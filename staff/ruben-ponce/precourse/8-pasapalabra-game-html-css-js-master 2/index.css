@@ -1,0 +1,272 @@
+body {
+    background-color: #00a0d0;
+    font-size: 1.5vw;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.contentA {
+    width: 35vw;
+    height: 35vw;
+    border-radius: 50%;
+    background-color: white;
+    margin: 4vw auto;
+    background-image: url("/img/skylab.jpg");
+    background-size: cover;
+    /*border: 1px solid black;*/
+}
+
+.letter {
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+    background-image: radial-gradient(at left, #293ca5, #4d62d8);
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 3vw;
+    position: absolute;
+    box-shadow: 0px 0px 5px 1px white;
+}
+
+.A {
+    top: 1vw;
+    left: 48vw;
+}
+
+.B {
+    top: 1.4vw;
+    left: 52.5vw;
+}
+
+.C {
+    top: 2.75vw;
+    left: 56.5vw;
+}
+
+.D {
+    top: 5vw;
+    left: 60.25vw;
+}
+
+.E {
+    top: 8vw;
+    left: 63.35vw;
+}
+
+.F {
+    top: 11.5vw;
+    left: 65.75vw;
+}
+
+.G {
+    top: 15.5vw;
+    left: 67.20vw;
+}
+
+.H {
+    top: 19.5vw;
+    left: 67.75vw;
+}
+
+.I {
+    top: 23.65vw;
+    left: 67.35vw;
+}
+
+.J {
+    top: 27.65vw;
+    left: 66.15vw;
+}
+
+.K {
+    top: 31.55vw;
+    left: 64vw;
+}
+
+.L {
+    top: 34.65vw;
+    left: 61.15vw;
+}
+
+.M {
+    top: 37.25vw;
+    left: 57.20vw;
+}
+
+.N {
+    top: 38.9vw;
+    left: 52.5vw;
+}
+
+.Ñ {
+    top: 39.25vw;
+    left: 47.5vw;
+}
+
+.O {
+    top: 38.25vw;
+    left: 42.5vw; 
+}
+
+.P {
+    top: 36.25vw;
+    left: 38vw; 
+}
+
+.Q {
+    top: 33vw;
+    left: 34.2vw; 
+}
+
+.R {
+    top: 29.3vw;
+    left: 31.6vw;
+}
+
+.S {
+    top: 25vw;
+    left: 30vw;
+}
+
+.T {
+    top: 20.3vw;
+    left: 29.35vw;
+}
+
+.U {
+    top: 15.8vw;
+    left: 29.8vw;
+}
+
+.V {
+    top: 11.7vw;
+    left: 31.2vw;
+}
+
+.W {
+    top: 8.2vw;
+    left: 33.4vw;
+}
+
+.X {
+    top: 5.25vw;
+    left: 36.2vw;
+}
+
+.Y {
+    top: 3vw;
+    left: 39.65vw;
+}
+
+.Z {
+    top: 1.5vw;
+    left: 43.8vw;
+}
+
+.contentB {
+    display: block;
+    float: left;
+    margin: 1.5vw 1vw 0 1vw;
+}
+
+.successes {
+    width: 4vw;
+    height: 4vw;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 4vw;
+    margin: 0 0 1vw 0.4vw ;
+    font-weight: bold;
+    box-shadow: 0px 0px 5px 1px white;
+    background-image: radial-gradient(at left, #293ca5, #4d62d8);
+}
+
+.timer {
+    width: 5vw;
+    height: 4vw;
+    background-color: red;
+    color: white;
+    border-radius: 30%;
+    text-align: center;
+    line-height: 4vw;
+    margin: 2vw 0.5vw 0 0;
+    font-weight: bold;
+    box-shadow: 0px 0px 5px 1px white;
+    background-image: radial-gradient(at left, #293ca5, #4d62d8);
+}
+
+.contentC {
+    display: inline-block;
+    width: 75vw;
+    height: 12vw;
+    background-color: white;
+    border-radius: 10px;
+    margin: 0.5vw 2vw;
+}
+
+.text {
+    margin: 0.5vw;
+    font-size: 1.3vw;
+}
+
+.contentD {
+    margin: 0 24vw;
+    width: 30vw;
+    display: inline-block;
+}
+
+#resp {
+    width: 20vw;
+    height: 1.3vw;
+    font-size: 1.5vw;
+}
+
+#send {
+    width: 7vw;
+    height: 2vw;
+    font-size: 1.3vw;
+    visibility: hidden;
+}
+
+.container {
+    background-color: white;
+    border-radius: inherit;
+}
+
+.buttonsBox {
+    display: block;
+    float: right;
+    width: 7vw;
+    height: 12vw;
+    margin: 0.5vw 1vw 0 0;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px 1px white;
+}
+
+.buttons {
+    width: 100%;
+    height: 33.3%;
+    font-size: 2vw;
+    cursor: pointer;
+    color: white;
+    margin: 0;
+    line-height: 3.75vw;
+    background-image: radial-gradient(at left, #293ca5, #4d62d8);
+}
+
+.start {
+    border-radius: 15px 15px 0px 0px;
+}
+
+.stop {
+    border-radius: 0px 0px 15px 15px;
+}
+
+.buttons:hover {
+    font-size: 3vw;
+    border-radius: inherit;
+    transition: 0.5s;
+    background-image: #00a0d0;
+}

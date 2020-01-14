@@ -1,0 +1,134 @@
+.container {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 14% 14% 14% 14% 14% 14%;
+    max-width: 500px;
+    height: 400px;
+    margin: 30px auto;
+    border-collapse: collapse;
+}
+
+.button {
+    text-align: center;
+    border: 1px solid black;
+    line-height: 55px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: teal;
+}
+
+.displayH {
+    grid-area: 1 / 1 / span 1 / span 4;
+    background-color: #05142ad9;
+    color: white;
+    text-align: right;
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+.display {
+    grid-area: 2 / 1 / span 1 / span 4;
+    background-color: #05142ad9;
+    color: white;
+    text-align: right;
+    font-size: 55px;
+    padding-right: 10px;
+}
+
+.AC {
+    grid-area: 3 / 1 / span 1 / span 2;
+    background-color: #c2c2c2;
+}
+
+.R {
+    grid-area: 3 / 3 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.div {
+    grid-area: 3 / 4 / span 1 / span 1;
+    background-color: #ff8721;
+    color: white;
+}
+
+.seven {
+    grid-area: 4 / 1 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.eight {
+    grid-area: 4 / 2 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.nine {
+    grid-area: 4 / 3 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.mult {
+    grid-area: 4 / 4 / span 1 / span 1;
+    background-color: #ff8721;
+    color: white;
+}
+
+.four {
+    grid-area: 5 / 1 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.five {
+    grid-area: 5 / 2 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.six {
+    grid-area: 5 / 3 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.subs {
+    grid-area: 5 / 4 / span 1 / span 1;
+    background-color: #ff8721;
+    color: white;
+}
+
+.one {
+    grid-area: 6 / 1 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.two {
+    grid-area: 6 / 2 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.three {
+    grid-area: 6 / 3 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.sum {
+    grid-area: 6 / 4 / span 1 / span 1;
+    background-color: #ff8721;
+    color: white;
+}
+
+.zero {
+    grid-area: 7 / 1 / span 1 / span 2;
+    background-color: #c2c2c2;
+}
+
+.point {
+    grid-area: 7 / 3 / span 1 / span 1;
+    background-color: #c2c2c2;
+}
+
+.result {
+    grid-area: 7 / 4 / span 1 / span 1;
+    background-color: #ff8721;
+    color: white;
+}

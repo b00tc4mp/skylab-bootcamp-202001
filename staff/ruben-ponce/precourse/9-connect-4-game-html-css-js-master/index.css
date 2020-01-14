@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+}
+
+.home {
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 10% auto 0;
+    width: 50%;
+}
+
+.container {
+    visibility: unset;
+    display: none; /*grid*/
+    grid-template-columns: repeat(7, 14.28%) ;
+    grid-template-rows: repeat(8, 12.5%);
+    text-align: center;
+    width: 35.5vw;
+    height: 40vw;
+    margin: 10vw auto;
+    border: 1px solid black;
+    box-shadow: 0px 0px 3px 0px black;
+}
+
+.top {
+    background-color: #80808024;
+    cursor: pointer;
+    line-height: 5vw;
+    border: 0.02vw dashed black;
+}
+
+.top:hover {
+    transition: 500ms;
+    text-transform: uppercase;
+    background-color: #80808085;
+    font-size: 3vw;
+}
+
+.board {
+    background-color: blue;
+}
+
+.pos {
+    border-radius: 50%;
+    background-color: white;
+    width: inherit;
+    height: inherit;
+    margin: 0.2vw 0.2vw 0vw;
+    line-height: 4.5vw;
+}
+
+.base {
+    grid-area: 8 / 1 / span 1 / span 7 ;
+    background-color: red;
+    font-size: 3vw;
+    line-height: 4.5vw;
+}
+
+.buttons {
+    display: none; /*flex*/
+    flex-wrap: nowrap;
+    background-color: #0000ffbd;
+    justify-content: center;
+    width: 20vw;
+    margin: -8vw auto;
+    border-radius: 1vw;
+    box-shadow: 0px 0px 5px 0px black;
+}
+
+.buttons > div {
+    padding: 1vw;
+    background-color: #ff0000db;
+    margin: 1vw;
+    border-radius: 1vw;
+    cursor: pointer;
+    box-shadow: 0px 0px 3px 0px white;
+}
+
+.buttons > div:hover {
+    transition: 500ms;
+    text-transform: uppercase;
+    background-color: yellow;
+}

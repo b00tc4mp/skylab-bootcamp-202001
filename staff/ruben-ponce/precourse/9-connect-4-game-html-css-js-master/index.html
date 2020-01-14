@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>conecta 4</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<div class="home">
+  <h1>CONECTA 4</h1><br>
+  <p>Instrucciones: Los jugadores deben introducir su ficha de color rojo o amarillo en la columna que prefieran con el objetivo de conseguir alinear 4 fichas del mismo color en posicion vertical, horizontal o diagonal. </p><br>
+  <button onclick="start()">Player VS Player</button><br>
+  <button onclick="activeRandom()">Player VS PC</button>
+</div>
+    <!-- 1 div container, 7 divs superiores para function click,  42 divs con 42 divs dentro para background y ficha, 1 div inferior para base-->
+<div class="container">    
+  <div class="top a" onclick="chip(this)">
+     a
+  </div>
+  <div class="top b" onclick="chip(this)">
+      b
+  </div>
+  <div class="top c" onclick="chip(this)">
+      c
+  </div>
+  <div class="top d" onclick="chip(this)">
+      d
+  </div>
+  <div class="top e" onclick="chip(this)">
+      e
+  </div>
+  <div class="top f" onclick="chip(this)">
+      f
+  </div>
+  <div class="top g" onclick="chip(this)">
+      g
+  </div>
+  <div class="board board1">
+  <div class="pos 1">1</div>
+  </div>
+  <div class="board board2">
+    <div class="pos 2">2</div>
+  </div>
+  <div class="board board3">
+    <div class="pos 3">3</div>
+  </div>
+  <div class="board board4">
+    <div class="pos 4">4</div>
+  </div>
+  <div class="board board5">
+    <div class="pos 5">5</div>
+  </div>
+  <div class="board board6">
+    <div class="pos 6">6</div>
+  </div>
+  <div class="board board7">
+    <div class="pos 7">7</div>
+  </div>
+  <div class="board board8">
+    <div class="pos 8">8</div>
+  </div>
+  <div class="board board9">
+    <div class="pos 9">9</div>
+  </div>
+  <div class="board board10">
+    <div class="pos 10">10</div>
+  </div>
+  <div class="board board11">
+    <div class="pos 11">11</div>
+  </div>
+  <div class="board board12">
+    <div class="pos 12">12</div>
+  </div>
+  <div class="board board13">
+    <div class="pos 13">13</div>
+  </div>
+  <div class="board board14">
+    <div class="pos 14">14</div>
+  </div>
+  <div class="board board15">
+    <div class="pos 15">15</div>
+  </div>
+  <div class="board board16">
+    <div class="pos 16">16</div>
+  </div>
+  <div class="board board17">
+    <div class="pos 17">17</div>
+  </div>
+  <div class="board board18">
+    <div class="pos 18">18</div>
+  </div>
+  <div class="board board19">
+    <div class="pos 19">19</div>
+  </div>
+  <div class="board board20">
+    <div class="pos 20">20</div>
+  </div>
+  <div class="board board21">
+    <div class="pos 21">21</div>
+  </div>
+  <div class="board board22">
+    <div class="pos 22">22</div>
+  </div>
+  <div class="board board23">
+    <div class="pos 23">23</div>
+  </div>
+  <div class="board board24">
+    <div class="pos 24">24</div>
+  </div>
+  <div class="board board25">
+    <div class="pos 25">25</div>
+  </div>
+  <div class="board board26">
+    <div class="pos 26">26</div>
+  </div>
+  <div class="board board27">
+    <div class="pos 27">27</div>
+  </div>
+  <div class="board board28">
+    <div class="pos 28">28</div>
+  </div>
+  <div class="board board29">
+    <div class="pos 29">29</div>
+  </div>
+  <div class="board board30">
+    <div class="pos 30">30</div>
+  </div>
+  <div class="board board31">
+    <div class="pos 31">31</div>
+  </div>
+  <div class="board board32">
+    <div class="pos 32">32</div>
+  </div>
+  <div class="board board33">
+    <div class="pos 33">33</div>
+  </div>
+  <div class="board board34">
+    <div class="pos 34">34</div>
+  </div>
+  <div class="board board35">
+    <div class="pos 35">35</div>
+  </div>
+  <div class="board board36">
+    <div class="pos 36">36</div>
+  </div>
+  <div class="board board37">
+    <div class="pos 37">37</div>
+  </div>
+  <div class="board board38">
+    <div class="pos 38">38</div>
+  </div>
+  <div class="board board39">
+    <div class="pos 39">39</div>
+  </div>
+  <div class="board board40">
+    <div class="pos 40">40</div>
+  </div>
+  <div class="board board41">
+    <div class="pos 41">41</div>
+  </div>
+  <div class="board board42">
+    <div class="pos 42">42</div>
+  </div>
+  <div class="base">TU TURNO</div>
+</div>
+
+<div class="buttons">
+  <div onclick="reset()">Reiniciar</div>
+  <div onclick="cerrar()">Salir</div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
