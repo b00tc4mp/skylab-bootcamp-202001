@@ -160,7 +160,6 @@ if (usuario === "ADMIN") {
     } else alert("El listado ha alcanzado el numero máximo de vuelos");   
   }
 
-//Eliminar vuelos
   var borrar = () => {
     var parameAdm = prompt("Introduce el ID del vuelo a borrar");
     console.log("Se ha eliminado el vuelo:");
