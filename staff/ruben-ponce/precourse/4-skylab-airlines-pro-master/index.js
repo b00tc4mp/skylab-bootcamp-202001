@@ -13,7 +13,6 @@ var flights = [
   { id: 10, to: 'Tel-Aviv', from: 'Madrid', cost: 150, scale: false }
 ];
 
-//Bienvenida
 var bienvenida = () => {
   var nombre = prompt("Introduzca su nombre de usuario: ");
   console.log("Hola "+ nombre + "!!. " + " Bienvenido a Skylab Airlines. \uD83D\uDE00");
