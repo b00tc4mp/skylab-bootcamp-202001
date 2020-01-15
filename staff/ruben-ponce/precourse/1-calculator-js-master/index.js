@@ -1,4 +1,4 @@
-'use stict'
+'use strict'
 var results = [];
 
 var calc = (num1, num2) => {
