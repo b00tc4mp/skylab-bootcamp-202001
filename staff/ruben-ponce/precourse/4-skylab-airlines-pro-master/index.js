@@ -141,7 +141,6 @@ if (usuario === "ADMIN") {
     };
   }
 
-//Crear vuelos
   var crear = () => {
     if (Object.keys(flights).length <= 15) {
       let id2 = flights.length;
