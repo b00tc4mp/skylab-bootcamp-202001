@@ -1,27 +1,26 @@
-var element = document.children
-
-var elements
-
-function getTree (elements) {
-
-    code = '';
-
+function html(elements, indent) {
+    var code = '';
+    if (indent === undefined) indent = '';
     for (var i = 0; i < elements.length; i++) {
-
-        var element = elements[i]
-    
-    code += "<" + element.tagName + ">";
-
-        if (element.children.length) {
-
-            code += getTree(element.children)
+        var element = elements[i];
+        if (isSemantic(element)){
+            code += indent + '<' + element.tagName + '> \n'
+            if (element.children.length) {
+                code += html(element.children, indent + '\t');
+            }
             
-        }
-
-    code += "</" + element.tagName + ">";
-
+            if (element.children.length) {
+                code += html(element.children, indent + "\t");
+            }
+            code += indent + "</" + element.tagName + "> \n"
+        } else {
+            return code += html(element.children, indent + "\t");
+        }   
     }
-return code
+    return code;
 }
-
-getTree(element)
+var semantic = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'main', 'mark', 'nav', 'section', 'summary', 'time', 'html', 'body', 'head'];
+function isSemantic (element){
+    return semantic.indexOf(element.tagName.toLowerCase())> -1;
+}
+console.log(html(document.children));
