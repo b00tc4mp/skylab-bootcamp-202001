@@ -15,7 +15,7 @@
             <div class="main">Main</div>
             <div class="aside">Aside</div>
         </div>
-        <div class="foot">Footer</div>
+        <div class="footer">Footer</div>
     </div>
 
 
@@ -41,6 +41,43 @@
         .head{
             width: 100%;
             height: 33.3vh;
+            background-color: red;
+        }
+
+        .nav{
+            width: 20%;
+            height: 33.3vh;
+            background-color: blue; 
+        }
+
+        .main{
+            width: 60%;
+            height: 33.3vh;
+            background-color: pink; 
+        }
+
+        .aside{
+            width: 20%;
+            height: 33.3vh;
+            background-color: orange; 
+        }
+
+        .footer{
+            width: 100%;
+            height: 33.3vh;
+            background-color: yellow;
+        }
+
+        @media only screen and (max-width: 767px) {
+            .head, .nav, .main, .aside, .footer {
+                width: 100%;
+                height: 20vh;
+            }
+            .content2 {
+                width: 100%;
+                height: 60vh;
+                flex-direction: column;
+            }
         }
     
     </style>
