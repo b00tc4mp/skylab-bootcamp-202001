@@ -4,18 +4,15 @@ function html(elements, indent) {
     for (var i = 0; i < elements.length; i++) {
         var element = elements[i];
         if (isSemantic(element)){
+
             code += indent + '<' + element.tagName + '> \n'
-            if (element.children.length) {
-                code += html(element.children, indent + '\t');
-            }
-            
+
             if (element.children.length) {
                 code += html(element.children, indent + "\t");
             }
             code += indent + "</" + element.tagName + "> \n"
-        } else {
-            return code += html(element.children, indent + "\t");
-        }   
+        }
+        else code += html(element.children)   
     }
     return code;
 }
@@ -23,4 +20,4 @@ var semantic = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer',
 function isSemantic (element){
     return semantic.indexOf(element.tagName.toLowerCase())> -1;
 }
-console.log(html(document.children));
+console.log(html(document.children))
