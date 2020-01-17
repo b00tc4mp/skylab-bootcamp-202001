@@ -1,0 +1,92 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header {
+    border: black solid 1px;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+}
+main {
+    border: black solid 1px;
+    height: 80vh;
+    width: 100%;
+
+}
+section{
+    border: black solid 1px;
+    width: 100%;
+    height: 50%;
+
+}
+footer {
+    border: black solid 1px;
+    width: 100%;
+    height: 10vh;
+
+}
+
+header > div {
+    margin: 5px;
+    border: blue solid 1px;
+    width: calc(100%/3);
+
+}
+.profile {
+    height: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    border: 1px solid red;
+}
+.photo{
+    width: 100%;
+    grid-column: span 1;
+    background-color: grey;
+}
+.editprofile {
+    grid-column: span 2;
+    background-color: cadetblue;
+}
+.follow {
+    height: 30%;
+    background-color: red;
+}
+.sectiontwo{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+.markers {
+    height: 20%;
+    background-color: sienna;
+}
+.imagecontainer{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.imagecontainer > div{
+    height: 100%;
+    border: 1px solid blue;
+}
+.links {
+    display: flex;
+    border: blueviolet 1px solid;
+    justify-content: space-between;
+    height: 100%;
+}
+.linkitem {
+    padding: 2px;
+    height: 100%;
+    flex-grow: 1;
+}
+.links div:nth-child(odd){
+    background-color: chocolate;
+}
+
