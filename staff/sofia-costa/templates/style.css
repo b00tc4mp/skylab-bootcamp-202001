@@ -107,6 +107,8 @@
     display: grid;
     grid-template-areas: "h" "n" "p";
     grid-template-rows: 10vh 10vh 100%;
+    position: relative;
+    height:100%;
 }
 
 .feed__nav {
@@ -172,7 +174,6 @@
 
 .post__footer {
     box-sizing: border-box;
-    padding: 10px;
 }
 
 .post__nav {
@@ -180,6 +181,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 0 10px;
 }
 
 .post__nav-container {
@@ -213,14 +215,16 @@
 
 .post__likes {
     height: 5vh;
-    max-height: 50px;
+    max-height: 30px;
     justify-content: start;
-    align-self: center;
+    width: 70px;
+    padding-left: 10px;
 }
 
 .post__more-comments {
     height: 5vh;
     max-height: 50px;
+    padding-left: 10px;
 }
 
 .comment__query {
@@ -301,10 +305,6 @@
     padding: 0 10vw;
     grid-area: userinfo;
     height:100%;
-}
-
-.info-option {
-    
 }
 
 .profile__info {
@@ -390,7 +390,11 @@
     }
 }
 
-/* Profile Post */
+/* Profile Post 
+
+
+! Desktop version only */
+
 
 .post-selected {
     display: flex;
@@ -406,19 +410,31 @@
     box-sizing: border-box;
     flex-flow: column wrap;
     width:250px;
+    position: relative;
+}
+
+.post__footer-post {
+    position: absolute;
+    bottom:0;
 }
 
 .post__date {
-    height: 5vh;
+    height: 30px;
+    justify-self: center;
+    padding-left: 10px;
 }
 
 .post__comment-area {
     max-height: 200px;
+    padding-left:10px;
+    padding: 0 10px;
 }
 
-.post__comment {
+.post__comments {
+    box-sizing: border-box;
     width: 250px;
-    height:284px;
+    height:330px;
+    padding: 10px;
 }
 
 .comment__entry {
@@ -431,4 +447,5 @@
 .comment__submit {
     width:20%;
     padding:0;
+    background-color: lightcoral;
 }
