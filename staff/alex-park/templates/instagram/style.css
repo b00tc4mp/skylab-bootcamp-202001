@@ -136,7 +136,7 @@ p {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 5;
+    /* margin: 5; */
     max-width: 880px;
 }
 
@@ -147,6 +147,10 @@ p {
     border: 2px solid black;
 }
 
+.footer {
+    background-color: black;
+    height: 10px;
+}
 
 @media only screen and (min-width: 998px) {
 
@@ -173,5 +177,21 @@ p {
         height: 100%;
         padding: 0% 3%;
         max-width: 180px;
+    }
+
+    .user-info {
+        grid-area: 2 / 1 / 2 / 7;
+    }
+
+    .gallery {
+        grid-area: 3 / 2 / 3 / 6;
+    }
+
+    .gallery__photo {
+        width: 18vw;
+    }
+
+    .footer {
+        grid-area: 4 / 1 / 4 / 7;
     }
 }
