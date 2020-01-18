@@ -100,7 +100,7 @@
 }
 
 .profile__name{
-    padding: 3% 5%;
+    padding: 3% 0%;
 }
 
 .profile__photo{
@@ -114,7 +114,9 @@
     background-color: rgb(233, 129, 146);
 }
 
-
+.profile__text{
+    font-size: ;
+}
 
 .profile-post{
     display: flex;
@@ -139,3 +141,9 @@
     padding: 5px;
 }
 
+.main_post, .post{
+    background-color: rgb(246, 178, 199);
+    padding:5px;
+    margin: 2px;
+    border: 1px solid black;
+}
