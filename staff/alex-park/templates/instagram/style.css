@@ -152,6 +152,38 @@ p {
     height: 10px;
 }
 
+@media only screen and (min-width: 733px) {
+    .post.profile {
+        grid-area: 2 / 2 / 2 / 6;
+
+    }
+
+    .posts-post.profile {
+
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+
+    }
+
+    .posts-post__photo.profile {
+        grid-area: 1 / 1 / 4 / 4;
+
+    }
+
+    .posts-post__header.profile {
+        grid-area: 1 / 4 / 1 / 6;
+    }
+
+    .posts-post__comments.profile {
+        grid-area: 2 / 4 / 2 / 6;
+    }
+
+    .posts-post__actions.profile {
+        grid-area: 3 / 4 / 3 / 6;
+    }
+}
+
 @media only screen and (min-width: 998px) {
 
     body {
