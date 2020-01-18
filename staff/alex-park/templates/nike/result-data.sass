@@ -1,0 +1,19 @@
+@import config
+
+.result-data
+    display: grid
+    grid-template-columns: 1fr 65px
+
+    &__text
+        grid-area: 1 / 1 / 1 / 1
+        font-family: $search-results
+        padding: 35px 3%
+        font-size: 24px
+
+    &__filter
+        grid-area: 1 / 2 / 1 / 2
+
+        &.fas
+            font-size: 24px
+            text-align: center
+            padding-top: 50%
