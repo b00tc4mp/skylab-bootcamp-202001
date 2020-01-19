@@ -5,6 +5,7 @@
     flex-wrap: wrap
     justify-content: space-around
     width: 100%
+    margin: 0
 
     &__post
         width: 49.25vw
@@ -12,21 +13,49 @@
 
         &-photo
             margin-bottom: 3%
-            max-width: 49.25vw
+            width: 48.25vw
+
+            &.detail-photo
+                width: 99%
+                max-width: 99%
 
         &-name
             font-family: $search-results
             font-size: 14px
-            padding-top: 2px
+            padding: 2px 2%
+
+            &.detail-name
+                font-size: 32px
+                width: auto
 
         &-desc
             font-family: $search-results
             font-size: 14px
             color: $gallery-desc
-            padding-top: 2px
+            padding: 2px 2%
+
+            &.detail-top-desc
+                font-size: 16px    
 
         &-price
             font-family: $search-results
             font-size: 14px
-            padding-top: 2px
+            padding: 2px 2%
+
+            &.detail-top-price
+                font-size: 16px
+                text-align: right
+                padding-right: 15px
+
+        
+        &.detail
+            width: 100vw
+
+        &.detail-top
+            width: 100%
+            display: grid
+            grid-template-columns: 1fr 100px
+            margin-top: 6%
+            margin-bottom: 0%
+
 

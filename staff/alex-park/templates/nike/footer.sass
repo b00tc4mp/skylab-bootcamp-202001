@@ -2,13 +2,21 @@
 
 .footer
     background-color: $footer-bg
-    padding: 10% 3% 1% 3%
     @extend %footer-main
+    width: 100%
+    max-width: 100%
+    padding: 10% 0%
     
+    &__info-user
+        margin: 0
+        max-width: 100%
+        padding-left: 5%
+
     &__info-help
         padding-top: 5%
         display: grid
-        grid-template-columns: 1fr 30px
+        grid-template-columns: auto 50px
+        padding-left: 5%
 
         &-msg
             grid-area: 1 / 1 / 1 / 1
@@ -21,7 +29,8 @@
     &__info-about-us
         padding-top: 15%
         display: grid
-        grid-template-columns: 1fr 30px
+        grid-template-columns: 1fr 50px
+        padding-left: 5%
 
         &-msg
             grid-area: 1 / 1 / 1 / 1
@@ -30,35 +39,35 @@
             color: white
             font-size: 16px
             text-align: center
+            
 
     &__info-media
         display: flex
         flex-wrap: wrap
         padding: 5% 0%
         justify-content: flex-start
+        padding-left: 5%
 
         &.fab
-            padding: 0 5%
+            padding: 0 3%
             color: $gallery-desc
             font-size: 28px
 
     &__info-map
-        display: flex
-        flex-wrap: wrap
+        width: 90%
+        margin-left: 5%
         padding: 5% 0% 0% 0%
         justify-content: flex-start
+        // padding-left: 5%
 
         &.fas
             font-size: 24px
-            padding-right: 5%
-
-        &-country
-            padding-top: 7%
 
     &__info-misc
         color: $gallery-desc
         font-size: 12px
         padding-top: 1%
+        padding-left: 5%
 
 
 
