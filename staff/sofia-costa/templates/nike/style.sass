@@ -1,0 +1,62 @@
+@import utils
+@import config
+@import normalize
+
+*
+    margin: 0
+
+.header
+    +flex(column)
+
+    &-top
+        +flex(row)
+
+        &__brand-nav
+            +flex(row)
+            max-height: $header-nav-height
+            max-width: 50vw
+
+        &__site-nav
+            +flex(row)
+            max-height: $header-nav-height
+            max-width: 50vw
+
+
+.button-nav-brand
+    max-height: 40px
+    font-weight: normal
+    font-size: .6rem
+
+.banner
+    width: 100vw
+    height: 60px
+    background-color: rgb(248, 248, 248)
+
+
+.banner__img
+    height: 60px
+
+
+ul
+    list-style-type: none
+
+    li
+        color: red
+
+
+.main-font
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+
+    &--grey
+        color: grey
+
+    &--bold
+        font-weight: bold
+
+    
+
+.main-nav
+
+    &__font
+        font-family: 'Oswald', sans-serif
+
