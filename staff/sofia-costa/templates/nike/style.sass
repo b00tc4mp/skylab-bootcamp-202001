@@ -1,62 +1,163 @@
 @import utils
 @import config
-@import normalize
+@import normalize.scss
+@import query
+@import button
+@import item
+@import nav
+@import banner
 
 *
     margin: 0
 
-.header
-    +flex(column)
+.body-results
+    position: absolute
 
-    &-top
-        +flex(row)
+    .header
+        +flex(column, center)
 
-        &__brand-nav
-            +flex(row)
-            max-height: $header-nav-height
-            max-width: 50vw
+        &-top
+            +flex(row, space-between)
+            @extend %brand-nav
+            @extend %site-nav
 
-        &__site-nav
-            +flex(row)
-            max-height: $header-nav-height
-            max-width: 50vw
+        @extend %main-nav
+           
+    .main-results
+        +flex(column, center)
+        box-sizing: border-box
+        padding: $padding-menu $padding-menu 10px $padding-menu
+        margin: auto
+
+        &__header
+            background-color: white
+            position: sticky
+            top: 0
+        
+            &-bottom
+                +flex(row, space-between)
+                padding-bottom: 40px
+
+                &-info
+                    +flex(row, space-between)
+                
+                &-organize
+                    +flex(row, space-between)
+                    align-items: center
+
+                    &-img
+                        max-height: 20px
+                        padding-right: 20px
+                
+                &-filter
+                    +flex(row, space-between)
+
+                &-order
+                    +flex(row, space-between)
+
+        &__wall
+            +flex(row, space-evenly)
+
+        &__menu
+            +flex(column, flex-start)
+            position: sticky
+            height: 100%
+            top: 0
+            z-index: -1
+
+        &__categories
+            padding-left:0
+
+        &__title
+            padding-bottom: 20px
+
+        &__sizes
+            +flex(row, space-between)
+            align-content: space-evenly
+            max-height: 250px
+            width: 250px
+            flex-flow: row wrap
+            padding-right: $padding-menu
+            box-sizing: border-box
+
+            .button-size
+                @extend %button-size
+
+        &__results
+            +flex(row, flex-start)
+            flex-flow: row wrap
+            box-sizing: border-box
+                
+        .item
+            @extend %item
+            margin-bottom: 50px
+            margin-right: 10px
+            cursor: pointer
+        
+        .menu
+            margin-bottom: 40px
 
 
-.button-nav-brand
-    max-height: 40px
-    font-weight: normal
-    font-size: .6rem
+    .footer
+        background-color: $black
+        height: 55vh
+        +flex(column, space-between)
+        box-sizing: border-box
+        padding: 40px 40px 0 40px
+        max-width: 100vw
 
-.banner
-    width: 100vw
-    height: 60px
-    background-color: rgb(248, 248, 248)
+        &__main
+            +flex(row, space-between)
 
+        &__columns
+            +flex(row, space-between)
 
-.banner__img
-    height: 60px
+        .list-line
+            line-height: 30px
 
+        &__list
+            max-width: 200px
+            padding-right: 50px
+        
+        &__share-img
+            max-height: 40px
+
+        &__footer
+            max-width: 100vw
+
+        &__img
+            max-width: 90vw
+           
 
 ul
     list-style-type: none
+    padding-left: 0
 
     li
-        color: red
+        padding: 5px 0
 
 
 .main-font
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
-
+    font-family: $main-font
+    margin: 0
     &--grey
         color: grey
-
     &--bold
         font-weight: bold
+    &--light
+        font-weight: lighter
+    &--big
+        font-size: 25px 
+    &--smallest
+        font-size: 10px
 
-    
 
 .main-nav
 
     &__font
-        font-family: 'Oswald', sans-serif
-
+        font-family: $nav-font
+        font-size: 1rem
+        &--white
+            color: white     
+        &--small
+            font-size: 12px

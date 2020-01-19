@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/css?family=Oswald&display=swap" rel="stylesheet">
 </head>
-<body class=body__results>
+<body class=body-results>
     <header class=header>
         <div class=header-top>
             <nav class=header-top__brand-nav>
@@ -25,16 +25,16 @@
             </nav>
         </div>
         <div class=header-bottom>
-            <img class=header-bottom__logotype>
+            <img class=header-bottom__logotype src="images/logo.png">
             <ul class="header-bottom__main-nav">
-                <li class="button-nav main-nav__new-releases"><button class="novedades"><h3 class="main-nav__font">NOVEDADES</h3></button></li>
-                <li class="button-nav main-nav__man"><button class="hombre"><h3 class="main-nav__font">HOMBRE</h3></button></li>
-                <li class="button-nav main-nav__woman"><button class="mujer"><h3 class="main-nav__font">MUJER</h3></button></li>
-                <li class="button-nav main-nav__children"><button class="ninos"><h3 class="main-nav__font">NIÑO/A</h3></button></li>
-                <li class="button-nav main-nav__customize"><button class="personalizar"><h3 class="main-nav__font">PERSONALIZAR</h3></button></li>
-                <li class="button-nav main-nav__colections"><button class="colecciones"><h3 class="main-nav__font">COLECCIONES</h3></button></li>
+                <button class="button-nav main-nav__new-releases novedades"><h3 class="main-nav__font">NOVEDADES</h3></button>
+                <button class="button-nav main-nav__new-releases hombre"><h3 class="main-nav__font">HOMBRE</h3></button>
+                <button class="button-nav main-nav__new-releases mujer"><h3 class="main-nav__font">MUJER</h3></button>
+                <button class="button-nav main-nav__new-releases ninos"><h3 class="main-nav__font">NIÑO/A</h3></button>
+                <button class="button-nav main-nav__new-releases personalizar"><h3 class="main-nav__font">PERSONALIZAR</h3></button>
+                <button class="button-nav main-nav__new-releases colecciones"><h3 class="main-nav__font">COLECCIONES</h3></button>
             </ul>
-            <div class="header__search">
+            <div class="header-bottom__search">
                 <input class=search__query>
                 <button class=search__submit></button>
             </div>
@@ -45,20 +45,19 @@
     </aside>
     <main class=main-results>
         <div class=main-results__header>
-            <div class=main-results__header-top>
-                <p class="main-font main-font--small main-font--bold">Tenis / Zapatillas</p>
-            </div>
+            <p class="main-font main-font--small main-font--bold">Tenis / Zapatillas</p>
             <div class=main-results__header-bottom>
                 <h1 class="main-font main-font--big main-font--bold">Mujer Tenis Zapatillas</h1>
-                <div class=" main-font main-font--smaller">
-                    <div class="header-bottom__organize">
-                        <div class="header-bottom__organize-filter">
+                <div class="main-results__header-bottom-info">
+                    <p class="main-font main-font--smaller"></p>
+                    <div class="main-results__header-bottom-organize">
+                        <div class="main-results__header-bottom-filter">
                             <p class="main-font main-font--normal">Filtro</p>
-                            <img class="filter__img" src="images/filter.png">
+                            <img class="main-results__header-bottom-organize-img filter__img" src="images/filter.png">
                         </div>
-                        <div class="header-bottom__organize-order">
+                        <div class="main-results__header-bottom-order">
                             <p class="main-font main-font--normal">Ordenar por</p>
-                            <img class="order__img" src="images/options.png">
+                            <img class="main-results__header-bottom-organize-img order__img" src="images/options.png">
                         </div>
                     </div>
                 </div>
@@ -82,38 +81,158 @@
                     <li class=main-results__categories-option><p class="main-font main-font--normal">Caminar</p></li>
                 </ul>
                 <ul class="menu main-results__gender">
+                    <div class="main-results__title main-results__gender-option"><p class="main-font main-font--normal main-font--bold">Sexo</p></div>
                     <li class="main-results__gender-option"><p class="main-font main-font--normal">Hombre</p></li>
                     <li class="main-results__gender-option"><p class="main-font main-font--normal">Mujer</p></li>
                 </ul>
-                <ul class="menu main-results__size">
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">35.5</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">36</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">36.5</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">37</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">37.5</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">38</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">38.5</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">39</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">40</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">40.5</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">41</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">42</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">42.5</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">43</p></button></li>
-                    <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">44</p></button></li>
-                </ul>
+                <div class="main-results__size">
+                    <p class="main-results__title main-font main-font--normal main-font--bold">Size</p>
+                    <ul class="menu main-results__sizes">
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">35.5</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">36</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">36.5</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">37</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">37.5</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">38</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">38.5</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">39</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">40</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">40.5</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">41</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">42</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">42.5</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">43</p></button></li>
+                        <li class="main-results__size-option"><button class="button-size"><p class="main-font main-font--normal">44</p></button></li>
+                    </ul>
+                </div>
+                
             </section>
             <section class="main-results__results">
                 <figure class="item">
                     <img class="item__img"src="images/sample.png">
                     <figcaption class="item__caption">
-                        <div class="item__name">
-                            <p class="main-font main-font--normal">NikeCourt Air Zoom Vapor Cage 4</p>
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
                         </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
+                    </figcaption>
+                </figure>
+                <figure class="item">
+                    <img class="item__img"src="images/sample.png">
+                    <figcaption class="item__caption">
+                        <div class="item__info item__line">
+                            <p class="main-font main-font--normal item__name">NikeCourt Air Zoom Vapor Cage 4</p>
+                            <p class="main-font main-font--normal item__price">150€</p>
+                        </div>
+                        <p class="main-font main-font--grey item__description item__line">Zapatillas de tenis de pista rápida - Mujer</p>
+                        <p class="main-font main-font--grey item__colors item__line">4 colores</p>
                     </figcaption>
                 </figure>
             </section>
         </section>
     </main>
+    <footer class="footer">
+        <main class="footer__main">
+            <div class="footer__columns">
+                <div class="footer__info footer__list">
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">TARJETAS DE REGALO</p>
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">TIENDAS MÁS CERCANAS</p>
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">REGÍSTRATE PARA RECIBIR CORREOS ELECTRÓNICOS</p>
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">HAZTE MIEMBRO</p>
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">DESCUENTO PARA ESTUDIANTES</p>
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">COMENTARIOS SOBRE LA WEB</p>
+                </div>
+                <div class="footer__help footer__list">
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">OBTENER AYUDA</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Estado del pedido</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Envío y entrega</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Devoluciones</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Opciones de pago</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Contactar con nosotros</p>
+                </div>
+                <div class="footer__about footer__list">
+                    <p class="main-nav__font main-nav__font--white main-nav__font--small list-line">ACERCA DE NIKE</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Noticias</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Empleo</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Inversores</p>
+                    <p class="main-font main-font--smallest main-font--grey list-line">Sostenibilidad</p>
+                </div>
+            </div>
+            <div class="footer__share">
+                <img class="footer__share-img" src="images/share.png">
+            </div>
+        </main>
+        <footer class="footer__footer">
+            <img class="footer__img" src="images/footer.png">
+        </footer>
+    </footer>
 </body>
 </html>

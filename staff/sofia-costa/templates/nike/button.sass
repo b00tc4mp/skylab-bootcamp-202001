@@ -1,34 +1,25 @@
 @import utils
+@import normalize
 
 %button
     +border(1px, solid, silver, 5px)
-    font-size: 1rem
+    font-size: 12px
     line-height: 1.15
     margin: 0
+    cursor: pointer
 
-%button-select
-    text-transform: none
-    button-style: none
-    border: none
-    text-decoration: none
-    text-align: center
-    background-color: transparent
-    
-button,
-input,
-optgroup,
-select,
-textarea
-    font-family: inherit
-    font-size: 1rem
+%button-size
+    +border(1px, solid, silver, 5px)
+    background-color: white
+    font-size: 12px
+    height: 36px
+    width: 58px
     line-height: 1.15
     margin: 0
-button,
-select,
-[type="button"]
-    text-transform: none
-    button-style: none
-    border: none
-    text-decoration: none
-    text-align: center
-    background-color: transparent
+    cursor: pointer
+
+%button-brand-nav
+    max-height: 40px
+    font-weight: normal
+    font-size: .6rem
+    cursor: pointer
