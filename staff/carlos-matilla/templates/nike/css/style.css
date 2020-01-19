@@ -38,38 +38,125 @@ table {
   box-sizing: border-box;
 }
 
-html {
-  height: 100%;
-  color: #757575;
-}
-
-body {
-  height: 100%;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-}
-
 header {
   width: 100%;
-}
-
-.mobile-menu {
-  display: none;
+  position: sticky;
+  top: 0;
 }
 
 .menu-superior {
   height: 5vh;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
   border: 1px solid #e5e5e5;
 }
+.menu-superior .menu-superior__marcas {
+  width: 30%;
+  height: 100%;
+  background-color: #ffffff;
+}
+.menu-superior .menu-superior__marcas .marcas {
+  height: 100%;
+}
+.menu-superior .menu-superior__marcas .marcas .marcas__menu {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+}
+.menu-superior .menu-superior__marcas .marcas .marcas__menu li {
+  border-right: 1px solid #e5e5e5;
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-superior .menu-superior__ajustes {
+  width: 27%;
+  height: 100%;
+}
+.menu-superior .menu-superior__ajustes .ajustes {
+  height: 100%;
+}
+.menu-superior .menu-superior__ajustes .ajustes .ajustes__menu {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+}
+.menu-superior .menu-superior__ajustes .ajustes .ajustes__menu li {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75em;
+}
+.menu-superior .menu-superior__ajustes .ajustes .ajustes__menu li a {
+  margin-left: 8px;
+  text-decoration: none;
+}
 
 .menu {
   height: 9vh;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.menu .logo-nike {
+  width: 18%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.menu .logo-nike img {
+  display: block;
+  max-block-size: 38%;
+  margin-left: 30px;
+}
+.menu .menu-principal {
+  width: 50%;
+  height: 100%;
+}
+.menu .menu-principal .categorias {
+  height: 100%;
+}
+.menu .menu-principal .categorias .categorias__menu {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+}
+.menu .menu-principal .categorias .categorias__menu li {
+  flex: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+}
+.menu .menu-principal .categorias .categorias__menu li:hover {
+  border-bottom: 2px solid black;
+  cursor: pointer;
+}
+.menu .search {
+  width: 18%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.menu .search .search__box {
+  display: flex;
+  align-items: center;
+  font-size: 1.15em;
+  width: 90%;
+  height: 55%;
+  border: 1px solid #757575;
+  padding-left: 15px;
+}
+.menu .search .search__box a {
+  margin-left: 8px;
+  text-decoration: none;
 }
 
 .banner {
@@ -84,122 +171,29 @@ header {
   font-weight: bold;
 }
 
-.menu-superior__marcas {
-  width: 30%;
-  height: 100%;
-  background-color: #FFFFFF;
-}
-
-.menu-superior__ajustes {
-  width: 27%;
-  height: 100%;
-}
-
-.marcas {
-  height: 100%;
-}
-
-.marcas__menu {
-  display: flex;
-  height: 100%;
-  align-items: stretch;
-}
-.marcas__menu li {
-  border-right: 1px solid #e5e5e5;
-  flex: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ajustes {
-  height: 100%;
-}
-
-.ajustes__menu {
-  display: flex;
-  height: 100%;
-  align-items: stretch;
-}
-.ajustes__menu li {
-  flex: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75em;
-}
-.ajustes__menu li a {
-  margin-left: 8px;
-  text-decoration: none;
-}
-
-.logo-nike {
-  width: 18%;
-  height: 100%;
-}
-
-.busca {
-  width: 18%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-.menu-principal {
-  width: 50%;
-  height: 100%;
-}
-.menu-principal li:hover {
-  border-bottom: 2px solid black;
-  cursor: pointer;
-}
-
-.categorias {
-  height: 100%;
-}
-
-.categorias__menu {
-  display: flex;
-  height: 100%;
-  align-items: stretch;
-}
-.categorias__menu li {
-  flex: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1em;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: black;
-}
-
-.search {
-  display: flex;
-  align-items: center;
-  font-size: 1.15em;
-  width: 90%;
-  height: 55%;
-  border: 1px solid #757575;
-  padding-left: 15px;
-}
-.search a {
-  margin-left: 8px;
-  text-decoration: none;
-}
-.search a:link {
-  color: #757575;
+.mobile-menu {
+  display: none;
 }
 
 @media only screen and (max-device-width: 1100px) {
   .mobile-menu {
-    height: 6vh;
-    background-color: #FFFFFF;
+    height: 8vh;
+    background-color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border: 1px solid #e5e5e5;
     color: black;
+  }
+  .mobile-menu div {
+    margin-left: 20px;
+  }
+  .mobile-menu .menu-icons {
+    display: flex;
+  }
+  .mobile-menu .menu-icons div {
+    margin-left: 12px;
+    margin-right: 12px;
   }
 
   .menu-superior {
@@ -213,14 +207,95 @@ header {
   .banner {
     display: none;
   }
+}
+html {
+  height: 100%;
+  color: #757575;
+}
 
-  .menu-icons {
-    display: flex;
+body {
+  height: 100%;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background-color: #ffffff;
+}
+main .filtros {
+  width: 15%;
+  background-color: #ffffff;
+}
+main .filtros .titulo {
+  width: 100%;
+  background-color: #ffffff;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: black;
+}
+main .filtros .filters {
+  width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  font-size: 1em;
+  margin-left: 30px;
+  margin-top: 50px;
+  color: black;
+}
+main .filtros .filters p {
+  margin-bottom: 20px;
+}
+main .resultados {
+  width: 80%;
+  background-color: #ffffff;
+  height: 100%;
+}
+main .resultados .titulo-resultados {
+  width: 100%;
+  background-color: #ffffff;
+  height: 10vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: black;
+}
+main .resultados .titulo-resultados ul {
+  display: flex;
+}
+main .resultados .titulo-resultados ul li {
+  margin-right: 20px;
+}
+main .resultados .imagenes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+}
+main .resultados img {
+  display: block;
+  margin: 0.5em;
+  max-width: 30%;
+}
+
+@media only screen and (max-device-width: 1100px) {
+  .filtros {
+    display: none;
   }
-  .menu-icons div {
-    margin-left: 12px;
-    margin-right: 12px;
-  }
+}
+footer {
+  width: 100%;
+  height: 200px;
+  background-color: black;
+  margin-top: 100px;
 }
 
 /*# sourceMappingURL=style.css.map */
