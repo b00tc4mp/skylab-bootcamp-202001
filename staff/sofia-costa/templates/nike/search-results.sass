@@ -11,6 +11,9 @@
         padding: $padding-menu $padding-menu 10px $padding-menu
         margin: auto
 
+        @media only screen and (max-width: 992px)
+            padding: 0
+
         &__header
             background-color: white
             position: sticky
@@ -50,3 +53,37 @@
         margin-bottom: 50px
         margin-right: 10px
         cursor: pointer
+
+
+@media only screen and (max-width: 992px)
+
+    .body-results
+        .main-results
+            padding: $padding-menu 0
+
+            &__header
+                padding: 0 20px
+
+            &__categories
+                +flex(row, flex-start)
+
+                &-option
+                    margin: auto
+            
+            &__gender
+                display: none
+
+            &__size
+                display: none
+
+            &__menu
+                height: 5vh
+
+    .body-results .main-results__wall
+        +flex(column, center)
+
+    .header-bottom-hide
+        display: none
+
+    .mobile-hide
+        display: none
