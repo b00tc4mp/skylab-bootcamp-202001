@@ -34,11 +34,7 @@
     align-content: center;
 }
 
-.nav__profile--active {
-    display: none;
-}
-
-.header__search {
+.search {
     display: none;
 }
 
@@ -61,9 +57,9 @@
 
 @media only screen and (min-width: 768px) {
 
-    .header__search {
+    .search {
         display: block;
-        height: 25px;;
+        height: 25px;
         width: 200px;
         align-self: center;
         border-radius: 5px;
@@ -201,16 +197,6 @@
     max-height: 30px;
     background-color: rgb(198, 255, 198);
     align-self: center;
-}
-
-.post__fav--active {
-    display:none;
-    background-color: black;
-}
-
-.post__collection--active {
-    display: none;
-    background-color: black;
 }
 
 .post__likes {
