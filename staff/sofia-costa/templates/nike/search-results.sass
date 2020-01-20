@@ -1,0 +1,52 @@
+@import utils
+@import item
+
+
+.body-results
+    position: absolute
+     
+    .main-results
+        +flex(column, center)
+        box-sizing: border-box
+        padding: $padding-menu $padding-menu 10px $padding-menu
+        margin: auto
+
+        &__header
+            background-color: white
+            position: sticky
+            top: 0
+        
+            &-bottom
+                +flex(row, space-between)
+                padding-bottom: 40px
+
+                &-info
+                    +flex(row, space-between)
+                
+                &-organize
+                    +flex(row, space-between)
+                    align-items: center
+
+                    &-img
+                        max-height: 20px
+                        padding-right: 20px
+                
+                &-filter
+                    +flex(row, space-between)
+
+                &-order
+                    +flex(row, space-between)
+
+        &__wall
+            +flex(row, space-evenly)
+           
+        &__results
+            +flex(row, flex-start)
+            flex-flow: row wrap
+            box-sizing: border-box
+        
+    .item
+        @extend %item
+        margin-bottom: 50px
+        margin-right: 10px
+        cursor: pointer

@@ -1,0 +1,12 @@
+@import utils
+@import nav
+    
+.header
+    +flex(column, center)
+
+    &-top
+        +flex(row, space-between)
+        @extend %brand-nav
+        @extend %site-nav
+
+    @extend %main-nav
