@@ -1,4 +1,4 @@
-var a = ["ferran", "sofia", "monica", "marc", "monica"];
+var a = ["ferran", "sofia", "monica", "marc", "ramon"];
 
 function indexOf(array, value){
     for (var i = 0; i < array.length; i++){
