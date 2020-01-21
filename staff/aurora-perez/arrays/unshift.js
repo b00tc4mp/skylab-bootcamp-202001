@@ -1,6 +1,5 @@
-'use strict'
 
-function unshift(array, arguments) { 
+function unshift(array, ...arguments) { 
     array.length += arguments.length;
     var it = arguments.length;
     var newArr= [];
