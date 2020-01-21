@@ -2,7 +2,7 @@
 
 function includes (arr, value, position){
     var result;
-    if (position){
+    if (position >= 0){
         position < 0? position = arr.length-(position*-1) : position = position;
         arr[position]===value? result = true : result = false;
     } else {
