@@ -1,6 +1,6 @@
 'use strict'
 
-console.log("DEMO concat-----------------------");
+console.log("TEST concat------------------------------------------------");
 console.log('it should return a new array (without modifying the arguments) with all added arrays concated.');
 
 // var a =['a', 'b', 'c'];
@@ -19,4 +19,5 @@ var c2 = [4,5,6,7,'Edu'];
 var test = concat(c, c1, c2);
 
 
-console.assert(test.length ===  11, ">It should be 11 ")
+console.assert(test.length ===  11, "it should be 11");
+console.assert(test[5] === 3, 'it should be 3');

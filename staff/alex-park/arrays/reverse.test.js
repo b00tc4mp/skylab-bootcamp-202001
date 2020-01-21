@@ -1,6 +1,6 @@
 'use strict'
 
-console.log("TEST reverse-------------------------------------");
+console.log("TEST reverse------------------------------------------------");
 console.log("it should return a new array with the reverted values.");
 
 
