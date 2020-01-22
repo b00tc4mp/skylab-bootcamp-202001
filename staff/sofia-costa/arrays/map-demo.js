@@ -12,5 +12,5 @@ map(a, function(el) { return console.log('num ' + el) });
 console.log('should each value be added 10 and printed out');
 
 var a = [{name: 'joana'}, {name: 'miguel'}, {name: 'mário'}];
-map(elems, function(person) { return person.name } )
+map(a, function(person) { return person.name } )
 console.log('should each element be an object and its property be returned');

@@ -43,13 +43,13 @@ var array1 = [1, 2, 3, 4, 5]
 var results = [results1, results2, results3, results4, results5]
 
 results.forEach(function(array, ) {
-    console.assert('should array length be ' + array.length +  + )
+    console.assert('should array length be ' + array.length)
 })
 
 
 console.log('should splice not work for undefined array')
 var result = splice()
-console.assert(result === TypeError: array is undefined)
+console.assert(result === TypeError, 'Error: ' + array + 'is undefined')
 
 
 
