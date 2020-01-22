@@ -5,8 +5,6 @@ console.log("it should return a new array with the reverted values.");
 
 
 var a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-console.log('it should return a new array with the reverted values: ', reverse(a));
-
 var test = reverse(a);
 
 console.assert(test.length === a.length, 'test and the original array should have the same length');

@@ -1,6 +1,6 @@
 'use strict'
 
-function every (array,a, expression) {
+function every (array, expression) {
     var contador = 0;
     for (var i = 0; i < array.length; i++){
         expression(array[i])? contador++ : contador+=0;
