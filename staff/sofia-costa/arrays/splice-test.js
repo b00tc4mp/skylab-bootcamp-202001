@@ -21,8 +21,20 @@ function splice (array, start, numElements) {
 var result1 = splice(list)
 var result2 = splice(list, 2)
 var result3 = splice(list, 3, 1)
-var result4 = splice(list, 0, 0, 'john')
+var result4 = splice(list, 0, 1, 'john')
 var result5 = splice(list, 2, 0, 'maria', 'joao')
+
+var list = [1, 2, 3, 4, 5];
+var start = 3;
+var numDelete = 10;
+var replace = 90
+console.assert(typeof start === "number", 'should start value be a number')
+
+
+console.log('Test 4')
+var list = ['broccoli', 3, 25, true, 'i-miss-soup']
+var result4 = splice(list, 0, 1, 'john')
+console.assert(list[0] ===  'john', 'should print \'john\' in index 0')
 
 
 
@@ -30,8 +42,8 @@ var result5 = splice(list, 2, 0, 'maria', 'joao')
 var array1 = [1, 2, 3, 4, 5]
 var results = [results1, results2, results3, results4, results5]
 
-results.forEach(function(value, param) {
-    console.assert('should array length be ' + param.length)
+results.forEach(function(array, ) {
+    console.assert('should array length be ' + array.length +  + )
 })
 
 
