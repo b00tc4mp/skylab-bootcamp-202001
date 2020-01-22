@@ -1,6 +1,6 @@
 var list = ['broccoli', 3, 25, true, 'i-miss-soup']
 
-function splice (array, start, numElements, replace) { debugger
+function splice (array, start, numElements, replace) {
     var newArray = []
     var spliced = []
 
