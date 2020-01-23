@@ -1,16 +1,14 @@
 'use strict'
 
-function join (arr, separator) {
-    if (!(arr instanceof Array)){
-        throw new TypeError (arr + ' is not an Array');
-    } 
-
+function join (array, separator) {
+    if (!(array instanceof Array)) {throw new TypeError(array + ' is not an array.')};
+    
     var result = '';
-    for (var i = 0; i < arr.length; i++){
-        if ( i == arr.length -1) {
-            result += `${arr[i]}`;
+    for (var i = 0; i < array.length; i++){
+        if ( i == array.length -1) {
+            result += `${array[i]}`;
         } else {
-        result += `${arr[i]}`+ `${separator}`;
+        result += `${array[i]}`+ `${separator}`;
         };
     };
     return result;

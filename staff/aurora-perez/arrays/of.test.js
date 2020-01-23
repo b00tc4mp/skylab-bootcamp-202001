@@ -5,7 +5,6 @@ console.log('it creates a new Array instance from a variable number of arguments
 
 var resultA=of(1,2,3);
 var arrayA=[1, 2, 3];
-console.log(resultA, arrayA)
 console.assert(resultA[0]===arrayA[0], 'it should be the same');
 console.assert(resultA[1]===arrayA[1], 'it should be the same');
 console.assert(resultA[2]===arrayA[2], 'it should be the same');
