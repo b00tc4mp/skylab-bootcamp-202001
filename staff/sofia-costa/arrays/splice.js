@@ -1,10 +1,12 @@
-var list = ['broccoli', 3, 25, true, 'i-miss-soup']
-var newArray = []
+var array = ['broccoli', 3, 25, true, 'i-miss-soup']
 
 function splice (array, start, numElements) {
-    
-    var spliced = []
 
+    var newArray = []
+    var spliced = []
+    newArray.length = array.length - numElements + (arguments.length - 3);
+    
+    
     for (var i = 0; i<start; i++) {
         newArray[i]=array[i]}
     for (var j = start; j<numElements+start; j++) {
@@ -15,8 +17,6 @@ function splice (array, start, numElements) {
         newArray[newArray.length]=array[n]}
 
     array = newArray
-    console.log(spliced)
-    console.log(array)
 }
 
-splice(list, 2, 0, 'maria', 'joao')
+splice(array, 2, 0, 'maria', 'joao')

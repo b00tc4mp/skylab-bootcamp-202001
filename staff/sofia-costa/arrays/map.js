@@ -1,14 +1,11 @@
-var lista = [3, 6, 1, 8, 0]
-var newArray = []
+function map (array, expression) {
+    if (!(array instanceof Array)) throw new TypeError(array + ' is not an Array');
+    if(typeof expression !== 'function') throw new TypeError(expression + ' is not a function')
 
-function map (array, functionHere) {
-    if (!(array instanceof Array)) throw new TypeError(arr + ' is not an Array');    
-    if (typeof functionHere !== 'function') throw new TypeError(functionHere + ' is not a function');        
+    var newArray = []      
     
     for (var i=0; i<array.length; i++){
-        newArray[newArray.length] = functionHere(array[i])
+        newArray[newArray.length] = expression(array[i])
     }
     return newArray
 }
-
-map(lista, function (el) { return el * 2 })
