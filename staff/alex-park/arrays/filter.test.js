@@ -14,7 +14,7 @@ describe('filter', function () {
         }
     });
 
-    it('should return even values on even-numbers filter applied on numbers array', function () {
+    it('should return an array with all the elements from a former array containing the letter o', function () {
         var array = ['abc', 'hola', 'mundo', 'hello', 'world'];
 
         var results = filter(array, function (value) {
