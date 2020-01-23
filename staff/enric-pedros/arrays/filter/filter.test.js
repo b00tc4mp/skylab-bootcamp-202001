@@ -33,5 +33,19 @@ describe('filter', function(){
         })();
     });
 
+    it('it should be wrong for typeError of function', function(){
+        (function(){
+            var _error;
+            try {
+               filter([],1) 
+            } catch (error) {
+               _error = error; 
+            }
+            assert(_error instanceof TypeError,'the error should be TypeError')
+            assert(_error.message === '1is not a function', 'should fail with message should be hello! is not Array')
+  
+        })();
+
+    });
 
 })
