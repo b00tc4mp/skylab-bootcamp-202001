@@ -4,7 +4,7 @@ function assert(assertion, message) {
     if (!assertion) throw new Error('Assertion failed: ' + message);
 }
 
-function it(should, test) {
+function itHappy(should, test) {
     try {
         test();
 
@@ -13,6 +13,24 @@ function it(should, test) {
         console.error('🤡 ' + should + ' †\n', error);
     }
 }
+function itCatch(should, assertCondition1, assertCondition2, test) {
+    try {
+        var _error
+        try{
+            test()
+        } catch(error) {
+            _error = error;
+        } finally {
+            assertCondition1(_error)
+            assertCondition2(_error)
+        }
+        console.log('%c ♥️ ' + should + ' √', 'color: green;');
+    } catch (error) {
+        console.error('🤡 ' + should + ' †\n', error);
+    }
+}
+
+
 
 function describe(description, tests) {
     'use strict';
