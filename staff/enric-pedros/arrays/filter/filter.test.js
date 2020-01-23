@@ -1,22 +1,37 @@
+describe('filter', function(){
 
-console.log('DEMO filter');
+    it('should return the elements lesser than 7', function(){
+        (function(){
 
-var a = [1,2,3,4,5,3,6,8,9,2]
-console.log('it',a)
+            
+            var a = [8,7,6,5,5,4,4];
+            function filtered (element){
+                return element < 7
+            };
 
-var newArrayFilter= filter(a,function uptothree(element){
-    return element > 3
+            var result = filter(a,filtered);
+            assert(result[0]=== 6,'it should be 6');
+            assert(result[1]=== 5,'it should be 5');
+            assert(result[2]=== 5,'it should be 5');
+            assert(result[3]=== 4,'it should be 4');
+            assert(result[4]=== 4,'it should be 4');
+
+        })();
+
+    });
+
+    it('the result should be wrong for typeError',function(){
+        (function(){
+           var _error;
+            try {
+               filter(1,function(){}) 
+            } catch (error) {
+               _error = error; 
+            }
+            assert(_error instanceof TypeError,'the error should be TypeError')
+            assert(_error.message === '1is not Array', 'should fail with message should be hello! is not Array')
+        })();
+    });
+
+
 })
-console.log('should new array with elements HIGHER than three be return',newArrayFilter )
-
-
-var ArrayFilterLesser= filter(a,function uptothree(element){
-    return element === 3
-})
-console.log('should new array with elements EQUAL than three be return',ArrayFilterLesser )
-
-
-var ArrayFilterHigher= filter(a,function uptothree(element){
-    return element < 3
-})
-console.log('should new array with elements LESSER than three be return',ArrayFilterHigher )
