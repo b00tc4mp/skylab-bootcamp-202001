@@ -25,7 +25,7 @@ describe("forEach", function() {
             } catch(error) {
                 __error = error;
             }
-            assert(__error.message === "a is not an array.", 'error message should be "a is not an array", but you got ' + __error.message);
+            assert(__error.message === "a is not an array", 'error message should be "a is not an array", but you got ' + __error.message);
             assert(__error instanceof TypeError, 'error should be of type TypeError, but instead it got ' + __error.__proto__.constructor.name);
         })();
         
@@ -36,7 +36,7 @@ describe("forEach", function() {
             } catch(error) {
                 __error = error;
             }
-            assert(__error.message === "-1 is not an array.", 'error message should be "-1 is not an array", but you got ' + __error.message);
+            assert(__error.message === "-1 is not an array", 'error message should be "-1 is not an array", but you got ' + __error.message);
             assert(__error instanceof TypeError, 'error should be of type TypeError, but instead it got ' + __error.__proto__.constructor.name);
         })();
 
@@ -47,7 +47,7 @@ describe("forEach", function() {
             } catch(error) {
                 __error = error;
             }
-            assert(__error.message === "true is not an array.", 'error message should be "true is not an array", but you got ' + __error.message);
+            assert(__error.message === "true is not an array", 'error message should be "true is not an array", but you got ' + __error.message);
             assert(__error instanceof TypeError, 'error should be of type TypeError, but instead it got ' + __error.__proto__.constructor.name);
         })();
     })

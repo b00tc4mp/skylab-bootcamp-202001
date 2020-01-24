@@ -3,15 +3,15 @@ describe('findIndex', function() {
         (function() {
             var a = [1, 5, 10, 25, 100];
             var test = findIndex(a, function(value) {return value > 5});
-            console.assert(test === 2, 'it should return the index of value 10 in array a');
+            assert(test === 2, 'it should return the index of value 10 in array a');
             
             var b = [5, 10, 15, 20, 25];
             var test2 = findIndex(b, function(value) {return value > 30});
-            console.assert(test2 === -1, 'it should return -1 since no value from array b meets the criteria');
+            assert(test2 === -1, 'it should return -1 since no value from array b meets the criteria');
             
             var c = [5,10,15,20,20,20,20,20];
             var test3 = findIndex(c, function(value) {return value === 20});
-            console.assert(test3 === 3, 'it should return the index of only the first element meeting the criteria');
+            assert(test3 === 3, 'it should return the index of only the first element meeting the criteria');
         })();
     })    
 
