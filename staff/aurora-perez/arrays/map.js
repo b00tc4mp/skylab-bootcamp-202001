@@ -4,7 +4,7 @@ function map(array, expression) {
         throw new TypeError (expression +' is not a function');
     };
     if (!(array instanceof Array)){
-        throw new TypeError (array + ' is not an Array')
+        throw new TypeError (array + ' is not an array')
     }
 
     var result = [];

@@ -75,7 +75,7 @@ describe('map', function() {
                 _error=error
             } finally {
                 assert(_error instanceof TypeError, 'should error be of type TypeError');
-                assert(_error.message === 'undefined is not an Array', 'should fail with message "undefined is not an Array"');
+                assert(_error.message === 'undefined is not an array', 'should fail with message "undefined is not an array"');
             };
         })();
 
@@ -88,7 +88,7 @@ describe('map', function() {
                 _error=error
             } finally {
                 assert(_error instanceof TypeError, 'should error be of type TypeError');
-                assert(_error.message === '1 is not an Array', 'should fail with message "1 is not an Array"');
+                assert(_error.message === '1 is not an array', 'should fail with message "1 is not an array"');
             };
         })();
 
@@ -101,7 +101,7 @@ describe('map', function() {
                 _error=error
             } finally {
                 assert(_error instanceof TypeError, 'should error be of type TypeError');
-                assert(_error.message === 'true is not an Array', 'should fail with message "true is not an Array"');
+                assert(_error.message === 'true is not an array', 'should fail with message "true is not an array"');
             };
   
         })();

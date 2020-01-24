@@ -1,16 +1,24 @@
 'use strict'
 
-function includes (arr, value, position){
+function includes (array, value, position){
+    if (!(array instanceof Array)) {throw new TypeError(array + ' is not an array.')};
+    if (typeof position === 'string' || typeof position === 'object' || typeof position === 'function') {
+        for (var i = 0; i < array.length; i++) {
+            if (value === array[i]) {
+                return true;
+            }
+        }
+    }
     var result;
-    if (position){
-        position < 0? position = arr.length-(position*-1) : position = position;
-        arr[position]===value? result = true : result = false;
+    if (position >= 0){
+        position < 0? position = array.length-(position*-1) : position = position;
+        array[position]===value? result = true : result = false;
     } else {
-        position = arr.length;
+        position = array.length;
         for (var i = 0; i < position; i++) {
-            if (arr[i] === value) {
+            if (array[i] === value) {
                 result = true; 
-                i = arr.length;
+                i = array.length;
             }  else {
                 result = false;
             };

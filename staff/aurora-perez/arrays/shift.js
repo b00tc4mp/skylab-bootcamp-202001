@@ -1,6 +1,8 @@
 'use strict'
 
 function shift (array){
+    if (!(array instanceof Array)) { throw TypeError ( array + ' is not an array.')}
+
     var result = [];
     if (array.length==0){
         return undefined;

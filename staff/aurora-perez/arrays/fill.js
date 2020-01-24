@@ -1,6 +1,8 @@
 'use strict'
 
 function fill (array, value, start, end) {
+    if (!(array instanceof Array)) { throw TypeError (array + ' is not an array')}
+
     if(!start) {start = 0};
     if(start<0) {start = array.length+start};
     if (!end) {end = array.length};
