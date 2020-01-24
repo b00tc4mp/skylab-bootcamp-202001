@@ -9,7 +9,9 @@ function concat (array, values) {
             newArray[newArray.length] = arguments[i][j]
         }
     }
-    array = newArray
+    for (var i = 0; i<newArray.length; i++) {
+        array[i] = newArray[i]
+    }
     console.log(array)
 }
 
