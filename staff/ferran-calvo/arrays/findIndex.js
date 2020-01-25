@@ -6,3 +6,7 @@ function findIndex(array, expresion) {
     }
     return -1
 }
+var f= function (element){
+    return element>0;
+}
+console.log(findIndex([1,10,5], f))
