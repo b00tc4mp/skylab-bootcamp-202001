@@ -1,5 +1,5 @@
 describe("Murray.prototype.toString", function () {
-    it("should return a string with all values of the array, separated by a comma", function() {
+    it("should return a string with all values of the murray, separated by a comma", function() {
         var murray = new Murray(1, 2, 3);
         var str = murray.toString();
 

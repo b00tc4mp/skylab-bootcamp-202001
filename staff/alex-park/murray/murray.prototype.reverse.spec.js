@@ -1,5 +1,5 @@
 describe('Murray.prototype.reverse', function() {
-    it('should modify the original array by reversing all its values', function() {
+    it('should modify the original murray by reversing all its values', function() {
         var murray = new Murray(1,2,3,4,5);
         var copy = new Murray(1,2,3,4,5);
         murray.reverse();

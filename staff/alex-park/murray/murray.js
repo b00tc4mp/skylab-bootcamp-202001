@@ -81,7 +81,7 @@ Murray.prototype.indexOf = function(value, position) {
     return -1;
 };
 
-Murray.prototype.reverse= function() {
+Murray.prototype.reverse = function() {
     var reversedMurray = [];
 
     for (var i = 0; i < this.length; i++) {
@@ -98,10 +98,42 @@ Murray.prototype.reverse= function() {
 Murray.prototype.map = function (expression) {
     if (!(typeof expression === 'function')) {throw new TypeError(expression + " is not a function")};
 
-    var result = [];
+    var result = new Murray;
+
     for (var i = 0; i < this.length; i++) {
         result[i] = expression(this[i]);
+        result.length++;
     }
     
+    return result;
+};
+
+Murray.prototype.join = function (separator) {
+    var joinedString = '';
+  
+    for (var i = 0; i < this.length; i++){
+        i === this.length -1?
+            joinedString += `${this[i]}`:
+            joinedString += `${this[i]}`+ `${separator}`;
+    }
+    
+    return joinedString;
+};
+
+Murray.prototype.find = function (expression) {
+    if (typeof expression !== 'function') {throw new TypeError(expression + ' is not a function.')};
+
+    var result;
+    
+    for (var i = 0; i < this.length; i++) {
+        if (expression(this[i])) {
+            result = this[i]; 
+            i = this.length;
+
+        } else {
+            result = undefined;
+        }
+    }
+
     return result;
 };

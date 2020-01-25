@@ -1,5 +1,5 @@
 describe('Murray.prototype.pop', function(){
-    it ('it should return the same array with the last value substracted', function(){
+    it ('should return the same murray with the last value substracted', function(){
         var murray = new Murray(1,2,3);
         var popped = murray.pop();
 
