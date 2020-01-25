@@ -5,6 +5,7 @@ function flat (array, depth) {
 
     var newArr = [];
     if (!depth) depth = 1
+    if (isNaN(depth)) return array
 
     function getValues (element, depth) {
 

@@ -1,16 +1,16 @@
 var array1 = [1, 3, 5]
 var array2 = [2, 4, 6]
 var array3 = ['yo que se', 4, true]
-var newArray = []
 
-function concat (array, values) {
-    for (var i = 0; i<arguments.length; i++) {
+
+function concat (array) {
+
+    if (!(array instanceof Array)) {throw new TypeError(array + ' is not an Array')}
+
+    for (var i = 1; i<arguments.length; i++) {
         for (var j = 0; j<arguments[i].length; j++) {
-            newArray[newArray.length] = arguments[i][j]
+            array[array.length] = arguments[i][j]
         }
-    }
-    for (var i = 0; i<newArray.length; i++) {
-        array[i] = newArray[i]
     }
     console.log(array)
 }
