@@ -1,5 +1,5 @@
 describe ('Murray.prototype.revserse', function () {
-    it('should return a new array with the reverted values', function(){
+    it('should return a new murray with the reverted values', function(){
         var murray = new Murray (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         murray.reverse();
         var murray2 = new Murray (10, 9, 8, 7, 6, 5, 4, 3, 2, 1);
@@ -7,7 +7,7 @@ describe ('Murray.prototype.revserse', function () {
         murray2.forEach(function(value, index){ expect(value).toBe(murray[index])})
     })
 
-    it('should return a new array with the reverted values even if the type', function(){
+    it('should return a new murray with the reverted values even if the type', function(){
         var murray = new Murray ([1, 2, 3], ['a', 'b', 'c'], [7, 8, 9]);
         var result = murray.reverse();
         var murray2 = new Murray ([7, 8, 9],['a', 'b', 'c'], [1, 2, 3]);
@@ -24,7 +24,7 @@ describe ('Murray.prototype.revserse', function () {
         
     })
 
-    it('should return a new reverted array, even if the type of arguments', function(){
+    it('should return a new reverted murray, even if the type of arguments', function(){
         var murray = new Murray (1, 2, 3, 4);
         murray.reverse('hello');
         var murray2 = new Murray (4, 3, 2, 1);

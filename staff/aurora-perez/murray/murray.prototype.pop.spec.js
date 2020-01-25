@@ -9,7 +9,7 @@ describe ('Murray.prototype.pop', function () {
         expect(murray[1]).toBe(2);
     })
 
-    it('should return undefined when the array is empty', function () {
+    it('should return undefined when the murray is empty', function () {
         var murray = new Murray ();
         var a = murray.pop();
         expect(a).toBeUndefined();

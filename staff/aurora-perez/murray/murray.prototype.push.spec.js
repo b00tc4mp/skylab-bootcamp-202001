@@ -47,7 +47,7 @@ describe('Murray.prototype.push', function () {
 
     })
     
-    it ('should be able to add any type of element to the new array', function(){
+    it ('should be able to add any type of element to the new murray', function(){
         var murray = new Murray (1, 2, 3);
         var length = murray.push(true, function(){}, 'a', undefined);
         expect(length).toBe(7);

@@ -1,5 +1,5 @@
 describe("Murray.prototype.toString", function () {
-    it("should return a string with all values of the array, separated by a comma", function() {
+    it("should return a string with all values of the murray, separated by a comma", function() {
         var murray = new Murray (1, 2, 3, 4);
         var result = murray.toString();
 
@@ -22,7 +22,7 @@ describe("Murray.prototype.toString", function () {
         expect(result).toBe('1,2,3,4,');
         expect(typeof result === 'string').toBe(true);
     })
-    it("should return a string with all values of the array, separated by a comma, whatever the type of the arguments ", function() {
+    it("should return a string with all values of the murray, separated by a comma, whatever the type of the arguments ", function() {
         var murray = new Murray (true, 'a', 3, 4, undefined);
         var result = murray.toString();
 

@@ -88,6 +88,36 @@ Murray.prototype.reverse = function reverse() {
     for( var i = 0; i <this.length; i++){
         this[i] = newMurray[i];
     }
-
     return this;
+};
+
+Murray.prototype.map = function (expression) { 
+    if(typeof expression !== "function"){ throw new TypeError (expression +' is not a function')};
+    
+    var result = new Murray;
+    for (var i = 0; i < this.length; i++) {
+        result[i] = expression(this[i]);
+        result.length++
+    }
+
+    return result;
+}
+
+Murray.prototype.join = function (separator) {
+    var newString = '';
+    for (var i = 0; i < this.length; i++){
+        i == this.length -1 ? newString += `${this[i]}` : newString += `${this[i]}`+ `${separator}`
+    };
+    return newString;
+};
+
+Murray.prototype.concat = function (){
+    var murray = [];
+    for (var i = 0; i < arguments.length; i++) {
+        var arg = arguments[i];
+        for (var j = 0; j < arg.length; j++) {
+            murray[murray.length] = arg[j];
+        };
+    };
+    return murray;
 };
