@@ -180,3 +180,11 @@ Murray.prototype.filter = function (condition) {
 
     return filtered;
 };
+
+Murray.prototype.every = function (condition) {
+    if (typeof condition !== 'function') {throw new TypeError (condition + ' is not a function')};
+
+    for (var i = 0; i < this.length; i++) { if (!condition(this[i])) { return false }; };
+
+    return true; 
+};
