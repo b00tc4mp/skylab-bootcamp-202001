@@ -65,7 +65,7 @@ Murray.prototype.toString = function() {
 };
 
 Murray.prototype.indexOf = function(value, position) {
-    if (isNaN(position)) {position = 0};
+    if (isNaN(parseInt(position))) {position = 0};
 
     if (position < 0){position = this.length + position};
     if (position===undefined){position = 0};
@@ -121,14 +121,13 @@ Murray.prototype.join = function (separator) {
 };
 
 Murray.prototype.find = function (expression) {
-    if (typeof expression !== 'function') {throw new TypeError(expression + ' is not a function.')};
+    if (typeof expression !== 'function') {throw new TypeError(expression + ' is not a function')};
 
     var result;
     
     for (var i = 0; i < this.length; i++) {
         if (expression(this[i])) {
-            result = this[i]; 
-            i = this.length;
+            return result = this[i]; 
 
         } else {
             result = undefined;
@@ -136,4 +135,48 @@ Murray.prototype.find = function (expression) {
     }
 
     return result;
+};
+
+Murray.prototype.findIndex = function (expression) {
+    if (typeof expression !== 'function') {throw new TypeError(expression + ' is not a function')};
+
+    var result = -1;
+
+    for (var i = 0; i < this.length; i++) {
+        if (expression(this[i])){ return result = i };
+
+    }
+
+    return result;
+};
+
+Murray.prototype.shift = function (){
+    var result;
+
+    if (this.length === 0) {
+        return undefined;
+
+    } else {
+        result = this[0];
+        for (var i = 0; i < this.length; i++){ this[i] = this[i+1] };
+        
+        this.length--;
+    }
+
+    return result;
+};
+
+Murray.prototype.filter = function (condition) {
+    if (typeof condition !== 'function') throw new TypeError(condition + ' is not a function');
+
+    var filtered = new Murray;
+
+    for (var i = 0; i < this.length; i++) {
+        if (condition(this[i])) {
+            filtered[filtered.length] = this[i];
+            filtered.length++;
+        }
+    }
+
+    return filtered;
 };
