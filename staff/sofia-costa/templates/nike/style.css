@@ -745,8 +745,8 @@ template {
 
 @media only screen and (max-width: 992px) {
   .body-results .item {
-    max-width: 45vw;
-    max-height: 45vw;
+    max-width: 48vw;
+    max-height: 60vw;
     flex: 1 0 51%;
     margin: 0;
     margin-right: 0;
@@ -762,6 +762,8 @@ template {
   .body-results .item .item__img {
     max-width: 45vw;
     max-height: 45vw;
+    justify-content: center;
+    margin-right: 0;
   }
 }
 
@@ -771,6 +773,7 @@ template {
 @media only screen and (max-width: 992px) {
   .item__caption {
     max-width: 45vw;
+    margin-right: 0;
   }
 }
 
@@ -1720,8 +1723,8 @@ ul li {
 }
 @media only screen and (max-width: 992px) {
   .body-results .item {
-    max-width: 45vw;
-    max-height: 45vw;
+    max-width: 48vw;
+    max-height: 60vw;
     flex: 1 0 51%;
     margin: 0;
     margin-right: 0;
@@ -1737,6 +1740,8 @@ ul li {
   .body-results .item .item__img {
     max-width: 45vw;
     max-height: 45vw;
+    justify-content: center;
+    margin-right: 0;
   }
 }
 
@@ -1746,6 +1751,7 @@ ul li {
 @media only screen and (max-width: 992px) {
   .item__caption {
     max-width: 45vw;
+    margin-right: 0;
   }
 }
 
@@ -1827,10 +1833,20 @@ ul li {
   flex-flow: row wrap;
   box-sizing: border-box;
 }
+@media only screen and (max-width: 992px) {
+  .body-results .main-results__results {
+    justify-content: center;
+  }
+}
 .body-results .item {
   margin-bottom: 50px;
   margin-right: 10px;
   cursor: pointer;
+}
+@media only screen and (max-width: 992px) {
+  .body-results .item {
+    margin-right: 0;
+  }
 }
 
 @media only screen and (max-width: 992px) {
@@ -1913,6 +1929,11 @@ ul li {
   box-sizing: border-box;
   padding: 40px 40px 0 40px;
   max-width: 100vw;
+}
+@media only screen and (max-width: 992px) {
+  .footer {
+    overflow: hidden;
+  }
 }
 .footer__main {
   display: flex;
