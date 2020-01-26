@@ -12,4 +12,4 @@ function fill(a, value, start = 0, end = a.length){
     }
     return a;
 }
-console.log(fill(array1, 4, -3,-2));
+console.log(fill(array1, 4));
