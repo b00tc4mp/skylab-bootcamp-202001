@@ -10,7 +10,6 @@ function includes (array, value, position){
         }
     }
 
-
     var result;
     if (position >= 0){
         position < 0? position = array.length-(position*-1) : position = position;

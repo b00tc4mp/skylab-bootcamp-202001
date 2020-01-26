@@ -235,15 +235,17 @@ Murray.prototype.concat = function () {
 
 Murray.prototype.fill = function (value, start, end) {
     if (isNaN(parseInt(start))) { start = 0 };
-    if (start === undefined) { start = 0 };
+    if (start && typeof start === 'boolean') { start = 1 };
     if (start<0) { start = this.length + start };
+
     if (isNaN(parseInt(end))) { end = this.length };
-    if (end === undefined) { end = this.length };
+    if (end && typeof end === 'boolean') { end = 1 };
     if (end < 0) { end = this.length + end };
 
-    for (start; start < end; start++) {
-        
-    }
+    start = parseInt(start);
+    end = parseInt(end);
+
+    for (start; start < end; start++) { this[start] = value };
 
     return this;
 };
