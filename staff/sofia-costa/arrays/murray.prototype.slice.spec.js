@@ -62,13 +62,17 @@ describe('Murray.prototype.slice', function() {
   
         expect(result1.length).toBe(19)
         expect(result1).toBe('me encantan patatas')
-
     })
 
     it('should not work unless you pass an array or a string', function() {
         expect(function(){
             true.slice()
         }).toThrowError(TypeError, 'true.slice is not a function')
+
+        expect(function() {
+            var fun = function(value) {return value + 3}
+            fun.slice()
+        }).toThrowError(TypeError, 'fun.slice is not a function')
     })
 
 })

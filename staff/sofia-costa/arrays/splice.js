@@ -5,9 +5,9 @@ function splice (array, start, numElements) {
     var newArray = []
     var spliced = []
     
-    
     for (var i = 0; i<start; i++) {
         newArray[i]=array[i]}
+    if(numElements===undefined) numElements = 0
     for (var j = start; j<numElements+start; j++) {
         spliced[spliced.length]=array[j]}
     for(var h = 3; h<arguments.length; h++)
@@ -21,4 +21,4 @@ function splice (array, start, numElements) {
     return spliced
 }
 
-splice(array, 2, 0, 'maria', 'joao')
+//splice(array, 2, 0, 'maria', 'joao')

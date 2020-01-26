@@ -3,8 +3,8 @@ var newArray = []
 var c
 
 function shift (array) {
-    c = array[0]
-    for (var i = 1; i < array.length; i++) {newArray[i-1]= array[i]}
-    array = newArray
-    console.log(array, c)
+    var c = array[0]
+    for (var i = 0; i < array.length; i++) {array[i]= array[i+1]}
+    array.length = array.length -1
+    console.log(c)
 }
