@@ -5,7 +5,7 @@ function Murray () {
 
     var initializeWithLength = (function() {
         if (_arguments.length === 1 && typeof _arguments[0] === 'number')
-            if(Number.isInteger(_arguments[0]))
+            if(Number.isInteger(_arguments[0]) && Number(_arguments[0])>0)
                 return true
             else throw new RangeError ('Invalid murray length')
         else return false
@@ -16,6 +16,18 @@ function Murray () {
     if (!initializeWithLength)
         for(var i = 0; i<arguments.length; i++) this[i] = arguments[i];
 }
+
+Murray.prototype.push = function () {
+    for (var i = 0; i<arguments.length; i++) {this[this.length] = arguments[i]; ++this.length}
+
+    return this.length;
+};
+
+Murray.prototype.forEach = function (expression) {
+    if (typeof expression !== 'function') throw new TypeError(expression + ' is not a function');
+
+    for (var i = 0; i < this.length; i++) expression(this[i], i, this);
+};
 
 Murray.prototype.concat = function() {
 
@@ -28,9 +40,14 @@ Murray.prototype.concat = function() {
         ++newArray.length}
 
     for (var i = 0; i<arguments.length; i++) {
-        if(typeof arguments[i] === 'string' || arguments[i] instanceof Function || typeof arguments[i] === 'number' || typeof arguments[i] === 'boolean') {newArray[newArray.length] = arguments[i]; ++newArray.length}
-        //if (typeof arguments[i] === 'function') {newArray[newArray.length] = arguments[i]; ++newArray.length}
-        else {for (var j = 0; j<arguments[i].length; j++) {
+        if (typeof arguments[i] === 'string' 
+        || arguments[i] instanceof Function 
+        || typeof arguments[i] === 'number' 
+        || typeof arguments[i] === 'boolean') {
+
+            newArray[newArray.length] = arguments[i]; ++newArray.length
+
+        } else {for (var j = 0; j<arguments[i].length; j++) {
             newArray[newArray.length] = arguments[i][j]
             ++newArray.length
         }
@@ -47,11 +64,8 @@ Murray.prototype.pop = function() {
 Murray.prototype.reverse = function() {
 
     var newArray = new Murray()
-    for (var i = this.length-1; i>-1; i--) {
-        newArray[newArray.length] = this[i]
-    }
-    for (var i = 0; i<newArray.length; i++)
-        this[i] = newArray[i]
+    for (var i = this.length-1; i>-1; i--) { newArray[newArray.length] = this[i] }
+    for (var i = 0; i<newArray.length; i++) { this[i] = newArray[i] }
 
     return this
 }
@@ -168,8 +182,29 @@ Murray.prototype.unshift = function() {
 }
 
 Murray.prototype.some = function() {
+    if(!(arguments[0] instanceof Function)) throw new ReferenceError(arguments[0] + ' is not a function')
+
     for (var i = 0; i<this.length; i++){   
-        if (argument[0](this[i])) return true
-        else return false
+        if (arguments[0](this[i])) return true
     }
+    return false
+}
+
+Murray.prototype.fill = function(value, start, end) {
+    if (start === undefined) start = 0
+    if (end === undefined) end = this.length
+    if (end !== undefined) { for (var i = start; i<end; i++) { this[i]=this[value] } }
+    return this
+}
+
+Murray.prototype.join = function (separator) {
+    var string
+    if (separator != undefined) {
+        for (var i = 0; i<this.length; i++) { 
+            i===0 ? string = this[i] : string += (separator + this[i]) } }
+    else {
+        for (var i = 0; i<this.length; i++) { 
+            i===0 ? string = this[i] : string += ',' + this[i] } }
+
+    return string
 }

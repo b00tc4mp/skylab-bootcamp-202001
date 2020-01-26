@@ -39,4 +39,11 @@ describe('Murray.prototype.constructor', function() {
             new Murray(1.1);
         }).toThrowError(RangeError, 'Invalid murray length');
     });
+
+    it('should fail when single value in arguments is numeric but negative', function() {
+        expect(function() {
+            new Murray(-3);
+        }).toThrowError(RangeError, 'Invalid murray length');
+    });
+
 });

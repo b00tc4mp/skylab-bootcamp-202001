@@ -12,7 +12,7 @@ describe('Murray.prototype.splice', function() {
 
     it('should modify the original array so that it\'s length equals to its length minus the number in the second parameter (if it is passed) and plus the number of arguments passed afterwards (if there\'s any)', function() {
         var murray = new Murray (1, 2, 3, 4, 5, 6) 
-        var result = murray.splice(2, 2, 'olá')
+        murray.splice(2, 2, 'olá')
 
         expect(murray).toBeInstanceOf(Murray)
         expect(murray.length).toBe(6 - 2 + 1)

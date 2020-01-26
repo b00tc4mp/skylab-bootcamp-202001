@@ -1,13 +1,14 @@
 var array1 = ['me', 'gustan', 'zanahorias']
-var newArray1
+
 
 function join (array, separator) {
+    var string
     if (separator != undefined) {
-        for (var i = 0; i<array.length; i++) { newArray1+= (separator + array[i]) } }
+        for (var i = 0; i<array.length; i++) { string+= (separator + array[i]) } }
     else { 
-        for (var i = 0; i<array.length; i++) { newArray1+= array[i] } }
+        for (var i = 0; i<array.length; i++) { string+= array[i] } }
 
-    console.log(newArray1)
+    console.log(string)
 }
 
 join (array1, ' ')
