@@ -64,14 +64,16 @@ Murray.prototype.toString=function() {
 };
 
 
-Murray.prototype.indexOf= function(value, position) {
-    if (isNaN(position)) { position = 0;}
+Murray.prototype.indexOf = function(value, position) {
+    if (position && typeof position === 'boolean') {position = 1};
+    
+    if (isNaN(parseInt(position))) {position = 0};
 
     if (position < 0){position = this.length + position};
-    if (position===undefined){position = 0};
-    if (typeof position=== 'boolean' && position){position = 1 }
 
-    for (position =  parseInt(position); position < this.length; position++) {
+    if (position===undefined){position = 0};
+
+    for (position = parseInt(position); position < this.length; position++) {
         if (value === this[position]) {
             var result = position;
             return result;
@@ -111,13 +113,99 @@ Murray.prototype.join = function (separator) {
     return newString;
 };
 
-Murray.prototype.concat = function (){
-    var murray = [];
-    for (var i = 0; i < arguments.length; i++) {
-        var arg = arguments[i];
-        for (var j = 0; j < arg.length; j++) {
-            murray[murray.length] = arg[j];
+Murray.prototype.find = function ( expression) {
+    if (typeof expression !== 'function') {throw new TypeError (expression + ' is not a function.')};
+
+    var result;
+    for (var i = 0; i < this.length; i++) {
+        if (expression(this[i])) {
+            return result = this[i]; 
+            
+        } else {
+            result = undefined;
         };
     };
+    return result;
+};
+
+Murray.prototype.findIndex = function findIndex (expression) {
+    if (typeof expression !== 'function') {throw new TypeError(expression + ' is not a function.')};
+    
+    var result = -1;
+    for (var i = 0; i < this.length; i++){
+        if (expression(this[i])){
+            result = i;
+            i = this.length;
+        };
+    };
+    return result;
+}
+
+Murray.prototype.shift = function shift (){
+   var result = [];
+    if (this.length==0){
+        return undefined;
+    }else{
+        result = this [0]
+        for (var i =0; i< this.length; i++){  
+            this [i] = this[i+1];
+        };
+        this.length=this.length-1;
+    };
+    return result;
+};
+
+Murray.prototype.filter = function filter(condition) {
+    if (typeof condition !== 'function') throw new TypeError(condition + ' is not a function.');
+    
+    var filtered = new Murray;
+    for (var i = 0; i < this.length; i++) {
+        if (condition(this[i])) {
+            filtered[filtered.length] = this[i];
+            filtered.length++
+        }
+    }
+    return filtered;
+}
+
+Murray.prototype.every = function every (expression) {
+    if (typeof expression !== 'function') {throw new TypeError (expression + ' is not a function.')};
+
+    for (var i = 0; i < this.length; i++){ if (!expression(this[i])) return false};
+
+    return true;
+};
+
+Murray.of = function of() {
+    var murray = new Murray;
+    for (var i = 0; i < arguments.length; i++) {
+        murray[murray.length] = arguments[i];
+        murray.length ++
+    };
+
     return murray;
 };
+
+Murray.prototype.includes = function (value, position) {
+    if (position && typeof position === 'boolean') {position = 1 };
+    if (isNaN(parseInt(position))) { position = 0 };
+    if (position < 0) { position = this.length + position };
+
+    position = parseInt(position);
+
+    for (parseInt(position); position < this.length; position++) {
+        if (this[position] === value) { return true };
+    }
+    return false;
+};
+
+// Murray.prototype.concat = function (){
+//     var murray = [];
+//     for (var i = 0; i < arguments.length; i++) {
+//         var arg = arguments[i];
+//         for (var j = 0; j < arg.length; j++) {
+//             murray[murray.length] = arg[j];
+//         };
+//     };
+//     return murray;
+// };

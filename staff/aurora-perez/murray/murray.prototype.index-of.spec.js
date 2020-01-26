@@ -26,7 +26,7 @@ describe('Murray.prototype.indexOf', function() {
         expect(result1).toBe(3);
     })
 
-    it ('the position will be 1 if you put true as a second argument', function (){
+    it ('should return position 1 if you put true as a second argument', function (){
         var murray = new Murray (1, 2, 3, 4);
 
         var result = murray.indexOf(1, true);
