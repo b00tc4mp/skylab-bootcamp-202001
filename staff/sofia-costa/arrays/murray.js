@@ -103,13 +103,18 @@ Murray.prototype.splice = function () {
     var newMurray = new Murray
     var spliced = new Murray
 
-    parseFloat(parseInt(arguments[0]))
-    parseFloat(parseInt(arguments[1]))
+    !isNaN(arguments[0]) && !(Number.isInteger(arguments[0])) && (typeof arguments[0] !== 'boolean') ? arguments[0] = parseFloat(parseInt(arguments[0])) : ''
+    !isNaN(arguments[1]) && !(Number.isInteger(arguments[1])) && (typeof arguments[1] !== 'boolean') ? arguments[1] = parseFloat(parseInt(arguments[1])) : ''
 
-    if (arguments[0]+this.length < 0) arguments[0] = 0
+    if (arguments[0]+this.length < 0 || isNaN(arguments[0])) arguments[0] = 0
     else if(arguments[0]<0) arguments[0] = this.length + arguments[0]
+    else if(arguments[0]>this.length) arguments[0] = this.length
+
     if(arguments[1]<0 && arguments[1] !== undefined) arguments[1] = 0
     else if (arguments[1] === undefined) arguments[1] = this.length - arguments[0]
+    else if (isNaN(arguments[1])) arguments[1] = 0
+    else if (arguments[1]>this.length) arguments[1] = this.length - arguments[0]
+
     if(this.length === 0 && arguments.length - 2 > 0) {
         for (var i = 2; i<arguments.length; i++){
             this[this.length] = arguments[i]
@@ -208,3 +213,61 @@ Murray.prototype.join = function (separator) {
 
     return string
 }
+
+Murray.prototype.flat = function(depth) {
+    
+    var newMurray = new Murray;
+    if (depth === undefined) depth = 1
+    if (isNaN(depth) || depth < 0 || depth === false || !Number.isInteger(depth)) return this
+
+    function getValues (element, depth) {
+
+        for (var i = 0; i<element.length; i++){
+            
+            if (element[i] instanceof Array && depth > -1) {
+                
+                getValues(element[i], depth-1)}
+            
+            else {newMurray[newMurray.length] = element[i] ; ++newMurray.length}
+        }
+    }
+    getValues(this, depth)
+    return newMurray
+}
+
+// Murray.prototype.copyWithin = function(target, element, endElement) {
+
+//     var newMurray = new Murray
+
+//     for (var j = element; j<endElement; j++) {
+//         newMurray[newMurray.length] = this[j]
+//         ++newMurray.length
+    
+//     }
+// // Por estes fors ao contrário!
+
+// for (var i = target; i<endElement - element + 1; i++){
+//     for (var k = 0; k<newMurray.length; k++) {
+//         var a = newMurray[k]
+//     }
+//     this[i] = a
+// }
+
+//     // for (var k = 0; k<newMurray.length; k++) {
+//     //     for (var i = target; i<endElement - element + 1; i++){
+//     //         this[i] = newMurray[k]
+//     //     }
+//     // }
+    
+
+    
+//     return this
+
+
+//     // if(endElement === undefined) endElement = this.length
+//     // for (var i = target; i<endElement-element+1; i++) 
+//     //     for (var j = element; j<endElement; j++)
+//     //         this[i] = this[j]
+
+//     // return this
+// }
