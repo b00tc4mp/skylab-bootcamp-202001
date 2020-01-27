@@ -75,11 +75,11 @@ Murray.prototype.unshift = function(){
 
 Murray.prototype.every = function(callback){
     for(var i=0; i<this.length; i++){
-        if(this[i] !== callback(this[i])){
-            return false;
+        if(callback(this[i])){
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 Murray.prototype.filter = function(callback){
@@ -155,5 +155,20 @@ Murray.prototype.findIndex = function(callback){
         if(this[i] === callback(this[i])){
             return i;
         }
+    }
+}
+
+Murray.prototype.reduce = function(callback,initialValue){
+    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
+    var accumulator = initialValue || 0;
+    for(var i=0; i<this.length; i++){
+        accumulator = callback(accumulator,this[i], i);
+    }
+    
+    return accumulator;
+
+
+    function callback(accumulator, currenValue, index){
+        return accumulator + currenValue;
     }
 }
