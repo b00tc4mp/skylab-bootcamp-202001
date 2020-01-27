@@ -128,7 +128,7 @@ Murray.prototype.find = function ( expression) {
     return result;
 };
 
-Murray.prototype.findIndex = function findIndex (expression) {
+Murray.prototype.findIndex = function findIndex (expression) { debugger
     if (typeof expression !== 'function') {throw new TypeError(expression + ' is not a function.')};
     
     var result = -1;
@@ -219,7 +219,7 @@ Murray.prototype.fill = function (value, start, end) {
     if (isNaN(parseInt(start))) { start = 0 };
     if (start && typeof start === 'boolean') { start = 1 };
     if (start<0) { start = this.length + start };
-    
+
     if (isNaN(parseInt(end))) { end = this.length };
     if (end && typeof end === 'boolean') { end = 1 };
     if (end < 0) { end = this.length + end };
