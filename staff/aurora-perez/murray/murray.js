@@ -199,13 +199,34 @@ Murray.prototype.includes = function (value, position) {
     return false;
 };
 
-// Murray.prototype.concat = function (){
-//     var murray = [];
-//     for (var i = 0; i < arguments.length; i++) {
-//         var arg = arguments[i];
-//         for (var j = 0; j < arg.length; j++) {
-//             murray[murray.length] = arg[j];
-//         };
-//     };
-//     return murray;
-// };
+Murray.prototype.concat = function () {
+    var concatenated = new Murray;
+
+    for (var i = 0; i < this.length; i++) { concatenated[i] = this[i]; concatenated.length++ };
+    for (var i = 0; i < arguments.length; i++) {
+        var args = arguments[i];
+        if (args instanceof Array || args instanceof Murray) {
+            for (var j = 0; j < args.length; j++) {
+                concatenated[concatenated.length] = args[j];
+                concatenated.length++;
+            }
+        } else { concatenated[concatenated.length] = args; concatenated.length++ };
+    }
+    return concatenated;
+};
+
+Murray.prototype.fill = function (value, start, end) {
+    if (isNaN(parseInt(start))) { start = 0 };
+    if (start && typeof start === 'boolean') { start = 1 };
+    if (start<0) { start = this.length + start };
+    
+    if (isNaN(parseInt(end))) { end = this.length };
+    if (end && typeof end === 'boolean') { end = 1 };
+    if (end < 0) { end = this.length + end };
+
+    start = parseInt(start);
+    end = parseInt(end);
+
+    for (start; start < end; start++) { this[start] = value };
+    return this;
+};

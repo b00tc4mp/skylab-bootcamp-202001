@@ -1,32 +1,63 @@
-describe('concat', function() {
-    it('should return a new array (without modifying the arguments) with all added arrays concated', function() {
-        (function() {
-            var a =['a', 'b', 'c'];
-            var a2= ['d','e','f'];
-            var resultA= concat(a, a2);
+describe("Murray.prototype.concat", function() {
+    it('should concatenate the murray with the murray specified on the argument', function() {
+        var murray = new Murray(1,2,3,4,5);
+        var murray2 = new Murray('a','b','c');
+        var conc = murray.concat(murray2);
 
-            assert(resultA.length === 6, 'length should be 6 but you got ' + resultA.length);
-            assert(resultA[3] === 'd', 'it should return a d, but instead you got ' + resultA[3]);
-
-
-            var b = [1, 2, 3];
-            var b1 = ['a', 'b', 'c'];
-            var b2 = [4, 5, 6];
-            var resultB = concat(b, b1, b2);
-
-            assert(resultB.length === 9, 'length should be 9 but you got ' + resultB.length);
-            assert(resultB[6] === 4, 'it should be a 4 but instead you got ' + resultB[6]);
+        expect(conc.length).toBe(murray.length+murray2.length);
+    });
 
 
-            var c = ['a', 'b', 'c'];
-            var c1 = [1, 2, 3];
-            var c2 = [4,5,6,7,'Edu'];
-            var c3 = [{name: 'Alex'}]
-            var resultC = concat(c, c1, c2, c3);
+    it('should concatenate even if the argument is an instance of an array or a murray', function () {
+        var murray = new Murray(1,2,3,4,5);
+        var murray2 = [6,7,8,9,10];
+        var conc = murray.concat(murray2);
 
-            assert(resultC.length === 12, 'length should be 12 but you got ' + resultC.length);
-            assert(resultC[resultC.length-1].constructor.name === 'Object', 'is should be the object but instead you got ' + resultC[resultC.length-1].constructor.name);
-        })();
-    })
+        expect(conc.length).toBe(10);
+        expect(typeof conc[6] === 'number').toBe(true);
+    });
 
+
+    it('should not modify the former murray nor the concatenated one', function() {
+        var murray = new Murray('a','b','c','d');
+        var murray2 = new Murray(1,2,3,4);
+
+        var copy = new Murray('a','b','c','d');
+        var copy2 = new Murray(1,2,3,4);
+
+        var conc = murray.concat(murray2);
+
+        expect(conc.length).toBe(murray.length+murray2.length);
+        murray.forEach(function(value, index) { expect(value).toBe(copy[index]) });
+        murray2.forEach(function(value, index) { expect(value).toBe(copy2[index]) });
+    });
+
+    it('should allow to concatenate any value type, not only murrays', function() {
+        var murray = new Murray(1,2,3);
+        var conc = murray.concat('oso');
+
+        expect(conc.length).toBe(4);
+        expect(conc[conc.length-1]).toBe('oso');
+
+        var murray2 = new Murray(1,2,3);
+        var conc2 = murray2.concat(50);
+
+        expect(conc2.length).toBe(4);
+        expect(conc2[conc2.length-1]).toBe(50);
+
+        var murray3 = new Murray(1,2,3);
+        var conc3 = murray3.concat(function(){});
+
+        expect(conc3.length).toBe(4);
+        expect(typeof conc3[conc3.length-1] === 'function').toBe(true);
+    });
+    
+    it('should allow for any number of arguments, which will all be concatenated in order', function() {
+        var murray = new Murray(1,2,3);
+        var conc = murray.concat(-50, [1,2,3], function(){}, 'oso', false);
+
+        expect(conc.length).toBe(10);
+        expect(conc[4]).toBe(1);
+        expect(typeof conc[conc.length-1] === 'boolean').toBe(true);
+    });
 })
