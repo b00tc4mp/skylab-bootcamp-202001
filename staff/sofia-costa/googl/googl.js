@@ -18,7 +18,7 @@ function googl(query, callback) {
 
                 var title = item.querySelector('h3.LC20lb')
 
-                if (title) {
+                if (title) { debugger
                     var result = {}
 
                     result.title = title.innerText
@@ -34,9 +34,10 @@ function googl(query, callback) {
                     var link = item.querySelector('.iUh30')
                     result.link = link.innerText
 
+                    results.push(result)
                 }
-
-                results.push(result)
+                else ''
+                
             }
 
             callback(results)
