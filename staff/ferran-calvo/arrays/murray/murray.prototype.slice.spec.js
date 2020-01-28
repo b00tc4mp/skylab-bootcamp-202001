@@ -11,6 +11,13 @@ describe('Murray.prototype.slice', function () {
         expect(result[0]).toBe(2)
         expect(result[1]).toBe(3)
     })
+    it('it should be return a new Murray with only a startIndex',function(){
+        var a = new Murray(1,2,3,4)
+        var result = a.slice(1)
+        expect(result[0]).toBe(2)
+        expect(result[1]).toBe(3)
+        expect(result[2]).toBe(4)
+    })
     it('it should fail when the argument is not a Number', function () {
         expect(function(){
             new Murray(1,2,3).slice('ab');

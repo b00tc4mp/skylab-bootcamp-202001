@@ -7,7 +7,7 @@ describe('Murray.prototype.reverse', function () {
         expect(result[2]).toBe(2);
         expect(result[3]).toBe(1);
     })
-    it('it should be true, all the elements pass the condition',function(){
+    it('it should return a murray = ("d","c","b","a")',function(){
         var a = new Murray("a", "b", "c", "d");
         var result = a.reverse()
         expect(result[0]).toBe("d");
