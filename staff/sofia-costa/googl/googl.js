@@ -1,7 +1,11 @@
 function googl(query, callback) {
+
+    if (callback instanceof Array) throw new TypeError(callback.constructor.name + ' is not a function');
+    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
+
     var xhr = new XMLHttpRequest
 
-    xhr.open('GET', 'https://www.google.com/search?q=' + query)
+    xhr.open('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=' + query)
 
     xhr.onreadystatechange = function (res) {
         
@@ -29,7 +33,10 @@ function googl(query, callback) {
                     }
   
                     var description = item.querySelector('.st')
-                    result.description = description.innerText
+
+                    if (description !== undefined && description !==null) {
+                        result.description = description.innerText
+                    }
 
                     var link = item.querySelector('.iUh30')
                     result.link = link.innerText
@@ -48,21 +55,32 @@ function googl(query, callback) {
 }
 
 
-var submit = document.querySelector('button')
+// var submit = document.querySelector('button')
 
 
-var input = document.querySelector('input').value
 
-submit.addEventListener('click', function(event) {
-    event.preventDefault()
+// submit.addEventListener('click', function(event) {
 
-    var input = document.querySelector('input').value
-    googl(input, function(results) {
-        results.forEach(function(result) { 
-            console.log(result) 
-        })
-    })
-})
+//     event.preventDefault()
+
+//     var input = document.querySelector('input').value
+
+//     googl(input, function(results) {
+//         results.forEach(function(result) { 
+
+//             // var item = document.createElement('li')
+//             // item.innerHTML = result.title + '\t' + result.description + '\t' + '\t'
+//             // document.body.ul.appendChild(item)
+
+//             console.log(result) 
+//         })
+//     })
+// })
+
+
+
+
+
 
 // TODO create tests with just console.assert (check that each item has at least a title and a description)
 
