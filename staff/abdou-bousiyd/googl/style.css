@@ -1,41 +1,75 @@
 .search {
-  border: 1px solid black;
-  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
 }
 .search--hide {
   display: none;
 }
 .search input {
-  border: 1px solid black;
-  border-radius: 1rem;
+  display: flex;
+  width: 50%;
+  height: 30px;
+  border-radius: 20px;
 }
 .search button {
   border: 1px solid black;
   border-radius: 1rem;
 }
 
+.login input[type=text], input[type=password] {
+  display: flex;
+  width: 25%;
+  padding: 12px 20px;
+  margin: 15px 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
 .login {
-  border: 1px solid black;
-  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 .login--hide {
   display: none;
 }
-.login input {
-  border: 1px solid black;
-  border-radius: 1rem;
-}
-.login button {
-  border: 1px solid black;
-  border-radius: 1rem;
+.login .button {
+  background-color: rgb(50, 66, 51);
+  color: white;
+  padding: 12px 20px;
+  margin: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 25%;
 }
 
+.register .button {
+  background-color: rgb(50, 66, 51);
+  color: white;
+  padding: 12px 20px;
+  margin: 10px 20px;
+  border: none;
+  cursor: pointer;
+  width: 25%;
+}
 .register {
-  border: 1px solid black;
-  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 .register--hide {
   display: none;
 }
-
+.register input[type=text], input[type=password] {
+  display: flex;
+  width: 25%;
+  padding: 12px 20px;
+  margin: 15px 20px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+#title{
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+}
 /*# sourceMappingURL=style.css.map */
