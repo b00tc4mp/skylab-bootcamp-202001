@@ -1,17 +1,25 @@
 var users = []; // ej: user => { name, surname, username, password }
 var loggedUser = null;
 
-var search = createSearch('.search', function (query) {
-    googl(query, function (results) {
-        createResults('.results', results);
-    });
-});
+    var searchGoogl = createSearch('.search', function (query) {
+        googl(query, function (results) {
+            createResults('.results', results);
+        });
+        return searchGoogl;
+    }); 
 
-createSearch('.search-2', function (query) {
-    ecosia(query, function (results) {
-        createResults('.results-2', results);
+    var searchEcopsia = createSearch('.search-2', function (query) {
+        ecosia(query, function (results) {
+            createResults('.results-2', results);
+        });
     });
-});
+
+    var searchYahoo = createSearch('.search-3', function (query) {
+        yahoo(query, function (results) {
+            createResults('.results-3', results);
+        });
+    });
+
 
 // createSearch('.search-3', function (query) {
 //     googl(query, function (results) {
@@ -42,7 +50,11 @@ var login = auth('.login', function(username, password) {
         if (_user){
             loggedUser = _user
             addClass(".login", 'login--hide')
+
             removeClass(".search", 'search--hide')
+            removeClass(".search1", 'search--hide')
+            removeClass(".search2", 'search--hide')
+
             changeTitle("title", "Search")
             changeTitle("user", "Welcome: " + _user.username)
         }else{

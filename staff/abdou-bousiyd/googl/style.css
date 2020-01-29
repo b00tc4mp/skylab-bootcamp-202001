@@ -1,19 +1,12 @@
-.search {
-  display: flex;
-  justify-content: center;
-}
+
 .search--hide {
   display: none;
 }
-.search input {
+.contentSearch {
   display: flex;
-  width: 50%;
-  height: 30px;
-  border-radius: 20px;
-}
-.search button {
-  border: 1px solid black;
-  border-radius: 1rem;
+  justify-content: center;
+  position: relative;
+  top: -100px;
 }
 
 .login input[type=text], input[type=password] {

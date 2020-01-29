@@ -6,49 +6,51 @@ function googl(query, callback) {
 
     var xhr = new XMLHttpRequest;
 
-    xhr.open('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=' + query);
+   search('https://www.google.com/search?q=' + query, 'div.g', 'h3.LC20lb', '.rc>.r>a', 'span.st', callback);
 
-    xhr.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            var doc = new DOMParser().parseFromString(this.responseText, 'text/html');
+  // xhr.open('GET', 'https://skylabcoders.herokuapp.com/proxy?url=https://www.google.com/search?q=' + query, 'div.g', 'h3.LC20lb', '.rc>.r>a', 'span.st', callback);
 
-            var items = doc.querySelectorAll('div.g');
+    // xhr.onreadystatechange = function () {
+    //     if (this.readyState === 4 && this.status === 200) {
+    //         var doc = new DOMParser().parseFromString(this.responseText, 'text/html');
 
-            var results = [];
+    //         var items = doc.querySelectorAll('div.g');
 
-            for (var i = 0; i < items.length; i++) {
-                var item = items[i];
+    //         var results = [];
 
-                var title = item.querySelector('h3.LC20lb');
+    //         for (var i = 0; i < items.length; i++) {
+    //             var item = items[i];
 
-                if (title) {
-                    var result = {};
+    //             var title = item.querySelector('h3.LC20lb');
 
-                    result.title = title.innerText;
+    //             if (title) {
+    //                 var result = {};
 
-                    var rating = item.querySelector('.slp.f');
+    //                 result.title = title.innerText;
 
-                    if (rating)
-                        result.rating = rating.innerText;                    
+    //                 var rating = item.querySelector('.slp.f');
 
-                    var description = item.querySelector('span.st');
+    //                 if (rating)
+    //                     result.rating = rating.innerText;                    
 
-                    if (description)
-                        result.description = description.innerText.trim();
+    //                 var description = item.querySelector('span.st');
 
-                    var link = item.querySelector('.rc>.r>a');
+    //                 if (description)
+    //                     result.description = description.innerText.trim();
 
-                    if (link)
-                        result.link = link.href;
+    //                 var link = item.querySelector('.rc>.r>a');
 
-                    results.push(result);
-                }
+    //                 if (link)
+    //                     result.link = link.href;
+
+    //                 results.push(result);
+    //             }
                 
-            }
+    //         }
 
-            callback(results);
-        }
-    }
+    //         callback(results);
+    //     }
+    // }
 
-    xhr.send();
+    // xhr.send();
 }
