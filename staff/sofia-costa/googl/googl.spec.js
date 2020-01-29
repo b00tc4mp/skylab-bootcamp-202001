@@ -1,87 +1,68 @@
 'use strict';
-describe('googl', function()  {
-    
-    it('Should display results', function(done) {
-        googl('pepito', function(results) { 
-            results.forEach(function(result) { 
-                expect(result).not.toBe(undefined);
-            });
-            done();
-        });
-    });
-    
-    it('Should display a title for each result', function (done) {
-        googl('pepito', function(results) { 
-            results.forEach(function(result) { 
+
+describe('googl', function () {
+    it('should succeed on matching query', function (done) {
+        googl('pepito', function (results) {
+            expect(results).toBeDefined();
+            //expect(results).toHaveLength(8);
+            expect(results.length).toBeGreaterThan(0);
+
+            results.forEach(result => {
                 expect(typeof result.title).toBe('string');
+                expect(typeof result.description).toBe('string');
+                expect(typeof result.link).toBe('string');
+
+                if (result.rating)
+                    expect(typeof result.rating).toBe('string');
             });
+
             done();
         });
     });
-    
-    it('Should display a description for each item, if there is any', function (done) {
-        googl('pepito', function(results) { 
-            results.forEach(function(result) { 
-                expect(result.description).not.toBe(undefined);
-            });
+
+    it('should succeed on non-matching query returning an empty array', function (done) {
+        googl('asdasdfñlajsfklasldñkfjañlsjflasjflasjfñladjs', function (results) {
+            expect(results).toBeDefined();
+            expect(results).toHaveLength(0);
+
             done();
         });
     });
-    
-    it('Should fail on non-function exrpression', function() { 
-        expect(function(){
-            googl('pepito', true)
-        }).toThrowError(TypeError, 'Array is not a function');
-        expect(function(){
-            googl('pepito', 'olá')
+
+    it('should fail on non-string query', function () {
+        expect(function () {
+            googl(undefined, function () { });
+        }).toThrowError(TypeError, 'undefined is not a string');
+
+        expect(function () {
+            googl(1, function () { });
+        }).toThrowError(TypeError, '1 is not a string');
+
+        expect(function () {
+            googl(true, function () { });
+        }).toThrowError(TypeError, 'true is not a string');
+
+        expect(function () {
+            googl({}, function () { });
+        }).toThrowError(TypeError, '[object Object] is not a string');
+    });
+
+    it('should fail on non-function callback', function () {
+
+        expect(function () {
+            googl('', undefined);
+        }).toThrowError(TypeError, 'undefined is not a function');
+
+        expect(function () {
+            googl('', 1);
+        }).toThrowError(TypeError, '1 is not a function');
+
+        expect(function () {
+            googl('', true);
         }).toThrowError(TypeError, 'true is not a function');
-    
+
+        expect(function () {
+            googl('', {});
+        }).toThrowError(TypeError, '[object Object] is not a function');
     });
 });
-
-
-
-
-// TODO create tests with just console.assert (check that each item has at least a title and a description)
-
-
-
-// googl('pepito', function(results) { 
-
-//     results.forEach(function(result) { 
-//         console.log(result) 
-//     })
-
-//     console.log('%c should results have a title', 'color: green;')
-//     results.forEach(function(result) {
-//         console.assert(result.title !== undefined, 'result should have a title, but it doesn\'t')
-//    })
-
-//     console.log('%c should results have a description', 'color: green;')
-//     results.forEach(function(result) {
-//         console.assert(result.description !== undefined, 'result should have a description, but it doesn\'t')
-//     })
-
-//     console.log('%c should results show a rating, in case they have one', 'color: green;')
-//     results.forEach(function(result) {
-//         if (results.rating)
-//             console.assert(result.rating !== undefined, 'result should have a description, but it doesn\'t')
-//     })
-
-//     console.log('%c should results have a link', 'color: green;')
-//     results.forEach(function(result) {
-//         console.assert(result.link !== undefined, 'result should have a link, but it doesn\'t')
-//     })
-
-//     console.log('%c should results be objects', 'color: green;')
-//     results.forEach(function(result) {
-//         console.assert(result instanceof Object, 'result should be an object but it isn\'t')
-//     })
-
-//     console.log('%c should each key of results be a string', 'color: green;')
-//     results.forEach(function(result) { 
-//         console.assert(typeof result.title === 'string', 'result should be a string but it isn\'t')
-//         console.assert(typeof result.description === 'string', 'result should be a string but it isn\'t')
-//         if (result.ranking !== undefined) console.assert(typeof result.description === 'string', 'result should be a string but it isn\'t')
-//     })
-// })
