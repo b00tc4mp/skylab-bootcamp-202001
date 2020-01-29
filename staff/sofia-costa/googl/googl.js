@@ -10,8 +10,9 @@ function googl(query, callback) {
     xhr.onreadystatechange = function (res) {
         
         if (this.readyState === 4 && this.status === 200) {
-            console.log(this.readyState)
+            // console.log(this.readyState)
             var doc = new DOMParser().parseFromString(this.responseText, 'text/html')
+            // console.log(this.responseText)
 
             var items = doc.querySelectorAll('div.g')
 
@@ -34,19 +35,19 @@ function googl(query, callback) {
   
                     var description = item.querySelector('.st')
 
-                    if (description !== undefined && description !==null) {
+                    if (description) {
                         result.description = description.innerText
                     }
 
                     var link = item.querySelector('.iUh30')
                     result.link = link.innerText
 
-                    results.push(result)
                 }
-                else ''
+                results.push(result)
+                // else ''
                 
             }
-
+            
             callback(results)
         }
     }

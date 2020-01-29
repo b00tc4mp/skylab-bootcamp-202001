@@ -1,0 +1,72 @@
+.search--hide {
+  display: none;
+}
+
+.enter--hide {
+  display: none;
+}
+
+.register--hide {
+  display: none;
+}
+
+.login--hide {
+  display: none;
+}
+
+.header__results--hide {
+  display: none;
+}
+
+.footer--hide {
+  display: none;
+}
+
+body {
+  height: 100vh;
+  align-content: center;
+}
+
+.header__start {
+  top: 300px;
+}
+.header__start .gugal {
+  display: flex;
+  justify-content: center;
+  font-size: 5em;
+  font-family: arial, sans-serif;
+}
+.header__start .gugal .g {
+  color: blue;
+}
+.header__start .gugal .u {
+  color: red;
+}
+.header__start .gugal .a {
+  color: yellow;
+}
+.header__start .gugal .l {
+  color: green;
+}
+.header__start .enter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 15vh;
+  max-width: 30vw;
+  margin: auto;
+  align-items: center;
+}
+.header__start .enter__button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 1em;
+  border: 2px solid black;
+  height: 5vh;
+  width: 20vw;
+  font-family: arial, sans-serif;
+  font-size: 1em;
+}
+
+/*# sourceMappingURL=style.css.map */

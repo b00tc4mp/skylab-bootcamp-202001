@@ -1,0 +1,49 @@
+@import utils
+body
+    height: 100vh
+    align-content: center
+
+.header
+    &__start
+        top: 300px
+
+        .gugal
+            display: flex
+            justify-content: center
+            font-size: 5em
+            font-family: arial, sans-serif
+
+            .g
+                color: blue
+            
+            .u
+                color: red
+            
+            .a
+                color: yellow
+
+            .l
+                color: green
+
+        .enter
+            +flex(column, space-between)
+            height: 15vh
+            max-width: 30vw
+            margin: auto
+            align-items: center
+
+            &__button
+                +flex(row, center)
+                +border
+                height: 5vh
+                width: 20vw
+                font-family: arial, sans-serif
+                font-size: 1em
+
+
+
+
+
+
+            
+            
