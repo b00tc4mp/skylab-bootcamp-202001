@@ -1,51 +1,106 @@
-var users = []
+function createRegister(selector, onToLogin) {
+    var register = document.querySelector(selector);
 
-enter('.enter', function(clicked) {
-    if (clicked === '.register') {
-        createRegister(clicked, function() {
-            createLogin('.login', function(username, password) {
-                if (
-                users.some(function(user) {return user.username === username && user.password === password})
-                ) { 
-                    var search = document.querySelector('.search')
-                    var login = document.querySelector('.login')
-                    search.classList.toggle('search--hide');
-                    login.classList.toggle('login--hide');
-                    debugger
-                    
-                } else alert('you cannot get in :P');
-            });
-        })
+    register.addEventListener('submit', function(event) {
+        event.preventDefault();
 
+        var user = {}
 
-    } else if (clicked === '.login') {
-        createLogin(clicked, function(username, password) {
-            if (
-                users.some(function(user) {return user.username === username && user.password === password})
-                ) { 
-                    var search = document.querySelector('.search')
-                    var login = document.querySelector('.login')
-                    login.classList.toggle('login--hide');
-                    search.classList.toggle('search--hide');
+        user.username = this.username.value;
+        user.password = this.password.value;
+        user.surname = this.surname.value;
+        user.name = this.name.value
 
-                } else alert('you cannot get in :P');
-        })
-    }
-})
+        users.push(user)
 
-createSearch('.search', function (query) {
-    googl(query, function (results) {
-        createResults('.results', results);
+        register.classList.toggle('register--hide')
+
     });
-});
+
+        var login = document.querySelector('.login-link')
+
+        login.addEventListener('click', function(event) {
+            event.preventDefault()
+            
+            onToLogin()
+        })
+
+    return register;
+}
+
+
+function createLogin(selector, callback, onToRegister) {
+
+    var login = document.querySelector(selector);
+
+    login.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        login.classList.toggle('login--hide')
+
+        var username = this.username.value;
+        var password = this.password.value;
+
+        callback(username, password);
+    });
+
+    var register = document.querySelector('.register-link')
+
+    register.addEventListener('click', function(event) {
+        event.preventDefault()
+        
+        onToRegister()
+    })
+
+    return login;
+}
 
 
 
 
 
-// var login = createLogin('.login', function(username, password) {
-//     if (username === 'pepito' && password === '123') {
-//         search.classList.toggle('search--hide');
-//         login.classList.toggle('login--hide');
-//     } else alert('you cannot get in :P');
-// });
+// function enter (selector, callback) {
+
+//     var clicked
+//     var enter = document.querySelector(selector)
+//     var enterRegister = enter.register
+//     var enterLogin = enter.login
+
+//     // debugger
+//     enterRegister.addEventListener('click', function(event) {
+//         event.preventDefault()
+//         clicked = '.register'
+//         // debugger
+//         enter.classList.toggle('enter')
+//         callback(clicked)
+//     })
+
+//     enterLogin.addEventListener('click', function(event) {
+//         event.preventDefault()
+//         clicked = '.login'
+
+//         enter.classList.toggle('enter')
+//         callback(clicked)
+//     })
+    
+// }
+
+
+
+// function createLogin(selector, callback) {
+
+//     var login = document.querySelector(selector);
+
+//     login.classList.toggle('login--hide')
+
+//     login.addEventListener('submit', function(event) {
+//         event.preventDefault();
+
+//         var username = this.username.value;
+//         var password = this.password.value;
+
+//         callback(username, password);
+//     });
+
+//     return login;
+// }

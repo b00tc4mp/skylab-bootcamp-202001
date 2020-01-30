@@ -23,7 +23,7 @@ function search(url, resultsSelector, titleSelector, linkSelector, contentSelect
 
                     var link = item.querySelector(linkSelector);
 
-                    if (link)
+                    if (link && link !== undefined && link !== null)
                         result.link = link.href.trim();
 
                     // var rating = item.querySelector(ratingSelector)
@@ -34,8 +34,8 @@ function search(url, resultsSelector, titleSelector, linkSelector, contentSelect
 
                     // TODO description
                     var description = item.querySelector(contentSelector);
-
-                    result.description = description.innerText;
+                    if (description && description !== undefined && description !== null)
+                        result.description = description.innerText;
 
                 }
 

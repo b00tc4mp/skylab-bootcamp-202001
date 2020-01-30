@@ -1,42 +1,84 @@
-var users = []
+var start = enter('.enter')
 
-enter('.enter', function(clicked) {
-    if (clicked === '.register') {
-        createRegister(clicked, function() {
-            createLogin('.login', function(username, password) {
-                if (
-                users.some(function(user) {return user.username === username && user.password === password})
-                ) { 
-                    var search = document.querySelector('.search')
-                    var login = document.querySelector('.login')
-                    search.classList.toggle('search--hide');
-                    login.classList.toggle('login--hide');
-                    
-                } else alert('you cannot get in :P');
-            });
-        })
-
-
-    } else if (clicked === '.login') {
-        createLogin(clicked, function(username, password) {
-            if (
-                users.some(function(user) {return user.username === username && user.password === password})
-                ) { 
-                    var search = document.querySelector('.search')
-                    var login = document.querySelector('.login')
-                    login.classList.toggle('login--hide');
-                    search.classList.toggle('search--hide');
-
-                } else alert('you cannot get in :P');
-        })
-    }
+var _register = createRegister('.register', function() {
+    var login=document.querySelector('.login')
+    _register.classList.toggle('register--hide')
+    login.classList.toggle('login--hide')
 })
 
-createSearch('.search', function (query) {
+var _login = createLogin('.login', function(username, password) {
+    if (users.some(function(user) {
+        return user.username === username && user.password === password
+    })) {   
+
+        var search = document.querySelector('.search')
+        var login = document.querySelector('.login')
+        search.classList.toggle('search--hide');
+        login.classList.toggle('login--hide');
+        
+    } else alert('you cannot get in :P');
+     
+}, function() {
+    var register = document.querySelector('.register')
+    _login.classList.toggle('login--hide')
+    register.classList.toggle('register--hide')
+});
+
+var _search = createSearch('.search1', function (query) {
     googl(query, function (results) {
         createResults('.results', results);
     });
 });
+var _search = createSearch('.search2', function (query) {
+    googl(query, function (results) {
+        createResults('.results', results);
+    });
+});
+var _search = createSearch('.search3', function (query) {
+    googl(query, function (results) {
+        createResults('.results', results);
+    });
+});
+var _search = createSearch('.search4', function (query) {
+    googl(query, function (results) {
+        createResults('.results', results);
+    });
+});
+
+
+// enter('.enter', function(clicked) {
+//     if (clicked === '.register') {
+//         createRegister(clicked, function() {
+//             createLogin('.login', function(username, password) {
+//                 if (
+//                 users.some(function(user) {return user.username === username && user.password === password})
+//                 ) { 
+//                     var search = document.querySelector('.search')
+//                     var login = document.querySelector('.login')
+//                     search.classList.toggle('search--hide');
+//                     login.classList.toggle('login--hide');
+                    
+//                 } else alert('you cannot get in :P');
+//             });
+//         })
+
+
+//     } else if (clicked === '.login') {
+//         createLogin(clicked, function(username, password) {
+//             if (
+//                 users.some(function(user) {return user.username === username && user.password === password})
+//                 ) { 
+//                     var search = document.querySelector('.search')
+//                     var login = document.querySelector('.login')
+//                     login.classList.toggle('login--hide');
+//                     search.classList.toggle('search--hide');
+
+//                 } else alert('you cannot get in :P');
+//         })
+//     }
+// })
+
+
 
 
 
