@@ -1,55 +1,55 @@
-function createSearch(selector, callback) {
-    var search = document.querySelector(selector);
+// function createSearch(selector, callback) {
+//     var search = document.querySelector(selector);
 
-    if(!search) return
+//     if(!search) return
 
-    // search.onsubmit = function (event) {
-    search.addEventListener('submit', function (event) {
-        event.preventDefault();
+//     // search.onsubmit = function (event) {
+//     search.addEventListener('submit', function (event) {
+//         event.preventDefault();
 
-        var query = this.query.value;
+//         var query = this.query.value;
 
-        callback(query);
-        // };
-    });
+//         callback(query);
+//         // };
+//     });
 
-    return search;
-}
+//     return search;
+// }
 
-function createResults(selector, results) {
-    var list = document.querySelector(selector);
+// function createResults(selector, results) {
+//     var list = document.querySelector(selector);
 
-    list.innerHTML = '';
+//     list.innerHTML = '';
 
-    results.forEach(function (result) {
-        var item = document.createElement('li');
+//     results.forEach(function (result) {
+//         var item = document.createElement('li');
 
-        var title = document.createElement('h3');
-        title.innerText = result.title;
+//         var title = document.createElement('h3');
+//         title.innerText = result.title;
 
-        var link = document.createElement('a');
-        link.target = '_blank';
-        link.href = result.link;
+//         var link = document.createElement('a');
+//         link.target = '_blank';
+//         link.href = result.link;
 
-        link.append(title);
+//         link.append(title);
 
-        item.append(link);
+//         item.append(link);
 
-        if (result.rating) {
-            var rating = document.createElement('span');
-            rating.innerText = result.rating;
+//         if (result.rating) {
+//             var rating = document.createElement('span');
+//             rating.innerText = result.rating;
 
-            item.append(rating);
-        }
+//             item.append(rating);
+//         }
 
-        var description = document.createElement('p');
-        description.innerText = result.description;
+//         var description = document.createElement('p');
+//         description.innerText = result.description;
 
-        item.append(description);
+//         item.append(description);
 
-        list.append(item);
-    });
-}
+//         list.append(item);
+//     });
+// }
 
 // function createLogin(selector, callback) {
 //     var login = document.querySelector(selector);
@@ -81,16 +81,16 @@ function createResults(selector, results) {
 // }
 
 
-function auth(selector, callback) {
-    var register = document.querySelector(selector);
+// function auth(selector, callback) {
+//     var register = document.querySelector(selector);
 
-    register.addEventListener('submit', function(event) {
-        event.preventDefault();
+//     register.addEventListener('submit', function(event) {
+//         event.preventDefault();
 
-        var [usernameInput, passwordInput] = register;
+//         var [usernameInput, passwordInput] = register;
 
-        callback(usernameInput.value, passwordInput.value);
-    });
+//         callback(usernameInput.value, passwordInput.value);
+//     });
 
-    return register;
-}
+//     return register;
+// }
