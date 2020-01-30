@@ -1,5 +1,5 @@
 function googl(query, callback) {
-    debugger
+  
     if (typeof query !== 'string') throw new TypeError(query + ' is not a string');
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
 

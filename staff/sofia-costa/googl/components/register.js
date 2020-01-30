@@ -1,4 +1,7 @@
 function createRegister(selector, onToLogin) {
+    if (typeof selector !== 'string') throw new TypeError(selector + ' is not a string')
+    if (typeof onToLogin !== 'function') throw new TypeError(onToLogin + ' is not a function')
+
     var register = document.querySelector(selector);
 
     register.addEventListener('submit', function(event) {

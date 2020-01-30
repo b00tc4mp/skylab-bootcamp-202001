@@ -1,4 +1,6 @@
-function createLogin(selector, callback, onToRegister) {
+function createLogin(selector, props) { // callback, onToRegister) {
+    if(typeof selector !== 'string') throw new TypeError(selector + 'is not a string')
+    if(typeof props !== 'object') throw new TypeError(props + 'is not an Object')
 
     var login = document.querySelector(selector);
 
@@ -8,7 +10,7 @@ function createLogin(selector, callback, onToRegister) {
         var username = this.username.value;
         var password = this.password.value;
 
-        callback(username, password);
+        props.onSubmit(username, password);
     });
 
     var register = document.querySelector('.register-link')
@@ -16,7 +18,7 @@ function createLogin(selector, callback, onToRegister) {
     register.addEventListener('click', function(event) {
         event.preventDefault()
         
-        onToRegister()
+        props.onToRegister()
     })
 
     return login;

@@ -6,6 +6,7 @@ describe('search', function() {
         expect(function() {
             search(url, 'sass', 'sass', 'sass', 'sass', function(){})
         }).toThrowError(SyntaxError, url + ' is not an url');
+
     });
 
     it('should fail if arguments number 2 to 5 are not strings', function () {

@@ -6,23 +6,32 @@ var _register = createRegister('.register', function() {
     login.classList.toggle('login--hide')
 })
 
-var _login = createLogin('.login', function(username, password) {
-    if (users.some(function(user) {
-        return user.username === username && user.password === password
-    })) {   
+var _login = createLogin('.login', {
 
-        var search = document.querySelector('.search')
-        var login = document.querySelector('.login')
-        search.classList.toggle('search--hide');
-        login.classList.toggle('login--hide');
-        
-    } else alert('you cannot get in :P');
-     
-}, function() {
-    var register = document.querySelector('.register')
-    _login.classList.toggle('login--hide')
-    register.classList.toggle('register--hide')
+    onSubmit: function(username, password) {
+        try{
+            authenticate(username, password)
+    
+            var search = document.querySelector('.search')
+            var login = document.querySelector('.login')
+            search.classList.toggle('search--hide');
+            login.classList.toggle('login--hide');
+    
+        } catch (error) {
+            alert(error.message)
+        }    
+    }, 
+
+    onToRegister: function() {
+        var register = document.querySelector('.register')
+        _login.classList.toggle('login--hide')
+        register.classList.toggle('register--hide')
+    }        
 });
+
+
+
+
 
 var _search = createSearch('.search1', function (query) {
     googl(query, function (results) {
