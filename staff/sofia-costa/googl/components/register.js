@@ -1,22 +1,18 @@
-function createRegister(selector, onToLogin) {
+function createRegister(selector, props) {
     if (typeof selector !== 'string') throw new TypeError(selector + ' is not a string')
-    if (typeof onToLogin !== 'function') throw new TypeError(onToLogin + ' is not a function')
+    if (typeof props !== 'object') throw new TypeError(props + ' is not an object')
 
     var register = document.querySelector(selector);
 
     register.addEventListener('submit', function(event) {
         event.preventDefault();
 
-        var user = {}
+        var name = this.name.value;
+        var surname = this.surname.value;
+        var username = this.username.value;
+        var password = this.password.value;
 
-        user.username = this.username.value;
-        user.password = this.password.value;
-        user.surname = this.surname.value;
-        user.name = this.name.value
-
-        users.push(user)
-
-        register.classList.toggle('register--hide')
+        props.onSubmit(name, surname, username, password);
 
     });
 
@@ -25,7 +21,7 @@ function createRegister(selector, onToLogin) {
         login.addEventListener('click', function(event) {
             event.preventDefault()
             
-            onToLogin()
+            props.onToLogin()
         })
 
     return register;

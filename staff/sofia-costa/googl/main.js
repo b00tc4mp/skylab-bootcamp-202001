@@ -1,9 +1,26 @@
 var start = enter('.enter')
 
-var _register = createRegister('.register', function() {
-    var login=document.querySelector('.login')
-    _register.classList.toggle('register--hide')
-    login.classList.toggle('login--hide')
+var _register = createRegister('.register', {
+    
+    onSubmit: function() {
+        try {
+            register(name, surname, username, password);
+            
+            //var search = document.querySelector('.search')
+            _register.classList.toggle('register--hide')
+            _login.classList.toggle('login--hide')
+
+        } catch (error) {
+            alert(error.message + ' ' + IT);
+        }
+    },
+    
+    onToLogin: function() {
+        var login=document.querySelector('.login')
+        _register.classList.toggle('register--hide')
+        login.classList.toggle('login--hide')
+    }
+    
 })
 
 var _login = createLogin('.login', {
@@ -12,10 +29,15 @@ var _login = createLogin('.login', {
         try{
             authenticate(username, password)
     
-            var search = document.querySelector('.search')
+            //var search = document.querySelector('.search')
             var login = document.querySelector('.login')
-            search.classList.toggle('search--hide');
+            //search.classList.toggle('search--hide');
             login.classList.toggle('login--hide');
+
+            _google.classList.toggle('search--hide');
+            _yahoo.classList.toggle('search--hide');
+            _bing.classList.toggle('search--hide');
+            _ecosia.classList.toggle('search--hide');
     
         } catch (error) {
             alert(error.message)
@@ -33,23 +55,23 @@ var _login = createLogin('.login', {
 
 
 
-var _search = createSearch('.search1', function (query) {
+var _google = createSearch('.search1', function (query) {
     googl(query, function (results) {
         createResults('.results', results);
     });
 });
-var _search = createSearch('.search2', function (query) {
-    googl(query, function (results) {
+var _yahoo = createSearch('.search2', function (query) {
+    yahoo(query, function (results) {
         createResults('.results', results);
     });
 });
-var _search = createSearch('.search3', function (query) {
-    googl(query, function (results) {
+var _bing = createSearch('.search3', function (query) {
+    bing(query, function (results) {
         createResults('.results', results);
     });
 });
-var _search = createSearch('.search4', function (query) {
-    googl(query, function (results) {
+var _ecosia = createSearch('.search4', function (query) {
+    ecosia(query, function (results) {
         createResults('.results', results);
     });
 });

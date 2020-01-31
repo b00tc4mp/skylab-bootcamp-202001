@@ -33,11 +33,9 @@ function search(url, resultsSelector, titleSelector, linkSelector, contentSelect
                     if (link && link !== undefined && link !== null)
                         result.link = link.href.trim();
                         
-                    // TODO description
                     var description = item.querySelector(contentSelector);
                     if (description && description !== undefined && description !== null)
                         result.description = description.innerText;
-
                 }
 
                 results.push(result)
