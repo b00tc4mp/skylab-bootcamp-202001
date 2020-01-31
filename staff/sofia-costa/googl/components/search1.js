@@ -6,7 +6,7 @@ function Search(props) {
 
     search.innerHTML += '<h2>' + props.title + '</h2>'
         .concat('<input class="input" type="text" name="query" placeholder="criteria">')
-        .concat('<button type="submit">Search</button>')
+        .concat('<button class="submit" type="submit">Search</button>')
 
     search.addEventListener('submit', function (event) {
         event.preventDefault();

@@ -1,4 +1,4 @@
-.login .submit, .register .submit, .enter__button {
+.login .submit, .register .submit, .enter__button, .search .submit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -6,17 +6,21 @@
   border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
 }
 
 .login .input, .register .input, .search .input {
   border-radius: 1em;
   border: 2px solid black;
-  height: 5vh;
+  height: 10vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
+  text-align: center;
 }
 
 .search {
@@ -31,7 +35,7 @@
 .search--hide {
   display: none;
 }
-.login .submit, .register .submit, .enter__button {
+.login .submit, .register .submit, .enter__button, .search .submit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -39,17 +43,21 @@
   border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
 }
 
 .login .input, .register .input, .search .input {
   border-radius: 1em;
   border: 2px solid black;
-  height: 5vh;
+  height: 10vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
+  text-align: center;
 }
 
 .enter {
@@ -64,7 +72,7 @@
 .enter--hide {
   display: none;
 }
-.login .submit, .register .submit, .enter__button {
+.login .submit, .register .submit, .search .submit, .enter__button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -72,17 +80,21 @@
   border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
 }
 
 .login .input, .register .input, .search .input {
   border-radius: 1em;
   border: 2px solid black;
-  height: 5vh;
+  height: 10vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
+  text-align: center;
 }
 
 .register {
@@ -97,7 +109,11 @@
 .register--hide {
   display: none;
 }
-.login .submit, .enter__button, .register .submit {
+.register .submit {
+  width: 8vw;
+}
+
+.login .submit, .search .submit, .enter__button, .register .submit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -105,17 +121,21 @@
   border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
 }
 
 .login .input, .search .input, .register .input {
   border-radius: 1em;
   border: 2px solid black;
-  height: 5vh;
+  height: 10vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
+  text-align: center;
 }
 
 .login {
@@ -130,6 +150,10 @@
 .login--hide {
   display: none;
 }
+.login .submit {
+  width: 100px;
+}
+
 .header__results--hide {
   display: none;
 }
@@ -138,7 +162,7 @@
   display: none;
 }
 
-.enter__button, .register .submit, .login .submit {
+.search .submit, .enter__button, .register .submit, .login .submit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -146,17 +170,21 @@
   border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
 }
 
 .search .input, .register .input, .login .input {
   border-radius: 1em;
   border: 2px solid black;
-  height: 5vh;
+  height: 10vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
-  font-size: 1em;
+  font-size: 1.2em;
+  text-align: center;
 }
 
 body {
@@ -174,19 +202,19 @@ body {
   font-family: arial, sans-serif;
 }
 .header__start .gugal .g {
-  color: blue;
+  color: #458efa;
 }
 .header__start .gugal .u {
-  color: red;
+  color: #ff6f6f;
 }
 .header__start .gugal .a {
-  color: yellow;
+  color: #ffff79;
 }
 .header__start .gugal .l {
-  color: green;
+  color: #75ff75;
 }
 
-.enter__button, .register .submit, .login .submit {
+.search .submit, .enter__button, .register .submit, .login .submit {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -194,17 +222,60 @@ body {
   border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
 }
 
 .search .input, .register .input, .login .input {
   border-radius: 1em;
   border: 2px solid black;
+  height: 10vh;
+  width: 20vw;
+  margin: 1vh 0;
+  font-family: arial, sans-serif;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.search .submit, .enter__button, .register .submit, .login .submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-radius: 1em;
+  border: 2px solid black;
   height: 5vh;
   width: 20vw;
+  margin: 1vh 0;
   font-family: arial, sans-serif;
   font-size: 1em;
+  background-color: lightgrey;
+}
+
+.search .input, .register .input, .login .input {
+  border-radius: 1em;
+  border: 2px solid black;
+  height: 10vh;
+  width: 20vw;
+  margin: 1vh 0;
+  font-family: arial, sans-serif;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.results {
+  margin: 15vh 0;
+  list-style-type: none;
+}
+
+li {
+  text-align: center;
+  font-family: arial, sans-serif;
+}
+
+a {
+  color: #3d87e3;
 }
 
 /*# sourceMappingURL=style.css.map */

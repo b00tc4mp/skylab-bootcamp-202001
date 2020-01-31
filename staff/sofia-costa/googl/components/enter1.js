@@ -11,14 +11,14 @@ function Enter() {
 
     var _register = Register({
     
-        onSubmit: function() {
+        onSubmit: function(name, surname, username, password) {
             try {
                 register(name, surname, username, password);
                 
                 _register.replaceWith(_login)
     
             } catch (error) {
-                alert(error.message + ' ' + IT);
+                alert(error.message);
             }
         },
         

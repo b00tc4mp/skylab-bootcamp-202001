@@ -22,6 +22,16 @@ describe('register', function () {
         expect(users).toContain(user);
     })
 
+    it('should display an error in case the username already exists', function() {
+       
+        register(user.name, user.surname, user.username, user.password)
+
+        expect(function(user) {
+            
+            register(user.name, user.surname, user.username, user.password)
+        }).toThrowError(Error, 'User ' + user.username + ' already exists')
+    })
+
     afterEach( function() {
         users.length = 0;
     })

@@ -4,7 +4,7 @@ function register (name, surname, username, password) {
     if (typeof username !== 'string') throw new TypeError('username ' + username + ' is not a string');
     if (typeof password !== 'string') throw new TypeError('password ' + password + ' is not a string');
 
-    var user = users.find(function (user) { return user.username === username; });
+    var user = users.find(function (user) { user.username === username; });
 
     if (user) throw new Error('User ' + username + ' already exists');
 
