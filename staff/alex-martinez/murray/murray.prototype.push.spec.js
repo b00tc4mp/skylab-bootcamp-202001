@@ -1,5 +1,5 @@
 describe('Murray.prototype.push', function () {
-    it('should have added 4 at the end of murray [1, 2, 3]', function () {
+    it('should have added 4 and modify the original length', function () {
         var murray = new Murray(1, 2, 3);
         var length = murray.push(4);
 
