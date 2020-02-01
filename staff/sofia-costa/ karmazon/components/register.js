@@ -1,16 +1,20 @@
+'use strict';
+
 function Register(props) {
     var register = document.createElement('form');
+    
+    Interactive.call(this, register);
+
     register.classList.add('register');
 
-    Interactive.call(this, register)
-
-    register.innerHTML = '<h2>Register</h2>'
-        .concat('<input class="input" type="text" name="name" placeholder="name" required>')
-        .concat('<input class="input" type="text" name="surname" placeholder="surname" required>')
-        .concat('<input class="input" type="text" name="username" placeholder="username" required>')
-        .concat('<input class="input" type="password" name="password" placeholder="password" required>')
-        .concat('<button class="submit" type="submit">OK</button>')
+    register.innerHTML = '<h2>Sign-up</h2>'
+        .concat('<input type="text" name="name" placeholder="name">')
+        .concat('<input type="text" name="surname" placeholder="surname">')
+        .concat('<input type="text" name="username" placeholder="username">')
+        .concat('<input type="password" name="password" placeholder="password">')
+        .concat('<button>Register</button>')
         .concat('<a href="">Login</a>');
+
 
     register.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -30,12 +34,10 @@ function Register(props) {
 
         props.onToLogin();
     });
-
-    return register;
 }
 
-Register.prototype = Object.create(Interactive)
-Register.prototype.constructor = Register
+Register.prototype = Object.create(Interactive.prototype);
+Register.prototype.constructor = Register;
 
 Register.prototype.__locateFeedbackInContainer__ = function(feedback) {
     var input = this.container.querySelector('input'); //?

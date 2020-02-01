@@ -3,7 +3,10 @@
 var IT = '🎈🤡';
 
 function App(props) {
+
     var app = document.createElement('main');
+
+    Component.call(this, app)
 
     app.innerHTML = '<header class="header__start"></header>';
     var header = app.querySelector('.header__start')
@@ -20,3 +23,6 @@ function App(props) {
     return app;
 
 }
+
+App.prototype = Object.create(Component.prototype);
+App.prototype.constructor = App;

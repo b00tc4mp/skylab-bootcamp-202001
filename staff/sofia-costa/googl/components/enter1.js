@@ -1,3 +1,5 @@
+var IT = '🎈🤡';
+
 function Enter() {
 
     var _enter = document.createElement('form');
@@ -6,48 +8,50 @@ function Enter() {
     _enter.innerHTML = '<button type="submit" class="enter__register enter__button" name="register">Register</button>'
         .concat('<button type="submit" class="enter__login enter__button" name="login">Login</button>')
 
+    Interactive.call(this, _enter)    
+
     var enterRegister = _enter.querySelector('.enter__register')
     var enterLogin = _enter.querySelector('.enter__login')
 
-    var _register = Register({
+    var _register = new Register({
     
         onSubmit: function(name, surname, username, password) {
             try {
                 register(name, surname, username, password);
                 
-                _register.replaceWith(_login)
+                _register.replaceWith(_login.container)
     
             } catch (error) {
-                alert(error.message);
+                _login.showError(error.message + ' ' + IT);
             }
         },
         
         onToLogin: function() {
-            _register.replaceWith(_login);
+            _register.replaceWith(_login.container);
 
         }
         
     })
 
-    var _login = Login({
+    var _login = new Login({
 
         onSubmit: function(username, password) {
             try{
                 authenticate(username, password)
         
-                _login.replaceWith(_googl);
+                _login.replaceWith(_googl.container);
 
             } catch (error) {
-                alert(error.message)
+                _login.showError(error.message + ' ' + IT);
             }    
         }, 
     
         onToRegister: function() {
-            _login.replaceWith(_register);
+            _login.replaceWith(_register.conatiner);
         }        
     });
 
-    var _googl = Search({
+    var _googl = new Search({
         title: 'Googl',
 
         onSubmit: function (query) {
@@ -75,14 +79,18 @@ function Enter() {
     enterRegister.addEventListener('click', function(event) {
         event.preventDefault()
 
-        _enter.replaceWith(_register)
+        _enter.replaceWith(_register.container)
     })
 
     enterLogin.addEventListener('click', function(event) {
         event.preventDefault()
     
-        _enter.replaceWith(_login)
+        _enter.replaceWith(_login.container)
     })  
 
     return _enter
 }
+
+
+Enter.prototype = Object.create(Interactive.prototype)
+Enter.prototype.constructor = Enter

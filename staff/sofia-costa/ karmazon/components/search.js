@@ -2,13 +2,14 @@
 
 function Search(props) {
     var search = document.createElement('form');
+
+    Interactive.call(this, search);
+
     search.classList.add('search');
 
-    Interactive.call(this, search)
-
     search.innerHTML += '<h2>' + props.title + '</h2>'
-        .concat('<input class="input" type="text" name="query" placeholder="criteria">')
-        .concat('<button class="submit" type="submit">Search</button>')
+        .concat('<input type="text" name="query" placeholder="criteria">')
+        .concat('<button type="submit">Search</button>')
 
     search.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -17,12 +18,10 @@ function Search(props) {
 
         props.onSubmit(query);
     });
-
-    return search;
 }
 
-Search.prototype = Object.create(Interactive)
-Search.prototype.constructor = Search
+Search.prototype = Object.create(Interactive.prototype);
+Search.prototype.constructor = Search;
 
 Search.prototype.__locateFeedbackInContainer__ = function (feedback) {
     this.container.append(feedback.container);
