@@ -1,6 +1,1 @@
-var users = [
-    {
-        username: '',
-        password: ''
-    }
-]
+var users = []

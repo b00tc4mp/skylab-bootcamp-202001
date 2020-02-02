@@ -12,9 +12,7 @@ Interactive.prototype.__showFeedback__= function(level, message) {
 
     this.__locateFeedbackInContainer__(feedback)
 
-    setTimeout(function() {
-        this.removeChild(feedback)
-    }.bind(this.constructor), 3000)
+    this.__removeFeedbackFromContainer__(feedback)
 }
 
 Interactive.prototype.__locateFeedbackInContainer__ = function() {
@@ -23,4 +21,8 @@ Interactive.prototype.__locateFeedbackInContainer__ = function() {
 
 Interactive.prototype.showError = function(error) {
     this.__showFeedback__('error', error)
+}
+
+Interactive.prototype.showWarning = function(warning) {
+    this.__showFeedback__('warning', warning)
 }

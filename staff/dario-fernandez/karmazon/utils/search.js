@@ -8,7 +8,7 @@ function search(url, itemSelector, titleSelector, linkSelector, descriptionSelec
 
         var data = JSON.parse(response.content)
         
-        callback(data)
+        callback(data)   
     }
 )
 }

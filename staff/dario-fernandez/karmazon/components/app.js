@@ -6,14 +6,14 @@ function App(props) {
 
     Component.call(this, _app)
     
-    _app.innerHTML = '<h1>' + props.title + '</h1>'
+    _app.innerHTML = '<h1 class="app__title">' + props.title + '</h1>'
 
     var _login = new Login({
         onSubmit: function(username, password) {
             try {
                 authenticate(username, password)
     
-                _login.container.replaceWith(_googl.container)
+                _login.container.replaceWith(_search.container)
             } catch(error) {
                 _login.showError(error.message)
             }
@@ -42,36 +42,43 @@ function App(props) {
         }
     })
 
-    var _googl = new Search({
+    var _search = new Search({
         onSubmit: function(query) {
             searchVehicles(query, function(results) {
                 if(results instanceof Error) {
-                    alert('Network error')
+                    _search.showError(results.message)
+                } else if(results.length === 0) {
+                    _search.showWarning('No results')
                 } else {
                     var _results = new Results({ results: results, onClick: function(id){
                         searchDetails(id, function(response) {
                             var details = new Details(response)
                             _results.container.replaceWith(details.container)
 
-                            details.container.querySelector('p').addEventListener('click', function() {
+                            details.container.querySelector('i').addEventListener('click', function() {
                                 details.container.replaceWith(_results.container)
                             })
                         })
                         
                     } })
-                    if (!_googlResults){
-                        _googlResults = _results.container
-                        _app.append(_googlResults);
-                     } else {
-                    _googlResults.replaceWith(_results.container);
+                    if (!_searchResults){
+                        _searchResults = _results.container
 
-                    _googlResults = _results.container;
+                        _app.append(_searchResults);
+                     } else if(document.querySelector('article')){
+                        document.querySelector('article').replaceWith(_results.container);
+
+                        _searchResults = _results.container;
+                    } else {
+                        _searchResults.replaceWith(_results.container);
+
+                        _searchResults = _results.container;
                     }
                 }
             })
         }
     })
-    var _googlResults
+    var _searchResults
 }
 
 App.prototype = Object.create(Component.prototype)
