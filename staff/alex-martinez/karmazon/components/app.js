@@ -65,6 +65,8 @@ function App(props) {
                         back.addEventListener('click',function(e){
                             e.preventDefault();
                             detail.container.replaceWith(__results);
+
+                            __results = detail.container;
                         })
                     })
                 } });
