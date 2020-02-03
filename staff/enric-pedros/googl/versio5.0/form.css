@@ -1,0 +1,98 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.register__buttonRegister {
+  background-color: #e2e0e0;
+  margin-top: 20px;
+  width: 117px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+.register__type {
+  border-radius: 1rem;
+  border: 1px solid #b4b4b4;
+  height: 5vh;
+  margin: 2vh 0;
+  font-size: 20px;
+}
+.register--hide {
+  display: none;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+.login__username {
+  border-radius: 1rem;
+  border: 1px solid #b4b4b4;
+  height: 5vh;
+  margin: 2vh 0;
+  font-size: 20px;
+}
+.login__password {
+  border-radius: 1rem;
+  border: 1px solid #b4b4b4;
+  height: 5vh;
+  margin: 2vh 0;
+  font-size: 20px;
+}
+.login__submit {
+  background-color: #e2e0e0;
+  margin-top: 20px;
+  width: 117px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+.search__text {
+  height: 40px;
+  border: 1px solid #b4b4b4;
+  border-radius: 1rem;
+}
+.search__buton {
+  background-color: #e2e0e0;
+  width: 75px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #b4b4b4;
+  border-radius: 1rem;
+}
+.search__Two {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+.search__Three {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+/*# sourceMappingURL=form.css.map */

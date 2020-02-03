@@ -1,0 +1,230 @@
+.header {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-family: arial, sans-serif;
+  color: #000001;
+  opacity: 0.75;
+}
+.header__about {
+  display: flex;
+  list-style: none;
+  padding-left: 10px;
+  align-items: center;
+}
+.header__google {
+  padding-right: 10px;
+}
+.header__utils {
+  display: flex;
+  list-style: none;
+  padding-right: 10px;
+  align-items: center;
+}
+.header__utils > li {
+  padding-left: 10px;
+}
+.header__utils > li > button {
+  background-color: #4D90FE;
+  background-image: -webkit-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: -moz-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: -ms-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: -o-linear-gradient(top, #4d90fe, #4787ed);
+  background-image: linear-gradient(top, #4d90fe, #4787ed);
+  border: 1px solid #3079ED;
+  color: white;
+  height: 30px;
+  border-radius: 1em;
+}
+
+.container-main__title-Google {
+  padding-top: 110px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.container-main__image {
+  text-align: center;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+.register__buttonRegister {
+  background-color: #e2e0e0;
+  margin-top: 20px;
+  width: 117px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+.register__type {
+  border-radius: 1rem;
+  border: 1px solid #b4b4b4;
+  height: 5vh;
+  margin: 2vh 0;
+  font-size: 20px;
+}
+.register--hide {
+  display: none;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+.login__username {
+  border-radius: 1rem;
+  border: 1px solid #b4b4b4;
+  height: 5vh;
+  margin: 2vh 0;
+  font-size: 20px;
+}
+.login__password {
+  border-radius: 1rem;
+  border: 1px solid #b4b4b4;
+  height: 5vh;
+  margin: 2vh 0;
+  font-size: 20px;
+}
+.login__submit {
+  background-color: #e2e0e0;
+  margin-top: 20px;
+  width: 117px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+.search__text {
+  height: 40px;
+  border: 1px solid #b4b4b4;
+  border-radius: 1rem;
+}
+.search__buton {
+  background-color: #e2e0e0;
+  width: 75px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #b4b4b4;
+  border-radius: 1rem;
+}
+.search__Two {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+.search__Three {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background-color: #f2f2f2;
+  font-family: arial, sans-serif;
+  color: #000001;
+  opacity: 0.75;
+  bottom: 0;
+  height: 60px;
+  position: fixed;
+  width: 100%;
+  font-size: 13px;
+}
+.footer__footerCountry {
+  background-color: #e2e0e0;
+  border-bottom: 1px solid #c5c5c5;
+  height: 30px;
+}
+.footer__conditions {
+  display: flex;
+  background-color: #e2e0e0;
+  justify-content: space-between;
+}
+.footer__privacity {
+  list-style: none;
+  display: flex;
+  padding-left: 0;
+  height: 30px;
+}
+.footer__privacity > li {
+  margin-left: 10px;
+}
+.footer__publicity {
+  list-style: none;
+  display: flex;
+}
+.footer__publicity > li {
+  margin-right: 10px;
+}
+.footer--hide {
+  display: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.search--hide {
+  display: none;
+}
+.search input {
+  border: 1px solid #b4b4b4;
+  border-radius: 1rem;
+}
+
+.login {
+  width: 30%;
+}
+.login--hide {
+  display: none;
+}
+.login__containerButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back {
+  background-color: #0fbe35;
+  margin-top: 20px;
+  width: 117px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+.back--hide {
+  display: none;
+}
+
+.results {
+  margin-left: 18px;
+}
+
+/*# sourceMappingURL=style.css.map */

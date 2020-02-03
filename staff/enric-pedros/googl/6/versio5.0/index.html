@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Googl</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <ul class="header__about">
+            <li class="header__google">Sobre Google</li>
+            <li class="header__shop">Tienda</li>
+        </ul>
+        <ul class="header__utils">
+            <li class="header__gmail">Gmail</li>
+            <li class="header__images">Imágenes</li>
+            <li class="header__applications"><i class="fa fa-th"></i></li>
+            <li class="=header__logIn"><button>Iniciar sesión</button></li>
+        </ul>
+    </div>
+    <main class='container-main'>
+        <h1 class="container-main__title-Google">
+            <figure class="container-main__image"><img
+                    src="https://www.google.es/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="">
+            </figure>
+        </h1>
+
+        <form class="register register--hide">
+            <input class="register__type" type="text" name='name' placeholder="name" value="" required>
+            <input class="register__type" type="text" name='surname' placeholder="surname" value="" required>
+            <input class="register__type" type="text" name='usernameRegister' placeholder="username" value="" required>
+            <input class="register__type" type="password" name='passwordRegister' placeholder="password" value=""
+                required>
+            <button type="submit" class="register__buttonRegister"><a href="">Register</a></button>
+            
+        </form>
+
+        <form class="login">
+            <input class="login__username" type="text" name="username" placeholder="username" required>
+            <input class="login__password" type="password" name="password" placeholder="password" required>
+            <div class="login__containerButton">
+                <!-- <button class="login__submit" type="submit"><a href="">Login</a></button> -->
+                <!-- <button type="button" class="back"><a href="">New Register</a></button> -->
+                <a href="">Login</a>
+            </div>
+        </form>
+
+        <form class="search search--hide">
+            <input type="text" name="query" class="search__text">
+            <button type="submit" class="search__buton">Search</button>
+        </form>
+
+        <ul class="results"></ul>
+
+        <form class="search__Two search--hide">
+            <input type="text" name="query" class="search__text">
+            <button type="submit" class="search__buton">Search</button>
+        </form>
+
+        <ul class="results-2"></ul>
+
+        <form class="search__Three search--hide">
+            <input type="text" name="query" class="search__text">
+            <button type="submit" class="search__buton">Search</button>
+        </form>
+
+        <ul class="results-3"></ul>
+
+        <!-- <form class="searchFour search--hide">
+            <input type="text" name="query" class="search__text">
+            <button type="submit" class="search__buton">Search</button>
+        </form>
+
+        <ul class="results"></ul> -->
+
+    </main>
+
+    <footer class='footer'>
+        <div class="footer__footerCountry">
+            <p>España</p>
+        </div>
+        <div class="footer__conditions">
+            <ul class="footer__publicity">
+                <li>Publicidad</li>
+                <li>Como funciona la empresa</li>
+                <li>Empresa</li>
+            </ul>
+            <ul class="footer__privacity">
+                <li>Privacidad</li>
+                <li>Condiciones</li>
+                <li>Configuración</li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="utils/spy.js"></script>
+    <script src="utils/call.js"></script>
+    <script src="utils/search.js"></script>
+
+    <script src="components/login.js"></script>
+    <script src="components/register.js"></script>
+    <script src="components/search.js"></script>
+    <script src="components/results.js"></script>
+
+    <script src="data.js"></script>
+
+    <script src="logic/googl.js"></script>
+    <script src="logic/ecosia.js"></script>
+    <script src="logic/bing.js"></script>
+    <script src="logic/yahoo.js"></script>
+    <script src="logic/register.js"></script>
+    <script src="logic/authenticate.js"></script>
+    
+    <script src="main.js"></script>
+
+</body>
+
+</html>
