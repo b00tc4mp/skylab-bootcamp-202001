@@ -2,7 +2,6 @@
 
 function Search(props) {
     var search = document.createElement('form');
-
     Interactive.call(this, search);
 
     search.classList.add('search');

@@ -3,11 +3,13 @@
 var IT = '🎈🤡';
 
 function App(props) {
+
     var app = document.createElement('main');
 
     Component.call(this, app);
 
-    app.innerHTML = '<h1>' + props.title + '</h1>';
+    app.innerHTML = '<h1>' + props.title + '</h1>'
+        .concat('<h3>' + props.subtitle + '<h3>')
 
     var _login = new Login({
         onSubmit: function (username, password) {
@@ -54,7 +56,18 @@ function App(props) {
                 if (!vehicles.length)
                     return _search.showWarning('No results ' + IT);
 
-                var __results = Results({ results: vehicles });
+                var __results = Results({ results: vehicles, onClick: function(id){
+                    retrieveVehicle(id, function(results){
+                        var detail = new Detail(results);
+                        __results.replaceWith(detail.container);
+                        
+                        var back = document.querySelector('a');
+                        back.addEventListener('click',function(e){
+                            e.preventDefault();
+                            detail.container.replaceWith(__results);
+                        })
+                    })
+                } });
 
                 if (!_results)
                     app.append(_results = __results);
@@ -66,6 +79,7 @@ function App(props) {
             });
         }
     });
+
 
     var _results;
 }
