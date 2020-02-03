@@ -1,26 +1,30 @@
-describe('retrieve vehicles',function(){
-    it('should succeed on matching id', function(done){
-        retrieveVehicle('FYG29',function(response){
-            expect(response).toBeDefined();
-                expect(response).not.toBeInstanceOf(Error);
-                expect(typeof response.name).toBe('string');
-                expect(typeof response.collection).toBe('string');
-                expect(typeof response.description).toBe('string');
-                expect(typeof response.price).toBe('number');
-            
-            done();
-        });
-    });
+describe('retrieveVehicle', () => {
+    it('should succeed on matching vehicle id', done => {
+        const ids = ['FYF46', 'FYF93', 'FYD43', 'FYD16', 'FYC00', 'FYC05', 'FYF75', 'FYB99', 'FYC82', 'FYD62', 'FYD19', 'FYC38', 'FYC55', 'FYD18', 'FJW82', 'FYG57', 'FYD55', 'FYD65', 'FJY64', 'FJY65']
 
-    it('should fail if non string id',function(){
-        expect(function(){
-            retrieveVehicle(true, function(){});
-        }).toThrowError(TypeError, 'true is not a string');
+        const id = ids.random()
 
-        expect(function(){
-            retrieveVehicle(1234,function(){});
-        }).toThrowError(TypeError, '1234 is not a string');
+        retrieveVehicle(id, vehicle => {
+            expect(vehicle).not.toBeInstanceOf(Error)
 
-    });
+            expect(vehicle.id).toBe(id)
+            expect(typeof vehicle.name).toBe('string')
+            expect(typeof vehicle.year).toBe('number')
+            // TODO ...
 
-});
+            done()
+        })
+    })
+
+    it('should return null on non-matching vehicle id', done => {
+        const id = 'non-valid-id'
+
+        retrieveVehicle(id, vehicle => {
+            expect(vehicle).not.toBeInstanceOf(Error)
+
+            expect(vehicle).toBeNull()
+
+            done()
+        })
+    })
+})
