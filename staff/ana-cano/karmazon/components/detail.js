@@ -1,44 +1,51 @@
-"use strict";
+class Detail extends Component {
+    constructor({ vehicle: { name, year, price, image, color, maker, collection, description, url }, style: { name: styleName, image: styleImage, url: styleUrl } }) {
+        super(document.createElement('article'))
 
-function Detail(results) {
-    var detail = document.createElement("article");
-    Component.call(this, detail);
-    detail.classList.add("detail");
-    var title = document.createElement("h3");
-    title.innerText += results.name + ' - Id#' + results.id;
-    detail.append(title);
-    
-    var figure = document.createElement('figure');
-    var image = document.createElement('img');
-    image.src = results.image;
-    figure.append(image);
-    detail.append(figure);
-    
-    var year = document.createElement("span");
-    year.innerText += 'Year: ' + results.year;
-    detail.append(year);
-    
-    var maker = document.createElement("span");
-    maker.innerText += 'Maker: ' + results.maker;
-    detail.append(maker);
-    
-    var collection = document.createElement("span");
-    collection.innerText += 'Collection: ' + results.collection;
-    detail.append(collection);
-    
-    var style = document.createElement("span");
-    style.innerText += 'Style: ' + results.style;
-    detail.append(style);
-    var description = document.createElement('p');
-    description.innerText += 'Description: ' + results.description;
-    detail.append(description);
-    var link = document.createElement("a");
-    link.href = results.url;
-    link.innerText += 'Link to URL: ' + results.url;
-    detail.append(link);
+        const detail = this.container
 
 
+        const _name = document.createElement('h3')
+        _name.innerText = name + ' (' + year + ')'
+        detail.append(_name)
+
+        const _image = document.createElement('img')
+        _image.src = image
+        detail.append(_image)
+
+        const _price = document.createElement('span')
+        _price.innerText = price + ' €'
+        detail.append(_price)
+
+        const _color = document.createElement('p')
+        _color.innerText = color
+        detail.append(_color)
+
+        const _maker = document.createElement('p')
+        _maker.innerText = maker
+        detail.append(_maker)
+
+        const _collection = document.createElement('p')
+        _collection.innerText = collection
+        detail.append(_collection)
+
+        const style = document.createElement('p')
+        const styleLink = document.createElement('a')
+        styleLink.innerText = styleName
+        styleLink.href = styleUrl
+        style.append(styleLink)
+        const _styleImage = document.createElement('img')
+        _styleImage.src = styleImage
+        style.append(_styleImage)
+        detail.append(style)
+
+        const _description = document.createElement('p')
+        _description.innerText = description
+        detail.append(_description)
+
+        const link = document.createElement('a')
+        link.innerText = url
+        link.href = url
+        detail.append(link)
+    }
 }
-
-Detail.prototype = Object.create(Component.prototype);
-Detail.prototype.constructor = Detail;
