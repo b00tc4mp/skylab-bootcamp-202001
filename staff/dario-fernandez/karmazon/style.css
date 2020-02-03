@@ -126,7 +126,6 @@ body {
   justify-content: flex-start;
   align-items: center;
   height: 90%;
-  max-height: 90vh;
   color: white;
 }
 .register__container {
@@ -346,6 +345,7 @@ body {
 .details__close {
   font-size: 1.5rem;
   color: #e23f3d;
+  align-self: flex-start;
 }
 .details__close:hover {
   cursor: pointer;

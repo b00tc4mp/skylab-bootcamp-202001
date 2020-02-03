@@ -52,11 +52,12 @@ function App(props) {
                 } else {
                     var _results = new Results({ results: results, onClick: function(id){
                         searchDetails(id, function(response) {
-                            var details = new Details(response)
+                            details = new Details(response)
                             _results.container.replaceWith(details.container)
 
                             details.container.querySelector('i').addEventListener('click', function() {
                                 details.container.replaceWith(_results.container)
+                                details = null
                             })
                         })
                         
@@ -65,8 +66,8 @@ function App(props) {
                         _searchResults = _results.container
 
                         _app.append(_searchResults);
-                     } else if(document.querySelector('article')){
-                        document.querySelector('article').replaceWith(_results.container);
+                     } else if(details){
+                        details.container.replaceWith(_results.container);
 
                         _searchResults = _results.container;
                     } else {
@@ -74,11 +75,13 @@ function App(props) {
 
                         _searchResults = _results.container;
                     }
+                    details = false
                 }
             })
         }
     })
     var _searchResults
+    var details
 }
 
 App.prototype = Object.create(Component.prototype)
