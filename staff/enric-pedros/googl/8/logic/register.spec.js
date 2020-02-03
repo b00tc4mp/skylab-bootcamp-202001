@@ -1,7 +1,7 @@
 'use strict';
-
 ​describe('register', function () {
-​
+    debugger
+​   
     var user;
 ​
     beforeEach(function () {
