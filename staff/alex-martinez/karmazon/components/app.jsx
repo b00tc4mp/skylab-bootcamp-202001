@@ -6,7 +6,7 @@ class App extends Component {
     constructor() {
         super()
 
-        this.state = { loggedIn: !false, vehicles: undefined, vehicle: undefined, style: undefined }
+        this.state = { loggedIn: !false, vehicles: undefined, vehicle: undefined, style: undefined, error}
     }
 
     render() {
@@ -19,7 +19,7 @@ class App extends Component {
 
                     this.setState({ loggedIn: true })
                 } catch (error) {
-                    //_login.showError(error.message + ' ' + IT)
+                    
                 }
             }} />}
 
@@ -31,13 +31,17 @@ class App extends Component {
 
             {this.state.vehicles && !this.state.vehicle && <Results results={this.state.vehicles} onItemClick={id => {
                 retrieveVehicle(id, vehicle =>
-                    retrieveStyle(vehicle.style, style =>
+                    retrieveStyle(vehicle.style, style => {
                         this.setState({ vehicle, style })
+                    }
                     )
                 )
             }} />}
 
-            {this.state.vehicle && <Detail vehicle={this.state.vehicle} style={this.state.style} />}
+            {this.state.vehicle && <Detail vehicle={this.state.vehicle} style={this.state.style} goBack={ ()=> {this.state.vehicles
+            this.setState({ vehicle : undefined})}
+            }
+            />}
         </main>
     }
 }

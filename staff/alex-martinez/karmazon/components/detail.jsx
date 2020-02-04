@@ -1,4 +1,4 @@
-function Detail({ vehicle: { name, year, price, image, color, maker, collection, description, url }, style: { name: styleName, image: styleImage, url: styleUrl } }) {
+function Detail({ vehicle: { name, year, price, image, color, maker, collection, description, url }, style: { name: styleName, image: styleImage, url: styleUrl } , goBack}) {
     return <li>
         <h3>{name} ({year})</h3>
         <img src={image} />
@@ -12,5 +12,10 @@ function Detail({ vehicle: { name, year, price, image, color, maker, collection,
         </p>
         <p>{description}</p>
         <a href={url}>{url}</a>
+        <a href="" onClick={event => {
+            event.preventDefault()
+            goBack()
+        }} >Go Back</a>
+
     </li>
 }
