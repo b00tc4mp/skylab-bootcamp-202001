@@ -8,7 +8,7 @@ class App extends Component {
 
         handleRegister = (name, surname, username, password) => {
             try {
-                Register(name, surname, username, password)
+                register(name, surname, username, password)
 
                 this.setState({ view: 'login'})
             } catch (error) {

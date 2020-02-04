@@ -1,8 +1,17 @@
-function authenticate(username, password) {
+function authenticate(username, password, callback) {
     if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
     if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
 
-    const user = users.find(user => user.username === username)
+    call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`,{
+        method: 'POST',
+        headers: {'Content-Type': 'application-json'},
+        body: JSON.stringify(username,password)
 
-    if (!user || user.password !== password) throw new Error('Wrong credentials')
+    },response =>{
+        if(response instanceof Error) return callback(response)
+        if(response === 200) callback(response)
+    }
+    )
+
+    
 }

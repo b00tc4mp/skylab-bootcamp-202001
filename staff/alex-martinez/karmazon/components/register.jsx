@@ -1,5 +1,14 @@
 function Register({onSubmit, goToLogin, error}) {
-    return <form>
+    return <form onSubmit={event => {
+        event.preventDefault()
+
+        const name = event.target.name.value
+        const surname = event.target.surname.value
+        const username = event.target.username.value
+        const password = event.target.password.value
+
+        onSubmit(name,surname,username,password)}}>
+        
         <h2>Sign-up</h2>
         
         {error && <Feedback level='error' message={error}/>}
@@ -8,10 +17,7 @@ function Register({onSubmit, goToLogin, error}) {
         <input type="text" name="surname" placeholder="surname"/>
         <input type="text" name="username" placeholder="username"/>
         <input type="password" name="password" placeholder="password"/>
-        <button onSubmit={event => {
-            event.preventDefault()
-            onSubmit()
-        }}>Register</button>
+        <button>Register</button>
         <a href="" onClick={event => {
             event.preventDefault()
             goToLogin()}
