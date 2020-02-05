@@ -5,7 +5,7 @@ function Login({ onSubmit, goToRegister, error }) {
 
         const username = event.target.username.value
         const password = event.target.password.value
-
+        
         onSubmit(username, password)
     }}>
         <h2>Sign-in</h2>

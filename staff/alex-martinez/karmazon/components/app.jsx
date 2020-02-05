@@ -8,9 +8,11 @@ class App extends Component {
 
         handleRegister = (name, surname, username, password) => {
             try {
-                register(name, surname, username, password)
+                register(name, surname, username, password, ()=>{
 
-                this.setState({ view: 'login'})
+                    this.setState({ view: 'login'})
+                })
+
             } catch (error) {
                 this.setState({error: `${error}.message ${IT}`})
 
@@ -22,9 +24,15 @@ class App extends Component {
 
         handleLogin = (username, password) => {
             try {
-                authenticate(username, password)
+                
+                authenticate(username, password, token =>{
+        
+                    const tokenResponse = JSON.parse(token.content).token
+                
+                    localStorage.setItem("token", tokenResponse)
 
-                this.setState({ view: 'search'})
+                    this.setState({ view: 'search'})
+                })
             } catch (error) {
                 this.setState({error: `${error}.message ${IT}`})
                 setTimeout(()=>{
@@ -71,7 +79,7 @@ class App extends Component {
 
             {view === 'search' && vehicles && !vehicle && <Results results={vehicles} onItemClick={handleDetail} />}
 
-            {view === 'search' && vehicle && <Detail vehicle={vehicle} style={style} goBack={handleGoBack}
+            {view === 'search' && vehicle && vehicles && <Detail vehicle={vehicle} style={style} goBack={handleGoBack}
             />}
         </Fragment>
     }

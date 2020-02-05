@@ -6,7 +6,7 @@ function Register({onSubmit, goToLogin, error}) {
         const surname = event.target.surname.value
         const username = event.target.username.value
         const password = event.target.password.value
-
+        
         onSubmit(name,surname,username,password)}}>
         
         <h2>Sign-up</h2>
