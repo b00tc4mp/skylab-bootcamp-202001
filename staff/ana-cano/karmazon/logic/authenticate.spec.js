@@ -1,7 +1,9 @@
-describe('authenticate', () => {
+'use strict';
+
+describe('authenticate', function () {
     var user;
 
-    beforeEach(() => {
+    beforeEach(function () {
         users.length = 0;
 
         user = {
@@ -9,38 +11,38 @@ describe('authenticate', () => {
             surname: 'surname-' + Math.random(),
             username: 'username-' + Math.random(),
             password: 'password-' + Math.random()
-        }
-    })
+        };
+    });
 
-    describe('when user already exists', () => {
-        beforeEach(() => {
-            users.push(user)
-        })
+    describe('when user already exists', function () {
+        beforeEach(function () {
+            users.push(user);
+        });
 
-        it('should succeed on correct credentials', () => {
-            expect(() => {
+        it('should succeed on correct credentials', function () {
+            expect(function () {
                 authenticate(user.username, user.password);
             }).not.toThrow();
-        })
+        });
 
-        it('should fail on incorrect credentials', () => {
-            expect(() => {
+        it('should fail on incorrect credentials', function () {
+            expect(function () {
                 authenticate(user.username, user.password + '-wrong');
             }).toThrowError(Error, 'Wrong credentials');
 
-            expect(() => {
+            expect(function () {
                 authenticate(user.username + '-wrong', user.password);
             }).toThrowError(Error, 'Wrong credentials');
-        })
-    })
+        });
+    });
 
-    it('should fail when user does not exist', () => {
-        expect(function() {
+    it('should fail when user does not exist', function () {
+        expect(function () {
             authenticate(user.username, user.password);
         }).toThrowError(Error, 'Wrong credentials');
-    })
+    });
 
-    afterEach(() => {
-        users.length = 0
-    })
-})
+    afterEach(function () {
+        users.length = 0;
+    });
+});

@@ -10,7 +10,7 @@ class Search extends Interactive {
             <input type="text" name="query" placeholder="criteria">
             <button type="submit">Search</button>`
 
-        search.addEventListener('submit', function(event) {
+        search.addEventListener('submit', function (event) {
             event.preventDefault()
 
             const query = this.query.value
@@ -18,7 +18,6 @@ class Search extends Interactive {
             onSubmit(query)
         })
     }
-
     __locateFeedbackInContainer__(feedback) {
         this.container.append(feedback.container)
     }

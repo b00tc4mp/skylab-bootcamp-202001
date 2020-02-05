@@ -10,8 +10,8 @@ class Feedback extends Component {
         feedback.innerText = props.message
 
         // feedback.showMessage = function (message) {
-        //     this.innerText = message
-        // }
+        //     this.innerText = message;
+        // };
         feedback.showMessage = message => feedback.innerText = message
     }
 }

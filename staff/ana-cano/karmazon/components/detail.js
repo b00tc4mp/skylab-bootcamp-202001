@@ -1,51 +1,60 @@
 class Detail extends Component {
-    constructor({ vehicle: { name, year, price, image, color, maker, collection, description, url }, style: { name: styleName, image: styleImage, url: styleUrl } }) {
+    constructor({results: { name, year, price, image, color, maker, collection, description, url }, onClick}) {
         super(document.createElement('article'))
 
         const detail = this.container
 
+        detail.classList.add("detail")
 
-        const _name = document.createElement('h3')
-        _name.innerText = name + ' (' + year + ')'
-        detail.append(_name)
+        const _title = document.createElement("h3")
+        _title.innerText += name 
+        detail.append(_title)
 
+        const _figure = document.createElement('figure')
         const _image = document.createElement('img')
         _image.src = image
-        detail.append(_image)
+        _figure.append(_image)
+        detail.append(_figure)
 
-        const _price = document.createElement('span')
-        _price.innerText = price + ' €'
-        detail.append(_price)
+        const _year = document.createElement("span")
+        _year.classList.add('year')
+        _year.innerText = year
+        detail.append(_year)
 
-        const _color = document.createElement('p')
-        _color.innerText = color
-        detail.append(_color)
-
-        const _maker = document.createElement('p')
+        const _maker = document.createElement("span")
+        _maker.classList.add('maker')
         _maker.innerText = maker
         detail.append(_maker)
 
-        const _collection = document.createElement('p')
+        const _collection = document.createElement("span")
+        _collection.classList.add('collection')
         _collection.innerText = collection
         detail.append(_collection)
 
-        const style = document.createElement('p')
-        const styleLink = document.createElement('a')
-        styleLink.innerText = styleName
-        styleLink.href = styleUrl
-        style.append(styleLink)
-        const _styleImage = document.createElement('img')
-        _styleImage.src = styleImage
-        style.append(_styleImage)
-        detail.append(style)
+        // const _style = document.createElement("span")
+        // _style.classList.add('style')
+        // _style.innerText = style
+        // detail.append(_style)
 
         const _description = document.createElement('p')
         _description.innerText = description
         detail.append(_description)
 
-        const link = document.createElement('a')
-        link.innerText = url
-        link.href = url
-        detail.append(link)
+        const _link = document.createElement("a")
+        _link.href = url
+        _link.innerText = url
+        detail.append(_link)
+
+        const _back = document.createElement('button')
+        _back.innerText = "X"
+        detail.append(_back)
+
+
+        _back.addEventListener('click', function (event) {
+            event.preventDefault()
+
+            onClick()
+        })
+
     }
 }

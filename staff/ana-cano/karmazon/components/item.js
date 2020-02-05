@@ -1,21 +1,26 @@
 class Item extends Component {
-    constructor({ item: { id, name, thumbnail, price }, onClick }) {
-        super(document.createElement('li'))
-
+    constructor({ result: { id, name, thumbnail, price }, onClick }) {
+        super(document.createElement('article')) 
         const item = this.container
+        item.classList.add('item')
 
-        item.addEventListener('click', () => onClick(id))
-
-        const _name = document.createElement('h3')
+        var _name = document.createElement('h3')
         _name.innerText = name
         item.append(_name)
 
-        const image = document.createElement('img')
+        var figure = document.createElement('figure')
+        var anchor = document.createElement('a')
+        var image = document.createElement('img')
         image.src = thumbnail
-        item.append(image)
+        anchor.append(image)
+        figure.append(anchor)
+        item.append(figure)
 
-        const _price = document.createElement('span')
-        _price.innerText = price
+        var _price = document.createElement('span')
+        _price.innerText += "price: " + price + "€"
         item.append(_price)
+
+        item.addEventListener('click', () => onClick(id))
+
     }
 }
