@@ -1,5 +1,5 @@
 function Register({onSubmit, goToLogin, error}) {
-    return <form onSubmit={event => {
+    return <form className = "register" onSubmit={event => {
         event.preventDefault()
 
         const name = event.target.name.value
