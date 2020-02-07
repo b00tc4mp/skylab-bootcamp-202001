@@ -13,6 +13,7 @@ function registerUser(name, surname, username, password, callback) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, surname, username, password })
+   
     }, response => {
         if (response instanceof Error) return callback(response)
 

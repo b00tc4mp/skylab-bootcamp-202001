@@ -44,6 +44,7 @@ describe('retrieveUser', () => {
 
         it('should succeed on correct token', done =>
             retrieveUser(token, user => {
+                const user= JSON.parse(user)
                 expect(user).not.toBeInstanceOf(Error)
 
                 expect(user.name).toBe(name)
