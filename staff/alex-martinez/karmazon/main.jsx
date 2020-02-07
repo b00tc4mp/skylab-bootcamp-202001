@@ -1,4 +1,1 @@
-ReactDOM.render(
-    <App title="Karmazon" />,
-    document.querySelector('#root')
-)
+ReactDOM.render(<App title="Karmazon App" />, document.querySelector('#root'))
