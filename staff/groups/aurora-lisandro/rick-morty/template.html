@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rick & Morty App</title>
+</head>
+
+<body>
+    <main class="root">
+        <nav class="nav">
+            <button class="nav__menu"><i class="fas fa-bars"></i></button>
+
+            <div class="nav__right">
+                <button class="nav__user"><i class="fas fa-user"></i></button>
+                <button clas=" nav__logout"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </nav>
+
+        <h1 class="title">Rick and Morty App</h1>
+
+        <form class="login">
+            <h1 class="login__title">Sign-in</h1>
+
+            <input class="login__input" type="text" name="username" placeholder="username" />
+
+            <input class="login__input" type="password" name="password" placeholder="password" />
+
+            <button class="login__buttton" type="submit">Login</button>
+
+            <a class="login__link" href=""> Are you not register yet? Register!</a>
+
+        </form>
+
+
+        <form class="register">
+            <h2 class="register__title">Sign-Up</h2>
+
+            <input type="text" class="register__input" name="name" placeholder="Name">
+            <input type="text" class="register__input" name="surname" placeholder="Surname">
+            <input type="text" class="register__input" name="username" placeholder="Username">
+            <input type="text" class="register__input" name="password" placeholder="Password">
+
+            <button class="register__button" type="submit">Register</button>
+            <a href="" class="register__link">Already a user? Sing-in!</a>
+        </form>
+
+        <form class="search">
+            <h2 class="search__title">Search</h2>
+
+            <input type="text" class="search__input" placeholder="Type your search"><button type="submit"
+                class="search__button"><i class="fas fa-search"></i></button>
+
+        </form>
+        <section class="results">
+            <h3 class="results__title">Your search results</h3>
+
+            <ul class="results__list">
+
+                <li class="item">
+                    <img src="https://fakeimg.pl/300x300/aaaaaa/">
+                    <div>
+                        <h3>Name</h3>
+                        <i class="fas fa-heart"></i>
+                        <i class="far fa-heart"></i>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="https://fakeimg.pl/300x300/aaaaaa/">
+                    <div>
+                        <h3>Name</h3>
+                        <i class="fas fa-heart"></i>
+                        <i class="far fa-heart"></i>
+                    </div>
+                </li>
+                <li class="item">
+                    <img src="https://fakeimg.pl/300x300/aaaaaa/">
+                    <div>
+                        <h3>Name</h3>
+                        <i class="fas fa-heart"></i>
+                        <i class="far fa-heart"></i>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <li class="item">
+            <img src="https://fakeimg.pl/300x300/aaaaaa/">
+            <div>
+                <h3>Name</h3>
+                <i class="fas fa-heart"></i>
+                <i class="far fa-heart"></i>
+            </div>
+        </li>
+
+        <br>
+        <br>
+        <br>
+
+        <article class="details">
+            <header class="details__header">
+                <button class="details__back-button"><i class="fas fa-chevron-circle-left"></i></button>
+                <h2 class="details__title">Info</h2>
+            </header>
+            <seaction class="details__card">
+                <div class="details__card-item">
+                    <img src="https://fakeimg.pl/300x300/aaaaaa/" alt="" class="details__img">
+                    <div>
+                        <h3>Name</h3>
+                        <i class="fas fa-heart"></i>
+                        <i class="far fa-heart"></i>
+                    </div>
+                </div>
+                <ul class="details__card-list">
+                    <li class="details__list-item">
+                        <p>what</p>
+                        <p>info</p>
+                    </li>
+                    <li class="details__list-item">
+                        <p>what</p>
+                        <p>info</p>
+                    </li>
+                    <li class="details__list-item">
+                        <p>what</p>
+                        <p>info</p>
+                    </li>
+                    <li class="details__list-item">
+                        <p>what</p>
+                        <p>info</p>
+                    </li>
+                    <li class="details__list-item">
+                        <p>what</p>
+                        <p>info</p>
+                    </li>
+                </ul>
+            </seaction>
+        </article>
+
+        <section class="favorites">
+            <h3 class="favorites__title">Your favorites</h3>
+
+            <ul class="favorites__list">
+                <nav class="favorites__nav">
+                    <a href=""><img src="https://fakeimg.pl/300x300/000000/">Characters</a>
+                    <a href=""><img src="https://fakeimg.pl/300x300/000000/">Episodes</a>
+                </nav>
+
+                <li class="favorites__item item">
+                    <img src="https://fakeimg.pl/300x300/000000/">
+                    <div>
+                        <h3>Name</h3>
+                        <i class="fas fa-heart"></i>
+                        <i class="far fa-heart"></i>
+                    </div>
+                </li>
+
+            </ul>
+
+        </section>
+    </main>
+</body>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+
+</html>
