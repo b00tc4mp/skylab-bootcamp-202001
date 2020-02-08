@@ -22,6 +22,13 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
+.details__card {
+  display: flex;
+  flex-wrap: wrap;
+  width: 90%;
+  justify-content: center;
+}
+
 main, .login, .register {
   display: flex;
   flex-direction: column;
@@ -38,9 +45,9 @@ main, .login, .register {
 }
 
 .nav {
-  overflow: hidden;
+  box-sizing: border-box;
   background-color: #6FC41C;
-  position: fixed;
+  position: sticky;
   top: 0;
   display: flex;
   justify-content: space-between;
@@ -70,10 +77,6 @@ main, .login, .register {
   border-radius: 5px;
   margin-top: 2rem;
 }
-h3 {
-  margin-left: 3rem;
-}
-
 .results {
   width: 100%;
 }
@@ -92,6 +95,28 @@ h3 {
 .login__link {
   font-size: 0.7rem;
   text-align: center;
+}
+
+.details {
+  width: 90%;
+  margin-top: 0.5rem;
+}
+.details__title {
+  text-align: center;
+  margin: 0.5rem 0 0.5rem 0;
+}
+.details__card {
+  justify-content: flex-start;
+  width: 100%;
+}
+.details__card-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: #6d6b6b;
+}
+.details__img {
+  width: 100%;
 }
 
 h1 {
