@@ -1,0 +1,90 @@
+body {
+  background-color: #303055;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #11ACCA;
+  margin: 0;
+}
+
+main, .register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register__input {
+  border: none;
+  background-color: #303055;
+  width: 60%;
+  height: 7%;
+  border-radius: 5px;
+}
+
+.nav {
+  overflow: hidden;
+  background-color: #6FC41C;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  color: #303055;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  width: 100%;
+}
+.nav__options {
+  display: none;
+  display: hidden;
+  flex-direction: column;
+  font-size: 1rem;
+}
+.nav__user {
+  color: #303055;
+  top: 0;
+  font-size: 1rem;
+}
+
+.register {
+  justify-content: space-evenly;
+  width: 60%;
+  height: 50%;
+  line-height: 3rem;
+  background-color: #797474;
+  border-radius: 5px;
+  margin-top: 2rem;
+}
+h3 {
+  margin-left: 3rem;
+}
+
+.results {
+  width: 100%;
+}
+.results__list {
+  width: 70%;
+}
+h1 {
+  margin-top: 80px;
+}
+
+main {
+  height: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */
