@@ -5,24 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Rick & Morty App</title>
 </head>
 
 <body>
     <main class="root">
         <nav class="nav">
-            <button class="nav__menu"><i class="fas fa-bars"></i></button>
-
-            <div class="nav__right">
+            <div class="nav__left-container">
+                <a class="nav__menu" href="javascript:void(0);" onClick="deployMenu()"><i class="fas fa-bars"></i></a>
+                <div class="nav__options">
+                    <a href="">Search characters</a>
+                    <a href="">Search episodes</a>
+                    <a href="">Favorites</a>
+                    <a href="" class=" nav__logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </div>
+            <div>
                 <button class="nav__user"><i class="fas fa-user"></i></button>
-                <button clas=" nav__logout"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </nav>
+
 
         <h1 class="title">Rick and Morty App</h1>
 
         <form class="login">
-            <h1 class="login__title">Sign-in</h1>
+            <h2 class="login__title">Sign-in</h2>
 
             <input class="login__input" type="text" name="username" placeholder="username" />
 
@@ -30,10 +38,13 @@
 
             <button class="login__buttton" type="submit">Login</button>
 
-            <a class="login__link" href=""> Are you not register yet? Register!</a>
+            <a class="login__link" href="">
+                 <p>Are you not registered yet?</p>
+                <p>Register!</p>
+            </a>
 
         </form>
-
+        <!-- 
 
         <form class="register">
             <h2 class="register__title">Sign-Up</h2>
@@ -45,9 +56,9 @@
 
             <button class="register__button" type="submit">Register</button>
             <a href="" class="register__link">Already a user? Sing-in!</a>
-        </form>
+        </form> -->
 
-        <form class="search">
+        <!-- <form class="search">
             <h2 class="search__title">Search</h2>
 
             <input type="text" class="search__input" placeholder="Type your search"><button type="submit"
@@ -93,9 +104,9 @@
                 <i class="fas fa-heart"></i>
                 <i class="far fa-heart"></i>
             </div>
-        </li>
+        </li> -->
 
-        <br>
+        <!--        <br>
         <br>
         <br>
 
@@ -158,10 +169,20 @@
 
             </ul>
 
-        </section>
+        </section> -->
     </main>
 </body>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
+<script>
+    function deployMenu() { //TODO adapt to react
+        var x = document.querySelector(".nav__options");
+        if (x.style.display === "flex") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "flex";
+        }
+    }
+</script>
 
 </html>
