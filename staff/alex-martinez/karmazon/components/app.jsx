@@ -1,86 +1,193 @@
-const IT = '🎈🤡'
+const IT = "🎈🤡";
 
-const { Component, Fragment } = React
+const { Component, Fragment } = React;
 
 class App extends Component {
+  state = {
+    view: "login",
+    vehicles: undefined,
+    vehicle: undefined,
+    style: undefined,
+    error: undefined
+  };
 
-        state = { view: 'login', vehicles: undefined, vehicle: undefined, style: undefined, error: undefined}
+  componentWillMount() {
+    const { token } = sessionStorage;
 
-        handleRegister = (name, surname, username, password) => {
-            try {
-                register(name, surname, username, password, ()=>{
+    if (token)
+      retrieveUser(token, (error, user) => {
+        if (error) return this.setState({ error: error.message + " " + IT });
 
-                    this.setState({ view: 'login'})
-                })
+        if (location.search) {
+          const query = location.search.split("=")[1];
 
-            } catch (error) {
-                this.setState({error: `${error}.message ${IT}`})
+          searchVehicles(query, (error, vehicles) => {
+            if (error)
+              return this.setState({ error: error.message + " " + IT });
 
-                setTimeout(()=>{
-                    this.setState({error: undefined})
-                },3000)
-            }
-        }
+            this.setState({
+              view: "search",
+              user,
+              query,
+              vehicles,
+              error: vehicles.length ? undefined : "No results " + IT
+            });
 
-        handleLogin = (username, password) => {
-            try {
-                
-                authenticate(username, password, token =>{
-        
-                    const tokenResponse = JSON.parse(token.content).token
-                
-                    localStorage.setItem("token", tokenResponse)
+            if (!vehicles.length)
+              setTimeout(() => {
+                this.setState({ error: undefined });
+              }, 3000);
+          });
+        } else this.setState({ view: "search", user });
+      });
+    else this.setState({ view: "login" });
+  }
 
-                    this.setState({ view: 'search'})
-                })
-            } catch (error) {
-                this.setState({error: `${error}.message ${IT}`})
-                setTimeout(()=>{
-                    this.setState({error: undefined})
-                },3000)
-            }
-        }
+  handleRegister = (name, surname, username, password) => {
+    try {
+      register(name, surname, username, password, error => {
+        if (error) {
+          this.setState({ error: error.message + " " + IT });
 
-        handleGoToRegister = () => this.setState({view: 'register'})
+          setTimeout(() => {
+            this.setState({ error: undefined });
+          }, 3000);
+        } else this.setState({ view: "login" });
+      });
+    } catch (error) {
+      this.setState({ error: error.message + " " + IT });
 
-        handleGoToLogin = () => this.setState({view: 'login'})
-
-        handleSearch = query => {
-            searchVehicles(query, vehicles =>
-                this.setState({ vehicles })
-            )
-        }
-
-        handleDetail = id => {
-            retrieveVehicle(id, vehicle =>
-                retrieveStyle(vehicle.style, style => {
-                    this.setState({ vehicle, style })
-                }
-                )
-            )
-        }
-
-        handleGoBack =  () => this.setState({ vehicle : undefined})
-    
-
-    render() {
-
-        const {props: {title}, state: {view, vehicles, vehicle, style, error}, handleLogin, handleRegister, 
-        handleGoToRegister, handleGoToLogin, handleSearch, handleDetail, handleGoBack} = this
-
-        return <Fragment>
-            <h1>{title}</h1>
-
-            {view === 'login' && <Login onSubmit={handleLogin} goToRegister={handleGoToRegister} error={error}/>}
-
-            {view === 'register' && <Register onSubmit={handleRegister} goToLogin={handleGoToLogin} error={error}/>}
-
-            {view === 'search' && <Search title="Search" onSubmit={handleSearch} warning={error}/>}
-
-            {view === 'search' && vehicles && !vehicle && <Results results={vehicles} onItemClick={handleDetail} />}
-
-            {view === 'search' && vehicle && vehicles && <Detail vehicle={vehicle} style={style} goBack={handleGoBack}
-            />}
-        </Fragment>
+      setTimeout(() => {
+        this.setState({ error: undefined });
+      }, 3000);
     }
+  };
+
+  handleLogin = (username, password) => {
+    try {
+      authenticate(username, password, (error, token) => {
+        if (error) {
+          this.setState({ error: error.message + " " + IT });
+
+          setTimeout(() => {
+            this.setState({ error: undefined });
+          }, 3000);
+        } else {
+          retrieveUser(token, (error, user) => {
+            if (error)
+              return this.setState({ error: error.message + " " + IT });
+
+            sessionStorage.token = token;
+
+            this.setState({ view: "search", user });
+          });
+        }
+      });
+    } catch (error) {
+      this.setState({ error: error.message + " " + IT });
+
+      setTimeout(() => {
+        this.setState({ error: undefined });
+      }, 3000);
+    }
+  };
+
+  handleGoToRegister = () => this.setState({ view: "register" });
+
+  handleGoToLogin = () => this.setState({ view: "login" });
+
+  handleSearch = query => {
+    try {
+      searchVehicles(query, (error, vehicles) => {
+        if (error) return this.setState({ error: error.message + " " + IT });
+
+        const { protocol, host, pathname } = location;
+
+        const url = `${protocol}//${host}${pathname}?q=${query}`;
+
+        history.pushState({ path: url }, "", url);
+
+        this.setState({
+          vehicles,
+          vehicle: undefined,
+          error: vehicles.length ? undefined : "No results " + IT
+        });
+
+        if (!vehicles.length)
+          setTimeout(() => {
+            this.setState({ error: undefined });
+          }, 3000);
+      });
+    } catch (error) {
+      this.setState({ error: error.message + " " + IT });
+
+      setTimeout(() => {
+        this.setState({ error: undefined });
+      }, 3000);
+    }
+  };
+
+  handleDetail = id => {
+    retrieveVehicle(id, (error, vehicle) => {
+      if (error) return this.setState({ error: error.message + " " + IT });
+
+      retrieveStyle(vehicle.style, (error, style) => {
+        if (error) return this.setState({ error: error.message + " " + IT });
+
+        this.setState({ vehicle, style, vehicles: undefined });
+      });
+    });
+  };
+
+  handleGoBack = () => this.setState({ vehicle: undefined });
+
+  render() {
+    const {
+      props: { title },
+      state: { view, vehicles, vehicle, style, error, user },
+      handleLogin,
+      handleRegister,
+      handleGoToRegister,
+      handleGoToLogin,
+      handleSearch,
+      handleDetail,
+      handleGoBack
+    } = this;
+
+    return (
+      <Fragment>
+        <h1>{title}</h1>
+
+        {user && <h2>{user.name}</h2>}
+
+        {view === "login" && (
+          <Login
+            onSubmit={handleLogin}
+            goToRegister={handleGoToRegister}
+            error={error}
+          />
+        )}
+
+        {view === "register" && (
+          <Register
+            onSubmit={handleRegister}
+            goToLogin={handleGoToLogin}
+            error={error}
+          />
+        )}
+
+        {view === "search" && (
+          <Search title="Search" onSubmit={handleSearch} warning={error} />
+        )}
+
+        {view === "search" && vehicles && !vehicle && (
+          <Results results={vehicles} onItemClick={handleDetail} />
+        )}
+
+        {view === "search" && vehicle && vehicles && (
+          <Detail vehicle={vehicle} style={style} goBack={handleGoBack} />
+        )}
+      </Fragment>
+    );
+  }
 }
