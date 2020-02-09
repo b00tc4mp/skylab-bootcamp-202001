@@ -1,0 +1,1 @@
+ReactDOM.render(<App title="Rick and Morty App" />, document.querySelector('#root'))
