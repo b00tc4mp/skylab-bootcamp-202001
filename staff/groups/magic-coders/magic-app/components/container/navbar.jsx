@@ -1,16 +1,5 @@
 function Navbar(props) {
 
-  const navbar = {
-    backgroundColor: 'rgb(0, 0, 0)',
-    width: '100wv',
-    height: '60px',
-    color: 'white',
-
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  }
-
   const logo = {
     fontSize: '24px',
     width: '20%'
@@ -36,7 +25,7 @@ function Navbar(props) {
 
 
   return (
-  <nav style={navbar} className="navbar" >
+  <nav className="navbar" >
     <section style={logo} className="logo" >
       <label style={labels}>
         <span>Magic</span>

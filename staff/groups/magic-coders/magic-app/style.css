@@ -159,4 +159,19 @@ ul {
   cursor: pointer;
 }
 
+.navbar {
+  background-color: black;
+  width: 100wv;
+  height: 60px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  width: 20%;
+}
+
 /*# sourceMappingURL=style.css.map */

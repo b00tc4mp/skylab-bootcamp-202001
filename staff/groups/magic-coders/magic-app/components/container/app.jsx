@@ -63,6 +63,7 @@ class App extends Component {
 
     return (
       <Fragment>
+        <Navbar />
         <Search onSubmit={handleSearch} />
         <Types onChange={handleSelect} property="types" />
         <Rarity onChange={handleSelect} property="rarity" />
