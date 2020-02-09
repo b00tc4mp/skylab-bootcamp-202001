@@ -5,7 +5,6 @@ body {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  max-width: 100%;
 }
 
 a {
@@ -23,12 +22,14 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-.favorites__nav, .details__card {
+
+.favorites__nav, .details__card, .results {
   display: flex;
   flex-wrap: wrap;
   width: 90%;
   justify-content: center;
 }
+
 
 main, .login, .register {
   display: flex;
@@ -79,12 +80,48 @@ main, .login, .register {
   margin-top: 2rem;
 }
 .results {
-  width: 100%;
+  padding: 0;
 }
-.results__list {
-  width: 70%;
+.results__item {
+  margin-bottom: 5rem;
 }
 
+.img {
+  width: 100%;
+}
+
+div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.7rem;
+  padding: 0.1em 0.3em;
+  margin-top: 0.1rem;
+  background-color: #494747;
+  align-items: center;
+}
+
+.item {
+  border-radius: 5px;
+}
+.item__heart {
+  color: red;
+}
+
+.search__title {
+  margin-left: 3rem;
+  font-family: Get Schwifty;
+  font-size: 3rem;
+  margin-top: 3rem;
+}
+.search__input {
+  border-radius: 0;
+  margin-top: 3rem;
+  font-size: 1rem;
+  border-bottom: 1px solid #E5EC2F;
+}
+.search__lens {
+  font-size: 1.5rem;
+=======
 .login {
   justify-content: space-evenly;
   width: 60%;
