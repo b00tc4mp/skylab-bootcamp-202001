@@ -3,7 +3,7 @@ const { Component } = React
 class App extends Component {
 
     state = {
-        view: 'register'
+        view: 'results'
     }
 
 
@@ -11,12 +11,12 @@ class App extends Component {
         const {
             props: { title }, state: {view}} = this
 
-        return <main className="app">
+        return <main className='app'>
             <h1>{title}</h1>
 
-            {view==="register" && <Register onSubmit={console.log('submit')} onToLogin={console.log('login')} error={undefined}/>}
-           
-
+            {view ==='register' && <Register onSubmit={console.log('submit')} onToLogin={console.log('login')} error={undefined}/>}
+            {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')}/>}
+          
         </main>
     }
 }
