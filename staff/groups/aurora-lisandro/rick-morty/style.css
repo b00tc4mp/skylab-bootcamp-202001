@@ -15,6 +15,11 @@ body {
   height: 100%;
 }
 
+input, button {
+  border: none;
+  background-color: inherit;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -166,8 +171,8 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 100%;
 }
 
-div {
-  display: flex;
+.item {
+  border-radius: 5px;
   justify-content: space-between;
   font-size: 1.7rem;
   padding: 0.1em 0.3em;
@@ -175,12 +180,11 @@ div {
   background-color: #494747;
   align-items: center;
 }
-
-.item {
-  border-radius: 5px;
-}
 .item__heart {
   color: red;
+}
+.item__desc {
+  display: flex;
 }
 
 .search__title {
