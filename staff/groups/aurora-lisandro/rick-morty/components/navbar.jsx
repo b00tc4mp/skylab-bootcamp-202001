@@ -35,7 +35,7 @@ function Navbar({ onLogout, onToFavs, onToSearch, onToProfile, title }) {
                 }}><i className="fas fa-sign-out-alt"></i></button>
             </div>
         </div>
-        <div>
+        <div className="nav__right-container">
             <button className="nav__user" onClick={event=>{
                 event.preventDefault()
                 onToProfile()
