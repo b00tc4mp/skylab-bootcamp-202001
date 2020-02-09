@@ -15,7 +15,7 @@ describe('authenticateUser', () => {
             call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON / stringify({
+                body: JSON.stringify({
                     name,
                     surname,
                     username,
@@ -80,7 +80,7 @@ describe('authenticateUser', () => {
         call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON / stringify({
+            body: JSON.stringify({
                 name,
                 surname,
                 username,
@@ -96,9 +96,9 @@ describe('authenticateUser', () => {
             }
         })
 
-        authenticateUser(username, password, (error, token) => {
+        authenticateUser(username, password, error => {
             expect(error).toBeInstanceOf(Error)
-            expect(token).toBeUndefined()
+
 
             expect(error.message).toBe('username and/or password wrong')
 
@@ -108,7 +108,7 @@ describe('authenticateUser', () => {
 
     it('should fail on no existing user', done => {
         authenticateUser(username, password, error => {
-            expect(error).toBeInstanceOf(TypeError)
+            expect(error).toBeInstanceOf(Error)
             expect(error.message).toBe('username and/or password wrong')
 
             done()
