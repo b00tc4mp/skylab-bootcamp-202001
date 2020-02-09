@@ -100,23 +100,52 @@ main, .login, .register {
 .details {
   width: 90%;
   margin-top: 0.5rem;
+  box-sizing: border-box;
+}
+.details__header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.3rem;
+}
+.details__back-button {
+  flex-grow: 0.5;
 }
 .details__title {
   text-align: center;
-  margin: 0.5rem 0 0.5rem 0;
 }
 .details__card {
   justify-content: flex-start;
   width: 100%;
+  height: 90%;
+}
+.details__card-item {
+  background-color: #6d6b6b;
+  height: 55%;
 }
 .details__card-footer {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  background-color: #6d6b6b;
 }
 .details__img {
   width: 100%;
+  height: 80%;
+}
+.details__card-list {
+  padding-inline-start: 0.5rem;
+  margin: 0;
+  width: 90%;
+  height: 40%;
+}
+.details__list-item {
+  display: flex;
+  justify-content: space-between;
+  height: 20%;
+  border-bottom: 1px solid grey;
+}
+.details__list-item > p {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
 }
 
 h1 {
