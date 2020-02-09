@@ -15,6 +15,7 @@ a {
 
 ul {
   list-style: none;
+  padding-inline-start: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -22,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0;
 }
 
-.details__card {
+.favorites__nav, .details__card {
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -146,6 +147,23 @@ main, .login, .register {
 .details__list-item > p {
   margin-bottom: 0;
   margin-top: 0.5rem;
+}
+
+.favorites {
+  width: 90%;
+  height: 90%;
+}
+.favorites__list {
+  width: 100%;
+}
+.favorites__title {
+  font-family: Get Schwifty;
+  font-size: 2rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+.favorites__nav {
+  width: 100%;
 }
 
 h1 {
