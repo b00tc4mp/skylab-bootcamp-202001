@@ -14,6 +14,7 @@ class App extends Component {
             props: { title }, state: {view}} = this
 
 
+
         return <main className='app'>
 
             {view!=='login' && view!=='register' && <Navbar 
@@ -21,9 +22,15 @@ class App extends Component {
             onToSearch={(type)=>{console.log(type)}} 
             onToFavs={()=>console.log('onToFavs')} 
             onToProfile={()=>{console.log('profile')}}/>}
+
              <h1>{title}</h1>
+
+            {view === 'login' && <Login onSubmit ={handleLogin} onToRegister = {handleRegister}/>}
+
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')}/>}
+
             {view==="register" && <Register onSubmit={console.log('submit')} onToLogin={console.log('login')} error={undefined}/>}
+            
 
            
 
