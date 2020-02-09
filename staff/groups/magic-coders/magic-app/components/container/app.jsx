@@ -63,31 +63,36 @@ class App extends Component {
 
     return (
       <Fragment>
-        <Navbar />
-        <Search onSubmit={handleSearch} />
-        <Types onChange={handleSelect} property="types" />
-        <Rarity onChange={handleSelect} property="rarity" />
-        <ManaCost onChange={handleSelect} property="cmc" />
-        <Colors onChange={handleCheckbox} property="colors" />
-        {cards.length > 0 && (
-          <div>
-            <Button
-              padding="3px 6px"
-              value={undefined}
-              onClick={handleLanguage}
-            >
-              English
-            </Button>
-            {languages.map(value => (
-              <Button padding="2px 5px" value={value} onClick={handleLanguage}>
-                {value}
-              </Button>
-            ))}
+        <main>
+          <Navbar />
+          <div className='container-options'>
+            <Search onSubmit={handleSearch} />
+            <Types onChange={handleSelect} property="types" />
+            <Rarity onChange={handleSelect} property="rarity" />
+            <ManaCost onChange={handleSelect} property="cmc" />
+            <Colors onChange={handleCheckbox} property="colors" />
           </div>
+          
+          {cards.length > 0 && (
+            <div>
+              <Button
+                padding="3px 6px"
+                value={undefined}
+                onClick={handleLanguage}
+              >
+                English
+              </Button>
+              {languages.map(value => (
+                <Button padding="2px 5px" value={value} onClick={handleLanguage}>
+                  {value}
+                </Button>
+              ))}
+            </div>
 
-        )}
-        {view === 'detail' && <Detail card={card}/>}
-        {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+          )}
+          {view === 'detail' && <Detail card={card}/>}
+          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+        </main>
       </Fragment>
     )
   }

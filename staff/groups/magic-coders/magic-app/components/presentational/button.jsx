@@ -20,7 +20,7 @@ function Button(props) {
 }
 
 Button.defaultProps = {
-  align: 'left',
+  align: 'center',
   backgroundColor: 'rgb(52, 90, 128)',
   color: 'white',
   children: 'Submit',

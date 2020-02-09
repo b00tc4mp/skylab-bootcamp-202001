@@ -162,16 +162,82 @@ ul {
 .navbar {
   background-color: black;
   width: 100wv;
-  height: 60px;
+  height: 55px;
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 2px solid white;
 }
-
-.logo {
+.navbar .logo {
   font-size: 24px;
   width: 20%;
+}
+.navbar .logo label {
+  display: flex;
+  flex-direction: column;
+}
+.navbar .items {
+  width: 40%;
+  display: none;
+}
+.navbar .items ul {
+  display: flex;
+  justify-content: space-around;
+}
+.navbar .items ul li:hover {
+  color: #be630e;
+  cursor: pointer;
+}
+.navbar .profile {
+  width: 20%;
+  display: none;
+}
+.navbar .profile label:hover {
+  color: #be630e;
+  cursor: pointer;
+}
+.navbar .bars {
+  margin-right: 20px;
+}
+
+@media (min-width: 700px) {
+  .navbar {
+    flex-direction: row;
+  }
+  .navbar .items {
+    display: block;
+  }
+  .navbar .profile {
+    display: inline;
+  }
+  .navbar .bars {
+    display: none;
+  }
+}
+main {
+  background-color: black;
+}
+
+.checkbox {
+  color: white;
+}
+
+.container-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.select {
+  height: 20px;
+}
+.select input {
+  background-color: white;
+}
+
+.background {
+  width: 80%;
 }
 
 /*# sourceMappingURL=style.css.map */

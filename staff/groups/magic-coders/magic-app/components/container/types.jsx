@@ -16,5 +16,10 @@ function Types({onChange, property}){
     "Vanguard"
   ]
 
-  return <Select onChange={onChange} data={options} property={property} /> 
+  return (
+    <div>
+      <h3 style={{color: 'white'}}>Type</h3>
+      <Select onChange={onChange} data={options} property={property} /> 
+    </div>
+  ) 
 }

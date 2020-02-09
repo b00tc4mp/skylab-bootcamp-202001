@@ -1,49 +1,32 @@
 function Navbar(props) {
 
-  const logo = {
-    fontSize: '24px',
-    width: '20%'
-  }
-
-  const labels = {
-    display: 'flex',
-    flexDirection: 'column',
-  }
-
-  const ul = {
-    display: 'flex',
-    justifyContent: 'space-around'
-  }
-
-  const items = {
-    width: '40%'
-  }
-
-  const profile = {
-    width: '20%'
-  }
-
-
   return (
   <nav className="navbar" >
-    <section style={logo} className="logo" >
-      <label style={labels}>
+    <section className="logo" >
+      <label>
         <span>Magic</span>
         <span style={{fontSize: '10px'}}>The Gathering</span>
         </label>
     </section>
 
-    <section style={items}>
-      <ul style={ul}>
+    <section className="items" >
+      <ul>
         <li>SEARCH</li>
         <li>FAVORITES</li>
         <li>FOR SALE</li>
       </ul>
     </section>
 
-    <section style={profile} className="profile" >
+    <section className="profile" >
       <i className="far fa-user"></i>
-      <label style={{marginLeft: '5px'}}>Profile</label>
+      <label style={{margin: '0px 20px 0px 5px'}}>Profile</label>
+
+      <i className="fas fa-sign-out-alt"></i>
+      <label style={{marginLeft: '5px'}}>Logout</label>
+    </section>
+
+    <section className="bars">
+      <i className="fas fa-bars"></i>
     </section>
 
   </nav>
