@@ -12,6 +12,7 @@ function searchCards(query, callback) {
             // cmc: 5,
             // supertypes: 'Snow',
         // }
+        /**/
 
   let string = ''
   let keys = Object.keys(query)
