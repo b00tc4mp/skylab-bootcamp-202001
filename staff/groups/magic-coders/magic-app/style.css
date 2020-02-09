@@ -113,9 +113,42 @@ ul {
 }
 
 .detail {
-  display: "flex";
-  justifyContent: "center";
-  alignItems: "center";
+  display: grid;
+  grid-template: auto auto auto auto/auto;
+}
+.detail__title {
+  grid-area: 1/1/span 1/span 1;
+}
+.detail__img {
+  grid-area: 2/1/span 1/span 1;
+  margin: 0 auto;
+}
+.detail__extra {
+  grid-area: 3/1/span 1/span 1;
+}
+.detail__text {
+  grid-area: 4/1/span 1/span 1;
+}
+@media (min-width: 1024px) {
+  .detail {
+    width: 90%;
+    margin: 0 auto;
+    grid-template: auto auto auto/1fr 1fr;
+  }
+  .detail__title {
+    margin: 0 auto;
+    grid-area: 1/1/span 1/span 2;
+  }
+  .detail__img {
+    grid-area: 2/1/span 1/span 1;
+    margin: 0 0 0 52%;
+  }
+  .detail__extra {
+    grid-area: 2/2/span 1/span 1;
+  }
+  .detail__text {
+    grid-area: 3/1/span 1/span 2;
+  }
 }
 
 .update {

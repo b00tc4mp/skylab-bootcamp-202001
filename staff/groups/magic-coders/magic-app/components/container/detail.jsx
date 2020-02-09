@@ -2,7 +2,7 @@ function Detail({card: { name, number, type, rarity, setName, text, cmc, imageUr
 
   return <div className="detail">
     <div className="detail__title">
-    <h1 style={{marginRight: '10px'}}>#{number} - {name} -</h1>
+      <h1>#{number} - {name} -</h1>
     </div>
     <img className="detail__img" src={imageUrl} />
     <div className="detail__extra">
