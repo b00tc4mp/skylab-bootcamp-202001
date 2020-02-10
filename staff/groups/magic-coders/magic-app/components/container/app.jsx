@@ -1,11 +1,13 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'landing', sidebar: false }
+
+  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'login', sidebar: false }
 
   logout = () => {
     this.setState({view: 'login'})
   }
+
 
   handleLogin = ({username, password}) => {
     try {
@@ -13,7 +15,7 @@ class App extends Component {
             // Asyn Error
             if (error) {
                 this.setState({error: error.message})
-                setTimeout(() => this.setState({error: undefined}), 3000);
+                setTimeout(() => this.setState({error: undefined}), 9000);
             } else {
                
               if (error)
@@ -110,7 +112,9 @@ handleGoToLogin = () => this.setState({view: "login"})
 
   render() {
     const {
-      state: { cards, card, language, view, sidebar },
+
+      state: { cards, card, language, view, error, sidebar  },
+
       handleLanguage,
       handleSearch,
       handleSelect,
@@ -127,8 +131,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       <Fragment>
         {(view === 'login' || view === 'register') &&
         <div className="container-login">
-          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister}/>}
-          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
+          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister} error={error}/>}
+          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error}/>}
         </div>
         }
         {(view !== 'login' || view !== 'register') &&
@@ -150,7 +154,7 @@ handleGoToLogin = () => this.setState({view: "login"})
                   value={undefined}
                   onClick={handleLanguage}
                 >
-                  English
+    
                 </Button>
                 {languages.map(value => (
                   <Button padding="2px 5px" value={value} onClick={handleLanguage}>
