@@ -568,24 +568,14 @@ body.is-loading .container-login:before {
 }
 
 .profile {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
   min-height: 84vh;
   color: white;
 }
-.profile__card {
-  width: 98%;
-  height: 80vh;
-  border: 1px solid white;
-  background-color: black;
-}
-.profile__header {
-  height: 15%;
-  border: 1px solid white;
+.profile .profile__header {
+  height: 6em;
   display: flex;
   justify-content: space-between;
+  background-color: black;
 }
 .profile__pic {
   width: 25%;
@@ -611,6 +601,16 @@ body.is-loading .container-login:before {
   margin-right: 1em;
   width: 50%;
   padding: 0.75em;
+}
+.profile__content {
+  background-color: white;
+  min-height: 74vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile__content img {
+  margin: 1em;
 }
 
 /*# sourceMappingURL=style.css.map */
