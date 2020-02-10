@@ -14,6 +14,10 @@ ul {
   padding: 0;
 }
 
+#root {
+  height: 100vh;
+}
+
 .search {
   display: flex;
   flex-direction: column;
@@ -115,7 +119,8 @@ ul {
   background-color: #BECBD9;
   display: grid;
   grid-template: auto auto auto auto/auto;
-  margin: 1rem auto 0;
+  height: 85vh;
+  width: 100%;
 }
 .detail__title {
   grid-area: 1/1/span 1/span 1;
@@ -135,8 +140,9 @@ ul {
 }
 @media (min-width: 1024px) {
   .detail {
-    width: 90%;
-    margin: 2rem auto;
+    width: 100%;
+    height: 92vh;
+    margin: 0 auto;
     grid-template: auto auto auto/1fr 1fr;
   }
   .detail__title {
@@ -297,16 +303,17 @@ main {
 }
 
 .footer {
+  width: 100%;
   display: grid;
   grid-template: auto auto auto auto/auto;
 }
 .footer__nav {
   margin: -5px auto;
-  padding: 0;
+  padding: 0 2rem;
   grid-area: 1/1/span 1/span 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-color: #483f3f;
   color: white;
@@ -316,16 +323,32 @@ main {
   display: flex;
 }
 .footer__nav__icons__icon {
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem 0.5rem 0rem;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .footer__nav__icons__icon:hover {
   color: #be630ex;
 }
+.footer__nav__icons__icon__facebook {
+  color: #3578E5;
+}
+.footer__nav__icons__icon__twitter {
+  color: #1da1f2;
+}
+.footer__nav__icons__icon__twitch {
+  color: #9147ff;
+}
+.footer__nav__icons__icon__youtube {
+  color: #f00;
+}
+.footer__nav__icons__icon__instagram {
+  color: white;
+}
 .footer__nav__about {
   grid-area: 2/1/span 1/span 1;
   cursor: pointer;
+  font-size: 1rem;
 }
 .footer__nav__about:hover {
   color: #be630e;
@@ -333,12 +356,20 @@ main {
 .footer__nav__language {
   grid-area: 3/1/span 1/span 1;
   cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 .footer__nav__language:hover {
   color: #be630e;
 }
 .footer p {
   grid-area: 4/1/span 1/span 1;
+  color: white;
+  background-color: #483f3f;
+  text-align: center;
+  margin: 0;
+  padding: 0 1rem 0.5rem 0;
+  width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -352,15 +383,22 @@ main {
     display: flex;
     grid-area: 1/1/span 1/span 1;
   }
+  .footer__nav__icons__icon {
+    font-size: 2rem;
+  }
   .footer__nav__about {
     grid-area: 1/1/span 1/span 1;
+    font-size: 1.5rem;
   }
   .footer__nav__language {
     grid-area: 1/1/span 1/span 1;
+    font-size: 1.5rem;
   }
   .footer p {
     grid-area: 2/1/span 1/span 1;
+    text-align: right;
   }
+}
 .a {
   color: white;
 }
