@@ -90,9 +90,11 @@ class App extends Component {
             </div>
 
           )}
-          {view === 'detail' && <Detail card={card}/>}
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+          
         </main>
+        {view === 'detail' && <Detail card={card}/>}
+        {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+
       </Fragment>
     )
   }
