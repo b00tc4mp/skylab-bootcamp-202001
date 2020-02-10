@@ -21,7 +21,7 @@ function Navbar(props) {
       <i className="far fa-user"></i>
       <label style={{margin: '0px 20px 0px 5px'}}>Profile</label>
 
-      <i className="fas fa-sign-out-alt"></i>
+      <i onClick={} className="fas fa-sign-out-alt"></i>
       <label style={{marginLeft: '5px'}}>Logout</label>
     </section>
 

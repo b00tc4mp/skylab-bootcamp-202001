@@ -1,7 +1,7 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'login' }
+  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'landing' }
 
   handleLogin = ({username, password}) => {
     try {
@@ -101,7 +101,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
 
   render() {
-    console.log(this.state.search)
+
     const {
       state: { cards, card, language, view },
       handleLanguage,
