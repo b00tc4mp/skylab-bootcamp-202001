@@ -2,7 +2,8 @@
     background-color: #BECBD9
     display: grid
     grid-template: auto auto auto auto / auto
-    margin: 1rem auto 0
+    height: 85vh
+    width: 100%
     &__title
         grid-area: 1 / 1 / span 1 / span 1
     &__img
@@ -16,8 +17,9 @@
         grid-area: 4 / 1 / span 1 / span 1
         margin: .5rem .5rem 1rem
     @media ( min-width: 1024px )
-        width: 90%
-        margin: 2rem auto
+        width: 100%
+        height: 92vh
+        margin: 0 auto
         grid-template: auto auto auto / 1fr 1fr
         &__title
             margin: 0 auto

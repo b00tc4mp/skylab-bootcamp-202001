@@ -1,7 +1,13 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'login' }
+
+  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'login', sidebar: false }
+
+  logout = () => {
+    this.setState({view: 'login'})
+  }
+
 
   handleLogin = ({username, password}) => {
     try {
@@ -100,10 +106,15 @@ handleGoToLogin = () => this.setState({view: "login"})
       })
   }
 
+  handleSidebar = () => {
+    this.setState({sidebar: !this.state.sidebar})
+  }
+
   render() {
-    console.log(this.state.search)
     const {
-      state: { cards, card, language, view, error },
+
+      state: { cards, card, language, view, error, sidebar  },
+
       handleLanguage,
       handleSearch,
       handleSelect,
@@ -112,7 +123,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleLogin, 
       handleRegister,
       handleGoToRegister,
-      handleGoToLogin
+      handleGoToLogin,
+      logout
     } = this
 
     return (
@@ -123,21 +135,18 @@ handleGoToLogin = () => this.setState({view: "login"})
           {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error}/>}
         </div>
         }
-
         {(view !== 'login' || view !== 'register') &&
         <Fragment>
           <main>
-            {view === 'landing' && <Navbar />}
+            {view === 'landing' && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} />}
             {view === 'landing' && 
             <div className='filter'>
-  
               <Types onChange={handleSelect} property="types" />
               <Rarity onChange={handleSelect} property="rarity" />
               <ManaCost onChange={handleSelect} property="cmc" />
               <Colors onChange={handleCheckbox} property="colors" />
               <Search onSubmit={handleSearch} title="Name Card" />
             </div>}
-  
             {view === 'landing' && cards.length > 0 && (
               <div>
                 <Button
@@ -154,15 +163,13 @@ handleGoToLogin = () => this.setState({view: "login"})
                 ))}
               </div>
             )}
-            
           </main>
           {view === 'detail' && <Detail card={card}/>}
           {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
         </Fragment>
         }
-
+        <Footer />
       </Fragment>
     )
   }
 }
-
