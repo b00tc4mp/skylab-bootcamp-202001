@@ -3,6 +3,10 @@ const { Component, Fragment } = React
 class App extends Component {
   state = { cards: [], language: undefined, search: {}, card: undefined, view: 'landing', sidebar: false }
 
+  logout = () => {
+    this.setState({view: 'login'})
+  }
+
   handleLogin = ({username, password}) => {
     try {
         authenticateUser(username, password, (error, token, user) => {
@@ -115,7 +119,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleLogin, 
       handleRegister,
       handleGoToRegister,
-      handleGoToLogin
+      handleGoToLogin,
+      logout
     } = this
 
     return (
@@ -129,7 +134,7 @@ handleGoToLogin = () => this.setState({view: "login"})
         {(view !== 'login' || view !== 'register') &&
         <Fragment>
           <main>
-            {view === 'landing' && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} />}
+            {view === 'landing' && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} />}
             {view === 'landing' && 
             <div className='filter'>
               <Types onChange={handleSelect} property="types" />

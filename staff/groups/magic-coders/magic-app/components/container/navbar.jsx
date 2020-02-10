@@ -1,8 +1,8 @@
-function Navbar({sidebar, toggleSidebar}) {
+function Navbar({sidebar, toggleSidebar, logout}) {
 
   return (
   <nav className="navbar" >
-    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} />
+    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} />
     <section className="logo" >
       <label>
         <span>Magic</span>

@@ -9,6 +9,11 @@
   display: flex
   justify-content: flex-end
 
+.div_fixed
+  position: fixed
+  z-index: 1
+  height: 100%
+  width: 100%
 
 .modal-content-sidebar 
   transition: all 0.4s ease-in-out
@@ -29,14 +34,15 @@
 
 
 .nav-modal-sidebar 
-  height: 49px
+  height: 55px
   width: 100%
-  background-color: #273742
+  background-color: white
   position: absolute
-  color: white
+  color: black
   display: flex
   align-items: center
   font-size: 20px
+  border-bottom: 3px solid black
 
 
 .close-sidebar 
@@ -46,7 +52,6 @@
   font-size: 38px
   transform: rotate(45deg)
   cursor: pointer
-  color: white
 
 
 .list-menu 
@@ -59,6 +64,7 @@
 .ul-menu 
   list-style-type: none
   margin: 0
+  margin-top: 5px
   padding: 0
   
 
@@ -74,18 +80,10 @@
 
 .ul-menu li i 
   width: 35px
-  color: #273742
+  color: white
 
 
 .ul-menu li:hover 
-  background-color: #273742
+  background-color: black
   border-top: 1px solid white
-
-
-.ul-menu li:hover > i 
   color: white
-
-
-.ul-menu li:hover > span 
-  color: white
-
