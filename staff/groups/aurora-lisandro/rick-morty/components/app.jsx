@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'login'
+        view: 'searchSeason'
     }
 
 
@@ -54,6 +54,8 @@ class App extends Component {
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
+
+            {view === 'searchSeason' && <SearchSeason onEpisodesClick = {console.log('hola')}/>}
         </main>
     }
 }
