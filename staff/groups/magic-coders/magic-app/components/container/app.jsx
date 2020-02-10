@@ -1,7 +1,11 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'landing' }
+  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'landing', sidebar: false }
+
+  logout = () => {
+    this.setState({view: 'login'})
+  }
 
   handleLogin = ({username, password}) => {
     try {
@@ -100,9 +104,13 @@ handleGoToLogin = () => this.setState({view: "login"})
       })
   }
 
+  handleSidebar = () => {
+    this.setState({sidebar: !this.state.sidebar})
+  }
+
   render() {
     const {
-      state: { cards, card, language, view },
+      state: { cards, card, language, view, sidebar },
       handleLanguage,
       handleSearch,
       handleSelect,
@@ -111,8 +119,10 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleLogin, 
       handleRegister,
       handleGoToRegister,
-      handleGoToLogin
+      handleGoToLogin,
+      logout
     } = this
+
     return (
       <Fragment>
         {(view === 'login' || view === 'register') &&
@@ -124,7 +134,7 @@ handleGoToLogin = () => this.setState({view: "login"})
         {(view !== 'login' || view !== 'register') &&
         <Fragment>
           <main>
-            {view === 'landing' && <Navbar />}
+            {view === 'landing' && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} />}
             {view === 'landing' && 
             <div className='filter'>
               <Types onChange={handleSelect} property="types" />
