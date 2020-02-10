@@ -1,6 +1,6 @@
 function searchCharacters(query, token, callback) {
     if (typeof query !== 'string') throw new TypeError(`query ${query} is not a string`)
-    // if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
+    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
 
     call('http://skylabcoders.herokuapp.com/api/v2/users/', {
