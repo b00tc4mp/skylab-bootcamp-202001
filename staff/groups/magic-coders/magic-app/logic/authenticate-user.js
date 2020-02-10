@@ -8,14 +8,32 @@ function authenticateUser(username, password, callback) {
     call('https://skylabcoders.herokuapp.com/api/v2/users/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    }, (error, response) => {
+        body: JSON.stringify({ username, password})
+    }, (error, response) => { 
         if (error) return callback(error)
 
         const { error: _error, token } = JSON.parse(response.content)
 
         if (_error) return callback(new Error(_error))
 
-        callback(undefined, token)
+
+
+          call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }, (error, response) => {
+        if (error) return callback(error)
+
+        const user = JSON.parse(response.content), {error: _error} = user
+       
+        if (_error) return callback(new Error(_error))
+
+        
+        
+        if (user.mtg) callback(undefined, token, user)
+    })
     })
 }
