@@ -117,36 +117,10 @@ handleGoToLogin = () => this.setState({view: "login"})
 
     return (
       <Fragment>
-<<<<<<< HEAD
-        <main>
-          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister} error={error}/>}
-          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error}/>}
-          {view === 'landing' && <Navbar />}
-          {view === 'landing' && <div className='container-options'>
-            <Search onSubmit={handleSearch} />
-            <Types onChange={handleSelect} property="types" />
-            <Rarity onChange={handleSelect} property="rarity" />
-            <ManaCost onChange={handleSelect} property="cmc" />
-            <Colors onChange={handleCheckbox} property="colors" />
-          </div>}
-          
-          {view === 'landing' && cards.length > 0 && (
-            <div>
-              <Button
-                padding="3px 6px"
-                value={undefined}
-                onClick={handleLanguage}
-              >
-                English
-              </Button>
-              {languages.map(value => (
-                <Button padding="2px 5px" value={value} onClick={handleLanguage}>
-                  {value}
-=======
         {(view === 'login' || view === 'register') &&
         <div className="container-login">
-          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister}/>}
-          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
+          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister} error={error}/>}
+          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error}/>}
         </div>
         }
 
@@ -171,8 +145,7 @@ handleGoToLogin = () => this.setState({view: "login"})
                   value={undefined}
                   onClick={handleLanguage}
                 >
-                  English
->>>>>>> magic-develop
+    
                 </Button>
                 {languages.map(value => (
                   <Button padding="2px 5px" value={value} onClick={handleLanguage}>
