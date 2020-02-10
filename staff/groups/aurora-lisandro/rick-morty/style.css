@@ -43,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
 }
 
-.app, .login, .register {
+.app, .landing, .search, .login, .register {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -187,20 +187,41 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
 }
 
+.search {
+  height: 30%;
+  justify-content: space-evenly;
+}
 .search__title {
-  margin-left: 3rem;
   font-family: Get Schwifty;
-  font-size: 3rem;
-  margin-top: 3rem;
+  font-size: 1.2rem;
+}
+.search__container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 80%;
+  height: 30%;
 }
 .search__input {
   border-radius: 0;
-  margin-top: 3rem;
+  margin-left: 1rem;
   font-size: 1rem;
+  height: 50%;
   border-bottom: 1px solid #E5EC2F;
 }
 .search__lens {
   font-size: 1.5rem;
+}
+
+.landing {
+  width: 90%;
+  height: 100%;
+  justify-content: space-around;
+}
+.landing__img {
+  width: 100%;
+  cursor: pointer;
+  margin-top: 1rem;
 }
 
 .app {
