@@ -16,12 +16,29 @@ class App extends Component {
         }
     }
 
+    handleRegister = (name, surname, username, password) => {
+        try {
+            registerUser(name, surname, username, password, error => {
+                if (error) {
+                    console.log(error)
+                } else {
+                    this.setState({ view: 'login' })
+                }
+            })
+        } catch (error) {
+            //TODO
+            console.log(error)
+        }
+    }
+
     handleOnToRegister = () => this.setState({ view: 'register' })
+
+    handleOnToLogin = () => this.setState({ view: 'login' })
 
 
     render() {
         const {
-            props: { title }, state: { view }, handleLogin, handleOnToRegister } = this
+            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -36,7 +53,7 @@ class App extends Component {
 
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
-            {view === "register" && <Register onSubmit={() => { console.log('submit') }} onToLogin={() => { console.log('login') }} error={undefined} />}
+            {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
         </main>
     }
 }
