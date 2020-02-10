@@ -118,16 +118,26 @@ handleGoToLogin = () => this.setState({view: "login"})
     return (
       <Fragment>
         <main>
+
           {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister}/>}
           {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
           {view === 'landing' && <Navbar />}
           {view === 'landing' && <div className='container-options'>
             <Search onSubmit={handleSearch} />
+          <Navbar />
+            
+          <div className='filter'>
+
             <Types onChange={handleSelect} property="types" />
             <Rarity onChange={handleSelect} property="rarity" />
             <ManaCost onChange={handleSelect} property="cmc" />
             <Colors onChange={handleCheckbox} property="colors" />
-          </div>}
+
+          </div>
+
+            <Search onSubmit={handleSearch} title="Name Card" />
+          </div>
+
           
           {view === 'landing' && cards.length > 0 && (
             <div>
@@ -146,9 +156,11 @@ handleGoToLogin = () => this.setState({view: "login"})
             </div>
 
           )}
-          {view === 'detail' && <Detail card={card}/>}
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+          
         </main>
+        {view === 'detail' && <Detail card={card}/>}
+        {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+
       </Fragment>
     )
   }
