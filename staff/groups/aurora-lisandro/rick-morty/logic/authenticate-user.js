@@ -25,12 +25,11 @@ function authenticateUser(username, password, callback) {
 
             const user = JSON.parse(response.content)
 
-            const { error: _error } = user
+            const { error: _error, appTag } = user
 
             if (_error) return callback(new Error(_error))
 
-
-            if (!user.appTag) return callback(new Error('username and/or password wrong'))
+            if (!appTag || appTag !== 'Rick1.0') return callback(new Error('username and/or password wrong'))
 
 
             callback(undefined, token)
