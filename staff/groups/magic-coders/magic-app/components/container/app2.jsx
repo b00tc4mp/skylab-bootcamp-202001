@@ -196,7 +196,7 @@ class App extends Component {
             
             <h1>{title}</h1>
 
-            {view === "login" && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister} error={error} message={message} />}
+            {view === "login" && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister} error={error}/>}
             
             {view === "register" && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error} />}
 

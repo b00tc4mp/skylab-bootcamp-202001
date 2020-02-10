@@ -1,7 +1,7 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'login' }
+  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'login' }
 
   handleLogin = ({username, password}) => {
     try {
@@ -9,7 +9,7 @@ class App extends Component {
             // Asyn Error
             if (error) {
                 this.setState({error: error.message})
-                setTimeout(() => this.setState({error: undefined}), 3000);
+                setTimeout(() => this.setState({error: undefined}), 9000);
             } else {
                
               if (error)
@@ -103,7 +103,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   render() {
     console.log(this.state.search)
     const {
-      state: { cards, card, language, view },
+      state: { cards, card, language, view, error },
       handleLanguage,
       handleSearch,
       handleSelect,
@@ -118,8 +118,8 @@ handleGoToLogin = () => this.setState({view: "login"})
     return (
       <Fragment>
         <main>
-          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister}/>}
-          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
+          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister} error={error}/>}
+          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error}/>}
           {view === 'landing' && <Navbar />}
           {view === 'landing' && <div className='container-options'>
             <Search onSubmit={handleSearch} />
