@@ -1,7 +1,8 @@
-function Navbar(props) {
+function Navbar({sidebar, toggleSidebar}) {
 
   return (
   <nav className="navbar" >
+    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} />
     <section className="logo" >
       <label>
         <span>Magic</span>
@@ -25,8 +26,8 @@ function Navbar(props) {
       <label style={{marginLeft: '5px'}}>Logout</label>
     </section>
 
-    <section className="bars">
-      <i className="fas fa-bars"></i>
+    <section  className="bars">
+      <i onClick={toggleSidebar} className="fas fa-bars"></i>
     </section>
 
   </nav>
