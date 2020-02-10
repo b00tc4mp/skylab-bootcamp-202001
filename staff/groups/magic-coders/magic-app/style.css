@@ -19,8 +19,8 @@ ul {
   flex-direction: column;
   border: 1px solid black;
   border-radius: 1rem;
-  padding: 0.5rem;
-  height: 50%;
+  padding: 0;
+  margin: 0;
 }
 .search input {
   display: block;
@@ -38,10 +38,10 @@ ul {
 }
 
 .login {
-  display: inline-block;
-  border: 1px solid black;
+  display: flex;
   border-radius: 1rem;
   padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .login input {
   display: block;
@@ -294,6 +294,20 @@ main {
 
 .background {
   width: 80%;
+}
+
+.a {
+  color: white;
+}
+
+.container-login {
+  height: 100vh;
+  background: url("https://www.ecopetit.cat/wpic/mpic/42-423215_minimalist-magic-the-gathering.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding-top: 10%;
 }
 
 /*# sourceMappingURL=style.css.map */

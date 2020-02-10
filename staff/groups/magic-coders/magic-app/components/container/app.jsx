@@ -64,7 +64,7 @@ handleGoToLogin = () => this.setState({view: "login"})
     if (query) _search = { ...search, name: query }
 
     searchCards(_search, (error, cards) => {
-      this.setState({ cards, language: undefined, view: 'search' })
+      this.setState({ cards, language: undefined, view: 'landing' })
     })
   }
 
@@ -117,49 +117,49 @@ handleGoToLogin = () => this.setState({view: "login"})
 
     return (
       <Fragment>
-        <main>
-
+        {(view === 'login' || view === 'register') &&
+        <div className="container-login">
           {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister}/>}
           {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
-          {view === 'landing' && <Navbar />}
-          {view === 'landing' && <div className='container-options'>
-            <Search onSubmit={handleSearch} />
-          <Navbar />
-            
-          <div className='filter'>
+        </div>
+        }
 
-            <Types onChange={handleSelect} property="types" />
-            <Rarity onChange={handleSelect} property="rarity" />
-            <ManaCost onChange={handleSelect} property="cmc" />
-            <Colors onChange={handleCheckbox} property="colors" />
-
-          </div>
-
-            <Search onSubmit={handleSearch} title="Name Card" />
-          </div>
-
-          
-          {view === 'landing' && cards.length > 0 && (
-            <div>
-              <Button
-                padding="3px 6px"
-                value={undefined}
-                onClick={handleLanguage}
-              >
-                English
-              </Button>
-              {languages.map(value => (
-                <Button padding="2px 5px" value={value} onClick={handleLanguage}>
-                  {value}
+        {(view !== 'login' || view !== 'register') &&
+        <Fragment>
+          <main>
+            {view === 'landing' && <Navbar />}
+            {view === 'landing' && 
+            <div className='filter'>
+  
+              <Types onChange={handleSelect} property="types" />
+              <Rarity onChange={handleSelect} property="rarity" />
+              <ManaCost onChange={handleSelect} property="cmc" />
+              <Colors onChange={handleCheckbox} property="colors" />
+              <Search onSubmit={handleSearch} title="Name Card" />
+            </div>}
+  
+            {view === 'landing' && cards.length > 0 && (
+              <div>
+                <Button
+                  padding="3px 6px"
+                  value={undefined}
+                  onClick={handleLanguage}
+                >
+                  English
                 </Button>
-              ))}
-            </div>
-
-          )}
-          
-        </main>
-        {view === 'detail' && <Detail card={card}/>}
-        {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+                {languages.map(value => (
+                  <Button padding="2px 5px" value={value} onClick={handleLanguage}>
+                    {value}
+                  </Button>
+                ))}
+              </div>
+            )}
+            
+          </main>
+          {view === 'detail' && <Detail card={card}/>}
+          {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+        </Fragment>
+        }
 
       </Fragment>
     )

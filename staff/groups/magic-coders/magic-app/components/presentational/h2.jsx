@@ -1,7 +1,7 @@
 function H2(props) {
 
   const style = {
-    color: 'rgb(52, 90, 128)',
+    color: 'white',
     fontSize: '30px'
   }
 
