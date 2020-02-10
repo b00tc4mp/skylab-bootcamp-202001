@@ -2,7 +2,7 @@ const { Component, Fragment } = React
 
 class App extends Component {
 
-  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'login', sidebar: false }
+  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'profile', sidebar: false }
 
   logout = () => {
     this.setState({view: 'login'})
@@ -137,8 +137,9 @@ handleGoToLogin = () => this.setState({view: "login"})
         }
         {(view !== 'login' || view !== 'register') &&
         <Fragment>
-          <main>
-            {view === 'landing' && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} />}
+          <div id="search-container">
+
+            {(view !== 'login' || view !== 'register') && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} />}
             {view === 'landing' && 
             <div className='filter'>
               <Types onChange={handleSelect} property="types" />
@@ -149,11 +150,7 @@ handleGoToLogin = () => this.setState({view: "login"})
             </div>}
             {view === 'landing' && cards.length > 0 && (
               <div>
-                <Button
-                  padding="3px 6px"
-                  value={undefined}
-                  onClick={handleLanguage}
-                >
+                <Button padding="3px 6px" value={undefined} onClick={handleLanguage} >
     
                 </Button>
                 {languages.map(value => (
@@ -163,12 +160,18 @@ handleGoToLogin = () => this.setState({view: "login"})
                 ))}
               </div>
             )}
-          </main>
+
+
+          </div>
           {view === 'detail' && <Detail card={card}/>}
           {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+          {view === 'profile' && <Profile />}
+
+
+          <Footer />
         </Fragment>
         }
-        <Footer />
+        
       </Fragment>
     )
   }
