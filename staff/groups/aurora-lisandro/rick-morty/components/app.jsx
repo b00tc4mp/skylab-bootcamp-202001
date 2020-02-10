@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'login'
+        view: 'landing'
     }
 
 
@@ -35,14 +35,25 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
-    handleGoToCharacters = () => console.log('to characters')
+    handleGoToCharacters = () => this.setState({ view: 'character search' })
 
     handleGoToEpisodes = () => console.log('to episodes')
+
+    handleOnSubmit = query => {
+        try {
+            searchCaracters(query, token, (error, response) => {
+                if (error) return console.log(error)
+                console.log(results)
+            })
+        } catch (error) {
+
+        }
+    }
 
 
     render() {
         const {
-            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes } = this
+            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -60,6 +71,8 @@ class App extends Component {
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
+
+            {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
         </main>
     }
 }
