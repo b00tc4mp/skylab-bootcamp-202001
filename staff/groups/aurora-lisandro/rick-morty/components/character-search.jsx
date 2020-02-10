@@ -1,4 +1,4 @@
-function CharacterSearch({ query, onSubmit }) {
+function CharacterSearch({ query, onSubmit, warning }) {
     return <form className="search" onSubmit={(event) => {
         event.preventDefault()
 
@@ -10,8 +10,9 @@ function CharacterSearch({ query, onSubmit }) {
         <div className="search__container">
             <input className="search__input" type="text" name="query" placeholder="Type your search here" />
             <button type="submit"
-                    ><i className="search__lens fas fa-search"></i></button>
-
+            ><i className="search__lens fas fa-search"></i></button>
         </div>
+        {warning && <Feedback level="warning" message={warning} />}
+
     </form>
 }
