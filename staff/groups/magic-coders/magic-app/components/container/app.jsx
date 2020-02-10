@@ -8,18 +8,18 @@ class App extends Component {
     const {token} = sessionStorage
     if (token) {
       retrieveUser(token, (error, user) => {
-
         this.setState({view: 'search', user})
       })
-      
+    } else {
+      this.setState({view: 'login'})
     }
+
   }
 
   logout = () => {
     sessionStorage.clear()
     this.setState({view: 'login'})
   }
-
 
   handleLogin = ({username, password}) => {
     try {
@@ -115,7 +115,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
 
   handleDetail = id => {
-      retrieveCard(undefined, id, (error, card)=> {
+      retrieveCard(id, (error, card)=> {
           this.setState({card, view:'detail'})
       })
   }
@@ -125,6 +125,13 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
 
   onToComponent = view => this.setState({view})
+
+  addToSale = id => {
+    const {token} = sessionStorage
+    addCardToSale(id, token, (error, msg) => {
+      console.log(msg);
+    })
+  }
 
   render() {
 
@@ -142,7 +149,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleGoToRegister,
       handleGoToLogin,
       logout,
-      onToComponent
+      onToComponent,
+      addToSale
     } = this
 
     return (
@@ -182,9 +190,9 @@ handleGoToLogin = () => this.setState({view: "login"})
 
 
           </div>
-          {view === 'detail' && <Detail card={card}/>}
-          {(view === 'search' && cards) && <Results results={cards} onClickItem={handleDetail} language={language} />}
-          {view === 'profile' && <Profile />}
+          {view === 'detail' && <Detail card={card} addToSale={addToSale} />}
+          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+          {view === 'profile' && <Profile user={user} />}
 
         </Fragment>
         }
