@@ -74,7 +74,6 @@ describe('authenticateUser', () => {
 
     })
 
-
     it('should fail on non app tag', done => {
         const appTag = 'Rick-wrong'
         call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
