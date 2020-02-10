@@ -1,7 +1,8 @@
+@import variables
 .navbar
   background-color: black
   width: 100wv
-  height: 55px
+  height: $heigth-navbar
   color: white
   display: flex
   justify-content: space-between
@@ -28,7 +29,7 @@
         color: #be630e
         cursor: pointer
 
-  .profile
+  &__profile
     width: 20%
     display: none
 
@@ -48,7 +49,7 @@
     .items 
       display: block
 
-    .profile
+    &__profile
       display: inline
 
     .bars

@@ -211,7 +211,7 @@ ul {
 .navbar {
   background-color: black;
   width: 100wv;
-  height: 55px;
+  height: 8vh;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -238,11 +238,11 @@ ul {
   color: #be630e;
   cursor: pointer;
 }
-.navbar .profile {
+.navbar__profile {
   width: 20%;
   display: none;
 }
-.navbar .profile label:hover {
+.navbar__profile label:hover {
   color: #be630e;
   cursor: pointer;
 }
@@ -258,7 +258,7 @@ ul {
   .navbar .items {
     display: block;
   }
-  .navbar .profile {
+  .navbar__profile {
     display: inline;
   }
   .navbar .bars {
@@ -307,7 +307,7 @@ main {
 .footer {
   width: 100%;
   display: grid;
-  grid-template: auto auto auto auto/auto;
+  grid-template: auto auto auto auto/8vh;
 }
 .footer__nav {
   margin: -5px auto;
@@ -565,6 +565,52 @@ body.is-loading .container-login:before {
   background-color: black;
   border-top: 1px solid white;
   color: white;
+}
+
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  min-height: 84vh;
+  color: white;
+}
+.profile__card {
+  width: 98%;
+  height: 80vh;
+  border: 1px solid white;
+  background-color: black;
+}
+.profile__header {
+  height: 15%;
+  border: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+}
+.profile__pic {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile__name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  width: 50%;
+}
+.profile__buttons {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile__buttons button {
+  border-radius: 1.5em;
+  margin-right: 1em;
+  width: 50%;
+  padding: 0.75em;
 }
 
 /*# sourceMappingURL=style.css.map */
