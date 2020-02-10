@@ -211,7 +211,7 @@ ul {
 .navbar {
   background-color: black;
   width: 100wv;
-  height: 55px;
+  height: 8vh;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -238,11 +238,11 @@ ul {
   color: #be630e;
   cursor: pointer;
 }
-.navbar .profile {
+.navbar__profile {
   width: 20%;
   display: none;
 }
-.navbar .profile label:hover {
+.navbar__profile label:hover {
   color: #be630e;
   cursor: pointer;
 }
@@ -258,7 +258,7 @@ ul {
   .navbar .items {
     display: block;
   }
-  .navbar .profile {
+  .navbar__profile {
     display: inline;
   }
   .navbar .bars {
@@ -307,7 +307,7 @@ main {
 .footer {
   width: 100%;
   display: grid;
-  grid-template: auto auto auto auto/auto;
+  grid-template: auto auto auto auto/8vh;
 }
 .footer__nav {
   margin: -5px auto;
@@ -565,6 +565,12 @@ body.is-loading .container-login:before {
   background-color: black;
   border-top: 1px solid white;
   color: white;
+}
+
+.profile {
+  border: 1px solid green;
+  min-height: 84vh;
+  color: blue;
 }
 
 /*# sourceMappingURL=style.css.map */

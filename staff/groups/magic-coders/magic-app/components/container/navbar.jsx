@@ -18,7 +18,7 @@ function Navbar({sidebar, toggleSidebar, logout}) {
       </ul>
     </section>
 
-    <section className="profile" >
+    <section className="navbar__profile" >
       <i className="far fa-user"></i>
       <label style={{margin: '0px 20px 0px 5px'}}>Profile</label>
 
