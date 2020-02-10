@@ -1,7 +1,11 @@
 const { Component } = React
 class App extends Component {
     state = {
+<<<<<<< HEAD
         view: 'landing'
+=======
+        view: 'login',
+>>>>>>> 7a44d3113aa0fe1d4256804368b5b66e8978941e
     }
 
 
@@ -9,6 +13,9 @@ class App extends Component {
         try {
             authenticateUser(username, password, (error, token) => {
                 if (error) return console.log(error)
+
+                sessionStorage.token = token
+
                 this.setState({ view: 'landing' })
             })
         } catch (error) {
