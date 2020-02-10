@@ -1,11 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-<<<<<<< HEAD
-        view: 'landing'
-=======
-        view: 'login',
->>>>>>> 7a44d3113aa0fe1d4256804368b5b66e8978941e
+        view: 'character search'
     }
 
 
@@ -48,12 +44,14 @@ class App extends Component {
 
     handleOnSubmit = query => {
         try {
-            searchCaracters(query, token, (error, response) => {
+            const { token } = sessionStorage
+
+            searchCharacters(query, token, (error, response) => {
                 if (error) return console.log(error)
-                console.log(results)
+                console.log(response)
             })
         } catch (error) {
-
+            console.log(error)
         }
     }
 
