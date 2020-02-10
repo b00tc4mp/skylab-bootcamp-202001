@@ -1,7 +1,10 @@
 const { Component } = React
 class App extends Component {
     state = {
+
         view: 'searchSeason'
+
+
     }
 
 
@@ -9,7 +12,10 @@ class App extends Component {
         try {
             authenticateUser(username, password, (error, token) => {
                 if (error) return console.log(error)
-                this.setState({ view: undefined })
+
+                sessionStorage.token = token
+
+                this.setState({ view: 'landing' })
             })
         } catch (error) {
             console.log(error)
@@ -35,10 +41,27 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
+    handleGoToCharacters = () => this.setState({ view: 'character search' })
+
+    handleGoToEpisodes = () => console.log('to episodes')
+
+    handleOnSubmit = query => {
+        try {
+            const { token } = sessionStorage
+
+            searchCharacters(query, token, (error, response) => {
+                if (error) return console.log(error)
+                console.log(response)
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     render() {
         const {
-            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin } = this
+            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -49,13 +72,19 @@ class App extends Component {
 
             <h1>{title}</h1>
 
+            {view === 'landing' && <Landing onToCharacterSearch={handleGoToCharacters} onToEpisodeSearch={handleGoToEpisodes} />}
+
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} />}
 
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
 
+
             {view === 'searchSeason' && <SearchSeason onEpisodesClick = {console.log('hola')}/>}
+
+            {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
+
         </main>
     }
 }
