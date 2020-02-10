@@ -147,6 +147,15 @@ handleGoToLogin = () => this.setState({view: "login"})
                 >
                   English
                 </Button>
+              ))}
+            </div>
+
+          )}
+          
+        </main>
+        {view === 'detail' && <Detail card={card}/>}
+        {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+        <Footer />
                 {languages.map(value => (
                   <Button padding="2px 5px" value={value} onClick={handleLanguage}>
                     {value}
