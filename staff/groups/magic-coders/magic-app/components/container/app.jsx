@@ -94,7 +94,7 @@ class App extends Component {
         </main>
         {view === 'detail' && <Detail card={card}/>}
         {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-
+        <Footer />
       </Fragment>
     )
   }
