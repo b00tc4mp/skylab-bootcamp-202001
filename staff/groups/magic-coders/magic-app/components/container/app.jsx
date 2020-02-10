@@ -11,7 +11,8 @@ class App extends Component {
 
         this.setState({view: 'search', user})
       })
-      
+    } else {
+      this.setState({view: 'login'})
     }
   }
 
@@ -182,7 +183,7 @@ handleGoToLogin = () => this.setState({view: "login"})
 
 
           </div>
-          {view === 'detail' && <Detail card={card}/>}
+          {view === 'detail' && <Detail card={card} onTo={onToComponent}/>}
           {(view === 'search' && cards) && <Results results={cards} onClickItem={handleDetail} language={language} />}
           {view === 'profile' && <Profile />}
 

@@ -1,6 +1,7 @@
-function Detail({card: { name, number, type, rarity, setName, text, cmc, imageUrl}}) {
+function Detail({card: { name, number, type, rarity, setName, text, cmc, imageUrl}, onTo}) {
 
   return <div className="detail">
+    <button className="detail__button" onClick={() => onTo('search')}>Go back</button>
     <div className="detail__title">
       <h1>{name}</h1>
     </div>
