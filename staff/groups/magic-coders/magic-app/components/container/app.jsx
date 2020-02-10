@@ -2,7 +2,7 @@ const { Component, Fragment } = React
 
 class App extends Component {
 
-  state = { cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, view: 'profile', sidebar: false }
+  state = {view: 'search', cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, sidebar: false }
 
   logout = () => {
     this.setState({view: 'login'})
@@ -61,6 +61,8 @@ handleGoToLogin = () => this.setState({view: "login"})
 
   handleLanguage = lang => this.setState({ language: lang })
 
+  handleLangSelect = ({target: {value}}) => this.setState({ language: value })
+
   handleSearch = ({ query }) => {
 
     const { search } = this.state
@@ -70,7 +72,7 @@ handleGoToLogin = () => this.setState({view: "login"})
     if (query) _search = { ...search, name: query }
 
     searchCards(_search, (error, cards) => {
-      this.setState({ cards, language: undefined, view: 'landing' })
+      this.setState({ cards, language: undefined, view: 'search' })
     })
   }
 
@@ -110,12 +112,15 @@ handleGoToLogin = () => this.setState({view: "login"})
     this.setState({sidebar: !this.state.sidebar})
   }
 
-  render() {
-    const {
+  onToComponent = view => this.setState({view})
 
+  render() {
+
+    const {
       state: { cards, card, language, view, error, sidebar  },
 
       handleLanguage,
+      handleLangSelect,
       handleSearch,
       handleSelect,
       handleCheckbox,
@@ -124,7 +129,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleRegister,
       handleGoToRegister,
       handleGoToLogin,
-      logout
+      logout,
+      onToComponent
     } = this
 
     return (
@@ -135,12 +141,13 @@ handleGoToLogin = () => this.setState({view: "login"})
           {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin} error={error}/>}
         </div>
         }
+
         {(view !== 'login' || view !== 'register') &&
         <Fragment>
-          <div id="search-container">
+          <div id="search-container" style={{backgroundColor: 'black'}}>
+            <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} onTo={onToComponent} />}
 
-            {(view !== 'login' || view !== 'register') && <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} />}
-            {view === 'landing' && 
+            {view === 'search' && 
             <div className='filter'>
               <Types onChange={handleSelect} property="types" />
               <Rarity onChange={handleSelect} property="rarity" />
@@ -164,12 +171,12 @@ handleGoToLogin = () => this.setState({view: "login"})
 
           </div>
           {view === 'detail' && <Detail card={card}/>}
-          {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+          {(view === 'search' && cards) && <Results results={cards} onClickItem={handleDetail} language={language} />}
           {view === 'profile' && <Profile />}
 
         </Fragment>
         }
-        <Footer onClick={handleLanguage}/>
+        <Footer changeLang={handleLangSelect}/>
       </Fragment>
     )
   }
