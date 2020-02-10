@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'login'
+        view: 'landing'
     }
 
 
@@ -35,10 +35,14 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
+    handleGoToCharacters = () => console.log('to characters')
+
+    handleGoToEpisodes = () => console.log('to episodes')
+
 
     render() {
         const {
-            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin } = this
+            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -48,6 +52,8 @@ class App extends Component {
                 onToProfile={() => { console.log('profile') }} />}
 
             <h1>{title}</h1>
+
+            {view === 'landing' && <Landing onToCharacterSearch={handleGoToCharacters} onToEpisodeSearch={handleGoToEpisodes} />}
 
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} />}
 
