@@ -1,8 +1,9 @@
-function Detail({card: { name, number, type, rarity, setName, text, cmc, imageUrl}}) {
+function Detail({card: {multiverseid, name, number, type, rarity, setName, text, cmc, imageUrl}, addToSale}) {
 
   return <div className="detail">
     <div className="detail__title">
       <h1>{name}</h1>
+      <button onClick={() => addToSale(multiverseid)}>+</button>
     </div>
     <img className="detail__img" src={imageUrl} />
     <div className="detail__extra">
