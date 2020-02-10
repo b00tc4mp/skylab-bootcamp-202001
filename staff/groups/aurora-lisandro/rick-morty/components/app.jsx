@@ -1,7 +1,10 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'character search'
+
+        view: 'searchSeason'
+
+
     }
 
 
@@ -77,7 +80,11 @@ class App extends Component {
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
 
+
+            {view === 'searchSeason' && <SearchSeason onEpisodesClick = {console.log('hola')}/>}
+
             {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
+
         </main>
     }
 }
