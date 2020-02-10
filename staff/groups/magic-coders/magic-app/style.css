@@ -15,13 +15,12 @@ ul {
 }
 
 .search {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   border: 1px solid black;
   border-radius: 1rem;
-  padding: 0.5rem;
-}
-.search--hide {
-  display: none;
+  padding: 0;
+  margin: 0;
 }
 .search input {
   display: block;
@@ -39,10 +38,10 @@ ul {
 }
 
 .login {
-  display: inline-block;
-  border: 1px solid black;
+  display: flex;
   border-radius: 1rem;
   padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .login input {
   display: block;
@@ -113,8 +112,10 @@ ul {
 }
 
 .detail {
+  background-color: #BECBD9;
   display: grid;
   grid-template: auto auto auto auto/auto;
+  margin: 1rem auto 0;
 }
 .detail__title {
   grid-area: 1/1/span 1/span 1;
@@ -122,17 +123,20 @@ ul {
 .detail__img {
   grid-area: 2/1/span 1/span 1;
   margin: 0 auto;
+  box-shadow: 0px 0px 20px 3px;
+  border-radius: 0.75rem;
 }
 .detail__extra {
   grid-area: 3/1/span 1/span 1;
 }
 .detail__text {
   grid-area: 4/1/span 1/span 1;
+  margin: 0.5rem 0.5rem 1rem;
 }
 @media (min-width: 1024px) {
   .detail {
     width: 90%;
-    margin: 0 auto;
+    margin: 2rem auto;
     grid-template: auto auto auto/1fr 1fr;
   }
   .detail__title {
@@ -146,8 +150,13 @@ ul {
   .detail__extra {
     grid-area: 2/2/span 1/span 1;
   }
+  .detail__extra__text {
+    margin: 37px 0% 0px 34px;
+    text-align: left;
+  }
   .detail__text {
     grid-area: 3/1/span 1/span 2;
+    margin: 2rem;
   }
 }
 
@@ -256,21 +265,49 @@ main {
   color: white;
 }
 
-.container-options {
+.filter {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-direction: column;
+}
+.filter > h3 {
+  border: 1px solid white;
+  margin-bottom: 0px;
 }
 
+@media screen and (min-width: 700px) {
+  .filter {
+    flex-direction: row;
+  }
+}
 .select {
   height: 20px;
-}
-.select input {
+  color: black;
   background-color: white;
+}
+.select option {
+  background-color: white;
+  border-color: yellow;
+  color: pink;
 }
 
 .background {
   width: 80%;
+}
+
+.a {
+  color: white;
+}
+
+.container-login {
+  height: 100vh;
+  background: url("https://www.ecopetit.cat/wpic/mpic/42-423215_minimalist-magic-the-gathering.jpg") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding-top: 10%;
 }
 
 /*# sourceMappingURL=style.css.map */

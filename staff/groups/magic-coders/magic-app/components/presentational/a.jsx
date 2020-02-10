@@ -10,11 +10,11 @@ function A(props) {
     display: 'block'
   }
 
-
-return <a style={style} href={props.href} onClick={_onClick}>{props.children}</a>
+return <a className={props.className} style={style} href={props.href} onClick={_onClick}>{props.children}</a>
 }
 
 A.defaultProps = {
   href: '/',
-  onClick: () => console.log('on click')
+  onClick: () => {},
+  className: ''
 }
