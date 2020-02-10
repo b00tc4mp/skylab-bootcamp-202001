@@ -1,7 +1,57 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'search' }
+  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'login' }
+
+  handleLogin = ({username, password}) => {
+    try {
+        authenticateUser(username, password, (error, token, user) => {
+            // Asyn Error
+            if (error) {
+                this.setState({error: error.message})
+                setTimeout(() => this.setState({error: undefined}), 3000);
+            } else {
+               
+              if (error)
+                  return this.setState({ error: error.message })
+
+              sessionStorage.token = token
+              this.setState({ view: 'landing', user })
+                
+            }
+        })
+        // Sync Error
+    } catch (error) {
+        this.setState({error: error.message})
+        setTimeout(() => this.setState({error: undefined}), 3000);
+    }
+}
+
+handleGoToRegister = () => this.setState({view: "register"})
+
+handleRegister = user => {
+  try {
+      registerUser(user, (error, message) => {
+          // Asyn Error
+          if (error) {
+              this.setState({error: error.message})
+              setTimeout(() => this.setState({error: undefined}), 3000);
+          }
+
+          this.setState({view: "login", message})
+          setTimeout(() => this.setState({message: undefined}), 3000);
+
+      })
+      
+      // Sync Errror
+  } catch (error) {
+      this.setState({error: error.message})
+      setTimeout(() => this.setState({error: undefined}), 3000);
+  }
+  
+}
+
+handleGoToLogin = () => this.setState({view: "login"})
 
   handleLanguage = lang => this.setState({ language: lang })
 
@@ -14,7 +64,7 @@ class App extends Component {
     if (query) _search = { ...search, name: query }
 
     searchCards(_search, (error, cards) => {
-      this.setState({ cards, language: undefined, view: 'search' })
+      this.setState({ cards, language: undefined, view: 'landing' })
     })
   }
 
@@ -58,33 +108,44 @@ class App extends Component {
       handleSearch,
       handleSelect,
       handleCheckbox,
-      handleDetail
+      handleDetail,
+      handleLogin, 
+      handleRegister,
+      handleGoToRegister,
+      handleGoToLogin
     } = this
 
     return (
       <Fragment>
-        <main>
-          <Navbar />
-          <div className='container-options'>
-            <Search onSubmit={handleSearch} />
-            <Types onChange={handleSelect} property="types" />
-            <Rarity onChange={handleSelect} property="rarity" />
-            <ManaCost onChange={handleSelect} property="cmc" />
-            <Colors onChange={handleCheckbox} property="colors" />
-          </div>
-          
-          {cards.length > 0 && (
-            <div>
-              <Button
-                padding="3px 6px"
-                value={undefined}
-                onClick={handleLanguage}
-              >
-                English
-              </Button>
-              {languages.map(value => (
-                <Button padding="2px 5px" value={value} onClick={handleLanguage}>
-                  {value}
+        {(view === 'login' || view === 'register') &&
+        <div className="container-login">
+          {view === 'login' && <Login onSubmit={handleLogin} handleGoToRegister={handleGoToRegister}/>}
+          {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
+        </div>
+        }
+
+        {(view !== 'login' || view !== 'register') &&
+        <Fragment>
+          <main>
+            {view === 'landing' && <Navbar />}
+            {view === 'landing' && 
+            <div className='filter'>
+  
+              <Types onChange={handleSelect} property="types" />
+              <Rarity onChange={handleSelect} property="rarity" />
+              <ManaCost onChange={handleSelect} property="cmc" />
+              <Colors onChange={handleCheckbox} property="colors" />
+              <Search onSubmit={handleSearch} title="Name Card" />
+            </div>}
+  
+            {view === 'landing' && cards.length > 0 && (
+              <div>
+                <Button
+                  padding="3px 6px"
+                  value={undefined}
+                  onClick={handleLanguage}
+                >
+                  English
                 </Button>
               ))}
             </div>
@@ -95,6 +156,20 @@ class App extends Component {
         {view === 'detail' && <Detail card={card}/>}
         {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
         <Footer />
+                {languages.map(value => (
+                  <Button padding="2px 5px" value={value} onClick={handleLanguage}>
+                    {value}
+                  </Button>
+                ))}
+              </div>
+            )}
+            
+          </main>
+          {view === 'detail' && <Detail card={card}/>}
+          {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+        </Fragment>
+        }
+
       </Fragment>
     )
   }

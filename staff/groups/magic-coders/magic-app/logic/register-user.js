@@ -10,11 +10,11 @@ function registerUser({name, surname, username, password}, callback) {
     if (typeof password !== 'string') throw new TypeError('password ' + password + ' is not a string');
     if (!password.trim()) throw new Error('password is empty');
     if (typeof callback !== "function") throw new Error(`${callback} is not a function`)
-
+    const mtg= true
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, surname, username, password })
+        body: JSON.stringify({ name, surname, username, password, mtg })
     }, (error, response) => {
         // Network Error
         if (error) return callback(error)

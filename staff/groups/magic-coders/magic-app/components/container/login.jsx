@@ -8,7 +8,7 @@ function Login({onSubmit, handleGoToRegister, error, message}) {
         <Input name="password" placeholder="password" type="password" /> 
         <Button>Login</Button>
         {error && <P>{error}</P>} 
-        <A onClick={handleGoToRegister}
+        <A className="a" onClick={handleGoToRegister}
         >Register</A>
     </Form>
     )
