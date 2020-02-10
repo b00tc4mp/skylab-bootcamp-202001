@@ -2,9 +2,21 @@ const { Component, Fragment } = React
 
 class App extends Component {
 
-  state = {view: 'search', cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, sidebar: false }
+  state = {view: undefined, cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, sidebar: false, user: undefined }
+
+  componentWillMount = () => {
+    const {token} = sessionStorage
+    if (token) {
+      retrieveUser(token, (error, user) => {
+
+        this.setState({view: 'search', user})
+      })
+      
+    }
+  }
 
   logout = () => {
+    sessionStorage.clear()
     this.setState({view: 'login'})
   }
 
@@ -22,7 +34,7 @@ class App extends Component {
                   return this.setState({ error: error.message })
 
               sessionStorage.token = token
-              this.setState({ view: 'landing', user })
+              this.setState({ view: 'search', user })
                 
             }
         })
@@ -117,7 +129,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   render() {
 
     const {
-      state: { cards, card, language, view, error, sidebar  },
+      state: { cards, card, language, view, error, sidebar, user  },
 
       handleLanguage,
       handleLangSelect,
@@ -142,10 +154,10 @@ handleGoToLogin = () => this.setState({view: "login"})
         </div>
         }
 
-        {(view !== 'login' || view !== 'register') &&
+        {(view !== 'login' && view !== 'register' && view) &&
         <Fragment>
           <div id="search-container" style={{backgroundColor: 'black'}}>
-            <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} onTo={onToComponent} />}
+            <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} onTo={onToComponent} user={user} />}
 
             {view === 'search' && 
             <div className='filter'>
@@ -176,7 +188,7 @@ handleGoToLogin = () => this.setState({view: "login"})
 
         </Fragment>
         }
-        <Footer changeLang={handleLangSelect}/>
+        {view && <Footer changeLang={handleLangSelect}/>}
       </Fragment>
     )
   }

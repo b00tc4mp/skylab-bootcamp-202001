@@ -1,4 +1,4 @@
-function Navbar({sidebar, toggleSidebar, logout, onTo}) {
+function Navbar({sidebar, toggleSidebar, logout, onTo, user}) {
 
   return (
   <nav className="navbar" >
@@ -20,10 +20,12 @@ function Navbar({sidebar, toggleSidebar, logout, onTo}) {
 
     <section className="navbar__profile" >
       <i className="far fa-user"></i>
-      <label onClick={() => onTo('profile')} style={{margin: '0px 20px 0px 5px'}}>Profile</label>
+      <label onClick={() => onTo('profile')} style={{margin: '0px 20px 0px 5px'}}>
+        {user ? firstUppercase(user.name): 'Profile'}
+      </label>
 
       <i className="fas fa-sign-out-alt"></i>
-      <label onClick={() => onTo('login')} style={{marginLeft: '5px'}}>Logout</label>
+      <label onClick={logout} style={{marginLeft: '5px'}}>Logout</label>
     </section>
 
     <section  className="bars">

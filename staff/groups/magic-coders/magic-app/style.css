@@ -65,6 +65,7 @@ ul {
   border: 1px solid black;
   border-radius: 1rem;
   padding: 0.5rem;
+  z-index: 50;
 }
 .register--hide {
   display: none;
@@ -87,6 +88,7 @@ ul {
   display: block;
   padding: 0.5rem;
   margin: 0.5rem;
+  color: white;
 }
 
 .feedback {
@@ -307,7 +309,7 @@ main {
 .footer {
   width: 100%;
   display: grid;
-  grid-template: auto auto auto auto/8vh;
+  grid-template: auto auto auto auto/auto;
 }
 .footer__nav {
   margin: -5px auto;
@@ -568,7 +570,7 @@ body.is-loading .container-login:before {
 }
 
 .profile {
-  min-height: 84vh;
+  min-height: 81vh;
   color: white;
 }
 .profile .profile__header {
@@ -604,10 +606,11 @@ body.is-loading .container-login:before {
 }
 .profile__content {
   background-color: white;
-  min-height: 74vh;
+  min-height: 54vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 .profile__content img {
   margin: 1em;

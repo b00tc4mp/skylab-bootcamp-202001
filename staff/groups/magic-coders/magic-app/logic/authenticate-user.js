@@ -18,7 +18,7 @@ function authenticateUser(username, password, callback) {
 
 
 
-          call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+        call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
