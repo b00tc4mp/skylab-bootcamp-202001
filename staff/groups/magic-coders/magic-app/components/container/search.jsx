@@ -1,9 +1,10 @@
 function Search({title, onSubmit, error}){
 
-    return <Form className="search" onSubmit={onSubmit} >
-        <H2>{title}</H2>
+    return (
+    <Form className="search" onSubmit={onSubmit} >
+        <h3 style={{color: 'white'}}>{title}</h3>
         {error && <P>{error}</P>}
-        <Input name="query" placeholder="criteria" />
+        <Input name="query" placeholder="" />
         <Button>Search</Button>
-    </Form>
+    </Form>)
 }

@@ -65,12 +65,12 @@ class App extends Component {
       <Fragment>
         <main>
           <Navbar />
-          <div className='container-options'>
-            <Search onSubmit={handleSearch} />
+          <div className='filter'>
             <Types onChange={handleSelect} property="types" />
             <Rarity onChange={handleSelect} property="rarity" />
             <ManaCost onChange={handleSelect} property="cmc" />
             <Colors onChange={handleCheckbox} property="colors" />
+            <Search onSubmit={handleSearch} title="Name Card" />
           </div>
           
           {cards.length > 0 && (

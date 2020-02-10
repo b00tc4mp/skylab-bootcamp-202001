@@ -21,12 +21,11 @@ function Button(props) {
 
 Button.defaultProps = {
   align: 'center',
-  backgroundColor: 'rgb(52, 90, 128)',
+  backgroundColor: '#8937e3',
   color: 'white',
   children: 'Submit',
   fontSize: '14px',
   padding: '8px 20px',
   type: 'submit',
   onClick: () => {}
-
 }

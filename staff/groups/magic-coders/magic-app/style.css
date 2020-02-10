@@ -15,13 +15,12 @@ ul {
 }
 
 .search {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   border: 1px solid black;
   border-radius: 1rem;
   padding: 0.5rem;
-}
-.search--hide {
-  display: none;
+  height: 50%;
 }
 .search input {
   display: block;
@@ -260,24 +259,37 @@ ul {
 }
 main {
   background-color: black;
-  height: 100vh;
 }
 
 .checkbox {
   color: white;
 }
 
-.container-options {
+.filter {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-direction: column;
+}
+.filter > h3 {
+  border: 1px solid white;
+  margin-bottom: 0px;
 }
 
+@media screen and (min-width: 700px) {
+  .filter {
+    flex-direction: row;
+  }
+}
 .select {
   height: 20px;
-}
-.select input {
+  color: black;
   background-color: white;
+}
+.select option {
+  background-color: white;
+  border-color: yellow;
+  color: pink;
 }
 
 .background {
