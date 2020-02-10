@@ -1,11 +1,27 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: undefined
+        view: 'login'
     }
+
+
+    handleLogin = (username, password) => {
+        try {
+            authenticateUser(username, password, (error, token) => {
+                if (error) return console.log(error)
+                this.setState({ view: undefined })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    handleOnToRegister = () => this.setState({ view: 'register' })
+
+
     render() {
         const {
-            props: { title }, state: { view } } = this
+            props: { title }, state: { view }, handleLogin, handleOnToRegister } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -16,11 +32,11 @@ class App extends Component {
 
             <h1>{title}</h1>
 
-            {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleRegister} />}
+            {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} />}
 
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
-            {view === "register" && <Register onSubmit={console.log('submit')} onToLogin={console.log('login')} error={undefined} />}
+            {view === "register" && <Register onSubmit={() => { console.log('submit') }} onToLogin={() => { console.log('login') }} error={undefined} />}
         </main>
     }
 }
