@@ -168,7 +168,7 @@ handleGoToLogin = () => this.setState({view: "login"})
           {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
         </Fragment>
         }
-        <Footer />
+        <Footer onClick={handleLanguage}/>
       </Fragment>
     )
   }
