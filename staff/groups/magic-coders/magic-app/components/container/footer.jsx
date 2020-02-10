@@ -1,8 +1,4 @@
-function Footer (props) {
-
-    const onClick = value => {
-        props.onClick(value)
-      }
+function Footer ({changeLang}) {
 
     return <div className="footer">
         <div className="footer__nav">
@@ -15,16 +11,17 @@ function Footer (props) {
             </div>
             <div className="footer__nav__about">About</div>
             <div className="footer__nav__language">
-                <label htmlFor="language">Language: </label><select className="select" type="select">
-                    <option onClick={onClick(value)} value="english">English</option>
-                    <option value="german">German</option>
-                    <option value="spanish">Spanish</option>
-                    <option value="french">French</option>
-                    <option value="italian">Italian</option>
-                    <option value="japanese">Japanese</option>
-                    <option value="portugese">Portugese</option>
-                    <option value="rusian">Russian</option>
-                    <option value="chinese">Chinese</option>
+                <label htmlFor="language">Language: </label>
+                <select onChange={changeLang} className="select" type="select">
+                    <option>English</option>
+                    <option>German</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                    <option>Italian</option>
+                    <option>Japanese</option>
+                    <option>Portugese</option>
+                    <option>Russian</option>
+                    <option>Chinese</option>
 
                 </select>
             </div>
