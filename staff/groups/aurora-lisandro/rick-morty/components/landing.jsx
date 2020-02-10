@@ -1,7 +1,7 @@
 function Landing({ onToCharacterSearch, onToEpisodeSearch }) {
     return <div className="landing">
 
-        <article className="landing__charachters" onClick={(event) => {
+        <article className="landing__characters" onClick={(event) => {
             event.preventDefault()
 
             onToCharacterSearch()

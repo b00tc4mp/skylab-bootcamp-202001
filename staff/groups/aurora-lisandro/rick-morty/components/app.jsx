@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'landing'
+        view: 'login'
     }
 
 
@@ -9,7 +9,7 @@ class App extends Component {
         try {
             authenticateUser(username, password, (error, token) => {
                 if (error) return console.log(error)
-                this.setState({ view: undefined })
+                this.setState({ view: 'landing' })
             })
         } catch (error) {
             console.log(error)
