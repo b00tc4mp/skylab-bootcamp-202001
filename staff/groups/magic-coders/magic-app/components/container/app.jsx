@@ -1,7 +1,7 @@
 const { Component, Fragment } = React
 
 class App extends Component {
-  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'login' }
+  state = { cards: [], language: undefined, search: {}, card: undefined, view: 'landing' }
 
   handleLogin = ({username, password}) => {
     try {
@@ -101,7 +101,6 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
 
   render() {
-    console.log(this.state.search)
     const {
       state: { cards, card, language, view },
       handleLanguage,
@@ -114,7 +113,6 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleGoToRegister,
       handleGoToLogin
     } = this
-
     return (
       <Fragment>
         {(view === 'login' || view === 'register') &&
@@ -123,21 +121,18 @@ handleGoToLogin = () => this.setState({view: "login"})
           {view === 'register' && <Register onSubmit={handleRegister} handleGoToLogin={handleGoToLogin}/>}
         </div>
         }
-
         {(view !== 'login' || view !== 'register') &&
         <Fragment>
           <main>
             {view === 'landing' && <Navbar />}
             {view === 'landing' && 
             <div className='filter'>
-  
               <Types onChange={handleSelect} property="types" />
               <Rarity onChange={handleSelect} property="rarity" />
               <ManaCost onChange={handleSelect} property="cmc" />
               <Colors onChange={handleCheckbox} property="colors" />
               <Search onSubmit={handleSearch} title="Name Card" />
             </div>}
-  
             {view === 'landing' && cards.length > 0 && (
               <div>
                 <Button
@@ -147,15 +142,6 @@ handleGoToLogin = () => this.setState({view: "login"})
                 >
                   English
                 </Button>
-              ))}
-            </div>
-
-          )}
-          
-        </main>
-        {view === 'detail' && <Detail card={card}/>}
-        {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-        <Footer />
                 {languages.map(value => (
                   <Button padding="2px 5px" value={value} onClick={handleLanguage}>
                     {value}
@@ -163,15 +149,13 @@ handleGoToLogin = () => this.setState({view: "login"})
                 ))}
               </div>
             )}
-            
           </main>
           {view === 'detail' && <Detail card={card}/>}
           {view === 'landing' && <Results results={cards} onClickItem={handleDetail} language={language} />}
         </Fragment>
         }
-
+        <Footer />
       </Fragment>
     )
   }
 }
-
