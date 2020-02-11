@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'login',
+        view: 'character search',
         error: undefined
     }
 
@@ -78,11 +78,7 @@ class App extends Component {
 
     render() {
         const {
-<<<<<<< HEAD
-            props: { title }, state: { view, results }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
-=======
             props: { title }, state: { view, error }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
->>>>>>> rick-develop
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -101,12 +97,7 @@ class App extends Component {
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={error} />}
 
-<<<<<<< HEAD
             {view === 'searchSeason' && <SearchSeason onEpisodesClick = {handleGoToEpisodes}/>}
-=======
-
-            {view === 'searchSeason' && <SearchSeason onEpisodesClick={console.log('hola')} />}
->>>>>>> rick-develop
 
             {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
 
