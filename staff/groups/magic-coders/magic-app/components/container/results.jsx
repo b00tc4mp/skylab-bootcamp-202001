@@ -56,10 +56,6 @@ function Results({ results, language, onClickItem }) {
           if (card.name && card.imageUrl) {
             return (
             <Item key={card.multiverseid} onClick={onClickItem} item={card}/>
-              // <li>
-              //   <h3>{card.name}</h3>
-              //   <img src={card.imageUrl} />
-              // </li>
             )
           }
         })
