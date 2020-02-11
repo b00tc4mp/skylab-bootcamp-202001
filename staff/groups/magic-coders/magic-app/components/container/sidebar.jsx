@@ -1,4 +1,4 @@
-function Sidebar({sidebar, toggleSidebar, logout}){
+function Sidebar({sidebar, toggleSidebar, logout, onTo}){
 
   return (
     <div
@@ -20,10 +20,9 @@ function Sidebar({sidebar, toggleSidebar, logout}){
         
         <div className="list-menu">
           <ul className="ul-menu">
-            <li>Search</li>
-            <li>For Sale</li>
-            <li>Favorites</li>
-            <li>Profile</li>
+            <li onClick={() => onTo('search')}>Search</li>
+            <li onClick={() => onTo('forsale')}>For Sale</li>
+            <li onClick={() => onTo('profile')}>Profile</li>
             <li onClick={logout}>Logout</li>
           </ul>
         </div>

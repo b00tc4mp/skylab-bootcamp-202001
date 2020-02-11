@@ -131,28 +131,35 @@ handleGoToLogin = () => this.setState({view: "login"})
       })
   }
 
-  handleSidebar = () => {
-    this.setState({sidebar: !this.state.sidebar})
-  }
+  handleSidebar = () => this.setState({sidebar: !this.state.sidebar})
 
-  onToComponent = view => this.setState({view})
+  onToComponent = view => {
+    if (view === 'search') this.setState({view, cards: []})
+    else this.setState({view})
+  } 
 
   addToSale = id => {
     const {token} = sessionStorage
     addCardToSale(id, token, (error, msg) => {
-      console.log(msg);
+      console.log(msg)
     })
   }
 
   handleProfile = () => {
-    const {user} = this.state
-    const {toSale} = user
+    const {token} = sessionStorage
 
-    if (toSale && toSale.length > 0) {
-      retrieveCardsProfile(toSale, (error, cardsToSale) => {
-        this.setState({cardsToSale, view: 'profile'})
-      })
-    }
+    retrieveUser(token, (error, user) => {
+      const {toSale} = user
+
+      if (toSale && toSale.length > 0) {
+        retrieveCardsProfile(toSale, (error, cardsToSale) => {
+          this.setState({view: 'profile', cardsToSale})
+        })
+      } else {
+        this.setState({view: 'profile'})
+      }
+
+    }) 
   }
 
   render() {
@@ -199,27 +206,20 @@ handleGoToLogin = () => this.setState({view: "login"})
               <Colors onChange={handleCheckbox} property="colors" />
               <Search onSubmit={handleSearch} title="Name Card" />
             </div>}
+
             {view === 'landing' && cards.length > 0 && (
               <div>
                 <Button padding="3px 6px" value={undefined} onClick={handleLanguage} >
-    
-                </Button>
-                {languages.map(value => (
-                  <Button padding="2px 5px" value={value} onClick={handleLanguage}>
-                    {value}
-                  </Button>
-                ))}
+                </Button>{languages.map(value => <Button padding="2px 5px" value={value} onClick={handleLanguage}> {value}</Button>)}
               </div>
             )}
-
-
           </div>
+
           {view === 'detail' && <Detail card={card} addToSale={addToSale} />}
-          {(view === 'search' && !cards.length) && 
-          <div className="results-nocards" >
-          </div>}
+          {(view === 'search' && !cards.length) && <div className="results-nocards"></div>}
           {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
           {view === 'profile' && <Profile user={user} cards={cardsToSale} />}
+          {view === 'forsale' && <ForSale onTo={onToComponent} />}
 
         </Fragment>
         }

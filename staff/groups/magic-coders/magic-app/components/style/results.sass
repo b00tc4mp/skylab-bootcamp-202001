@@ -5,16 +5,19 @@
   justify-content: space-evenly
   align-items: center
   flex-wrap: wrap
-  margin-top: 5px
   background: rgb(242, 242, 242)
   background: white
   background-color: white
+  margin-top: 5px
 
 .results-nocards
   height: (((48.5vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
   background-color: black
 
 @media (min-width: 698px)
+  .results
+    margin-top: 0px
+
   .results-nocards
     height: (((97vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
     background-color: white

@@ -2,7 +2,7 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
 
   return (
   <nav className="navbar" >
-    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} />
+    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} onTo={onTo} />
     <section className="logo" >
       <label>
         <span>Magic</span>
@@ -12,9 +12,8 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
 
     <section className="items" >
       <ul>
-        <li>FOR SALE</li>
         <li onClick={() => onTo('search')}>SEARCH</li>
-        <li>FAVORITES</li>
+        <li onClick={() => onTo('forsale')}>FOR SALE</li>
       </ul>
     </section>
 
