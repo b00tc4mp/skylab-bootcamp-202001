@@ -7,6 +7,7 @@
 body {
   text-align: center;
   margin: 0;
+  padding: 0;
 }
 
 ul {
@@ -117,11 +118,13 @@ ul {
 .results-nocards {
   height: 10.5vh;
   background-color: black;
+  margin-bottom: -5px;
+  padding: 0;
 }
 
 @media (min-width: 698px) {
   .results-nocards {
-    height: 59vh;
+    height: 58vh;
     background-color: white;
     background: url("https://i.imgur.com/lP6b13v.jpg") no-repeat center center;
     background-image: 100%;
@@ -150,7 +153,6 @@ ul {
   font-size: 0.7rem;
   height: 3vh;
 }
-
 .detail__title h1 {
   display: inline;
 }
