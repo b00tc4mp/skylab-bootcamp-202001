@@ -14,7 +14,7 @@ function addCardToSale(id, token, callback) {
         //Logic
         let {toSale} = user
         if (!toSale)
-            toSale = [id]
+            toSale = [{id, price}]
         else
             toSale.includes(id) ? '' : toSale.push(id)
 

@@ -109,10 +109,10 @@ ul {
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
-  margin-top: 5px;
   background: #f2f2f2;
   background: white;
   background-color: white;
+  margin-top: 5px;
 }
 
 .results-nocards {
@@ -123,6 +123,10 @@ ul {
 }
 
 @media (min-width: 698px) {
+  .results {
+    margin-top: 0px;
+  }
+
   .results-nocards {
     height: 58vh;
     background-color: white;
