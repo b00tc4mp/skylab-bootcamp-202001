@@ -137,8 +137,8 @@ handleGoToLogin = () => this.setState({view: "login"})
     if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
     else if (view === 'forsale') {
       const {token} = sessionStorage
-      retrieveCardsSales(token, (error, cards) => {
-        this.setState({cards, view})
+      retrieveCardsSales(token, (error, cards, users) => {
+        this.setState({cards, users, view})
       })
 
     } else {
@@ -164,7 +164,7 @@ handleGoToLogin = () => this.setState({view: "login"})
 
   render() {
     const {
-      state: { cards, card, language, view, error, sidebar, user,cardsToSale },
+      state: { cards, card, language, view, error, sidebar, user, cardsToSale, users },
 
       handleLanguage,
       handleLangSelect,
@@ -215,11 +215,11 @@ handleGoToLogin = () => this.setState({view: "login"})
 
             {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
             {(view === 'search' && !cards.length) && 
-            <div className="results-nocards" ></div>}
+            <div className="results-nocards"></div>}
           </div>
 
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-          {view === 'forsale' && <Results results={cards} language={language} view={view} />}
+          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users} />}
+          {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
           {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} />}
 
         </Fragment>

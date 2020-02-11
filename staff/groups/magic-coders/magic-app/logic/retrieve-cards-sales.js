@@ -14,15 +14,12 @@ function retrieveCardsSales(token, callback) {
         let users = JSON.parse(response.content), { error: _error } = users
         if (_error) return callback(new Error(_error))
 
-        users = users.filter(user => user.mtg && user.toSale)
+        users = users.filter(user => user.mtg && user.toSale && user.phone && user.email)
 
         let cards = []
         users.forEach(user => user.toSale.forEach(card => cards.push(card)))
 
-
-        console.log(cards)
-
-        callback(undefined, cards)
+        callback(undefined, cards, users)
       }
     )
 }
