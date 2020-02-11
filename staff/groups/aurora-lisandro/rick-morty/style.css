@@ -36,7 +36,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   text-align: center;
 }
 
-.searchSeason__component, .details__card, .results {
+.searchSeason__component, .search__filters, .details__card, .results {
   display: flex;
   flex-wrap: wrap;
   width: 90%;
@@ -195,12 +195,18 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-family: Get Schwifty;
   font-size: 1.2rem;
 }
+.search__filter {
+  font-size: 1rem;
+}
+.search__name {
+  font-size: 1.2rem;
+}
 .search__container {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   width: 80%;
-  height: 30%;
+  height: 20%;
 }
 .search__input {
   border-radius: 0;
@@ -231,7 +237,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 }
 .searchSeason__season {
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin: 1rem;
 }
 .searchSeason__image {
   -webkit-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
@@ -263,7 +269,6 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   width: 100%;
   cursor: pointer;
   margin-top: 1rem;
-
 }
 
 .feedback {

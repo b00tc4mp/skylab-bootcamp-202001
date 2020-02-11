@@ -65,7 +65,7 @@ class App extends Component {
 
     handleOnSubmit = query => {
         try {
-            const { token } = sessionStorage
+            const { token } = this.state
 
             searchCharacters(query, token, (error, response) => {
                 if (error) return this.__handleError__(error)
@@ -106,6 +106,6 @@ class App extends Component {
 
             {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
 
-        </main>
+        </main >
     }
 }
