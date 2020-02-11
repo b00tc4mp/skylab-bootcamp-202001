@@ -113,9 +113,19 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
-    handleGoToCharacters = () => this.setState({ view: 'search' })
+    handleGoToCharacters = () => this.setState({
+        view: 'search',
+        characters: undefined,
+        episodes: undefined,
+        detail: undefined
+    })
 
-    handleGoToEpisodes = () => this.setState({ view: 'seasons' })
+    handleGoToEpisodes = () => this.setState({
+        view: 'seasons',
+        characters: undefined,
+        episodes: undefined,
+        detail: undefined
+    })
 
 
 
@@ -123,11 +133,7 @@ class App extends Component {
     render() {
         const {
 
-<<<<<<< HEAD
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleItemClick, handleLogout } = this
-=======
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleEpisodeClick, handleCharacterClick } = this
->>>>>>> rick-develop
+            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout } = this
 
         return <main className='app'>
 
@@ -152,7 +158,7 @@ class App extends Component {
 
             {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
 
-            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} />}
+            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleSearchEpisodes} />}
 
             {view === 'detail' && <Details item={detail} />}
 
