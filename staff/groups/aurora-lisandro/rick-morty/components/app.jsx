@@ -34,7 +34,7 @@ class App extends Component {
                 if (error) {
                     this.__handleError__(error)
                 } else {
-                    this.setState(results )
+                    this.setState(results)
                 }
             })
         } catch (error) {
@@ -52,12 +52,12 @@ class App extends Component {
         try {
             const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTQwNTEzNDM5YmIwMzAwMTUzNDcxMjQiLCJpYXQiOjE1ODE0MTI2MjgsImV4cCI6MTU4MTQxNjIyOH0.dV7JPvmv-t4SwgsBrlwYSyoSl5xcPYKQOL4CIplQEBM'
 
-            searchSeason(querySeason, token, (error, results) =>{
-                if(error)
+            searchSeason(querySeason, token, (error, results) => {
+                if (error)
                     console.log(error)
-                this.setState({view: 'results', results}) //TODO
+                this.setState({ view: 'results', results }) //TODO
             })
-        }catch (error) {
+        } catch (error) {
             console.log(error)
         }
 
@@ -80,7 +80,9 @@ class App extends Component {
     render() {
         const {
 
-            props: { title }, state: { view, results, error }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this        return <main className='app'>
+            props: { title }, state: { view, results, error }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
+
+        return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
                 onLogout={() => console.log('logout')}
@@ -99,7 +101,7 @@ class App extends Component {
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={error} />}
 
 
-            {view === 'searchSeason' && <SearchSeason onEpisodesClick = {handleGoToEpisodes}/>}
+            {view === 'searchSeason' && <SearchSeason onEpisodesClick={handleGoToEpisodes} />}
 
 
             {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
