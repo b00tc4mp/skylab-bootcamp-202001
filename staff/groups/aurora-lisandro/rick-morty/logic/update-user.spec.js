@@ -1,4 +1,4 @@
-fdescribe('updateUser', () => {
+describe('updateUser', () => {
     let name, surname, username, password, appTag, token
 
     beforeEach(() => {
