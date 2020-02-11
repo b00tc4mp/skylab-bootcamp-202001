@@ -2,7 +2,7 @@ const { Component } = React
 class App extends Component {
     state = {
 
-        view: 'searchSeason'
+        view: 'searchSeason', results: undefined
 
 
     }
@@ -28,7 +28,7 @@ class App extends Component {
                 if (error) {
                     console.log(error)
                 } else {
-                    this.setState({ view: 'login' })
+                    this.setState(results )
                 }
             })
         } catch (error) {
@@ -43,7 +43,20 @@ class App extends Component {
 
     handleGoToCharacters = () => this.setState({ view: 'character search' })
 
-    handleGoToEpisodes = () => console.log('to episodes')
+    handleGoToEpisodes = (querySeason) => {
+        try {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTQwNTEzNDM5YmIwMzAwMTUzNDcxMjQiLCJpYXQiOjE1ODE0MTI2MjgsImV4cCI6MTU4MTQxNjIyOH0.dV7JPvmv-t4SwgsBrlwYSyoSl5xcPYKQOL4CIplQEBM'
+
+            searchSeason(querySeason, token, (error, results) =>{
+                if(error)
+                    console.log(error)
+                this.setState({view: 'results', results}) //TODO
+            })
+        }catch (error) {
+            console.log(error)
+        }
+
+    }
 
     handleOnSubmit = query => {
         try {
@@ -61,7 +74,7 @@ class App extends Component {
 
     render() {
         const {
-            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
+            props: { title }, state: { view, results }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -76,12 +89,11 @@ class App extends Component {
 
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} />}
 
-            {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
+            {view === 'results' && <Results results={results} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
 
-
-            {view === 'searchSeason' && <SearchSeason onEpisodesClick = {console.log('hola')}/>}
+            {view === 'searchSeason' && <SearchSeason onEpisodesClick = {handleGoToEpisodes}/>}
 
             {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
 
