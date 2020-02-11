@@ -1,4 +1,5 @@
-function addCardToSale(card, token, callback) {
+function addCardToSold(id, token, callback) {
+    console.log('heee')
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',
@@ -12,13 +13,17 @@ function addCardToSale(card, token, callback) {
         if (_error) return callback(new Error(_error))
 
         //Logic
-        let {toSale} = user
-        const {multiverseid} = card
+        let {sold, toSale} = user
+        const card = toSale.filter(card => card.multiverseid === id)
+        toSale = toSale.filter(card => card.multiverseid !== id)
 
-        if (!toSale)
-            toSale = [card]
-        else
-            toSale.some(card => card.id === multiverseid) ? '' : toSale.push(card)
+        if (!sold) {
+            sold = card
+        } else {
+            sold.push(card[0])
+        }
+
+        
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
@@ -26,7 +31,7 @@ function addCardToSale(card, token, callback) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({toSale})
+            body: JSON.stringify({toSale, sold})
         }, (error, response) => {
             if (error) return callback(error)
 
