@@ -22,7 +22,7 @@ function Login({ onSubmit, onToRegister, error }) {
             event.preventDefault()
 
             onToRegister()
-        }}> Are you not register yet? Register!</a>
+        }}> Not a member yet? Register!</a>
 
     </form>
 

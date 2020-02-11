@@ -54,11 +54,11 @@ class App extends Component {
             const { token } = sessionStorage
 
             searchCharacters(query, token, (error, response) => {
-                if (error) return console.log(error)
+                if (error) return this.__handleError__(error)
                 console.log(response)
             })
         } catch (error) {
-            console.log(error)
+            this.__handleError__(error)
         }
     }
 
