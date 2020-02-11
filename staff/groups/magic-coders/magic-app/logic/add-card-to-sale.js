@@ -1,4 +1,4 @@
-function addCardToSale(id, token, callback) {
+function addCardToSale(card, token, callback) {
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',
@@ -13,10 +13,12 @@ function addCardToSale(id, token, callback) {
 
         //Logic
         let {toSale} = user
+        const {multiverseid} = card
+
         if (!toSale)
-            toSale = [{id, price}]
+            toSale = [card]
         else
-            toSale.includes(id) ? '' : toSale.push(id)
+            toSale.some(card => card.id === multiverseid) ? '' : toSale.push(card)
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
