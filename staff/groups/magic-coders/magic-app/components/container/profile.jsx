@@ -1,4 +1,4 @@
-function Profile({user, cards}) {
+function Profile({user, cards, view}) {
 
   const green = {
     backgroundColor: 'green', 
@@ -23,7 +23,7 @@ function Profile({user, cards}) {
           </div>
         </header>
         <main className="profile__content">
-         <Results results={cards} />
+         <Results results={cards} view={view} />
         </main>
     </div>
   )

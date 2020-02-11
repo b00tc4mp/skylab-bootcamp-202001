@@ -1,12 +1,12 @@
-function retrieveCardsProfile(ids, callback) {
-    if (!(ids instanceof Array)) throw new TypeError(ids.constructor.name + ' is not an Array')
+function retrieveCardsProfile(cards, callback) {
+    if (!(cards instanceof Array)) throw new TypeError(cards.constructor.name + ' is not an Array')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 
     let stringIds = ''
 
-    for (let i = 0; i < ids.length; i++) {
-      stringIds += ids[i]
-      if(i < ids.length - 1) stringIds+=","
+    for (let i = 0; i < cards.length; i++) {
+      stringIds += cards[i]['multiverseid']
+      if(i < cards.length - 1) stringIds+=","
     }
   
     call(`https://api.magicthegathering.io/v1/cards/?multiverseid=${stringIds}`, undefined,
@@ -16,6 +16,7 @@ function retrieveCardsProfile(ids, callback) {
 
       if (response.status === 200) {
         let { cards } = JSON.parse(response.content)
+        console.log(cards)
         callback(undefined, cards)
       }
     }

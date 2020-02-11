@@ -44,8 +44,7 @@ function filterTypes(array, types) {
 
 
 
-function Results({ results, language, onClickItem }) {
-
+function Results({ results, language, onClickItem, view, user }) {
 
   return (
     <ul className="results">
@@ -55,20 +54,14 @@ function Results({ results, language, onClickItem }) {
 
           if (card.name && card.imageUrl) {
             return (
-            <Item key={card.multiverseid} onClick={onClickItem} item={card}/>
+            <Item key={card.multiverseid} onClick={onClickItem} item={card} view={view} user={user} />
             )
           }
         })
       }
       {language && filterLanguage(results, language).map(card => {
 
-        return (
-          <li>
-            <h3>{card.name}</h3>
-            <img src={card.imageUrl} />
-            <span>{randomPrices()}</span>
-          </li>
-        )}
+        return <Item key={card.multiverseid} onClick={onClickItem} item={card} view={view} user={user} />}
       )}
       
     </ul>

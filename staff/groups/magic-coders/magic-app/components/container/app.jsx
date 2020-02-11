@@ -135,12 +135,20 @@ handleGoToLogin = () => this.setState({view: "login"})
 
   onToComponent = view => {
     if (view === 'search') this.setState({view, cards: []})
-    else this.setState({view})
+    else if (view === 'forsale') {
+      const {token} = sessionStorage
+      retrieveCardsSales(token, (error, cards) => {
+        this.setState({cards, view})
+      })
+
+    } else {
+      this.setState({view})
+    } 
   } 
 
-  addToSale = id => {
+  addToSale = card => {
     const {token} = sessionStorage
-    addCardToSale(id, token, (error, msg) => {
+    addCardToSale(card, token, (error, msg) => {
       console.log(msg)
     })
   }
@@ -219,10 +227,9 @@ handleGoToLogin = () => this.setState({view: "login"})
             <div className="results-nocards" ></div>}
           </div>
 
-
           {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-          {view === 'profile' && <Profile user={user} cards={cardsToSale} />}
-          {view === 'forsale' && <ForSale onTo={onToComponent} />}
+          {view === 'forsale' && <Results results={cards} language={language} view={view} user={user} />}
+          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} />}
 
         </Fragment>
         }
