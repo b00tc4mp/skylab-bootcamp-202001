@@ -1,5 +1,5 @@
 function retrieveCard(id, callback) {
-    if (typeof id !== 'string') throw new TypeError(id + ' is not a string')
+    if (typeof id !== 'number') throw new TypeError(id + ' is not a string')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 
     call(`https://api.magicthegathering.io/v1/cards/${id}`, undefined,

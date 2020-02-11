@@ -8,7 +8,6 @@
   background: rgb(242, 242, 242)
   background: white
   background-color: white
-  margin-top: 0px
 
 .results-nocards
   height: (((48.5vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
@@ -17,11 +16,9 @@
   padding: 0
 
 @media (min-width: 698px)
-  .results
-    margin-top: .5vh
 
   .results-nocards
-    height: (((96vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
+    height: $heigth-nocards
     background-color: white
     background: url('magic-search.jpg') no-repeat center center
     background-image: 100%

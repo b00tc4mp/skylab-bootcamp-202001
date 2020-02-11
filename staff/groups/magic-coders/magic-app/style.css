@@ -112,7 +112,6 @@ ul {
   background: #f2f2f2;
   background: white;
   background-color: white;
-  margin-top: 0px;
 }
 
 .results-nocards {
@@ -123,12 +122,8 @@ ul {
 }
 
 @media (min-width: 698px) {
-  .results {
-    margin-top: 0.5vh;
-  }
-
   .results-nocards {
-    height: 58vh;
+    height: 62vh;
     background-color: white;
     background: url("magic-search.jpg") no-repeat center center;
     background-image: 100%;
@@ -359,6 +354,7 @@ main {
   width: 100%;
   display: grid;
   grid-template: auto auto auto auto/auto;
+  margin: 0;
 }
 .footer__nav {
   margin: 0 auto;

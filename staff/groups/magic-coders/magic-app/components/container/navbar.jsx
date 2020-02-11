@@ -2,7 +2,7 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
 
   return (
   <nav className="navbar" >
-    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} onTo={onTo} />
+    <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} onTo={onTo} onToProfile={onToProfile} />
     <section className="logo" >
       <label>
         <span>Magic</span>
