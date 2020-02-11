@@ -232,7 +232,7 @@ handleGoToLogin = () => this.setState({view: "login"})
 
         </Fragment>
         }
-        {view && <Footer changeLang={handleLangSelect}/>}
+        {(view !== 'login' && view !== 'register' && view) && <Footer changeLang={handleLangSelect}/>}
       </Fragment>
     )
   }

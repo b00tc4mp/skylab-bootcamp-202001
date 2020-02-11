@@ -4,10 +4,7 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
   <nav className="navbar" >
     <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} onTo={onTo} onToProfile={onToProfile} />
     <section className="logo" >
-      <label>
-        <span>Magic</span>
-        <span style={{fontSize: '10px'}}>The Gathering</span>
-        </label>
+      <img className="logo" src="../logo.png" alt=""/>
     </section>
 
     <section className="items" >

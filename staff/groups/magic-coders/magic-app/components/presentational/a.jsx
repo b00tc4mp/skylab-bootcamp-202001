@@ -7,7 +7,6 @@ function A(props) {
 
   const style = {
     cursor: 'pointer',
-    display: 'block'
   }
 
 return <a className={props.className} style={style} href={props.href} onClick={_onClick}>{props.children}</a>
