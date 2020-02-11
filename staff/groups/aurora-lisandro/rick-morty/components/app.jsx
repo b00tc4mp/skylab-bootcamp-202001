@@ -64,9 +64,9 @@ class App extends Component {
             const { token } = sessionStorage
 
             searchCharacters(query, token, (error, response) => {
-                const { results } = response
-
                 if (error) return this.__handleError__(error)
+
+                const { results } = response
                 this.setState({ view: 'search', characters: results })
             })
         } catch (error) {

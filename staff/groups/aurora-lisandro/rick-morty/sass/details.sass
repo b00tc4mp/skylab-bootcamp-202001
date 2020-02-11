@@ -12,12 +12,10 @@
         text-align: center
     &__card
         @extend %flex-wrap
-        justify-content: flex-start
-        width: 100%
-        height: 90%
+        height: 60%
     &__card-item
         background-color: #6d6b6b
-        height: 55%
+        height: 90%
     &__card-footer
         display: flex
         justify-content: space-between
@@ -26,16 +24,21 @@
         width: 100%
         height: 80%
     &__card-list
-        padding-inline-start: 0.5rem
+
         margin: 0
 
-        width: 90%
-        height: 40%
+        width: 80%
+        height: 14%
     &__list-item
         display: flex
         justify-content: space-between
-        height: 20%
-        border-bottom: 1px solid grey
+        height: 100%
+        font-size: 1.1rem
+        color: white
+        padding-left: 0.8rem
+        border: 1px solid grey
+        align-items: flex-end
         & > p
             margin-bottom: 0
             margin-top: 0.5rem
+            width: 50%
