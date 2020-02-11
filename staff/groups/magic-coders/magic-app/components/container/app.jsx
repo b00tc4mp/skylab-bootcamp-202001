@@ -6,13 +6,16 @@ class App extends Component {
     card: undefined, 
     cards: [], 
     cardsToSale: [],
+    cardsSold: [],
     error: undefined, 
     language: undefined, 
     message: undefined, 
     search: {}, 
     sidebar: false, 
     user: undefined,
-    view: undefined, 
+    view: undefined,
+    viewProfile: true,
+    users: undefined
   }
 
   componentWillMount = () => {
@@ -91,7 +94,6 @@ handleGoToLogin = () => this.setState({view: "login"})
     const { search } = this.state
 
     let _search = search
-
     if (query) _search = { ...search, name: query }
 
     searchCards(_search, (error, cards) => {
@@ -137,8 +139,8 @@ handleGoToLogin = () => this.setState({view: "login"})
     if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
     else if (view === 'forsale') {
       const {token} = sessionStorage
-      retrieveCardsSales(token, (error, cards) => {
-        this.setState({cards, view})
+      retrieveCardsSales(token, (error, cards, users) => {
+        this.setState({cards, users, view})
       })
 
     } else {
@@ -156,24 +158,20 @@ handleGoToLogin = () => this.setState({view: "login"})
   handleProfile = () => {
     const {token} = sessionStorage
 
-    retrieveUser(token, (error, user) => {
-      const {toSale} = user
-
-      if (toSale && toSale.length > 0) {
-        retrieveCardsProfile(toSale, (error, cardsToSale) => {
-          this.setState({view: 'profile', cardsToSale})
-        })
-      } else {
-        this.setState({view: 'profile'})
-      }
-
+    retrieveUser(token, (error, {toSale}) => {
+      if (!toSale) toSale = []
+      this.setState({view: 'profile', cardsToSale: toSale})
     }) 
   }
 
-  render() {
+  handleButtonProfile = event => {
+    this.setState({viewProfile: !this.state.viewProfile})
+  }
 
+  render() {
     const {
-      state: { cards, card, language, view, error, sidebar, user,cardsToSale },
+
+      state: { cards, card, language, view, error, sidebar, user, cardsToSale, users, viewProfile},
 
       handleLanguage,
       handleLangSelect,
@@ -188,7 +186,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       logout,
       onToComponent,
       addToSale,
-      handleProfile
+      handleProfile,
+      handleButtonProfile
     } = this
 
     return (
@@ -224,12 +223,12 @@ handleGoToLogin = () => this.setState({view: "login"})
 
             {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
             {(view === 'search' && !cards.length) && 
-            <div className="results-nocards" ></div>}
+            <div className="results-nocards"></div>}
           </div>
 
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-          {view === 'forsale' && <Results results={cards} language={language} view={view} />}
-          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} />}
+          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users}  />}
+          {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
+          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} />}
 
         </Fragment>
         }
