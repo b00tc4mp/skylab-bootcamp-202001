@@ -1,7 +1,7 @@
 function Register ({onSubmit, handleGoToLogin, error}) {
 
     return <Form className="register" onSubmit={onSubmit} >
-        <H2>Sign-up</H2>
+        <img src="../logo.png" alt=""/>
         <Input name="name" placeholder="Name" required/>
         <Input name="surname" placeholder="Surname" required/>
         <Input name="phone" placeholder="Phone" />
