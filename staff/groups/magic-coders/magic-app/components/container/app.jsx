@@ -156,22 +156,13 @@ handleGoToLogin = () => this.setState({view: "login"})
   handleProfile = () => {
     const {token} = sessionStorage
 
-    retrieveUser(token, (error, user) => {
-      const {toSale} = user
-
-      if (toSale && toSale.length > 0) {
-        retrieveCardsProfile(toSale, (error, cardsToSale) => {
-          this.setState({view: 'profile', cardsToSale})
-        })
-      } else {
-        this.setState({view: 'profile'})
-      }
-
+    retrieveUser(token, (error, {toSale}) => {
+      if (!toSale) toSale = []
+      this.setState({view: 'profile', cardsToSale: toSale})
     }) 
   }
 
   render() {
-
     const {
       state: { cards, card, language, view, error, sidebar, user,cardsToSale },
 
