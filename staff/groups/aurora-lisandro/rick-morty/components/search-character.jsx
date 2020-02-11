@@ -1,17 +1,16 @@
-function CharacterSearch({onSubmit, warning }) {
+function CharacterSearch({ onSubmit, warning }) {
     return <form className="search" onSubmit={(event) => {
 
         event.preventDefault()
 
         const searchName = event.target.name.value
-        console.log(searchName)
-        const query = {gender: '', status: '', species: '', name: ''}
-        
+        const query = { gender: '', status: '', species: '', name: '' }
+
         let values = document.querySelectorAll('.search__filter')
-    
-        let i =0
-        for(const key in query){
-            query[key]=values[i].value
+
+        let i = 0
+        for (const key in query) {
+            query[key] = values[i].value
             i++
         }
 

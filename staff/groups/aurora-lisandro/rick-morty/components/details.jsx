@@ -4,11 +4,11 @@ function Details({ item: { id, image, name, status, species, gender, location: {
             <img src={image} alt="" className="details__img" />
             <div className="details__card-footer">
                 <h3>{name}</h3>
-                {isFav && <i className="fas fa-heart" onClick={(event) => {
+                <i className="fas fa-heart" onClick={(event) => {
                     event.preventDefault()
 
                     onFavClick(id)
-                }}></i>}
+                }}></i>
                 {/* {!isFav<i className="fas fa-heart" onClick={()}></i>} */}
             </div>
         </div>
