@@ -1,6 +1,6 @@
 function Colors({onChange, property}) {
 
-  const options = ["white", "green", "blue", "red", "black"]
+  const options = ["white", "blue", "black", "red", "green"]
   
   return (
     <div>

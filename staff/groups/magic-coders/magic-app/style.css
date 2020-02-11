@@ -1,4 +1,5 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/loader.min.css");
 * {
   box-sizing: border-box;
 }
@@ -111,9 +112,25 @@ ul {
   background: #f2f2f2;
   background: white;
   background-color: white;
-  height: 59vh;
 }
 
+.results-nocards {
+  height: 10.5vh;
+  background-color: black;
+}
+
+@media (min-width: 698px) {
+  .results-nocards {
+    height: 59vh;
+    background-color: white;
+    background: url("https://i.imgur.com/lP6b13v.jpg") no-repeat center center;
+    background-image: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+}
 .item {
   width: calc( 95wv/3 );
   border: 1px solid white;
@@ -136,6 +153,13 @@ ul {
 
 .detail__title h1 {
   display: inline;
+}
+.detail__title button {
+  background-color: green;
+  color: white;
+  height: 20px;
+  width: 10px;
+  border-radius: 10px;
 }
 .detail__img {
   grid-area: 2/1/span 1/span 1;
@@ -623,6 +647,7 @@ body.is-loading .container-login:before {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  color: black;
 }
 .profile__content img {
   margin: 1em;

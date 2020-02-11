@@ -9,4 +9,18 @@
   background: rgb(242, 242, 242)
   background: white
   background-color: white
-  height: (((97vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
+
+.results-nocards
+  height: (((48.5vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
+  background-color: black
+
+@media (min-width: 698px)
+  .results-nocards
+    height: (((97vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
+    background-color: white
+    background: url('https://i.imgur.com/lP6b13v.jpg') no-repeat center center
+    background-image: 100%
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -o-background-size: cover
+    background-size: cover

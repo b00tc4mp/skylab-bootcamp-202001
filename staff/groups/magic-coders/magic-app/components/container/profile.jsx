@@ -1,28 +1,30 @@
-function Profile({user}) {
-  return (
+function Profile({user, cards}) {
 
+  const green = {
+    backgroundColor: 'green', 
+    color: "white",
+    fontSize: '14px',
+    cursor: 'pointer'
+  }
+
+  const white = { 
+    fontSize: '14px',
+    cursor: 'pointer'
+  }
+
+  return (
       <div className="profile">
         <header className="profile__header">
           <div className="profile__pic">Foto perfil</div>
-          <div className="profile__name">{user.name}</div>
+          <div className="profile__name">{firstUppercase(user.name)}</div>
           <div className="profile__buttons">
-            <button>En venta</button>
-            <button>Vendidas</button>
+            <button style={green}>En venta</button>
+            <button style={white}>Vendidas</button>
           </div>
         </header>
         <main className="profile__content">
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=379007&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=378007&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=374007&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=379307&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=3009&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=379007&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=378007&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=374007&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=379307&type=card" alt=""/>
-         <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=3009&type=card" alt=""/>
+         <Results results={cards} />
         </main>
-    
     </div>
   )
 }
