@@ -1,5 +1,5 @@
 function Item ({item: { multiverseid, name, imageUrl, user}, onClick, view, users}) {
-    
+
   let email = undefined
   let phone = undefined
 

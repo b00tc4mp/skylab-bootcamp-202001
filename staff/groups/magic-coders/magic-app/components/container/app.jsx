@@ -6,13 +6,16 @@ class App extends Component {
     card: undefined, 
     cards: [], 
     cardsToSale: [],
+    cardsSold: [],
     error: undefined, 
     language: undefined, 
     message: undefined, 
     search: {}, 
     sidebar: false, 
     user: undefined,
-    view: undefined, 
+    view: undefined,
+    viewProfile: true,
+    users: undefined
   }
 
   componentWillMount = () => {
@@ -91,7 +94,6 @@ handleGoToLogin = () => this.setState({view: "login"})
     const { search } = this.state
 
     let _search = search
-
     if (query) _search = { ...search, name: query }
 
     searchCards(_search, (error, cards) => {
@@ -162,9 +164,14 @@ handleGoToLogin = () => this.setState({view: "login"})
     }) 
   }
 
+  handleButtonProfile = event => {
+    this.setState({viewProfile: !this.state.viewProfile})
+  }
+
   render() {
     const {
-      state: { cards, card, language, view, error, sidebar, user, cardsToSale, users },
+
+      state: { cards, card, language, view, error, sidebar, user, cardsToSale, users, viewProfile},
 
       handleLanguage,
       handleLangSelect,
@@ -179,7 +186,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       logout,
       onToComponent,
       addToSale,
-      handleProfile
+      handleProfile,
+      handleButtonProfile
     } = this
 
     return (
@@ -218,9 +226,9 @@ handleGoToLogin = () => this.setState({view: "login"})
             <div className="results-nocards"></div>}
           </div>
 
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users} />}
+          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users}  />}
           {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
-          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} />}
+          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} />}
 
         </Fragment>
         }
