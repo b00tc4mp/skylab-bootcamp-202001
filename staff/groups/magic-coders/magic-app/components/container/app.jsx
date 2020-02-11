@@ -222,13 +222,13 @@ handleGoToLogin = () => this.setState({view: "login"})
               </div>
             )}
 
-            {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} />}
+            {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
             {(view === 'search' && !cards.length) && 
             <div className="results-nocards" ></div>}
           </div>
 
           {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-          {view === 'forsale' && <Results results={cards} language={language} view={view} user={user} />}
+          {view === 'forsale' && <Results results={cards} language={language} view={view} />}
           {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} />}
 
         </Fragment>

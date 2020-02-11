@@ -1,9 +1,10 @@
-function Detail({card: {multiverseid, name, number, type, rarity, setName, text, cmc, imageUrl}, addToSale, onTo}) {
+function Detail({card: {multiverseid, name, number, type, rarity, setName, text, cmc, imageUrl}, addToSale, onTo, user}) {
 
   const _card = {
     multiverseid, 
     name, 
-    imageUrl
+    imageUrl,
+    user: firstUppercase(user.name)
   }
 
   return <div className="detail">
