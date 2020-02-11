@@ -29,7 +29,7 @@ class App extends Component {
 
   logout = () => {
     sessionStorage.clear()
-    this.setState({view: 'login'})
+    this.setState({view: 'login', cards: [], sidebar: false})
   }
 
   handleLogin = ({username, password}) => {

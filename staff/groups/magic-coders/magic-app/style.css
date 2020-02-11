@@ -112,7 +112,7 @@ ul {
   background: #f2f2f2;
   background: white;
   background-color: white;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 
 .results-nocards {
@@ -124,7 +124,7 @@ ul {
 
 @media (min-width: 698px) {
   .results {
-    margin-top: 0px;
+    margin-top: 5px;
   }
 
   .results-nocards {
