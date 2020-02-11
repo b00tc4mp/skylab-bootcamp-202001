@@ -2,7 +2,8 @@ const { Component } = React
 class App extends Component {
     state = {
         view: 'character search',
-        error: undefined
+        error: undefined,
+        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTQyYzQwMWRkOWY0MDAwMTU0MmM4OWQiLCJpYXQiOjE1ODE0MzM4NjUsImV4cCI6MTU4MTQzNzQ2NX0.FDcHFmhMgO-B08j4f8gYrhezCL8gfX2FAerM14QdWtk'
     }
 
     __handleError__ = (error) => {
@@ -64,8 +65,8 @@ class App extends Component {
 
     handleOnSubmit = query => {
         try {
-            const { token } = sessionStorage
-
+            const { token } = this.state
+           
             searchCharacters(query, token, (error, response) => {
                 if (error) return this.__handleError__(error)
                 console.log(response)

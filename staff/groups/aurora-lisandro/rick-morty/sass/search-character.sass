@@ -2,8 +2,17 @@
     @extend %flex-column
     height: 30%
     justify-content: space-evenly
+
     &__title
         font-family: Get Schwifty
+        font-size: 1.2rem
+       
+    &__filters
+        @extend %flex-wrap
+    &__filter
+        font-size: 1rem
+
+    &__name
         font-size: 1.2rem
     &__container
         display: flex
@@ -11,6 +20,7 @@
         align-items: flex-end
         width: 80%
         height: 30%
+
     &__input
         @extend %input
         border-radius: 0

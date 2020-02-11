@@ -1,9 +1,11 @@
 function searchCharacters(query, token, callback) {
-    if (typeof query !== 'string') throw new TypeError(`query ${query} is not a string`)
+    if (typeof query !== 'object') throw new TypeError(`query ${query} is not an object`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
-
-    call('http://skylabcoders.herokuapp.com/api/v2/users/', {
+ 
+    const queryString = createQuery(query)
+    console.log(queryString)
+    call('https://skylabcoders.herokuapp.com/api/v2/users/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -17,7 +19,7 @@ function searchCharacters(query, token, callback) {
         if (_error) return callback(new Error(_error))
 
 
-        call(`https://rickandmortyapi.com/api/character/?name=${query}`, undefined, (error, response) => {
+        call(`https://rickandmortyapi.com/api/character/?${queryString}`, undefined, (error, response) => {
 
             if (error) return callback(error)
 
