@@ -6,13 +6,15 @@ class App extends Component {
     card: undefined, 
     cards: [], 
     cardsToSale: [],
+    cardsSold: [],
     error: undefined, 
     language: undefined, 
     message: undefined, 
     search: {}, 
     sidebar: false, 
     user: undefined,
-    view: undefined, 
+    view: undefined,
+    viewProfile: true
   }
 
   componentWillMount = () => {
@@ -91,7 +93,6 @@ handleGoToLogin = () => this.setState({view: "login"})
     const { search } = this.state
 
     let _search = search
-
     if (query) _search = { ...search, name: query }
 
     searchCards(_search, (error, cards) => {
@@ -162,9 +163,13 @@ handleGoToLogin = () => this.setState({view: "login"})
     }) 
   }
 
+  handleButtonProfile = event => {
+    this.setState({viewProfile: !this.state.viewProfile})
+  }
+
   render() {
     const {
-      state: { cards, card, language, view, error, sidebar, user,cardsToSale },
+      state: { cards, card, language, view, error, sidebar, user, cardsToSale, viewProfile},
 
       handleLanguage,
       handleLangSelect,
@@ -179,7 +184,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       logout,
       onToComponent,
       addToSale,
-      handleProfile
+      handleProfile,
+      handleButtonProfile
     } = this
 
     return (
@@ -220,7 +226,7 @@ handleGoToLogin = () => this.setState({view: "login"})
 
           {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
           {view === 'forsale' && <Results results={cards} language={language} view={view} />}
-          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} />}
+          {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} />}
 
         </Fragment>
         }
