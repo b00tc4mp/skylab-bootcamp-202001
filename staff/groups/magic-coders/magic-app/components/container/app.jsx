@@ -212,9 +212,8 @@ handleGoToLogin = () => this.setState({view: "login"})
               </div>
             )}
 
-
           </div>
-          {view === 'detail' && <Detail card={card} addToSale={addToSale} />}
+          {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} />}
           {(view === 'search' && !cards.length) && 
           <div className="results-nocards" >
           </div>}
