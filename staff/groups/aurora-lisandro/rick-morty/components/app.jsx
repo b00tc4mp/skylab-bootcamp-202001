@@ -74,9 +74,25 @@ class App extends Component {
         }
     }
 
-    handleItemClick = (id) => {
+    handleEpisodeClick = (id) => { //TODO
+        // try {
+        //     retrieveEpisode(id, (error, detail) => {
+        //         if (error) console.log(error)
+
+        //         this.setState({ view: 'detail', detail })
+        //     })
+        // } catch (error) {
+        //     this.__handleError__(error)
+        // }
+    }
+
+    handleCharacterClick = (id) => {
         try {
-            console.log(id)
+            retrieveCharacter(id, (error, detail) => {
+                if (error) console.log(error)
+
+                this.setState({ view: 'detail', detail })
+            })
         } catch (error) {
             this.__handleError__(error)
         }
@@ -94,7 +110,7 @@ class App extends Component {
     render() {
         const {
 
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleItemClick } = this
+            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleEpisodeClick, handleCharacterClick } = this
 
         return <main className='app'>
 
@@ -114,16 +130,13 @@ class App extends Component {
 
             {view === 'search' && <CharacterSearch onSubmit={handleOnSubmit} />}
 
-            {view === 'search' && characters && <Results results={characters} onItemFavClick={console.log('fav')} handleClick={handleItemClick} />}
+            {view === 'search' && characters && <Results results={characters} onItemFavClick={() => { consoleconsole.log('fav') }} handleClick={handleCharacterClick} />}
 
             {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
 
-            {view === 'episodes' && episodes && <Results results={episodes} />}
+            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} />}
 
             {view === 'detail' && <Details item={detail} />}
-
-
-
 
         </main >
     }
