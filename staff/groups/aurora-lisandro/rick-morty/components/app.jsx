@@ -82,6 +82,17 @@ class App extends Component {
         }
     }
 
+    handleLogout = () => {
+        sessionStorage.clear()
+
+        this.setState({
+            view: 'login', error: undefined,
+            characters: undefined,
+            episodes: undefined,
+            detail: undefined
+        })
+    }
+
     handleOnToRegister = () => this.setState({ view: 'register' })
 
     handleOnToLogin = () => this.setState({ view: 'login' })
@@ -91,16 +102,19 @@ class App extends Component {
     handleGoToEpisodes = () => this.setState({ view: 'seasons' })
 
 
+
+
     render() {
         const {
 
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleItemClick } = this
+            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleItemClick, handleLogout } = this
 
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
-                onLogout={() => console.log('logout')}
-                onToSearch={(type) => { console.log(type) }}
+                onLogout={handleLogout}
+                onToCharacters={handleGoToCharacters}
+                onToEpisodes={handleGoToEpisodes}
                 onToFavs={() => console.log('onToFavs')}
                 onToProfile={() => { console.log('profile') }} />}
 
