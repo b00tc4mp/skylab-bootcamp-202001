@@ -15,8 +15,8 @@ function Profile({user, cards}) {
   return (
       <div className="profile">
         <header className="profile__header">
-          <div className="profile__pic">Foto perfil</div>
-          <div className="profile__name">{firstUppercase(user.name)}</div>
+          <div className="profile__name">{<h2>{firstUppercase(user.name)}</h2>}</div>
+          <div className="profile__estadistics"><p>On Sale: {cards.length}</p><p>Sold: 0</p><p>Total Amount: 345$</p></div>
           <div className="profile__buttons">
             <button style={green}>En venta</button>
             <button style={white}>Vendidas</button>

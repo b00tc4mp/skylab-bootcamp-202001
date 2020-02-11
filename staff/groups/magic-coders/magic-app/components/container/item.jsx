@@ -6,5 +6,6 @@ function Item ({item: { multiverseid, name, imageUrl}, onClick}) {
  
     </div>
     <img onClick={() => onClick(multiverseid)} src={imageUrl} />
+    <div><span>{randomPrices()}</span></div>
   </li>
 }
