@@ -190,8 +190,9 @@ handleGoToLogin = () => this.setState({view: "login"})
 
 
           </div>
-          {view === 'detail' && <Detail card={card} addToSale={addToSale} />}
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
+
+          {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} />}
+          {(view === 'search') && <Results results={cards} onClickItem={handleDetail} language={language} />}
           {view === 'profile' && <Profile user={user} />}
 
         </Fragment>
