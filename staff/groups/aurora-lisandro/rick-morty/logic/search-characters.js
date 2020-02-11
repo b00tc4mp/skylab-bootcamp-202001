@@ -2,9 +2,8 @@ function searchCharacters(query, token, callback) {
     if (typeof query !== 'object') throw new TypeError(`query ${query} is not an object`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
- 
+
     const queryString = createQuery(query)
-    console.log(queryString)
     call('https://skylabcoders.herokuapp.com/api/v2/users/', {
         method: 'GET',
         headers: {
