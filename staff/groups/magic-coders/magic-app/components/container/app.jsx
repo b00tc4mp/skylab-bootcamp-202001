@@ -201,38 +201,38 @@ handleGoToLogin = () => this.setState({view: "login"})
 
         {(view !== 'login' && view !== 'register' && view) &&
         <Fragment>
-          <div id="search-container" style={{backgroundColor: 'black'}}>
+          
             <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} 
-            onTo={onToComponent} user={user} onToProfile={handleProfile} />}
+            onTo={onToComponent} user={user} onToProfile={handleProfile} />
 
-            {view === 'search' && 
+            {/* {view === 'search' && 
             <div className='filter'>
               <Types onChange={handleSelect} property="types" />
               <Rarity onChange={handleSelect} property="rarity" />
               <ManaCost onChange={handleSelect} property="cmc" />
               <Colors onChange={handleCheckbox} property="colors" />
               <Search onSubmit={handleSearch} title="Name Card" />
-            </div>}
+            </div>} */}
 
-            {view === 'landing' && cards.length > 0 && (
+       {/*      {view === 'landing' && cards.length > 0 && (
               <div>
                 <Button padding="3px 6px" value={undefined} onClick={handleLanguage} >
                 </Button>{languages.map(value => <Button padding="2px 5px" value={value} onClick={handleLanguage}> {value}</Button>)}
               </div>
-            )}
+            )} */}
 
-            {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
+          {/*   {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
             {(view === 'search' && !cards.length) && 
-            <div className="results-nocards"></div>}
-          </div>
+            <div className="results-nocards"></div>} */}
+          
 
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users}  />}
+          {/* {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users}  />}
           {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
           {view === 'profile' && <Profile user={user} cards={cardsToSale} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} />}
-
+ */}
         </Fragment>
         }
-        {(view !== 'login' && view !== 'register' && view) && <Footer changeLang={handleLangSelect}/>}
+        {/* {(view !== 'login' && view !== 'register' && view) && <Footer changeLang={handleLangSelect}/>} */}
       </Fragment>
     )
   }

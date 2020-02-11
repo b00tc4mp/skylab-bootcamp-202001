@@ -4,7 +4,7 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
   <nav className="navbar" >
     <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} onTo={onTo} onToProfile={onToProfile} />
     <section className="logo" >
-      <img className="logo" src="../logo.png" alt=""/>
+      <img className="logoimg" src="../logo.png" alt=""/>
     </section>
 
     <section className="items" >
@@ -15,13 +15,16 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
     </section>
 
     <section className="navbar__profile" >
-      <i className="far fa-user"></i>
-      <label onClick={onToProfile} style={{margin: '0px 20px 0px 5px'}}>
-        {user ? firstUppercase(user.name): 'Profile'}
-      </label>
-
-      <i className="fas fa-sign-out-alt"></i>
-      <label onClick={logout} style={{marginLeft: '5px'}}>Logout</label>
+      <div>
+        <i className="far fa-user"></i>
+        <label onClick={onToProfile} style={{margin: '0px 20px 0px 5px'}}>
+          {user ? firstUppercase(user.name): 'Profile'}
+        </label>
+      </div>
+      <div>
+        <i className="fas fa-sign-out-alt"></i>
+        <label onClick={logout} style={{marginLeft: '5px'}}>Logout</label>
+      </div>
     </section>
 
     <section  className="bars">
