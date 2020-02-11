@@ -66,6 +66,7 @@ function Results({ results, language, onClickItem }) {
           <li>
             <h3>{card.name}</h3>
             <img src={card.imageUrl} />
+            <span>{randomPrices()}</span>
           </li>
         )}
       )}
