@@ -260,6 +260,17 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 
 }
 
+.feedback {
+  font-size: 1rem;
+  text-align: center;
+}
+.feedback--warning {
+  color: lime;
+}
+.feedback--error {
+  color: #ff00008f;
+}
+
 .app {
   height: 100%;
 }

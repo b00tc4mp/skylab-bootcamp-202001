@@ -1,19 +1,29 @@
 const { Component } = React
 class App extends Component {
+    state = {
+        view: 'login',
+        error: undefined
+    }
 
+    __handleError__ = (error) => {
+        this.setState({ error: error.message })
 
+        setTimeout(() => {
+            this.setState({ error: undefined })
+        }, 3000)
+    }
 
     handleLogin = (username, password) => {
         try {
             authenticateUser(username, password, (error, token) => {
-                if (error) return console.log(error)
+                if (error) return this.__handleError__(error)
 
                 sessionStorage.token = token
 
                 this.setState({ view: 'landing' })
             })
         } catch (error) {
-            console.log(error)
+            this.__handleError__(error)
         }
     }
 
@@ -21,14 +31,13 @@ class App extends Component {
         try {
             registerUser(name, surname, username, password, error => {
                 if (error) {
-                    console.log(error)
+                    this.__handleError__(error)
                 } else {
                     this.setState({ view: 'login' })
                 }
             })
         } catch (error) {
-            //TODO
-            console.log(error)
+            this.__handleError__(error)
         }
     }
 
@@ -45,18 +54,18 @@ class App extends Component {
             const { token } = sessionStorage
 
             searchCharacters(query, token, (error, response) => {
-                if (error) return console.log(error)
+                if (error) return this.__handleError__(error)
                 console.log(response)
             })
         } catch (error) {
-            console.log(error)
+            this.__handleError__(error)
         }
     }
 
 
     render() {
         const {
-            props: { title }, state: { view }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
+            props: { title }, state: { view, error }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
         return <main className='app'>
 
             {view !== 'login' && view !== 'register' && <Navbar
@@ -69,11 +78,11 @@ class App extends Component {
 
             {view === 'landing' && <Landing onToCharacterSearch={handleGoToCharacters} onToEpisodeSearch={handleGoToEpisodes} />}
 
-            {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} />}
+            {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} error={error} />}
 
             {view === 'results' && <Results results={console.log('results')} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
-            {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={undefined} />}
+            {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={error} />}
 
 
             {view === 'searchSeason' && <SearchSeason onEpisodesClick={console.log('hola')} />}
