@@ -1,6 +1,9 @@
 .searchSeason
-    width: 90%
+    width: 100%
     height: 100%
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
 
     &__title
         @extend %title
@@ -10,12 +13,14 @@
         
     &__component
         @extend %flex-wrap
-        width: 95%
+        width: 100%
         height: 100%
     
     &__season
         @extend %flex-column
-        margin: 1.5em
+        justify-content: space-between
+        margin: 1rem
+        
     &__image
         -webkit-box-shadow: 4px 0px 10px 0px rgba(0,0,0,0.75)
         -moz-box-shadow: 4px 0px 10px 0px rgba(0,0,0,0.75)

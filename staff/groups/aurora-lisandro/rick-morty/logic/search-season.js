@@ -1,4 +1,4 @@
-function searchSeason (querySeason, token, callback){
+function searchSeason (querySeason, token, callback){ 
     if (typeof querySeason !== 'string') throw new TypeError (`querySeason ${querySeason} is not a string`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError (`callback ${callback} is not a function`)
@@ -31,10 +31,10 @@ function searchSeason (querySeason, token, callback){
 
                 const {results} = season
 
-                if(favs.length){
+                if(typeof favs !== 'undefined'){
 
                     results.forEach(episode => {
-                        if(favs.includes(episode.id)) episode.isFavs= true
+                        if(favs.includes(episode.id)) episode.isFav= true
                     })
                 }    
 
