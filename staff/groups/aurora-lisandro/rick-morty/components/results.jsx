@@ -1,9 +1,9 @@
-function Results({results=[], onItemClick, onItemFavClick}) {
-    return <section className="results"> 
+function Results({ results = [], handleClick, onItemFavClick }) {
+    return <section className="results">
         <h3 className="results__title">Your search results</h3>
-        
+
         <ul className="results__list">
-            {results.map(item => <Item key = {item.id} item ={item} onClick= {onItemClick} onFavClick = {onItemFavClick}/>)}
+            {results.map(item => <Item key={item.id} item={item} onItemClick={handleClick} onFavClick={onItemFavClick} />)}
         </ul>
     </section>
 

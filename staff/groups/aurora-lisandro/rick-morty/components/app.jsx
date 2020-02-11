@@ -1,9 +1,11 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'login',
+        view: 'landing',
         error: undefined,
-        results: undefined
+        characters: undefined,
+        episodes: undefined,
+        detail: undefined
     }
 
     __handleError__ = (error) => {
@@ -34,9 +36,47 @@ class App extends Component {
                 if (error) {
                     this.__handleError__(error)
                 } else {
-                    this.setState(results)
+                    this.setState({ view: 'login' })
                 }
             })
+        } catch (error) {
+            this.__handleError__(error)
+        }
+    }
+
+
+    handleSearchEpisodes = (querySeason) => {
+        try {
+            const { token } = sessionStorage
+            searchSeason(querySeason, token, (error, episodes) => {
+                if (error) this.__handleError__(error)
+
+                this.setState({ view: 'episodes', episodes })
+            })
+        } catch (error) {
+            this.__handleError__(error)
+        }
+
+    }
+
+    handleOnSubmit = query => {
+        try {
+            const { token } = sessionStorage
+
+            searchCharacters(query, token, (error, response) => {
+                const { results } = response
+
+                if (error) return this.__handleError__(error)
+                this.setState({ view: 'search', characters: results })
+            })
+        } catch (error) {
+            this.__handleError__(error)
+        }
+    }
+
+    handleItemClick = (id) => {
+        try {
+            console.log(id)
         } catch (error) {
             this.__handleError__(error)
         }
@@ -46,41 +86,15 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
-    handleGoToCharacters = () => this.setState({ view: 'character search' })
+    handleGoToCharacters = () => this.setState({ view: 'search' })
 
-    handleGoToEpisodes = (querySeason) => {
-        try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTQwNTEzNDM5YmIwMzAwMTUzNDcxMjQiLCJpYXQiOjE1ODE0MTI2MjgsImV4cCI6MTU4MTQxNjIyOH0.dV7JPvmv-t4SwgsBrlwYSyoSl5xcPYKQOL4CIplQEBM'
-
-            searchSeason(querySeason, token, (error, results) => {
-                if (error)
-                    console.log(error)
-                this.setState({ view: 'results', results }) //TODO
-            })
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-    handleOnSubmit = query => {
-        try {
-            const { token } = this.state
-
-            searchCharacters(query, token, (error, response) => {
-                if (error) return this.__handleError__(error)
-                console.log(response)
-            })
-        } catch (error) {
-            this.__handleError__(error)
-        }
-    }
+    handleGoToEpisodes = () => this.setState({ view: 'seasons' })
 
 
     render() {
         const {
 
-            props: { title }, state: { view, results, error }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit } = this
+            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleItemClick } = this
 
         return <main className='app'>
 
@@ -92,19 +106,24 @@ class App extends Component {
 
             <h1>{title}</h1>
 
-            {view === 'landing' && <Landing onToCharacterSearch={handleGoToCharacters} onToEpisodeSearch={handleGoToEpisodes} />}
-
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} error={error} />}
-
-            {view === 'results' && <Results results={results} onItemClick={console.log('item')} onItemFavClick={console.log('fav')} />}
 
             {view === "register" && <Register onSubmit={handleRegister} onToLogin={handleOnToLogin} error={error} />}
 
+            {view === 'landing' && <Landing onToCharacterSearch={handleGoToCharacters} onToEpisodeSearch={handleGoToEpisodes} />}
 
-            {view === 'searchSeason' && <SearchSeason onEpisodesClick={handleGoToEpisodes} />}
+            {view === 'search' && <CharacterSearch onSubmit={handleOnSubmit} />}
+
+            {view === 'search' && characters && <Results results={characters} onItemFavClick={console.log('fav')} handleClick={handleItemClick} />}
+
+            {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
+
+            {view === 'episodes' && episodes && <Results results={episodes} />}
+
+            {view === 'detail' && <Details item={detail} />}
 
 
-            {view === 'character search' && <CharacterSearch onSubmit={handleOnSubmit} />}
+
 
         </main >
     }
