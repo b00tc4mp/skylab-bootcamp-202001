@@ -1,4 +1,4 @@
-function Navbar({sidebar, toggleSidebar, logout, onTo, user}) {
+function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
 
   return (
   <nav className="navbar" >
@@ -12,15 +12,15 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user}) {
 
     <section className="items" >
       <ul>
+        <li>FOR SALE</li>
         <li onClick={() => onTo('search')}>SEARCH</li>
         <li>FAVORITES</li>
-        <li>FOR SALE</li>
       </ul>
     </section>
 
     <section className="navbar__profile" >
       <i className="far fa-user"></i>
-      <label onClick={() => onTo('profile')} style={{margin: '0px 20px 0px 5px'}}>
+      <label onClick={onToProfile} style={{margin: '0px 20px 0px 5px'}}>
         {user ? firstUppercase(user.name): 'Profile'}
       </label>
 

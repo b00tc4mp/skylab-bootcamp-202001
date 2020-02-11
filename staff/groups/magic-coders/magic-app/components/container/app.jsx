@@ -2,7 +2,18 @@ const { Component, Fragment } = React
 
 class App extends Component {
 
-  state = {view: undefined, cards: [], language: undefined, search: {}, card: undefined, error: undefined, message: undefined, sidebar: false, user: undefined }
+  state = {
+    card: undefined, 
+    cards: [], 
+    cardsToSale: [],
+    error: undefined, 
+    language: undefined, 
+    message: undefined, 
+    search: {}, 
+    sidebar: false, 
+    user: undefined,
+    view: undefined, 
+  }
 
   componentWillMount = () => {
     const {token} = sessionStorage
@@ -133,10 +144,21 @@ handleGoToLogin = () => this.setState({view: "login"})
     })
   }
 
+  handleProfile = () => {
+    const {user} = this.state
+    const {toSale} = user
+
+    if (toSale && toSale.length > 0) {
+      retrieveCardsProfile(toSale, (error, cardsToSale) => {
+        this.setState({cardsToSale, view: 'profile'})
+      })
+    }
+  }
+
   render() {
 
     const {
-      state: { cards, card, language, view, error, sidebar, user  },
+      state: { cards, card, language, view, error, sidebar, user,cardsToSale },
 
       handleLanguage,
       handleLangSelect,
@@ -150,7 +172,8 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleGoToLogin,
       logout,
       onToComponent,
-      addToSale
+      addToSale,
+      handleProfile
     } = this
 
     return (
@@ -165,7 +188,8 @@ handleGoToLogin = () => this.setState({view: "login"})
         {(view !== 'login' && view !== 'register' && view) &&
         <Fragment>
           <div id="search-container" style={{backgroundColor: 'black'}}>
-            <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} onTo={onToComponent} user={user} />}
+            <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} 
+            onTo={onToComponent} user={user} onToProfile={handleProfile} />}
 
             {view === 'search' && 
             <div className='filter'>
@@ -191,8 +215,11 @@ handleGoToLogin = () => this.setState({view: "login"})
 
           </div>
           {view === 'detail' && <Detail card={card} addToSale={addToSale} />}
+          {(view === 'search' && !cards.length) && 
+          <div className="results-nocards" >
+          </div>}
           {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} />}
-          {view === 'profile' && <Profile user={user} />}
+          {view === 'profile' && <Profile user={user} cards={cardsToSale} />}
 
         </Fragment>
         }
