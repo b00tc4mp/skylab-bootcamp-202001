@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'landing',
+        view: 'login',
         error: undefined,
         characters: undefined,
         episodes: undefined,
