@@ -13,9 +13,9 @@ class App extends Component {
     search: {}, 
     sidebar: false, 
     user: undefined,
+    users: undefined,
     view: undefined,
-    viewProfile: true,
-    users: undefined
+    viewProfile: true
   }
 
   componentWillMount = () => {
@@ -88,14 +88,22 @@ handleGoToLogin = () => this.setState({view: "login"})
   handleLangSelect = ({target: {value}}) => this.setState({ language: value })
 
   handleSearch = ({ query }) => {
-    const { search } = this.state
+    try{
+      const { search } = this.state
 
-    let _search = search
-    if (query) _search = { ...search, name: query }
-
-    searchCards(_search, (error, cards) => {
-      this.setState({ cards, language: undefined, view: 'search' })
-    })
+      let _search = search
+      if (query) _search = { ...search, name: query }
+  
+      searchCards(_search, (error, cards) => {
+        if (error)  {
+          this.__handleError__(error)
+        } else {
+          this.setState({ cards, language: undefined, view: 'search', error: error })
+        }
+      })
+    } catch (error) {
+      this.__handleError__(error)
+    }
   }
 
   handleSelect = ({ target: { value } }, property) => {
@@ -142,10 +150,14 @@ handleGoToLogin = () => this.setState({view: "login"})
   } 
 
   addToSale = card => {
-    const {token} = sessionStorage
-    addCardToSale(card, token, (error, msg) => {
-      console.log(msg)
-    })
+    try {
+      const {token} = sessionStorage
+      addCardToSale(card, token, (error, msg) => {
+      })
+    } catch (error) {
+
+    }
+
   }
 
   handleProfile = () => {
@@ -174,11 +186,11 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
  
   render() {
-    console.log(this.state.card);
 
     const {
-      state: { card, cards, cardsSold, cardsToSale, language, view, error, sidebar, user, users, viewProfile},
+      state: { card, cards, cardsSold, cardsToSale, language, error, sidebar, user, users, view, viewProfile},
 
+      addToSale,
       handleLanguage,
       handleLangSelect,
       handleSearch,
@@ -189,15 +201,13 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleRegister,
       handleGoToRegister,
       handleGoToLogin,
-      logout,
-      onToComponent,
-      addToSale,
       handleProfile,
       handleButtonProfile,
-      handleCardSold
+      handleCardSold,
+      logout,
+      onToComponent
     } = this
     
-
 
     return (
       <Fragment>
@@ -212,23 +222,27 @@ handleGoToLogin = () => this.setState({view: "login"})
         <Fragment>
           <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} onTo={onToComponent} user={user} onToProfile={handleProfile} />
 
-          {view === 'search' && 
-          <div style={{backgroundColor: 'black', borderTop: '3px solid white'}} className='filter'>
-            <Types onChange={handleSelect} property="types" />
-            <Rarity onChange={handleSelect} property="rarity" />
-            <ManaCost onChange={handleSelect} property="cmc" />
-            <Colors onChange={handleCheckbox} property="colors" />
-            <Search onSubmit={handleSearch} title="Name Card" />
-          </div>}
+          <div className={view === "search" ? "main-container": "main-container__forsale"}>
+            {view === 'search' && 
+            <div className='filter'>
+              <Search onSubmit={handleSearch} title="Name Card" />
+              <div className="filters">
+                <Types onChange={handleSelect} property="types" />
+                <Rarity onChange={handleSelect} property="rarity" />
+                <ManaCost onChange={handleSelect} property="cmc" />
+                <Colors onChange={handleCheckbox} property="colors" />
+              </div>
+            </div>}
 
-          {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
-          {(view === 'search' && !cards.length) && <div className="results-nocards"></div>}
+            {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
+            {(view === 'search' && !cards.length) && <div className="results-nocards"></div>}
 
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users} />}
-          {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
-          {view === 'profile' && 
-          <Profile user={user} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} 
-          cards={viewProfile ? cardsToSale : cardsSold} toSold={handleCardSold} />}
+            {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users} />}
+            {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
+            {view === 'profile' && 
+            <Profile user={user} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} 
+            cards={viewProfile ? cardsToSale : cardsSold} toSold={handleCardSold} />}
+          </div>
 
         </Fragment>
         }

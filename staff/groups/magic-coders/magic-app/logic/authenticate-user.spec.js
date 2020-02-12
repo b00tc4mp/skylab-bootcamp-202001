@@ -1,159 +1,103 @@
-describe('authenticateUser', function () {
-    let user
+fdescribe('authenticateUser', function () {
+    let name, surname, phone, email, username, password
 
     beforeEach(() => {
-        user = {
-            name: 'done' + Math.random(),
-            surname: 'done' + Math.random(),
-            username: 'done' + Math.random(),
-            password: 'done' + Math.random()
-        }
+        name = 'magic' + Math.random()
+        surname = 'magic' + Math.random()
+        phone = parseInt(Math.random()*1000000000)
+        email = 'magic'+ Math.random() + '@gmail.com'
+        username = 'magic' + Math.random()
+        password = 'magic' + Math.random()
     })
 
-    describe('when user already exists', function() {
-        beforeEach(function (done) {
-            registerUser(user, () => {})
-            done()
-        })
-
-        it('should succeed on correct credentials', function(done) {
-            authenticateUser(user.username, user.password, response => {
-                expect(typeof response).toBe("object")
+    describe('When user already exists', () => {
+        
+        beforeEach(done => 
+            call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, surname, phone, email, username, password, mtg: true })
+            }, (error, response) => {
+                if (error) return callback(error)
+        
+                if (response.content) {
+                    const {error: _error} = JSON.parse(response.content)
+                    if (_error) return callback(new Error(_error))
+                } 
                 done()
+            })
+        )
+
+        it('should succeed on correct credentials', done =>
+            authenticateUser(username, password, (error, token) => {
+                expect(error).toBeUndefined()
+                expect(typeof(token)).toBe('string')
+
+                const [header, payload, signature] = token.split('.')
+                expect(header.length).toBeGreaterThan(0)
+                expect(payload.length).toBeGreaterThan(0)
+                expect(signature.length).toBeGreaterThan(0)
+
+                done()
+            })
+        )
+
+        it('should fail on wrong password', done =>
+            authenticateUser(username, `${password}wrong`, (error, token) => {
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe('username and/or password wrong')
+                done()
+            })
+        )
+
+        it('should fail on wrong username', done =>
+            authenticateUser(`${username}wrong`, password, (error, token) => {
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe('username and/or password wrong')
+                done()
+            })
+        )
+
+        afterEach(done => {
+            call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            }, (error, response) => {
+                if (error) return done(error)
+
+                const { error: _error, token } = JSON.parse(response.content)
+
+                if (_error) return done(new Error(_error))
+
+                call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ password })
+                }, (error, response) => {
+                    if (error) return done(error)
+
+                    if (response.content) {
+                        const { error } = JSON.parse(response.content)
+
+                        if (error) return done(new Error(error))
+                    }
+                    done()
+                })
             })
         })
 
-        
+    })
+
+    describe('When user should be deleted', () => {
+        it('should user don\'t exist', done => {
+            authenticateUser(username, password, (error, token) => {
+                expect(error).toBeInstanceOf(Error)
+                done()
+            })
+        })
     })
 })
-    
-
-    // describe('when user already exists', function () {
-    //     beforeEach(function () {
-    //         // users.push(user)
-    //         registerUser(user, response => {})
-    //     })
-
-    //     it('should succeed on correct credentials', function () {
-    //         expect(function () {
-    //             authenticateUser(user.username, user.password)
-    //         }).not.toThrow()
-    //     })
-
-    //     it('should fail on incorrect credentials', function () {
-    //         expect(function () {
-    //             authenticateUser(user.username, user.password + '-wrong')
-    //         }).toThrowError(Error, 'Wrong credentials')
-
-    //         expect(function () {
-    //             authenticateUser(user.username + '-wrong', user.password)
-    //         }).toThrowError(Error, 'Wrong credentials')
-    //     })
-    // })
-
-    // it('should fail when user does not exist', function () {
-    //     expect(function () {
-    //         authenticateUser(user.username, user.password)
-    //     }).toThrowError(Error, 'Wrong credentials')
-    // })
-
-    // afterEach(function () {
-    //     users.length = 0
-    // })
-
-
-/*
-describe('authenticateUser', () => {
-    let user
-
-    beforeEach(() => {
-        user = {
-            name: 'name-' + Math.random(),
-            surname: 'surname-' + Math.random(),
-            username: 'username-' + Math.random(),
-            password: 'password-' + Math.random()
-        }
-    })
-
-    describe('when user already exists', () => {
-        beforeEach(() =>
-            users.push(user)
-        )
-
-        it('should succeed on correct credentials', () =>
-            expect(() =>
-                authenticateUser(user.username, user.password)
-            ).not.toThrow()
-        )
-
-        it('should fail on incorrect credentials', () => {
-            expect(() =>
-                authenticateUser(user.username, user.password + '-wrong')
-            ).toThrowError(Error, 'Wrong credentials')
-
-            expect(() =>
-                authenticateUser(user.username + '-wrong', user.password)
-            ).toThrowError(Error, 'Wrong credentials')
-        })
-    })
-
-    it('should fail when user does not exist', () =>
-        expect(() => {
-            authenticateUser(user.username, user.password)
-        }).toThrowError(Error, 'Wrong credentials')
-    )
-
-    afterEach(() =>
-        users.length = 0
-    )
-})
-
-/*
-'use strict'
-
-describe('authenticateUser', function () {
-    let user
-
-    beforeEach(function () {
-
-        user = {
-            name: 'name-' + Math.random(),
-            surname: 'surname-' + Math.random(),
-            username: 'username-' + Math.random(),
-            password: 'password-' + Math.random()
-        }
-    })
-
-    describe('when user already exists', function () {
-        beforeEach(function () {
-            users.push(user)
-        })
-
-        it('should succeed on correct credentials', function () {
-            expect(function () {
-                authenticateUser(user.username, user.password)
-            }).not.toThrow()
-        })
-
-        it('should fail on incorrect credentials', function () {
-            expect(function () {
-                authenticateUser(user.username, user.password + '-wrong')
-            }).toThrowError(Error, 'Wrong credentials')
-
-            expect(function () {
-                authenticateUser(user.username + '-wrong', user.password)
-            }).toThrowError(Error, 'Wrong credentials')
-        })
-    })
-
-    it('should fail when user does not exist', function () {
-        expect(function () {
-            authenticateUser(user.username, user.password)
-        }).toThrowError(Error, 'Wrong credentials')
-    })
-
-    afterEach(function () {
-        users.length = 0
-    })
-})
-*/

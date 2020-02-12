@@ -1,0 +1,18 @@
+@import variables
+    
+.main-container
+    height: (100vh - $heigth-footer - $heigth-navbar)
+    display: flex
+
+    &__forsale
+        height: (100vh - $heigth-footer - $heigth-navbar)
+        display: flex
+        flex-direction: row
+        justify-content: space-evenly
+
+
+
+@media screen and ( max-width: 700px)
+    .main-container
+        flex-direction: column
+        align-items: center
