@@ -125,11 +125,7 @@ handleGoToLogin = () => this.setState({view: "login"})
     this.setState({ search: { ...search, [property]: stringColors } })
   }
 
-  handleDetail = id => {
-      retrieveCard(id, (error, card)=> {
-          this.setState({card, view:'detail'})
-      })
-  }
+  handleDetail = card => this.setState({card, view:'detail'})
 
   handleSidebar = () => this.setState({sidebar: !this.state.sidebar})
 

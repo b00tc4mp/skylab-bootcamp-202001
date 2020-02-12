@@ -1,5 +1,5 @@
 function Item ({item: { multiverseid, name, imageUrl, user}, onClick, view, users, toSold, viewProfile}) {
-
+  let card = { multiverseid, name, imageUrl, user}
   let email = undefined
   let phone = undefined
 
@@ -20,7 +20,7 @@ function Item ({item: { multiverseid, name, imageUrl, user}, onClick, view, user
       {(view === 'forsale') && <button onClick={ () => event.path[0].innerText = user + ': ' + email + ' ' +  phone} >Contact</button> }
       
     </div>
-    <img onClick={() => onClick(multiverseid)} src={imageUrl} />
+    <img onClick={() => onClick(card)} src={imageUrl} />
     {(view === 'profile' && viewProfile) && <Button onClick={() => toSold(multiverseid)} className="button--green">Sold</Button>}
   </li>
 }
