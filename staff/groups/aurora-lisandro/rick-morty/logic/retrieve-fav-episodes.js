@@ -1,4 +1,4 @@
-function retrieveFavCharacters(token, callback) {
+function retrieveFavEpisodes(token, callback) {
     if (typeof token !== 'string') throw new Error(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new Error(`callback ${callback} is not a function`)
 
@@ -14,12 +14,12 @@ function retrieveFavCharacters(token, callback) {
 
         if (_error) return callback(new Error(_error))
 
-        const { favCharacters } = user
+        const { favEpisodes } = user
 
-        if (!favCharacters || !favCharacters.length) return callback(undefined, [])
+        if (!favEpisodes || !favEpisodes.length) return callback(undefined, [])
 
 
-        call(`https://rickandmortyapi.com/api/character/${favCharacters}`, undefined, (error, response) => {
+        call(`https://rickandmortyapi.com/api/episode/${favEpisodes}`, undefined, (error, response) => {
             if (error) return callback(error)
 
             if (response.content) {
