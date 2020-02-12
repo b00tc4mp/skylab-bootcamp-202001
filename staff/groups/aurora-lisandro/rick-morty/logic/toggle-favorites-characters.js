@@ -19,11 +19,13 @@ function toggleFavoritesCharacters(token, id, callback) {
 
         if (response.content) {
             const user = JSON.parse(response.content)
-            const { error, favCharacters = [] } = user
+            let { error, favCharacters = [] } = user //let en vez de const
 
             if (error) return callback(new Error(error))
 
-            favCharacters.toggle(id)
+            if (!favCharacters.length ) { //cambio
+                favCharacters=[id]
+            } else {favCharacters.toggle(id)}
 
 
             call('https://skylabcoders.herokuapp.com/api/v2/users/', {
