@@ -16,7 +16,7 @@ function authenticateUser(username, password, callback) {
         if (_error) return callback(new Error(_error))
 
 
-        call('http://skylabcoders.herokuapp.com/api/v2/users/', {
+        call('https://skylabcoders.herokuapp.com/api/v2/users/', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
 
