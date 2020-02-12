@@ -1,4 +1,4 @@
-describe('retrieveUser', () => {
+fdescribe('retrieveUser', () => {
     let name, surname, username, password, appTag, token
 
     beforeEach(() => {
@@ -64,5 +64,36 @@ describe('retrieveUser', () => {
 
             })
         })
+
+        it('should fail on invalid token', done => {
+            retrieveUser(`${token}-wrong`, error => {
+                expect(error).toBeDefined()
+                expect(error.message).toBe('invalid token')
+
+                done()
+            })
+        })
     })
+
+    it('should fail on non-string token', () => {
+        const token = 1
+        expect(() => {
+            retrieveUser(token, () => { })
+        }).toThrowError(TypeError, `token ${token} is not a string`)
+    })
+
+    it('should fail on non-string token', () => {
+        const token = true
+        expect(() => {
+            retrieveUser(token, () => { })
+        }).toThrowError(TypeError, `token ${token} is not a string`)
+    })
+
+    it('should fail on non-string token', () => {
+        const token = undefined
+        expect(() => {
+            retrieveUser(token, () => { })
+        }).toThrowError(TypeError, `token ${token} is not a string`)
+    })
+
 })
