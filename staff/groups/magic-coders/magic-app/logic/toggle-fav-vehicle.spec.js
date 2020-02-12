@@ -1,4 +1,4 @@
-fdescribe('toggle-fav-vehicle', () => {
+describe('toggle-fav-vehicle', () => {
   let name, surname, username, password, token, id
   let Ids = ['FGD', 'ADF', 'DFG', 'TYU', 'AWR', 'QEW', 'VAM']
 
@@ -38,7 +38,6 @@ fdescribe('toggle-fav-vehicle', () => {
   describe('when user already exists and has fav property', () => {
 
     const index = Math.floor(Math.random() * Math.floor(Ids.length))
-    debugger
     let idRandom = Ids[index]
     
     beforeEach((done) => {
