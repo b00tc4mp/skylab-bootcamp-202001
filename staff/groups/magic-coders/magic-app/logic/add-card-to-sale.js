@@ -1,7 +1,26 @@
 function addCardToSale(card, token, callback) {
     if (card.constructor.name !== "Object") throw new TypeError(`${card} is not an Object`)
-    if (typeof token !== "string") throw new TypeError(`${card} is not a String`)
-    if (typeof callback !== "function") throw new TypeError(`${card} is not a Function`)
+    if (typeof token !== "string") throw new TypeError(`token ${token} is not a string`)
+    if (typeof callback !== "function") throw new TypeError(`callback ${callback} is not a function`)
+
+    const [header, payload, signature] = token.split('.')
+    if(!header || !payload || !signature) throw new Error('invalid token')
+
+    for (const key in card) {
+        const value = card[key]
+        let expect = key === 'multiverseid' ? 'number' : 'string'
+
+        if (typeof value !== expect) throw new TypeError(`${key} ${value} is not a ${expect}`)
+        if (expect === "string" && !value.trim().length) throw new TypeError(`${key} is empty or blank`)
+    }
+
+    const keys = Object.keys(card)
+    const VALID_KEYS = ['multiverseid', 'name', 'imageUrl', 'user']
+    
+    keys.forEach(key => {
+        if (!VALID_KEYS.includes(key)) throw new Error(`property ${key} is not allowed`)
+    })
+    
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',

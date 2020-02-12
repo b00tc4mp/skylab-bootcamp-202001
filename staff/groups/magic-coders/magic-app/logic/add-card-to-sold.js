@@ -1,5 +1,4 @@
 function addCardToSold(id, token, callback) {
-    console.log('heee')
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',
@@ -22,8 +21,6 @@ function addCardToSold(id, token, callback) {
         } else {
             sold.push(card[0])
         }
-
-        
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
