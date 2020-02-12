@@ -15,7 +15,8 @@ class App extends Component {
     user: undefined,
     users: undefined,
     view: undefined,
-    viewProfile: true
+    viewProfile: true,
+    viewDetail: false
   }
 
   componentWillMount = () => {
@@ -138,6 +139,7 @@ handleGoToLogin = () => this.setState({view: "login"})
 
   onToComponent = view => {
     if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
+    // if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
     else if (view === 'forsale') {
       const {token} = sessionStorage
       retrieveCardsSales(token, (error, cards, users) => {
