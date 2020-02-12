@@ -3,7 +3,6 @@ function filterLanguage(array, language) {
 
     const {foreignNames} = card
 
-
     if(foreignNames && foreignNames.some(foreign => foreign.language.split(' ')[0] === language)) {
       let card;
 
