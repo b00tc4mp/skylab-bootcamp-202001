@@ -6,9 +6,8 @@
   align-items: center
   flex-wrap: wrap
   max-width: 80%
-  background: rgb(242, 242, 242)
-  background: white
-  background-color: white
+  background: rgb(255,255,255)
+  background: radial-gradient(circle, #fff 35%, #383838 100%)   
   overflow: scroll
 
 .results-nocards
@@ -16,6 +15,7 @@
   background-color: black
   margin-bottom: -5px
   padding: 0
+  background: radial-gradient(circle, #fff 35%, #383838 100%)   
 
 @media (max-width: 698px)
   .results
@@ -24,6 +24,7 @@
 @media (min-width: 698px)
 
   .results-nocards
+    background: radial-gradient(circle, #fff 35%, #383838 100%)   
     height: $heigth-nocards
     background-color: white
     background: url('magic-search.jpg') no-repeat center center

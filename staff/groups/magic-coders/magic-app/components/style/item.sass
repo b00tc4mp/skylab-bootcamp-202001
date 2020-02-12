@@ -1,8 +1,18 @@
 .item
-  width: calc( 95wv/3  )
-  border: 1px solid white
-  margin-bottom: 5px
   display: flex
   justify-content: center
   align-items: center
   flex-direction: column
+  color: white
+  background-color: #272727
+  border-radius: 0.75rem
+  margin: 2rem
+  box-shadow: 15px 25px 39px 1px rgba(0,0,0,0.8)
+  transition: all .2s ease-in-out
+  transform: scale(1)
+  cursor: pointer
+  &:hover
+    transition: all 200ms ease-in
+    transform: scale(1.15)
+  img 
+    border-radius: 1rem
