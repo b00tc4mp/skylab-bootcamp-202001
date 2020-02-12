@@ -1,5 +1,3 @@
-'use strict';
-
 function registerUser({name, surname, phone, email, username, password}, callback) {
     if (typeof name !== 'string') throw new TypeError('name ' + name + ' is not a string');
     if (!name.trim()) throw new Error('name is empty');

@@ -2,7 +2,7 @@ describe("registerUser", () => {
   let name, surname, username, password
 
   beforeEach(() => {
-    name = 'vcr-'
+    name = 'vcr-' + Math.random()
     surname = 'vcr-' + Math.random()
     username = 'vcr-' + Math.random()
     password = 'vcr-' + Math.random()

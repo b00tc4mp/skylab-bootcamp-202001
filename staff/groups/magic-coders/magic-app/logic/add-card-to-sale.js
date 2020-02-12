@@ -1,4 +1,7 @@
 function addCardToSale(card, token, callback) {
+    if (card.constructor.name !== "Object") throw new TypeError(`${card} is not an Object`)
+    if (typeof token !== "string") throw new TypeError(`${card} is not a String`)
+    if (typeof callback !== "function") throw new TypeError(`${card} is not a Function`)
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',
@@ -13,15 +16,11 @@ function addCardToSale(card, token, callback) {
 
         //Logic
         let {toSale} = user
-        const {multiverseid} = card
-        console.log(multiverseid)
 
         if (!toSale)
             toSale = [card]
         else
-            toSale.some(card => card.multiverseid === multiverseid) ? '' : toSale.push(card)
-
-        console.log(toSale)
+            toSale.some(_card => _card.multiverseid === card.multiverseid) ? '' : toSale.push(card)
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
