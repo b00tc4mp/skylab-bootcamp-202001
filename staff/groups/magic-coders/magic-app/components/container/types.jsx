@@ -18,8 +18,9 @@ function Types({onChange, property}){
 
   return (
     <div>
-      <h3 style={{color: 'white'}}>Type</h3>
-      <Select onChange={onChange} data={options} property={property} /> 
+      <p>Types</p>
+      <br/>
+      <Select onChange={onChange} data={options} property={property} placeholder="Types" /> 
     </div>
   ) 
 }

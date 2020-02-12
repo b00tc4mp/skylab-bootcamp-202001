@@ -3,16 +3,16 @@ function Checkbox(props) {
   const onChange = event => props.onChange(event, props.property)
 
   return (
-    <div>
+    <section className="colors">
       {props.data.map((element, i) => {
         return (
           <label key={i} className="checkbox">
             <input key={i} onChange={onChange} name={element} type="checkbox"/>
-            {element}
+            {` ${firstUppercase(element)}`}
           </label>
         )
       })
     }
-    </div>
+    </section>
   )
 }

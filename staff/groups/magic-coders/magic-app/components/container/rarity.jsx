@@ -4,7 +4,8 @@ function Rarity({onChange, property}){
   
   return (
     <div>
-      <h3 style={{color: 'white'}}>Rarity</h3>
+      <p>Rarity</p>
+      <br/>
       <Select onChange={onChange} data={options} property={property} />
     </div>
   )
