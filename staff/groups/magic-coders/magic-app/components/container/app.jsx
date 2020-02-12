@@ -22,11 +22,10 @@ class App extends Component {
     const {token} = sessionStorage
     if (token) {
       retrieveUser(token, (error, user) => {
-        this.setState({view: 'search', user})
+        if (error) return this.__handleError__(error)
+        else this.setState({view: 'search', user})
       })
-    } else {
-      this.setState({view: 'login'})
-    }
+    } else this.setState({view: 'login'})
   }
 
   logout = () => {
@@ -34,15 +33,18 @@ class App extends Component {
     this.setState({view: 'login', cards: [], sidebar: false})
   }
 
+  __handleError__ = error => {
+    this.setState({error: error.message})
+    setTimeout(() => this.setState({error: undefined}), 9000)
+  }
+
   handleLogin = ({username, password}) => {
     try {
         authenticateUser(username, password, (error, token, user) => {
             // Asyn Error
-            if (error) {
-                this.setState({error: error.message})
-                setTimeout(() => this.setState({error: undefined}), 9000);
-            } else {
-               
+            if (error) this.__handleError__(error)
+            else {
+
               if (error)
                   return this.setState({ error: error.message })
 
@@ -53,8 +55,7 @@ class App extends Component {
         })
         // Sync Error
     } catch (error) {
-        this.setState({error: error.message})
-        setTimeout(() => this.setState({error: undefined}), 3000);
+        this.__handleError__(error)
     }
 }
 
@@ -65,8 +66,7 @@ handleRegister = user => {
       registerUser(user, (error, message) => {
           // Asyn Error
           if (error) {
-              this.setState({error: error.message})
-              setTimeout(() => this.setState({error: undefined}), 3000);
+            this.__handleError__(error)
           }
 
           this.setState({view: "login", message})
@@ -76,8 +76,7 @@ handleRegister = user => {
       
       // Sync Errror
   } catch (error) {
-      this.setState({error: error.message})
-      setTimeout(() => this.setState({error: undefined}), 3000);
+      this.__handleError__(error)
   }
   
 }
