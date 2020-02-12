@@ -3,7 +3,6 @@ function CharacterSearch({ onSubmit, warning }) {
 
         event.preventDefault()
 
-        const searchName = event.target.name.value
         const query = { gender: '', status: '', species: '', name: '' }
 
         let values = document.querySelectorAll('.search__filter')
@@ -14,8 +13,9 @@ function CharacterSearch({ onSubmit, warning }) {
             i++
         }
 
+        const queryString = createQuery(query)
 
-        onSubmit(query)
+        onSubmit(queryString)
     }}>
         <h3 className="search__title">Search for crazy characters</h3>
 

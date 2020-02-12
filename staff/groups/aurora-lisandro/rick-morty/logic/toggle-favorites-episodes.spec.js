@@ -1,4 +1,4 @@
-describe('toggleFavoritesCharacters', () => {
+describe('toggleFavoritesEpisodes', () => {
     let id, token, callback, name, surname, username, password
 
     id = Math.floor((Math.random() * 492) + 1)
@@ -25,6 +25,7 @@ describe('toggleFavoritesCharacters', () => {
                     const { error } = JSON.parse(response.content)
                     if (error) return done(error)
                 }
+
                 call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
 
                     method: 'POST',
@@ -45,8 +46,8 @@ describe('toggleFavoritesCharacters', () => {
             })
         })
 
-        it('should add a character id when it was not previously there', done => {
-            toggleFavoritesCharacters(token, id, (error, response) => {
+        it('should add a episode id when it was not previously there', done => {
+            toggleFavoritesEpisodes(token, id, (error, response) => {
                 expect(error).toBeUndefined()
 
                 call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
@@ -57,11 +58,11 @@ describe('toggleFavoritesCharacters', () => {
 
                     if (response.content) {
                         const user = JSON.parse(response.content)
-                        const { error, favCharacters } = user
+                        const { error, favEpisodes } = user
 
                         if (error) return done(new Error(error))
 
-                        expect(favCharacters).toContain(id)
+                        expect(favEpisodes).toContain(id)
 
                         done()
 
@@ -72,9 +73,9 @@ describe('toggleFavoritesCharacters', () => {
 
         })
 
-        describe('when fav character alredy exists', () => {
+        describe('when fav episode alredy exists', () => {
             beforeEach(done => {
-                const favCharacters = [id]
+                const favEpisode = [id]
 
                 call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                     method: 'PATCH',
@@ -82,7 +83,7 @@ describe('toggleFavoritesCharacters', () => {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({ favCharacters })
+                    body: JSON.stringify({ favEpisode })
                 }, (error, response) => {
                     if (error) return done(error)
 
@@ -97,9 +98,9 @@ describe('toggleFavoritesCharacters', () => {
 
             })
 
-            it('should succeed removing a character id when previously added', done => {
+            it('should succeed removing a episode id when previously added', done => {
 
-                toggleFavoritesCharacters(token, id, (error, response) => {
+                toggleFavoritesEpisodes(token, id, (error, response) => {
                     expect(error).toBeUndefined()
 
                     call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
@@ -110,10 +111,10 @@ describe('toggleFavoritesCharacters', () => {
 
                         if (response.content) {
                             const user = JSON.parse(response.content)
-                            const { error, favCharacters } = user
+                            const { error, favCharacter } = user
 
                             if (error) return callback(new Error(error))
-                            expect(favCharacters).not.toContain(id)
+                            expect(favCharacter).not.toContain(id)
 
                             done()
 
@@ -130,17 +131,17 @@ describe('toggleFavoritesCharacters', () => {
     it('should fail on non-string token', () => {
         token = 1
         expect(() =>
-            toggleFavoritesCharacters(token, id, () => { })
+            toggleFavoritesEpisodes(token, id, () => { })
         ).toThrowError(TypeError, `token ${token} is not a string`)
 
         token = true
         expect(() =>
-            toggleFavoritesCharacters(token, id, () => { })
+            toggleFavoritesEpisodes(token, id, () => { })
         ).toThrowError(TypeError, `token ${token} is not a string`)
 
         token = undefined
         expect(() =>
-            toggleFavoritesCharacters(token, id, () => { })
+            toggleFavoritesEpisodes(token, id, () => { })
         ).toThrowError(TypeError, `token ${token} is not a string`)
     })
 
@@ -148,7 +149,7 @@ describe('toggleFavoritesCharacters', () => {
         token = 'abc'
 
         expect(() =>
-            toggleFavoritesCharacters(token, id, () => { })
+            toggleFavoritesEpisodes(token, id, () => { })
         ).toThrowError(Error, 'invalid token')
     })
 
@@ -157,17 +158,17 @@ describe('toggleFavoritesCharacters', () => {
 
         callback = 1
         expect(() =>
-            toggleFavoritesCharacters(token, id, callback)
+            toggleFavoritesEpisodes(token, id, callback)
         ).toThrowError(TypeError, `callback ${callback} is not a function`)
 
         callback = true
         expect(() =>
-            toggleFavoritesCharacters(token, id, callback)
+            toggleFavoritesEpisodes(token, id, callback)
         ).toThrowError(TypeError, `callback ${callback} is not a function`)
 
         callback = undefined
         expect(() =>
-            toggleFavoritesCharacters(token, id, callback)
+            toggleFavoritesEpisodes(token, id, callback)
         ).toThrowError(TypeError, `callback ${callback} is not a function`)
     })
 })
