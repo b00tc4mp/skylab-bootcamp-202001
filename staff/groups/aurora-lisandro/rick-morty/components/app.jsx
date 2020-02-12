@@ -22,29 +22,44 @@ class App extends Component {
     componentWillMount() {
         const { token } = sessionStorage
 
-        if (token)
-            retrieveUser(token, (error, user) => {
-                if (error)
-                    return this.setState({ error: error.message })
+        if (token) {
 
-                if (location.search) {
-                    const query = location.search.split('?')[1]
+            try {
+                retrieveUser(token, (error, user) => {
+                    if (error)
+                        this.handleLogout()
 
-                    searchCharacters(query, token, (error, response) => {
-                        if (error)
-                            this.setState({ error: error.message })
-
-                        const { results: characters } = response
-
-                        this.setState({ view: 'search', characters })
-
-                    })
-                } else
                     this.setState({ view: 'landing', user })
-            })
-        else this.setState({ view: 'login' })
-    }
+                    if (address.search.gender
+                        || address.search.name
+                        || address.search.status
+                        || address.search.species) {
+                        this.setState({ query: address.search })
 
+                        this.handleOnSubmit(this.state.query)
+
+                    } else if (address.search.season) {
+                        this.setState({ query: address.search })
+
+                        this.handleSearchEpisodes(this.state.query.season)
+                    } else if (address.hash && address.hash.startsWith('character/')) {
+                        const [, id] = address.hash.split('/')
+
+                        this.handleCharacterClick(id)
+                    } else if (address.hash && address.hash.startsWith('episode/')) {
+                        const [, id] = address.hash.split('/')
+
+                        this.handleEpisodeClick(id)
+                    }
+                })
+            } catch (error) {
+                this.handleLogout()
+            }
+        } else {
+            this.handleLogout()
+        }
+
+    }
 
     handleLogin = (username, password) => {
         try {
@@ -81,8 +96,10 @@ class App extends Component {
             searchSeason(querySeason, token, (error, episodes) => {
                 if (error) this.__handleError__(error)
 
+                const season = querySeason
+                address.search = { season }
 
-                this.setState({ view: 'episodes', episodes })
+                this.setState({ view: 'episodes', episodes, query: querySeason })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -90,17 +107,19 @@ class App extends Component {
 
     }
 
-    handleOnSubmit = (queryString, query) => {
+    handleOnSubmit = query => {
         try {
             const { token } = sessionStorage
 
-            searchCharacters(queryString, token, (error, response) => {
+            this.setState({ query })
+
+            searchCharacters(query, token, (error, response) => {
                 if (error) return this.__handleError__(error)
 
-                this.setState({ query })
+                address.search = query
 
                 const { results } = response
-                this.setState({ view: 'search', characters: results })
+                this.setState({ view: 'search', characters: results, query })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -112,6 +131,8 @@ class App extends Component {
             const { token } = sessionStorage
             retrieveEpisode(token, id, (error, detail) => {
                 if (error) console.log(error)
+
+                address.hash = `episode/${id}`
 
                 this.setState({ view: 'detailEpisode', detail })
             })
@@ -126,6 +147,8 @@ class App extends Component {
             retrieveCharacter(token, id, (error, detail) => {
                 if (error) console.log(error)
 
+                address.hash = `character/${id}`
+
                 this.setState({ view: 'detail', detail })
             })
         } catch (error) {
@@ -135,13 +158,14 @@ class App extends Component {
 
     handleLogout = () => {
         sessionStorage.clear()
-
+        address.clear()
         this.setState({
             view: 'login',
             error: undefined,
             characters: undefined,
             episodes: undefined,
-            detail: undefined
+            detail: undefined,
+            user: undefined
         })
     }
 
@@ -149,19 +173,28 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
-    handleGoToCharacters = () => this.setState({
-        view: 'search',
-        characters: undefined,
-        episodes: undefined,
-        detail: undefined
-    })
+    handleGoToCharacters = () => {
+        address.clear()
+        this.setState({
+            view: 'search',
+            characters: undefined,
+            episodes: undefined,
+            detail: undefined,
+            query: undefined
+        })
+    }
 
-    handleGoToEpisodes = () => this.setState({
-        view: 'seasons',
-        characters: undefined,
-        episodes: undefined,
-        detail: undefined
-    })
+    handleGoToEpisodes = () => {
+        address.clear()
+        this.setState({
+            view: 'seasons',
+            characters: undefined,
+            episodes: undefined,
+            detail: undefined,
+            query: undefined
+        })
+
+    }
 
     handleFavClick = id => {
         const { token } = sessionStorage

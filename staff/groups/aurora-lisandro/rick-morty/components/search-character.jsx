@@ -13,9 +13,7 @@ function CharacterSearch({ onSubmit, warning }) {
             i++
         }
 
-        const queryString = createQueryString(query)
-
-        onSubmit(queryString, query)
+        onSubmit(query)
     }}>
         <h3 className="search__title">Search for crazy characters</h3>
 

@@ -6,7 +6,6 @@ const address = {
 
         if (query && (keys = Object.keys(query)).length) {
             let queryString = '?'
-
             for (let i = 0; i < keys.length; i++) {
                 const key = keys[i]
 
