@@ -222,23 +222,27 @@ handleGoToLogin = () => this.setState({view: "login"})
         <Fragment>
           <Navbar toggleSidebar={this.handleSidebar} sidebar={sidebar} logout={logout} onTo={onToComponent} user={user} onToProfile={handleProfile} />
 
-          {view === 'search' && 
-          <div style={{backgroundColor: 'black', borderTop: '3px solid white'}} className='filter'>
-            <Types onChange={handleSelect} property="types" />
-            <Rarity onChange={handleSelect} property="rarity" />
-            <ManaCost onChange={handleSelect} property="cmc" />
-            <Colors onChange={handleCheckbox} property="colors" />
-            <Search onSubmit={handleSearch} title="Name Card" error={error} />
-          </div>}
+          <div className={view === "search" ? "main-container": "main-container__forsale"}>
+            {view === 'search' && 
+            <div className='filter'>
+              <Search onSubmit={handleSearch} title="Name Card" />
+              <div className="filters">
+                <Types onChange={handleSelect} property="types" />
+                <Rarity onChange={handleSelect} property="rarity" />
+                <ManaCost onChange={handleSelect} property="cmc" />
+                <Colors onChange={handleCheckbox} property="colors" />
+              </div>
+            </div>}
 
-          {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
-          {(view === 'search' && !cards.length) && <div className="results-nocards" error={error}></div>}
+            {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
+            {(view === 'search' && !cards.length) && <div className="results-nocards"></div>}
 
-          {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users} />}
-          {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
-          {view === 'profile' && 
-          <Profile user={user} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} 
-          cards={viewProfile ? cardsToSale : cardsSold} toSold={handleCardSold} />}
+            {view === 'search' && <Results results={cards} onClickItem={handleDetail} language={language} users={users} />}
+            {view === 'forsale' && <Results results={cards} language={language} view={view} users={users} />}
+            {view === 'profile' && 
+            <Profile user={user} view={view} viewProfile={viewProfile} toggleButton={handleButtonProfile} 
+            cards={viewProfile ? cardsToSale : cardsSold} toSold={handleCardSold} />}
+          </div>
 
         </Fragment>
         }

@@ -4,7 +4,8 @@ function Colors({onChange, property}) {
   
   return (
     <div>
-      <h3 style={{color: 'white'}}>Colors</h3>
+      <p>Colors</p>
+      <br/>
       <Checkbox data={options} onChange={onChange} property={property} />
     </div>
     

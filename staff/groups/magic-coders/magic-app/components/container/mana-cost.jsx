@@ -4,7 +4,8 @@ function ManaCost({onChange, property}) {
 
   return (
     <div>
-      <h3 style={{color: 'white'}}>Mana Cost</h3>
+      <p>Mana Cost</p>
+      <br/>
       <Select onChange={onChange} data={options} property={property} />
     </div>
   )
