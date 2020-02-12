@@ -125,6 +125,13 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 }
 .results__item {
   margin-bottom: 5rem;
+  -webkit-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
+}
+.results__title {
+  font-family: Get Schwifty;
+  font-size: 1.2rem;
 }
 
 .login {
@@ -257,6 +264,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-family: Get Schwifty;
   margin: 3rem;
   font-size: 4rem;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .searchSeason__component {
   width: 100%;
@@ -296,6 +304,9 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   width: 100%;
   cursor: pointer;
   margin-top: 1rem;
+  -webkit-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .feedback {
