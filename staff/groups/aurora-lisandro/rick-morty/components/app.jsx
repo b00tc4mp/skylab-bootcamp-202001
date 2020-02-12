@@ -88,7 +88,8 @@ class App extends Component {
 
     handleCharacterClick = (id) => {
         try {
-            retrieveCharacter(id, (error, detail) => {
+            const { token } = sessionStorage
+            retrieveCharacter(token, id, (error, detail) => {
                 if (error) console.log(error)
 
                 this.setState({ view: 'detail', detail })
