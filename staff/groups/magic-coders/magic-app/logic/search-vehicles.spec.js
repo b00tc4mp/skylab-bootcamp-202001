@@ -1,5 +1,3 @@
-'use strict';
-
 describe('searchVehicles', function () {
     it('should succeed on matching query', function (done) {
         searchVehicles('batman', function (results) {

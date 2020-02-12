@@ -1,4 +1,4 @@
-fdescribe('addCardToSale', () => {
+describe('addCardToSale', () => {
     let name, surname, phone, email, username, password, token
 
     beforeEach(() => {
