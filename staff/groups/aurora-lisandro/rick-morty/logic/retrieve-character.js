@@ -1,7 +1,8 @@
-function retrieveCharacter (token, id, callback) { 
-    if (typeof token !== 'string') throw new TypeError (`token ${token} is not a string`)
-    if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
-    if (typeof callback !== 'function') throw new TypeError (`callback ${callback} is not a function`)
+function retrieveCharacter(token, id, callback) {
+    debugger
+    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
+    // if (typeof id !== 'string') throw new TypeError(`id ${id} is not a string`)
+    if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
 
     const [header, payload, signature] = token.split('.')
 
@@ -11,32 +12,32 @@ function retrieveCharacter (token, id, callback) {
 
 
     call('https://skylabcoders.herokuapp.com/api/v2/users/', {
-        method: 'GET', 
-        headers: {'Authorization' : 'Bearer ' + token} 
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token }
     }, (error, response) => {
 
-        if (error) return callback (error)
+        if (error) return callback(error)
 
-        const {error:_error, favs} = JSON.parse(response.content)
+        const { error: _error, favs } = JSON.parse(response.content)
 
-        if (_error) return callback(new Error (_error))
+        if (_error) return callback(new Error(_error))
 
 
-        call ('https://rickandmortyapi.com/api/character/' + id, undefined, (error, response)=> {
-            if (error) return callback (error)
+        call('https://rickandmortyapi.com/api/character/' + id, undefined, (error, response) => {
+            if (error) return callback(error)
 
-            const result = JSON.parse(response.content) 
+            const result = JSON.parse(response.content)
 
-            const {error: _error} = result
+            const { error: _error } = result
 
-            if(_error) return callback(new Error (_error))
-            
-            if (response.status ===200){
+            if (_error) return callback(new Error(_error))
 
-                if (favs) result.isFav=true
+            if (response.status === 200) {
+
+                if (favs) result.isFav = true
 
                 callback(undefined, result)
-            }  
+            }
 
         })
     })
