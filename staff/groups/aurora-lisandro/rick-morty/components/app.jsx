@@ -9,7 +9,7 @@ class App extends Component {
     }
 
     __handleError__ = (error) => {
-        this.setState({ error: error.message })
+        this.setState({ error: error.message, characters: undefined })
 
         setTimeout(() => {
             this.setState({ error: undefined })
@@ -74,9 +74,10 @@ class App extends Component {
         }
     }
 
-    handleEpisodeClick = (id) => { debugger
+    handleEpisodeClick = (id) => {
         try {
-            retrieveEpisode(id, (error, detail) => {
+            const { token } = sessionStorage
+            retrieveEpisode(token, id, (error, detail) => {
                 if (error) console.log(error)
 
                 this.setState({ view: 'detailEpisode', detail })
@@ -103,7 +104,8 @@ class App extends Component {
         sessionStorage.clear()
 
         this.setState({
-            view: 'login', error: undefined,
+            view: 'login',
+            error: undefined,
             characters: undefined,
             episodes: undefined,
             detail: undefined
@@ -134,7 +136,7 @@ class App extends Component {
     render() {
         const {
 
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout } = this
+            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick } = this
 
         return <main className='app'>
 
@@ -153,13 +155,13 @@ class App extends Component {
 
             {view === 'landing' && <Landing onToCharacterSearch={handleGoToCharacters} onToEpisodeSearch={handleGoToEpisodes} />}
 
-            {view === 'search' && <CharacterSearch onSubmit={handleOnSubmit} />}
+            {view === 'search' && <CharacterSearch onSubmit={handleOnSubmit} warning={error} />}
 
-            {view === 'search' && characters && <Results results={characters} onItemFavClick={() => { consoleconsole.log('fav') }} handleClick={handleCharacterClick} />}
+            {view === 'search' && characters && <Results results={characters} onItemFavClick={() => { console.log('fav') }} handleClick={handleCharacterClick} />}
 
             {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
 
-            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleSearchEpisodes} />}
+            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} />}
 
             {view === 'detailEpisode' && <DetailsEpisode item={detail} />}
 
