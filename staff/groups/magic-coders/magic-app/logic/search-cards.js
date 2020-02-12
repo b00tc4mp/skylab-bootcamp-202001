@@ -28,15 +28,17 @@ function searchCards(query, callback) {
 
   call(`https://api.magicthegathering.io/v1/cards?${string}`, undefined,
     (error, response) => {
+      console.log(response)
+      
       if (error) return callback(error)
 
-      if (response.content.length === 0) return callback(response)
-
+      
       if (response.status === 200) {
-        
+  
         var { cards } = JSON.parse(response.content)
-
-        console.log(cards)
+        
+        if (cards.length === 0) return callback(new Error("No found cards"))
+        
         callback(undefined, cards)
       }
     }

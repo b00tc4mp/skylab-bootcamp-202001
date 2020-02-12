@@ -10,7 +10,10 @@ function Detail({card: {multiverseid, name, number, type, rarity, setName, text,
   return <div className="detail">
     <div className="detail__button-content">
       <button className="detail__button-content__button__back" onClick={() => onTo('search')}>Go back</button>
-      <button className="detail__button-content__button__add" onClick={() => addToSale(_card)}>Add to sale</button>
+      <button className="detail__button-content__button__add" onClick={() => {
+        event.target.innerHTML = 'In sale'
+        addToSale(_card)
+        }}>Add to sale</button>
     </div>
     <div className="detail__title">
       <h1>{name}</h1>
