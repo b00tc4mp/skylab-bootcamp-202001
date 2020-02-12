@@ -724,7 +724,7 @@ table {
 }
 
 .container-login:before {
-  background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("overlay.png");
+  background-image: linear-gradient(to top, rgba(19, 21, 25, 0.5), rgba(19, 21, 25, 0.5)), url("img/overlay.png");
   background-size: auto, 256px 256px;
   background-position: center, center;
   background-repeat: no-repeat, repeat;
@@ -732,7 +732,7 @@ table {
 }
 
 .container-login:after {
-  background-image: url("bg.jpg");
+  background-image: url("img/bg.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

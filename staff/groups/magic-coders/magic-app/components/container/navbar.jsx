@@ -4,7 +4,7 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
   <nav className="navbar" >
     <Sidebar sidebar={sidebar} toggleSidebar={toggleSidebar} logout={logout} onTo={onTo} onToProfile={onToProfile} />
     <section className="logo" >
-      <img className="logoimg" src="../logo.png" alt=""/>
+      <img className="logoimg" src="img/logo.png" alt=""/>
     </section>
 
     <section className="items" >
