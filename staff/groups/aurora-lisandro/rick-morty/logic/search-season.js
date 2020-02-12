@@ -16,9 +16,9 @@ function searchSeason (querySeason, token, callback){
 
         if (_error) return callback(new Error(_error))
 
-        const {favs} = user
+        const {favEpisodes} = user
 
-    })
+    
     
     
     call (`https://rickandmortyapi.com/api/episode/?episode=${querySeason}`, 
@@ -31,10 +31,10 @@ function searchSeason (querySeason, token, callback){
 
                 const {results} = season
 
-                if(typeof favs !== 'undefined'){
+                if(typeof favEpisodes !== 'undefined'){
 
                     results.forEach(episode => {
-                        if(favs.includes(episode.id)) episode.isFav= true
+                        if(favEpisodes.includes(episode.id)) episode.isFav= true
                     })
                 }    
 
@@ -47,7 +47,7 @@ function searchSeason (querySeason, token, callback){
             } else {
                 return callback(new Error('Unkown error'))
             }
-        
+        })
 
     })
 

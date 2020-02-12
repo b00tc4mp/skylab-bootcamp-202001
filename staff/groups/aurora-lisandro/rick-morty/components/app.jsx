@@ -6,7 +6,9 @@ class App extends Component {
         error: undefined,
         characters: undefined,
         episodes: undefined,
-        detail: undefined
+        detail: undefined,
+        favorites: undefined,
+        querySeason: undefined
     }
 
     __handleError__ = (error) => {
@@ -81,7 +83,7 @@ class App extends Component {
                 if (error) this.__handleError__(error)
 
 
-                this.setState({ view: 'episodes', episodes })
+                this.setState({ view: 'episodes', episodes, querySeason })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -148,6 +150,8 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
+    handleGoToFavorites = () => this.setState({view : 'favorites', favorites: undefined})
+
     handleGoToCharacters = () => this.setState({
         view: 'search',
         characters: undefined,
@@ -174,6 +178,15 @@ class App extends Component {
 
                     this.handleOnSubmit(query)
                 })
+            } else if (this.state.episodes){
+                toggleFavoritesEpisodes(token, id, error => {
+                    if (error) this.__handleError__(error)
+
+                    const query = location.search.split('?')[1]
+                        debugger
+
+                    this.handleSearchEpisodes(this.state.querySeason)
+                }) 
             }
         } catch (error) {
             this.__handleError__(error)
@@ -181,12 +194,31 @@ class App extends Component {
     }
 
 
+    handleFavoritesCharacters = () => {
+        const { token } = sessionStorage
+        try {
+            retrieveFavCharacters (token, (error, favorites)=> { 
+                this.setState({ view: 'favorites', favorites })
+            })
+        }catch(error){
+            this.__handleError__(error)
+        }
+    }
+
+    handleFavoritesEpisodes = () => {
+        const { token } = sessionStorage
+        try {
+            retrieveFavEpisodes (token, (error, favorites)=> { 
+                this.setState({ view: 'favorites', favorites })
+            })
+        }catch(error){
+            this.__handleError__(error)
+        }    
+    }
 
 
     render() {
-        const {
-
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick } = this
+        const {props: { title }, state: { view, episodes, error, characters, detail, favorites }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, handleFavoritesEpisodes} = this
 
         return <main className='app'>
 
@@ -194,7 +226,7 @@ class App extends Component {
                 onLogout={handleLogout}
                 onToCharacters={handleGoToCharacters}
                 onToEpisodes={handleGoToEpisodes}
-                onToFavs={() => console.log('onToFavs')}
+                onToFavs={handleGoToFavorites}
                 onToProfile={() => { console.log('profile') }} />}
 
             <h1>{title}</h1>
@@ -216,6 +248,10 @@ class App extends Component {
             {view === 'detailEpisode' && <DetailsEpisode item={detail} />}
 
             {view === 'detail' && <Details item={detail} />}
+
+            {view === 'favorites' && !favorites && <Favorites onToFavCharacters ={handleFavoritesCharacters} onToFavEpisodes ={handleFavoritesEpisodes}/>}
+
+            {view === 'favorites' && favorites && <Results results={favorites} />}
 
         </main >
     }
