@@ -1,13 +1,13 @@
 @import variables
 .footer
-    position: fixed
-    bottom: 0
+
     z-index: 1000
     width: 100%
     height: $heigth-footer 
     display: grid
     grid-template: auto auto auto auto / auto
     margin: 0
+    border-top: 1px solid #c7c7c7
     
     &__nav
         margin: 0 auto
@@ -16,7 +16,7 @@
         flex-direction: column
         justify-content: space-between
         align-items: center
-        background-color: #272727
+        background-color: #383838
         color: white
         width: 100%
 
@@ -55,7 +55,7 @@
     p
         grid-area: 4 / 1 / span 1 / span 1
         color: white
-        background-color: #272727
+        background-color: #383838
         text-align: center
         margin: 0
         width: 100%
@@ -82,3 +82,8 @@
             grid-area: 2 / 1 / span 1 / span 1
             text-align: right
                 
+
+@media ( max-width: 698px )
+    .footer
+        position: fixed
+        bottom: 0
