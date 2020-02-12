@@ -1,4 +1,4 @@
-describe('Register user', function () {
+describe('Register user', () => {
   let name, surname, phone, email, username, password
 
   beforeEach(() => {
@@ -36,6 +36,46 @@ describe('Register user', function () {
         done()
       })
     })
-  })
 
+    it('Should fail when same user exist', done => {
+      registerUser({name, surname, phone, email, username, password}, (error, response) => {
+        expect(error).toBeDefined()
+        expect(error.message).toBe(`user with username "${username}" already exists`)
+        expect(response).toBeUndefined()
+        done()
+      })
+    })
+
+    afterEach(done => {
+      call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        }, (error, response) => {
+            if (error) return done(error)
+
+            const { error: _error, token } = JSON.parse(response.content)
+
+            if (_error) return done(new Error(_error))
+
+            call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            }, (error, response) => {
+                if (error) return done(error)
+
+                if (response.content) {
+                    const { error } = JSON.parse(response.content)
+
+                    if (error) return done(new Error(error))
+                }
+            })
+        })
+    })
+  })
 })
+
