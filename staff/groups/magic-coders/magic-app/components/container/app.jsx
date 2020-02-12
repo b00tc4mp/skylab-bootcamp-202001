@@ -132,11 +132,7 @@ handleGoToLogin = () => this.setState({view: "login"})
     this.setState({ search: { ...search, [property]: stringColors } })
   }
 
-  handleDetail = id => {
-      retrieveCard(id, (error, card)=> {
-          this.setState({card, view:'detail'})
-      })
-  }
+  handleDetail = card => this.setState({card, view:'detail'})
 
   handleSidebar = () => this.setState({sidebar: !this.state.sidebar})
 
@@ -190,6 +186,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
  
   render() {
+
     const {
       state: { card, cards, cardsSold, cardsToSale, language, error, sidebar, user, users, view, viewProfile},
 
@@ -233,13 +230,6 @@ handleGoToLogin = () => this.setState({view: "login"})
             <Colors onChange={handleCheckbox} property="colors" />
             <Search onSubmit={handleSearch} title="Name Card" error={error} />
           </div>}
-
-          {view === 'landing' && cards.length > 0 && (
-            <div>
-              <Button padding="3px 6px" value={undefined} onClick={handleLanguage} >
-              </Button>{languages.map(value => <Button padding="2px 5px" value={value} onClick={handleLanguage}> {value}</Button>)}
-            </div>
-          )}
 
           {view === 'detail' && <Detail card={card} onTo={onToComponent} addToSale={addToSale} user={user} />}
           {(view === 'search' && !cards.length) && <div className="results-nocards" error={error}></div>}

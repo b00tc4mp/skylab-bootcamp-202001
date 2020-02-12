@@ -14,11 +14,14 @@ function addCardToSale(card, token, callback) {
         //Logic
         let {toSale} = user
         const {multiverseid} = card
+        console.log(multiverseid)
 
         if (!toSale)
             toSale = [card]
         else
-            toSale.some(card => card.id === multiverseid) ? '' : toSale.push(card)
+            toSale.some(card => card.multiverseid === multiverseid) ? '' : toSale.push(card)
+
+        console.log(toSale)
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
