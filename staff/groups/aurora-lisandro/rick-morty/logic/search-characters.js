@@ -1,9 +1,8 @@
 function searchCharacters(query, token, callback) {
-    if (typeof query !== 'object') throw new TypeError(`query ${query} is not an object`)
+    if (typeof query !== 'string') throw new TypeError(`query ${query} is not a string`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
 
-    const queryString = createQuery(query)
     call('https://skylabcoders.herokuapp.com/api/v2/users/', {
         method: 'GET',
         headers: {
@@ -13,12 +12,12 @@ function searchCharacters(query, token, callback) {
     }, (error, response) => {
         if (error) return callback(error)
 
-        const { error: _error, favs } = JSON.parse(response.content)
+        const { error: _error, favCharacters } = JSON.parse(response.content)
 
         if (_error) return callback(new Error(_error))
 
 
-        call(`https://rickandmortyapi.com/api/character/?${queryString}`, undefined, (error, response) => {
+        call(`https://rickandmortyapi.com/api/character/?${query}`, undefined, (error, response) => {
 
             if (error) return callback(error)
 
@@ -28,9 +27,9 @@ function searchCharacters(query, token, callback) {
                 const content = JSON.parse(response.content)
                 const { results } = content
 
-                if (favs) {
+                if (favCharacters) {
                     results.forEach(character => {
-                        if (favs.includes(character.id)) character.isFav = true
+                        if (favCharacters.includes(character.id)) character.isFav = true
                     })
                 }
 

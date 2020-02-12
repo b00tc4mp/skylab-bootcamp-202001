@@ -2,6 +2,7 @@ const { Component } = React
 class App extends Component {
     state = {
         view: 'login',
+        user: undefined,
         error: undefined,
         characters: undefined,
         episodes: undefined,
@@ -15,6 +16,34 @@ class App extends Component {
             this.setState({ error: undefined })
         }, 3000)
     }
+
+
+    componentWillMount() {
+        const { token } = sessionStorage
+
+        if (token)
+            retrieveUser(token, (error, user) => {
+                if (error)
+                    return this.setState({ error: error.message })
+
+                if (location.search) {
+                    const query = location.search.split('?')[1]
+
+                    searchCharacters(query, token, (error, response) => {
+                        if (error)
+                            this.setState({ error: error.message })
+
+                        const { results: characters } = response
+
+                        this.setState({ view: 'search', characters })
+
+                    })
+                } else
+                    this.setState({ view: 'landing', user })
+            })
+        else this.setState({ view: 'login' })
+    }
+
 
     handleLogin = (username, password) => {
         try {
@@ -51,6 +80,7 @@ class App extends Component {
             searchSeason(querySeason, token, (error, episodes) => {
                 if (error) this.__handleError__(error)
 
+
                 this.setState({ view: 'episodes', episodes })
             })
         } catch (error) {
@@ -65,6 +95,8 @@ class App extends Component {
 
             searchCharacters(query, token, (error, response) => {
                 if (error) return this.__handleError__(error)
+
+                setUrl(query)
 
                 const { results } = response
                 this.setState({ view: 'search', characters: results })
@@ -130,13 +162,31 @@ class App extends Component {
         detail: undefined
     })
 
+    handleFavClick = id => {
+        const { token } = sessionStorage
+        try {
+            if (this.state.characters) {
+
+                toggleFavoritesCharacters(token, id, error => {
+                    if (error) this.__handleError__(error)
+
+                    const query = location.search.split('?')[1]
+
+                    this.handleOnSubmit(query)
+                })
+            }
+        } catch (error) {
+            this.__handleError__(error)
+        }
+    }
+
 
 
 
     render() {
         const {
 
-            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick } = this
+            props: { title }, state: { view, episodes, error, characters, detail }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick } = this
 
         return <main className='app'>
 
@@ -157,11 +207,11 @@ class App extends Component {
 
             {view === 'search' && <CharacterSearch onSubmit={handleOnSubmit} warning={error} />}
 
-            {view === 'search' && characters && <Results results={characters} onItemFavClick={() => { console.log('fav') }} handleClick={handleCharacterClick} />}
+            {view === 'search' && characters && <Results results={characters} onItemFavClick={handleFavClick} handleClick={handleCharacterClick} />}
 
             {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
 
-            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} />}
+            {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} onItemFavClick={handleFavClick} />}
 
             {view === 'detailEpisode' && <DetailsEpisode item={detail} />}
 

@@ -3,8 +3,7 @@ function setUrl(query) {
 
     let url = `${protocol}//${host}${pathname}`
 
-    query ? url = `${url}?q=${query}` : url
-
+    query ? url = `${url}?${query}` : url
 
     history.pushState({ path: url }, '', url)
 

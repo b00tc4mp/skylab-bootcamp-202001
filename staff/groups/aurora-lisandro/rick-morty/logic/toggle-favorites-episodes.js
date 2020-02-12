@@ -1,4 +1,4 @@
-function toggleFavoritesCharacters(token, id, callback) {
+function toggleFavoritesEpisodes(token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
@@ -19,17 +19,17 @@ function toggleFavoritesCharacters(token, id, callback) {
 
         if (response.content) {
             const user = JSON.parse(response.content)
-            const { error, favCharacters = [] } = user
+            const { error, favEpisodes = [] } = user
 
             if (error) return callback(new Error(error))
 
-            favCharacters.toggle(id)
+            favEpisodes.toggle(id)
 
 
             call('https://skylabcoders.herokuapp.com/api/v2/users/', {
                 method: 'PATCH',
                 headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
-                body: JSON.stringify({ favCharacters })
+                body: JSON.stringify({ favEpisodes })
             },
                 (error, response) => {
                     if (error) return callback(error)
