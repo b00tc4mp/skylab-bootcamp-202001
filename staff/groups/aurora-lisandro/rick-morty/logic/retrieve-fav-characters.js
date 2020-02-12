@@ -1,4 +1,4 @@
-function retrieveFavCharacters(token, callback) {
+function retrieveFavCharacters(token, callback) { debugger
     if (typeof token !== 'string') throw new Error(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new Error(`callback ${callback} is not a function`)
 
@@ -23,10 +23,16 @@ function retrieveFavCharacters(token, callback) {
             if (error) return callback(error)
 
             if (response.content) {
-                const results = JSON.parse(response.content)
+                let results = JSON.parse(response.content)
                 const { error } = results
 
                 if (error) return callback(new Error(error))
+                
+                if(!(results instanceof Array)) {
+                    results = [results]   
+                }
+
+                results.map(character => character.isFav = true)
 
                 callback(undefined, results)
 
