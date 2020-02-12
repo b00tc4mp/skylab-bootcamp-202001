@@ -35,6 +35,14 @@
   margin: 0.5rem;
   outline: none;
 }
+.search button:hover {
+  background-color: #be630e;
+  transition: all 200ms ease-in;
+  transform: scale(1.15);
+  cursor: pointer;
+  color: white;
+  border: 1px solid white;
+}
 
 .login {
   display: flex;

@@ -6,7 +6,7 @@ function Search({title, onSubmit, error}){
 
         <Input name="query" placeholder="" required={false}/>
         {error && <P>{error}</P>}
-        <Button>Search</Button>
+        <Button className="button--pressed">Search</Button>
         
         { error && <Feedback message={error.message} /> }
     </Form>)
