@@ -1,6 +1,6 @@
 function retrieveCardsSales(token, callback) {
-    // if (!(cards instanceof Array)) throw new TypeError(cards.constructor.name + ' is not an Array')
-    // if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
+    if (typeof token !== 'string') throw new TypeError(token + ' is not string')
+    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users/all`,
       {method: "GET", headers: {
