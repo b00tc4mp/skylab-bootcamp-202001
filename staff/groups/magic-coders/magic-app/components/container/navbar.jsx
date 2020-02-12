@@ -9,8 +9,8 @@ function Navbar({sidebar, toggleSidebar, logout, onTo, user, onToProfile}) {
 
     <section className="items" >
       <ul>
-        <li onClick={() => onTo('search')}>SEARCH</li>
-        <li onClick={() => onTo('forsale')}>FOR SALE</li>
+        <li onClick={() => onTo('search')}><a> SEARCH</a></li>
+        <li onClick={() => onTo('forsale')}><a>FOR SALE</a></li>
       </ul>
     </section>
 
