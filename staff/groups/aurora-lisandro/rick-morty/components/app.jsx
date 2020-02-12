@@ -74,16 +74,16 @@ class App extends Component {
         }
     }
 
-    handleEpisodeClick = (id) => { //TODO
-        // try {
-        //     retrieveEpisode(id, (error, detail) => {
-        //         if (error) console.log(error)
+    handleEpisodeClick = (id) => { debugger
+        try {
+            retrieveEpisode(id, (error, detail) => {
+                if (error) console.log(error)
 
-        //         this.setState({ view: 'detail', detail })
-        //     })
-        // } catch (error) {
-        //     this.__handleError__(error)
-        // }
+                this.setState({ view: 'detailEpisode', detail })
+            })
+        } catch (error) {
+            this.__handleError__(error)
+        }
     }
 
     handleCharacterClick = (id) => {
@@ -135,6 +135,8 @@ class App extends Component {
             {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
 
             {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} />}
+
+            {view === 'detailEpisode' && <DetailsEpisode item={detail} />}
 
             {view === 'detail' && <Details item={detail} />}
 
