@@ -6,11 +6,12 @@ class App extends Component {
         error: undefined,
         characters: undefined,
         episodes: undefined,
-        detail: undefined
+        detail: undefined,
+        query: undefined
     }
 
     __handleError__ = (error) => {
-        this.setState({ error: error.message, characters: undefined })
+        this.setState({ error: error.message, characters: undefined, episodes: undefined })
 
         setTimeout(() => {
             this.setState({ error: undefined })
@@ -89,14 +90,14 @@ class App extends Component {
 
     }
 
-    handleOnSubmit = query => {
+    handleOnSubmit = (queryString, query) => {
         try {
             const { token } = sessionStorage
 
-            searchCharacters(query, token, (error, response) => {
+            searchCharacters(queryString, token, (error, response) => {
                 if (error) return this.__handleError__(error)
 
-                setUrl(query)
+                this.setState({ query })
 
                 const { results } = response
                 this.setState({ view: 'search', characters: results })
