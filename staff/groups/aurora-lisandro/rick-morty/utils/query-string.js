@@ -1,17 +1,17 @@
-function createQuery (query){
+function createQueryString(query) {
     let qs = ''
 
     const keys = Object.keys(query)
 
-    for (let i = 0; i < keys.length; i++) {  
+    for (let i = 0; i < keys.length; i++) {
         const key = keys[i]
 
-        if (query[key]!== ""){
+        if (query[key] !== "") {
 
             qs += `${key}=${query[key]}&`
         }
     }
-    return qs.substring(0, qs.length-1)
+    return qs.substring(0, qs.length - 1)
 }
 
 
