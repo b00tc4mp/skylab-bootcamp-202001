@@ -1,4 +1,4 @@
-function retrieveUser(token, callback) {
+function __retrieveUser__(token, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
 
     const [header, payload, signature] = token.split('.')
@@ -23,9 +23,7 @@ function retrieveUser(token, callback) {
 
             if (error) return callback(new Error(error))
 
-            const { name, surname, username } = data
-
-            callback(undefined, { name, surname, username })
+            callback(undefined, data)
         }
     })
 

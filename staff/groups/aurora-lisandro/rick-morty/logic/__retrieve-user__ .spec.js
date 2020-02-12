@@ -1,11 +1,13 @@
-describe('retrieveUser', () => {
-    let name, surname, username, password, appTag, token
+describe('__retrieveUser__', () => {
+    let name, surname, username, password, appTag, token, favEpisodes, favCharacters
 
     beforeEach(() => {
         name = `name-${Math.random()}`
         surnname = `surnname-${Math.random()}`
         username = `username-${Math.random()}`
         password = `password-${Math.random()}`
+        favEpisodes = [Math.random(), Math.random(), Math.random()]
+        favCharacters = [Math.random(), Math.random(), Math.random()]
         appTag = 'Rick1.0'
     })
 
@@ -19,6 +21,8 @@ describe('retrieveUser', () => {
                     surname,
                     username,
                     password,
+                    favCharacters,
+                    favEpisodes,
                     appTag
                 })
             }, (error, response) => {
@@ -58,6 +62,13 @@ describe('retrieveUser', () => {
                 expect(user.surname).toBe(surname)
                 expect(user.username).toBe(username)
                 expect(user.appTag).toBe(appTag)
+                user.favEpisodes.forEach((fav, index) => {
+                    expect(fav).toBe(favEpisodes[index])
+                });
+                user.favCharacters.forEach((fav, index) => {
+                    expect(fav).toBe(favCharacters[index])
+                })
+
                 expect(user.password).toBeUndefined()
 
                 done()
