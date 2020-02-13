@@ -301,7 +301,11 @@ class App extends Component {
 
             {view === 'favorites' && !favorites && <Favorites onToFavCharacters={handleFavoritesCharacters} onToFavEpisodes={handleFavoritesEpisodes} />}
 
-            {view === 'favorite-characters' || view === 'favorite-episodes' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+            {view === 'favorite-characters' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+
+            {view === 'favorite-episodes' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+
+
 
         </main >
     }
