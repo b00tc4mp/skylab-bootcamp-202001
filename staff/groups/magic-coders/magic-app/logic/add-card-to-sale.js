@@ -1,11 +1,10 @@
 /** @function addCardToSale */
 function addCardToSale(card, token, callback) {
-console.log(card)
-debugger
 /**
  * @param {object} card - Contain all properties and values of target card for send data to on sale
  * @param {string} token - Need token to send targeted card to add new property on actual user
- * @param {function} callback - Return error / update successful
+ * @callback - Return error / update successful
+ * @throw - 
  */
 
     if (card.constructor.name !== "Object") throw new TypeError(`card ${card} is not an Object`)
