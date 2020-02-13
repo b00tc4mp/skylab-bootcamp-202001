@@ -21,7 +21,7 @@ class App extends Component {
     }
 
 
-    __hashMap__ = (address) => {
+    __hashMap__ = (address, id) => {
         const hashValues = {
             'login': this.handleOnToLogin,
             'register': this.handleOnToRegister,
@@ -37,7 +37,7 @@ class App extends Component {
             if (address.startsWith(key)) handle = hashValues[key]
         }
 
-        return handle
+        handle()
     }
 
     componentWillMount() {
@@ -77,9 +77,8 @@ class App extends Component {
 
                         this.handleEpisodeClick(id)
                     } else if (address.hash) {
-                        const handle = this.__hashMap__(address.hash)
+                        this.__hashMap__(address.hash)
 
-                        handle()
                     } else {
                         this.setState({ view: 'landing' })
                     }
