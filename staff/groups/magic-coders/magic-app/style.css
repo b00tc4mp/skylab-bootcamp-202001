@@ -720,6 +720,7 @@ table {
   right: 0;
   display: flex;
   justify-content: flex-end;
+  z-index: 99;
 }
 
 .div_fixed {
