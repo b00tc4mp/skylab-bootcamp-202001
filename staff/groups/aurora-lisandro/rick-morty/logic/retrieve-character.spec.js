@@ -59,7 +59,7 @@ describe('retrieve character', () => {
 
         it('should fail on incorrect id', done => {
             id = 7897987549738
-            debugger
+            
             retrieveCharacter(token, id, (error, character) => {
                 expect(error.message).toBe('Character not found')
                 done()

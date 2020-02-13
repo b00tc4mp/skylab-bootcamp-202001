@@ -1,1 +1,1 @@
-ReactDOM.render(<App title="Rick and Morty App" />, document.querySelector('#root'))
+ReactDOM.render(<App title='./images/title.png' />, document.querySelector('#root'))

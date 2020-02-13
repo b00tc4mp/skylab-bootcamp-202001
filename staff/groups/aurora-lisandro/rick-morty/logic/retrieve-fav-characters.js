@@ -1,4 +1,4 @@
-function retrieveFavCharacters(token, callback) { debugger
+function retrieveFavCharacters(token, callback) { 
     if (typeof token !== 'string') throw new Error(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new Error(`callback ${callback} is not a function`)
 

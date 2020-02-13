@@ -183,7 +183,7 @@ class App extends Component {
                     if (error) this.__handleError__(error)
 
                     const query = location.search.split('?')[1]
-                        debugger
+                        
 
                     this.handleSearchEpisodes(this.state.querySeason)
                 }) 
@@ -229,7 +229,7 @@ class App extends Component {
                 onToFavs={handleGoToFavorites}
                 onToProfile={() => { console.log('profile') }} />}
 
-            <h1>{title}</h1>
+            <img className="title"src={title}/>
 
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} error={error} />}
 

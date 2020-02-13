@@ -25,7 +25,7 @@ function retrieveFavEpisodes(token, callback) {
             if (response.content) {
                 let results = JSON.parse(response.content)
                 const { error } = results
-                debugger
+                
                 if (error) return callback(new Error(error))
 
                 if(!(results instanceof Array)) {
