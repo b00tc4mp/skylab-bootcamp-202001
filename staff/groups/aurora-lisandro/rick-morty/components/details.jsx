@@ -1,5 +1,6 @@
 function Details({ item: { id, image, name, status, species, gender, location: { name: locationName } }, onBackButtonClick, onFavClick }) {
-    return <section className="details__card">
+    return <div className="details">    
+    <section className="details__card">
         <div className="details__card-item">
             <img src={image} alt="" className="details__img" />
             <div className="details__card-footer">
@@ -37,4 +38,5 @@ function Details({ item: { id, image, name, status, species, gender, location: {
             </li>
         </ul>
     </section>
+    </div>
 }

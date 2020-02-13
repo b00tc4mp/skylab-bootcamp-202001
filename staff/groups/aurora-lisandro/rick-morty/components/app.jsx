@@ -8,9 +8,7 @@ class App extends Component {
         episodes: undefined,
         detail: undefined,
         favorites: undefined,
-        querySeason: undefined,
         query: undefined
-
     }
 
     __handleError__ = (error) => {
@@ -71,7 +69,12 @@ class App extends Component {
 
                 sessionStorage.token = token
 
-                this.setState({ view: 'landing' })
+                retrieveUser(token, (error, user) => {
+                    if (error)
+                        this.__handleError__(error)
+
+                    this.setState({ view: 'landing', user })
+                })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -167,7 +170,8 @@ class App extends Component {
             characters: undefined,
             episodes: undefined,
             detail: undefined,
-            user: undefined
+            user: undefined,
+            favorites: undefined
         })
     }
 
@@ -207,23 +211,32 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             if (this.state.characters) {
-
                 toggleFavoritesCharacters(token, id, error => {
                     if (error) this.__handleError__(error)
 
-                    const query = location.search.split('?')[1]
-
-                    this.handleOnSubmit(query)
+                    this.handleOnSubmit(this.state.query)
                 })
             } else if (this.state.episodes) {
                 toggleFavoritesEpisodes(token, id, error => {
                     if (error) this.__handleError__(error)
 
-                    const query = location.search.split('?')[1]
-                        
-                    
+
                     this.handleSearchEpisodes(this.state.query)
                 })
+            } else if(this.state.favorites){
+                if(this.state.view === 'favorite-characters'){
+                    toggleFavoritesEpisodes(token, id, error => {
+                        if (error) this.__handleError__(error)
+
+                        this.handleFavoritesCharacters()
+                    })
+                }else if(this.state.view === 'favorite-episodes'){
+                    toggleFavoritesEpisodes(token, id, error => {
+                        if (error) this.__handleError__(error)
+    
+                        this.handleFavoritesEpisodes()
+                    })
+                }
             }
         } catch (error) {
             this.__handleError__(error)
@@ -235,7 +248,7 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             retrieveFavCharacters(token, (error, favorites) => {
-                this.setState({ view: 'favorites', favorites })
+                this.setState({ view: 'favorite-characters', favorites })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -246,7 +259,7 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             retrieveFavEpisodes(token, (error, favorites) => {
-                this.setState({ view: 'favorites', favorites })
+                this.setState({ view: 'favorite-episodes', favorites })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -288,7 +301,11 @@ class App extends Component {
 
             {view === 'favorites' && !favorites && <Favorites onToFavCharacters={handleFavoritesCharacters} onToFavEpisodes={handleFavoritesEpisodes} />}
 
-            {view === 'favorites' && favorites && <Results results={favorites} />}
+            {view === 'favorite-characters' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+
+            {view === 'favorite-episodes' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+
+
 
         </main >
     }
