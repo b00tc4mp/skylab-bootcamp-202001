@@ -1,9 +1,15 @@
 /** @function searchCards */
 function searchCards(query, callback) {
+
 /**
  * @param {object} query - Query, contains all filters added and query for the search
  * @param {function} callback - Return error / cards 
  */
+
+  if (!(query instanceof Object)) throw new TypeError(`${query} is not an object`)
+  if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+ 
+  address.search = query
 
   let string = ''
   let keys = Object.keys(query)

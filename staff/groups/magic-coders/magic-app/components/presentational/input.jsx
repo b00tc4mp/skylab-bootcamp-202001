@@ -1,7 +1,7 @@
 function Input(props) {
   
   return <input type={props.type} name={props.name} placeholder={props.placeholder} 
-    autoComplete={props.autoComplete} required={props.required}/>
+    autoComplete={props.autoComplete} required={props.required} defaultValue={props.defaultValue} />
 }
 
 Input.defaultProps = {
@@ -9,5 +9,6 @@ Input.defaultProps = {
   placeholder: 'type...',
   type: 'text',
   autoComplete: 'off',
-  required: true
+  required: true,
+  defaultValue: ''
 }

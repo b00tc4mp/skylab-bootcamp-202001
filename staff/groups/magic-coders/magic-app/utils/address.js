@@ -1,63 +1,64 @@
 const address = {
-  set search(query) {
-      const { protocol, host, pathname } = location
+    set search(query) {
 
-      let url = `${protocol}//${host}${pathname}`, keys
+        const { protocol, host, pathname } = location
 
-      if (query && (keys = Object.keys(query)).length) {
-          let queryString = '?'
+        let url = `${protocol}//${host}${pathname}`, keys
 
-          for (let i = 0; i < keys.length; i++) {
-              const key = keys[i]
+        if (query && (keys = Object.keys(query)).length) {
+            let queryString = '?'
 
-              queryString += `${key}=${query[key]}`
+            for (let i = 0; i < keys.length; i++) {
+                const key = keys[i]
 
-              if (i < keys.length - 1) queryString += '&'
-          }
+                queryString += `${key}=${query[key]}`
 
-          url += queryString
-      }
+                if (i < keys.length - 1) queryString += '&'
+            }
 
-      history.pushState({ path: url }, '', url)
-  },
+            url += queryString
+        }
 
-  get search() {
-      const query = {}
+        history.pushState(undefined, undefined, url)
+    },
 
-      const { search } = location
+    get search() {
+        const query = {}
 
-      if (search.startsWith('?')) {
-          const keyValues = search.substring(1).split('&')
+        const { search } = location
 
-          keyValues.forEach(keyValue => {
-              const [key, value] = keyValue.split('=')
+        if (search.startsWith('?')) {
+            const keyValues = search.substring(1).split('&')
 
-              query[key] = decodeURI(value)
-          })
-      }
+            keyValues.forEach(keyValue => {
+                const [key, value] = keyValue.split('=')
 
-      return query
-  },
+                query[key] = decodeURI(value)
+            })
+        }
+        console.log(query)
+        return query
+    },
 
-  set hash(hash = '') {
-      const { protocol, host, pathname } = location
+    set hash(hash = '') {
+        const { protocol, host, pathname } = location
 
-      let url = `${protocol}//${host}${pathname}${hash ? `#${hash}` : ''}`
+        let url = `${protocol}//${host}${pathname}${hash ? `#${hash}` : ''}`
 
-      history.pushState({ path: url }, '', url)
-  },
+        history.pushState(undefined, undefined, url)
+    },
 
-  get hash() {
-      const { hash } = location
+    get hash() {
+        const { hash } = location
 
-      return hash.startsWith('#') ? hash.substring(1) : ''
-  },
+        return hash.startsWith('#') ? hash.substring(1) : ''
+    },
 
-  clear() {
-      const { protocol, host, pathname } = location
+    clear() {
+        const { protocol, host, pathname } = location
 
-      let url = `${protocol}//${host}${pathname}`
+        let url = `${protocol}//${host}${pathname}`
 
-      history.pushState({ path: url }, '', url)
-  }
+        history.pushState(undefined, undefined, url)
+    }
 }
