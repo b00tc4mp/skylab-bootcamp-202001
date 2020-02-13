@@ -172,7 +172,8 @@ class App extends Component {
             episodes: undefined,
             detail: undefined,
             user: undefined,
-            favorites: undefined
+            favorites: undefined,
+            query: undefined
         })
     }
 
@@ -182,7 +183,7 @@ class App extends Component {
 
     handleGoToFavorites = () => {
         address.clear()
-        this.setState({ view: 'favorites', favorites: undefined })
+        this.setState({ view: 'favorites', favorites: undefined, characters: undefined, episodes: undefined, query: undefined })
     }
 
     handleGoToCharacters = () => {
@@ -226,7 +227,7 @@ class App extends Component {
                 })
             } else if (this.state.favorites) {
                 if (this.state.view === 'favorite-characters') {
-                    toggleFavoritesEpisodes(token, id, error => {
+                    toggleFavoritesCharacters(token, id, error => {
                         if (error) this.__handleError__(error)
 
                         this.handleFavoritesCharacters()
@@ -248,7 +249,10 @@ class App extends Component {
     handleFavoritesCharacters = () => {
         const { token } = sessionStorage
         try {
+
             retrieveFavCharacters(token, (error, favorites) => {
+                if (error) return this.__handleError__(error)
+
                 this.setState({ view: 'favorite-characters', favorites })
             })
         } catch (error) {
