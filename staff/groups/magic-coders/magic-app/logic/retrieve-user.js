@@ -1,4 +1,10 @@
+/** @function retrieveUser */
 function retrieveUser(token, callback) {
+/**
+ * @param {string} token - It's required for get authorization in call
+ * @param {function} callback - Return error / user
+ */
+
     if (typeof token !== 'string') throw new TypeError(token + ' is not a string');
     const [header, payload, signature] = token.split('.')
     if (!header || !payload || !signature) throw new Error('invalid token')

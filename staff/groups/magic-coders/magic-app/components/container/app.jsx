@@ -208,11 +208,7 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleCardSold,
       logout,
       onToComponent
-    } = this
-
-
-    console.log(this.state);
-    
+    } = this    
 
     return (
       <Fragment>

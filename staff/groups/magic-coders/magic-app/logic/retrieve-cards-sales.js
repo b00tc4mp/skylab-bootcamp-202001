@@ -1,4 +1,9 @@
+/** @function retrieveCardsSales */
 function retrieveCardsSales(token, callback) {
+  /**
+   * @param {string} token - It's required for get authorization in call for return users
+   * @param {function} callback - Return error / cards in to sale and users
+   */
     if (typeof token !== 'string') throw new TypeError(token + ' is not string')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 

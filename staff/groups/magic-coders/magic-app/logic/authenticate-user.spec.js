@@ -1,4 +1,4 @@
-describe('authenticateUser', function () {
+describe('Authenticate User', function () {
     let name, surname, phone, email, username, password
 
     beforeEach(() => {

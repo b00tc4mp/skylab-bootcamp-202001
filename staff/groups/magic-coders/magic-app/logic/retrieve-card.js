@@ -1,4 +1,9 @@
+/** @function retrieveCard */
 function retrieveCard(id, callback) {
+/**
+ * @param {string} id - It's required for concatenate id card to query
+ * @param {function} callback - Return error / card
+ */
     if (typeof id !== 'number') throw new TypeError(id + ' is not a string')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 

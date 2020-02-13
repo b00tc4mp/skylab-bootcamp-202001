@@ -1,4 +1,14 @@
+/** @function resgisterUser */
 function registerUser({name, surname, phone, email, username, password}, callback) {
+    /**
+     * @param {string} name - Name of user
+     * @param {string} surname - Surname of user
+     * @param {number} phone - Telephone number of user
+     * @param {string} email - Email of user
+     * @param {string} username - User name of user
+     * @param {string} password - Password of user
+     * @param {function} callback - Return error / user registered
+     */
     if (typeof name !== 'string') throw new TypeError('name ' + name + ' is not a string');
     if (!name.trim()) throw new Error('name is empty');
     if (typeof surname !== 'string') throw new TypeError('surname ' + surname + ' is not a string');

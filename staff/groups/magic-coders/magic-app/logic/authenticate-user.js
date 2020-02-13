@@ -1,4 +1,10 @@
+/** @function authenticateUser */
 function authenticateUser(username, password, callback) {
+  /**
+   * @param {string} username - Username of user
+   * @param {string} password - Password of user
+   * @param {function} callback - Return error / user and token
+   */
   if (!username.trim()) throw new Error("username is empty")
   if (!password.trim()) throw new Error("password is empty")
   if (typeof username !== "string")
