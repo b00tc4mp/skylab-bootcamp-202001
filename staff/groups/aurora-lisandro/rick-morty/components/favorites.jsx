@@ -7,7 +7,7 @@ function Favorites ({onToFavCharacters, onToFavEpisodes, error }) {
 
             onToFavCharacters()
         }}>
-            <h3>Characters</h3>
+            <h3 className="favorites__section">Characters</h3>
             <img src="./images/characters.png" className="favorites__img" />
         </article>
         <article className="favorites__episodes" onClick={(event) => {
@@ -15,7 +15,7 @@ function Favorites ({onToFavCharacters, onToFavEpisodes, error }) {
 
             onToFavEpisodes()
         }}>
-            <h3>Episodes</h3>
+            <h3 className="favorites__section">Episodes</h3>
             <img src="./images/episodes.png" className="favorites__img" />
         </article>
 

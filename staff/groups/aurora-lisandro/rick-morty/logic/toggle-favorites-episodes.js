@@ -20,7 +20,7 @@ function toggleFavoritesEpisodes(token, id, callback) {
         if (response.content) {
             const user = JSON.parse(response.content)
             let { error, favEpisodes = [] } = user
-            debugger
+            
             if (error) return callback(new Error(error))
 
             if (!favEpisodes.length ) { //cambio
