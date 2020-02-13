@@ -46,8 +46,8 @@ describe('retrieve character', () => {
             retrieveCharacter(token, id, (error, character) => {
                 expect(error).toBeUndefined()
                 expect(character).toBeDefined()
-                expect(typeof id).toBe('number')
-                expect(typeof character.id).toBe(id)
+                expect(typeof character.id).toBe('number')
+                expect(character.id).toBe(id)
                 expect(typeof character.name).toBe('string')
                 expect(typeof character.status).toBe('string')
                 expect(typeof character.species).toBe('string')
@@ -59,7 +59,7 @@ describe('retrieve character', () => {
 
         it('should fail on incorrect id', done => {
             id = 7897987549738
-            
+
             retrieveCharacter(token, id, (error, character) => {
                 expect(error.message).toBe('Character not found')
                 done()

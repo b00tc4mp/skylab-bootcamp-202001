@@ -77,7 +77,7 @@ describe('searchCharacters', () => {
                     expect(typeof character.gender).toBe('string')
                     expect(typeof character.origin).toBe('object')
                     expect(typeof character.location).toBe('object')
-                    // expect(typeof character.isFav).toBeFalsy() TODO
+                    expect(typeof character.isFav).toBeFalsy()
 
 
                     done()
@@ -86,7 +86,7 @@ describe('searchCharacters', () => {
         })
 
         it('should succeed on non-matching query returning error message', done => {
-            searchCharacters('no-existing-charachter', token, error => {
+            searchCharacters({}, token, error => {
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe('There is nothing here')
 
@@ -104,48 +104,48 @@ describe('searchCharacters', () => {
         //         expect(results)
         //     })
         // })
+        it('should fail on non-string query', () => {
+            const query = 1
+            expect(() => {
+                searchCharacters(query, token, () => { })
+            }).toThrowError(TypeError, `query ${query} is not a string`)
+        })
+
+        it('should fail on non-string query', () => {
+            const query = true
+            expect(() => {
+                searchCharacters(query, token, () => { })
+            }).toThrowError(TypeError, `query ${query} is not a string`)
+        })
+
+        it('should fail on non-string query', () => {
+            const query = undefined
+            expect(() => {
+                searchCharacters(query, token, () => { })
+            }).toThrowError(TypeError, `query ${query} is not a string`)
+        })
+
+        it('should fail on non-function callback', () => {
+            const callback = 1
+            expect(() => {
+                searchCharacters(query, token, callback)
+            }).toThrowError(TypeError, `callback ${callback} is not a function`)
+        })
+
+        it('should fail on non-function callback', () => {
+            const callback = true
+            expect(() => {
+                searchCharacters(query, token, callback)
+            }).toThrowError(TypeError, `callback ${callback} is not a function`)
+        })
+
+        it('should fail on non-function callback', () => {
+            const callback = 'function'
+            expect(() => {
+                searchCharacters(query, token, callback)
+            }).toThrowError(TypeError, `callback ${callback} is not a function`)
+        })
     })
 
 
-    it('should fail on non-string query', () => {
-        const query = 1
-        expect(() => {
-            searchCharacters(query, token, () => { })
-        }).toThrowError(TypeError, `query ${query} is not a string`)
-    })
-
-    it('should fail on non-string query', () => {
-        const query = true
-        expect(() => {
-            searchCharacters(query, token, () => { })
-        }).toThrowError(TypeError, `query ${query} is not a string`)
-    })
-
-    it('should fail on non-string query', () => {
-        const query = undefined
-        expect(() => {
-            searchCharacters(query, token, () => { })
-        }).toThrowError(TypeError, `query ${query} is not a string`)
-    })
-
-    it('should fail on non-function callback', () => {
-        const callback = 1
-        expect(() => {
-            searchCharacters(query, token, callback)
-        }).toThrowError(TypeError, `callback ${callback} is not a function`)
-    })
-
-    it('should fail on non-function callback', () => {
-        const callback = true
-        expect(() => {
-            searchCharacters(query, token, callback)
-        }).toThrowError(TypeError, `callback ${callback} is not a function`)
-    })
-
-    it('should fail on non-function callback', () => {
-        const callback = 'function'
-        expect(() => {
-            searchCharacters(query, token, callback)
-        }).toThrowError(TypeError, `callback ${callback} is not a function`)
-    })
 })

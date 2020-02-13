@@ -1,4 +1,4 @@
-fdescribe('retrieveUser', () => {
+describe('retrieveUser', () => {
     let name, surname, username, password, appTag, token
 
     beforeEach(() => {

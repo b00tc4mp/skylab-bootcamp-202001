@@ -45,12 +45,12 @@ class App extends Component {
 
                         this.handleSearchEpisodes(this.state.query.season)
                     } else if (address.hash && address.hash.startsWith('character/')) {
-                        const [, id] = address.hash.split('/')
-
+                        let [, id] = address.hash.split('/')
+                        id = parseInt(id)
                         this.handleCharacterClick(id)
                     } else if (address.hash && address.hash.startsWith('episode/')) {
-                        const [, id] = address.hash.split('/')
-
+                        let [, id] = address.hash.split('/')
+                        id = parseInt(id)
                         this.handleEpisodeClick(id)
                     } else {
                         this.setState({ view: 'landing' })
@@ -119,12 +119,12 @@ class App extends Component {
         try {
             const { token } = sessionStorage
 
+            address.search = query
             this.setState({ query })
 
+            query = createQueryString(query)
             searchCharacters(query, token, (error, response) => {
                 if (error) return this.__handleError__(error)
-
-                address.search = query
 
                 const { results } = response
                 this.setState({ view: 'search', characters: results, query })
@@ -150,6 +150,7 @@ class App extends Component {
 
     handleCharacterClick = (id) => {
         try {
+            console.log(typeof id)
             const { token } = sessionStorage
             retrieveCharacter(token, id, (error, detail) => {
                 if (error) console.log(error)
