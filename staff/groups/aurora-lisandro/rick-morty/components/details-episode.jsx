@@ -1,4 +1,4 @@
-function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
+function DetailsEpisode({ item: { name, air_date, episode, characters }, error }) {
     return <div className="details">  
     <section className="details__card">
 
