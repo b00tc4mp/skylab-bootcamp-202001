@@ -110,6 +110,23 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   padding-right: 0.5rem;
 }
 
+@media (min-width: 768px) {
+  .nav {
+    width: 100%;
+  }
+  .nav__options {
+    display: flex;
+    flex-direction: row;
+    top: 0;
+    height: 0;
+  }
+  .nav__menu {
+    display: none;
+  }
+  .nav__user {
+    visibility: hidden;
+  }
+}
 .register {
   justify-content: space-evenly;
   width: 60%;
@@ -133,6 +150,11 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   color: #2a7886;
 }
 
+@media (min-width: 768px) {
+  .register {
+    width: 35%;
+  }
+}
 .results {
   padding: 0;
   width: 90%;
@@ -173,6 +195,11 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   color: #2a7886;
 }
 
+@media (min-width: 768px) {
+  .login {
+    width: 35%;
+  }
+}
 .details {
   width: 90%;
   margin-top: 0.5rem;
