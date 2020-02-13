@@ -1,4 +1,5 @@
 function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
+
     return <section className="details__card">
         {/* <div className ="details__card-item"> */}
 

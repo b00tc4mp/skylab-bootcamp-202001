@@ -1,5 +1,10 @@
 function Details({ item: { id, image, name, status, species, gender, location: { name: locationName } }, onBackButtonClick, onFavClick }) {
-    return <div className="details">    
+    return <div className="details">   
+    <a className="back-button" onClick={()=>{
+        event.preventDefault()
+
+        onBackButtonClick()
+    }}><i className="fas fa-long-arrow-alt-left"></i></a> 
     <section className="details__card">
         <div className="details__card-item">
             <img src={image} alt="" className="details__img" />
