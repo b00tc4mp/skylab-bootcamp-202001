@@ -6,7 +6,7 @@ function Landing({ onToCharacterSearch, onToEpisodeSearch }) {
 
             onToCharacterSearch()
         }}>
-            <h3>Find crazy characters</h3>
+            <h3 className="landing__section">Find crazy characters</h3>
             <img src="./images/characters.png" className="landing__img" />
         </article>
         <article className="landing__episodes" onClick={(event) => {
@@ -14,7 +14,7 @@ function Landing({ onToCharacterSearch, onToEpisodeSearch }) {
 
             onToEpisodeSearch()
         }}>
-            <h3>Find great episodes</h3>
+            <h3 className="landing__section">Find great episodes</h3>
             <img src="./images/episodes.png" className="landing__img" />
         </article>
     </div>

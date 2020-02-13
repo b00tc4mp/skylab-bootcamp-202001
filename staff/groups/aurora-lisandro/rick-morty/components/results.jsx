@@ -1,4 +1,5 @@
 function Results({ results, handleClick, onItemFavClick }) {
+    
     return <section className="results">
         <h3 className="results__title">Your search results</h3>
 
