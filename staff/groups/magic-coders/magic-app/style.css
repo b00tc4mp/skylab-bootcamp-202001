@@ -657,6 +657,7 @@ table {
   background: radial-gradient(circle, #fff 35%, #383838 100%);
 }
 .main-container__forsale {
+  min-height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -840,8 +841,6 @@ table {
   padding: 0.75em;
 }
 .profile__content {
-  background-color: white;
-  min-height: 55vh;
   display: flex;
   justify-content: center;
   align-items: center;
