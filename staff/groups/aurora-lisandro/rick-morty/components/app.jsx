@@ -280,7 +280,6 @@ class App extends Component {
     }
 
     handleBackToResults = () => {
-        debugger
         if (address.hash.startsWith('episode/')) {
             this.handleSearchEpisodes(this.state.season)
         } else if (address.hash.startsWith('character/')) {
@@ -300,9 +299,9 @@ class App extends Component {
                 onToFavs={handleGoToFavorites}
                 onToProfile={() => { console.log('profile') }} />}
 
-            {view ==='login' && <img className="title"src={title}/>}
+            {view === 'login' && <img className="title" src={title} />}
 
-            {view === 'register' && <img className="title"src={title}/>}
+            {view === 'register' && <img className="title" src={title} />}
 
 
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} error={error} />}
