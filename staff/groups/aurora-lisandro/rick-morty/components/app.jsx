@@ -21,20 +21,20 @@ class App extends Component {
     }
 
 
-    hashMap = (address) => {
+    __hashMap__ = (address) => {
         const hashValues = {
             'login': this.handleOnToLogin,
             'register': this.handleOnToRegister,
             'favorite-characters': this.handleFavoritesCharacters,
             'favorite-episodes': this.handleFavoritesEpisodes,
             'search': this.handleGoToCharacters,
-            'seasons': this.handleGoToCharacters,
+            'seasons': this.handleGoToCharacters
         }
 
         let handle
 
         for (const key in hashValues) {
-            if (key === address) handle = hashValues[key]
+            if (address.startsWith(key)) handle = hashValues[key]
         }
 
         return handle
@@ -66,15 +66,18 @@ class App extends Component {
                         this.handleSearchEpisodes(this.state.query.season)
                     } else if (address.hash && address.hash.startsWith('character/')) {
                         let [, id] = address.hash.split('/')
+
                         id = parseInt(id)
+
                         this.handleCharacterClick(id)
                     } else if (address.hash && address.hash.startsWith('episode/')) {
                         let [, id] = address.hash.split('/')
+
                         id = parseInt(id)
+
                         this.handleEpisodeClick(id)
                     } else if (address.hash) {
-
-                        const handle = this.hashMap(address.hash)
+                        const handle = this.__hashMap__(address.hash)
 
                         handle()
                     } else {
