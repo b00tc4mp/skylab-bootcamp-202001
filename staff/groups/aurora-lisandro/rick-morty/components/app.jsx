@@ -1,7 +1,7 @@
 const { Component } = React
 class App extends Component {
     state = {
-        view: 'login',
+        view: undefined,
         user: undefined,
         error: undefined,
         characters: undefined,
@@ -30,7 +30,7 @@ class App extends Component {
                     if (error)
                         this.handleLogout()
 
-                    this.setState({ view: 'landing', user })
+                    this.setState({ user })
                     if (address.search.gender
                         || address.search.name
                         || address.search.status
@@ -51,6 +51,8 @@ class App extends Component {
                         const [, id] = address.hash.split('/')
 
                         this.handleEpisodeClick(id)
+                    } else {
+                        this.setState({ view: 'landing' })
                     }
                 })
             } catch (error) {
@@ -138,7 +140,7 @@ class App extends Component {
                 if (error) console.log(error)
                 address.hash = `episode/${id}`
 
-                this.setState({ view: 'detailEpisode', detail })
+                this.setState({ view: 'detailEpisode', detail, query: id })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -222,17 +224,17 @@ class App extends Component {
 
                     this.handleSearchEpisodes(this.state.query)
                 })
-            } else if(this.state.favorites){
-                if(this.state.view === 'favorite-characters'){
+            } else if (this.state.favorites) {
+                if (this.state.view === 'favorite-characters') {
                     toggleFavoritesEpisodes(token, id, error => {
                         if (error) this.__handleError__(error)
 
                         this.handleFavoritesCharacters()
                     })
-                }else if(this.state.view === 'favorite-episodes'){
+                } else if (this.state.view === 'favorite-episodes') {
                     toggleFavoritesEpisodes(token, id, error => {
                         if (error) this.__handleError__(error)
-    
+
                         this.handleFavoritesEpisodes()
                     })
                 }
@@ -258,6 +260,8 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             retrieveFavEpisodes(token, (error, favorites) => {
+                if (error) return this.__handleError__(error)
+
                 this.setState({ view: 'favorite-episodes', favorites })
             })
         } catch (error) {
@@ -265,9 +269,16 @@ class App extends Component {
         }
     }
 
+    handleBackToResults = () => {
+        if (address.hash.startsWith('episode/')) {
+            this.handleSearchEpisodes(this.state.query)
+        } else if (address.hash.startsWith('character/')) {
+            this.handleOnSubmit(this.state.query)
+        }
+    }
 
     render() {
-        const { props: { title }, state: { view, episodes, error, characters, detail, favorites }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, handleFavoritesEpisodes } = this
+        const { props: { title }, state: { view, episodes, error, characters, detail, favorites }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, handleFavoritesEpisodes, handleBackToResults } = this
 
         return <main className='app'>
 
@@ -278,7 +289,7 @@ class App extends Component {
                 onToFavs={handleGoToFavorites}
                 onToProfile={() => { console.log('profile') }} />}
 
-            <img className="title"src={title}/>
+            <img className="title" src={title} />
 
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} error={error} />}
 
@@ -294,9 +305,9 @@ class App extends Component {
 
             {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} onItemFavClick={handleFavClick} />}
 
-            {view === 'detailEpisode' && <DetailsEpisode item={detail} />}
+            {view === 'detailEpisode' && <DetailsEpisode item={detail} onBackButtonClick={handleBackToResults} />}
 
-            {view === 'detail' && <Details item={detail} />}
+            {view === 'detail' && <Details item={detail} onBackButtonClick={handleBackToResults} />}
 
             {view === 'favorites' && !favorites && <Favorites onToFavCharacters={handleFavoritesCharacters} onToFavEpisodes={handleFavoritesEpisodes} />}
 
