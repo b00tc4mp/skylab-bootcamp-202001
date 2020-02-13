@@ -1,3 +1,4 @@
+
 function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
     return <div className="details">  
     <section className="details__card">
@@ -11,6 +12,7 @@ function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
                     onFavClick(id)
                 }}></i>} 
                 {!isFav<i className="fas fa-heart" onClick={()}></i>}*/}
+
         {/* </div> */}
         {/* </div> */}
         <div className ="details__list-container">
@@ -34,5 +36,6 @@ function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
             </li>
         </ul>
     </section>
+
     </div>
 }
