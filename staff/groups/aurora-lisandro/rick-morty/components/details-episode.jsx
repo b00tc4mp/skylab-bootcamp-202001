@@ -1,11 +1,6 @@
 function DetailsEpisode({ item: { name, air_date, episode, characters }, error }) {
-<<<<<<< HEAD
     return <div className="details">
         <section className="details__card">
-=======
-    return <div className="details">  
-    <section className="details__card">
->>>>>>> 87dd2d5431b3706b5efea65a0db540775959b408
 
             {/* <div className ="details__card-item"> */}
 
