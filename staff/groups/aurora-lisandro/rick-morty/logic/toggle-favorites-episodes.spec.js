@@ -111,10 +111,10 @@ describe('toggleFavoritesEpisodes', () => {
 
                         if (response.content) {
                             const user = JSON.parse(response.content)
-                            const { error, favCharacter } = user
+                            const { error, favCharacters } = user
 
                             if (error) return callback(new Error(error))
-                            expect(favCharacter).not.toContain(id)
+                            expect(favCharacters).not.toContain(id)
 
                             done()
 
