@@ -21,12 +21,32 @@ class App extends Component {
     }
 
 
+    hashMap = (address) => {
+        const hashValues = {
+            'login': this.handleOnToLogin,
+            'register': this.handleOnToRegister,
+            'favorite-characters': this.handleFavoritesCharacters,
+            'favorite-episodes': this.handleFavoritesEpisodes,
+            'search': this.handleGoToCharacters,
+            'seasons': this.handleGoToCharacters,
+        }
+
+        let handle
+
+        for (const key in hashValues) {
+            if (key === address) handle = hashValues[key]
+        }
+
+        return handle
+    }
+
     componentWillMount() {
         const { token } = sessionStorage
 
         if (token) {
 
             try {
+
                 retrieveUser(token, (error, user) => {
                     if (error)
                         this.handleLogout()
@@ -52,6 +72,11 @@ class App extends Component {
                         let [, id] = address.hash.split('/')
                         id = parseInt(id)
                         this.handleEpisodeClick(id)
+                    } else if (address.hash) {
+
+                        const handle = this.hashMap(address.hash)
+
+                        handle()
                     } else {
                         this.setState({ view: 'landing' })
                     }
@@ -76,6 +101,7 @@ class App extends Component {
                     if (error)
                         this.__handleError__(error)
 
+                    address.hash = 'landing'
                     this.setState({ view: 'landing', user })
                 })
             })
@@ -87,11 +113,10 @@ class App extends Component {
     handleRegister = (name, surname, username, password) => {
         try {
             registerUser(name, surname, username, password, error => {
-                if (error) {
-                    this.__handleError__(error)
-                } else {
-                    this.setState({ view: 'login' })
-                }
+                if (error)
+                    return this.__handleError__(error)
+
+                this.handleOnToLogin()
             })
         } catch (error) {
             this.__handleError__(error)
@@ -166,7 +191,7 @@ class App extends Component {
 
     handleLogout = () => {
         sessionStorage.clear()
-        address.clear()
+        address.hash = 'login'
         this.setState({
             view: 'login',
             error: undefined,
@@ -179,7 +204,10 @@ class App extends Component {
         })
     }
 
-    handleOnToRegister = () => this.setState({ view: 'register' })
+    handleOnToRegister = () => {
+        address.hash = 'register'
+        this.setState({ view: 'register' })
+    }
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
@@ -189,7 +217,7 @@ class App extends Component {
     }
 
     handleGoToCharacters = () => {
-        address.clear()
+        address.hash = 'search'
         this.setState({
             view: 'search',
             characters: undefined,
@@ -202,7 +230,7 @@ class App extends Component {
     }
 
     handleGoToEpisodes = () => {
-        address.clear()
+        addres.hash = 'seasons'
         this.setState({
             view: 'seasons',
             characters: undefined,
@@ -255,7 +283,7 @@ class App extends Component {
     handleFavoritesCharacters = () => {
         const { token } = sessionStorage
         try {
-
+            address.hash = 'favorite-characters'
             retrieveFavCharacters(token, (error, favorites) => {
                 if (error) return this.__handleError__(error)
 
@@ -269,6 +297,7 @@ class App extends Component {
     handleFavoritesEpisodes = () => {
         const { token } = sessionStorage
         try {
+            address.hash = 'favorite-episodes'
             retrieveFavEpisodes(token, (error, favorites) => {
                 if (error) return this.__handleError__(error)
 
