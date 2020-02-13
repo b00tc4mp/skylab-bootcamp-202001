@@ -647,7 +647,7 @@ table {
 @media (max-width: 698px) {
   .footer {
     position: fixed;
-    bottom: 0;
+    bottom: 16px;
   }
 }
 .main-container {
@@ -657,7 +657,6 @@ table {
   background: radial-gradient(circle, #fff 35%, #383838 100%);
 }
 .main-container__forsale {
-  height: 85vh;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
