@@ -20,12 +20,12 @@ function toggleFavoritesEpisodes(token, id, callback) {
         if (response.content) {
             const user = JSON.parse(response.content)
             let { error, favEpisodes = [] } = user
-            debugger
+
             if (error) return callback(new Error(error))
 
-            if (!favEpisodes.length ) { //cambio
+            if (!favEpisodes.length) { //cambio
                 favEpisodes.push(id)
-            } else {favEpisodes.toggle(id)}
+            } else { favEpisodes.toggle(id) }
 
 
             call('https://skylabcoders.herokuapp.com/api/v2/users/', {
@@ -41,7 +41,7 @@ function toggleFavoritesEpisodes(token, id, callback) {
                         if (error) return callback(new Error(error))
                     }
                     if (response.status === 204) {
-                        
+
                         callback()
                     }
                 })

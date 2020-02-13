@@ -175,7 +175,10 @@ class App extends Component {
 
     handleOnToLogin = () => this.setState({ view: 'login' })
 
-    handleGoToFavorites = () => this.setState({ view: 'favorites', favorites: undefined })
+    handleGoToFavorites = () => {
+        address.clear()
+        this.setState({ view: 'favorites', favorites: undefined })
+    }
 
     handleGoToCharacters = () => {
         address.clear()
