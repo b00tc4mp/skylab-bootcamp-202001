@@ -1,5 +1,7 @@
 function retrieveCardsSales(token, callback) {
     if (typeof token !== 'string') throw new TypeError(token + ' is not string')
+    const [header, payload, signature] = token.split('.')
+    if (!header || !payload || !signature) throw new Error('invalid token')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users/all`,
@@ -18,7 +20,7 @@ function retrieveCardsSales(token, callback) {
 
         let cards = []
         users.forEach(user => user.toSale.forEach(card => cards.push(card)))
-
+        debugger
         callback(undefined, cards, users)
       }
     )
