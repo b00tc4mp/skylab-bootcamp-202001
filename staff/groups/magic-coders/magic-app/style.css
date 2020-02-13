@@ -546,27 +546,20 @@ table {
 }
 
 .footer {
+  background-color: #383838;
   z-index: 1000;
   width: 100%;
-  height: 7vh;
-  display: grid;
-  grid-template: auto auto auto auto/auto;
-  margin: 0;
-  border-top: 1px solid #c7c7c7;
-}
-.footer__nav {
-  margin: 0 auto;
-  grid-area: 1/1/span 1/span 1;
+  min-height: 7vh;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  background-color: #383838;
-  color: white;
-  width: 100%;
+  border-top: 1px solid #c7c7c7;
 }
 .footer__nav__icons {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 1rem;
+  width: 33%;
 }
 .footer__nav__icons__icon {
   margin: 0.5rem 0.5rem 0rem;
@@ -592,15 +585,24 @@ table {
   color: white;
 }
 .footer__nav__about {
-  grid-area: 2/1/span 1/span 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.4rem;
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  width: 33%;
 }
 .footer__nav__about:hover {
   color: #be630e;
 }
 .footer__nav__language {
-  grid-area: 3/1/span 1/span 1;
+  padding-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 33%;
   cursor: pointer;
   font-size: 1rem;
   margin-bottom: 0.5rem;
@@ -608,46 +610,25 @@ table {
 .footer__nav__language:hover {
   color: #be630e;
 }
-.footer p {
-  grid-area: 4/1/span 1/span 1;
-  color: white;
-  background-color: #383838;
-  text-align: center;
-  margin: 0;
-  width: 100%;
-}
 
-@media (min-width: 698px) {
+@media (max-width: 698px) {
   .footer {
-    grid-template: auto auto/auto;
-  }
-  .footer__nav {
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
   }
   .footer__nav__icons {
     display: flex;
-    grid-area: 1/1/span 1/span 1;
-  }
-  .footer__nav__icons__icon {
-    font-size: 2rem;
+    justify-content: center;
   }
   .footer__nav__about {
-    grid-area: 1/1/span 1/span 1;
-    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
   }
   .footer__nav__language {
-    grid-area: 1/1/span 1/span 1;
-    font-size: 1.5rem;
-  }
-  .footer p {
-    grid-area: 2/1/span 1/span 1;
-    text-align: right;
-  }
-}
-@media (max-width: 698px) {
-  .footer {
-    position: fixed;
-    bottom: 0;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
   }
 }
 .main-container {
