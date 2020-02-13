@@ -1,5 +1,5 @@
-describe('retrieve character', () => {
-    let id, token, callback, name, surname, username, password
+describe('retrieve character of episodes', () => {
+    let idArray, token, callback, name, surname, username, password
 
     beforeEach(() => {
         name = 'name-' + Math.random()
@@ -40,27 +40,32 @@ describe('retrieve character', () => {
             })
         })
 
-        it('should succeed on matching character id', done => {
-            const id = Math.floor((Math.random() * 492) + 1)
+        it('should succeed on episode with multiples character', done => {
+            const idArray = []
+            let id 
+            for ( let i = 0; i<10; i++){
+                id = Math.floor((Math.random() * 492) + 1)
+                idArray.push(id)
+            }
+            
 
-            retrieveCharacter(token, id, (error, character) => {
+            retrieveCharacterOfEpisodes(token, idArray, (error, character) => {
                 expect(error).toBeUndefined()
-                expect(character).toBeDefined()
-                expect(typeof character.id).toBe('number')
-                expect(character.id).toBe(id)
-                expect(typeof character.name).toBe('string')
-                expect(typeof character.status).toBe('string')
-                expect(typeof character.species).toBe('string')
-                expect(typeof character.gender).toBe('string')
+                expect(character[0]).toBeDefined()
+                expect(idArray instanceof Array).toBe(true)
+                expect(typeof character[0].name).toBe('string')
+                expect(typeof character[0].status).toBe('string')
+                expect(typeof character[0].species).toBe('string')
+                expect(typeof character[0].gender).toBe('string')
 
                 done()
             })
         })
 
-        it('should fail on incorrect id', done => {
-            id = 7897987549738
-
-            retrieveCharacter(token, id, (error, character) => {
+        it('should fail on incorrect idArray', done => {
+            idArray = [7897987549738]
+            
+            retrieveCharacterOfEpisodes(token, idArray, (error, character) => {
                 expect(error.message).toBe('Character not found')
                 done()
 
@@ -69,47 +74,47 @@ describe('retrieve character', () => {
         })
 
 
-        it('should fail when the id is not a number', () => {
-            id = 'hello'
+        it('should fail when the idArray is not an array', () => {
+            idArray = 'hello'
             expect(() => {
-                retrieveCharacter(token, id, () => { })
-            }).toThrowError(TypeError, `id ${id} is not a number`)
+                retrieveCharacterOfEpisodes(token, idArray, () => { })
+            }).toThrowError(TypeError, `idArray ${idArray} is not an array`)
 
-            id = {}
+            idArray = {}
             expect(() => {
-                retrieveCharacter(token, id, () => { })
-            }).toThrowError(TypeError, `id ${id} is not a number`)
+                retrieveCharacterOfEpisodes(token, idArray, () => { })
+            }).toThrowError(TypeError, `idArray ${idArray} is not an array`)
 
-            id = true
+            idArray = true
             expect(() => {
-                retrieveCharacter(token, id, () => { })
-            }).toThrowError(TypeError, `id ${id} is not a number`)
+                retrieveCharacterOfEpisodes(token, idArray, () => { })
+            }).toThrowError(TypeError, `idArray ${idArray} is not an array`)
 
         })
 
         it('should fail when the callback is not a function', () => {
-            id = 1
+            idArray = [1]
             callback = 'hello'
             expect(() => {
-                retrieveCharacter(token, id, callback)
+                retrieveCharacterOfEpisodes(token, idArray, callback)
             }).toThrowError(TypeError, `callback ${callback} is not a function`)
 
-            id = 1
+            idArray = [1]
             callback = 1
             expect(() => {
-                retrieveCharacter(token, id, callback)
+                retrieveCharacterOfEpisodes(token, idArray, callback)
             }).toThrowError(TypeError, `callback ${callback} is not a function`)
 
-            id = 1
+            idArray = [1]
             callback = true
             expect(() => {
-                retrieveCharacter(token, id, callback)
+                retrieveCharacterOfEpisodes(token, idArray, callback)
             }).toThrowError(TypeError, `callback ${callback} is not a function`)
 
-            id = 1
+            idArray = [1]
             callback = {}
             expect(() => {
-                retrieveCharacter(token, id, callback)
+                retrieveCharacterOfEpisodes(token, idArray, callback)
             }).toThrowError(TypeError, `callback ${callback} is not a function`)
 
         })

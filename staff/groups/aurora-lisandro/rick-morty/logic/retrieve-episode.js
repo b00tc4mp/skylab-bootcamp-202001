@@ -9,7 +9,7 @@ function retrieveEpisode(token, id, callback) {
 
     if (!sub) throw new Error('no id in token')
 
-    // if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
+    if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
