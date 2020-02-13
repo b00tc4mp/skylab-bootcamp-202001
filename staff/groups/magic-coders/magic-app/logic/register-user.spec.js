@@ -32,7 +32,7 @@ describe('Register user', () => {
             const {error: _error} = JSON.parse(response.content)
             if (_error) return callback(new Error(_error))
         } 
-        callback(undefined, "user registered!")
+        // callback(undefined, "user registered!")
         done()
       })
     })
@@ -40,8 +40,9 @@ describe('Register user', () => {
     it('Should fail when same user exist', done => {
       registerUser({name, surname, phone, email, username, password}, (error, response) => {
         expect(error).toBeDefined()
-        expect(error.message).toBe(`user with username "${username}" already exists`)
         expect(response).toBeUndefined()
+        expect(error).toBeInstanceOf(Error)
+        expect(error.message).toBe(`user with username "${username}" already exists`)
         done()
       })
     })
@@ -73,6 +74,8 @@ describe('Register user', () => {
 
                     if (error) return done(new Error(error))
                 }
+
+                done()
             })
         })
     })

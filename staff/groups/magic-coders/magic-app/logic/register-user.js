@@ -15,6 +15,7 @@ function registerUser({name, surname, phone, email, username, password}, callbac
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, surname, phone, email, username, password, mtg: true })
     }, (error, response) => {
+
         // Network Error
         if (error) return callback(error)
 

@@ -114,6 +114,27 @@ describe('addCardToSale', () => {
         })
     })     
 
+    it("should fail on non-object card", () => {
+        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
+        
+        card = function() {}
+        let callback = function(){}
+        expect(() => addCardToSale(card, token, callback))
+        .toThrowError(TypeError, `card ${card} is not an Object`)
+
+        card = "characters"
+        expect(() => addCardToSale(card, token, callback))
+        .toThrowError(TypeError, `card ${card} is not an Object`)
+
+        card = Math.random()
+        expect(() => addCardToSale(card, token, callback))
+        .toThrowError(TypeError, `card ${card} is not an Object`)
+
+        callback = true
+        expect(() => addCardToSale(card, token, callback))
+        .toThrowError(TypeError, `card ${card} is not an Object`)
+    })
+
     it("should fail on non-string token", () => {
         token = 1
         expect(() => addCardToSale(card, token, () => {}))
@@ -134,30 +155,6 @@ describe('addCardToSale', () => {
         token = undefined
         expect(() => addCardToSale(card, token, () => {}))
         .toThrowError(TypeError, `token ${token} is not a string`)
-    })
-
-    it("should fail on non-function callback", () => {
-        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
-        
-        let callback = {}
-        expect(() => addCardToSale(card, token, callback))
-        .toThrowError(TypeError, `callback ${callback} is not a function`)
-
-        callback = []
-        expect(() => addCardToSale(card, token, callback))
-        .toThrowError(TypeError, `callback ${callback} is not a function`)
-
-        callback = "characters"
-        expect(() => addCardToSale(card, token, callback))
-        .toThrowError(TypeError, `callback ${callback} is not a function`)
-
-        callback = Math.random()
-        expect(() => addCardToSale(card, token, callback))
-        .toThrowError(TypeError, `callback ${callback} is not a function`)
-
-        callback = true
-        expect(() => addCardToSale(card, token, callback))
-        .toThrowError(TypeError, `callback ${callback} is not a function`)
     })
 
     it("should fail on non-function callback", () => {

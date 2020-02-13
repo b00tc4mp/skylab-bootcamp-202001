@@ -1,4 +1,7 @@
 function addCardToSold(id, token, callback) {
+    if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
+    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
+    if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
 
     call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
         method: 'GET',
