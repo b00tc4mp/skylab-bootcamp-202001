@@ -299,7 +299,10 @@ class App extends Component {
                 onToFavs={handleGoToFavorites}
                 onToProfile={() => { console.log('profile') }} />}
 
-            <img className="title" src={title} />
+            {view ==='login' && <img className="title"src={title}/>}
+
+            {view === 'register' && <img className="title"src={title}/>}
+
 
             {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleOnToRegister} error={error} />}
 
