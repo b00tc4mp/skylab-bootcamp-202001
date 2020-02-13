@@ -1,19 +1,8 @@
 function searchCards(query, callback) {
-  // if (typeof query !== "string")
-  //   throw new TypeError(query + " is not a string")
-  // if (typeof callback !== "function")
-  //   throw new TypeError(callback + " is not a function")
 
-  // const queryObj = {
-            // name: query,
-            // types: 'Creature',
-            // rarity: 'Rare',
-            // colors: 'red|black|white',
-            // cmc: 5,
-            // supertypes: 'Snow',
-        // }
-        /**/
-
+  if (!(query instanceof Object)) throw new TypeError(`${query} is not an object`)
+  if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+ 
   address.search = query
 
   let string = ''
