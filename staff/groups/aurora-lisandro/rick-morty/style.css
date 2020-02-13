@@ -14,13 +14,13 @@ body {
 #root {
   margin: 0;
   padding: 0;
-  background-color: #2a1b38;
+  background-color: #f1f3f4;
   width: 100%;
   height: 100%;
 }
 
 html {
-  background-color: #2a1b38;
+  background-color: #f1f3f4;
 }
 
 input, button {
@@ -39,7 +39,7 @@ ul {
 }
 
 h1, h2, h3, h4, h5, h6, .searchSeason__title {
-  color: #11ACCA;
+  color: #2a7886;
   margin: 0;
   text-align: center;
 }
@@ -59,7 +59,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 
 .search__input, .login__input, .register__input {
   border: none;
-  background-color: #2a1b38;
+  background-color: #f1f3f4;
   width: 60%;
   height: 7%;
   border-radius: 5px;
@@ -68,15 +68,15 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 
 .nav {
   box-sizing: border-box;
-  background-color: #6FC41C;
+  background-color: #79bac1;
   position: sticky;
   top: 0;
   display: flex;
   justify-content: space-between;
-  color: #2a1b38;
-  font-size: 1.5rem;
-  padding: 0.5rem;
+  color: #2a7886;
+  padding: 0.3rem;
   width: 100%;
+  font-size: 1.5rem;
 }
 .nav__right-container {
   height: 25%;
@@ -90,19 +90,22 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   height: 50vh;
   top: 100%;
   left: 0px;
-  background-color: #6FC41C;
+  background-color: #79bac1;
   width: 100%;
+  color: 2a7886;
 }
 .nav__link, .nav__logout {
   padding: 0 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
+  font-family: tomcat DEMO;
 }
 .nav__logout {
   text-align: left;
+  color: #2a7886;
 }
 .nav__user {
-  color: #2a1b38;
+  color: #2a7886;
   top: 0;
   font-size: 1rem;
 }
@@ -111,7 +114,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   justify-content: space-evenly;
   width: 60%;
   height: 50%;
-  background-color: #797474;
+  background-color: #79bac1;
   border-radius: 5px;
   margin-top: 2rem;
 }
@@ -125,26 +128,38 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 }
 .results__item {
   margin-bottom: 5rem;
-  -webkit-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
-  box-shadow: 4px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 4px 0px 10px 0px #512b58;
+  -moz-box-shadow: 4px 0px 10px 0px #512b58;
+  box-shadow: 4px 0px 10px 0px #512b58;
 }
 .results__title {
   font-family: Get Schwifty;
   font-size: 1.2rem;
+  margin: 0.5rem;
 }
 
 .login {
   justify-content: space-evenly;
   width: 60%;
   height: 50%;
-  background-color: #797474;
+  background-color: #79bac1;
   border-radius: 5px;
   margin-top: 2rem;
+  font-family: tomcat DEMO;
+  font-size: 1.5rem;
 }
 .login__link {
   font-size: 0.7rem;
   text-align: center;
+  font-size: 1.3rem;
+  padding: 0.5rem;
+  color: #512b58;
+}
+.login__button {
+  font-size: 1rem;
+  font-family: tomcat DEMO;
+  border-bottom: #512b58;
+  color: #2a7886;
 }
 
 .details {
@@ -167,7 +182,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   height: 60%;
 }
 .details__card-item {
-  background-color: #6d6b6b;
+  background-color: #79bac1;
   height: 90%;
 }
 .details__card-footer {
@@ -207,30 +222,37 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 
 .item {
   border-radius: 5px;
+  background-color: #79bac1;
+}
+.item__heart {
+  color: #512b58;
+}
+.item__desc {
+  display: flex;
   justify-content: space-between;
   font-size: 1.7rem;
   padding: 0.1em 0.3em;
   margin-top: 0.1rem;
-  background-color: #494747;
+  background-color: #79bac1;
   align-items: center;
-}
-.item__heart {
-  color: red;
-}
-.item__desc {
-  display: flex;
+  font-family: tomcat DEMO;
 }
 
 .search {
-  height: 30%;
+  height: 40%;
   justify-content: space-evenly;
+  margin-bottom: 1.5rem;
 }
 .search__title {
   font-family: Get Schwifty;
   font-size: 1.2rem;
+  color: #2a7886;
+  margin: 1rem;
 }
 .search__filter {
+  color: #512b58;
   font-size: 1rem;
+  font-family: tomcat DEMO;
 }
 .search__name {
   font-size: 1.2rem;
@@ -247,10 +269,11 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   margin-left: 1rem;
   font-size: 1rem;
   height: 50%;
-  border-bottom: 1px solid #E5EC2F;
+  border-bottom: 1px solid #2a7886;
 }
 .search__lens {
   font-size: 1.5rem;
+  color: #512b58;
 }
 
 .searchSeason {
@@ -264,7 +287,6 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-family: Get Schwifty;
   margin: 3rem;
   font-size: 4rem;
-  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 .searchSeason__component {
   width: 100%;
@@ -281,15 +303,16 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 }
 .searchSeason__button {
   margin-top: 0.5em;
-  background-color: #6FC41C;
+  background-color: #2a7886;
   height: 15%;
   width: 30%;
   border-radius: 5px;
   padding: 0.2rem;
   font-size: 1rem;
-  color: #303055;
+  color: #f1f3f4;
   cursor: pointer;
   max-height: 30px;
+  font-family: tomcat DEMO;
 }
 .searchSeason__image {
   max-width: 100%;
@@ -356,7 +379,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 
 .title {
   width: 100%;
-  background-color: #2a1b38;
+  background-color: #f1f3f4;
 }
 
 /*# sourceMappingURL=style.css.map */
