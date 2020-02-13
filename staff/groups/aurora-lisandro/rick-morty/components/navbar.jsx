@@ -1,12 +1,11 @@
 function Navbar({ onLogout, onToFavs, onToCharacters, onToEpisodes, onToProfile, title }) {
 
 
-    const toggleNavBar = () => {
+    const toggleNavBar = () => { 
         const menu = document.querySelector(".nav__options")
-        if (menu.style.display === "flex") {
+        if (menu.style.display === "flex" && window.visualViewport.width < 768) {
             menu.style.display = "none"
-
-        } else {
+        } else{
             menu.style.display = "flex"
 
         }

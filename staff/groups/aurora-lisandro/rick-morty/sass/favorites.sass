@@ -25,6 +25,16 @@
         font-size: 1rem
         text-align: center
 
-    &__nav
-        width: 100%
-        @extend %flex-wrap
+
+@media ( min-width: 768px )
+    .favorites
+        display: flex
+        flex-direction: column
+        justify-content: flex-start
+        &__container
+            display: flex
+            flex-direction: row
+            justify-content: space-around
+        &__episodes, &__characters
+            width: 45%
+            
