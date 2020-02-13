@@ -9,7 +9,7 @@ function SearchSeason ({onEpisodesClick}){
                     event.preventDefault()
 
                     onEpisodesClick('S01')
-                    }}>Season 1</button>
+                    }}>Season one</button>
             </article>
 
             <article className="searchSeason__season">
@@ -18,7 +18,7 @@ function SearchSeason ({onEpisodesClick}){
                     event.preventDefault()
 
                     onEpisodesClick('S02')
-                    }}>Season 2</button>
+                    }}>Season two</button>
             </article>
 
             <article className="searchSeason__season">
@@ -27,7 +27,7 @@ function SearchSeason ({onEpisodesClick}){
                     event.preventDefault()
 
                     onEpisodesClick('S03')
-                    }}>Season3</button>
+                    }}>Season three</button>
             </article>
         </div>
     </section>
