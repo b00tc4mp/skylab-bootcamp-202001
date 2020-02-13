@@ -27,13 +27,7 @@ function addCardToSold(id, token, callback) {
         const card = toSale.filter(card => card.multiverseid === id)
 
         toSale = toSale.filter(card => card.multiverseid !== id) //removed from toSale
-        !sold ? sold = card : sold.push(card[0]) //add to sold
-
-        // if (!sold) {
-        //     sold = card
-        // } else {
-        //     sold.push(card[0])
-        // }
+        sold ? sold.push(card[0]) : sold = card //add to solds
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
