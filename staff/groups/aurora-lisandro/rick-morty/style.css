@@ -15,7 +15,6 @@ body {
   padding: 0;
   background-color: #f1f3f4;
   width: 100%;
-  height: 100vh;
 }
 
 html {
@@ -144,7 +143,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 .login {
   justify-content: space-evenly;
   width: 60%;
-  height: 40%;
+  height: 40vh;
   background-color: #79bac1;
   border-radius: 5px;
   margin-top: 2rem;
