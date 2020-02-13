@@ -100,7 +100,7 @@ class App extends Component {
         try {
             const { token } = sessionStorage
             searchSeason(season, token, (error, episodes) => {
-                if (error) this.__handleError__(error)
+                if (error) return this.__handleError__(error)
 
                 address.search = { season }
 
@@ -136,7 +136,6 @@ class App extends Component {
             const { token } = sessionStorage
             retrieveEpisode(token, id, (error, detail) => {
                 if (error) console.log(error)
-
                 address.hash = `episode/${id}`
 
                 this.setState({ view: 'detailEpisode', detail })
