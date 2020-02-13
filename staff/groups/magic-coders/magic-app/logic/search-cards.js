@@ -1,7 +1,10 @@
 function searchCards(query, callback) {
+
   if (!(query instanceof Object)) throw new TypeError(`${query} is not an object`)
   if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
-  
+ 
+  address.search = query
+
   let string = ''
   let keys = Object.keys(query)
 
