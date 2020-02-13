@@ -28,7 +28,7 @@ function retrieveCardsSales(token, callback) {
 
         let cards = []
         users.forEach(user => user.toSale.forEach(card => cards.push(card)))
-        
+
         callback(undefined, cards, users)
       }
     )

@@ -1,22 +1,24 @@
 function Select(props) {
-
   let {defaultValue, data, address} = props
 
-  if (address) {
-    const index = data.indexOf(defaultValue)
-    let value = data[index]
-    data = data.filter(opt => opt !== value)
-    data.unshift(value)
+  let index
+  if (address) index = data.indexOf(defaultValue)
+
+  function createOptions() {
+    return data.map((element, i) => {
+      if (i == index) {
+        return <option selected="selected" key={i}>{element}</option>
+      } else {
+        return <option key={i}>{element}</option>
+      }
+    }) 
   }
 
   return (
-  <select 
-    className="select"
-    onChange={(event) => props.onChange(event, props.property)}
-  >
-    {(!props.defaultValue ) && <option></option>}
-    {data.map((element, i)=> <option key={i}>{element}</option>)}
-  </select>
+    <select className="select" onChange={(event) => props.onChange(event, props.property)}>
+      {(!defaultValue) && <option></option>}
+      {createOptions()}
+    </select>
   )
 }
 

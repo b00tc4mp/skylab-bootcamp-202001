@@ -3,6 +3,7 @@ const { Component, Fragment } = React
 class App extends Component {
 
   state = {
+    address: undefined,
     card: undefined, 
     cards: [], 
     cardsToSale: [],
@@ -19,41 +20,32 @@ class App extends Component {
     viewDetail: false,
   }
 
-  // componentWillMount = () => {
-  //   const {token} = sessionStorage
-  //   if (token) {
-  //     retrieveUser(token, (error, user) => {
-  //       if (error) return this.__handleError__(error)
-  //       else this.setState({view: 'search', user})
-  //     })
-  //   } else this.setState({view: 'login'})
-  // }
-
   componentWillMount() {
     const { token } = sessionStorage
+    this.setState({search:{}})
 
     if (token)
         try {
             retrieveUser(token, (error, user) => {
-                if (error) {
-                  this.logout()
-                  return this.__handleError__(error)
-                }
+              if (error) {
+                this.logout()
+                return this.__handleError__(error)
+              }
 
-                this.setState({ view: 'search', user })
+              this.setState({ view: 'search', user })
 
-                if (Object.keys(address.search).length) {
+              if (Object.keys(address.search).length) {
 
-                  this.setState({search: {...address.search, address: true}})
+                this.setState({search: address.search, address: true})
 
-                  this.handleSearch({q: address.search})
+                this.handleSearch({q: address.search})
 
-                } else if (address.hash && address.hash.startsWith('vehicles/')) {
-                  const [, id] = address.hash.split('/')
+              } else if (address.hash && address.hash.startsWith('vehicles/')) {
+                const [, id] = address.hash.split('/')
 
-                  this.handleDetail(id)
-                }
-            })
+                this.handleDetail(id)
+              }
+          })
         } catch (error) {
             this.logout()
         }
@@ -224,7 +216,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   render() {
 
     const {
-      state: {card, cards, cardsSold, cardsToSale, language, error, sidebar, user, users, view, viewProfile, search},
+      state: {address, card, cards, cardsSold, cardsToSale, language, error, sidebar, user, users, view, viewProfile, search},
 
       addToSale,
       handleLanguage,
@@ -242,7 +234,7 @@ handleGoToLogin = () => this.setState({view: "login"})
       handleCardSold,
       logout,
       onToComponent
-    } = this    
+    } = this
 
     return (
       <Fragment>
@@ -262,10 +254,10 @@ handleGoToLogin = () => this.setState({view: "login"})
             <div className='filter'>
               <Search onSubmit={handleSearch} search={search} />
               <div className="filters">
-                <Types onChange={handleSelect} property="types" search={search} />
-                <Rarity onChange={handleSelect} property="rarity" search={search} />
-                <ManaCost onChange={handleSelect} property="cmc" search={search} />
-                <Colors onChange={handleCheckbox} property="colors" search={search} />
+                <Types onChange={handleSelect} property="types" search={search} address={address} />
+                <Rarity onChange={handleSelect} property="rarity" search={search} address={address} />
+                <ManaCost onChange={handleSelect} property="cmc" search={search} address={address} />
+                <Colors onChange={handleCheckbox} property="colors" search={search} address={address} />
               </div>
             </div>}
 
