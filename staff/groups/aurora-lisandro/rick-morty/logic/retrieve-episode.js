@@ -23,7 +23,7 @@ function retrieveEpisode(token, id, callback) {
         const { error: _error, favs } = data
 
         if (_error) return callback(new Error(_error))
-        debugger
+        
         call(`https://rickandmortyapi.com/api/episode/${id}`, undefined, (error, response) => {
             if (error) return callback(error)
 
