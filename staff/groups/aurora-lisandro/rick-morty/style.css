@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   text-align: center;
 }
 
-.favorites__nav, .searchSeason__component, .search__filters, .results {
+.searchSeason__component, .search__filters, .results {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
@@ -172,6 +172,17 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   margin: 0.5rem;
 }
 
+@media (min-width: 768px) {
+  .results {
+    max-width: 75%;
+  }
+  .results__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+  }
+}
 .login {
   justify-content: space-evenly;
   width: 60%;
@@ -323,6 +334,15 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-family: tomcat DEMO;
 }
 
+@media (min-width: 768px) {
+  .item {
+    width: 30%;
+    height: 17rem;
+  }
+  .item__desc {
+    font-size: 1.2rem;
+  }
+}
 .search {
   height: 40%;
   justify-content: space-evenly;
@@ -403,6 +423,18 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   max-width: 100%;
 }
 
+@media (min-width: 768px) {
+  .searchSeason__title {
+    margin: 2rem 0 0 0;
+    height: 3%;
+  }
+  .searchSeason__component {
+    height: 60%;
+  }
+  .searchSeason__season {
+    justify-content: unset;
+  }
+}
 .landing {
   width: 90%;
   height: 100%;
@@ -424,6 +456,14 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   text-align: center;
 }
 
+@media (min-width: 768px) {
+  .landing {
+    flex-direction: row;
+  }
+  .landing__episodes, .landing__characters {
+    width: 45%;
+  }
+}
 .feedback {
   font-size: 1rem;
   text-align: center;
@@ -461,13 +501,31 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-size: 1rem;
   text-align: center;
 }
-.favorites__nav {
-  width: 100%;
-}
 
+@media (min-width: 768px) {
+  .favorites {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .favorites__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .favorites__episodes, .favorites__characters {
+    width: 45%;
+  }
+}
 .title {
   width: 100%;
   background-color: #f1f3f4;
+}
+
+@media (min-width: 768px) {
+  .app {
+    height: 100vh;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
