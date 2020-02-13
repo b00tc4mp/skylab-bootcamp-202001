@@ -1,6 +1,8 @@
-function Types({onChange, property}){
+function Types({onChange, property, search}){
 
-  const options=  [  
+  const {types, address} = search
+
+  let options=  [  
     "Artifact",
     "Conspiracy",
     "Creature",
@@ -20,7 +22,13 @@ function Types({onChange, property}){
     <div>
       <p>Types</p>
       <br/>
-      <Select onChange={onChange} data={options} property={property} placeholder="Types" /> 
+      <Select 
+        onChange={onChange}
+        data={options}
+        property={property} 
+        defaultValue={types}
+        address={address}
+      /> 
     </div>
   ) 
 }

@@ -16,22 +16,54 @@ class App extends Component {
     users: undefined,
     view: undefined,
     viewProfile: true,
-    viewDetail: false
+    viewDetail: false,
   }
 
-  componentWillMount = () => {
-    const {token} = sessionStorage
-    if (token) {
-      retrieveUser(token, (error, user) => {
-        if (error) return this.__handleError__(error)
-        else this.setState({view: 'search', user})
-      })
-    } else this.setState({view: 'login'})
-  }
+  // componentWillMount = () => {
+  //   const {token} = sessionStorage
+  //   if (token) {
+  //     retrieveUser(token, (error, user) => {
+  //       if (error) return this.__handleError__(error)
+  //       else this.setState({view: 'search', user})
+  //     })
+  //   } else this.setState({view: 'login'})
+  // }
+
+  componentWillMount() {
+    const { token } = sessionStorage
+
+    if (token)
+        try {
+            retrieveUser(token, (error, user) => {
+                if (error) {
+                  this.logout()
+                  return this.__handleError__(error)
+                }
+
+                this.setState({ view: 'search', user })
+
+                if (Object.keys(address.search).length) {
+
+                  this.setState({search: {...address.search, address: true}})
+
+                  this.handleSearch({q: address.search})
+
+                } else if (address.hash && address.hash.startsWith('vehicles/')) {
+                  const [, id] = address.hash.split('/')
+
+                  this.handleDetail(id)
+                }
+            })
+        } catch (error) {
+            this.logout()
+        }
+    else this.logout()
+}
 
   logout = () => {
     sessionStorage.clear()
-    this.setState({view: 'login', cards: [], sidebar: false})
+    address.clear()
+    this.setState({view: 'login', cards: [], sidebar: false, user: undefined})
   }
 
   __handleError__ = error => {
@@ -50,8 +82,7 @@ class App extends Component {
                   return this.setState({ error: error.message })
 
               sessionStorage.token = token
-              this.setState({ view: 'search', user })
-                
+              this.setState({ view: 'search', user})
             }
         })
         // Sync Error
@@ -72,7 +103,6 @@ handleRegister = user => {
 
           this.setState({view: "login", message})
           setTimeout(() => this.setState({message: undefined}), 3000);
-
       })
       
       // Sync Errror
@@ -88,12 +118,17 @@ handleGoToLogin = () => this.setState({view: "login"})
 
   handleLangSelect = ({target: {value}}) => this.setState({ language: value })
 
-  handleSearch = ({ query }) => {
+  handleSearch = (querys) => {
+
     try{
+      let {query, q} = querys
+
       const { search } = this.state
 
-      let _search = search
+      let _search = search 
+
       if (query) _search = { ...search, name: query }
+      if (q) _search = q
   
       searchCards(_search, (error, cards) => {
         if (error)  {
@@ -168,7 +203,6 @@ handleGoToLogin = () => this.setState({view: "login"})
     retrieveUser(token, (error, {toSale, sold}) => {
       if (!toSale) toSale = []
 
-      console.log(sold);
       this.setState({
         view: 'profile', 
         cardsToSale: toSale, 
@@ -190,7 +224,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   render() {
 
     const {
-      state: { card, cards, cardsSold, cardsToSale, language, error, sidebar, user, users, view, viewProfile},
+      state: {card, cards, cardsSold, cardsToSale, language, error, sidebar, user, users, view, viewProfile, search},
 
       addToSale,
       handleLanguage,
@@ -211,9 +245,6 @@ handleGoToLogin = () => this.setState({view: "login"})
     } = this
 
 
-    console.log(this.state);
-    
-
     return (
       <Fragment>
         {(view === 'login' || view === 'register') &&
@@ -230,12 +261,12 @@ handleGoToLogin = () => this.setState({view: "login"})
           <div className={view === "search" ? "main-container": "main-container__forsale"}>
             {view === 'search' && 
             <div className='filter'>
-              <Search onSubmit={handleSearch} title="Name Card" />
+              <Search onSubmit={handleSearch} search={search} />
               <div className="filters">
-                <Types onChange={handleSelect} property="types" />
-                <Rarity onChange={handleSelect} property="rarity" />
-                <ManaCost onChange={handleSelect} property="cmc" />
-                <Colors onChange={handleCheckbox} property="colors" />
+                <Types onChange={handleSelect} property="types" search={search} />
+                <Rarity onChange={handleSelect} property="rarity" search={search} />
+                <ManaCost onChange={handleSelect} property="cmc" search={search} />
+                <Colors onChange={handleCheckbox} property="colors" search={search} />
               </div>
             </div>}
 

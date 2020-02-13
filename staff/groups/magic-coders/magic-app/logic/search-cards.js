@@ -14,6 +14,8 @@ function searchCards(query, callback) {
         // }
         /**/
 
+  address.search = query
+
   let string = ''
   let keys = Object.keys(query)
 
