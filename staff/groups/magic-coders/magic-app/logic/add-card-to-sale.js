@@ -1,11 +1,16 @@
-/** @function addCardToSale */
-function addCardToSale(card, token, callback) {
-/**
+/** @function addCardToSale
  * @param {object} card - Contain all properties and values of target card for send data to on sale
  * @param {string} token - Need token to send targeted card to add new property on actual user
  * @callback - Return error / update successful
- * @throw - 
+ * @throw - Will throw an error if card is not an object
+ * @throw - Will throw an error if token is not a string
+ * @throw - Will throw an error if callback is not a function
+ * @throw - Will throw an error if token is invalid
+ * @throw - Will throw an error if each argument value in object card is not a expected string, number or empty
+ * @throw - Will throw an error if each argument name in object card is not a expected
  */
+
+function addCardToSale(card, token, callback) {
 
     if (card.constructor.name !== "Object") throw new TypeError(`card ${card} is not an Object`)
     if (typeof token !== "string") throw new TypeError(`token ${token} is not a string`)

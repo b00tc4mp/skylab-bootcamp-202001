@@ -177,7 +177,7 @@ handleGoToLogin = () => this.setState({view: "login"})
     // if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
     else if (view === 'forsale') {
       const {token} = sessionStorage
-      retrieveCardsSales(token, (error, cards, users) => {debugger
+      retrieveCardsSales(token, (error, cards, users) => {
         this.setState({cards, users, view})
       })
 
