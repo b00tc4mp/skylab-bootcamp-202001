@@ -1,9 +1,12 @@
-/** @function retrieveCardsSales */
+/** @function retrieveCardsSales 
+ * @param {string} token - It's required for get authorization in call for return users
+ * @param {function} callback - Return error / cards in to sale and users
+ * @throw - Will throw an error if token is not a string
+ * @throw - Will throw an error if token is not valid
+ * @throw - Will throw an error if callback is not a function
+ */
+
 function retrieveCardsSales(token, callback) {
-  /**
-   * @param {string} token - It's required for get authorization in call for return users
-   * @param {function} callback - Return error / cards in to sale and users
-   */
     if (typeof token !== 'string') throw new TypeError(token + ' is not string')
     const [header, payload, signature] = token.split('.')
     if (!header || !payload || !signature) throw new Error('invalid token')

@@ -1,10 +1,12 @@
-/** @function retrieveCard */
-function retrieveCard(id, callback) {
-/**
+/** @function retrieveCard 
  * @param {string} id - It's required for concatenate id card to query
  * @param {function} callback - Return error / card
+ * @throw - Will throw an error if id is not a number
+ * @throw - Will throw an error if callback is not a function
  */
-    if (typeof id !== 'number') throw new TypeError(id + ' is not a string')
+
+function retrieveCard(id, callback) {
+    if (typeof id !== 'number') throw new TypeError(id + ' is not a number')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 
     call(`https://api.magicthegathering.io/v1/cards/${id}`, undefined,
