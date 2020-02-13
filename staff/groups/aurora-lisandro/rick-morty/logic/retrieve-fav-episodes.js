@@ -25,11 +25,11 @@ function retrieveFavEpisodes(token, callback) {
             if (response.content) {
                 let results = JSON.parse(response.content)
                 const { error } = results
-                
+
                 if (error) return callback(new Error(error))
 
-                if(!(results instanceof Array)) {
-                    results = [results]   
+                if (!(results instanceof Array)) {
+                    results = [results]
                 }
 
                 results.map(episode => episode.isFav = true)

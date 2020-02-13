@@ -1,5 +1,5 @@
 function searchSeason(querySeason, token, callback) {
-    // if (typeof querySeason !== 'string') throw new TypeError (`querySeason ${querySeason} is not a string`)
+    if (typeof querySeason !== 'string') throw new TypeError(`querySeason ${querySeason} is not a string`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
 
@@ -42,8 +42,10 @@ function searchSeason(querySeason, token, callback) {
                     const { error } = season
                     return callback(new Error(error))
 
+                } else if (response.status === 429) {
+                    return callback(new Error('API Limit'))
                 } else {
-                    return callback(new Error('Unkown error'))
+
                 }
             })
 
@@ -51,60 +53,3 @@ function searchSeason(querySeason, token, callback) {
     })
 
 }
-
-// function searchEpisodes (query, token, callback){
-
-//     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
-//     if (typeof query !== 'string') throw new TypeError(`query ${query} is not a string`)
-//     if (typeof callback !== 'function') throw new TypeError (`callback ${callback} is not a function`)
-
-//     call('http://skylabcoders.herokuapp.com/api/v2/users/', {
-//         method: 'GET',
-//         headers: { 'Authorization': 'Bearer ' + token },
-//     }, (error, response) => {
-
-//         if (error) return callback(error)
-
-//         const user = JSON.parse(response.content)
-
-//         const {error:_error} = user
-
-//         if (_error) return callback(new Error(_error))
-
-//        const {favs} = user
-
-//     })
-
-//     call (`https://rickandmortyapi.com/api/episode/${query}`,
-//         undefined, (error, response)=> {
-
-//         if (error) return callback(error)
-
-//         const episodes = JSON.parse(response.content)  
-
-
-//         if (response.status === 404){
-//             const {error} = episodes 
-//             return callback(new Error (error))
-
-//         } else {
-//             return callback(new Error('Unkown error'))
-
-//         if (response.status === 200) {
-
-//             if(favs.length){
-//                 episodes.forEach(episode => {
-//                     if(favs.includes(episode.id)) favs= true
-//                 })
-//             }
-
-//             return callback(undefined, episodes)
-//         }
-
-
-//         }
-
-
-//     }
-
-// })
