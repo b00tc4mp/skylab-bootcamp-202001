@@ -1,6 +1,7 @@
 function retrieveCharacterOfEpisodes(token, idArray, callback) {
-    // if (typeof id !== 'string') throw new TypeError(`id ${id} is not a string`)
+    if (!(idArray instanceof Array)) throw new TypeError(`idArray ${idArray} is not an array`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
+        if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
 
  call('https://skylabcoders.herokuapp.com/api/v2/users/', {
     method: 'GET',
