@@ -210,6 +210,7 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             if (this.state.characters) {
+                debugger
                 toggleFavoritesCharacters(token, id, error => {
                     if (error) this.__handleError__(error)
 
@@ -277,7 +278,7 @@ class App extends Component {
         try {
             const {token} = sessionStorage
             retrieveCharacterOfEpisodes(token, idArray, (error, characters)=>{
-                this.setState({view:'search', characters})
+                this.setState({view:'search', characters, episodes: undefined, detail: undefined})
             })
 
         }catch(error){
