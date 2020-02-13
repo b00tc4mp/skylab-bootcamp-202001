@@ -249,7 +249,6 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             if (this.state.characters) {
-                debugger
                 toggleFavoritesCharacters(token, id, error => {
                     if (error) this.__handleError__(error)
 
@@ -263,6 +262,7 @@ class App extends Component {
                     this.handleSearchEpisodes(this.state.query)
                 })
             } else if (this.state.favorites) {
+
                 if (this.state.view === 'favorite-characters') {
                     toggleFavoritesCharacters(token, id, error => {
                         if (error) this.__handleError__(error)
@@ -270,6 +270,7 @@ class App extends Component {
                         this.handleFavoritesCharacters()
                     })
                 } else if (this.state.view === 'favorite-episodes') {
+
                     toggleFavoritesEpisodes(token, id, error => {
                         if (error) this.__handleError__(error)
 
@@ -290,7 +291,7 @@ class App extends Component {
             retrieveFavCharacters(token, (error, favorites) => {
                 if (error) return this.__handleError__(error)
 
-                this.setState({ view: 'favorite-episodes', favorites, error: !favorites.length ? 'No Favorites' : undefined })
+                this.setState({ view: 'favorite-characters', favorites, error: !favorites.length ? 'No Favorites' : undefined })
             })
         } catch (error) {
             this.__handleError__(error)
