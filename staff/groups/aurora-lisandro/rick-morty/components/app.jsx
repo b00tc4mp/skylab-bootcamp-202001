@@ -265,9 +265,33 @@ class App extends Component {
         }
     }
 
+    handleStarring = (characters) => {
+        const results = characters.characters
+        const idArray=[]
+        
+        results.forEach(link => {
+            let arr=link.split('/')
+            let id = arr[arr.length-1]
+            idArray.push(id)
+        })
+        try {
+            const {token} = sessionStorage
+            retrieveCharacterOfEpisodes(token, idArray, (error, characters)=>{
+                this.setState({view:'search', characters})
+            })
+
+        }catch(error){
+            this.__handleError__(error)
+        }
+
+    }
+
 
     render() {
-        const { props: { title }, state: { view, episodes, error, characters, detail, favorites }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, handleFavoritesEpisodes } = this
+        const { props: { title }, state: { view, episodes, error, characters, detail, favorites }, 
+        handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit,
+        handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, 
+        handleFavoritesEpisodes,handleStarring } = this
 
         return <main className='app'>
 
@@ -293,8 +317,8 @@ class App extends Component {
             {view === 'seasons' && <SearchSeason onEpisodesClick={handleSearchEpisodes} />}
 
             {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} onItemFavClick={handleFavClick} />}
-
-            {view === 'detailEpisode' && <DetailsEpisode item={detail} />}
+            
+            {view === 'detailEpisode' && <DetailsEpisode item={detail} onLinkClick={handleStarring}/>}
 
             {view === 'detail' && <Details item={detail} />}
 

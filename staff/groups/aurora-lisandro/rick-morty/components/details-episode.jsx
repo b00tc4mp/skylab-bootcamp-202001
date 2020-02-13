@@ -1,4 +1,4 @@
-function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
+function DetailsEpisode({ item: { name, air_date, episode, characters }, onLinkClick, error}) {
     return <section className="details__card">
         {/* <div className ="details__card-item"> */}
 
@@ -27,9 +27,15 @@ function DetailsEpisode({ item: { name, air_date, episode, characters } }) {
         <ul className="details__card-list">
             <li className="details__list-item">
                 <p>Characters in the episode</p>
-                <p>{characters}</p>
+                <a className="details__link" href="" onClick={event => {
+                    event.preventDefault()
+
+                    onLinkClick({characters})
+                }}> Check the characters in this episode here!</a>
             </li>
         </ul>
+    
+        {error && <Feedback level="error" message={error} />}
 
     </section>
 }
