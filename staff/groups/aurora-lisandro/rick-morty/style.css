@@ -113,14 +113,24 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 .register {
   justify-content: space-evenly;
   width: 60%;
-  height: 50%;
+  height: 50vh;
   background-color: #79bac1;
   border-radius: 5px;
   margin-top: 2rem;
+  font-family: tomcat DEMO;
+  font-size: 1.5rem;
 }
 .register__link {
-  font-size: 0.7rem;
+  font-size: 1.3rem;
   text-align: center;
+  padding: 0.5rem;
+  color: #512b58;
+}
+.register__button {
+  font-size: 1rem;
+  font-family: tomcat DEMO;
+  border-bottom: #512b58;
+  color: #2a7886;
 }
 
 .results {
@@ -151,7 +161,6 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-size: 1.5rem;
 }
 .login__link {
-  font-size: 0.7rem;
   text-align: center;
   font-size: 1.3rem;
   padding: 0.5rem;
@@ -174,6 +183,9 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   font-family: Blueberry;
   font-size: 0.7rem;
   letter-spacing: 1px;
+}
+.details__link {
+  color: #512b58;
 }
 .details__back-button {
   flex-grow: 0.5;
@@ -217,7 +229,6 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 .details__card-list {
   background-color: #79bac1;
   margin: 0;
-  opacity: 0.7;
   width: 100%;
   height: 14%;
 }

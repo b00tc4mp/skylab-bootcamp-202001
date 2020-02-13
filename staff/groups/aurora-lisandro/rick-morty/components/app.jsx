@@ -377,9 +377,7 @@ class App extends Component {
 
             {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} onItemFavClick={handleFavClick} />}
 
-            {view === 'detailEpisode' && <DetailsEpisode item={detail} onLinkClick={handleStarring} />}
-
-            {view === 'detailEpisode' && <DetailsEpisode item={detail} on LinkClick={handleStarring} onBackButtonClick={handleBackToResults} />}
+            {view === 'detailEpisode' && <DetailsEpisode item={detail} onLinkClick={handleStarring} onBackButtonClick={handleBackToResults} />}
 
 
             {view === 'detail' && <Details item={detail} onBackButtonClick={handleBackToResults} />}
