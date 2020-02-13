@@ -1,6 +1,6 @@
-function Types({onChange, property, search}){
+function Types({onChange, property, search, address}){
 
-  const {types, address} = search
+  const {types} = search
 
   let options=  [  
     "Artifact",

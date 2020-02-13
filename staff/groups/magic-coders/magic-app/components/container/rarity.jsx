@@ -1,4 +1,4 @@
-function Rarity({onChange, property, search}){
+function Rarity({onChange, property, search, address}){
 
   const {rarity} = search
 
@@ -13,6 +13,7 @@ function Rarity({onChange, property, search}){
         data={options} 
         property={property} 
         defaultValue={rarity}
+        address={address}
       />
     </div>
   )
