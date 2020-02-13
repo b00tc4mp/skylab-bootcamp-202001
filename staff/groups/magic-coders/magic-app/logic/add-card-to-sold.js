@@ -1,4 +1,12 @@
+/** @function addCardToSold */
 function addCardToSold(id, token, callback) {
+
+/**
+ * @param {number} id - Need id from item to compare 
+ * @param {string} token - Need token to get users what got sales cards
+ * @param {function} callback - Return error /
+ */
+
     if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
@@ -17,13 +25,9 @@ function addCardToSold(id, token, callback) {
         //Logic
         let {sold, toSale} = user
         const card = toSale.filter(card => card.multiverseid === id)
-        toSale = toSale.filter(card => card.multiverseid !== id)
 
-        if (!sold) {
-            sold = card
-        } else {
-            sold.push(card[0])
-        }
+        toSale = toSale.filter(card => card.multiverseid !== id) //removed from toSale
+        sold ? sold.push(card[0]) : sold = card //add to solds
 
         call('https://skylabcoders.herokuapp.com/api/v2/users', {
             method: 'PATCH',
