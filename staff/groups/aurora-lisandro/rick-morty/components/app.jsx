@@ -8,7 +8,8 @@ class App extends Component {
         episodes: undefined,
         detail: undefined,
         favorites: undefined,
-        query: undefined
+        query: undefined,
+        season: undefined
     }
 
     __handleError__ = (error) => {
@@ -106,7 +107,7 @@ class App extends Component {
 
                 address.search = { season }
 
-                this.setState({ view: 'episodes', episodes, query: season })
+                this.setState({ view: 'episodes', episodes, season, query: season })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -183,7 +184,7 @@ class App extends Component {
 
     handleGoToFavorites = () => {
         address.clear()
-        this.setState({ view: 'favorites', favorites: undefined, characters: undefined, episodes: undefined, query: undefined })
+        this.setState({ view: 'favorites', favorites: undefined, characters: undefined, episodes: undefined, query: undefined, error: undefined })
     }
 
     handleGoToCharacters = () => {
@@ -193,7 +194,9 @@ class App extends Component {
             characters: undefined,
             episodes: undefined,
             detail: undefined,
-            query: undefined
+            query: undefined,
+            error: undefined,
+            season: undefined
         })
     }
 
@@ -204,7 +207,9 @@ class App extends Component {
             characters: undefined,
             episodes: undefined,
             detail: undefined,
-            query: undefined
+            query: undefined,
+            error: undefined,
+            season: undefined
         })
 
     }
@@ -253,7 +258,7 @@ class App extends Component {
             retrieveFavCharacters(token, (error, favorites) => {
                 if (error) return this.__handleError__(error)
 
-                this.setState({ view: 'favorite-characters', favorites })
+                this.setState({ view: 'favorite-episodes', favorites, error: !favorites.length ? 'No Favorites' : undefined })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -266,7 +271,7 @@ class App extends Component {
             retrieveFavEpisodes(token, (error, favorites) => {
                 if (error) return this.__handleError__(error)
 
-                this.setState({ view: 'favorite-episodes', favorites })
+                this.setState({ view: 'favorite-episodes', favorites, error: !favorites.length ? 'No Favorites' : undefined })
             })
         } catch (error) {
             this.__handleError__(error)
@@ -274,8 +279,9 @@ class App extends Component {
     }
 
     handleBackToResults = () => {
+        debugger
         if (address.hash.startsWith('episode/')) {
-            this.handleSearchEpisodes(this.state.query)
+            this.handleSearchEpisodes(this.state.season)
         } else if (address.hash.startsWith('character/')) {
             this.handleOnSubmit(this.state.query)
         }
@@ -313,11 +319,11 @@ class App extends Component {
 
             {view === 'detail' && <Details item={detail} onBackButtonClick={handleBackToResults} />}
 
-            {view === 'favorites' && !favorites && <Favorites onToFavCharacters={handleFavoritesCharacters} onToFavEpisodes={handleFavoritesEpisodes} />}
+            {view === 'favorites' && !favorites && <Favorites onToFavCharacters={handleFavoritesCharacters} onToFavEpisodes={handleFavoritesEpisodes} warning={error} />}
 
-            {view === 'favorite-characters' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+            {view === 'favorite-characters' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} handleClick={handleCharacterClick} warning={error} />}
 
-            {view === 'favorite-episodes' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} />}
+            {view === 'favorite-episodes' && favorites && <Results results={favorites} onItemFavClick={handleFavClick} handleClick={handleEpisodeClick} warning={error} />}
 
 
 
