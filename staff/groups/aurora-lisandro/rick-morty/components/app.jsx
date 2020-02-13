@@ -219,6 +219,7 @@ class App extends Component {
         const { token } = sessionStorage
         try {
             if (this.state.characters) {
+                debugger
                 toggleFavoritesCharacters(token, id, error => {
                     if (error) this.__handleError__(error)
 
@@ -279,7 +280,28 @@ class App extends Component {
         }
     }
 
-    handleBackToResults = () => {
+    handleStarring = (characters) => {
+        const results = characters.characters
+        const idArray=[]
+        
+        results.forEach(link => {
+            let arr=link.split('/')
+            let id = arr[arr.length-1]
+            idArray.push(id)
+        })
+        try {
+            const {token} = sessionStorage
+            retrieveCharacterOfEpisodes(token, idArray, (error, characters)=>{
+                this.setState({view:'search', characters, episodes: undefined, detail: undefined})
+            })
+
+        }catch(error){
+            this.__handleError__(error)
+        }
+
+    }
+      
+      handleBackToResults = () => {
         if (address.hash.startsWith('episode/')) {
             this.handleSearchEpisodes(this.state.season)
         } else if (address.hash.startsWith('character/')) {
@@ -287,8 +309,13 @@ class App extends Component {
         }
     }
 
+
+
     render() {
-        const { props: { title }, state: { view, episodes, error, characters, detail, favorites }, handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit, handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, handleFavoritesEpisodes, handleBackToResults } = this
+        const { props: { title }, state: { view, episodes, error, characters, detail, favorites }, 
+        handleLogin, handleOnToRegister, handleRegister, handleOnToLogin, handleGoToCharacters, handleGoToEpisodes, handleOnSubmit,
+        handleSearchEpisodes, handleCharacterClick, handleLogout, handleEpisodeClick, handleFavClick, handleGoToFavorites, handleFavoritesCharacters, 
+        handleFavoritesEpisodes,handleStar
 
         return <main className='app'>
 
@@ -318,7 +345,10 @@ class App extends Component {
 
             {view === 'episodes' && episodes && <Results results={episodes} handleClick={handleEpisodeClick} onItemFavClick={handleFavClick} />}
 
-            {view === 'detailEpisode' && <DetailsEpisode item={detail} onBackButtonClick={handleBackToResults} />}
+            {view === 'detailEpisode' && <DetailsEpisode item={detail} onLinkClick={handleStarring}/>}
+
+            {view === 'detailEpisode' && <DetailsEpisode item={detail} on LinkClick={handleStarring} onBackButtonClick={handleBackToResults} />}
+
 
             {view === 'detail' && <Details item={detail} onBackButtonClick={handleBackToResults} />}
 
