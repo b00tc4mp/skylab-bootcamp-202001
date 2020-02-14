@@ -5,7 +5,7 @@
 
 - ### Victori Murillo Mora
 - ### Ruben Ponce Cañadas
-- ### Carlos Garcia Matilla
+- ### Carlos García Matilla
 
 <br>
 
