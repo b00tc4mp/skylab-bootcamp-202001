@@ -1,0 +1,88 @@
+@import variables
+.footer
+    background-color: #383838
+    z-index: 1000
+    width: 100%
+    min-height: $heigth-footer 
+    display: flex
+    justify-content: space-between
+    border-top: 1px solid #c7c7c7
+    
+    &__nav
+       
+
+        &__icons
+            display: flex
+            align-items: center
+            justify-content: flex-start
+            padding-left: 1rem
+            width: 33%
+            &__icon
+                margin: .5rem .5rem 0rem
+                cursor: pointer 
+                font-size: 1.5rem
+                &:hover
+                    color: #be630ex
+                &__facebook
+                    color: #3578E5
+                &__twitter
+                    color: rgb(29, 161, 242)
+                &__twitch
+                   color: #9147ff
+                &__youtube
+                    color: #f00
+                &__instagram
+                    color: white
+                    
+        &__about
+            display: flex
+            align-items: center
+            justify-content: center
+            cursor: pointer
+            font-size: 1.4rem
+            font-family: 'Montserrat', sans-serif
+            color: white
+            width: 33%
+            &:hover
+               color: #be630e
+        &__language
+            padding-right: 1rem
+            display: flex
+            align-items: center
+            justify-content: flex-end
+            width: 33%
+            cursor: pointer
+            font-size: 1rem
+            margin-bottom: .5rem
+            &:hover
+               color: #be630e
+
+
+
+
+                
+
+@media ( max-width: 698px )
+    .footer
+        display: none
+        position: fixed
+        bottom: 0px
+
+        flex-direction: column
+        align-items: center
+        &__nav__icons
+            display: flex
+            justify-content: center
+        &__nav__about
+            display: flex
+            justify-content: center
+            padding: 0.5rem
+
+        &__nav__language
+            display: flex
+            justify-content: center
+            padding: 0.5rem
+            
+        
+
+    
