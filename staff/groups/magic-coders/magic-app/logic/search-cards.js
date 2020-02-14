@@ -6,10 +6,8 @@
  */
 
 function searchCards(query, callback) {
-
-
-  if (!(query instanceof Object)) throw new TypeError(`${query} is not an object`)
-  if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
+  if (!(query instanceof Object)) throw new TypeError(`query ${query} is not an object`)
+  if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
  
   address.search = query
 
