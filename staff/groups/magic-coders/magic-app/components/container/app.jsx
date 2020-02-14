@@ -224,7 +224,6 @@ class App extends Component {
     try {
       address.hash = ""
       const { token } = sessionStorage
-
       retrieveUser(token, (error, { toSale, sold }) => {
         if (!toSale) toSale = []
 
