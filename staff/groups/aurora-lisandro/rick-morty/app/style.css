@@ -1,3 +1,15 @@
+@font-face {
+  font-family: Blueberry;
+  src: url("rick-morty/app/fonts/blueberry-regular.otf");
+}
+@font-face {
+  font-family: tomcat DEMO;
+  src: url("rick-morty/app/fonts/tomcat.otf");
+}
+@font-face {
+  font-family: Get Schwifty;
+  src: url("rick-morty/app/fonts/get-schwifty.ttf");
+}
 body {
   margin: 0;
   padding: 0;
