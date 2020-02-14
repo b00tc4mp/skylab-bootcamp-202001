@@ -1,10 +1,12 @@
-/** @function searchCards */
-function searchCards(query, callback) {
-
-/**
+/** @function searchCards
  * @param {object} query - Query, contains all filters added and query for the search
  * @param {function} callback - Return error / cards 
+ * @throw - Will throw an error if query is not an object
+ * @throw - Will throw an error if callback is not a function
  */
+
+function searchCards(query, callback) {
+
 
   if (!(query instanceof Object)) throw new TypeError(`${query} is not an object`)
   if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)

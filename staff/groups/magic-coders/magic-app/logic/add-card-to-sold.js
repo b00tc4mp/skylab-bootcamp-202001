@@ -1,11 +1,13 @@
-/** @function addCardToSold */
-function addCardToSold(id, token, callback) {
-
-/**
+/** @function addCardToSold
  * @param {number} id - Need id from item to compare 
  * @param {string} token - Need token to get users what got sales cards
- * @param {function} callback - Return error /
+ * @param {function} callback - Return error / ok
+ * @throw - Will throw an error if id is not a number
+ * @throw - Will throw an error if token is not a string
+ * @throw - Will throw an error if callback is not a function
  */
+
+function addCardToSold(id, token, callback) {
 
     if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
