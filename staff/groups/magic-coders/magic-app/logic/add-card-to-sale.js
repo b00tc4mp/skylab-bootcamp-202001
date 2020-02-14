@@ -18,7 +18,7 @@ function addCardToSale(card, token, callback) {
 
     const [header, payload, signature] = token.split('.')
     if(!header || !payload || !signature) throw new Error('invalid token')
-    
+
     for (const key in card) {
         const value = card[key]
         let expect = key === 'multiverseid' ? 'number' : 'string'
