@@ -532,6 +532,7 @@ table {
 @media screen and (max-width: 700px) {
   .filter {
     width: 100%;
+    height: 100vh;
   }
 }
 .select {
@@ -613,6 +614,9 @@ table {
 
 @media (max-width: 698px) {
   .footer {
+    display: none;
+    position: fixed;
+    bottom: 16px;
     flex-direction: column;
     align-items: center;
   }
@@ -626,18 +630,9 @@ table {
     padding: 0.5rem;
   }
   .footer__nav__language {
-    grid-area: 1/1/span 1/span 1;
-    font-size: 1.5rem;
-  }
-  .footer p {
-    grid-area: 2/1/span 1/span 1;
-    text-align: right;
-  }
-}
-@media (max-width: 698px) {
-  .footer {
-    position: fixed;
-    bottom: 16px;
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
   }
 }
 .main-container {
@@ -657,6 +652,7 @@ table {
 
 @media screen and (max-width: 700px) {
   .main-container {
+    height: 0;
     flex-direction: column;
     align-items: center;
   }

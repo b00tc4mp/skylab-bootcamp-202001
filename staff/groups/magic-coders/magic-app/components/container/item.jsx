@@ -1,5 +1,6 @@
 function Item ({item, onClick, view, users, toSold, viewProfile}) {
-  
+
+
   let {multiverseid, name, imageUrl, user} = item
   let email = undefined
   let phone = undefined

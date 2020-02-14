@@ -34,13 +34,17 @@ class App extends Component {
 
               this.setState({ view: 'search', user })
 
+
+              console.log(address.hash.startsWith('cards/'))
+              console.log(address.hash);
+
               if (Object.keys(address.search).length) {
 
                 this.setState({search: address.search, address: true})
 
                 this.handleSearch({q: address.search})
 
-              } else if (address.hash && address.hash.startsWith('vehicles/')) {
+              } else if (address.hash && address.hash.startsWith('cards/')) {
                 const [, id] = address.hash.split('/')
 
                 this.handleDetail(id)
@@ -160,7 +164,20 @@ handleGoToLogin = () => this.setState({view: "login"})
     this.setState({ search: { ...search, [property]: stringColors } })
   }
 
-  handleDetail = card => this.setState({card, cards: [], view:'detail'})
+  handleDetail = card => {
+
+    if (typeof card === 'string') {
+      retrieveCard(card, (error, cardObj) => {
+        address.hash = `cards/${cardObj.multiverseid}`
+
+        this.setState({card:cardObj, cards: [], view:'detail'})
+      })
+    } else {
+      address.hash = `cards/${card.multiverseid}`
+      this.setState({card, cards: [], view:'detail'})
+    }
+    
+  }
 
   handleSidebar = () => this.setState({sidebar: !this.state.sidebar})
 
