@@ -12,10 +12,11 @@ The registered user can search for filtered cards by name, color, type, rarity o
 
 ![titulo](magic-doc/user-cases-magic.jpg)
 
-## Tecnical description
-
 ### Workflow
 ![titulo](magic-doc/workflow.jpg)
 
+## Tecnical description
+
 ## Blocks
 ![titulo](magic-doc/blocks.jpg)
+
