@@ -10,16 +10,25 @@ The registered user can search for filtered cards by name, color, type, rarity o
 
 ### Use cases
 
-![titulo](magic-doc/user-cases-magic.jpg)
+![titulo](user-cases-magic.jpg)
 
 ## Tecnical description
 
 ### Workflow
-![titulo](magic-doc/workflow.jpg)
+![titulo](workflow.jpg)
 
 ## Blocks
-![titulo](magic-doc/blocks.jpg)
+![titulo](blocks.jpg)
+
+## Sequences
+
+![titulo](sequences.jpg)
+
+## Class
+
+![titulo](class-diagram.jpg)
+
 
 ## Data Model
 
-![titulo](magic-doc/data-model.jpg)
+![titulo](data-model.jpg)

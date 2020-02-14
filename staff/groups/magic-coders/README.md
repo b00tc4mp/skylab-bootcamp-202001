@@ -11,18 +11,6 @@
 
 ## Planing
 
+[Trello - Magic Board](https://trello.com/b/G2cBD5aS/magic)
 
-### Workflow
-![titulo](magic-doc/workflow.jpg)
-
-## Tecnical description
-
-## Blocks
-![titulo](magic-doc/blocks.jpg)
-
-## Modules
-![titulo](magic-doc/modules.jpg)
-
-## Sequences
-![titulo](magic-doc/sequences.jpg)
 
