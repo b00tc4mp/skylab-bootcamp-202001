@@ -31,13 +31,15 @@ class App extends Component {
             'seasons': this.handleGoToCharacters
         }
 
-        let handle
+
 
         for (const key in hashValues) {
-            if (address.startsWith(key)) handle = hashValues[key]
+            if (address.startsWith(key)) {
+                return hashValues[key]
+            }
         }
 
-        handle()
+
     }
 
     componentWillMount() {
@@ -77,8 +79,8 @@ class App extends Component {
 
                         this.handleEpisodeClick(id)
                     } else if (address.hash) {
-                        this.__hashMap__(address.hash)
-
+                        const action = this.__hashMap__(address.hash)
+                        action()
                     } else {
                         this.setState({ view: 'landing' })
                     }
@@ -146,13 +148,13 @@ class App extends Component {
         try {
             const { token } = sessionStorage
 
-            address.search = query
+
             this.setState({ query })
 
-            query = createQueryString(query)
+
             searchCharacters(query, token, (error, response) => {
                 if (error) return this.__handleError__(error)
-
+                address.search = query
                 const { results } = response
                 this.setState({ view: 'search', characters: results, query })
             })
@@ -232,7 +234,7 @@ class App extends Component {
     }
 
     handleGoToEpisodes = () => {
-        addres.hash = 'seasons'
+        address.hash = 'seasons'
         this.setState({
             view: 'seasons',
             characters: undefined,
