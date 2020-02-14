@@ -1,3 +1,12 @@
+/* * Function description
+ * It authenticate the credentials of the user
+ * @ Constructor
+ * param {string} username - The username of the user
+ * param {string} password - The password of the user
+ * param {function} callback - The callback that returns the user token or an error response
+ */
+
+
 function authenticateUser(username, password, callback) {
     if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
     if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)

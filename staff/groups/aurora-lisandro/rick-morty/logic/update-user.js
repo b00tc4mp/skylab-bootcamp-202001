@@ -1,3 +1,13 @@
+/* * Function description
+* It update the data of the user
+* @Constructor
+* param {string} token - is necesary for get the user data
+* param {string} data - The user data that the user wants to change
+* param {function} callback - The callback that returns nothing or an error response
+*/
+
+
+
 function updateUser(token, data, callback) {
     if (typeof token !== 'string') new TypeError(`token ${token} is not a 
     string`)

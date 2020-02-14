@@ -1,3 +1,12 @@
+/* * Function description
+It retrieves all of characters that show in an episode and chekcs if they are favorites or not of the user
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {idArray} array - it is an array of the id of the characters
+* param {callback} function - it returns the character list
+
+*/
+
 function retrieveCharacterOfEpisodes(token, idArray, callback) {
     if (!(idArray instanceof Array)) throw new TypeError(`idArray ${idArray} is not an array`)
     if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)

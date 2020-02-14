@@ -1,3 +1,13 @@
+/* * Function description
+It retrieves a detail of a character and chekcs if it is one of the user favorites
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {id} number - it is the id of the character
+* param {callback} function - it returns the character details or an error
+
+*/
+
+
 function retrieveCharacter(token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
