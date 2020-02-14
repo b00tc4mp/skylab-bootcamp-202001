@@ -11,7 +11,7 @@
 
 ## Planing
 
-<a href="https://trello.com/b/G2cBD5aS/magic">Trello - Magic Board</a>
+<a href="https://trello.com/b/G2cBD5aS/magic" target="_blank">Trello - Magic Board</a>
 
 <!-- [Trello - Magic Board](https://trello.com/b/G2cBD5aS/magic) -->
 
