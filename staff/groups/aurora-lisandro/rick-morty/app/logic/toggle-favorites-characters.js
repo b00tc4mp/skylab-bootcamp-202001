@@ -1,3 +1,13 @@
+/* * Function description
+It add or remove a character from the favorites list of the user
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {id} number - it is the id of the character
+* param {callback} function - it returns nothing or an error
+
+*/
+
+
 function toggleFavoritesCharacters(token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
@@ -19,11 +29,11 @@ function toggleFavoritesCharacters(token, id, callback) {
 
         if (response.content) {
             const user = JSON.parse(response.content)
-            let { error, favCharacters = [] } = user //let en vez de const
+            let { error, favCharacters = [] } = user 
 
             if (error) return callback(new Error(error))
 
-            if (!favCharacters.length ) { //cambio
+            if (!favCharacters.length ) { 
                 favCharacters=[id]
             } else {favCharacters.toggle(id)}
 

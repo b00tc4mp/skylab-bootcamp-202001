@@ -167,7 +167,7 @@ class App extends Component {
         try {
             const { token } = sessionStorage
             retrieveEpisode(token, id, (error, detail) => {
-                if (error) console.log(error)
+                if (error) return this.__handleError__(error) 
                 address.hash = `episode/${id}`
 
                 this.setState({ view: 'detailEpisode', detail, query: id })
@@ -179,10 +179,9 @@ class App extends Component {
 
     handleCharacterClick = (id) => {
         try {
-            console.log(typeof id)
             const { token } = sessionStorage
             retrieveCharacter(token, id, (error, detail) => {
-                if (error) console.log(error)
+                if (error) return this.__handleError__(error)
 
                 address.hash = `character/${id}`
 
@@ -357,8 +356,7 @@ class App extends Component {
                 onLogout={handleLogout}
                 onToCharacters={handleGoToCharacters}
                 onToEpisodes={handleGoToEpisodes}
-                onToFavs={handleGoToFavorites}
-                onToProfile={() => { console.log('profile') }} />}
+                onToFavs={handleGoToFavorites} />}
 
             {view === 'login' && <img className="title" src={title} />}
 

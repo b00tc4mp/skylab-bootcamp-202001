@@ -1,3 +1,11 @@
+/* * Function description
+It retrieves all of favorites characters of the user
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {callback} function - it returns all favorites characters of the user or an error
+
+*/
+
 function retrieveFavCharacters(token, callback) { 
     if (typeof token !== 'string') throw new Error(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new Error(`callback ${callback} is not a function`)

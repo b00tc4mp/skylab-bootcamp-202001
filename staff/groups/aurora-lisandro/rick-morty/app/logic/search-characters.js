@@ -1,3 +1,12 @@
+/* * Function description
+It search characters with filters
+* @Constructor
+* param {object} query - are the user search parameters 
+* param {string} token - it is necesary for get the user favorites information
+* param {callback} function - it returns the filter characters of the search or an error
+
+*/
+
 function searchCharacters(query, token, callback) {
     if (typeof query !== 'object') throw new TypeError(`query ${query} is not an object`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)

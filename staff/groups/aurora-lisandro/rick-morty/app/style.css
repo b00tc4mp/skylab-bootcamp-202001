@@ -292,22 +292,43 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 @media screen and (min-width: 768px) {
   .details {
     height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
   .details__card {
     height: 100%;
     width: 60%;
-    flex-direction: column;
+    flex-wrap: wrap;
     border-radius: 0 0 0 5px;
-    justify-content: flex-end;
   }
   .details__card-list {
-    height: 22.5%;
+    height: 65%;
   }
   .details__card-item {
     border-radius: 5px 0 0 5px;
+    width: 60%;
   }
   .details__img {
     border-radius: 5px 0 0 0;
+  }
+  .details__list-container {
+    width: 40%;
+    height: 43.5%;
+  }
+  .details__episodesList-container {
+    height: 100%;
+  }
+  .details__episodesList-item {
+    height: 25%;
+    font-size: 1.5rem;
+    padding-left: 0.5rem;
+  }
+  .details__episodeCard {
+    display: block;
+  }
+  .details__episodesList {
+    height: 50%;
   }
 }
 .item__img {
@@ -520,6 +541,12 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 .title {
   width: 100%;
   background-color: #f1f3f4;
+}
+
+.back-button {
+  font-size: 1rem;
+  font-family: tomcat DEMO;
+  color: #512b58;
 }
 
 @media (min-width: 768px) {
