@@ -3,14 +3,16 @@
 
 ## STAFF
 
-- ### Victori Murillo Mora
-- ### Ruben Ponce Cañadas
-- ### Carlos García Matilla
+- Victori Murillo Mora
+- Ruben Ponce Cañadas
+- Carlos García Matilla
 
 <br>
 
 ## Planing
 
-[Trello - Magic Board](https://trello.com/b/G2cBD5aS/magic)
+<a href="https://trello.com/b/G2cBD5aS/magic">Trello - Magic Board</a>
+
+<!-- [Trello - Magic Board](https://trello.com/b/G2cBD5aS/magic) -->
 
 

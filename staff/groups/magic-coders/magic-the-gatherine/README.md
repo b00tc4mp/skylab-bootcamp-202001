@@ -6,5 +6,7 @@
 
 ## Production
 
-[Magic The Gatherine App](http://magic-skylab.surge.sh/)
+<a href="http://magic-skylab.surge.sh/">Magic The Gatherine App</a>
+
+<!-- [Magic The Gatherine App](http://magic-skylab.surge.sh/) -->
 
