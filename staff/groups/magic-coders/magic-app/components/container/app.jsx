@@ -182,9 +182,11 @@ handleGoToLogin = () => this.setState({view: "login"})
   handleSidebar = () => this.setState({sidebar: !this.state.sidebar})
 
   onToComponent = view => {
+  
     if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
     // if (view === 'search') this.setState({view, cards: [], search: {}, language: undefined})
-    else if (view === 'forsale') {
+    else if (view === 'forsale') {  
+      address.hash=''
       const {token} = sessionStorage
       retrieveCardsSales(token, (error, cards, users) => {
         this.setState({cards, users, view})
@@ -207,6 +209,7 @@ handleGoToLogin = () => this.setState({view: "login"})
   }
 
   handleProfile = () => {
+    address.hash=''
     const {token} = sessionStorage
 
     retrieveUser(token, (error, {toSale, sold}) => {

@@ -6,19 +6,20 @@
 
 
   .profile__header
-    height: 3.5em
+    min-height: 3rem
     width: 100%
     display: flex
     justify-content: space-between
-    background-color: rgba(0,0,0)
+    background-color: #272727
 
   &__estadistics
-    width: 50%
+    
     display: flex
     justify-content: center
     align-items: center
+    padding: 0.5rem
     p 
-      margin-right: 2em
+      margin: 1rem
       font-size: 1.25em
    
 
@@ -27,20 +28,26 @@
     align-items: center
     justify-content: center
     font-size: 1.5em
-    width: 25%
+  
+    padding: 0.5rem
     
 
   &__buttons
-    width: 25%
+ 
     display: flex
     justify-content: center
     align-items: center
+    padding: 0.5rem
 
     button 
-      border-radius: 1.5em
-      margin-right: 1em
-      width: 50%
-      padding: 0.75em
+        border: 1px solid white
+        border-radius: 1rem
+        width: 5rem
+        padding: 0.5rem
+        
+        margin: 0.5rem
+        outline: none
+        
 
   &__content
     
@@ -49,8 +56,16 @@
     align-items: center
     flex-wrap: wrap
     color: black
-    // border: 1px solid red
 
-    img
-      margin: 1em
+      
 
+@media ( max-width: 698px )
+  .profile__header
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    &__estadistics
+      width: 0
+      display: flex
+      justify-content: center
