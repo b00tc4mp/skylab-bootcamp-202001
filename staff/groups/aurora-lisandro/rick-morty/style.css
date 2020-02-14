@@ -298,7 +298,7 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
   }
   .details__card {
     height: 100%;
-    width: 70%;
+    width: 60%;
     flex-wrap: wrap;
     border-radius: 0 0 0 5px;
   }
@@ -313,7 +313,22 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
     border-radius: 5px 0 0 0;
   }
   .details__list-container {
-    margin-left: 4px;
+    width: 40%;
+    height: 43.5%;
+  }
+  .details__episodesList-container {
+    height: 100%;
+  }
+  .details__episodesList-item {
+    height: 25%;
+    font-size: 1.5rem;
+    padding-left: 0.5rem;
+  }
+  .details__episodeCard {
+    display: block;
+  }
+  .details__episodesList {
+    height: 50%;
   }
 }
 .item__img {
@@ -526,6 +541,12 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 .title {
   width: 100%;
   background-color: #f1f3f4;
+}
+
+.back-button {
+  font-size: 1rem;
+  font-family: tomcat DEMO;
+  color: #512b58;
 }
 
 @media (min-width: 768px) {
