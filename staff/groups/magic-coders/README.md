@@ -20,3 +20,9 @@ The registered user can search for filtered cards by name, color, type, rarity o
 ## Blocks
 ![titulo](magic-doc/blocks.jpg)
 
+## Modules
+![titulo](magic-doc/modules.jpg)
+
+## Sequences
+![titulo](magic-doc/sequences.jpg)
+
