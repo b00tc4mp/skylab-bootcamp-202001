@@ -77,15 +77,21 @@
 @media screen and ( min-width: 768px )
     .details
         height: 65%
+        display: flex
+        justify-content: center
+        align-items: flex-start
         &__card
             height: 100%
-            width: 60%
-            flex-direction: column
+            width: 70%
+            flex-wrap: wrap
             border-radius: 0 0 0 5px
-            justify-content: flex-end
         &__card-list
-            height: 22.5%
+            height: 65%
+            
         &__card-item
             border-radius: 5px 0 0 5px
+            width: 60%
         &__img
-            border-radius: 5px 0 0 0    
+            border-radius: 5px 0 0 0 
+        &__list-container
+            margin-left: 4px

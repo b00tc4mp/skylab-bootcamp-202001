@@ -292,22 +292,28 @@ h1, h2, h3, h4, h5, h6, .searchSeason__title {
 @media screen and (min-width: 768px) {
   .details {
     height: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
   .details__card {
     height: 100%;
-    width: 60%;
-    flex-direction: column;
+    width: 70%;
+    flex-wrap: wrap;
     border-radius: 0 0 0 5px;
-    justify-content: flex-end;
   }
   .details__card-list {
-    height: 22.5%;
+    height: 65%;
   }
   .details__card-item {
     border-radius: 5px 0 0 5px;
+    width: 60%;
   }
   .details__img {
     border-radius: 5px 0 0 0;
+  }
+  .details__list-container {
+    margin-left: 4px;
   }
 }
 .item__img {
