@@ -1,7 +1,7 @@
 # Magic-the-gathering
 
 # Introduction
-Application of search and sale of cards
+Application of search and sale of cards.
 
 ![](magic-doc/mtggif.gif)
 
@@ -19,3 +19,7 @@ The registered user can search for filtered cards by name, color, type, rarity o
 
 ## Blocks
 ![titulo](magic-doc/blocks.jpg)
+
+## Data Model
+
+![titulo](magic-doc/data-model.jpg)
