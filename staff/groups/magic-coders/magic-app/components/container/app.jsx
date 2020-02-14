@@ -45,13 +45,15 @@ class App extends Component {
         })
       } catch (error) {
         this.logout()
-      }
-    else this.logout()
+      } else
+        this.logout()
   }
 
   logout = () => {
     sessionStorage.clear()
     address.clear()
+
+    
 
     this.setState({
       view: "login",
