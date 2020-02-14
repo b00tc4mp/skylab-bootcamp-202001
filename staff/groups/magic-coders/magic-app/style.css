@@ -270,12 +270,13 @@ table {
   flex-direction: column;
   color: white;
   background-color: #272727;
-  border-radius: 0.75rem;
+  border-radius: 3rem;
   margin: 2rem;
   box-shadow: 15px 25px 39px 1px rgba(0, 0, 0, 0.8);
   transition: all 0.2s ease-in-out;
   transform: scale(1);
   cursor: pointer;
+  font-family: "Montserrat", sans-serif;
 }
 .item:hover {
   transition: all 200ms ease-in;
@@ -283,6 +284,25 @@ table {
 }
 .item img {
   border-radius: 1rem;
+}
+.item div h2 {
+  padding: 0.5rem;
+  font-size: 1.25rem;
+}
+.item div div {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.item button {
+  border: 1px solid white;
+  border-radius: 1rem;
+  width: 5rem;
+  padding: 0.5rem;
+  width: 5rem;
+  margin: 0.5rem;
+  outline: none;
+  margin: 0.75rem;
 }
 
 .detail {
@@ -568,7 +588,7 @@ table {
   font-size: 1.5rem;
 }
 .footer__nav__icons__icon:hover {
-  color: #be630e;
+  color: #be630ex;
 }
 .footer__nav__icons__icon__facebook {
   color: #3578E5;
@@ -616,7 +636,7 @@ table {
   .footer {
     display: none;
     position: fixed;
-    bottom: 16px;
+    bottom: 0px;
     flex-direction: column;
     align-items: center;
   }
@@ -668,6 +688,7 @@ table {
   width: 100vw;
   height: 100vh;
   z-index: 1;
+  background-color: black;
 }
 
 .container-login:before, .container-login:after {
@@ -686,6 +707,7 @@ table {
   background-position: center, center;
   background-repeat: no-repeat, repeat;
   z-index: 2;
+  animation: fadeInFromNone 4s linear;
 }
 
 .container-login:after {
@@ -694,6 +716,18 @@ table {
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 1;
+  animation: fadeInFromNone 4s linear;
+}
+@-webkit-keyframes fadeInFromNone {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .bg-modal-sidebar {
@@ -791,20 +825,20 @@ table {
   width: 100%;
 }
 .profile .profile__header {
-  height: 3.5em;
+  min-height: 3rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  background-color: black;
+  background-color: #272727;
 }
 .profile__estadistics {
-  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem;
 }
 .profile__estadistics p {
-  margin-right: 2em;
+  margin: 1rem;
   font-size: 1.25em;
 }
 .profile__name {
@@ -812,19 +846,21 @@ table {
   align-items: center;
   justify-content: center;
   font-size: 1.5em;
-  width: 25%;
+  padding: 0.5rem;
 }
 .profile__buttons {
-  width: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0.5rem;
 }
 .profile__buttons button {
-  border-radius: 1.5em;
-  margin-right: 1em;
-  width: 50%;
-  padding: 0.75em;
+  border: 1px solid white;
+  border-radius: 1rem;
+  width: 5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  outline: none;
 }
 .profile__content {
   display: flex;
@@ -833,10 +869,20 @@ table {
   flex-wrap: wrap;
   color: black;
 }
-.profile__content img {
-  margin: 1em;
-}
 
+@media (max-width: 698px) {
+  .profile__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .profile__header__estadistics {
+    width: 0;
+    display: flex;
+    justify-content: center;
+  }
+}
 .button {
   cursor: pointer;
 }
