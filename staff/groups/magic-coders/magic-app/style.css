@@ -636,7 +636,7 @@ table {
   .footer {
     display: none;
     position: fixed;
-    bottom: 16px;
+    bottom: 0px;
     flex-direction: column;
     align-items: center;
   }
@@ -822,19 +822,23 @@ table {
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
+  min-width: 50%;
 }
 .profile__estadistics p {
-  margin: 1rem;
+  margin: 0.5rem;
   font-size: 1.25em;
+  text-align: center;
 }
 .profile__name {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5em;
+  min-width: 25%;
   padding: 0.5rem;
 }
 .profile__buttons {
+  min-width: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -863,10 +867,17 @@ table {
     align-items: center;
     justify-content: space-between;
   }
-  .profile__header__estadistics {
-    width: 0;
+
+  .profile__estadistics {
+    width: 100%;
     display: flex;
     justify-content: center;
+  }
+  .profile__name {
+    width: 100%;
+  }
+  .profile__buttons {
+    width: 100%;
   }
 }
 .button {
