@@ -276,7 +276,6 @@ class App extends Component {
       },
 
       addToSale,
-      handleLanguage,
       handleLangSelect,
       handleSearch,
       handleSelect,
