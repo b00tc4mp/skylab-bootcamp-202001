@@ -1,0 +1,72 @@
+
+.nav
+    box-sizing: border-box
+    background-color: #79bac1
+    position: sticky
+    top: 0
+    display: flex
+    justify-content: space-between
+    color: #2a7886
+    padding: 0.3rem
+    width: 100%
+    font-size: 1.5rem
+
+
+    &__right-container
+        height: 25%
+
+    &__options
+        display: none
+        flex-direction: column
+        justify-content: space-around
+        font-size: 1rem
+        position: absolute
+        height: 50vh
+        top: 100%
+        left: 0px
+        background-color: #79bac1
+        width: 100%
+        color: 2a7886
+        padding-left: 0.5rem
+
+    &__link, &__logout
+        padding: 0 0.5rem
+        font-size: 1.5rem
+        cursor: pointer
+        font-family: tomcat DEMO
+
+    // &__menu
+    //     display: flex
+    //     flex-direction: column
+    &__logout
+        text-align: left
+        color: #2a7886
+        
+    &__user
+        color: #2a7886
+        top: 0
+        font-size: 1rem
+        padding-right: 0.5rem
+    //&__left-container
+
+
+@media ( min-width: 768px )
+    .nav
+        width: 100%
+
+        &__options
+            display: flex
+            flex-direction: row
+            top: 0
+            height: 0
+
+        &__menu
+            display: none
+        
+        &__user
+            visibility: hidden
+
+
+    
+
+ 

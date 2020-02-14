@@ -15,7 +15,7 @@ This app was created with React, no frameworks where used. It is designed to mak
 
 The user API is used to store user data and get it. While the Rick and Morty API is only for getting data.
 
-Using this 2 API's we can create a flow to get data from on and store it in the other, and so molding the data of the user to display the correct info in the view.
+Using this 2 API's we can create a flow to get data from one and store it in the other, and so molding the data of the user to display the correct info in the view.
 
 ### Use Cases
 ![](images/use-cases.jpg)
