@@ -11,7 +11,7 @@ function Register({ onSubmit, onToLogin, error }) {
         <input type="text" className="register__input" name="name" placeholder="Name" />
         <input type="text" className="register__input" name="surname" placeholder="Surname" />
         <input type="text" className="register__input" name="username" placeholder="Username" />
-        <input type="text" className="register__input" name="password" placeholder="Password" />
+        <input type="password" className="register__input" name="password" placeholder="Password" />
 
         <button className="register__button" type="submit">Register</button>
 
