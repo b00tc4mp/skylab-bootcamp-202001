@@ -1,3 +1,12 @@
+/* * Function description
+It retrieves all of favorites episodes of the user
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {callback} function - it returns all favorites episodes of the user or an error
+
+*/
+
+
 function retrieveFavEpisodes(token, callback) {
     if (typeof token !== 'string') throw new Error(`token ${token} is not a string`)
     if (typeof callback !== 'function') throw new Error(`callback ${callback} is not a function`)

@@ -1,3 +1,12 @@
+/* * Function description
+It retrieves a detail of an episode and chekcs if it is one of the user favorites
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {id} number - it is the id of the episode
+* param {callback} function - it returns the episode details or an error
+
+*/
+
 function retrieveEpisode(token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
 

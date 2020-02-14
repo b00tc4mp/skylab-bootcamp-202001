@@ -1,3 +1,13 @@
+/* * Function description
+It search episodes from a season
+* @Constructor
+* param {string} querySeason - is season name identifier
+* param {string} token - it is necesary for get the user favorites information
+* param {callback} function - it returns the episodes of the season of the search or an error
+
+*/
+
+
 function searchSeason(querySeason, token, callback) {
     if (typeof querySeason !== 'string') throw new TypeError(`querySeason ${querySeason} is not a string`)
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)

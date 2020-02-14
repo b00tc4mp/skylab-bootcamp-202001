@@ -1,3 +1,13 @@
+/* * Function description
+It add or remove an episode from the favorites list of the user
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {id} number - it is the id of the episode
+* param {callback} function - it returns nothing or an error
+
+*/
+
+
 function toggleFavoritesEpisodes(token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
     if (typeof id !== 'number') throw new TypeError(`id ${id} is not a number`)
