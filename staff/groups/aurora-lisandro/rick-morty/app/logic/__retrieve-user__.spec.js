@@ -54,7 +54,7 @@ describe('__retrieveUser__', () => {
         })
 
         it('should succeed on valid token', done => {
-            retrieveUser(token, (error, user) => {
+            __retrieveUser__(token, (error, user) => {
                 expect(error).toBeUndefined()
                 expect(user).toBeDefined()
 
@@ -77,7 +77,7 @@ describe('__retrieveUser__', () => {
         })
 
         it('should fail on invalid token', done => {
-            retrieveUser(`${token}-wrong`, error => {
+            __retrieveUser__(`${token}-wrong`, error => {
                 expect(error).toBeDefined()
                 expect(error.message).toBe('invalid token')
 
@@ -89,21 +89,21 @@ describe('__retrieveUser__', () => {
     it('should fail on non-string token', () => {
         const token = 1
         expect(() => {
-            retrieveUser(token, () => { })
+            __retrieveUser__(token, () => { })
         }).toThrowError(TypeError, `token ${token} is not a string`)
     })
 
     it('should fail on non-string token', () => {
         const token = true
         expect(() => {
-            retrieveUser(token, () => { })
+            __retrieveUser__(token, () => { })
         }).toThrowError(TypeError, `token ${token} is not a string`)
     })
 
     it('should fail on non-string token', () => {
         const token = undefined
         expect(() => {
-            retrieveUser(token, () => { })
+            __retrieveUser__(token, () => { })
         }).toThrowError(TypeError, `token ${token} is not a string`)
     })
 

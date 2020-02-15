@@ -167,7 +167,7 @@ class App extends Component {
         try {
             const { token } = sessionStorage
             retrieveEpisode(token, id, (error, detail) => {
-                if (error) return this.__handleError__(error) 
+                if (error) return this.__handleError__(error)
                 address.hash = `episode/${id}`
 
                 this.setState({ view: 'detailEpisode', detail, query: id })
@@ -251,13 +251,13 @@ class App extends Component {
         try {
             if (this.state.characters) {
                 toggleFavoritesCharacters(token, id, error => {
-                    if (error) this.__handleError__(error)
+                    if (error) return this.__handleError__(error)
 
                     this.handleOnSubmit(this.state.query)
                 })
             } else if (this.state.episodes) {
                 toggleFavoritesEpisodes(token, id, error => {
-                    if (error) this.__handleError__(error)
+                    if (error) return this.__handleError__(error)
 
 
                     this.handleSearchEpisodes(this.state.query)
@@ -266,14 +266,14 @@ class App extends Component {
 
                 if (this.state.view === 'favorite-characters') {
                     toggleFavoritesCharacters(token, id, error => {
-                        if (error) this.__handleError__(error)
+                        if (error) return this.__handleError__(error)
 
                         this.handleFavoritesCharacters()
                     })
                 } else if (this.state.view === 'favorite-episodes') {
 
                     toggleFavoritesEpisodes(token, id, error => {
-                        if (error) this.__handleError__(error)
+                        if (error) return this.__handleError__(error)
 
                         this.handleFavoritesEpisodes()
                     })

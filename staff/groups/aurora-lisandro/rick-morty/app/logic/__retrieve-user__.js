@@ -1,3 +1,11 @@
+/* * Function description
+Helper function that retrieves all user data.
+* @Constructor
+* param {string} token - it is necesary for get the user favorites information
+* param {callback} function - it returns user public data or an error
+
+*/
+
 function __retrieveUser__(token, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
 

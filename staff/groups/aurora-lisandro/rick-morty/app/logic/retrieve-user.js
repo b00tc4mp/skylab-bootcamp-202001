@@ -1,5 +1,5 @@
 /* * Function description
-It retrieves user data
+It retrieves user data. Only username, name and surname
 * @Constructor
 * param {string} token - it is necesary for get the user favorites information
 * param {callback} function - it returns user public data or an error
