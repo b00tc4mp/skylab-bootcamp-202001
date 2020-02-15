@@ -1,0 +1,39 @@
+@font-face 
+    font-family: Blueberry
+    src: url('rick-morty/app/fonts/blueberry-regular.otf') format('opentype')
+
+@font-face 
+    font-family: tomcat DEMO
+    src: url('rick-morty/app/fonts/tomcat.otf') format('opentype')
+
+
+@font-face 
+    font-family: Get Schwifty
+    src: url('rick-morty/app/fonts/get-schwifty.ttf') format('truetype')
+
+    
+@import ./sass/normalize
+@import ./sass/base
+@import ./sass/nav
+@import ./sass/register
+@import ./sass/results
+@import ./sass/login
+@import ./sass/details
+@import ./sass/item
+@import ./sass/search-character
+@import ./sass/search-season
+@import ./sass/landing
+@import ./sass/feedback
+@import ./sass/favorites
+@import ./sass/title
+@import ./sass/back-button
+
+h1, h2, h3, h4, h5, h6
+    @extend %title
+
+.app
+    @extend %flex-column
+
+@media ( min-width: 768px )
+    .app
+        height: 100vh

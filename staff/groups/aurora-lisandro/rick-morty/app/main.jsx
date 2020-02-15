@@ -1,0 +1,1 @@
+ReactDOM.render(<App title='./images/title.png' />, document.querySelector('#root'))

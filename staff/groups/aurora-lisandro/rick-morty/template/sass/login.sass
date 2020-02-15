@@ -1,0 +1,30 @@
+
+.login
+    @extend %flex-column
+    justify-content: space-evenly
+    width: 60%
+    height: 40vh
+    background-color: #79bac1
+    border-radius: 5px
+    margin-top: 2rem
+    font-family: tomcat DEMO
+    font-size: 1.5rem
+
+    &__input
+        @extend %input
+        
+    &__link
+        text-align: center
+        font-size: 1.3rem
+        padding: 0.5rem
+        color: #512b58
+    &__button
+        font-size: 1rem
+        font-family: tomcat DEMO
+        border-bottom: #512b58
+        color: #2a7886
+
+@media ( min-width: 768px )
+    .login
+        width: 35%
+    

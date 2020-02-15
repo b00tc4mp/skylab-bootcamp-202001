@@ -1,0 +1,41 @@
+.search
+    @extend %flex-column
+    height: 40%
+    justify-content: space-evenly
+    margin-bottom: 1.5rem
+
+    &__title
+        font-family: Get Schwifty
+        font-size: 1.2rem
+        color: #2a7886
+        margin: 1rem
+
+    &__filters
+        @extend %flex-wrap
+
+    &__filter
+        color: #512b58
+        font-size: 1rem
+        font-family: tomcat DEMO
+
+    &__name
+        font-size: 1.2rem
+    &__container
+        display: flex
+        justify-content: center
+        align-items: flex-end
+        width: 80%
+        height: 30%
+
+    &__input
+        @extend %input
+        border-radius: 0
+        margin-left: 1rem
+        font-size: 1rem
+        height: 50%
+        border-bottom: 1px solid #2a7886
+       
+    &__lens
+        font-size: 1.5rem
+        color: #512b58
+        
