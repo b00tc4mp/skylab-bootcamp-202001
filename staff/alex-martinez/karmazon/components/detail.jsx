@@ -1,6 +1,10 @@
-function Detail({ vehicle: { name, year, price, image, color, maker, collection, description, url }, style: { name: styleName, image: styleImage, url: styleUrl } , goBack}) {
+function Detail({ vehicle: { id, name, year, price, image, color, maker, collection, 
+    description, url, heart }, style: { name: styleName, image: styleImage, url: styleUrl }, onFavClick, goBack }){ 
+        debugger
+ 
     return <li>
         <h3>{name} ({year})</h3>
+        {heart ? <HeartRed id={id} onClick={onFavClick}/> : <Heart id={id} onClick={onFavClick}/>}
         <img src={image} />
         <span>{price} €</span>
         <p>{color}</p>
@@ -16,6 +20,5 @@ function Detail({ vehicle: { name, year, price, image, color, maker, collection,
             event.preventDefault()
             goBack()
         }} >Go Back</a>
-
     </li>
 }
