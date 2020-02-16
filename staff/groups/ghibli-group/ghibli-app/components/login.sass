@@ -1,0 +1,26 @@
+@import config
+@import utils
+
+.login
+    margin-top: 5vh
+
+    .form
+        +flex(column, center, center)
+
+    .input
+        @extend %input
+
+    .submit
+        @extend %button
+
+    .not-registered
+        text-align: center
+        font-family: $font-main
+        margin: 1vh 5vh 5vh 5vh
+
+        &__link
+            color: $main-color
+            margin: 1vh
+
+        &__text
+            margin: 1vh

@@ -1,0 +1,60 @@
+@import config
+@import utils
+
+.details
+    display: flex
+    flex-direction: column
+    //align-items: center
+    justify-content: center
+
+    &__image
+        height: 30vh
+        align-self: center
+        margin: 5vh
+        margin-top: 0
+
+    &__category
+        font-family: $font-main
+        color: $main-color
+        margin: 5vh
+
+    &__info
+        &-text
+            font-family: $font-main
+            margin: 5vh
+            text-align: justify
+            line-height: 3vh
+
+    .watchlist
+        align-self: center
+        background-color: $main-color
+        border-radius: 3vh
+        margin-bottom: 4vh
+
+        &--clicked
+            background-color: white
+            border: 2px solid $main-color
+
+        &__img
+            height: 5vh
+            width: 5vh
+            color: white
+
+        &__text
+            padding: 3vw
+            font-family: $font-main
+            font-size: 1rem
+            color: white
+
+        &__button 
+            display: flex
+            justify-content: center
+            align-items: center
+
+            &--clicked
+                color: black
+
+
+
+// CAMBIAR LA CLASSE DE WATCHLIST Y DE BUTTON A .WATCHLIST--CLICKED Y 
+// .WATCHLIST__BUTTON--CLICKED HACER EL AÑADIR A FAVORITOS

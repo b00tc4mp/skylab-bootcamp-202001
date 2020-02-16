@@ -1,0 +1,21 @@
+@import config
+@import utils
+
+.register
+    margin: 5vh 0
+
+    .form
+        +flex(column, center, center)
+
+    .input
+        @extend %input
+
+    .submit
+        @extend %button
+
+    .incentive
+        font-family: $font-main
+        margin-top: 0
+        margin: 3vh 4vh
+        text-align: center
+        line-height: 5vh

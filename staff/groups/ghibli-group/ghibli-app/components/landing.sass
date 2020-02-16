@@ -1,0 +1,36 @@
+@import config
+@import utils
+  
+.results
+    margin: 5vw
+
+    &__container
+
+        .category
+            display: flex
+            align-items: center
+            justify-content: center
+            margin: 5vh 0
+
+            &__img
+                width: 100%
+                height: 30vh
+                border-radius: 2vw
+                position: relative
+            
+            &__title
+                position: absolute
+                z-index: 5
+                color: #414141
+                font-family: $font-main
+
+            &__opacity
+                position: absolute
+                z-index: 3
+                background-color: white
+                opacity: 0.5
+                width: 85%
+                height: 30vh
+                border-radius: 2vw
+            
+            

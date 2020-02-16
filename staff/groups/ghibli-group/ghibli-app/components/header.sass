@@ -1,0 +1,27 @@
+@import config
+@import utils
+  
+.header
+    &__top
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+        .logo
+            height: 10vh
+            width: 10vh
+            margin: 2vh
+        
+        .login
+            height: 8vh
+            margin: 0 5vh
+
+            .line
+                @extend %line
+
+            &__text
+                font-family: $font-main
+                font-size: 1.5rem
+                font-weight: 10
+
+

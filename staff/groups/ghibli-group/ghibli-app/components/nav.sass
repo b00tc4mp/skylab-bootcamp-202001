@@ -1,0 +1,41 @@
+@import config
+@import utils
+
+.user-nav
+    margin-right: 7vw
+    margin-left: 45vw
+    position: absolute
+
+
+    &__list
+        display: flex
+        flex-direction: column
+        //background-color: white
+        background-color: rgb(220, 220, 220)
+        width: 45vw
+        border-radius: 0 0 5vh 5vh 
+        position: relative
+        top: 0
+        z-index: 10
+
+    .user
+        //margin-right: 5vw
+        justify-self: right
+        align-self: self-end
+        text-align: center
+
+        .line
+            @extend %line
+            justify-self: right
+            margin: 0
+
+    .option
+        text-align: center
+        position: relative
+        font-family: $font-main
+        margin: 5vh 0
+        z-index: 10
+
+    .option--show
+        display: none
+

@@ -1,0 +1,30 @@
+@import config
+
+=flex($direction, $justify-content, $align-items)
+    display: flex
+    flex-direction: $direction
+    justify-content: $justify-content
+    align-items: $align-items
+    
+%line
+    border: 2px solid $main-color
+    border-radius: 1vw
+    margin: 1vw 0
+
+%input
+    border-radius: 3vh
+    border: $border-width solid $main-color
+    margin: 2vh
+    height: 6vh
+    font-size: 1.5rem
+    text-align: center
+
+%button
+    border-radius: 5vh
+    background-color: $main-color
+    color: white
+    padding: 2vh
+    margin: 4vh
+    font-size: 1.5rem
+    text-align: center
+    font-family: $font-main

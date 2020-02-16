@@ -1,0 +1,1 @@
+ReactDOM.render(<App title="GHIBLI GUIDE"/>, document.querySelector('#root'))

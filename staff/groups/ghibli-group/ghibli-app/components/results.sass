@@ -1,0 +1,49 @@
+@import config
+@import utils
+
+.results
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+    // &__img
+    //     width: 100%
+    //     height: 30vh
+    //     border-radius: 2vw
+    //     position: relative
+    
+    &__title
+        color: #414141
+        font-family: $font-main
+        margin: 5vh
+
+    .item
+        min-height: 10vh
+        max-height: 100%
+        width: 100%
+        border-radius: $border-radius
+        background-color: $main-color
+        display: flex
+        align-items: center
+        justify-content: center
+        font-family: $font-main
+        
+        //position: relative
+    
+        &-title
+            color: white
+            padding: 2vh
+            text-align: center
+
+            //position: absolute
+        
+
+    // &__opacity
+    //     position: absolute
+    //     z-index: 3
+    //     background-color: white
+    //     opacity: 0.5
+    //     width: 85%
+    //     height: 30vh
+    //     border-radius: 2vw

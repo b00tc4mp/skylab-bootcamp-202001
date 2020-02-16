@@ -1,0 +1,70 @@
+@import config
+@import utils
+
+.edit
+    display: flex
+    flex-direction: column
+    justify-items: center
+    align-items: center
+
+    &__title
+        color: #414141
+        font-family: $font-main
+        margin: 5vh
+        text-align: center
+        font-weight: 1
+        font-size: 2rem
+    
+    .line
+        @extend %line
+        width: 60vw
+        align-self: center
+        display: flex
+
+    .edit-category
+        display: flex
+        flex-direction: column
+        justify-items: center
+        margin: 5vh
+        margin-top: 0
+
+        .category
+            text-align: center
+            font-family: $font-main
+            margin: 1vh
+            color: $main-color
+
+    .form
+        +flex(column, center, center)
+
+        .input
+            @extend %input
+
+        .submit
+            @extend %button
+            font-size: 1rem
+
+        .message
+            font-family: $font-main
+            margin-bottom: 3vh
+
+        .delete
+            border-radius: 5vh
+            background-color: rgb(220, 220, 220)
+            color: white
+            padding: 2vh
+            margin: 4vh
+            font-size: 1.5rem
+            text-align: center
+            font-family: $font-main
+    
+    .button
+        border-radius: 3vh
+        border: $border-width solid $main-color
+        margin: 8vh
+        margin-top: 3vh
+        font-size: 1.5rem
+        text-align: center
+        color: $main-color
+        padding: 1vh 2vh
+        text-align: center
