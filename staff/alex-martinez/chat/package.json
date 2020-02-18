@@ -4,8 +4,8 @@
   "description": "",
   "main": "chat-server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "npx jasmine *.specs.js",
+    "start": "node chat-server.js"
   },
   "keywords": [],
   "author": "",
