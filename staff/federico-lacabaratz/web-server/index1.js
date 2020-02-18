@@ -12,33 +12,41 @@ const server = net.createServer(socket => {
     logger.debug('setting encoding to utf8')
     socket.setEncoding('utf8')
 
-    socket.on('data', request => {
+    socket.on('data', chunk => {
         logger.info(`request from ${socket.remoteAddress}:
-${request}`)
+${chunk}`)
 
-        const lines = request.split('\n')
-        let [, path] = lines[0].split(' ')
+
+        const headers = chunk.split('\n')
+
+        let path = headers[0].split(' ')[1]
 
         if (path === '/') path += 'index.html'
 
-        path = `.${path}`
+        const rs = fs.createReadStream(`.${path}`)
 
-        fs.readFile(path, 'utf8', (error, content) => {
-            if (error) {
-                logger.warn(error)
+        if (path !== 'favicon.ico') {
+            rs.on('data', content => {
+                logger.debug(`content received from file stream reading`)
 
-                return socket.end(`HTTP/1.1 404 NOT FOUND
+                socket.end(`HTTP/1.1 200 OK
 Content-Type: text/html
 
-<h1>Not found</h1>`)
-            }
-
-            socket.end(`HTTP/1.1 200 OK
-Content-Type: text/html
-
-${content}
+${content.toString()}
 `)
-        })
+            })
+            rs.on('error', error => {
+                logger.error(error)
+
+                socket.end(`HTTP/1.1 404 NOT FOUND
+<h1>NOT FOUND</h1>`)
+            })
+
+        } else {
+            socket.end(`HTTP/1.1 404 NOT FOUND
+<h1>NOT FOUND</h1>`)
+        }
+
     })
 
     socket.on('error', error => logger.error(error))
