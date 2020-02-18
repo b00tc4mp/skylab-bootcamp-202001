@@ -1,37 +1,43 @@
-const net = require('net')
-var fs = require('fs')
+const http = require('http')
+const fs = require('fs')
+const logger = require('./logger')
 
-const server = net.createServer(socket => {
+logger.info('starting server')
 
-    socket.on('data', chunk => {
-        let path = chunk.toString().split("/")[1].split(' ')[0]
+const { argv: [, , port = 8080] } = process
 
-        if(!path) path='index.html'
+const requestListener = (req, res) => {
+    const path = req.url
 
-        const rs = fs.createReadStream(`./${path}`)
+    const main = '/index.html'
 
-        if(path !== "favicon.ico"){
-            console.log(path)
-            rs.on('data', content => {
-                socket.end(`HTTP/1.1 200 OK\nServer: Cowboy\nAccess-Control-Allow-Origin:\nContent-Type: text/html\n\n${content}\n`)
-            })
+    const rs = fs.createReadStream(`.${path === '/' ? main : path}`)
 
-            rs.on('error', error => {
-                socket.end(`HTTP/1.1 404\n\nnot found`)
-            })
+    if (path !== 'favicon.ico') {
+        rs.on('data', body => {
+            res.end(body)
+        })
+        rs.on('error', error => {
+            logger.error(error)
+            res.writeHead(404)
+            res.end('NOT FOUND')
+        })
+    } else {
+        logger.error(error)
+        res.writeHead(404)
+        res.end('NOT FOUND')
+    }
 
-        }else {
-
-        }
-
-        // Content-Type: text/html
-        //socket.end(`HTTP/1.1 404
-        //Content-Type: text/html
-        
-        
-//<h1>Not found</h1>
-
+    req.on('error', error => {
+        logger.error(error)
+        res.writeHead(404)
+        res.end('NOT FOUND') 
     })
-})
 
-server.listen(8080)
+}
+
+logger.info('starting server')
+
+const server = http.createServer(requestListener)
+
+server.listen(port)
