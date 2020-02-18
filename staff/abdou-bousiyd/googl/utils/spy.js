@@ -1,5 +1,4 @@
 'use strict';
-
 function spy(func, ctx) {
     return function() {
         console.log(func.name +  '(' + (function() {
