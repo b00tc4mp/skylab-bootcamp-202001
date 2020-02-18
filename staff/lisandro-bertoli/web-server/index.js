@@ -1,65 +1,38 @@
-const net = require('net')
+const http = require('http')
 const fs = require('fs')
 const logger = require('./logger')
 
-logger.info('starting server')
-
 const { argv: [, , port = 8080] } = process
 
-const server = net.createServer(socket => {
-    logger.debug('set socket enconding to utf-8')
+const requestListener = (req, res) => {
+    logger.info(`request from ${req.socket.remoteAddress} : ${req.url}`)
 
-    socket.setEncoding('utf-8')
+    const main = '/index.html'
 
-    socket.on('data', chunk => {
-        logger.info(`request from ${socket.remoteAddress}:
-${chunk.toString()}`)
+    const rs = fs.createReadStream(`.${req.url === '/' ? main : req.url}`)
 
+    if (req.url !== 'favicon.ico') {
+        rs.on('data', body => {
+            res.end(body)
+        })
 
-        const headers = chunk.split('\n')
+        rs.on('error', error => {
+            logger.warn(error)
+            res.writeHead(404)
+            res.end('<h1>NOT FOUND</h1>')
+        })
+    } else {
+        logger.warn(error)
+        res.writeHead(404)
+        res.end('<h1>NOT FOUND</h1>')
+    }
 
-        let path = headers[0].split(' ')[1]
+}
 
-        console.log(path)
+logger.info('starting server')
 
-        if (path === '/') path += 'index.html'
+const server = http.createServer(requestListener)
 
-        const rs = fs.createReadStream(`.${path}`)
-
-        if (path !== 'favicon.ico') {
-            rs.on('data', content => {
-                logger.debug(`content received from file stream reading`)
-
-                socket.end(`HTTP/1.1 200 OK
-Content-Type: text/html
-
-${content.toString()}
-`)
-            })
-            rs.on('error', error => {
-                logger.error(error)
-
-                socket.end(`HTTP/1.1 404 NOT FOUND
-
-<h1>NOT FOUND</h1>`)
-            })
-
-        } else {
-            socket.end(`HTTP/1.1 404 NOT FOUND
-
-<h1>NOT FOUND</h1>`)
-        }
-
-    })
-
-    socket.on('error', error => {
-        logger.error(error)
-    })
-})
-server.listen(8080, () => logger.info(`Server running on port ${port}`))
-
-server.on('SIGINT', () => {
-    logger.warn('server stopped abruptly')
-
-    setTimeout(() => process.exit(0), 1000)
+server.listen(port, () => {
+    logger.info(`server running on port ${port}`)
 })
