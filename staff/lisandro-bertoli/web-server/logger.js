@@ -4,10 +4,13 @@ const moment = require('moment')
 function log(level, message) {
     const output = `${level} ${moment().format('Y-MM-DD HH:mm:ss:SSS')} ${message}`
 
-    fs.writeFile('./server.log', `${output}\n`, { flag: 'a', enconding: 'utf8' }, (error) => {
-        if (error) console.log(error)
+    const ws = fs.createWriteStream('./server.log', { flags: 'a', enconding: 'utf8' })
 
-        console.log(output)
+    ws.write(output + '\n')
+    console.log(output)
+
+    ws.on('error', error => {
+        console.log(error)
     })
 }
 module.exports = {
