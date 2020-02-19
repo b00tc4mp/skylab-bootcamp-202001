@@ -1,4 +1,4 @@
-const http = require('http')
+/* const http = require('http')
 const fs = require('fs')
 
 const logger = require('./logger')
@@ -16,13 +16,13 @@ const server = http.createServer((request,response)=> {
     path = `.${path}`;
 
     let rs = fs.createReadStream(path)
-    response.setHeader('Content-Type','text/html')
+    response.setHeader('Content-Type','text/html') */
 
     /* rs.on('data', chunk => {res.write(chunk)})
     rs.on('end', ()=> res.end()) */
     
     //con pipe 
-    rs.pipe(response)
+    /* rs.pipe(response)
 
     rs.on('error', error => {
         logger.warn(error)
@@ -30,7 +30,7 @@ const server = http.createServer((request,response)=> {
         return res.end('<h1>Not Found</h1>');
     })
     response.on('error', error => logger.error(error))
-
+ */
     /* fs.readFile(path, function(error, html){
         if(error) {
             res.writeHead(404);
@@ -41,11 +41,20 @@ const server = http.createServer((request,response)=> {
         response.end()
      
     }) */
-})
-server.listen(8000)
+//})
+/* server.listen(8000)
 
 process.on('SIGINT', () => {
     logger.warn(`server abruptly stopped`)
 
     setTimeout(() => process.exit(0), 1000)
-})
+}) */
+
+
+const express = require('express')
+const app = express()
+
+app.use(express.static('public'))
+app.use(express.static('utils'))
+
+app.listen(8000)
