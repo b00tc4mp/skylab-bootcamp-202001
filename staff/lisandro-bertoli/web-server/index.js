@@ -1,45 +1,24 @@
-const http = require('http')
-const fs = require('fs')
-const logger = require('./logger')
+const express = require('express')
+const path = require('path')
+const logger = require('./utils/logger')
+const loggerMidWare = require('./utils/logger-mid-ware')
+
+logger.level = logger.DEBUG
+logger.path = path.join('./server.log')
 
 const { argv: [, , port = 8080] } = process
 
-const requestListener = (req, res) => {
-    const { url, socket, httpVersion } = req
-    logger.info(`request from ${socket.remoteAddress} : ${url} HTTP/${httpVersion}`)
+logger.debug('setting up server')
 
-    const main = '/index.html'
+const app = express()
 
-    if (url === 'favicon.ico') {
-        logger.warn(error)
+app.use(loggerMidWare)
 
-        res.writeHead(404)
-        return res.end('<h1>NOT FOUND</h1>')
-    }
+app.use(express.static(path.join(__dirname, 'public')))
 
-    const rs = fs.createReadStream(`.${url === '/' ? main : url}`)
+app.listen(port, () => logger.info(`server up and running on port ${port}`))
 
-    rs.setHeader('Content-Type', 'text/html')
-
-    rs.pipe(res)
-
-    rs.on('error', error => {
-        logger.warn(error)
-
-        res.writeHead(404)
-        res.end('<h1>NOT FOUND</h1>')
-    })
-}
-
-logger.info('starting server')
-const server = http.createServer(requestListener)
-
-server.listen(port, () => {
-    logger.info(`server running on port ${port}`)
-})
-
-server.on('SIGINT', () => {
-    logger.warn('server stopped abruptly')
-
-    setTimeout(() => process.exit(0), 1000)
+process.on('SIGINT', () => {
+    logger.warn(`server abruptly stopped`)
+    process.exit(0)
 })
