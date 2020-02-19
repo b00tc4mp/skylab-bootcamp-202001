@@ -5,9 +5,15 @@ const logger = require('./logger')
 http.createServer( function (req, res) {
     let path = req.url.replace('/', '')
     path.includes('.html') ? path = path.replace('.html', '') : path = path
-    
+    logger.info(req.connection.remoteAddress)
+
     fs.readFile(`${path}.html`, function (error, data) {
-        if (error) logger.warn(error.message)
+        if (error) {
+            logger.warn(error.message)
+            res.writeHead(404, {'Content-Type': 'text/html'});
+            res.write(error.message)
+            return
+        }
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write(data);
         res.end();
