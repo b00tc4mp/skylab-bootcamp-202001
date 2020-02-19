@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const rs = fs.createReadStream('./server.log')
+const rs = fs.createReadStream('../server.log')
 
 rs.setEncoding('utf8')
 

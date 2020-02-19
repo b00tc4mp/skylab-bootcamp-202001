@@ -9,15 +9,12 @@ function log(level, message) {
     const ws = fs.createWriteStream('./server.log', {flags: 'a', encoding: 'utf8'})
 
     ws.write(`${output}\n`)
-
-    // fs.writeFile('./server.log', `${output}\n`, { encoding: 'utf8', flag: 'a' }, error => {
-    //     if (error) console.error(error)
-    // })
 }
 
 module.exports = {
     __debugEnabled__: false,
     __logfile__: undefined,
+
     setDebugEnabled(enable) {
         this.__debugEnabled__ = enable
     },
