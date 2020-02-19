@@ -15,18 +15,13 @@ const server = net.createServer(socket => {
         logger.info(`request from ${socket.remoteAddress}:
 ${chunk}`)
 
-
         const headers = chunk.split('\n')
-        console.log(headers)
 
         let path = headers[0].split(' ')[1]
-
-        console.log(path)
 
         if (path === '/') path += 'index.html'
 
         const rs = fs.createReadStream(`.${path}`)
-        console.log(rs)
 
         if (path !== 'favicon.ico') {
             rs.on('data', content => {
@@ -51,7 +46,6 @@ ${content.toString()}
 
 <h1>NOT FOUND</h1>`)
         }
-
     })
 
     socket.on('error', error => {
