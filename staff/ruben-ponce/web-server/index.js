@@ -4,8 +4,10 @@ const logger = require('./logger')
 
 http.createServer( function (req, res) {
     let path = req.url.replace('/', '')
+    logger.host = req.connection.remoteAddress
     path.includes('.html') ? path = path.replace('.html', '') : path = path
-    logger.info(req.connection.remoteAddress)
+    
+    logger.info('attempting to read file')
 
     fs.readFile(`${path}.html`, function (error, data) {
         if (error) {
