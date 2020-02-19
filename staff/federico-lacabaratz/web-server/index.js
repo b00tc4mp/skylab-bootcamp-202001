@@ -1,29 +1,29 @@
 const express = require('express')
 const logger = require('./utils/logger')
 const path = require('path')
+const loggerMidWare = require('./utils/logger-mid-ware')
+// const staticMidWare = require('./utils/static-mid-ware')
 
 const { argv: [, , port = 8080] } = process
 
-logger.setDebugEnabled(!true)
-logger.setLogFile(path.join(__dirname, 'server.log'))
+logger.level = logger.DEBUG
+logger.path = path.join(__dirname, 'server.log')
 
-logger.debug('starting server')
+logger.debug('setting up server')
 
 const app = express()
 
-app.use(express.static('public'))
+app.use(loggerMidWare)
 
-app.get('/', (req, res) => {
-    logger.info(`logged new request: ${req}`)
-    res.send(req)
-})
+//app.use(staticMidWare(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.listen(port, () => logger.info(`server up and running on port ${port}`))
 
 process.on('SIGINT', () => {
     logger.warn(`server abruptly stopped`)
-    
-    setTimeout(() => process.exit(0), 1000)
+
+    process.exit(0)
 })
 
 

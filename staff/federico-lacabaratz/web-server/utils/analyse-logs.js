@@ -1,6 +1,7 @@
 const fs = require('fs')
+const path = require('path')
 
-const rs = fs.createReadStream('../server.log')
+const rs = fs.createReadStream(path.join(__dirname, `..${path.sep}server.log`))
 
 rs.setEncoding('utf8')
 
