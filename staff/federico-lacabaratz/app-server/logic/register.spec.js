@@ -1,7 +1,5 @@
-'use strict';
-
 describe('register', function () {
-    var user;
+    const user;
     
     beforeEach(function () { 
         users.length = 0;

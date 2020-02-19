@@ -1,7 +1,7 @@
 'use strict';
 
 describe('authenticate', function () {
-    var user;
+    const user;
 
     beforeEach(function () {
         users.length = 0;

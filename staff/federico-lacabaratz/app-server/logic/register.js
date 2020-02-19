@@ -1,6 +1,4 @@
-'use strict';
-
-function register(name, surname, username, password) {
+module.exports = (name, surname, username, password) => {
     if (typeof name !== 'string') throw new TypeError('name ' + name + ' is not a string');
     if (!name.trim()) throw new Error('name is empty');
     if (typeof surname !== 'string') throw new TypeError('surname ' + surname + ' is not a string');
@@ -10,7 +8,7 @@ function register(name, surname, username, password) {
     if (typeof password !== 'string') throw new TypeError('password ' + password + ' is not a string');
     if (!password.trim()) throw new Error('password is empty');
 
-    var user = users.find(function (user) { return user.username === username; });
+    const user = users.find(function (user) { return user.username === username; });
 
     if (user) throw new Error('User ' + username + ' already exists');
 
