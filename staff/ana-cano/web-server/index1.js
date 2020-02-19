@@ -1,15 +1,34 @@
-const http = require('http')
-const fs = require('fs')
-const logger = require('./logger')
+const http = require ('http')
+const fs = require ('fs')
+const log = require ('./logger')
 
-const requestListener = (req, resp)=> {
-    const rs = fs.createReadStream(`.${req.url === "/" ? "index.html": req.url}`)
-    rs.on("data",content=>{
-        resp.writeHead(200)
-        resp.end(`${content}`)
+const {argv: [, , port = 8080]} = process
+
+const requestListener = (req, res) => {
+  const path = req.url
+  const rs = fs.createReadStream(`.${path === '/' ? '/index.html' : path}`)
+  
+    if(path !== 'favicon.ico'){
+      rs.on('data', body => {
+      res.end(body);
     })
+      rs.on('error', error => {
+      log.error(error)
+      res.writeHead(404)
+      res.end('NOT FOUND')
+    })
+  }else{
+      log.error(error)
+      res.writeHead(404)
+      res.end('NOT FOUND')
+  }
+  req.on('error', error =>{
+      log.error(error)
+      res.writeHead(404)
+      res.end('NOT FOUND')
+  })
 }
 
-
+log.info('starting server')
 const server = http.createServer(requestListener);
-server.listen(8080)
+server.listen(port);
