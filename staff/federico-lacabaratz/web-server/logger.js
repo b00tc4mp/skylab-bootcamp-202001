@@ -17,9 +17,13 @@ function log(level, message) {
 
 module.exports = {
     __debugEnabled__: false,
-
+    __logfile__: undefined,
     setDebugEnabled(enable) {
         this.__debugEnabled__ = enable
+    },
+
+    setLogFile(path) {
+        this.__logFile__= path
     },
 
     debug(message) { this.__debugEnabled__ && log('DEBUG', message) },
