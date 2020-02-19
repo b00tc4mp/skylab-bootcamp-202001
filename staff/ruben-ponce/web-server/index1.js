@@ -1,30 +1,23 @@
 const fs = require('fs')
-const net = require('net')
-const logger = require('./logger')
+const http = require('http')
+const logger = require('./utils/logger')
 
-const server = net.createServer( socket => {
-    socket.on('data', chunck => {
-        logger.host = socket.remoteAddress
-        console.log(chunck.toString())
+http.createServer( function (req, res) {
+    let path = req.url.replace('/', '')
+    logger.host = req.connection.remoteAddress
+    path.includes('.html') ? path = path.replace('.html', '') : path = path
+    
+    logger.info('attempting to read file')
 
-        const [firstLine] = chunck.toString().split('\n')
-        let [, path] = firstLine.split(' ')
-        path = path.replace('/', '')
-
-        const endSocket = (status, statusMessage, html = '') => {
-            socket.end(`HTTP/1.1 ${status} ${statusMessage}\nServer: Cowboy\nAccess-Control-Allow-Origin: *\nContent-Type: text/html\n\n${html}\n`) // Content-Type: text/html
+    fs.readFile(`${path}.html`, function (error, data) {
+        if (error) {
+            logger.warn(error.message)
+            res.writeHead(404, {'Content-Type': 'text/html'});
+            res.write(error.message)
+            return
         }
-
-        fs.readFile(path, (error, data) => {
-            if (error) {
-                logger.warn(error.message)
-                endSocket(404, 'Not found', error.message) 
-                return
-            }
-            logger.info('ok')
-            endSocket(200, 'ok', data.toString())
-        })
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.write(data);
+        res.end();
     })
-})
-
-server.listen(8080)
+}).listen(8080)
