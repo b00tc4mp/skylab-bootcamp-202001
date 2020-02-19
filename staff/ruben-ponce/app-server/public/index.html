@@ -6,7 +6,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form class="login">
+    <form class="login" method="POST" action="/login">
         <h2>Sign-in</h2>
     
         <input type="text" name="username" placeholder="username">
@@ -14,7 +14,7 @@
     
         <!-- <p class="feedback feedback--error">Wrong credentials</p> -->
     
-        <button>Login</button>
+        <button type="submit">Login</button>
     
         <a href="register.html">Register</a>
     </form>

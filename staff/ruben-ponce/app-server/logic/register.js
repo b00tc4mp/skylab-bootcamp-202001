@@ -1,5 +1,3 @@
-'use strict';
-
 const users = require('../data')
 
 function register(name, surname, username, password) {
