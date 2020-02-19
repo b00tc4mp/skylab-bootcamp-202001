@@ -19,6 +19,7 @@ function register(name, surname, username, password) {
     user = { name: name, surname: surname, username: username, password: password };
 
     users.push(user);
+    console.log(users)
 }
 
 module.exports = register

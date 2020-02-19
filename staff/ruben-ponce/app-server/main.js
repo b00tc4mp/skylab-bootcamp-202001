@@ -16,8 +16,6 @@ app.post('/register', (req, res) => {
         body += chunk
     })
     req.on('end', () => {
-        // DO something with body (debug here, analise it, parse it... etc)
-        // console.log('body =>', body)
         body = body.split('&')
         body.forEach(data => {
             _body.push(data.split('=')[1])
@@ -28,10 +26,8 @@ app.post('/register', (req, res) => {
         let password = _body[3]
 
         register(name, surname, username, password)
-
-        res.end(users)
-
-
+        
+        res.end()
     })
 })
 
