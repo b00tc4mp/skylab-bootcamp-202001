@@ -5,31 +5,30 @@ const logger = require('./logger')
 const { argv: [, , port = 8080] } = process
 
 const requestListener = (req, res) => {
-    logger.info(`request from ${req.socket.remoteAddress} : ${req.url}`)
+    const { url, socket, httpVersion } = req
+    logger.info(`request from ${socket.remoteAddress} : ${url} HTTP/${httpVersion}`)
+
     const main = '/index.html'
 
-    logger.debug(`starting readStream for requested url`)
-    const rs = fs.createReadStream(`.${req.url === '/' ? main : req.url}`)
+    if (url === 'favicon.ico') {
+        logger.warn(error)
 
-    if (req.url !== 'favicon.ico') {
-        rs.on('data', body => {
-            logger.info(`finished reading content of requested path. Sending as body`)
+        res.writeHead(404)
+        return res.end('<h1>NOT FOUND</h1>')
+    }
 
-            res.end(body)
-        })
+    const rs = fs.createReadStream(`.${url === '/' ? main : url}`)
 
-        rs.on('error', error => {
-            logger.warn(error)
+    rs.setHeader('Content-Type', 'text/html')
 
-            res.writeHead(404)
-            res.end('<h1>NOT FOUND</h1>')
-        })
-    } else {
+    rs.pipe(res)
+
+    rs.on('error', error => {
         logger.warn(error)
 
         res.writeHead(404)
         res.end('<h1>NOT FOUND</h1>')
-    }
+    })
 }
 
 logger.info('starting server')
