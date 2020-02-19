@@ -6,7 +6,7 @@ const app = express()
 
 app.use(express.static('public'));
 app.use(express.static('logic'));
-app.use(express.static('utils'));
+// app.use(express.static('utils'));
 
 app.post('/register', (req, res) => {
     let body = ''
@@ -26,11 +26,10 @@ app.post('/register', (req, res) => {
         let password = _body[3]
 
         register(name, surname, username, password)
-        
+        res.redirect('/')
         res.end()
     })
 })
-
 
 app.listen(8080, function () {
     console.log('server up')
