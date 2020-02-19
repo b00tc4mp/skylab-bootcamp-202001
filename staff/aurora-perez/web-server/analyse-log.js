@@ -6,6 +6,7 @@ rs.setEncoding('utf8')
 
 let count = 0
 
+
 rs.on('data', chunk => {
     const lines = chunk.split('\n')
 
