@@ -1,4 +1,6 @@
-module.exports = (name, surname, username, password) => {
+const users = require('../data.js')
+
+const register = (name, surname, username, password) => {
     if (typeof name !== 'string') throw new TypeError('name ' + name + ' is not a string');
     if (!name.trim()) throw new Error('name is empty');
     if (typeof surname !== 'string') throw new TypeError('surname ' + surname + ' is not a string');
@@ -16,3 +18,6 @@ module.exports = (name, surname, username, password) => {
 
     users.push(user);
 };
+
+if (require !== undefined)
+    module.exports = register

@@ -19,6 +19,25 @@ app.use(loggerMidWare)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.post('/authenticate', (req, res) => {
+    let body = ''
+    req.on('data', chunk => {
+        body += chunk
+    })
+    req.on('end', () => {
+        try {
+            const data = JSON.parse(body)
+            res.write()
+            // DO something with body (debug here, analise it, parse it... etc)
+            console.log('body =>', body)
+            res.end()
+        } catch (error) {
+            res.statusCode = 400
+            return res.end(`error: ${error.message}`)           
+        }
+    })
+})
+
 app.listen(port, () => logger.info(`server up and running on port ${port}`))
 
 process.on('SIGINT', () => {
@@ -28,15 +47,3 @@ process.on('SIGINT', () => {
 })
 
 
-
-app.post('/authenticate', (req, res) => {
-    let body = ''
-    req.on('data', chunk => {
-        body += chunk
-    })
-    req.on('end', () => {
-        // DO something with body (debug here, analise it, parse it... etc)
-        console.log('body =>', body)
-        res.end()
-    })
-})
