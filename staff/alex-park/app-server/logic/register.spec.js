@@ -1,3 +1,8 @@
+if (typeof require !== 'undefined') {
+    var register = require('./register')
+    var users = require('../data')
+}
+
 describe('register', function (){
     beforeEach(function () {
         users.length = 0;
@@ -24,7 +29,7 @@ describe('register', function (){
 
         expect(function() {
             register([])
-        }).toThrowError(TypeError, 'name Array is not a string')
+        }).toThrowError(TypeError, 'name  is not a string')
 
         expect(function() {
             register(function() {})
