@@ -13,11 +13,14 @@ const requestListener = (req, res) => {
 
     const rs = fs.createReadStream(`.${path === '/' ? main : path}`)
 
+    res.setHeader ('Content-type', 'text/html')
+
     if (path !== 'favicon.ico') {
-        rs.on('data', body => {
-            logger.info(`request from ${req.connection.remoteAddress}`)
-            res.end(body)
-        })
+
+        logger.info(`request from ${req.connection.remoteAddress}`)
+
+        rs.pipe(res)
+
         rs.on('error', error => {
             logger.error(error)
             res.writeHead(404)
