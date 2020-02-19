@@ -1,34 +1,59 @@
-const net = require('net')
-const fs = require('fs')
-const log = require('./logger')
+// const http = require ('http')
+// const fs = require ('fs')
+// const log = require ('./logger')
 
-const server = net.createServer(socket => {
-    socket.on('data', chunk => {
-        let path = chunk.toString().split("/")[1].split(' ')[0]
+// const {argv: [, , port = 8080]} = process
 
-        if(!path) path='index.html'
+// const requestListener = (req, res) => {
 
-        const rs = fs.createReadStream(`./${path}`)
+//   const path = req.url
 
-        if(path !== "favicon.ico"){
-            console.log(path)
-            rs.on('data', content => {
-                socket.end(`HTTP/1.1 200 OK\nServer: Cowboy\nAccess-Control-Allow-Origin:\nContent-Type: text/html\n\n${content}\n`)
-            })
+//   const rs = fs.createReadStream(`.${path === '/' ? '/index.html' : path}`)
+  
+//     if(path !== 'favicon.ico'){
+//       rs.on('data', body => {
+//       res.end(body);
 
-            rs.on('error', error => {
-                socket.end(`HTTP/1.1 404\n\nnot found`)
-            })
+//       log.info(`request from ${req.connection.remoteAddress}`)
+//       console.log(req)
+//     })
+//       rs.on('error', error => {
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
 
-        } else {
-           
-            socket.end(`HTTP/1.1 404\n\nnot found
-            
-<h1>NOT FOUND</h1>`)
-           
-        }
+//     })
+//   }else{
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//   }
 
-    })
+//   req.on('error', error =>{
+//       log.error(error)
+//       res.writeHead(404)
+//       res.end('NOT FOUND')
+//   })
+// }
+
+// log.info('starting server')
+
+// const server = http.createServer(requestListener);
+// server.listen(port);
+
+
+const express = require ('express')
+const path = require('path')
+
+const app = express()
+
+app.use(express.static('public'));
+app.use('/static', express.static(path.join(__dirname 'public')))
+
+const {argv: [, , port = 8080]} = process
+
+app.get('/', (req, res) => {
+  res.pipe(response))
 })
 
-server.listen(8080)
+app.listen(port);
