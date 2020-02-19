@@ -1,8 +1,8 @@
 const net = require('net')
-var fs = require('fs')
+const fs = require('fs')
+const log = require('./logger')
 
 const server = net.createServer(socket => {
-
     socket.on('data', chunk => {
         let path = chunk.toString().split("/")[1].split(' ')[0]
 
@@ -20,16 +20,13 @@ const server = net.createServer(socket => {
                 socket.end(`HTTP/1.1 404\n\nnot found`)
             })
 
-        }else {
-
+        } else {
+           
+            socket.end(`HTTP/1.1 404\n\nnot found
+            
+<h1>NOT FOUND</h1>`)
+           
         }
-
-        // Content-Type: text/html
-        //socket.end(`HTTP/1.1 404
-        //Content-Type: text/html
-        
-        
-//<h1>Not found</h1>
 
     })
 })
