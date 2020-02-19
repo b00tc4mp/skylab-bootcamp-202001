@@ -15,6 +15,7 @@ const requestListener = (req, res) => {
 
     if (path !== 'favicon.ico') {
         rs.on('data', body => {
+            logger.info(`request from ${req.connection.remoteAddress}`)
             res.end(body)
         })
         rs.on('error', error => {
