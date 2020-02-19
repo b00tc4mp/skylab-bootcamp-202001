@@ -16,6 +16,7 @@ const server = http.createServer((req, res) => {
 
     if (req.url !== 'favicon.ico') {
         rs.on('data', body => {
+            logger.info('correct printing')
             res.end(body)
         })
 
