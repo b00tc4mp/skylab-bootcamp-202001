@@ -19,7 +19,6 @@ function parserMidWare(req, res, next) {
     })
 
     req.body = body
-
     next()
 }
 
