@@ -3,9 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing</title>
+    <title>Login</title>
 </head>
 <body>
-    <h1>Hello World! Well done reaching this part!</h1>
+    <h2>LOGIN</h2>
+    <form action="/authenticate" method="POST">
+        <input type='text' placeholder="Username" name='username'>
+        <input type='password' placeholder="Password" name='password'>
+        <br>
+        <input type='submit' value='Submit'>
+        <br>
+        <a href='./register.html'>Go to Register</a>
+    </form>
 </body>
 </html>

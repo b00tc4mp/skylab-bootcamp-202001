@@ -1,9 +1,5 @@
-'use strict';
-
-if (typeof require !== 'undefined') {
-    var authenticate = require('./authenticate')
-    var users = require('../data')
-}
+var authenticateUser = require('./authenticate-user')
+var users = require('../utils/data')
 
 describe('authenticate', function () {
     var user;
@@ -20,36 +16,36 @@ describe('authenticate', function () {
     });
 
     describe('when user already exists', function () {
-        beforeEach(function() {
+        beforeEach(function () {
             users.push(user);
         });
 
         it('should succeed on correct credentials', function () {
-            expect(function(){
-                authenticate(user.username, user.password)
+            expect(function () {
+                authenticateUser(user.username, user.password)
             }).not.toThrow();
         });
 
         it('should fail with wrong credentials', function () {
-            expect(function() {
-                authenticate(user.username + '-:^)', user.password)
+            expect(function () {
+                authenticateUser(user.username + '-:^)', user.password)
             }).toThrowError(Error, 'Wrong credentials')
         });
 
         it('should fail with wrong credentials', function () {
-            expect(function() {
-                authenticate(user.username, user.password + '-:^)')
+            expect(function () {
+                authenticateUser(user.username, user.password + '-:^)')
             }).toThrowError(Error, 'Wrong credentials')
         });
     });
 
-    it('should fail when user does not exist', function() {
-        expect(function() {
-            authenticate(user.username, user.password)
+    it('should fail when user does not exist', function () {
+        expect(function () {
+            authenticateUser(user.username, user.password)
         }).toThrowError(Error, 'Wrong credentials')
     });
-    
-    afterEach(function() {
+
+    afterEach(function () {
         users.length = 0;
     });
 })

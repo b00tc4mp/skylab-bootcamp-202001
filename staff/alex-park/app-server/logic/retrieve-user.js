@@ -1,0 +1,9 @@
+const users = require('../utils/data')
+
+module.exports = username => {
+    if (typeof username !== 'string') { throw new TypeError(username + " is not a string.") };
+
+    let user = (users.find(function(user) { return user.username === username })).name
+
+    return user
+}
