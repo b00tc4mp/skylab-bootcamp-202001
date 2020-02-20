@@ -1,10 +1,13 @@
 const express = require('express')
-let path = require('path')
-const fs = require('fs')
+const path = require('path')
+const bodyParser = require('body-parser')
 const logger = require('./utils/logger')
 const loggerMidWare = require('./utils/logger-mid-ware')
-const urlencodedBodyParser = require('./utils/urlencoded-body-parser')
 const { authenticateUser, registerUser, retrieveUser } = require('./logic')
+const { Login, App, Home, Register, Landing } = require('./components')
+const { sessions } = require('./data')
+
+const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
 const { argv: [, , port = 8080] } = process
 
@@ -14,7 +17,17 @@ logger.path = path.join(__dirname, 'server.log')
 const app = express()
 
 app.use(loggerMidWare)
+
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.get('/', (req, res) => {
+    res.send(App({ title: 'My App', body: Landing() }))
+})
+
+app.get('/login', (req, res) => {
+    res.send(App({ title: 'Login', body: Login() }))
+})
+
 app.use(urlencodedBodyParser)
 
 app.post('/authenticate', (req, res) => {
@@ -23,79 +36,51 @@ app.post('/authenticate', (req, res) => {
     try {
         authenticateUser(username, password)
 
-        const mainUser = retrieveUser(username)
+        sessions.push(username)
 
-        res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing</title>
-</head>
-<body>
-    <h1>Hello, ${mainUser}!</h1>
-</body>
-</html>`)
-
-    } catch ({ message }) {
-        res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <h2>LOGIN</h2>
-    <form action="/authenticate" method="POST">
-        <input type='text' placeholder="Username" name='username'>
-        <input type='password' placeholder="Password" name='password'>
-        <p style='color: red;'>${message}</p>
-        <br>
-        <input type='submit' value='Submit'>
-        <br>
-        <a href='./register.html'>Go to Register</a>
-    </form>
-</body>
-</html>`)
+        res.redirect(`home/${username}`)
+    } catch({ message }) {
+        res.send(App({ title: 'Login', body: Login({ error: message }) }))
     }
 })
 
-app.post('/register', (req, res) => {
-    debugger
-    const { name, surname, username, password } = req.body
-    console.log(req.body)
+app.get('/home/:username', (req, res) => {
+    const { params: { username } } = req
 
-    res.end()
+    if (sessions.includes(username)) {
+        const { name } = retrieveUser(username)
+
+        res.send(App({ title: 'Home', body: Home({ name, username }) }))
+    } else {
+        res.redirect('/login')
+    }
+})
+
+app.post('/logout', (req, res) => {
+    const { body: { username } } = req
+
+    const index = sessions.indexOf(username)
+
+    sessions.splice(index, 1)
+
+    res.redirect('/login')
+})
+
+app.post('/register', (req, res) => {
+    const { name, surname, username, password } = req.body
 
     try {
         registerUser(name, surname, username, password)
 
-        // res.use('/')
+        res.redirect('/login')
+
     } catch ({ message }) {
-        res.send(`<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form action='/register' method='POST'>
-        <input type='text' name='name' placeholder="Name" required>
-        <input type='text' name='surname' placeholder="Surname" required>
-        <input type='text' name='username' placeholder="username" required>
-        <input type='password' name='password' placeholder="Password" required>
-        <p style='color: red;'>${message}</p>
-        <br>
-        <input type='submit' value='Submit'>
-        <br>
-        <a href='./index.html'>Go to Login</a>
-    </form>
-</body>
-</html>`)
+        res.send(App({ title: 'Register', body: Register({ error: message }) }))
     }
+})
+
+app.get('/register', (req, res) => {
+    res.send(App({ title: 'Register', body: Register() }))
 })
 
 logger.debug('setting up server')
