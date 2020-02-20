@@ -1,6 +1,6 @@
-## Challenges Week #6
+## Some Challenges Week #6
 
-### [./app-server](./app-server)
+### [./web-server](./web-server)
 ```
 Using Express with our bodyParser
 ```
