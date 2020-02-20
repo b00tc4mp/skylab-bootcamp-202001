@@ -4,6 +4,7 @@ const path = require('path')
 const loggerMidWare = require('./utils/logger-mid-ware')
 const register = require('./logic/register')
 const authenticate = require('./logic/authenticate')
+const retrieveUser = require('./logic/retrieve-user')
 const users = require('./data')
 const bodyParser = require('./utils/body-parser')
 const fs = require('fs')
@@ -20,16 +21,18 @@ app.use(loggerMidWare)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.post('/login', bodyParser, (req, res) => {
+app.post('/authenticate', bodyParser, (req, res) => {
 
     try {
         const { username, password } = req.body
         authenticate(username, password)
 
-        res.send(`<h1>Welcome ${username}<h1>`)
+        const user = retrieveUser(username)
+
+        res.send(`<h1>Welcome ${user.name} ${user.surname}<h1>`)
 
     } catch (error) {
-        res.status(401).send("<h1>401, Wrong Credentials!</h1>\n<a href='/login.html'>Go to Login<a><a href='/register.html'>Go to Register<a>")
+        res.status(400).send(`<h1>400, ${error.message}</h1>\n<a href='/login.html'>Go to Login<a><a href='/register.html'>Go to Register<a>`)
     }
 })
 
