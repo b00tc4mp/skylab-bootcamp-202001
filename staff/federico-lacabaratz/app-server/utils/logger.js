@@ -1,51 +1,30 @@
 const fs = require('fs')
 const moment = require('moment')
 
-const LEVELS = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL']
+function log(level, message) {
+    const output = `${level} ${moment().format('Y-MM-DD HH:mm:ss.SSS')} ${message}`
 
-let ws
+    console.log(output)
 
-const logger = {
-    __level__: this.DEBUG,
-    __path__: undefined,
-
-    __log__(level, message) {
-        if (level >= this.__level__) {
-            const output = `${LEVELS[level]} ${moment().format('Y-MM-DD HH:mm:ss.SSS')} ${message}`
-
-            console.log(output)
-
-            debugger
-
-            // fs.writeFile(this.__logFile__, `${output}\n`, { encoding: 'utf8', flag: 'a' }, error => {
-            //     if (error) console.error(error)
-            // })
-
-            if (!ws) ws = fs.createWriteStream(this.__path__, { flags: 'a' })
-
-            ws.write(`${output}\n`)
-        }
-    },
-
-    set level(level) {
-        this.__level__ = level
-    },
-
-    set path(path) {
-        this.__path__ = path
-    },
-
-    debug(message) { this.__log__(this.DEBUG, message) },
-
-    info(message) { this.__log__(this.INFO, message) },
-
-    warn(message) { this.__log__(this.WARN, message) },
-
-    error(message) { this.__log__(this.ERROR, message) },
-
-    fatal(message) { this.__log__(this.FATAL, message) }
+    fs.writeFile('./server.log', `${output}\n`, { encoding: 'utf8', flag: 'a' }, error => {
+        if (error) console.error(error)
+    })
 }
 
-LEVELS.forEach((LEVEL, index) => logger[LEVEL] = index)
+module.exports = {
+    __debugEnabled__: false,
 
-module.exports = logger
+    setDebugEnabled(enable) {
+        this.__debugEnabled__ = enable
+    },
+
+    debug(message) { this.__debugEnabled__ && log('DEBUG', message) },
+
+    info(message) { log('INFO', message) },
+
+    warn(message) { log('WARN', message) },
+
+    error(message) { log('ERROR', message) },
+
+    fatal(message) { log('FATAL', message) }
+}

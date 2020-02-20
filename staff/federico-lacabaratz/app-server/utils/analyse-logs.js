@@ -10,7 +10,7 @@ let count = 0
 rs.on('data', chunk => {
     const lines = chunk.split('\n')
 
-    count += lines.reduce((accum, line) => line.includes('192.168.0.29') ? ++accum : accum, 0)
+    count += lines.reduce((accum, line) => line.includes('192.168.0.50') ? ++accum : accum, 0)
 
 })
 

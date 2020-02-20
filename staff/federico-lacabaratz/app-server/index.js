@@ -1,13 +1,12 @@
 const express = require('express')
-const logger = require('./utils/logger')
+const { logger, loggerMidWare, cookieParserMidWare } = require('./utils')
 const path = require('path')
-const loggerMidWare = require('./utils/logger-mid-ware')
-const register = require('./logic/register')
-const authenticate = require('./logic/authenticate')
-const retrieveUser = require('./logic/retrieve-user')
-const users = require('./data')
-const bodyParser = require('./utils/body-parser')
-const fs = require('fs')
+const { authenticate, register, retrieveUser } = require('./logic')
+const bodyParser = require('body-parser')
+const { Landing, Login, Register, Home, App } = require('./components')
+const { sessions } = require('./data')
+
+const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
 const { argv: [, , port = 8080] } = process
 
@@ -18,41 +17,96 @@ logger.debug('setting up server')
 const app = express()
 
 app.use(loggerMidWare)
+app.use(cookieParserMidWare)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.post('/authenticate', bodyParser, (req, res) => {
+app.get('/', (req, res) => {
+    res.send(App({ title: 'SoDaFede', body: Landing() }))
+})
+
+app.get('/login', (req, res) => {
+    const { cookies: { username } } = req
+    debugger
+    if (sessions.includes(username)) return res.redirect(`/home/${username}`)
+
+    res.send(App({ title: 'Login', body: Login() }))
+})
+
+app.use(urlencodedBodyParser)
+
+app.post('/login', (req, res) => {
+    const { username, password } = req.body
 
     try {
-        const { username, password } = req.body
         authenticate(username, password)
 
-        const user = retrieveUser(username)
+        sessions.push(username)
 
-        res.send(`<h1>Welcome ${user.name} ${user.surname}<h1>`)
+        const { cookies: { username: _username } } = req
 
-    } catch (error) {
-        res.status(400).send(`<h1>400, ${error.message}</h1>\n<a href='/login.html'>Go to Login<a><a href='/register.html'>Go to Register<a>`)
+        username !== _username && res.setHeader('set-cookie', `username=${username}`)
+
+        res.redirect(`/home/${username}`)
+
+    } catch ({ message }) {
+
+        res.send(App({ title: 'Login', body: Login({ error: message }) }))
     }
 })
 
-app.post('/register', bodyParser, (req, res) => {
+app.get('/home/:username', (req, res) => {
+
+    const { params: { username } } = req
+
+    if (sessions.includes(username)) {
+        const { name } = retrieveUser(username)
+
+        const { cookies: { username: _username } } = req
+
+        username !== _username && res.setHeader('set-cookie', `username=${username}`)
+
+        res.send(App({ title: 'Home', body: Home({ name, username }) }))
+
+    } else res.redirect('/login')
+})
+
+app.post('/logout', (req, res) => {
+    const { body: { username } } = req
+
+    const index = sessions.indexOf(username)
+
+    sessions.splice(index, 1)
+
+    res.clearCookie('username')
+
+    res.redirect('/login')
+})
+
+app.post('/register', (req, res) => {
+
+    const { name, surname, username, password } = req.body
 
     try {
-        const { name, surname, username, password } = req.body
         register(name, surname, username, password)
 
-    } catch (error) {
-        res.status(401).send(`<h1>Error: ${error.message}</h1>\n<a href='/login.html'>Go to Login<a><a href='/register.html'>Go to Register<a>`)
+        res.redirect('/login')
+
+    } catch ({ message }) {
+
+        res.send(App({ title: 'Register', body: Register({ error: message }) }))
     }
-    res.sendFile(path.join(__dirname+'/public/login.html'))
+
 })
 
-app.listen(port, () => logger.info(`server up and running on port ${port}`))
+app.get('/register', (req, res) => {
+    res.send(App({ title: 'Register', body: Register() }))
+})        
+
+app.listen(port, () => logger.info(`Example app listening on port ${port}!`))
 
 process.on('SIGINT', () => {
     logger.warn(`server abruptly stopped`)
 
     process.exit(0)
 })
-

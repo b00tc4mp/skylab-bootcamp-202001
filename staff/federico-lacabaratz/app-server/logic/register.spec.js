@@ -1,7 +1,7 @@
 require('jasmine')
 
-const register = require('./register.js')
 const users = require('../data.js')
+const register = require('./register.js')
 
 describe('register', function () {
     let user
