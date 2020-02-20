@@ -5,6 +5,7 @@ const loggerMidWare = require('./utils/logger-mid-ware')
 const users = require('./data')
 const authenticate = require('./logic/authenticate')
 const register = require('./logic/register')
+require('jasmine')
 
 // const staticMidWare = require('./utils/static-mid-ware')
 
@@ -22,15 +23,6 @@ app.use(loggerMidWare)
 //app.use(staticMidWare(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'public')))
 
-
-
-app.get('/login', (req, res)=>{
-    res.render('./public/login.html')
-})
-
-app.get('/register', (req, res)=>{
-    res.render('./public/register.html')
-})
 
 app.post('/register', (req,res)=>{
 
@@ -53,6 +45,7 @@ app.post('/register', (req,res)=>{
             <a href="register.html">Go to Register</a> <a href="login.html">Go to Login</a>`)
         }
         res.sendFile(path.join(__dirname+'/public/login.html'))
+        //res.redirect('/login.html')
     })
    
 })
@@ -67,10 +60,15 @@ app.post('/login', (req, res)=>{
         // DO something with body (debug here, analise it, parse it... etc)
         let username = (body.split('=')[1]).split('&')[0]
         let password = body.split('=')[2]
+        let _name
+        for(let i = 0; i<users.length; i++){
+            Object.keys(users[i]).forEach((key)=>{if(users[i][key]===username) _name = users[i]['name']})}
+        //console.log(users)
         try {
             authenticate(username, password)
+            
             res.send(
-                `<h1>Welcome ${username}</h1>`
+                `<h1>Welcome ${_name}</h1>`
             )
         } catch (error) {
             //console.error(error)

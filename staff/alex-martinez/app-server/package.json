@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node .",
     "debug": "node debug .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jasmine ./logic/*.spec.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,8 @@
     "express": "^4.17.1",
     "moment": "^2.24.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  },
   "description": ""
 }
