@@ -1,64 +1,47 @@
+const {retrieveUser, authenticate, register } = require('./logic')
+const {App, Login, Landing, Register, Home} = require('./components')
 const express = require('express')
-const register = require('./logic/register')
-const authenticate = require('./logic/authenticate')
-const users = require('./data')
-
 const app = express()
+const bodyParse = require('body-parser')
 
-app.use(express.static('public'));
 app.use(express.static('logic'));
+app.use(express.static('utils'));
+app.use(bodyParse.urlencoded({ extended: false }))
 
-app.post('/register', (req, res) => {
-    let body = ''
-    let _body = []
-    
-    req.on('data', chunk => {
-        body += chunk
-    })
-    req.on('end', () => {
-        body = body.split('&')
-        body.forEach(data => {
-            _body.push(data.split('=')[1])
-        })
-        let name = _body[0]
-        let surname = _body[1]
-        let username = _body[2]
-        let password = _body[3]
-
-        try {
-            register(name, surname, username, password)
-            console.log(users)
-            res.redirect('/')
-            res.end()
-        } catch (error) {
-            res.end(`<h1>${error}</h1>`)
-        }
-    })
+app.get('/',(req,res)=>{
+    res.send(App({ title: 'My App', body:Landing()}))
 })
 
-app.post('/login', (req, res) => {
-    let body = ''
-    let _body = []
-    
-    req.on('data', chunk => {
-        body += chunk
-    })
-    req.on('end', () => {
-        body = body.split('&')
-        body.forEach(data => {
-            _body.push(data.split('=')[1])
-        })
-        let username = _body[0]
-        let password = _body[1]
+app.get('/login',(req,res)=>{
+    res.send(App({ title: 'Login', body:Login()}))
+})
 
-        try {
-            authenticate(username, password)
-            console.log('logged in')
-            res.end(`<h1>Welcome ${username}!, now i get your password ${password} :)</h1>`)
-        } catch (error) {
-            res.end(`<h1>404. ${error}</h1>`)
-        }
-    })
+app.get('/register',(req,res)=>{
+    res.send(App({ title: 'Register', body:Register()}))
+})
+
+app.post('/register', (req, res) => {
+    const {name,surname,username,password}= req.body
+
+    try{
+        register(name, surname, username, password)
+        res.send(App({ title: 'Login', body:Login()}))
+    }catch({message}){
+        res.send(App({ title: 'Register', body: Register({message})}))
+    }
+})
+
+app.post('/login',(req,res)=> {
+    const {username, password} = req.body
+
+    try{
+        authenticate(username,password)
+        const user = retrieveUser(username)
+        const {name} = user
+        res.send(App({ title: 'Home', body: Home({name, password}) }))
+    }catch({message}){
+        res.send(App({ title: 'Login', body: Login({message})}))
+    }
 })
 
 app.listen(8080, function () {
