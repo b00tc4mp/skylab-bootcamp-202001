@@ -1,7 +1,6 @@
 const express = require('express')
-const user = require('../handlers/user')
-
 const router = express.Router()
+const user = require('../handlers/user')
 
 router.post('/authenticate', user.authUser)
 router.post('/register', user.registerUser)
