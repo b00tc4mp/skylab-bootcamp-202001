@@ -1,14 +1,12 @@
 const express = require('express')
 const user = require('../handlers/user')
-const bodyParser = require('../utils/body-parser')
 
-const {Router} = express
-const app = Router()
+const router = express.Router()
 
-app.post('/authenticate', bodyParser, user.authUser)
-app.post('/register', bodyParser, user.registerUser)
+router.post('/authenticate', user.authUser)
+router.post('/register', user.registerUser)
 
-app.get(["/", "/register.html"], user.renderRegister)
-app.get("/login.html", user.renderLogin)
+router.get(["/", "/register.html"], user.renderRegister)
+router.get("/login.html", user.renderLogin)
 
-module.exports = app
+module.exports = router
