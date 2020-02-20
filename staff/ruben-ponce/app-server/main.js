@@ -25,10 +25,14 @@ app.post('/register', (req, res) => {
         let username = _body[2]
         let password = _body[3]
 
-        register(name, surname, username, password)
-        console.log(users)
-        res.redirect('/')
-        res.end()
+        try {
+            register(name, surname, username, password)
+            console.log(users)
+            res.redirect('/')
+            res.end()
+        } catch (error) {
+            res.end(`<h1>${error}</h1>`)
+        }
     })
 })
 
@@ -46,9 +50,14 @@ app.post('/login', (req, res) => {
         })
         let username = _body[0]
         let password = _body[1]
-        authenticate(username, password)
-        console.log('logged in')
-        res.end(`<h1>Welcome ${username}!, now i get your password ${password} :)</h1>`)
+
+        try {
+            authenticate(username, password)
+            console.log('logged in')
+            res.end(`<h1>Welcome ${username}!, now i get your password ${password} :)</h1>`)
+        } catch (error) {
+            res.end(`<h1>404. ${error}</h1>`)
+        }
     })
 })
 
