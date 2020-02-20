@@ -23,23 +23,7 @@ const app = express()
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.post('/authenticate', (req, res) => {
-    let data = ''
-    req.on('data', chunk => {
-        data += chunk
-    })
-    req.on('end', () => {
-        // DO something with body (debug here, analise it, parse it... etc)
-        body = {}
-            data.split('&').forEach(element => {
-                //const [key, value] = element.split('=')
-                const key = element.split('=')[0]
-                const value = element.split('=')[1]
-                body[key]=value
-            })
-            req.body = body
-            debugger
-        res.end()
-    })
+    
 })
 
 app.listen(port, () => console.log(`server up and running on port ${port}`))
