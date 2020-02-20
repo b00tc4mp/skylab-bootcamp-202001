@@ -1,5 +1,4 @@
-const authenticate = require('../logic/authenticate-user')
-const retrieveUser = require('../logic/retrieve-user')
+const { authenticateUser, retrieveUser } = require('../logic')
 
 
 function authMidWare(req, res, next) {
@@ -7,7 +6,7 @@ function authMidWare(req, res, next) {
 
         const { username, password } = req.body
         try {
-            authenticate(username, password)
+            authenticateUser(username, password)
 
             res.user = retrieveUser(username)
 

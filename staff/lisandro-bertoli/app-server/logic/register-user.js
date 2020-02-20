@@ -1,4 +1,4 @@
-const users = require('../data')
+const { users } = require('../data')
 
 function register(name, surname, username, password) {
     if (typeof name !== 'string') throw new TypeError('name ' + name + ' is not a string');
@@ -11,7 +11,9 @@ function register(name, surname, username, password) {
     if (!password.trim()) throw new Error('password is empty');
     var user = users.find(function (user) { return user.username === username; });
     if (user) throw new Error('User ' + username + ' already exists');
+
     user = { name: name, surname: surname, username: username, password: password };
+
     users.push(user);
 }
 module.exports = register 

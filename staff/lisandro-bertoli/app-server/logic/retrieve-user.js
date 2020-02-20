@@ -1,4 +1,4 @@
-const users = require('../data')
+const { users } = require('../data')
 
 function retriveUser(_username) {
     const user = users.find(function (user) { return _username === user.username });
