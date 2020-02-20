@@ -1,40 +1,48 @@
+
 const fs = require('fs')
 const moment = require('moment')
 
+const LEVELS = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL']
+
+let ws
+
 const logger = {
-    __location__: {},
-    set location(location) { this.__location__ = location || '' },
-    get location() { return this.__location__ },
+    __level__: this.DEBUG,
+    __path__: undefined,
 
-    __port__: '',
-    set port(port) { this.__port__ = port },
-    get port() { return this.__port__ },
+    __log__(level, message) {
+        if (level >= this.__level__) {
+            const output = `${LEVELS[level]} ${moment().format('Y-MM-DD HH:mm:ss.SSS')} ${message}`
 
-    __ip__: '',
-    set ip(ip) { this.__ip__ = ip || 'localhost' },
-    get ip() { return this.__ip__ },
+            // fs.writeFile(this.__logFile__, `${output}\n`, { encoding: 'utf8', flag: 'a' }, error => {
+            //     if (error) console.error(error)
+            // })
 
-    log(level, message) {
-        const {ip, port} = this
-        const host = ip && port? ip + ":" + port : ""
+            if (!ws) ws = fs.createWriteStream(this.__path__, { flags: 'a' })
 
-        const output = `${level}\t${moment().format('Y-MM-DD HH:mm:ss')}\t ${this.location.city} ${host}\t${message}\n`
-    
-        fs.writeFile('server.log', output, { enconding: 'utf8', flag: 'a' }, error => {
-            if (error) console.log(error)
-        })
+            ws.write(`${output}\n`)
+        }
     },
 
-    __debugEnabled__: false,
-    setDebugEnabled(enable) {
-        this.__debugEnabled__ = enable
+    set level(level) {
+        this.__level__ = level
     },
 
-    debug(message) { this.__debugEnabled__ && this.log('DEBUG', message) },
-    info(message) { this.log('INFO', message) },
-    warn(message) { this.log('WARN', message) },
-    error(message) { this.log('ERROR', message) },
-    fatal(message) { this.log('FATAL', message) }
+    set path(path) {
+        this.__path__ = path
+    },
+
+    debug(message) { this.__log__(this.DEBUG, message) },
+
+    info(message) { this.__log__(this.INFO, message) },
+
+    warn(message) { this.__log__(this.WARN, message) },
+
+    error(message) { this.__log__(this.ERROR, message) },
+
+    fatal(message) { this.__log__(this.FATAL, message) }
 }
 
-module.exports = logger
+LEVELS.forEach((LEVEL, index) => logger[LEVEL] = index)
+
+module.exports = logge

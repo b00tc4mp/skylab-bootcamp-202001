@@ -22,7 +22,7 @@ const authUser = (req, res) => {
 const registerUser = (req, res) => {
   try {
     register(req.body)
-    res.redirect('/login.html')
+    res.redirect('/login')
     
   } catch (error) {
     res.status(401).send(`<h1>${error.message}</h1>`)
@@ -31,10 +31,7 @@ const registerUser = (req, res) => {
 
 const renderRegister = (req, res) => {
   try {
-    fs.readFile(path.join(__dirname, '../public/register.html'), (error, data) => {
-      let html = data.toString()
-      res.status(200).send(html)
-    })
+    res.status(200).sendFile(path.join(__dirname, '../public/register.html'))
   } catch (error) {
     console.log(error)
   }
@@ -42,10 +39,7 @@ const renderRegister = (req, res) => {
 
 const renderLogin = (req, res) => {
   try {
-    fs.readFile(path.join(__dirname, '../public/login.html'), (error, data) => {
-      let html = data.toString()
-      res.status(200).send(html)
-    })
+    res.status(200).sendFile(path.join(__dirname, '../public/login.html'))
   } catch (error) {
     console.log(error)
   }

@@ -4,13 +4,10 @@ function bodyParser(req, res, next) {
   req.on('data', function(chunk){ data += chunk})
 
   req.on('end', function(){
-
     const body = {}
     
     data.split('&').forEach(ele => {
-    //"name=victori&surname=murillo&username=vam&password=123"
-      const key = ele.split("=")[0]
-      const value = ele.split("=")[1]
+      const [key, value] = ele.split("=")
       body[key] = value
     })
 
