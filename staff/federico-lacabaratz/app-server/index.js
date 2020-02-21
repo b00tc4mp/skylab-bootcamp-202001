@@ -17,9 +17,10 @@ logger.debug('setting up server')
 const app = express()
 
 app.use(loggerMidWare)
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(urlencodedBodyParser)
 app.use(cookieParserMidWare)
 
-app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
     res.send(App({ title: 'SoDaFede', body: Landing() }))
@@ -27,13 +28,12 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     const { cookies: { username } } = req
-    debugger
+    
     if (sessions.includes(username)) return res.redirect(`/home/${username}`)
 
     res.send(App({ title: 'Login', body: Login() }))
 })
 
-app.use(urlencodedBodyParser)
 
 app.post('/login', (req, res) => {
     const { username, password } = req.body
