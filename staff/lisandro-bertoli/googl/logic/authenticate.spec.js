@@ -1,6 +1,6 @@
 'use strict';
 
-fdescribe('authenticate', function () {
+describe('authenticate', function () {
     var user;
 
     beforeEach(function () {

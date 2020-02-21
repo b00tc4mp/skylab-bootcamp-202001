@@ -1,10 +1,11 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
-const { loggerMidWare, logger, cookieParserMidWare } = require('./utils')
+const session = require('express-session')
+const { loggerMidWare, logger } = require('./utils')
 const { Home, App, Register, Login, Landing } = require('./components')
 const { retrieveUser, registerUser, authenticateUser } = require('./logic')
-const { sessions } = require('./data')
+
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -18,45 +19,38 @@ const app = express()
 const { argv: [, , port = 8080] } = process
 
 app.use(loggerMidWare)
-app.use(cookieParserMidWare)
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
 
-app.use(urlencodedBodyParser)
-
-
-app.get('/', (req, res) => {
-    const { cookies: { username } } = req
-
-    if (sessions.includes(username)) return res.redirect(`/home/${username}`)
-
-    res.send(App({ title: 'Landing', body: Landing() }))
+app.get('/', ({ session: { acceptCookies } }, res) => {
+    res.send(App({ title: 'Landing', body: Landing(), acceptCookies }))
 })
 
-app.get('/register', (req, res) => {
-    const { cookies: { username } } = req
-
-    if (sessions.includes(username)) return res.redirect(`/home/${username}`)
-
-    res.send(App({ title: 'Register', body: Register() }))
+app.get('/register', ({ session: { acceptCookies } }, res) => {
+    res.send(App({ title: 'Register', body: Register(), acceptCookies }))
 })
 
 app.get('/login', (req, res) => {
-    const { cookies: { username } } = req
+    const { session: { username } } = req
 
-    if (sessions.includes(username)) return res.redirect(`/home/${username}`)
+    if (username) return res.redirect(`/home/${username}`)
 
-    res.send(App({ title: 'Login', body: Login() }))
+    const { session: { acceptCookies } } = req
+
+    res.send(App({ title: 'Login', body: Login(), acceptCookies }))
 })
+
 app.get('/home/:username', (req, res) => {
     const { params: { username } } = req
 
     const { name } = retrieveUser(username)
 
+
+
     res.send(App({ title: 'Home', body: Home({ name }) }))
 })
 
-app.post('/register', (req, res, next) => {
+app.post('/register', urlencodedBodyParser, (req, res) => {
     const { name, surname, username, password } = req.body
-
     try {
         registerUser(name, surname, username, password)
 
@@ -67,7 +61,7 @@ app.post('/register', (req, res, next) => {
 })
 
 
-app.post('/login', (req, res) => {
+app.post('/login', urlencodedBodyParser, (req, res) => {
     const { username, password } = req.body
 
     try {
@@ -85,9 +79,20 @@ app.post('/login', (req, res) => {
     }
 })
 
-app.use(express.static(path.join(__dirname, 'public')))
+app.post('/logout', urlencodedBodyParser, ({ session }, res) => {
+    session.destroy(() => res.redirect('/login'))
+})
+
+app.post('/accept-cookies', (req, res) => {
+    const { session } = req
+    debugger
+    session.acceptCookies = true
+
+    res.redirect(req.get('referer'))
+})
 
 app.listen(port, () => logger.info(`server up and running on port ${port}`))
+
 
 process.on('SIGINT', () => {
     logger.warn(`server abruptly stopped`)

@@ -1,5 +1,7 @@
+const CookiesPanel = require('./cookies')
+
 function App(props) {
-    const { title, body } = props
+    const { title, body, acceptCookies } = props
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -9,6 +11,7 @@ function App(props) {
     </head>
     <body>
         ${body}
+        ${!acceptCookies ? CookiesPanel() : ''}
     </body>
     </html>   
     `
