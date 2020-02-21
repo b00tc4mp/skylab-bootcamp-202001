@@ -3,7 +3,7 @@ const { logger, loggerMidWare, cookieParserMidWare } = require('./utils')
 const path = require('path')
 const { authenticateUser, retrieveUser, registerUser } = require('./logic')
 const bodyParser = require('body-parser')
-const { Login, App, Home, Register, Landing } = require('./components')
+const { Login, App, Home, Register, Landing, Cookies } = require('./components')
 const { sessions } = require('./data')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
@@ -23,15 +23,19 @@ app.use(cookieParserMidWare)
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/', (req, res) => {
-    res.send(App({ title: 'My App', body: Landing() }))
+    const { cookies: { cookieConsent } } = req
+    const cookieCompo = cookieConsent && cookieConsent === 'true' ? '' : Cookies()
+    res.send(App({ title: 'My App', body: Landing(), cookies: cookieCompo}))
 })
 
 app.get('/login', (req, res) => {
-    const { cookies: { username } } = req
+    
+    const { cookies: { username, cookieConsent } } = req
+    const cookieCompo = cookieConsent && cookieConsent === 'true' ? '' : Cookies()
 
     if (sessions.includes(username)) return res.redirect(`/home/${username}`)
 
-    res.send(App({ title: 'Login', body: Login() }))
+    res.send(App({ title: 'Login', body: Login(), cookies: cookieCompo }))
 })
 
 app.use(urlencodedBodyParser)
@@ -55,7 +59,8 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/home/:username', (req, res) => {
-    const { params: { username } } = req
+    const { params: { username }, cookies: {cookieConsent} } = req
+    const cookieCompo = cookieConsent && cookieConsent === 'true' ? '' : Cookies()
 
     if (sessions.includes(username)) {
         const { name } = retrieveUser(username)
@@ -64,7 +69,7 @@ app.get('/home/:username', (req, res) => {
 
         username !== _username && res.setHeader('set-cookie', `username=${username}`)
 
-        res.send(App({ title: 'Home', body: Home({ name, username }) }))
+        res.send(App({ title: 'Home', body: Home({ name, username }), cookies: cookieCompo }))
     } else res.redirect('/login')
 })
 
@@ -76,6 +81,7 @@ app.post('/logout', (req, res) => {
     sessions.splice(index, 1)
 
     res.clearCookie('username')
+    res.clearCookie('cookieConsent')
 
     res.redirect('/login')
 })
@@ -85,6 +91,7 @@ app.post('/register', (req, res) => {
 
     try {
         registerUser(name, surname, username, password)
+        
 
         res.redirect('/login')
     } catch ({ message }) {
@@ -93,7 +100,17 @@ app.post('/register', (req, res) => {
 })
 
 app.get('/register', (req, res) => {
-    res.send(App({ title: 'Register', body: Register() }))
+    const { cookies: { username, cookieConsent } } = req
+    const cookieCompo = cookieConsent && cookieConsent === 'true' ? '' : Cookies()
+    if (sessions.includes(username)) return res.redirect(`/home/${username}`)
+
+    res.send(App({ title: 'Register', body: Register(), cookies: cookieCompo }))
+})
+
+app.post('/cookie-alert', (req, res) => {
+    
+    res.setHeader('set-cookie', `cookieConsent=true`)
+    res.redirect(req.get('referer'))
 })
 
 app.listen(port, () => logger.info(`server up and running on port ${port}`))

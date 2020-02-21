@@ -1,5 +1,5 @@
 module.exports = function (props = {}) {
-    const { title, body } = props
+    const { title, body, cookies} = props
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -12,6 +12,7 @@ module.exports = function (props = {}) {
 </head>
 <body class="app">
     ${body}
+    ${cookies}
 </body>
 </html>`
 }
