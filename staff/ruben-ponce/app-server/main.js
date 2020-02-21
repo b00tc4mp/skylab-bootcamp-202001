@@ -8,15 +8,15 @@ app.use(express.static('logic'));
 app.use(express.static('utils'));
 app.use(bodyParse.urlencoded({ extended: false }))
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send(App({ title: 'My App', body:Landing()}))
 })
 
-app.get('/login',(req,res)=>{
+app.get('/login', (req, res) =>{
     res.send(App({ title: 'Login', body:Login()}))
 })
 
-app.get('/register',(req,res)=>{
+app.get('/register', (req, res) => {
     res.send(App({ title: 'Register', body:Register()}))
 })
 
@@ -31,7 +31,7 @@ app.post('/register', (req, res) => {
     }
 })
 
-app.post('/login',(req,res)=> {
+app.post('/login', (req, res) => {
     const {username, password} = req.body
 
     try{
@@ -42,6 +42,10 @@ app.post('/login',(req,res)=> {
     }catch({message}){
         res.send(App({ title: 'Login', body: Login({message})}))
     }
+})
+
+app.post('/logout', (req, res) => {
+    res.redirect('/login')
 })
 
 app.listen(8080, function () {

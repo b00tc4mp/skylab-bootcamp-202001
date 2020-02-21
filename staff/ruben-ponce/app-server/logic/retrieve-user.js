@@ -1,4 +1,4 @@
-const users = require('../data')
+const users = require('../data/users')
 
 module.exports= function(usernameUser) {
     if (typeof usernameUser !== 'string') throw new TypeError(`usernameUser ${usernameUser} is not a string`)
