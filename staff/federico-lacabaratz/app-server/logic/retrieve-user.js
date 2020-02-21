@@ -1,10 +1,12 @@
-const users = require('../data/data')
+const users = require('../data/data.js')
 
-module.exports = function (username) {
+function retrieveUser (username) {
 
-    if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
+    if (typeof username !== 'string') throw new TypeError(`${username} is not a string`)
 
     const user = users.find(user => user.username === username)
 
     return user
 }
+
+module.exports = retrieveUser

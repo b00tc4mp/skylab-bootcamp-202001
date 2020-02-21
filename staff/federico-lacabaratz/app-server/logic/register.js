@@ -20,5 +20,4 @@ function register (name, surname, username, password) {
     users.push(user)
 }
 
-if(require !== undefined)
-    module.exports = register
+module.exports = register

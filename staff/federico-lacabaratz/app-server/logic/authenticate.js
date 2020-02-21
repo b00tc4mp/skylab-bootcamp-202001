@@ -10,4 +10,4 @@ function authenticate (username, password) {
     if (!user) throw new Error('Wrong credentials')
 }
 
-    module.exports = authenticate
+module.exports = authenticate

@@ -1,42 +1,63 @@
-let users = require('../data')
-const retrieveUser = require('./retrieve-user')
+const users = require('../data/data.js')
+const retrieveUser = require('./retrieve-user.js')
 
 describe('retrieveUser', () => {
-    let name, surname, username
+    let name, surname, username, password
 
-    beforeEach(() => {
-        let user = {
-            name:'name-' + Math.random(),
-            surname: 'surname-' + Math.random(),
-            username:'username-' + Math.random()
-        }
-        const {username} = user
-    })
+        beforeEach(function () {
+            users.length = 0
 
-    describe('when user already exists', () => {
-        beforeEach( users.push(user))
+            user = {
+                name: 'name-' + Math.random(),
+                surname: 'surname-' + Math.random(),
+                username: 'username-' + Math.random(),
+                password: 'password-' + Math.random()
+            }
+        })
 
-        it('should succeed', () =>
-            retrieveUser((username) => {
+    describe('when user already exists', function () {
+        beforeEach(function () {
+            users.push(user)
+        })
 
-                expect(user).toBeDefined()
+        it('should succeed on correct username', () => {
+            const userInfo = retrieveUser(user.username) 
+                expect(userInfo).not.toBe(undefined)
 
-                const VALID_KEYS = ['name', 'surname', 'username']
-                Object.keys(user).forEach(key => VALID_KEYS.includes(key))
-                
-                expect(user.name).toBe(name)
-                expect(user.surname).toBe(surname)
-                expect(user.username).toBe(username)
-                expect(user.password).toBeUndefined()
-            })
-        )
+                expect(userInfo.name).toBe(user.name)
+                expect(userInfo.surname).toBe(user.surname)
+                expect(userInfo.username).toBe(user.username)
+        })
 
-        afterEach( () => users.splice(user.indexOf(user), 1))
-    })
+        it('should fail on invalid username', () => {
+            const userInfo = retrieveUser(`${user}-wrong`)
+                expect(userInfo).toBe(undefined)
+        })
 
-    it('should fail on non-string username', () => {
+        afterEach(() => {
+            users.length = 0
+        })
 
-        expect(retrieveUser(true)).toThrowError(TypeError, `user true is not a string`)
-        expect(retrieveUser([])).toThrowError(TypeError, `user [] is not a string`)
+        it('should fail on non-string username', () => {
+            username = 1
+            expect(() =>
+                retrieveUser(username, () => { })
+            ).toThrowError(TypeError, `${username} is not a string`)
+
+            username = true
+            expect(() =>
+                retrieveUser(username, () => { })
+            ).toThrowError(TypeError, `${username} is not a string`)
+
+            username = undefined
+            expect(() =>
+                retrieveUser(username, () => { })
+            ).toThrowError(TypeError, `${username} is not a string`)
+
+            username = null
+            expect(() =>
+                retrieveUser(username, () => { })
+            ).toThrowError(TypeError, `${username} is not a string`)
+        })
     })
 })
