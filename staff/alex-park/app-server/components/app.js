@@ -13,8 +13,12 @@ module.exports = function ( props = {}) {
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="app">
-    ${body}
+    <h1>🏎️ KARMAZON APP 🏎️</h1>
     ${!acceptCookies ? Cookies() : ''}
+    ${body}
 </body>
+<script src="utils/call.js"></script>
+<script src="utils/array.prototype.random.js"></script>
+<script src="utils/array.prototype.toggle.js"></script>
 </html>`
 }

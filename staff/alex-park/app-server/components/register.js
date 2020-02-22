@@ -2,11 +2,16 @@ module.exports = function (props = {}) {
     const { error } = props
 
     return `<section class="register">
-    <h1>Register</h1>
+    <h2>Register</h2>
     <form action="/register" method="POST">
-    <input type="text" name="name" placeholder="name"><input type="text" name="surname" placeholder="surname"><input type="text" name="username" placeholder="username"><input type="password" name="password" placeholder="password"><button>Send</button>
+        <input type="text" name="name" placeholder="Name">
+        <input type="text" name="surname" placeholder="Surname">
+        <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password" placeholder="Password">
+        <button>Submit</button>
         ${error ? `<p class="register__error">${error}</p>` : ''}
     </form>
     <a href="/login">Login</a>
 </section>`
 }
+

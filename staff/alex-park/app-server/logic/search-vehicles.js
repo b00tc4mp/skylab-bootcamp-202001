@@ -1,6 +1,5 @@
 const { call } = require('../utils')
 const atob = require('atob')
-require('../specs/specs-helper')
 
 module.exports = function(token, query, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)

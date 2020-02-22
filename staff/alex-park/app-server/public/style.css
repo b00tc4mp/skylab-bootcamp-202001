@@ -1,35 +1,305 @@
-.app {
-  text-align: center;
+.item, .search, .register, .login {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.search input, .register input, .login input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .item h2, .search h2, .register h2, .login h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.search button, .register button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.item, .search, .register, .login {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.search input, .register input, .login input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .item h2, .search h2, .register h2, .login h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.search button, .register button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
 }
 
 .login {
   display: inline-block;
-  border: 1px solid black;
-  padding: 1px;
-}
-.login input {
-  border: none;
+  padding: 0.5rem;
 }
 .login button {
-  border: none;
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
-.login__error {
-  color: red;
+.login a {
+  display: block;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+.item, .search, .register, .login {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.search input, .register input, .login input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .item h2, .search h2, .register h2, .login h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.search button, .register button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
 }
 
 .register {
   display: inline-block;
   border: 1px solid black;
-  padding: 1px;
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
-.register input {
-  border: none;
+.register--hide {
+  display: none;
 }
-.register button {
-  border: none;
+.register a {
+  display: block;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
-.register__error {
+
+.app {
+  text-align: center;
+}
+
+.item, .search, .login, .register {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.search input, .login input, .register input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .item h2, .search h2, .login h2, .register h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.search button, .register button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.search {
+  width: 40%;
+  margin-left: 30%;
+}
+.search input {
+  width: 90%;
+}
+.item, .login, .register, .search {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.login input, .register input, .search input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .item h2, .login h2, .register h2, .search h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.register button, .search button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.results {
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item, .login, .register, .search {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.login input, .register input, .search input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .item h2, .login h2, .register h2, .search h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.register button, .search button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.item {
+  width: 40%;
+  margin: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.item img {
+  max-width: 38vw;
+  width: auto;
+  cursor: pointer;
+}
+.item span {
+  font-size: 2.1em;
+  font-weight: bolder;
+}
+.item .fa-heart {
+  font-size: 2em;
+}
+.item .fas {
   color: red;
+}
+
+h1 {
+  font-size: 4.5em;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-color: #193cff;
+  font-family: "Arial";
+}
+
+.favbutton {
+  padding: 1%;
+  background-color: white;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

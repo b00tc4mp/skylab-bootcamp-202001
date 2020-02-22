@@ -1,11 +1,5 @@
 const { call } = require('../utils')
 const atob = require('atob')
-Array.prototype.toggle = function (value) {
-    const index = this.findIndex(_value => _value === value)
-
-    if (index > -1) this.splice(index, 1)
-    else this.push(value)
-}
 
 module.exports = function (token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
