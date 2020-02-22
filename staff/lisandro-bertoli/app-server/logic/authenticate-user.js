@@ -1,12 +1,23 @@
-const { users } = require('../data')
+const { call } = require('../utils')
 
-function authenticate(username, password) {
-    if (typeof username !== 'string') throw new TypeError('username ' + username + ' is not a string');
-    if (typeof password !== 'string') throw new TypeError('password ' + password + ' is not a string');
+module.exports = function (username, password, callback) {
+    if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
+    if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
+    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
 
-    var user = users.find(function (user) { return username === user.username });
+    call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    }, (error, response) => {
+        debugger
 
-    if (!user || user.password !== password) throw new Error('Wrong credentials')
+        if (error) return callback(error)
+
+        const { error: _error, token } = JSON.parse(response.content)
+
+        if (_error) return callback(new Error(_error))
+
+        callback(undefined, token)
+    })
 }
-
-module.exports = authenticate

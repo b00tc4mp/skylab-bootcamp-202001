@@ -1,8 +1,8 @@
 const call = require('./call')
 require('./array.prototype.random')
 
-describe('call', function () {
-    it('should succeed on valid url', function (done) {
+describe('call', () => {
+    it('should succeed on valid url', (done) => {
         var targets = [
             { url: 'https://www.lavanguardia.com/', text: 'vanguardia' },
             { url: 'https://www.eldiario.es/', text: 'eldiario' },
@@ -13,7 +13,7 @@ describe('call', function () {
 
         var target = targets.random();
 
-        call('https://skylabcoders.herokuapp.com/proxy?url=' + target.url, undefined, function (response) {
+        call('https://skylabcoders.herokuapp.com/proxy?url=' + target.url, undefined, (error, response) => {
             expect(response.status).toBe(200);
 
             //expect(response.content.toLowerCase().includes(target.text)).toBeTruthy();
@@ -23,18 +23,18 @@ describe('call', function () {
         });
     });
 
-    it('should fail on invalid url', function () {
+    it('should fail on invalid url', () => {
         var url = 'invalid-url';
 
-        expect(function () {
+        expect(() => {
             call(url, undefined, () => { })
         }).toThrowError(SyntaxError, url + ' is not an url');
     });
 
-    it('should fail on valid non-existing url', function (done) {
+    it('should fail on valid non-existing url', (done) => {
         var url = 'https://non-existing.url';
 
-        call(url, undefined, function (error) {
+        call(url, undefined, (error) => {
             expect(error).toBeInstanceOf(Error);
             expect(error.message).toBe('Network error');
 
