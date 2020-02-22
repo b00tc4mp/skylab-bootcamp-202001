@@ -15,8 +15,6 @@ const logger = {
 
             console.log(output)
 
-            debugger
-
             // fs.writeFile(this.__logFile__, `${output}\n`, { encoding: 'utf8', flag: 'a' }, error => {
             //     if (error) console.error(error)
             // })

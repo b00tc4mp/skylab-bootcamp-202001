@@ -3,6 +3,5 @@ module.exports = {
     App: require('./app'),
     Home: require('./home'),
     Register: require('./register'),
-    Landing: require('./landing'),
-    Cookies: require('./cookie-alert')
+    Landing: require('./landing')
 }
