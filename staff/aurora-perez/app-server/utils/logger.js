@@ -6,7 +6,7 @@ const LEVELS = ['DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL']
 let ws
 
 const logger = {
-    __level__: this.INFO,
+    __level__: this.DEBUG,
     __path__: undefined,
 
     __log__(level, message) {
