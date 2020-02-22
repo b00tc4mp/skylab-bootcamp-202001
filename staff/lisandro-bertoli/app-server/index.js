@@ -2,7 +2,6 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const querystring = require('querystring');
 const { loggerMidWare, logger } = require('./utils')
 const { Home, App, Register, Login, Landing } = require('./components')
 const { retrieveUser, registerUser, authenticateUser, searchVehicles, retrieveVehicle } = require('./logic')
@@ -22,6 +21,7 @@ const { argv: [, , port = 8080] } = process
 
 app.use(loggerMidWare)
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
+
 
 app.get('/', ({ session: { acceptCookies } }, res) => {
     res.send(App({ title: 'Landing', body: Landing(), acceptCookies }))
@@ -134,34 +134,26 @@ app.get('/home/:username', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-
-    const { query: { q: _query }, session: { token } } = req
-    debugger
-
+    const { query: { q: _query }, session: { acceptCookies, token, user: { name } } } = req
 
     try {
-
         searchVehicles(token, _query, (error, vehicles) => {
-            const { session: { acceptCookies, user: { name } } } = req
-
-
             if (error) {
                 const { message } = error
 
-                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                return res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
             }
 
             req.session.query = _query
 
             res.send(App({ title: 'Home', body: Home({ vehicles, name }), acceptCookies }))
-
         })
     } catch ({ message }) {
-
+        res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
     }
 })
 
-app.get('/details/:id', (req, res) => {
+app.get('/vehicle/:id', (req, res) => {
     const { params: { id }, session: { token, acceptCookies } } = req
     try {
         retrieveVehicle(token, id, (error, vehicle) => {

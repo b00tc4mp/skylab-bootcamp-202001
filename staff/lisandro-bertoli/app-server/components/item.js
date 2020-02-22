@@ -1,16 +1,16 @@
 module.exports = function ({ vehicle: { id, thumbnail, name, price, isFav } }) {
 
-    return `<form action="/details/${id}" method="GET">
+    return `<form action="/vehicle/${id}" method="GET">
     <button type="submit">
-        <li className="item" >
-            <img className="item__thumbnail" src=${thumbnail} alt="" />
+        <li class="item" >
+            <img class="item__thumbnail" src=${thumbnail} alt="" />
             <div>
-                ${isFav ? `<i className="fas fa-heart item__heart"></i>` : `<i className="far fa-heart item__heart"></i>`}
+                ${isFav ? `<i class="fas fa-heart item__heart"></i>` : `<i class="far fa-heart item__heart"></i>`}
             </div>
 
-            <div className="item__info-wrapper">
-                <h3 className="item__name">${name}</h3>
-                <span className="item__price">${price}</span>
+            <div class="item__info-wrapper">
+                <h3 class="item__name">${name}</h3>
+                <span class="item__price">${price}</span>
             </div>
         </li>
     </button>    
