@@ -4,13 +4,13 @@ const path = require('path')
 const { authenticateUser, retrieveUser, registerUser } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const { Login, App, Home, Register, Landing } = require('./components')
+const { Login, App, Home, Register, Landing, Search } = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
 const { argv: [, , port = 8080] } = process
 
-logger.level = logger.DEBUG
+logger.level = logger.FATAL
 logger.path = path.join(__dirname, 'server.log')
 
 logger.debug('setting up server')
@@ -88,7 +88,7 @@ app.get('/home/:username', (req, res) => {
 
             const { session: { acceptCookies } } = req
 
-            res.send(App({ title: 'Home', body: Home({ name, username }), acceptCookies }))
+            res.send(App({ title: 'Home', body: Home({ name, username }),search: Search(), acceptCookies }))
         } else res.redirect('/login')
     })
 })
@@ -100,14 +100,25 @@ app.post('/logout', urlencodedBodyParser, ({ session }, res) => {
 app.post('/register', urlencodedBodyParser, (req, res) => {
     const { body: { name, surname, username, password } } = req
 
-    try {
-        registerUser(name, surname, username, password) // TODO WARN! this is SYNC!
+    try{
+        
+        registerUser(name, surname, username, password,(error) => {
+            if(error){
+                const { message } = error
+                const { session: { acceptCookies } } = req
 
-        res.redirect('/login')
-    } catch ({ message }) {
+                return res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+            }else{
+                const { session: { acceptCookies } } = req
+                res.send(App({ title: 'Login', body: Login(), acceptCookies }))
+            }
+        })
+
+    }catch({message}){
         const { session: { acceptCookies } } = req
 
         res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+
     }
 })
 
