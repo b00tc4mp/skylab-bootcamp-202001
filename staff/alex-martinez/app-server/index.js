@@ -1,10 +1,10 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const { Login, App, Home, Register, Landing, Search } = require('./components')
+const { Login, App, Home, Register, Landing, Search, Results} = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -124,6 +124,26 @@ app.post('/register', urlencodedBodyParser, (req, res) => {
 
 app.get('/register', ({ session: { acceptCookies } }, res) => {
     res.send(App({ title: 'Register', body: Register(), acceptCookies }))
+})
+
+app.get('/search',(req, res) => {
+    const { params: { username }, session: { token }, query: { query } } = req
+    console.log('query: ' + query)
+    searchVehicles(token, query, (error, vehicles) => {
+        if(error){
+            const { message } = error
+            const { session: { acceptCookies } } = req
+
+            return res.send(App({ title: 'Home', body: Search({ error: message }), acceptCookies }))
+        }
+
+       
+        const { session: { acceptCookies } } = req
+        
+
+        res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({vehicles}) , acceptCookies }))
+         
+    })
 })
 
 app.post('/accept-cookies', (req, res) => {
