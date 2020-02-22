@@ -3,8 +3,8 @@ module.exports = function (props = {}) {
 
     return `<li class='item'>
     <h2>${name} (${id})</h2>
-    <img src='${thumbnail}'>
+    <form action='/vehicle/${id}' method='GET'><input type="hidden"><button type='submit'><img src='${thumbnail}'></button></form>
     <span>${price} €</span>
-    <span>${isFav? '<p><i className="fas fa-heart"></i></p>' : '<p><i className="far fa-heart"></i></p>'}</span>
+    <span>${isFav? '<p><i class="fas fa-heart"></i></p>' : '<p><i class="far fa-heart"></i></p>'}</span>
 </li>`
 }

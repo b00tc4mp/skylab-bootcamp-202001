@@ -1,4 +1,4 @@
-.item, .search, .register, .login {
+.details, .item form button, .item, .search, .register, .login {
   background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
   border-top: 0.8em solid #491386;
   border-bottom: 0.8em solid #d1d1ff;
@@ -16,12 +16,12 @@
   margin: 0.5rem;
 }
 
-h1, .item h2, .search h2, .register h2, .login h2 {
+h1, .details span, .details h2, .item h2, .search h2, .register h2, .login h2 {
   color: orange;
   text-shadow: 0.1em 0.1em black;
 }
 
-.search button, .register button {
+.details button, .search button, .register button {
   border: 0.2em solid darkblue;
   box-shadow: 0.2em 0.2em black;
   width: 40%;
@@ -33,7 +33,7 @@ h1, .item h2, .search h2, .register h2, .login h2 {
   cursor: pointer;
 }
 
-.item, .search, .register, .login {
+.details, .item form button, .item, .search, .register, .login {
   background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
   border-top: 0.8em solid #491386;
   border-bottom: 0.8em solid #d1d1ff;
@@ -51,12 +51,12 @@ h1, .item h2, .search h2, .register h2, .login h2 {
   margin: 0.5rem;
 }
 
-h1, .item h2, .search h2, .register h2, .login h2 {
+h1, .details span, .details h2, .item h2, .search h2, .register h2, .login h2 {
   color: orange;
   text-shadow: 0.1em 0.1em black;
 }
 
-.search button, .register button {
+.details button, .search button, .register button {
   border: 0.2em solid darkblue;
   box-shadow: 0.2em 0.2em black;
   width: 40%;
@@ -88,7 +88,7 @@ h1, .item h2, .search h2, .register h2, .login h2 {
   margin: 0.5rem;
 }
 
-.item, .search, .register, .login {
+.details, .item form button, .item, .search, .register, .login {
   background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
   border-top: 0.8em solid #491386;
   border-bottom: 0.8em solid #d1d1ff;
@@ -106,12 +106,12 @@ h1, .item h2, .search h2, .register h2, .login h2 {
   margin: 0.5rem;
 }
 
-h1, .item h2, .search h2, .register h2, .login h2 {
+h1, .details span, .details h2, .item h2, .search h2, .register h2, .login h2 {
   color: orange;
   text-shadow: 0.1em 0.1em black;
 }
 
-.search button, .register button {
+.details button, .search button, .register button {
   border: 0.2em solid darkblue;
   box-shadow: 0.2em 0.2em black;
   width: 40%;
@@ -142,7 +142,7 @@ h1, .item h2, .search h2, .register h2, .login h2 {
   text-align: center;
 }
 
-.item, .search, .login, .register {
+.details, .item form button, .item, .search, .login, .register {
   background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
   border-top: 0.8em solid #491386;
   border-bottom: 0.8em solid #d1d1ff;
@@ -160,12 +160,12 @@ h1, .item h2, .search h2, .register h2, .login h2 {
   margin: 0.5rem;
 }
 
-h1, .item h2, .search h2, .login h2, .register h2 {
+h1, .details span, .details h2, .item h2, .search h2, .login h2, .register h2 {
   color: orange;
   text-shadow: 0.1em 0.1em black;
 }
 
-.search button, .register button {
+.details button, .search button, .register button {
   border: 0.2em solid darkblue;
   box-shadow: 0.2em 0.2em black;
   width: 40%;
@@ -184,7 +184,7 @@ h1, .item h2, .search h2, .login h2, .register h2 {
 .search input {
   width: 90%;
 }
-.item, .login, .register, .search {
+.details, .item form button, .item, .login, .register, .search {
   background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
   border-top: 0.8em solid #491386;
   border-bottom: 0.8em solid #d1d1ff;
@@ -202,12 +202,12 @@ h1, .item h2, .search h2, .login h2, .register h2 {
   margin: 0.5rem;
 }
 
-h1, .item h2, .login h2, .register h2, .search h2 {
+h1, .details span, .details h2, .item h2, .login h2, .register h2, .search h2 {
   color: orange;
   text-shadow: 0.1em 0.1em black;
 }
 
-.register button, .search button {
+.details button, .register button, .search button {
   border: 0.2em solid darkblue;
   box-shadow: 0.2em 0.2em black;
   width: 40%;
@@ -226,7 +226,7 @@ h1, .item h2, .login h2, .register h2, .search h2 {
   flex-wrap: wrap;
 }
 
-.item, .login, .register, .search {
+.details, .item form button, .item, .login, .register, .search {
   background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
   border-top: 0.8em solid #491386;
   border-bottom: 0.8em solid #d1d1ff;
@@ -244,12 +244,12 @@ h1, .item h2, .login h2, .register h2, .search h2 {
   margin: 0.5rem;
 }
 
-h1, .item h2, .login h2, .register h2, .search h2 {
+h1, .details span, .details h2, .item h2, .login h2, .register h2, .search h2 {
   color: orange;
   text-shadow: 0.1em 0.1em black;
 }
 
-.register button, .search button {
+.details button, .register button, .search button {
   border: 0.2em solid darkblue;
   box-shadow: 0.2em 0.2em black;
   width: 40%;
@@ -268,7 +268,7 @@ h1, .item h2, .login h2, .register h2, .search h2 {
   flex-direction: column;
   justify-content: center;
 }
-.item img {
+.item form button {
   max-width: 38vw;
   width: auto;
   cursor: pointer;
@@ -282,6 +282,86 @@ h1, .item h2, .login h2, .register h2, .search h2 {
 }
 .item .fas {
   color: red;
+}
+
+.details, .login, .register, .search, .item, .item form button {
+  background-image: linear-gradient(to bottom right, #7f70ff, #fafafa);
+  border-top: 0.8em solid #491386;
+  border-bottom: 0.8em solid #d1d1ff;
+  border-left: 0.8em solid #491386;
+  border-right: 0.8em solid #d1d1ff;
+  box-shadow: 0.3em 0.3em #1f1f1f;
+  border-radius: 1rem;
+}
+
+.login input, .register input, .search input {
+  display: block;
+  border: 0.2em solid blue;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+}
+
+h1, .details span, .details h2, .login h2, .register h2, .search h2, .item h2 {
+  color: orange;
+  text-shadow: 0.1em 0.1em black;
+}
+
+.details button, .register button, .search button {
+  border: 0.2em solid darkblue;
+  box-shadow: 0.2em 0.2em black;
+  width: 40%;
+  margin-left: 30%;
+  font-weight: bolder;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  cursor: pointer;
+}
+
+.details {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 4%;
+  margin-bottom: 5%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+.details .fa-heart {
+  font-size: 2em;
+}
+.details .fas {
+  color: red;
+}
+.details h2 {
+  grid-area: 1/2/1/6;
+}
+.details img {
+  grid-area: 2/1/5/4;
+  max-width: 100%;
+  width: auto;
+}
+.details .content {
+  grid-area: 2/4/6/6;
+  width: 95%;
+  margin-left: 2.5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: justify;
+  font-size: 0.8em;
+}
+.details button {
+  grid-area: 1/1/1/1;
+  width: 80%;
+  max-height: 40%;
+  cursor: pointer;
+}
+.details span {
+  grid-area: 5/1/5/4;
+  font-size: 2.5em;
+  font-weight: bolder;
 }
 
 h1 {

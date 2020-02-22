@@ -3,8 +3,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { logger, loggerMidWare } = require('./utils')
-const { authenticateUser, registerUser, retrieveUser, searchVehicles } = require('./logic')
-const { Login, App, Home, Register, Landing, Search } = require('./components')
+const { authenticateUser, registerUser, retrieveUser, searchVehicles, retrieveVehicle } = require('./logic')
+const { Login, App, Home, Register, Landing, Search, Details } = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -83,7 +83,6 @@ app.get('/search/:username', (req, res) => {
         req.session.name = user.name
         req.session.username = user.username
 
-
         if (username === _username) {
             const { name } = user
             const { session: { acceptCookies } } = req
@@ -95,16 +94,30 @@ app.get('/search/:username', (req, res) => {
 
 app.get('/query-search', (req, res) => {
     const { query: { query }, session: { token, acceptCookies, name, username } } = req
+    req.session.query = query
     
+    try {
+        searchVehicles(token, query, (error, vehicles) => {
+            if (error) {
+                const { message } = error
+    
+                return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+            } else {
+                return res.send(App({ title: 'Search', body: Search({ name, username, vehicles }), acceptCookies }))
+            }
+        })
+    } catch({ message }) {
+        return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))}
+})
 
-    searchVehicles(token, query, (error, vehicles) => {
+app.get('/vehicle/:id', urlencodedBodyParser, (req, res) => {
+    const { session: { token, acceptCookies, query }, params: { id } } = req
+    
+    retrieveVehicle(token, id, (error, vehicle) => {
         if (error) {
-            const { message } = error
-
-            return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+            //
         } else {
-            debugger
-            return res.send(App({ title: 'Search', body: Search({ name, username, vehicles }), acceptCookies }))
+            res.send(App({ title: 'Details', body: Details({ vehicle, query }), acceptCookies }))
         }
     })
 })
