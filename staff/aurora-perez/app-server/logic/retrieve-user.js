@@ -1,13 +1,9 @@
-if(typeof require !== 'undefined') {
-    var users = require ('../utils/data')
-}
+const users = require('../data/users')
 
-retrieveUser = (username) => {
-    if (typeof username !== 'string') throw new TypeError('username ' + username + ' is not a string')
+module.exports = function (username) {
+    if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
 
-    let user = users.find(function (user) { return user.username === username; })
-}
+    const user = users.find(user => user.username === username)
 
-if(typeof module !== 'undefined') {
-    module.exports =retrieveUser
+    return user
 }

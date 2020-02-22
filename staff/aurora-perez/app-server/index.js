@@ -1,17 +1,20 @@
 const express = require('express')
-const path = require('path')
 const logger = require('./utils/logger')
+const path = require('path')
 const loggerMidWare = require('./utils/logger-mid-ware')
-const authenticate = require('./logic/authenticate')
-const register = require('./logic/register')
-const retrieveUser = require('./logic/retrieve-user')
-const users = require('./utils/data')
-const fs = require('fs')
+const { authenticateUser, retrieveUser, registerUser } = require('./logic')
+const bodyParser = require('body-parser')
+const { Login, App, Home, Register, Landing } = require('./components')
+const { sessions } = require('./data')
+
+const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
 const { argv: [, , port = 8080] } = process
 
-logger.level=logger.DEBUG
+logger.level = logger.DEBUG
 logger.path = path.join(__dirname, 'server.log')
+
+logger.debug('setting up server')
 
 const app = express()
 
@@ -19,104 +22,87 @@ app.use(loggerMidWare)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.post('/authenticate', (req, res, next) => {
-    //formdata = () => { TODO
-        let data = ''
-
-        req.on('data', chunk => {
-            data += chunk
-        })
-        
-        req.on('end', () => {
-
-            let body = {}
-
-            data.split('&').forEach(element => {
-                //const [key, value] = element.split('=')
-                const key = element.split('=')[0]
-                const value = element.split('=')[1]
-                body[key]=value
-            })
-            req.body = body
-            
-            next()
-
-        })
-    //}
-}, (req, res)=>{
-    try {
-        const {body: {username, password} } = req
-            authenticate(username, password)
-            
-            //var ws = fs.createWriteStream(path.join(__dirname, 'public/index.html'))
-
-            retrieveUser(username)
-
-            res.send(`<h1>Hello ${username} </h1>`)
-
-            //const rs = fs.createReadStream(path.join(__dirname, 'public/index.html'))
-           
-            // rs.on('open', function () {
-            //     rs.pipe(res);
-            // })
-            
-    }catch(error){
-        const rs = fs.createReadStream(path.join(__dirname, 'public/login-wrong.html'))
-        rs.on('open', function () {
-                rs.pipe(res);
-        })
-
-    }
-   
+app.get('/', (req, res) => {
+    res.send(App({ title: 'My App', body: Landing() }))
 })
 
-app.post('/register', (req, res, next) => {
-    //formdata = () => { TODO
-        let data = ''
+app.get('/login', (req, res) => {
+    const { headers: { cookie } } = req
 
-        req.on('data', chunk => {
-            data += chunk
-        })
+    if (cookie) {
+        const [, username] = cookie.split('=')
 
-        req.on('end', () => {
-            // DO something with body (debug here, analise it, parse it... etc)
-
-            let body = {}
-
-            data.split('&').forEach(element => {
-                const key = element.split('=')[0]
-                const value = element.split('=')[1]
-                body[key]=value
-            })
-            req.body = body
-            
-            next()
-
-        })
-    //}
-}, (req, res)=>{
-    try {
-        const {body: {name, surname, username, password} } = req
-            register(name, surname, username, password)
-
-            const rs = fs.createReadStream(path.join(__dirname, 'public/login.html'))
-            //res.end(path.join(__dirname, 'public/index.html'))
-            //debugger
-            rs.on('open', function () {
-                rs.pipe(res);
-            })
-            
-    }catch(error){
-        const rs = fs.createReadStream(path.join(__dirname, 'public/register-wrong.html'))
-        rs.on('open', function () {
-                rs.pipe(res);
-        })
-
+        if (sessions.includes(username)) return res.redirect(`/home/${username}`)
     }
-   
+
+    res.send(App({ title: 'Login', body: Login() }))
 })
 
+app.use(urlencodedBodyParser)
 
+app.post('/login', (req, res) => {
+    const { username, password } = req.body
+
+    try {
+        authenticateUser(username, password)
+
+        sessions.push(username)
+        debugger
+        const { headers: { cookie } } = req
+
+        if (!cookie)
+            res.setHeader('set-cookie', `username=${username}`)
+        else {
+            const [, _username] = cookie.split('=')
+
+            if (username !== _username) res.setHeader('set-cookie', `username=${username}`)
+        }
+
+        res.redirect(`/home/${username}`)
+    } catch ({ message }) {
+        res.send(App({ title: 'Login', body: Login({ error: message }) }))
+    }
+})
+
+app.get('/home/:username', (req, res) => {
+    const { params: { username } } = req
+
+    if (sessions.includes(username)) {
+        const { name } = retrieveUser(username)
+
+        const { headers: { cookie } } = req
+
+        !cookie && res.setHeader('set-cookie', `username=${username}`)
+
+        res.send(App({ title: 'Home', body: Home({ name, username }) }))
+    } else res.redirect('/login')
+})
+
+app.post('/logout', (req, res) => {
+    const { body: { username } } = req
+
+    const index = sessions.indexOf(username)
+
+    sessions.splice(index, 1)
+
+    res.redirect('/login')
+})
+
+app.post('/register', (req, res) => {
+    const { name, surname, username, password } = req.body
+
+    try {
+        registerUser(name, surname, username, password)
+
+        res.redirect('/login')
+    } catch ({ message }) {
+        res.send(App({ title: 'Register', body: Register({ error: message }) }))
+    }
+})
+
+app.get('/register', (req, res) => {
+    res.send(App({ title: 'Register', body: Register() }))
+})
 
 app.listen(port, () => logger.info(`server up and running on port ${port}`))
 
