@@ -4,5 +4,6 @@ module.exports = {
     Login: require('./login'),
     Register: require('./register'),
     Landing: require('./landing'),
-    CookiesPanel: require('./cookies')
+    CookiesPanel: require('./cookies'),
+    Search: require('./search')
 }
