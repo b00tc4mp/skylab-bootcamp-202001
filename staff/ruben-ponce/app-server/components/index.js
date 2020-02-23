@@ -4,4 +4,5 @@ module.exports = {
     Search: require('./search'),
     Register: require('./register'),
     Landing: require('./landing'),
+    Details: require('./details')
 }

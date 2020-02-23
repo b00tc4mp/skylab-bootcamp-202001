@@ -1,10 +1,10 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser, searchVehicles } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, retrieveStyle } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const { Login, App, Search, Register, Landing, Results } = require('./components')
+const { Login, App, Search, Register, Landing, Details} = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -96,7 +96,6 @@ app.get('/register', ({ session: { acceptCookies } }, res) => {
 
 app.get('/search/:username', (req, res) => {
     const { params: { username }, session: { token, acceptCookies }, query } = req
-    // let query = url.parse(req.url, true) = req
     const _query = query.query
 
     retrieveUser(token, (error, user) => {
@@ -116,7 +115,7 @@ app.get('/search/:username', (req, res) => {
             if(_query){
                 try {
                     searchVehicles(token, _query, (error, vehicles) => {
-                        res.send(App({ title: 'Search', body: Search({name, vehicles}), acceptCookies})) 
+                        res.send(App({ title: 'Search', body: Search({name, username, vehicles}), session:{ token }, acceptCookies})) 
                     })
                 } catch (error) {
                     return res.send(App({ title: 'Search', body: Search({ name, username, error }), session:{ token }, acceptCookies }))
@@ -124,6 +123,20 @@ app.get('/search/:username', (req, res) => {
 
             } else return res.send(App({ title: 'Search', body: Search({ name, username, error }), session:{ token }, acceptCookies }))
         } else res.redirect('/login')
+    })
+})
+
+app.post('/details', urlencodedBodyParser, (req, res) => {
+    const { body: { id }, session: { token, acceptCookies } } = req
+
+    retrieveVehicle(token, id, (error, vehicle) => {
+        
+        const { style } = vehicle
+
+        retrieveStyle(style, (error, styles) => {
+
+            res.send(App({ title: 'Details', body: Details({vehicle, styles}), session:{ token}, acceptCookies }))
+        })
     })
 })
 
