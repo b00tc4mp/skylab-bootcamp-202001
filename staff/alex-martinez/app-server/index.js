@@ -1,10 +1,10 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser, searchVehicles } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const { Login, App, Home, Register, Landing, Search, Results} = require('./components')
+const { Login, App, Home, Register, Landing, Search, Results, Detail} = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -143,6 +143,25 @@ app.get('/search',(req, res) => {
 
         res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({vehicles}) , acceptCookies }))
          
+    })
+})
+
+app.get('/detail/:id', (req, res) =>{
+    const { params: { username }, session: { token } } = req
+    const id = req.params.id
+    
+    
+    retrieveVehicle(token, id, (error, vehicle) => {
+        if(error){
+            const { message } = error
+            const { session: {acceptCookies} } = req
+
+            return //res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({error: message}) , acceptCookies }))
+        }
+
+        const { session: { acceptCookies } } = req
+        
+        res.send(App({ title: 'Home', body: Home({ username }),search: Search(), detail: Detail({vehicle}), acceptCookies }))
     })
 })
 

@@ -1,7 +1,7 @@
 const Cookies = require('./cookies')
 
 module.exports = function (props = {}) {
-    const { title, body, acceptCookies, search, results} = props
+    const { title, body, acceptCookies, search, results, detail} = props
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -16,6 +16,7 @@ module.exports = function (props = {}) {
     ${body}
     ${ !search ? '' : search }
     ${ !results ? '' : results}
+    ${ !detail ? '' : detail}
     ${!acceptCookies ? Cookies() : ''}
 </body>
 </html>`
