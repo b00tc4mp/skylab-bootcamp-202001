@@ -3,8 +3,8 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { logger, loggerMidWare } = require('./utils')
-const { authenticateUser, registerUser, retrieveUser, searchVehicles, retrieveVehicle } = require('./logic')
-const { Login, App, Home, Register, Landing, Search, Details } = require('./components')
+const { authenticateUser, registerUser, retrieveUser, searchVehicles, retrieveVehicle, toggleFavVehicle, searchFavs } = require('./logic')
+const { Login, App, Home, Register, Landing, Search, Details, FavsList } = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -92,9 +92,11 @@ app.get('/search/:username', (req, res) => {
     })
 })
 
-app.get('/query-search', (req, res) => {
+app.get('/vehicles', (req, res) => {
     const { query: { query }, session: { token, acceptCookies, name, username } } = req
-    req.session.query = query
+    if (typeof req.session.query === 'undefined') {
+        req.session.query = query
+    }
     
     try {
         searchVehicles(token, query, (error, vehicles) => {
@@ -107,19 +109,62 @@ app.get('/query-search', (req, res) => {
             }
         })
     } catch({ message }) {
-        return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))}
+        return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+    }
 })
 
 app.get('/vehicle/:id', urlencodedBodyParser, (req, res) => {
-    const { session: { token, acceptCookies, query }, params: { id } } = req
+    const { session: { token, acceptCookies, query, name, username }, params: { id } } = req
     
-    retrieveVehicle(token, id, (error, vehicle) => {
-        if (error) {
-            //
-        } else {
+    try {
+        retrieveVehicle(token, id, (error, vehicle) => {
+            if (error) {
+                const { message } = error
+                return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+            }
+
             res.send(App({ title: 'Details', body: Details({ vehicle, query }), acceptCookies }))
-        }
-    })
+        })
+            
+    } catch ({ message }) {
+        return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+    }
+})
+
+app.get('*/fav/:id', (req, res) => {
+    const { session: { token, acceptCookies, name, username }, params: { id } } = req
+
+    try {
+        toggleFavVehicle(token, id, error => {
+            if (error) {
+                const { message } = error
+                return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+            }
+
+            res.redirect(req.get('referer'))
+        })
+
+    } catch({ message }) {
+        res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+    }
+})
+
+app.get('/favs-list/:username', (req, res) => {
+    const { session: { token, acceptCookies, name, username } } = req
+    
+    try {
+        searchFavs(token, (error, listOfFavs) => {
+            if (error) {
+                const { message } = error
+                return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+            } 
+            debugger
+            return res.send(App({ title: 'Favorites List', body: FavsList({ listOfFavs, username }), acceptCookies }))
+        })
+
+    } catch ({ message }) {
+        return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))  
+    }
 })
 
 app.post('/logout', urlencodedBodyParser, ({ session }, res) => {

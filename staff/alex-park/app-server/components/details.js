@@ -11,8 +11,8 @@ module.exports = function (props = {}) {
         <p><b>COLLECTION:</b> ${collection}</p>
         <p><b>STYLE:</b> ${style}</p>
         <p><b>DESCRIPTION:</b> ${description}</p></div>
-        <span>${isFav? '<p><i class="fas fa-heart"></i></p>' : '<p><i class="far fa-heart"></i></p>'}</span>
+        ${isFav ? `<form action="fav/${id}" method="GET"><input type="hidden"><button type="submit"><i class="fas fa-heart"></i></button></form>` : `<form action="fav/${id}" method="GET"><input type="hidden"><button type="submit"><i class="far fa-heart"></i></button></form>`}
         <span>PRICE: ${price}€</span>
-        <a href='/query-search?query=${query}'>BACK</a>
+        <a href='/vehicles?query=${query}'>BACK</a>
 </li>`
 }
