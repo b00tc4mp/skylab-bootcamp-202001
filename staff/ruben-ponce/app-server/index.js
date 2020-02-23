@@ -128,13 +128,13 @@ app.get('/search/:username', (req, res) => {
 
 app.post('/details', urlencodedBodyParser, (req, res) => {
     const { body: { id }, session: { token, acceptCookies } } = req
-
+    
     retrieveVehicle(token, id, (error, vehicle) => {
         
         const { style } = vehicle
 
         retrieveStyle(style, (error, styles) => {
-
+            
             res.send(App({ title: 'Details', body: Details({vehicle, styles}), session:{ token}, acceptCookies }))
         })
     })
@@ -142,6 +142,10 @@ app.post('/details', urlencodedBodyParser, (req, res) => {
 
 app.post('/logout', urlencodedBodyParser, ({ session }, res) => {
     session.destroy(() => res.redirect('/login'))
+})
+
+app.get('/back', urlencodedBodyParser, (res, req) => {
+
 })
 
 app.post('/accept-cookies', (req, res) => {

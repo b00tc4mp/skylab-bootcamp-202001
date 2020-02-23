@@ -1,7 +1,7 @@
 module.exports = function(props){
     const { vehicle: { id, name, year, price, image, color, maker, collection, description, url, isFav }, styles: { name: styleName, image: styleImage, url: styleUrl } } = props
     return `
-        <h3>${name} (${year})</h3> <
+        <h3>${name} (${year})</h3> <form action="/back" method="GET"><button>Back</button><form>
          <img src=${image} />
          <span>${price} €</span>
          <p>${color}</p>
