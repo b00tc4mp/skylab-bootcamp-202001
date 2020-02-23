@@ -128,7 +128,7 @@ app.get('/register', ({ session: { acceptCookies } }, res) => {
 
 app.get('/search',(req, res) => {
     const { params: { username }, session: { token }, query: { query } } = req
-    console.log('query: ' + query)
+    
     searchVehicles(token, query, (error, vehicles) => {
         if(error){
             const { message } = error
