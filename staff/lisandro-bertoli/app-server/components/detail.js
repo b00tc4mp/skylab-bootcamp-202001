@@ -4,9 +4,11 @@ module.exports = function ({ vehicle: { id, name, image, year, color, maker, col
         <div class="details__intro">
             <a class="details__exit" href="/return"> << Back to results</a>
             <h2 class="details__car-name">${name}</h2>
-            <span>
+            <form action="/toggle-favorite/${id}" method="POST">
+                <button type="submit">
                 ${isFav ? `<i class="fas fa-heart item__heart"></i>` : `<i class="far fa-heart item__heart"></i>`}
-            </span>
+                </button>
+            </form>
             <div class="details__img-container">
                 <img class="details__img" src=${image} alt="" />
             </div>

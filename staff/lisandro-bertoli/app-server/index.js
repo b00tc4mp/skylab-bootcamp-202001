@@ -3,8 +3,24 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { loggerMidWare, logger } = require('./utils')
-const { Home, App, Register, Login, Landing } = require('./components')
-const { retrieveUser, registerUser, authenticateUser, searchVehicles, retrieveVehicle } = require('./logic')
+
+const {
+    Home,
+    App,
+    Register,
+    Login,
+    Landing
+} = require('./components')
+
+const {
+    retrieveUser,
+    registerUser,
+    authenticateUser,
+    searchVehicles,
+    retrieveVehicle,
+    toggleFavVehicle,
+    retrieveFavorites
+} = require('./logic')
 
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
@@ -20,6 +36,7 @@ const { argv: [, , port = 8080] } = process
 
 
 app.use(loggerMidWare)
+app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
 
 
@@ -133,21 +150,36 @@ app.get('/home/:username', (req, res) => {
     }
 })
 
-app.get('/search', (req, res) => {
+app.get('/search/:favs?', (req, res) => {
     const { query: { q: _query }, session: { acceptCookies, token, user: { name } } } = req
 
     try {
-        searchVehicles(token, _query, (error, vehicles) => {
-            if (error) {
-                const { message } = error
+        const { params: { favs } } = req
+        if (favs) {
 
-                return res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
-            }
+            retrieveFavorites(token, (error, favorites) => {
+                if (error) {
+                    const { message } = error
 
-            req.session.query = _query
+                    return res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
+                }
 
-            res.send(App({ title: 'Home', body: Home({ vehicles, name }), acceptCookies }))
-        })
+                res.send(App({ title: 'Home', body: Home({ vehicles: favorites, name }), acceptCookies }))
+            })
+        } else {
+            searchVehicles(token, _query, (error, vehicles) => {
+                if (error) {
+                    const { message } = error
+
+                    return res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
+                }
+
+                req.session.query = _query
+
+                res.send(App({ title: 'Home', body: Home({ vehicles, name }), acceptCookies }))
+            })
+
+        }
     } catch ({ message }) {
         res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
     }
@@ -169,6 +201,24 @@ app.get('/vehicle/:id', (req, res) => {
         })
     } catch ({ message }) {
         console.log(message)
+    }
+})
+
+app.post('/toggle-favorite/:id', urlencodedBodyParser, (req, res) => {
+    const { session: { token }, params: { id } } = req
+
+    try {
+        toggleFavVehicle(token, id, error => {
+            if (error) {
+                logger.warn(error)
+                return res.redirect(req.get('referer'))
+            }
+
+            res.redirect(req.get('referer'))
+        })
+    } catch (error) {
+        logger.warn(error)
+        return res.redirect(req.get('referer'))
     }
 })
 
