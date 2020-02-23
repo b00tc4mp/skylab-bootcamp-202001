@@ -103,7 +103,10 @@ app.post('/login', urlencodedBodyParser, (req, res) => {
 
                 session.token = token
 
+
                 const { username } = user
+
+                session.username = username
 
                 res.redirect(`/home/${username}`)
 

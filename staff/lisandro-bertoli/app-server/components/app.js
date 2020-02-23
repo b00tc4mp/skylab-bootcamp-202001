@@ -12,6 +12,7 @@ function App(props) {
         
     </head>
     <body>
+        <h1>${title}</h1>
         ${body}
         ${!acceptCookies ? CookiesPanel() : ''}
     </body>
