@@ -1,7 +1,7 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, retrieveStyle } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { Login, App, Home, Register, Landing, Search, Results, Detail} = require('./components')
@@ -127,7 +127,7 @@ app.get('/register', ({ session: { acceptCookies } }, res) => {
 })
 
 app.get('/search',(req, res) => {
-    const { params: { username }, session: { token }, query: { query } } = req
+    const { params: { username }, session: { token, name }, query: { query } } = req
     
     searchVehicles(token, query, (error, vehicles) => {
         if(error){
@@ -141,7 +141,7 @@ app.get('/search',(req, res) => {
         const { session: { acceptCookies } } = req
         
 
-        res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({vehicles}) , acceptCookies }))
+        res.send(App({ title: 'Home', body: Home({ username, name }),search: Search({ username, name }),results: Results({vehicles}) , acceptCookies }))
          
     })
 })
@@ -158,10 +158,18 @@ app.get('/detail/:id', (req, res) =>{
 
             return //res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({error: message}) , acceptCookies }))
         }
+        retrieveStyle(vehicle.style, (error,style) => {
+            if(error){
+                const { message } = error
+                const { session: {acceptCookies} } = req
 
-        const { session: { acceptCookies } } = req
+                return
+            }
+            const { session: { acceptCookies } } = req
         
-        res.send(App({ title: 'Home', body: Home({ username }),search: Search(), detail: Detail({vehicle}), acceptCookies }))
+            res.send(App({ title: 'Home', body: Home({ username }),search: Search(), detail: Detail({vehicle, style}), acceptCookies }))
+        })
+
     })
 })
 
