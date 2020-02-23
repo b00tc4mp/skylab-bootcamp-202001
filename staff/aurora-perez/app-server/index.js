@@ -1,10 +1,10 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser, searchVehicles } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, toggleFavVehicle, retrieveFavVehicles } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const { Login, App, Search, Register, Results, Item, Landing } = require('./components')
+const { Login, App, Search, Register, Results, Item, Details, Favorites, Landing } = require('./components')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -83,29 +83,85 @@ app.get('/search/:username', (req, res) => {
 
         const { username: _username } = user
 
+        req.session.name = user.name
+        req.session.username = user.username
+
         if (username === _username) {
             const { name } = user
             
             const { session: { acceptCookies } } = req
             debugger
-            res.send(App({ title: 'Search', body: Search({ name }), acceptCookies }))
+            res.send(App({ title: 'Search', body: Search({ name, username }), acceptCookies }))
         } else res.redirect('/login')
     })
 })
 
 app.get('/search', (req, res) => {
-    const { session: { token, acceptCookies } } = req
+    const { query: {query}, session: { token, acceptCookies, name, username } } = req
+    req.session.query = query
 
-    const { query: {query} } = req 
-     
-    searchVehicles ( token, query, (error, vehicles) => {
-        if (error) {
-            const { message } = error
+    try {
+        searchVehicles ( token, query, (error, vehicles) => {
+            if (error) {
+                const { message } = error
 
-            return res.send(App({ title: 'Search', body: Search({ error: message }), acceptCookies }))
-        }
-        res.send(App({ title: 'Search', body: Search({ vehicles }), acceptCookies }))
-    })
+                return res.send(App({ title: 'Search', body: Search({ name, username, error: message }), acceptCookies }))
+            }
+            res.send(App({ title: 'Search', body: Search({ name, username, vehicles }), acceptCookies }))
+        })
+    }catch( {message} ){
+        return res.send(App({ title: 'Search', body: Search({ name, username, error: message }), acceptCookies }))
+    }
+
+})
+
+app.get('/vehicle/:id' , (req, res) => {
+    const { session: { token, acceptCookies, query }, params: { id } } = req
+
+    try{
+        retrieveVehicle(token, id, (error, vehicle) => {
+            if(error) {
+                const { message } = error
+                return res.send(App({ title: 'Search', body: Search ({  name, username, error: message }), acceptCookies }))
+            } 
+            res.send(App({ title: 'Search', body: Details({ vehicle, query}), acceptCookies }))
+        })
+    }catch ({message} ){
+        res.send(App({ title: 'Details', body: Details({ vehicle, query, error: message }), acceptCookies }))
+    }
+    
+})
+
+app.get('/*/fav/:id', (req, res) => {
+    const { session: { name, username, token, acceptCookies, query }, params: { id } } = req
+
+    try {
+        toggleFavVehicle (token, id, error => {
+            if(error) {
+                const { message } = error
+                return res.send(App({ title: 'Search', body: Search ({  name, username, error: message }), acceptCookies }))
+            }
+            res.redirect(req.get('referer'))
+        })
+    } catch ({error}){
+        res.send(App({ title: 'Search', body: Search ({  name, username, error: message }), acceptCookies }))
+    }
+})
+
+app.get('/favorites/:username', (req, res) => {
+    const { session: { name, username, token, acceptCookies, query }, params: { id }} = req
+
+    try{
+        retrieveFavVehicles(token, (error, favsList) => {
+            if (error) {
+                const { message } = error
+                return res.send(App({ title: 'Search', body: Search ({  name, username, error: message }), acceptCookies }))
+            }
+            res.send(App({ title: 'Favorites', body: Favorites ({ favsList }), acceptCookies }))
+        })
+    }catch({message}){
+        res.send(App({ title: 'Search', body: Search ({  name, username, error: message }), acceptCookies }))
+    }
 
 })
 

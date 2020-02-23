@@ -6,5 +6,7 @@ module.exports = {
     Search: require('./search'),
     Results: require('./results'),
     Item: require('./item'),
+    Details: require('./details'),
+    Favorites: require('./favorites'),
     Landing: require('./landing')
 }

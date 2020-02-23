@@ -13,8 +13,8 @@ module.exports = function (props = {}) {
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="app">
-    ${body}
     ${!acceptCookies ? Cookies() : ''}
+    ${body}
 </body>
 </html>`
 }

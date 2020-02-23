@@ -89,4 +89,20 @@ body {
   width: 40%;
 }
 
+.detail__fav {
+  cursor: pointer;
+}
+
+.favorites {
+  width: 90%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+.favorites__item {
+  max-width: 40%;
+  width: 40%;
+}
+
 /*# sourceMappingURL=style.css.map */
