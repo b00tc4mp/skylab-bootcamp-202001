@@ -1,32 +1,187 @@
-
 const express = require('express')
-//const logger = require('./utils/logger')
+const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-//const loggerMidWare = require('./utils/logger-mid-ware')
-const authenticate = require('./logic/authenticate')
-const register = require('./logic/register')
-const data = require('./utils/data')
-const fs = require("fs")
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, toogleFavVehicle } = require('./logic')
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const { Login, App, Search, Register, Landing, Results, Item, Detail } = require('./components')
 
-const { argv: [, , port = 8080] } = process
+const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
-// logger.level = logger.DEBUG
-// logger.path = path.join(__dirname, 'server.log')
+const { argv: [, , port = 8081] } = process
 
-// logger.debug('setting up server')
+logger.level = logger.DEBUG
+logger.path = path.join(__dirname, 'server.log')
+
+logger.debug('setting up server')
 
 const app = express()
 
-// app.use(loggerMidWare)
-
-//app.use(staticMidWare(path.join(__dirname, 'public')))
+app.use(loggerMidWare)
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/components', express.static(path.join(__dirname, 'components'))) // NOTE to see sass files in browser
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
 
-app.post('/authenticate', (req, res) => {
-    
+app.get('/', ({ session: { acceptCookies } }, res) => {
+    res.send(App({ title: 'My App', body: Landing(), acceptCookies }))
 })
 
-app.listen(port, () => console.log(`server up and running on port ${port}`))
+app.get('/login', (req, res) => {
+    const { session: { username } } = req
+
+    if (username) return res.redirect(`/search/${username}`)
+
+    const { session: { acceptCookies } } = req
+
+    res.send(App({ title: 'Login', body: Login(), acceptCookies }))
+})
+
+app.post('/login', urlencodedBodyParser, (req, res) => {
+    const { body: { username, password }, session } = req
+
+    try {
+        authenticateUser(username, password, (error, token) => {
+            if (error) {
+                const { message } = error
+                const { session: { acceptCookies } } = req
+
+                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+            }
+
+            retrieveUser(token, (error, user) => {
+                if (error) {
+                    const { message } = error
+                    const { session: { acceptCookies } } = req
+
+                    return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                }
+
+                session.token = token
+
+                const { username } = user
+
+                res.redirect(`/search/${username}`)
+            })
+        })
+    } catch ({ message }) {
+        const { session: { acceptCookies } } = req
+
+        res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+    }
+})
+
+app.get('/search/:username', (req, res) => {
+    const { params: { username }, session: { token, acceptCookies } } = req
+
+    try {
+        retrieveUser(token, (error, user) => {
+            if (error) {
+                const { message } = error
+                const { session: { acceptCookies } } = req
+                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+            }
+
+            const { username: _username } = user
+
+            if (username === _username) {
+                const { name } = user
+
+                res.send(App({ title: 'Search', body: Search({ name }), acceptCookies }))
+
+            }
+        })
+
+    } catch (error) {
+        const { message } = error
+
+        return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+    }
+})
+app.get('/search', (req, res) => {
+    const { params: { username }, session: { token, acceptCookies }, query } = req
+    req.session.query=query
+            console.log(query)
+
+    try {
+
+        retrieveUser(token, (error, user) => {
+            if (error) {
+                const { message } = error
+                const { session: { acceptCookies } } = req
+                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+            }
+            const { name } = user
+            const _query = query.query
+            console.log(_query)
+
+            searchVehicles(token, _query, (error, vehicles) => {
+                if (error) {
+                    
+                    return res.send(App({ title: 'Search', body: Search({ error: message }), acceptCookies }))
+                }
+                return res.send(App({ title: 'Search', body: Search({ name, vehicles }), acceptCookies }))
+            })
+        })
+
+    } catch (error) {
+        const { message } = error
+
+        return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+    }
+})
+
+app.post('/logout', urlencodedBodyParser, ({ session }, res) => {
+    session.destroy(() => res.redirect('/login'))
+})
+
+app.post('/register', urlencodedBodyParser, (req, res) => {
+    const { body: { name, surname, username, password } } = req
+
+    try {
+        registerUser(name, surname, username, password, error => {
+            if (error) { 
+
+            const { message } = error
+            const { session: { acceptCookies } } = req
+
+            return res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+            }
+        })
+
+        res.redirect('/login')
+    } catch ({ message }) {
+        const { session: { acceptCookies } } = req
+
+        res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+    }
+})
+
+app.get('/register', ({ session: { acceptCookies } }, res) => {
+    res.send(App({ title: 'Register', body: Register(), acceptCookies }))
+})
+
+app.get('/detail/:id', ({ session: { acceptCookies, token }, params:{id} }, res) =>{
+    retrieveVehicle(token, id,(error, detail)=>{
+        if(error)
+        res.redirect(req.get('referer'))
+        if(detail)
+        res.send(App({title: `${detail.name}`, body:Detail({detail}, acceptCookies)}))
+    })
+})
+app.get('/back', (req, res)=>{
+    const {session: {query}}=req
+    res.redirect(`/search?query=${query.query}`)
+})
+
+app.post('/accept-cookies', (req, res) => {
+    const { session } = req
+
+    session.acceptCookies = true
+
+    res.redirect(req.get('referer'))
+})
+
+app.listen(port, () => logger.info(`server up and running on port ${port}`))
 
 process.on('SIGINT', () => {
     logger.warn(`server abruptly stopped`)
