@@ -1,4 +1,5 @@
-module.exports = function ({ vehicle: { id, name, image, year, color, maker, collection, style, description, isFav } }) {
+module.exports = function (props = {}) {
+    const { vehicle: { id, name, image, year, color, maker, collection, style, description, isFav } } = props
 
     return `<section class="details">
         <div class="details__intro">

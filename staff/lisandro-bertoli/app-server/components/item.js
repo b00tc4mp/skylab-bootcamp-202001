@@ -1,10 +1,11 @@
-module.exports = function ({ vehicle: { id, thumbnail, name, price, isFav } }) {
+module.exports = function (props = {}) {
+    const { vehicle: { id, thumbnail, image, name, price, isFav } } = props
 
     return `<article class="item">
     <form action="/vehicle/${id}" method="GET">
     <button type="submit">
         <li>
-            <img class="item__thumbnail" src=${thumbnail} alt="" />
+            <img class="item__thumbnail" src=${thumbnail || image} alt="" />
     
             <div class="item__info-wrapper">
                 <h3 class="item__name">${name}</h3>

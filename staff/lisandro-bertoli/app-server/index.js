@@ -37,7 +37,7 @@ const { argv: [, , port = 8080] } = process
 
 app.use(loggerMidWare)
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 * 1000 * 1000 * 24 }, resave: false, saveUninitialized: true }))
 
 
 app.get('/', ({ session: { acceptCookies } }, res) => {
@@ -100,13 +100,10 @@ app.post('/login', urlencodedBodyParser, (req, res) => {
                     return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
 
                 }
-
-                session.token = token
-
-
                 const { username } = user
 
-                session.username = username
+                session.token = token
+                // session.username = username
 
                 res.redirect(`/home/${username}`)
 
@@ -154,7 +151,7 @@ app.get('/home/:username', (req, res) => {
 })
 
 app.get('/search/:favs?', (req, res) => {
-    const { query: { q: _query }, session: { acceptCookies, token, user: { name } } } = req
+    const { query: { q }, session: { acceptCookies, token, user: { name } } } = req
 
     try {
         const { params: { favs } } = req
@@ -170,14 +167,14 @@ app.get('/search/:favs?', (req, res) => {
                 res.send(App({ title: 'Home', body: Home({ vehicles: favorites, name }), acceptCookies }))
             })
         } else {
-            searchVehicles(token, _query, (error, vehicles) => {
+            searchVehicles(token, q, (error, vehicles) => {
                 if (error) {
                     const { message } = error
 
                     return res.send(App({ title: 'Home', body: Home({ error: message, name }), acceptCookies }))
                 }
 
-                req.session.query = _query
+                req.session.query = q
 
                 res.send(App({ title: 'Home', body: Home({ vehicles, name }), acceptCookies }))
             })
