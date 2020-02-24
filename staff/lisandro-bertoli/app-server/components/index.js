@@ -1,5 +1,5 @@
 module.exports = {
-    Home: require('./home'),
+    User: require('./user'),
     App: require('./app'),
     Login: require('./login'),
     Register: require('./register'),

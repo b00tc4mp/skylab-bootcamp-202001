@@ -2,7 +2,7 @@ const searchVehicles = require('./search-vehicles')
 const { call } = require('../utils')
 require('../specs/specs-helper.js')
 
-describe('searchVehicles', () => {
+fdescribe('searchVehicles', () => {
     let name, surname, username, password, token, query, ids
 
     const queryIds = {

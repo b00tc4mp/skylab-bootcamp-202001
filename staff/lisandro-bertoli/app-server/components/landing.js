@@ -1,8 +1,11 @@
-function Landing() {
+const User = require('./user')
+const Search = require('./search')
+
+function Landing(props = {}) {
+    const { username, name, vehicles, vehicle, error } = props
     return `
-    <h1>Lisandro suck my balls with nocilla</h1>
-    <a href="/login"> to Login</a>
-    <a href="/register"> to Register</a>
+    ${User({ username, name })}
+    ${Search({ title: 'Search', error, vehicles, vehicle })}
     `
 }
 module.exports = Landing
