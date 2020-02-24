@@ -1,7 +1,7 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, retrieveStyle } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, retrieveStyle, toggleFavVehicle } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { Login, App, Search, Register, Landing, Details} = require('./components')
@@ -115,7 +115,7 @@ app.get('/search/:username', (req, res) => {
             if(_query){
                 try {
                     searchVehicles(token, _query, (error, vehicles) => {
-                        res.send(App({ title: 'Search', body: Search({name, username, vehicles}), session:{ token }, acceptCookies})) 
+                        res.send(App({ title: 'Search', body: Search({name, username, vehicles, username}), session:{ token }, acceptCookies})) 
                     })
                 } catch (error) {
                     return res.send(App({ title: 'Search', body: Search({ name, username, error }), session:{ token }, acceptCookies }))
@@ -126,8 +126,8 @@ app.get('/search/:username', (req, res) => {
     })
 })
 
-app.post('/details', urlencodedBodyParser, (req, res) => {
-    const { body: { id }, session: { token, acceptCookies } } = req
+app.post('/details/:id', urlencodedBodyParser, (req, res) => {
+    const { body: { id, username }, session: { token, acceptCookies } } = req
     
     retrieveVehicle(token, id, (error, vehicle) => {
         
@@ -135,17 +135,21 @@ app.post('/details', urlencodedBodyParser, (req, res) => {
 
         retrieveStyle(style, (error, styles) => {
             
-            res.send(App({ title: 'Details', body: Details({vehicle, styles}), session:{ token}, acceptCookies }))
+            res.send(App({ title: 'Details', body: Details({vehicle, styles, username}), session:{ token}, acceptCookies }))
         })
+    })
+})
+
+app.post('/toggle-fav/:id', (req, res) => {
+    debugger
+    const { params: { id}  ,session: { token, acceptCookies }} = req
+    toggleFavVehicle(id, token, (error) => {
+        res.redirect(req.get('referer'))
     })
 })
 
 app.post('/logout', urlencodedBodyParser, ({ session }, res) => {
     session.destroy(() => res.redirect('/login'))
-})
-
-app.get('/back', urlencodedBodyParser, (res, req) => {
-
 })
 
 app.post('/accept-cookies', (req, res) => {

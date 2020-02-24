@@ -10,7 +10,7 @@ module.exports = function(props = {}) {
 <input type="text" name="query" value="${query}">
 <button>Search</button></form>
 ${error !== "" ? `<p>${error}</p>` : ``}
-${vehicles ? Results(vehicles) : ``}
+${vehicles ? Results(vehicles, username) : ``}
 </section>
 `
 }

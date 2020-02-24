@@ -1,7 +1,11 @@
 module.exports = function(props){
-    const { vehicle: { id, name, year, price, image, color, maker, collection, description, url, isFav }, styles: { name: styleName, image: styleImage, url: styleUrl } } = props
+    const { vehicle: { id, name, year, price, image, color, maker, collection, description, url, isFav }, styles: { name: styleName, image: styleImage, url: styleUrl }, username } = props
     return `
-        <h3>${name} (${year})</h3> <form action="/back" method="GET"><button>Back</button><form>
+    <a href="/search/${username}"><-- Back</a>
+    <form action="/toggle-fav/${id}" method="POST">
+        <button class="detail__fav">${isFav ? '💖' : '🤍'}</button>
+    </form>
+        <h3>${name} (${year})</h3> 
          <img src=${image} />
          <span>${price} €</span>
          <p>${color}</p>
@@ -15,3 +19,4 @@ module.exports = function(props){
          <a href=${url}>${url}</a>
     `
 }
+
