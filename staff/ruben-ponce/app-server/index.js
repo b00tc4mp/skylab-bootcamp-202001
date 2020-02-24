@@ -19,7 +19,7 @@ const app = express()
 app.use(loggerMidWare)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/components', express.static(path.join(__dirname, 'components'))) // NOTE to see sass files in browser
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 1000 * 60 * 60 * 24 }, resave: false, saveUninitialized: true }))
 
 app.get('/', landing)
 

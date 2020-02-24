@@ -1,4 +1,5 @@
 const { retrieveVehicle, retrieveStyle } = require('../logic')
+const { App, Details } = require('../components')
 
 module.exports = (req, res) => {
     const { body: { id, username }, session: { token, acceptCookies } } = req

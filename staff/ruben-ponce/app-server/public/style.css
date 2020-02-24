@@ -54,4 +54,26 @@
   color: red;
 }
 
+.results-list {
+  list-style: none;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.detail__fav {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+}
+
+.image {
+  background-color: transparent;
+  border: none;
+}
+
+.list {
+  width: 25rem;
+}
+
 /*# sourceMappingURL=style.css.map */
