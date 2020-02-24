@@ -126,22 +126,21 @@ app.get('/register', ({ session: { acceptCookies } }, res) => {
     res.send(App({ title: 'Register', body: Register(), acceptCookies }))
 })
 
-app.get('/search',(req, res) => {
-    const { params: { username }, session: { token, name }, query: { query } } = req
+app.get('/search' ,(req, res) => {
+    const { params: {name, username}, session: { token }, query: { query } } = req
     
     searchVehicles(token, query, (error, vehicles) => {
         if(error){
             const { message } = error
             const { session: { acceptCookies } } = req
 
-            return res.send(App({ title: 'Home', body: Search({ error: message }), acceptCookies }))
+            return res.send(App({ title: 'Home', body: Home({username, name}),search: Search({ error: message }), acceptCookies }))
         }
 
        
         const { session: { acceptCookies } } = req
-        
 
-        res.send(App({ title: 'Home', body: Home({ username, name }),search: Search({ username, name }),results: Results({vehicles}) , acceptCookies }))
+        res.send(App({ title: 'Home', body: Home({ username, name }),search: Search(),results: Results({vehicles}) , acceptCookies }))
          
     })
 })

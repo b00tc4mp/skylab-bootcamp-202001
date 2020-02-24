@@ -1,7 +1,7 @@
 const Cookies = require('./cookies')
 
 module.exports = function (props = {}) {
-    const { title, body, acceptCookies, search, results, detail} = props
+    const { title, body, acceptCookies, search, results, detail, name, username} = props
 
     return `<!DOCTYPE html>
 <html lang="en">

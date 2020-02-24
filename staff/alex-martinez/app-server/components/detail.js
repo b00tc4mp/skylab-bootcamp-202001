@@ -3,7 +3,7 @@ require('./item')
 
 module.exports = function(props = {}) {
     const { vehicle, style } = props
-    console.log(style)
+    
     return `<h3>${vehicle.name} ${vehicle.year}</h3>
     <img src=${vehicle.image}>
     <span>${vehicle.price} €</span>
