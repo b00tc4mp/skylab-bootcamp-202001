@@ -2,8 +2,7 @@ require('../utils/array.prototype.toggle')
 const { call } = require('../utils')
 const atob = require('atob')
 
-
-module.exports = function(token, id, callback) {
+module.exports = function(id, token, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
 
     const [header, payload, signature] = token.split('.')
