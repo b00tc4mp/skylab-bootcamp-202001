@@ -165,7 +165,7 @@ app.get('/detail/:id', ({ session: { acceptCookies, token }, params:{id} }, res)
         if(error)
         res.redirect(req.get('referer'))
         if(detail)
-        res.send(App({title: `${detail.name}`, body:Detail({detail}, acceptCookies)}))
+        res.send(App({title: `${detail.name}`, body:Detail({detail}), acceptCookies}))
     })
 })
 app.get('/back', (req, res)=>{
