@@ -1,5 +1,5 @@
 module.exports = function (props = {}) {
-    const { vehicle: { id, name, image, year, color, maker, collection, style, description, price, isFav }, query } = props
+    const { vehicle: { id, name, image, thumbnail, year, color, maker, collection, style, description, price, isFav }, username, query } = props
 
     return `<li class='details'>
     <h2>${id}: ${name}</h2>
@@ -13,6 +13,6 @@ module.exports = function (props = {}) {
         <p><b>DESCRIPTION:</b> ${description}</p></div>
         ${isFav ? `<form action="fav/${id}" method="GET"><input type="hidden"><button type="submit"><i class="fas fa-heart"></i></button></form>` : `<form action="fav/${id}" method="GET"><input type="hidden"><button type="submit"><i class="far fa-heart"></i></button></form>`}
         <span>PRICE: ${price}€</span>
-        <a href='/vehicles?query=${query}'>BACK</a>
+        ${!query ? `<a href='/favs-list/${username}'>BACK</a>` : `<a href='/vehicles?query=${query}'>BACK</a>`}
 </li>`
 }

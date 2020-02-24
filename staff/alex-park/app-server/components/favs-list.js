@@ -1,10 +1,10 @@
 const Item = require('./item')
 
 module.exports = function(props = {}) {
-    const { listOfFavs, username } = props
+    const { listOfFavs, username, query } = props
 
     return `<section>
-    <a href="/search/${username}">BACK</a> 
+    ${query ? `<a href="/vehicles?query=${query}">BACK</a>` : `<a href="/search/${username}">BACK</a>`}
     <ul class='favlist'>${listOfFavs.map(result => Item({result}))}</ul>
 </section>`
 }
