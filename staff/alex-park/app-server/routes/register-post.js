@@ -1,5 +1,4 @@
 const { registerUser } = require('../logic')
-const { App, Register } = require('../components')
 const { logger } = require('../utils')
 
 module.exports = (req, res) => {
@@ -12,7 +11,7 @@ module.exports = (req, res) => {
                 const { message } = error
                 const { session: { acceptCookies } } = req
 
-                return res.send(App({ title: 'Register', body: Register({ error: message, name, surname, username }), acceptCookies }))
+                return res.render('register', { error: message, name, surname, username, acceptCookies })
             } else {
                 res.redirect('/login')
             }
@@ -22,6 +21,6 @@ module.exports = (req, res) => {
         const { session: { acceptCookies } } = req
         const { message } = error
 
-        return res.send(App({ title: 'Register', body: Register({ error: message, name, surname, username }), acceptCookies }))
+        return res.render('register', { error: message, name, surname, username, acceptCookies })
     }
 }

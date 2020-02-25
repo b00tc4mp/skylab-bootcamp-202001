@@ -1,0 +1,13 @@
+extends app 
+ 
+block body
+    section.register
+    h2 Register
+    form(action="/register", method="post")
+        input(type="text" name="name" placeholder="Name" value=(name || false))
+        input(type="text" name="surname" placeholder="Surname" value=(surname || false))
+        input(type="text" name="username" placeholder="Username" value=(username || false))
+        input(type="password" name="password" placeholder="Password")
+        button SUBMIT
+    a(href="/login") Login
+    include feedback

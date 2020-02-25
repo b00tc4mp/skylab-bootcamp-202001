@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const FileStore = require('session-file-store').apply(session)
+const FileStore = require('session-file-store')(session)
 const { logger, loggerMidWare } = require('./utils')
 const { landing, login, loginPost, search, results, details, toggleFav, favsList, logout, registerPost, register, acceptCookies } = require('./routes')
 
@@ -14,6 +14,9 @@ logger.level = logger.INFO
 logger.path = path.join(__dirname, 'server.log')
 
 const app = express()
+
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'components'))
 
 app.use(loggerMidWare)
 app.use(express.static(path.join(__dirname, 'public')))

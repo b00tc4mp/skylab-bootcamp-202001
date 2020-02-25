@@ -1,5 +1,4 @@
 const { authenticateUser } = require('../logic')
-const { App, Login } = require('../components')
 const { logger } = require('../utils')
 
 module.exports = (req, res) => {
@@ -13,10 +12,10 @@ module.exports = (req, res) => {
                 const { message } = error
                 const { session: { acceptCookies } } = req
 
-                return res.send(App({ title: 'Login', body: Login({ error: message, username }), acceptCookies }))
+                return res.render('login', { acceptCookies, error: message })
             }
         })
-        
+
         session.token = token
 
         session.save(() => {
@@ -24,7 +23,7 @@ module.exports = (req, res) => {
 
             if (fav) return res.redirect(307, `/toggle-fav/${fav}`)
 
-            res.redirect('/')
+            return res.redirect('/')
         })
     } catch (error) {
         logger.error(error)
@@ -32,31 +31,6 @@ module.exports = (req, res) => {
         const { message } = error
         const { session: { acceptCookies } } = req
 
-        res.send(App({ title: 'Login', body: Login({ error: message, username }), acceptCookies }))
+        return res.render('login', { acceptCookies, error: message })
     }
-
-}
-
-try {
-
-        retrieveUser(token, (error, user) => {
-            if (error) {
-                const { message } = error
-                const { session: { acceptCookies } } = req
-
-                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
-            }
-
-            session.token = token
-
-            const { username } = user
-
-            res.redirect(`/search/${username}`)
-        })
-    })
-} catch ({ message }) {
-    const { session: { acceptCookies } } = req
-
-    res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
-}
 }
