@@ -1,0 +1,21 @@
+extends app
+
+include search
+
+block body
+    section.home
+        h1 Welcome, #{name || "Anonymus"}
+        unless username
+            span
+                a(href="/login") to Login
+            span
+                a(href="/register")  to Register
+        if username
+            include user
+    +search(query)
+        if (results.length)
+            include results
+            +results(results)
+        else
+            error
+

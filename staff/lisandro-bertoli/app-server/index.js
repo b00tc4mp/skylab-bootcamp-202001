@@ -26,6 +26,9 @@ logger.debug('setting up server')
 
 const app = express()
 
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'components'))
+
 const { argv: [, , port = 8080] } = process
 
 

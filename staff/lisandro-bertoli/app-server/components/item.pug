@@ -1,0 +1,22 @@
+mixin item(id, name, isFav, thumbnail, image, price)
+    article.item
+      form(action=`/vehicle/+${id}` method="GET")
+        button(type="submit")
+          li
+            img.item__thumbnail(src=thumbnail)
+            .item__info-wrapper
+              h3.item__name=name
+              span.item__price=`$${price}`
+        form(action="/toggle-favorite/${id}" method="POST")
+            button(type="submit")
+                | ${isFav ? `
+                i.fas.fa-heart.item__heart
+                | ` : `
+                i.far.fa-heart.item__heart
+                | `}
+
+
+
+
+
+
