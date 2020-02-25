@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const FileStore = require('session-file-store').apply(session)
 const { logger, loggerMidWare } = require('./utils')
 const { landing, login, loginPost, search, results, details, toggleFav, favsList, logout, registerPost, register, acceptCookies } = require('./routes')
 
@@ -17,7 +18,13 @@ const app = express()
 app.use(loggerMidWare)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use('/components', express.static(path.join(__dirname, 'components')))
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
+app.use(session({
+    secret: 'keyboard cat',
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    resave: false,
+    saveUninitialized: true,
+    store: new FileStore({})
+}))
 
 app.get('/', landing)
 

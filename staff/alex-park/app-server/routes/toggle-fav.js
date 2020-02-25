@@ -1,20 +1,38 @@
 const { toggleFavVehicle } = require('../logic')
-const { App, Search } = require('../components')
+const { logger } = require('../utils')
 
 module.exports = (req, res) => {
-    const { session: { token, acceptCookies, name, username }, params: { id } } = req
+    const { session, params: { id } } = req
+
+    const { token } = session
+
+    if (!token) {
+        session.referer = req.get('referer')
+
+        session.fav = id
+
+        return session.save(() => res.redirect('/login'))
+    }
 
     try {
         toggleFavVehicle(token, id, error => {
             if (error) {
-                const { message } = error
-                return res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+                logger.error(error)
+
+                res.redirect('/error')
             }
 
-            res.redirect(req.get('referer'))
+            const { referer = req.get('referer') } = session
+
+            delete session.referer
+            delete session.fav
+
+            session.save(() => res.redirect(referer))
         })
 
-    } catch({ message }) {
-        res.send(App({ title: 'Search', body: Search({ error: message, name, username }), acceptCookies }))
+    } catch(error) {
+        logger.error(error)
+
+        res.redirect('/error')
     }
 }
