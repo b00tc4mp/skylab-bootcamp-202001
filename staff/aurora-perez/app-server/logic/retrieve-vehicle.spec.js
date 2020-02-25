@@ -1,8 +1,8 @@
 const retrieveVehicle = require('./retrieve-vehicle')
 const { call } = require('../utils')
-Array.prototype.random = function () {
-    return this[Math.floor(Math.random() * this.length)];
-}
+require('../utils/array.prototype.random.js')
+
+
 describe('retrieveVehicle', () => {
     let name, surname, username, password, token, query, ids, id
     const queryIds = {

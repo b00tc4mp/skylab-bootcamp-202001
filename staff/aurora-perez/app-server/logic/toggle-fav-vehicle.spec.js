@@ -1,16 +1,7 @@
 const toggleFavVehicle = require('./toggle-fav-vehicle')
 const { call } = require('../utils')
-const atob = require('atob')
 require('../specs/specs-helper.js')
-Array.prototype.random = function () {
-    return this[Math.floor(Math.random() * this.length)];
-}
-Array.prototype.toggle = function (value) {
-    const index = this.findIndex(_value => _value === value)
-
-    if (index > -1) this.splice(index, 1)
-    else this.push(value)
-}
+require('../utils/array.prototype.random.js')
 
 describe('toggleFavVehicle', () => {
     let name, surname, username, password, token, id

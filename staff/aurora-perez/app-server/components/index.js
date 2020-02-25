@@ -8,5 +8,7 @@ module.exports = {
     Item: require('./item'),
     Details: require('./details'),
     Favorites: require('./favorites'),
-    Landing: require('./landing')
+    Landing: require('./landing'),
+    Feedback: require ('./feedback'),
+    User: require('./user')
 }
