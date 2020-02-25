@@ -14,7 +14,7 @@ module.exports = function (props = {}) {
 </head>
 <body class="app">
     ${body}
-    ${ !search ? '' : search }
+    ${ search }
     ${ !results ? '' : results}
     ${ !detail ? '' : detail}
     ${!acceptCookies ? Cookies() : ''}

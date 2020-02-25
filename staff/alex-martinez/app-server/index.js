@@ -23,7 +23,7 @@ app.use('/components', express.static(path.join(__dirname, 'components'))) // NO
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
 
 app.get('/', ({ session: { acceptCookies } }, res) => {
-    res.send(App({ title: 'My App', body: Landing(), acceptCookies }))
+    res.send(App({ title: 'My App', body: Landing(),search: Search(), acceptCookies }))
 })
 
 app.get('/login', (req, res) => {
@@ -130,46 +130,135 @@ app.get('/search' ,(req, res) => {
     const { params: {name, username}, session: { token }, query: { query } } = req
     
     searchVehicles(token, query, (error, vehicles) => {
-        if(error){
-            const { message } = error
-            const { session: { acceptCookies } } = req
+        
+        const { query: { query }, session: { token } } = req
 
-            return res.send(App({ title: 'Home', body: Home({username, name}),search: Search({ error: message }), acceptCookies }))
-        }
+        if (token) {
+            retrieveUser(token, (error, user) => {
+                if (error) {
+                    const { message } = error
+                    const { session: { acceptCookies } } = req
 
-       
-        const { session: { acceptCookies } } = req
+                    return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                }
 
-        res.send(App({ title: 'Home', body: Home({ username, name }),search: Search(),results: Results({vehicles}) , acceptCookies }))
-         
-    })
+                const { name, username } = user
+
+                try {
+                    searchVehicles(token, query, (error, vehicles) => {
+                        const { session: { acceptCookies } } = req
+
+                        if (error) {
+                            const { message } = error
+
+                            return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                        }
+
+                        //res.send(App({ title: 'Search', body: Landing({ name, username, query, results: vehicles }), acceptCookies }))
+                        res.send(App({ title: 'Home', body: Home({ username, name }),search: Search(),results: Results({vehicles}) , acceptCookies }))
+                    })
+                } catch ({ message }) {
+                    const { session: { acceptCookies } } = req
+
+                    res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies })) // ?
+                }
+            })
+        } else
+            try {
+                searchVehicles(undefined, query, (error, vehicles) => {
+                    const { session: { acceptCookies } } = req
+
+                    if (error) {
+                        const { message } = error
+
+                        return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                    }
+
+                    //res.send(App({ title: 'Search', body: Landing({ query, results: vehicles }), acceptCookies }))
+                    res.send(App({ title: 'Home', body: Home({ username, name }),search: Search(),results: Results({vehicles}) , acceptCookies }))
+                })
+            } catch ({ message }) {
+                const { session: { acceptCookies } } = req
+
+                res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies })) // ?
+            }
+            
+        })
 })
 
 app.get('/detail/:id', (req, res) =>{
-    const { params: { username }, session: { token } } = req
+    const { params: { name ,username }, session: { token } } = req
     const id = req.params.id
-    
-    
-    retrieveVehicle(token, id, (error, vehicle) => {
-        if(error){
-            const { message } = error
-            const { session: {acceptCookies} } = req
-
-            return //res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({error: message}) , acceptCookies }))
-        }
-        retrieveStyle(vehicle.style, (error,style) => {
-            if(error){
+    debugger
+    if (token) {
+        retrieveUser(token, (error, user) => {
+            if (error) {
                 const { message } = error
-                const { session: {acceptCookies} } = req
+                const { session: { acceptCookies } } = req
 
+                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+            }
+
+            const { name, username } = user
+            
+            try{
+
+            retrieveVehicle(token, id, (error, vehicle) => {
+                if(error){
+                    const { message } = error
+                    const { session: {acceptCookies} } = req
+        
+                    return res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({error: message}) , acceptCookies }))
+                }
+                retrieveStyle(vehicle.style, (error,style) => {
+                    if(error){
+                        const { message } = error
+                        const { session: {acceptCookies} } = req
+        
+                        return
+                    }
+                    const { session: { acceptCookies } } = req
+                
+                    res.send(App({ title: 'Home', body: Home({ name, username }),search: Search(), detail: Detail({vehicle, style}), acceptCookies }))
+                })
+            })
+        
+            } catch({message}){
+            const { session: { acceptCookies } } = req
+
+            return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+            
+            }
+        })
+    }
+
+    else {
+        try{
+            retrieveVehicle(undefined, id, (error, vehicle) => {
+                if(error){
+                        const { message } = error
+                        const { session: {acceptCookies} } = req
+            
+                        return //res.send(App({ title: 'Home', body: Home({ username }),search: Search(),results: Results({error: message}) , acceptCookies }))
+                }
+                    retrieveStyle(vehicle.style, (error,style) => {
+                        if(error){
+                            const { message } = error
+                            const { session: {acceptCookies} } = req
+            
+                            return
+                        }
+                        const { session: { acceptCookies } } = req
+                    
+                        res.send(App({ title: 'Home', body: Home({}),search: Search(), detail: Detail({vehicle, style}), acceptCookies }))
+                    })
+            
+                })
+            } catch({message}){
                 return
             }
-            const { session: { acceptCookies } } = req
-        
-            res.send(App({ title: 'Home', body: Home({ username }),search: Search(), detail: Detail({vehicle, style}), acceptCookies }))
-        })
-
-    })
+        } 
+       
 })
 
 app.post('/accept-cookies', (req, res) => {
