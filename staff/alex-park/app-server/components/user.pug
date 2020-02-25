@@ -2,5 +2,5 @@ mixin user(name, username)
     section
         h1 Welcome, #{name}!
             form(action="/logout" method="POST")
-            input(type="hidden" value=username name="username")
-            button Logout
+                input(type="hidden" value=username name="username")
+                button Logout

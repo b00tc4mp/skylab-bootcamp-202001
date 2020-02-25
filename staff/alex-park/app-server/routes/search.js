@@ -13,7 +13,7 @@ module.exports = (req, res) => {
                     res.redirect('/error')
                 }
 
-                const { name, usename } = user
+                const { name, username } = user
 
                 try {
                     searchVehicles(token, query, (error, vehicles) => {

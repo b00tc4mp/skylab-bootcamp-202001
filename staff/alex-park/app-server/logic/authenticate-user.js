@@ -1,6 +1,6 @@
 const { fetch } = require('../utils')
 
-module.exports = function (username, password, callback) {
+module.exports = function (username, password) {
     if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
     if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
 

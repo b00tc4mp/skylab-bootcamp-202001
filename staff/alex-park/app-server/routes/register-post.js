@@ -5,17 +5,26 @@ module.exports = (req, res) => {
     const { body: { name, surname, username, password } } = req
 
     try {
-        registerUser(name, surname, username, password, error => {
-            if (error) {
+        registerUser(name, surname, username, password)
+            .then(error => {
+                if (error) {
+                    logger.warn(error)
+                    const { message } = error
+                    const { session: { acceptCookies } } = req
+
+                    return res.render('register', { error: message, name, surname, username, acceptCookies })
+                }
+
+                return res.redirect('/login')
+
+            })
+            .catch(error => {
                 logger.warn(error)
                 const { message } = error
                 const { session: { acceptCookies } } = req
 
                 return res.render('register', { error: message, name, surname, username, acceptCookies })
-            } else {
-                res.redirect('/login')
-            }
-        })
+            })
     } catch (error) {
         logger.warn(error)
         const { session: { acceptCookies } } = req

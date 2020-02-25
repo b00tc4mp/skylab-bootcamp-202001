@@ -1,5 +1,4 @@
 const { searchFavs } = require('../logic')
-const { App, Search, FavsList } = require('../components')
 
 module.exports = (req, res) => {
     const { session: { token, acceptCookies, name, username, query } } = req
