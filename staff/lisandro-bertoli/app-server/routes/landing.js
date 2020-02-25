@@ -12,9 +12,9 @@ module.exports = ({ session: { acceptCookies, token } }, res) => {
             }
             const { username, name } = user
 
-            return res.send(App({ title: 'Landing', body: Landing({ username, name }), acceptCookies }))
+            return res.render('landing', { username, name, acceptCookies })
         })
     } else {
-        res.send(App({ title: 'Landing', body: Landing(), acceptCookies }))
+        return res.render('landing', { acceptCookies })
     }
 }
