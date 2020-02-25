@@ -1,7 +1,7 @@
 const express = require('express')
 const { logger, loggerMidWare } = require('./utils')
 const path = require('path')
-const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, retrieveStyle } = require('./logic')
+const { authenticateUser, retrieveUser, registerUser, searchVehicles, retrieveVehicle, retrieveStyle, toggleFavVehicle } = require('./logic')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { Login, App, Home, Register, Landing, Search, Results, Detail} = require('./components')
@@ -60,8 +60,19 @@ app.post('/login', urlencodedBodyParser, (req, res) => {
 
                 const { username } = user
 
+                //res.redirect(`/home/${username}`)
+
+                session.token = token
+
+                session.save(() => {
+                const { fav } = session
+
+                if (fav) return res.redirect(307, `/toggle-fav/${fav}`)
+
                 res.redirect(`/home/${username}`)
             })
+            })
+            
         })
     } catch ({ message }) {
         const { session: { acceptCookies } } = req
@@ -259,6 +270,40 @@ app.get('/detail/:id', (req, res) =>{
             }
         } 
        
+})
+
+app.post('/toggle-fav/:id', (req, res) => {
+    const { params: { id }, session } = req
+
+    const { token } = session
+
+    if (!token) {
+        session.referer = req.get('referer')
+
+        session.fav = id
+        return session.save(() => res.redirect('/login'))
+    }
+
+    try {
+        console.log(id)
+        toggleFavVehicle(token, id, error => {
+            if (error) {
+                // ?
+
+                console.log(error)
+            }
+
+            const { referer = req.get('referer') } = session
+
+            delete session.referer
+            delete session.fav
+
+            session.save(() => res.redirect(referer))
+        })
+    } catch ({ message }) {
+        // ?
+        console.log({message})
+    }
 })
 
 app.post('/accept-cookies', (req, res) => {

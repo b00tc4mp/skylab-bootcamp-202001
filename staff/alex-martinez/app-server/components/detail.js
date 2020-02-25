@@ -5,6 +5,7 @@ module.exports = function(props = {}) {
     const { vehicle, style } = props
     
     return `<h3>${vehicle.name} ${vehicle.year}</h3>
+    <section><form action="toggle-fav/${vehicle.id}" method="POST"><button>${vehicle.isFav ? '💖' : '🤍'}</button></form></h3></section>
     <img src=${vehicle.image}>
     <span>${vehicle.price} €</span>
     <p>${vehicle.color}</p>
