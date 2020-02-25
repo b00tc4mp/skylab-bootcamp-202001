@@ -11,9 +11,9 @@ module.exports = (req, res) => {
                 logger.warn(error)
 
                 const { message } = error
-                const { session: acceptCookies } = req
+                const { acceptCookies } = session
 
-                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                return res.render('login', { error: message, acceptCookies })
             }
 
             session.token = token
@@ -29,8 +29,8 @@ module.exports = (req, res) => {
         logger.warn(error)
 
         const { message } = error
-        const { session: acceptCookies } = req
+        const { acceptCookies } = session
 
-        return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+        return res.render('login', { error: message, acceptCookies })
     }
 }

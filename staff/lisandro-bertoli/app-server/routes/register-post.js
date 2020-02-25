@@ -12,9 +12,9 @@ module.exports = (req, res) => {
                 logger.warn(error)
 
                 const { message } = error
-                const { session: { acceptCookies } } = req
+                const { acceptCookies } = req.session
 
-                return res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+                return res.render('register', { error: message, acceptCookies })
             }
 
             return res.redirect('/login')
@@ -22,9 +22,9 @@ module.exports = (req, res) => {
     } catch (error) {
         logger.warn(error)
 
-        const { session: { acceptCookies } } = req
         const { message } = error
+        const { acceptCookies } = req.session
 
-        res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+        return res.render('register', { error: message, acceptCookies })
     }
 }
