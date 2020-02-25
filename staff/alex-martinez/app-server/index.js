@@ -36,7 +36,8 @@ app.get('/login', (req, res) => {
 
     const { session: { acceptCookies } } = req
 
-    res.send(App({ title: 'Login', body: Login(), acceptCookies }))
+    //res.send(App({ title: 'Login', body: Login(), acceptCookies }))+
+    res.render('login', {acceptCookies})
 })
 
 app.post('/login', urlencodedBodyParser, (req, res) => {
@@ -137,7 +138,8 @@ app.post('/register', urlencodedBodyParser, (req, res) => {
 })
 
 app.get('/register', ({ session: { acceptCookies } }, res) => {
-    res.send(App({ title: 'Register', body: Register(), acceptCookies }))
+    //res.send(App({ title: 'Register', body: Register(), acceptCookies }))
+    res.render('register', {acceptCookies})
 })
 
 app.get('/search' ,(req, res) => {
