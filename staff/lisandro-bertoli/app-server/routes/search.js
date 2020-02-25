@@ -28,7 +28,7 @@ module.exports = (req, res) => {
 
                         session.query = query
 
-                        res.send(App({ title: 'Landing', body: Landing({ vehicles, name, username }), acceptCookies }))
+                        res.render('landing', { results: vehicles, name, username, acceptCookies, query })
                     })
 
                 } catch (error) {

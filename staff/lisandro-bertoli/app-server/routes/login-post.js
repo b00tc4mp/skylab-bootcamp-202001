@@ -19,10 +19,11 @@ module.exports = (req, res) => {
             session.token = token
 
             const { favId } = session
+            const { acceptCookies } = session
 
             if (favId) return res.redirect(307, `/toggle-favorite/${favId}`)
 
-            res.render('/')
+            res.render('landing', { acceptCookies, username })
 
         })
     } catch (error) {
