@@ -6,5 +6,6 @@ module.exports = {
     Landing: require('./landing'),
     Search: require('./search'),
     Details: require('./details'),
-    FavsList: require('./favs-list')
+    FavsList: require('./favs-list'),
+    User: require('./user')
 }

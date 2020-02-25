@@ -3,7 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const { logger, loggerMidWare } = require('./utils')
-const { login, loginPost, search, results, details, toggleFav, favsList, logout, registerPost, register, acceptCookies } = require('./routes')
+const { landing, login, loginPost, search, results, details, toggleFav, favsList, logout, registerPost, register, acceptCookies } = require('./routes')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -19,9 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/components', express.static(path.join(__dirname, 'components')))
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
 
-app.get('/', ({ session: { acceptCookies } }, res) => {
-    res.send(App({ title: 'My App', body: Landing(), acceptCookies }))
-})
+app.get('/', landing)
 
 app.get('/login', login)
 

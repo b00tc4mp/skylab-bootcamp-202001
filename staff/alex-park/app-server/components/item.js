@@ -1,5 +1,5 @@
 module.exports = function (props = {}) {
-    const {result: {id, name, thumbnail, price, isFav} } = props
+    const { result: { id, name, thumbnail, price, isFav } } = props
 
     return `<li class='item'>
     <h2>${name} (${id})</h2>
