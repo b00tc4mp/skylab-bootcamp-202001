@@ -1,1 +1,2 @@
-p(class=`${`feedback feedback--${level}`}`)=message
+mixin feedback(level, message)
+    p.feedback(class=`${`feedback--${level}`}`)=message

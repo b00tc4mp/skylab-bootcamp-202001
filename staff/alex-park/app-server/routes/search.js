@@ -1,26 +1,62 @@
-const { retrieveUser } = require('../logic')
-const { App, Login, Search } = require('../components')
+const { searchVehicles, retrieveUser } = require('../logic')
+const { logger } = require('../utils')
 
 module.exports = (req, res) => {
-    const { params: { username }, session: { token } } = req
+    const { query: { query }, session: { token } } = req
 
-    retrieveUser(token, (error, user) => {
-        if (error) {
-            const { message } = error
-            const { session: { acceptCookies } } = req
+    if (token) {
+        try {
+            retrieveUser(token, (error, user) => {
+                if (error) {
+                    logger.error(error)
 
-            return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
+                    res.redirect('/error')
+                }
+
+                const { name, usename } = user
+
+                try {
+                    searchVehicles(token, query, (error, vehicles) => {
+                        const { session: { acceptCookies } } = req
+
+                        if (error) {
+                            logger.error(error)
+
+                            res.redirect('/error')
+                        } else {
+                            res.render('landing', { name, username, query, results: vehicles, acceptCookies })
+                        }
+                    })
+
+                } catch (error) {
+                    logger.error(error)
+
+                    res.redirect('/error')
+                }
+            })
+        } catch ({ message }) {
+            logger.error(error)
+
+            res.redirect('/error')
         }
 
-        const { username: _username } = user
-        req.session.name = user.name
-        req.session.username = user.username
+    } else {
+        try {
+            searchVehicles(undefined, query, (error, vehicles) => {
+                const { session: { acceptCookies } } = req
 
-        if (username === _username) {
-            const { name } = user
-            const { session: { acceptCookies } } = req
+                if (error) {
+                    logger.error(error)
 
-            res.send(App({ title: 'Search', body: Search({ name, username }), acceptCookies }))
-        } else res.redirect('/login')
-    })
+                    res.redirect('/error')
+                }
+
+                res.render('landing', { query, results: vehicles, acceptCookies })
+            })
+        } catch (error) {
+            logger.error(error)
+
+            res.redirect('/error')
+        }
+    }
 }

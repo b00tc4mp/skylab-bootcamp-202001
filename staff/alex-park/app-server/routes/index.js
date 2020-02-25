@@ -3,7 +3,7 @@ module.exports = {
     login: require('./login'),
     loginPost: require('./login-post'),
     search: require('./search'),
-    results: require('./results'),
+    results: require('./search'),
     details: require('./details'),
     toggleFav: require('./toggle-fav'),
     favsList: require('./favs-list'),

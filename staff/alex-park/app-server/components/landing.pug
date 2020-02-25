@@ -1,14 +1,21 @@
+extends app
 
+include user
+include search
+include feedback
 
-
-const Search = require('./search')
-const User = require('./user')
-const Results = require('./results')
-
-module.exports = function (props = {}) {
-    const { name, username, query, vehicles } = props
-
-    return `${name ? User({ name, username }) : `<section><a href='/register'>Register</a> or <a href='/login'>Login</a></section>`}
-    ${Search({ query })}
-    ${vehicles ? Results({vehicles}) : ''}`
-}
+block body
+    if (name)
+        +user(name, username)
+    else
+        section
+            a(href="/register") Register
+            |  or  
+            a(href="/login") Login
+    +search(query)
+    if results
+        if(results.length)
+            include results
+            +results(results)
+        else
+            +feedback('warning', 'No results')

@@ -1,4 +1,3 @@
-const { App, Landing } = require('../components')
 const { retrieveUser } = require('../logic')
 const { logger } = require('../utils')
 
@@ -14,8 +13,7 @@ module.exports = ({ session: { token, acceptCookies } }, res) => {
 
                 const { name, username } = user
 
-                res.send(App({ title: 'My App', body: Landing( {name, username }), acceptCookies }))
-
+                res.render('landing', { name, username, acceptCookies })
             })
         } catch (error) {
             logger.error(error)
@@ -23,6 +21,6 @@ module.exports = ({ session: { token, acceptCookies } }, res) => {
             res.redirect('/error')
         }
     } else {
-        res.send(App({ title: 'My App', body: Landing(), acceptCookies }))
+        res.render('landing', { acceptCookies })
     }
 }

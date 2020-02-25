@@ -1,5 +1,7 @@
 extends app 
  
+include feedback
+
 block body
     section.register
     h2 Register
@@ -9,5 +11,6 @@ block body
         input(type="text" name="username" placeholder="Username" value=(username || false))
         input(type="password" name="password" placeholder="Password")
         button SUBMIT
+    if error
+        +feedback('error', error)
     a(href="/login") Login
-    include feedback

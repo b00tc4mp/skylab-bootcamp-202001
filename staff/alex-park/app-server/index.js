@@ -35,23 +35,31 @@ app.get('/login', login)
 
 app.post('/login', urlencodedBodyParser, loginPost)
 
-app.get('/search/:username', search)
-
-app.get('/vehicles', results)
-
-app.get('/vehicle/:id', urlencodedBodyParser, details)
-
-app.get('*/fav/:id', toggleFav)
-
-app.get('/favs-list/:username', favsList)
-
 app.post('/logout', urlencodedBodyParser, logout)
-
-app.post('/register', urlencodedBodyParser, registerPost)
 
 app.get('/register', register)
 
+app.post('/register', urlencodedBodyParser, registerPost)
+
 app.post('/accept-cookies', acceptCookies)
+
+app.get('/search/', search)
+
+app.post('/toggle-fav/:id', toggleFav)
+
+// app.get('/vehicles', results)
+
+// app.get('/vehicle/:id', urlencodedBodyParser, details)
+
+// app.get('*/fav/:id', toggleFav)
+
+// app.get('/favs-list/:username', favsList)
 
 logger.debug('setting up server')
 app.listen(port, () => { logger.info(`Successfully connected to server on port ${port}`) })
+
+process.on('SIGINT', () => {
+    logger.warn(`server abruptly stopped`)
+
+    process.exit(0)
+})
