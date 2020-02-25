@@ -1,10 +1,8 @@
-const searchVehicles = require('./search-vehicles')
+const { searchVehicles } = require('.')
 const { call } = require('../utils')
-require('../specs/specs-helper.js')
 require('../utils/array.prototype.random')
 
-
-describe('searchVehicles', () => {
+fdescribe('searchVehicles', () => {
     let name, surname, username, password, token, query, ids
 
     const queryIds = {
@@ -57,17 +55,19 @@ describe('searchVehicles', () => {
         )
 
         it('should get results on matching query but no favs if not previously added', done =>
-            searchVehicles(token, query, (error, results) => {
+            searchVehicles(token, query, (error, vehicles) => {
                 expect(error).toBeUndefined()
 
-                expect(results).toBeDefined()
-                expect(results.length).toBeGreaterThan(0)
+                expect(vehicles).toBeDefined()
+                expect(vehicles.length).toBeGreaterThan(0)
 
-                results.forEach(result => {
-                    expect(typeof result.id).toBe('string')
-                    expect(typeof result.name).toBe('string')
-                    expect(typeof result.thumbnail).toBe('string')
-                    expect(typeof result.price).toBe('number')
+                vehicles.forEach(vehicle => {
+                    expect(typeof vehicle.id).toBe('string')
+                    expect(typeof vehicle.name).toBe('string')
+                    expect(typeof vehicle.thumbnail).toBe('string')
+                    expect(typeof vehicle.price).toBe('number')
+                    expect(typeof vehicle.isFav).toBe('boolean')
+                    expect(vehicle.isFav).toBeFalsy()
                 })
 
                 done()
@@ -109,12 +109,12 @@ describe('searchVehicles', () => {
                 })
             })
 
-            it('should get results on matching query but no favs if not previously added', done => {
-                searchVehicles(token, query, (error, results) => {
+            it('should get results on matching query with favs as previously added', done => {
+                searchVehicles(token, query, (error, vehicles) => {
                     expect(error).toBeUndefined()
 
-                    expect(results).toBeDefined()
-                    expect(results.length).toBeGreaterThan(0)
+                    expect(vehicles).toBeDefined()
+                    expect(vehicles.length).toBeGreaterThan(0)
 
                     call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                         method: 'GET',
@@ -133,13 +133,16 @@ describe('searchVehicles', () => {
                         const { favs } = user
 
                         for (const fav of favs)
-                            expect(ids).toContain(fav)
+                            -                            expect(ids).toContain(fav)
 
-                        results.forEach(result => {
-                            expect(typeof result.id).toBe('string')
-                            expect(typeof result.name).toBe('string')
-                            expect(typeof result.thumbnail).toBe('string')
-                            expect(typeof result.price).toBe('number')
+                        vehicles.forEach(vehicle => {
+                            expect(typeof vehicle.id).toBe('string')
+                            expect(typeof vehicle.name).toBe('string')
+                            expect(typeof vehicle.thumbnail).toBe('string')
+                            expect(typeof vehicle.price).toBe('number')
+                            expect(typeof vehicle.isFav).toBe('boolean')
+
+                            expect(vehicle.isFav).toBe(favs.includes(vehicle.id))
                         })
 
                         done()
@@ -218,4 +221,6 @@ describe('searchVehicles', () => {
             searchVehicles(token, query, {})
         ).toThrowError(TypeError, '[object Object] is not a function')
     })
+
+    // TODO unit test cases for anonymous searches
 })

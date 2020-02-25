@@ -1,5 +1,6 @@
 const { call } = require('../utils')
 const atob = require('atob')
+require('../utils/array.prototype.toggle')
 
 module.exports = function (token, id, callback) {
     if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)

@@ -1,11 +1,10 @@
-const express = require("express")
-const {logger, loggerMidWare, /*wait*/} = require ("./utils")
-const path = require("path")
-const {authenticateUser, retrieveUser, registerUser, searchVehicles, toogleFavVehicle} = ("./logic")
+const express = require('express')
+const { logger, loggerMidWare, /*wait*/ } = require('./utils')
+const path = require('path')
 const bodyParser = require('body-parser')
 const session = require('express-session')
-const { Login, App, Register, Landing, Search, Results } = require('./components')
 const FileStore = require('session-file-store')(session)
+const { landing, login, loginPost, logout, register, registerPost, acceptCookies, search, toggleFav } = require('./routes')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 
@@ -18,9 +17,12 @@ logger.debug('setting up server')
 
 const app = express()
 
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'components'))
+
 app.use(loggerMidWare)
-app.use(express.static(path.join(_dirname, 'public'))) //Mirar bien lo de static
-app.use('/components', express.static(path.join(__dirname, 'components'))) // Para ver sass files in browser
+app.use(express.static(path.join(__dirname, 'public')))
+app.use('/components', express.static(path.join(__dirname, 'components'))) // NOTE to see sass files in browser
 app.use(session({
     secret: 'my grandmas dad had a second life',
     cookie: { maxAge: 1000 * 60 * 60 * 24 },
@@ -29,46 +31,28 @@ app.use(session({
     store: new FileStore({})
 }))
 
+app.get('/', landing)
 
-app.get('/', ({ session: { token, acceptCookies } }, res) => {
-    if (token) {
-        retrieveUser(token, (error, user) => {
-            if (error) {
-                const { message } = error
-                const { session: { acceptCookies } } = req
+app.get('/login', login)
 
-                return res.send(App({ title: 'Login', body: Login({ error: message }), acceptCookies }))
-            }
+app.post('/login', urlencodedBodyParser, loginPost)
 
-            const { name, username } = user
+app.post('/logout', urlencodedBodyParser, logout)
 
-            res.send(App({ title: 'My App', body: Landing({ name, username }), acceptCookies }))
-        })
-    } else res.send(App({ title: 'My App', body: Landing(), acceptCookies }))
+app.get('/register', register)
+
+app.post('/register', urlencodedBodyParser, registerPost)
+
+app.post('/accept-cookies', acceptCookies)
+
+app.get('/search', search)
+
+app.post('/toggle-fav/:id', toggleFav)
+
+app.listen(port, () => logger.info(`server up and running on port ${port}`))
+
+process.on('SIGINT', () => {
+    logger.warn(`server abruptly stopped`)
+
+    process.exit(0)
 })
-
-app.get("/login", (req, res)=> {
-    const {session : { username}} = req
-    if (username) return res.redirect(`/home/${username}`)
-    const {session : {acceptCookies}} = req
-    res.send(App({ title: 'Login', body: Login(), acceptCookies}))
-})
-
-app.post("/login", urlencodedBodyParser, (req, res) => { // Para que el body sea parseado
-    const { body: { username, password }, session } = req
-    try { authenticateUser(username, password, (error, token)=> {
-        if(error){
-            const {message} = error
-            const { session: {acceptCookies}} = req
-            return res.send(App({title: 'Login', body: Login({error: message}), acceptCookies}))
-        }
-        session.token = token
-        session.save(() => {
-            const {fav} = session
-            if(fav) return res.redirect(307, `/toogle-fav/${fav}`)
-
-            res.redirect('/')
-
-            }
-        })
-    
