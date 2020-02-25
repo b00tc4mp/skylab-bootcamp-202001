@@ -16,9 +16,8 @@ module.exports = function (name, surname, username, password) {
         body: JSON.stringify({ name, surname, username, password })
     })
         .then(response => {
-            if (response.status === 201) return false
+            if (response.status === 201) return
             const { error } = JSON.parse(response.content)
-
-            return error
+            if (error) return error
         })
 }

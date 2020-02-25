@@ -12,7 +12,7 @@ module.exports = function (username, password) {
         .then(response => {
             const { error: _error, token } = JSON.parse(response.content)
 
-            if (_error) return callback(new Error(_error))
+            if (_error) throw new Error(_error)
 
             return token
         })

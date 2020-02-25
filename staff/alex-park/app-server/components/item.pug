@@ -2,6 +2,6 @@ mixin item(id, name, isFav, thumbnail, price)
     li.results--item.item
         h3= name
         form(action=(`toggle-fav/${id}`) method="POST")
-            button = `${isFav ? i.fas.fa-heart : i.far.fa-heart}`
+            button = `lo gordo`
         img(src=thumbnail)
         span= `${price} €`
