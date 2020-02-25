@@ -3,7 +3,7 @@ const { App, Landing } = require('../components')
 const { logger } = require('../utils')
 
 module.exports = (req, res) => {
-    const { query: { q }, session } = req
+    const { query: { query }, session } = req
     const { token } = session
     if (token) {
         try {
@@ -17,7 +17,7 @@ module.exports = (req, res) => {
                 const { username, name } = user
 
                 try {
-                    searchVehicles(token, q, (error, vehicles) => {
+                    searchVehicles(token, query, (error, vehicles) => {
                         if (error) {
                             logger.error(error)
 
@@ -26,7 +26,7 @@ module.exports = (req, res) => {
 
                         const { acceptCookies } = session
 
-                        session.query = q
+                        session.query = query
 
                         res.send(App({ title: 'Landing', body: Landing({ vehicles, name, username }), acceptCookies }))
                     })
@@ -44,18 +44,18 @@ module.exports = (req, res) => {
         }
     } else {
         try {
-            searchVehicles(undefined, q, (error, vehicles) => {
+            searchVehicles(undefined, query, (error, vehicles) => {
                 if (error) {
                     logger.error(error)
 
                     res.redirect('/error')
                 }
 
-                session.query = q
+                session.query = query
 
                 const { acceptCookies } = session
-
-                res.send(App({ title: 'Landing', body: Landing({ vehicles }), acceptCookies }))
+                debugger
+                res.render('landing', { acceptCookies, results: vehicles, query })
             })
 
         } catch (error) {

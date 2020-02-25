@@ -13,9 +13,9 @@ block body
         if username
             include user
     +search(query)
-        if (results.length)
-            include results
-            +results(results)
-        else
-            error
+    if results
+        include results
+        +results(results)
+    else
+        error
 

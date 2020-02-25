@@ -22,7 +22,7 @@ module.exports = (req, res) => {
 
             if (favId) return res.redirect(307, `/toggle-favorite/${favId}`)
 
-            res.redirect('/')
+            res.render('/')
 
         })
     } catch (error) {
