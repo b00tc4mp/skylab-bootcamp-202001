@@ -9,7 +9,7 @@ module.exports = function (props = {}) {
             ? `
             <div class="home__actions">
             <form action="/logout" method="POST"><button>Logout</button></form>
-            <p><a href="/search/favorites">Favorites</a></p>
+            <p><a href="/favorites">Favorites</a></p>
             </div>`
             : `<span><a href="/login">to Login</a></span><span><a href="/register"> to Register</a></span>`}
     </section>

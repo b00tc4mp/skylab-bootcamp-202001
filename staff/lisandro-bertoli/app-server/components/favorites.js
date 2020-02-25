@@ -1,12 +1,10 @@
 const Item = require('./item')
 
-module.exports = function ({ favs, onToSearch }) {
-    return <div class="favorites">
-        <h2>Favorites</h2>
-        <ul>
-            {favs.map(vehicle => Item({ vehicle }))}
+module.exports = function (props = {}) {
+    const { favorites } = props
+    return `<h2>Your Favorites</h2><a class="favorites__exit" href="/return"> << Go Back</a>
+        <ul class="results">
+            ${favorites.map(vehicle => Item({ vehicle }))}
         </ul>
-        <a href="" onClick={onToSearch}>Back to Search</a>
-    </div>
-
+`
 }

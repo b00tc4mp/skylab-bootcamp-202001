@@ -13,7 +13,8 @@ const { landing,
     toggleFav,
     goBack,
     logout,
-    acceptCookies
+    acceptCookies,
+    favorites
 } = require('./routes')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
@@ -49,7 +50,9 @@ app.get('/vehicle/:id', detail)
 
 app.post('/toggle-favorite/:id', urlencodedBodyParser, toggleFav)
 
-app.get('/return', goBack)
+app.get('/favorites', favorites)
+
+app.get('/return/:favorites?', goBack)
 
 app.post('/logout', urlencodedBodyParser, logout)
 

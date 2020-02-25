@@ -4,6 +4,7 @@ const { logger } = require('../utils')
 
 module.exports = (req, res) => {
     const { params: { id }, session: { token, acceptCookies } } = req
+
     if (token) {
         try {
             retrieveUser(token, (error, user) => {

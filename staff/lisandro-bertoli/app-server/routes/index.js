@@ -9,5 +9,6 @@ module.exports = {
     toggleFav: require('./toggle-fav'),
     goBack: require('./go-back'),
     logout: require('./logout'),
-    acceptCookies: require('./accept-cookies')
+    acceptCookies: require('./accept-cookies'),
+    favorites: require('./favorites')
 }

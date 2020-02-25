@@ -7,5 +7,6 @@ module.exports = {
     CookiesPanel: require('./cookies'),
     Search: require('./search'),
     Results: require('./results'),
-    Item: require('./item')
+    Item: require('./item'),
+    Favorites: require('./favorites')
 }
