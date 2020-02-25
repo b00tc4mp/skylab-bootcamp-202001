@@ -22,6 +22,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use('/components', express.static(path.join(__dirname, 'components'))) // NOTE to see sass files in browser
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: true }))
 
+app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, 'components'))
+
 app.get('/', ({ session: { acceptCookies } }, res) => {
     res.send(App({ title: 'My App', body: Landing(),search: Search(), acceptCookies }))
 })
