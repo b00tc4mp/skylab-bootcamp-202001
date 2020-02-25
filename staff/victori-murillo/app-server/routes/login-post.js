@@ -7,19 +7,16 @@ module.exports = (req, res) => {
     try {
         authenticateUser(username, password)
             .then(token => {
-                debugger
                 session.token = token
 
                 session.save(() => {
                     const { fav } = session
 
                     if (fav) return res.redirect(307, `/toggle-fav/${fav}`)
-
                     res.redirect('/')
                 })
             })
             .catch(error => {
-                debugger
                 logger.warn(error)
 
                 const { message } = error

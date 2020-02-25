@@ -1,6 +1,6 @@
 const { toggleFavVehicle } = require('.')
 require('../specs/specs-helper')
-const { call } = require('../utils')
+const { fetch } = require('../utils')
 require('../utils/array.prototype.random')
 
 describe('toggleFavVehicle', () => {
@@ -17,144 +17,114 @@ describe('toggleFavVehicle', () => {
     })
 
     describe('when user already exists', () => {
-        beforeEach(done =>
-            call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+        beforeEach(() =>
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, surname, username, password })
-            }, (error, response) => {
-                if (error) return done(error)
-
+            })
+            .then(response => {
                 if (response.content) {
                     const { error } = JSON.parse(response.content)
-
-                    if (error) return done(new Error(error))
+                    if (error) throw new Error(error)
                 }
 
-                call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
-                }, (error, response) => {
-                    if (error) return done(error)
-
+                })
+                .then(response => {
                     const { error: _error, token: _token } = JSON.parse(response.content)
-
-                    if (_error) return done(new Error(_error))
-
+                    if (_error) throw new Error(_error)
                     token = _token
-
-                    done()
                 })
             })
         )
 
-        it('should add a vehicle id when it was not previously there', done =>
-            toggleFavVehicle(token, id, error => {
-                expect(error).toBeUndefined()
-
-                call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
+        it('should add a vehicle id when it was not previously there', () =>
+            toggleFavVehicle(token, id)
+            .then(() => 
+                fetch(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
-                }, (error, response) => {
-                    if (error) return done(error)
-
-                    // retrieve user to check fav has been added
-
-                    const user = JSON.parse(response.content), { error: _error } = user
-
-                    if (_error) return done(new Error(_error))
-
-                    const { favs } = user
-
-                    expect(favs).toContain(id)
-
-                    done()
                 })
-            })
+                .then(response => {
+                    // retrieve user to check fav has been added
+                    const user = JSON.parse(response.content), { error: _error } = user
+                    if (_error) throw new Error(_error)
+                    const { favs } = user
+                    expect(favs).toContain(id)
+                })
+            )
         )
 
         describe('when fav vehicle already exists', () => {
-            beforeEach(done => {
+            beforeEach(() => {
                 const favs = [id]
 
-                call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
+                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({ favs })
-                }, (error, response) => {
-                    if (error) return done(error)
-
+                })
+                .then(response => {
                     if (response.content) {
                         const { error } = JSON.parse(response.content)
-
-                        if (error) return done(new Error(error))
+                        if (error) throw new Error(error)
                     }
-
-                    done()
                 })
             })
 
-            it('should succeed removing a vehicle id when previously added', done => {
-                toggleFavVehicle(token, id, error => {
-                    expect(error).toBeUndefined()
-
-                    call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
+            it('should succeed removing a vehicle id when previously added', () => {
+                return toggleFavVehicle(token, id)
+                .then(() => {
+                    // expect(error).toBeUndefined()
+                    return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
-                    }, (error, response) => {
-                        if (error) return done(error)
-
+                    })
+                    .then(response => {
                         // retrieve user to check fav has been removed
-
                         const user = JSON.parse(response.content), { error: _error } = user
-
-                        if (_error) return done(new Error(_error))
-
+                        if (_error) throw new Error(_error)
                         const { favs } = user
 
                         expect(favs).not.toContain(id)
-
-                        done()
                     })
                 })
             })
         })
 
-        it('should fail on invalid token', done => {
-            toggleFavVehicle(`${token}-wrong`, id, error => {
+        it('should fail on invalid token', () => {
+            toggleFavVehicle(`${token}-wrong`, id)
+            .catch(error => {
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe('invalid token')
-
-                done()
             })
         })
 
-        afterEach(done => {
-            call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+        afterEach(() => {
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ password })
-            }, (error, response) => {
-                if (error) return done(error)
-
+            })
+            .then(response => {
                 if (response.content) {
                     const { error } = JSON.parse(response.content)
-
-                    if (error) return done(new Error(error))
+                    if (error) throw new Error(error)
                 }
-
-                done()
             })
         })
     })
@@ -184,22 +154,4 @@ describe('toggleFavVehicle', () => {
         ).toThrowError(Error, 'invalid token')
     })
 
-    it('should fail on non-function callback', () => {
-        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
-
-        callback = 1
-        expect(() =>
-            toggleFavVehicle(token, id, callback)
-        ).toThrowError(TypeError, `callback ${callback} is not a function`)
-
-        callback = true
-        expect(() =>
-            toggleFavVehicle(token, id, callback)
-        ).toThrowError(TypeError, `callback ${callback} is not a function`)
-
-        callback = undefined
-        expect(() =>
-            toggleFavVehicle(token, id, callback)
-        ).toThrowError(TypeError, `callback ${callback} is not a function`)
-    })
 })
