@@ -13,11 +13,9 @@ module.exports = function (token, id) {
     })
     .then(response => {
         const user = JSON.parse(response.content), { error: _error } = user
-
         if (_error) throw new Error(_error)
 
         const { favs = [] } = user
-
         favs.toggle(id)
 
         return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/`, {

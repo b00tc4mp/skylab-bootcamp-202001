@@ -11,10 +11,11 @@ module.exports = (req, res) => {
         session.fav = id
         return session.save(() => res.redirect('/login'))
     }
-    
     try {
+        debugger
         toggleFavVehicle(token, id)
         .then(() => {
+            debugger
             const { referer = req.get('referer') } = session
 
             delete session.referer
