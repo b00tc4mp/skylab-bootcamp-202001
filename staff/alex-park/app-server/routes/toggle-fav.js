@@ -3,25 +3,18 @@ const { logger } = require('../utils')
 
 module.exports = (req, res) => {
     const { session, params: { id } } = req
-
     const { token } = session
+    console.log(token)
 
     if (!token) {
         session.referer = req.get('referer')
-
         session.fav = id
-
         return session.save(() => res.redirect('/login'))
     }
-
+    
     try {
-        toggleFavVehicle(token, id, error => {
-            if (error) {
-                logger.error(error)
-
-                res.redirect('/error')
-            }
-
+        toggleFavVehicle(token, id)
+        .then(() => {
             const { referer = req.get('referer') } = session
 
             delete session.referer
@@ -29,8 +22,13 @@ module.exports = (req, res) => {
 
             session.save(() => res.redirect(referer))
         })
+        .catch(error => {
+            logger.error(error)
 
-    } catch(error) {
+            res.redirect('/error')
+
+        })
+    } catch (error) {
         logger.error(error)
 
         res.redirect('/error')

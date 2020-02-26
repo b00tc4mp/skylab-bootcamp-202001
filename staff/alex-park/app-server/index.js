@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 const { logger, loggerMidWare } = require('./utils')
-const { landing, login, loginPost, search, results, details, toggleFav, favsList, logout, registerPost, register, acceptCookies } = require('./routes')
+const { landing, login, loginPost, search, toggleFav, logout, registerPost, register, acceptCookies } = require('./routes')
 
 const urlencodedBodyParser = bodyParser.urlencoded({ extended: false })
 

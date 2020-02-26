@@ -1,8 +1,6 @@
 const retrieveVehicle = require('./retrieve-vehicle')
-const { call } = require('../utils')
-Array.prototype.random = function () {
-    return this[Math.floor(Math.random() * this.length)];
-}
+const { fetch } = require('../utils')
+require('../utils/array.prototype.random')
 
 describe('retrieveVehicle', () => {
     let name, surname, username, password, token, query, ids, id
@@ -25,44 +23,39 @@ describe('retrieveVehicle', () => {
     })
 
     describe('when user already exists', () => {
-        beforeEach(done =>
-            call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+        beforeEach(() =>
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, surname, username, password })
-            }, (error, response) => {
-                if (error) return done(error)
-
+            })
+            .then(response => {
                 if (response.content) {
                     const { error } = JSON.parse(response.content)
 
-                    if (error) return done(new Error(error))
+                    if (error) throw new Error(error)
                 }
 
-                call(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password })
-                }, (error, response) => {
-                    if (error) return done(error)
-
+                }) 
+                .then(response => {
                     const { error: _error, token: _token } = JSON.parse(response.content)
 
-                    if (_error) return done(new Error(_error))
+                    if (_error) throw new Error(_error)
 
                     token = _token
-
-                    done()
                 })
             })
         )
 
-        it('should get result on matching id but not fav if not previously added', done => {
+        it('should get result on matching id but not fav if not previously added', () => {
             const id = ids.random()
 
-            retrieveVehicle(token, id, (error, vehicle) => {
-                expect(error).toBeUndefined()
-
+            return retrieveVehicle(token, id)
+            .then(vehicle => {
                 expect(typeof vehicle.id).toBe('string')
                 expect(typeof vehicle.name).toBe('string')
                 expect(typeof vehicle.image).toBe('string')
@@ -72,73 +65,61 @@ describe('retrieveVehicle', () => {
                 expect(typeof vehicle.price).toBe('number')
                 expect(typeof vehicle.isFav).toBe('boolean')
                 expect(vehicle.isFav).toBeFalsy()
-
-                done()
             })
         })
 
-        it('should succeed on non-matching id returning a null vehicle', done => {
-            retrieveVehicle(token, 'asdasdfñlajsfklasldñkfjañlsjflasjflasjfñladjs', (error, vehicle) => {
-                expect(error).toBeUndefined()
-
+        it('should succeed on non-matching id returning a null vehicle', () => 
+            retrieveVehicle(token, 'asdasdfñlajsfklasldñkfjañlsjflasjflasjfñladjs')
+            .then(vehicle => 
                 expect(vehicle).toBeNull()
-
-                done()
-            })
-        })
+            )
+        )
 
         describe('when fav vehicles already exists', () => {
             let fav
 
-            beforeEach(done => {
+            beforeEach(() => {
                 const favs = [ids.random(), ids.random(), ids.random()]
 
                 fav = favs.random()
 
-                call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
+                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({ favs })
-                }, (error, response) => {
-                    if (error) return done(error)
-
+                })
+                .then(response => {
                     if (response.content) {
                         const { error } = JSON.parse(response.content)
 
-                        if (error) return done(new Error(error))
+                        if (error) throw new Error(error)
                     }
-
-                    done()
                 })
             })
 
-            it('should get vehicle on matching id with fav as previously added', done => {
-                retrieveVehicle(token, fav, (error, vehicle) => {
-                    expect(error).toBeUndefined()
-
+            it('should get vehicle on matching id with fav as previously added', () => 
+                retrieveVehicle(token, fav)
+                .then(vehicle => {
                     expect(vehicle).toBeDefined()
 
-                    call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
+                    return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
-                    }, (error, response) => {
-                        if (error) return done(error)
-
-                        // retrieve user to check fav has been removed
-
+                    })
+                    .then(response => {
                         const user = JSON.parse(response.content), { error: _error } = user
 
-                        if (_error) return done(new Error(_error))
+                        if (_error) throw new Error(_error)
 
                         const { favs } = user
 
                         for (const fav of favs)
--                            expect(ids).toContain(fav)
+                            expect(ids).toContain(fav)
 
                         expect(typeof vehicle.id).toBe('string')
                         expect(vehicle.id).toBe(fav)
@@ -151,81 +132,56 @@ describe('retrieveVehicle', () => {
                         expect(typeof vehicle.isFav).toBe('boolean')
 
                         expect(vehicle.isFav).toBe(favs.includes(vehicle.id))
-
-                        done()
                     })
                 })
-            })
+            )
         })
 
-        it('should fail on invalid token', done => {
-            retrieveVehicle(`${token}-wrong`, id, error => {
+        it('should fail on invalid token', () => 
+            retrieveVehicle(`${token}-wrong`, id)
+            .then(() => { throw new Error('should not reach that point') }) 
+            .catch(error => {
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe('invalid token')
-
-                done()
             })
-        })
+        )
 
-        afterEach(done => {
-            call(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+        afterEach(() => 
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ password })
-            }, (error, response) => {
-                if (error) return done(error)
-
+            })
+            .then(response => {
                 if (response.content) {
                     const { error } = JSON.parse(response.content)
 
-                    if (error) return done(new Error(error))
+                    if (error) throw new Error(error)
                 }
-
-                done()
             })
-        })
+        )
     })
 
     it('should fail on non-string id', () => {
         token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
 
         expect(() =>
-            retrieveVehicle(token, undefined, () => { })
+            retrieveVehicle(token, undefined)
         ).toThrowError(TypeError, 'undefined is not a string')
 
         expect(() =>
-            retrieveVehicle(token, 1, () => { })
+            retrieveVehicle(token, 1)
         ).toThrowError(TypeError, '1 is not a string')
 
         expect(() =>
-            retrieveVehicle(token, true, () => { })
+            retrieveVehicle(token, true)
         ).toThrowError(TypeError, 'true is not a string')
 
         expect(() =>
-            retrieveVehicle(token, {}, () => { })
+            retrieveVehicle(token, {})
         ).toThrowError(TypeError, '[object Object] is not a string')
-    })
-
-    it('should fail on non-function callback', () => {
-        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
-
-        expect(() =>
-            retrieveVehicle(token, id, undefined)
-        ).toThrowError(TypeError, 'undefined is not a function')
-
-        expect(() =>
-            retrieveVehicle(token, id, 1)
-        ).toThrowError(TypeError, '1 is not a function')
-
-        expect(() =>
-            retrieveVehicle(token, id, true)
-        ).toThrowError(TypeError, 'true is not a function')
-
-        expect(() =>
-            retrieveVehicle(token, id, {})
-        ).toThrowError(TypeError, '[object Object] is not a function')
     })
 })

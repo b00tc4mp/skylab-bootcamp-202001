@@ -7,15 +7,13 @@ module.exports = (req, res) => {
     try {
         authenticateUser(username, password)
             .then(token => {
-
                 session.token = token
 
                 session.save(() => {
                     const { fav } = session
 
                     if (fav) return res.redirect(307, `/toggle-fav/${fav}`)
-
-                    return res.redirect('/')
+                    res.redirect('/')
                 })
             })
             .catch(error => {
