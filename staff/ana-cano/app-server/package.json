@@ -1,7 +1,6 @@
 {
   "name": "web-server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node .",
@@ -30,5 +29,6 @@
     "jasmine": "^3.5.0",
     "nodemon": "^2.0.2",
     "sass": "^1.25.0"
-  }
+  },
+  "description": ""
 }

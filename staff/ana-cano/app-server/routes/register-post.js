@@ -13,7 +13,7 @@ module.exports = (req, res) => {
                 const { message } = error
                 const { session: { acceptCookies } } = req
 
-                return res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+                return res.render('register', { error: message, level: "error", acceptCookies })
             }
 
             res.redirect('/login')
@@ -24,6 +24,6 @@ module.exports = (req, res) => {
         const { message } = error
         const { session: { acceptCookies } } = req
 
-        res.send(App({ title: 'Register', body: Register({ error: message }), acceptCookies }))
+        res.render('register', { error: message, level: "error", acceptCookies })
     }
 }
