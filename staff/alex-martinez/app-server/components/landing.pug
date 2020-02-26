@@ -1,15 +1,22 @@
-doctype html
-head
-  meta(charset='UTF-8')
-  meta(name='viewport' content='width=device-width, initial-scale=1.0')
-  title My App
-  link(rel='icon' href='/favicon.ico' type='image/x-icon')
-  link(rel='stylesheet' href='/style.css')
-a(href='/register') Register
-|  or 
-a(href='/login') Login
-form(action='/search' method='GET')
-  input(type='text' name='query' placeholder='criteria...')
-  button(type='submit') Send
-if !acceptCookies
-    include cookies
+extends app
+
+include user
+include search
+include feedback
+
+block body
+    if (name)
+        +user(name, username)
+    else
+        section
+            a(href="/register") Register
+            |  or 
+            a(href="/login") Login
+    +search(query)
+    if results
+        if (results.length)
+            //- WARN this include is here and not on top (as user and search) because it collides with results array
+            include results 
+            +results(results)
+        else
+            +feedback('warning', 'No results')
