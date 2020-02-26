@@ -1,7 +1,7 @@
 const { authenticateUser } = require('.')
 const { fetch } = require('../utils')
 
-fdescribe('authenticateUser', () => {
+describe('authenticateUser', () => {
     let name, surname, username, password
 
     beforeEach(() => {
@@ -50,15 +50,15 @@ fdescribe('authenticateUser', () => {
         )
 
         it('should fail on incorrect username', () => 
-            authenticateUser(`${username}-wrong`, password) 
-                .then(() => { throw new Error('Should no reach to this point') })
-                .catch(error => {
-                    expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe('username and/or password wrong')
-                })
-        )
+        authenticateUser(`${username}-wrong`, password) 
+            .then(() => { throw new Error('Should no reach to this point') })
+            .catch(error => {
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe('username and/or password wrong')
+            })
+    )
 
-        afterEach(() => {
+        afterEach(() => 
             fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -70,7 +70,7 @@ fdescribe('authenticateUser', () => {
 
                 if (_error) throw new Error(_error)
 
-                fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ fdescribe('authenticateUser', () => {
                     }
                 })
             })
-        })
+        )
     })
 
     it('should fail when user does not exist', () => {
