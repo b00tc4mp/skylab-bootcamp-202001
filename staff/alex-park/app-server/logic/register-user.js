@@ -18,6 +18,6 @@ module.exports = function (name, surname, username, password) {
         .then(response => {
             if (response.status === 201) return
             const { error } = JSON.parse(response.content)
-            if (error) return error
+            if (error) throw new Error(error)
         })
 }

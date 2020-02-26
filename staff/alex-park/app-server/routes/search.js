@@ -7,39 +7,38 @@ module.exports = (req, res) => {
     if (token) {
         try {
             retrieveUser(token)
-                .then(user => {
-                    const { name, username } = user
+            .then(user => {
+                const { name, username } = user
 
-                    searchVehicles(token, query)
-                        .then(vehicles => {
-                            const { session: { acceptCookies } } = req
-
-                            res.render('landing', { name, username, query, results: vehicles, acceptCookies })
-                        })
-
+                searchVehicles(token, query)
+                .then(vehicles => {
+                    const { session: { acceptCookies } } = req
+                    res.render('landing', { name, username, query, results: vehicles, acceptCookies })
                 })
                 .catch(error => {
                     logger.error(error)
-
                     res.redirect('/error')
                 })
-        } catch ({ message }) {
-            logger.error(error)
 
+            })
+            .catch(error => {
+                logger.error(error)
+                res.redirect('/error')
+            })
+        } catch ({ message }) {
+            logger.error(message)
             res.redirect('/error')
         }
 
     } else {
         try {
             searchVehicles(undefined, query)
-                .then(vehicles => {
-                    const { session: { acceptCookies } } = req
-
-                    res.render('landing', { query, results: vehicles, acceptCookies })
-                })
-        } catch (error) {
-            logger.error(error)
-
+            .then(vehicles => {
+                const { session: { acceptCookies } } = req
+                res.render('landing', { query, results: vehicles, acceptCookies })
+            })
+        } catch ({message}) {
+            logger.error(message)
             res.redirect('/error')
         }
     }

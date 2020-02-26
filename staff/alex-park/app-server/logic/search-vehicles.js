@@ -14,33 +14,33 @@ module.exports = function (token, query) {
                 'Authorization': `Bearer ${token}`
             }
         })
-            .then(response => {
-                const user = JSON.parse(response.content), { error: _error } = user
+        .then(response => {
+            const user = JSON.parse(response.content), { error: _error } = user
 
-                if (_error) throw new Error(_error)
+            if (_error) throw new Error(_error)
 
-                const { favs = [] } = user
+            const { favs = [] } = user
 
-                return fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles?q=${query}`)
-                    .then(response => {
-                        if (response.status === 200) {
-                            const vehicles = JSON.parse(response.content)
-
-                            vehicles.forEach(vehicle => vehicle.isFav = favs.includes(vehicle.id))
-
-                            return vehicles
-                        }
-                    })
-            })
-
-    } else {
-        return fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles?q=${query}`)
+            return fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles?q=${query}`)
             .then(response => {
                 if (response.status === 200) {
                     const vehicles = JSON.parse(response.content)
 
+                    vehicles.forEach(vehicle => vehicle.isFav = favs.includes(vehicle.id))
+
                     return vehicles
                 }
             })
+        })
+
+    } else {
+        return fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles?q=${query}`)
+        .then(response => {
+            if (response.status === 200) {
+                const vehicles = JSON.parse(response.content)
+
+                return vehicles
+            }
+        })
     }
 }

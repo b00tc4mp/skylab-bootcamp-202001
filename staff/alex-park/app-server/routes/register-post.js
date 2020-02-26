@@ -6,29 +6,18 @@ module.exports = (req, res) => {
 
     try {
         registerUser(name, surname, username, password)
-            .then(error => {
-                if (error) {
-                    logger.warn(error)
-                    const { message } = error
-                    const { session: { acceptCookies } } = req
+        .then(() => res.redirect('/login'))
+        .catch(error => { debugger
+            logger.warn(error)
+            const {message} = error
+            const { session: { acceptCookies } } = req
 
-                    return res.render('register', { error: message, name, surname, username, acceptCookies })
-                }
-
-                return res.redirect('/login')
-
-            })
-            .catch(error => {
-                logger.warn(error)
-                const { message } = error
-                const { session: { acceptCookies } } = req
-
-                return res.render('register', { error: message, name, surname, username, acceptCookies })
-            })
+            return res.render('register', { error: message, name, surname, username, acceptCookies })
+        })
     } catch (error) {
         logger.warn(error)
         const { session: { acceptCookies } } = req
-        const { message } = error
+        const {message} = error
 
         return res.render('register', { error: message, name, surname, username, acceptCookies })
     }

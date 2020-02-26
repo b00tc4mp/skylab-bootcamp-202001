@@ -1,6 +1,3 @@
-module.exports = function () {
-    if (typeof Array.prototype.random === 'undefined')
-    Array.prototype.random = function () {
-        return this[Math.floor(Math.random() * this.length)];
-    }
+Array.prototype.random = function () {
+    return this[Math.floor(Math.random() * this.length)];
 }
