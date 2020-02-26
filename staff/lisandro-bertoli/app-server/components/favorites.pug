@@ -1,11 +1,11 @@
 extends app
 
 
+include search
 
-mixin favorites(results)
-    ul.results
-        each result in results
-            -const {id, name, isFav, image, price} = result
-            +item(id, name, isFav, image, price)
-include item
-    +favorites(results)
+block body    
+    h1 Your favorites
+    a(href="/return") Go back
+    if results
+        include results
+        +results(results)

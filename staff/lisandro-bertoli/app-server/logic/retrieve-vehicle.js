@@ -1,7 +1,7 @@
 const { fetch } = require('../utils')
 const atob = require('atob')
 
-module.exports = function (token, id, callback) {
+module.exports = function (token, id) {
     if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
     if (token) {
         if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)

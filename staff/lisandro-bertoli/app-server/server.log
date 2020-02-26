@@ -59410,3 +59410,2367 @@ INFO 2020-02-26 15:33:33.254 server up and running on port 8080
 DEBUG 2020-02-26 15:33:52.546 setting up server
 INFO 2020-02-26 15:33:52.558 server up and running on port 8080
 WARN 2020-02-26 15:33:57.113 server abruptly stopped
+DEBUG 2020-02-26 18:58:26.449 setting up server
+INFO 2020-02-26 18:58:26.462 server up and running on port 8080
+INFO 2020-02-26 18:58:29.357 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Ax0n7cTtEZwyXNIlsyCUOm6btrDgZjE3F.Zb5t6ANnImPHoEFDax628rAYjdRB7jWVbzRhGpBXJz8
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 18:58:29.793 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 18:58:31.715 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+
+INFO 2020-02-26 18:58:31.790 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+
+INFO 2020-02-26 18:58:33.809 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+
+INFO 2020-02-26 18:58:34.413 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 18:58:35.054 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 18:58:36.288 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+if-none-match: W/"9d1-Q0Y/m7rOxRJHHi6apy4+HD/FZSc"
+
+WARN 2020-02-26 18:58:59.504 server abruptly stopped
+DEBUG 2020-02-26 18:59:00.606 setting up server
+INFO 2020-02-26 18:59:00.629 server up and running on port 8080
+INFO 2020-02-26 18:59:02.268 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AuG_nGwHCnSc1iEqEmYiiLnaWoIdcpSlo.L2%2F6yPwfCMr%2F5h2i7cMpGJc7H2etLrSM6O7hDuKZ%2FIg
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 18:59:02.694 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 18:59:03.965 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+
+INFO 2020-02-26 18:59:04.042 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+
+INFO 2020-02-26 18:59:08.235 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+
+INFO 2020-02-26 18:59:08.809 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 18:59:09.433 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 18:59:10.423 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+
+INFO 2020-02-26 18:59:11.508 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+
+WARN 2020-02-26 19:01:59.626 server abruptly stopped
+DEBUG 2020-02-26 19:02:07.402 setting up server
+INFO 2020-02-26 19:02:07.414 server up and running on port 8080
+INFO 2020-02-26 19:02:09.547 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AUFR5_7zGV1J80kgiJfJM4eRm9xrjM5EA.%2BRfA5h08rouSg5dxknVauAEcRs6dJhuLYQ5pIwyS3Ss
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 19:02:10.005 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:02:11.341 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:02:11.423 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:02:16.107 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:02:16.729 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:02:17.326 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:02:18.227 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"21e-tRpCgL5L8FYLFiS7UQti0YejsFc"
+
+INFO 2020-02-26 19:02:19.281 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:03:05.764 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"a04-x5TsnmedS1i1LP/ej1lj3QgNce8"
+
+INFO 2020-02-26 19:03:06.816 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:03:33.100 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"a31-qswvwbhUTFb6CE/hoHEE2B/nGwM"
+
+INFO 2020-02-26 19:03:34.164 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:03:36.023 request from ::1:
+GET /return HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:03:36.032 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 19:03:36.609 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:03:38.723 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"a38-wBDi5GJ7b3OV/Xeex+ZZ55+bdzQ"
+
+INFO 2020-02-26 19:03:39.736 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+DEBUG 2020-02-26 19:03:58.798 setting up server
+INFO 2020-02-26 19:03:58.823 server up and running on port 8080
+INFO 2020-02-26 19:05:03.335 request from ::1:
+POST /toggle-favorite/FYB61 HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 0
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AKxVU0-yHy-TWbCDdXykv6cjy2awd1V4k.80XjxsieJSqAHd4vWCTL3O76uCNefrDPyPst78dp25Y
+
+INFO 2020-02-26 19:05:03.367 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:03.741 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:05:07.820 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+WARN 2020-02-26 19:05:08.361 Error: username and/or password wrong
+INFO 2020-02-26 19:05:08.435 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:11.988 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:12.512 request from ::1:
+POST /toggle-favorite/FYB61 HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:13.600 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"a38-wBDi5GJ7b3OV/Xeex+ZZ55+bdzQ"
+
+INFO 2020-02-26 19:05:14.641 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:05:17.328 request from ::1:
+GET /return HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:17.340 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 19:05:17.955 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:05:18.968 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"8b1-HT6k1MUpx88c19m/qFn9yNY0zFI"
+
+INFO 2020-02-26 19:05:20.016 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:05:21.566 request from ::1:
+POST /toggle-favorite/FYD90 HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 0
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:22.682 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"8b1-HT6k1MUpx88c19m/qFn9yNY0zFI"
+
+INFO 2020-02-26 19:05:23.687 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:27.829 request from ::1:
+GET /return HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:27.836 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 19:05:28.452 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:05:30.019 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:05:31.736 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+INFO 2020-02-26 19:07:18.110 request from ::1:
+GET /vehicle/+FYF94? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"49d-kZvkCg7V/B6psde/Mqnfyg4kZyY"
+
+ERROR 2020-02-26 19:07:18.678 TypeError: undefined is not a string
+INFO 2020-02-26 19:07:18.684 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+
+DEBUG 2020-02-26 19:07:57.307 setting up server
+INFO 2020-02-26 19:07:57.320 server up and running on port 8080
+INFO 2020-02-26 19:08:00.461 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3A_Tg7t8Kc4Bcwum0GmU7sd8E56e03Kmaq.HxidKjXz6saiLbxJJ1GJEZ2Z8HdYUAa%2BBwAlor%2Bsc1E
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 19:08:00.891 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:08:09.850 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+
+INFO 2020-02-26 19:08:09.939 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:08:13.234 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 23
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+
+INFO 2020-02-26 19:08:13.867 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:08:14.493 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:08:16.356 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+if-none-match: W/"29cd2-DkNXn8yMmQfoiOb0CZ1VJoOdk5w"
+
+INFO 2020-02-26 19:08:18.122 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+
+INFO 2020-02-26 19:08:19.480 request from ::1:
+GET /vehicle/+FYF94? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+
+ERROR 2020-02-26 19:08:20.074 TypeError: undefined is not a string
+INFO 2020-02-26 19:08:20.081 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+
+WARN 2020-02-26 19:09:16.259 server abruptly stopped
+DEBUG 2020-02-26 19:09:32.764 setting up server
+INFO 2020-02-26 19:09:32.777 server up and running on port 8080
+INFO 2020-02-26 19:09:42.102 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AjVkKLfJjhFf63QvdggsNQ8-Gr5Ag1SAs.HkpWDgjLtFNxclPFiZ8PCj2d60R%2B%2BfOVgstTiyTISko
+if-none-match: W/"3c6-46O5Wz4Ko6eyVGPrL7081tPhII8"
+
+INFO 2020-02-26 19:09:42.670 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:09:44.427 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+if-none-match: W/"29cd2-DkNXn8yMmQfoiOb0CZ1VJoOdk5w"
+
+INFO 2020-02-26 19:09:45.237 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+
+INFO 2020-02-26 19:09:46.553 request from ::1:
+GET /vehicle/+FYF94? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+
+INFO 2020-02-26 19:10:38.652 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/vehicle/+FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:10:42.239 request from ::1:
+GET /search?q=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/vehicle/+FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+
+ERROR 2020-02-26 19:10:42.244 TypeError: undefined is not a string
+INFO 2020-02-26 19:10:42.260 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/vehicle/+FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+
+INFO 2020-02-26 19:10:46.097 request from ::1:
+GET /vehicle/+FYB61? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+
+INFO 2020-02-26 19:10:51.035 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/vehicle/+FYB61?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+DEBUG 2020-02-26 19:11:29.214 setting up server
+INFO 2020-02-26 19:11:29.228 server up and running on port 8080
+INFO 2020-02-26 19:11:31.101 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AkExOdjwY7ISBJe8bI1GsXaV3EvPLO40s.reHhpGm1sDQEgRVwGeUQ5uhpoT2ISpALW5qS0ksVbi0
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:11:31.550 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:11:33.303 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"29ca6-roMuarTzKc/NxnS6ILON7nGh7Vk"
+
+INFO 2020-02-26 19:11:34.170 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+
+INFO 2020-02-26 19:11:35.410 request from ::1:
+GET /vehicle/+FYF94? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"43c-qKjvECiXapNpwwKrNpnTTUDdmWQ"
+
+INFO 2020-02-26 19:11:35.871 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/vehicle/+FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:12:13.700 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:12:13.820 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:12:15.980 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"29ca6-roMuarTzKc/NxnS6ILON7nGh7Vk"
+
+INFO 2020-02-26 19:12:16.828 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+
+INFO 2020-02-26 19:12:18.139 request from ::1:
+GET /vehicle/FYF94? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"c6a-TaFCKDgKXdnsrua6kh1QXBWUMBc"
+
+INFO 2020-02-26 19:12:18.601 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/vehicle/FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:12:24.006 request from ::1:
+GET /return HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/vehicle/FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+
+INFO 2020-02-26 19:12:24.021 request from ::1:
+GET /search?q=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/vehicle/FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+
+ERROR 2020-02-26 19:12:24.022 TypeError: undefined is not a string
+INFO 2020-02-26 19:12:24.027 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/vehicle/FYF94?
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+
+WARN 2020-02-26 19:12:45.556 server abruptly stopped
+DEBUG 2020-02-26 19:15:07.971 setting up server
+INFO 2020-02-26 19:15:07.983 server up and running on port 8080
+INFO 2020-02-26 19:15:09.342 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3Av4LOIY3aSDhvTY-POMP8nqqnQmcOZ-i3.CO58PrUpzCh1kq6gVrSOjjBlxr%2FrTzkb8WKMFXkraZQ
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:15:09.762 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:15:11.616 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"29b45-zKgS+Mk/ozH6mcNzTtXUKWXzHcU"
+
+INFO 2020-02-26 19:15:12.473 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:14.721 request from ::1:
+POST /toggle-favorite/FYF94 HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 0
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:14.749 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:14.823 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:16.772 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 21
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:17.281 request from ::1:
+POST /toggle-favorite/FYF94 HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 21
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:18.365 request from ::1:
+GET /search?query=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"29b45-zKgS+Mk/ozH6mcNzTtXUKWXzHcU"
+
+INFO 2020-02-26 19:15:20.151 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:15:21.973 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=blue
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"728-Ox5Bnsm9EhDMpHWEpDYAhRMrjPI"
+
+INFO 2020-02-26 19:15:23.054 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:26.140 request from ::1:
+GET /return HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:26.148 request from ::1:
+GET /search?q=blue HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+ERROR 2020-02-26 19:15:26.660 TypeError: undefined is not a string
+INFO 2020-02-26 19:15:26.666 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:30.887 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:15:31.513 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:15:38.464 request from ::1:
+GET /search?query=red HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"2d394-xfe4fGFrV6NJIleeD3BiLwg2ohY"
+
+INFO 2020-02-26 19:15:40.236 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:15:42.024 request from ::1:
+GET /vehicle/FYD99? HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+ERROR 2020-02-26 19:15:42.525 TypeError: undefined is not a string
+INFO 2020-02-26 19:15:42.535 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:50.461 request from ::1:
+POST /logout HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 0
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+
+INFO 2020-02-26 19:15:50.469 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWLyARdxI4BXrBDltWzZM8jVcjbJKbbg6.TFuzqqozjuJV%2BMHmmhCKUbgNNoCcp21gv1Rw3iypVB4
+if-none-match: W/"3c5-jBZNkqa39oJeEAz9xMI+ye4EspQ"
+
+INFO 2020-02-26 19:15:50.576 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:15:51.998 request from ::1:
+GET /register HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:15:52.061 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/register
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:15:53.770 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/register
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:15:53.827 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:15:54.866 request from ::1:
+POST /accept-cookies HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 0
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:15:54.873 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"35b-hlXXsnJOUg313xOs0jeOJPBKieI"
+
+INFO 2020-02-26 19:15:54.972 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:17:09.096 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"2e7-jo7mW09ouRG24S3UCcYsMXXT92E"
+
+INFO 2020-02-26 19:17:09.206 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:17:12.559 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+purpose: prefetch
+sec-fetch-site: none
+sec-fetch-mode: navigate
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"39a-YMl9mjUVihK+umSASRwMso4Tb/Y"
+
+INFO 2020-02-26 19:17:12.628 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+purpose: prefetch
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:17:12.845 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:14.227 request from ::1:
+GET /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"2e7-jo7mW09ouRG24S3UCcYsMXXT92E"
+
+INFO 2020-02-26 19:17:14.286 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:16.067 request from ::1:
+POST /login HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 21
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:16.581 request from ::1:
+GET / HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/login
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"326-I+OdEa6SQApIyGZABVsNMyMKVow"
+
+INFO 2020-02-26 19:17:17.141 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:17:19.448 request from ::1:
+GET /search?query=red HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"2d216-HfhFUMLm+1RMYmvLMaRTTMpAXmU"
+
+INFO 2020-02-26 19:17:21.197 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:23.294 request from ::1:
+POST /toggle-favorite/FYC25 HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+content-length: 0
+cache-control: max-age=0
+origin: http://localhost:8080
+upgrade-insecure-requests: 1
+content-type: application/x-www-form-urlencoded
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:24.369 request from ::1:
+GET /search?query=red HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+cache-control: max-age=0
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"2d1a2-lA9aQcvYF3nisjv2EqOHLZM/2xI"
+
+INFO 2020-02-26 19:17:26.206 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+
+INFO 2020-02-26 19:17:27.642 request from ::1:
+GET /favorites HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/search?query=red
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+if-none-match: W/"71c-6+0d6gbrD4meV5cacWiYYGzfbwY"
+
+INFO 2020-02-26 19:17:28.694 request from ::1:
+GET /style.css HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+if-none-match: W/"1211-17080371d87"
+if-modified-since: Wed, 26 Feb 2020 06:37:40 GMT
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+accept: text/css,*/*;q=0.1
+sec-fetch-site: same-origin
+sec-fetch-mode: no-cors
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:30.836 request from ::1:
+GET /return HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+INFO 2020-02-26 19:17:30.842 request from ::1:
+GET /search?q=red HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+ERROR 2020-02-26 19:17:31.349 TypeError: undefined is not a string
+INFO 2020-02-26 19:17:31.355 request from ::1:
+GET /error HTTP/1.1
+host: localhost:8080
+connection: keep-alive
+upgrade-insecure-requests: 1
+user-agent: Mozilla/5.0 (X11; Fedora; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36
+sec-fetch-user: ?1
+accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9
+sec-fetch-site: same-origin
+sec-fetch-mode: navigate
+referer: http://localhost:8080/favorites
+accept-encoding: gzip, deflate, br
+accept-language: es-ES,es;q=0.9,en;q=0.8
+cookie: connect.sid=s%3AWEXqAT0Y2BQKAiyYTEiDUFMfB11TmtSD.LJsb1RS7SKwmQkOJPB5POjP075q2GAr0v9cXKz0TiOU
+
+WARN 2020-02-26 19:17:34.049 server abruptly stopped

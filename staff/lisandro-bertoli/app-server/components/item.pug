@@ -1,6 +1,6 @@
 mixin item(id, name, isFav, thumbnail, price)
     article.item
-        form(action=`/vehicle/+${id}` method="GET")
+        form(action=`/vehicle/${id}` method="GET")
             button(type="submit")
                 li
                 img.item__thumbnail(src=thumbnail)
