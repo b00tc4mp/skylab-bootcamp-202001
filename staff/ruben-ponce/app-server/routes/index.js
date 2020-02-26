@@ -1,12 +1,11 @@
 module.exports = {
+    landing: require('./landing'),
     login: require('./login'),
     loginPost: require('./login-post'),
+    logout: require('./logout'),
     register: require('./register'),
     registerPost: require('./register-post'),
-    search: require('./search'),
-    details: require('./details'),
-    landing: require('./landing'),
-    toggleFavVehicle: require('./toggle-fav-vehicles'),
     acceptCookies: require('./accept-cookies'),
-    logout: require('./logout')
+    search: require('./search'),
+    toggleFav: require('./toggle-fav')
 }

@@ -1,4 +1,7 @@
-
+const { toggleFavVehicle } = require('.')
+require('../specs/specs-helper')
+const { call } = require('../utils')
+require('../utils/array.prototype.random')
 
 describe('toggleFavVehicle', () => {
     let name, surname, username, password, token, id

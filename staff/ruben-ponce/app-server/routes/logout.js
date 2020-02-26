@@ -1,3 +1,3 @@
 module.exports = ({ session }, res) => {
-    session.destroy(() => res.redirect('/login'))
+    session.destroy(() => res.redirect('/'))
 }

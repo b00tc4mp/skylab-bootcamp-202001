@@ -1,11 +1,9 @@
-const { App, Login } = require('../components')
-
 module.exports = (req, res) => {
-    const { session: { username } } = req
+    const { session: { token } } = req
 
-    if (username) return res.redirect(`/search/${username}`)
+    if (token) return res.redirect('/')
 
     const { session: { acceptCookies } } = req
 
-    res.send(App({ title: 'Login', body: Login(), acceptCookies }))
+    res.render('login', { acceptCookies })
 }

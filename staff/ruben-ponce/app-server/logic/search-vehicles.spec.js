@@ -1,5 +1,9 @@
-describe('retrieveVehicle', () => {
-    let name, surname, username, password, token, query, ids, id
+const { searchVehicles } = require('.')
+const { call } = require('../utils')
+require('../utils/array.prototype.random')
+
+describe('searchVehicles', () => {
+    let name, surname, username, password, token, query, ids
 
     const queryIds = {
         'red': ['FYC25', 'FYF21', 'FYD99', 'FYF83', 'FYD92', 'FYG53', 'FYC24', 'FYF19', 'FYD88', 'FYG71', 'GMR66', 'FYG73', 'FYF65', 'FYF29', 'FYB36', 'FYC56', 'FYB58', 'FYF36', 'FYF16', 'FYF43', 'FYG85', 'FYF40', 'FYF85', 'FYD89', 'FYF71', 'FYF34', 'FYG68', 'FYC21', 'FYC66', 'FYC97', 'FYG12', 'FYG69', 'FYG70', 'GBT61', 'GGR60', 'FYD83', 'FYC61', 'FYD78', 'FYG15', 'FYD73', 'FYF03', 'FYD45', 'GBT30', 'GBT88', 'GBT31', 'FYJ56', 'FYG44', 'FYG32', 'FYD80', 'FYC46', 'FYF99', 'FYB43', 'FYB34', 'FYF12', 'FYF38', 'FYB72', 'FYG65', 'FYG66', 'FYG67', 'FYD48', 'FYF44', 'FYC42', 'FYD30', 'FYD00', 'FYD07', 'FYF78', 'FYC89', 'FYD35', 'FYD09', 'FYB79', 'FYC30', 'FYB54', 'FYC78', 'FYB63', 'FYD29', 'FYB96', 'FYC86', 'FYC98', 'FYD05', 'FYD14', 'FYC60', 'FYB70', 'FYG62', 'FYG63', 'FYG64', 'FYD61', 'FJV66', 'GFB79', 'FYC39', 'FYB57', 'FYC70', 'FYB55', 'FYD33', 'FYD17', 'FYD58', 'FYC92', 'FJW04', 'FJY26', 'FJW75', 'FKB20', 'FJY67', 'FJY73', 'FKB45', 'FJW32', 'FKB11', 'FKC24', 'FKC23', 'FKC25', 'FJY70', 'FJY16', 'FKB15', 'FJV97', 'FKB01', 'FJW42', 'FJY17', 'FKB50', 'FJY07', 'FJV79', 'FJY13', 'FKB37', 'FJW00', 'FRR82', 'FRR85', 'FRR88', 'FRR91', 'FRR94', 'FJV61', 'FKB95', 'FJW96', 'FJY24', 'FJW88', 'FJY42', 'FKC22', 'FKC21', 'FJY02', 'FKB35', 'FJX44', 'FJY83', 'FKB07', 'FJV77', 'FRR81', 'FRR84', 'FRR87', 'FRR90', 'FRR93', 'FJW83', 'FJV83', 'FJY36', 'FJY11', 'FDK41', 'FJV56', 'FJX11', 'FJW28', 'FJX79', 'FKC17', 'FKC18', 'FKC19', 'FJX12', 'FJV50', 'FTX87', 'FJX23', 'FJY95', 'FJX09', 'FRR80', 'FRR86', 'FRR89', 'FRR92', 'FJW67', 'FJX24', 'FKB32', 'FJW48', 'FJW52', 'FJV59', 'FJX99', 'FJW63', 'FJW54', 'FJV47', 'FJX95', 'FJW19', 'FJV74', 'FKC14', 'FKC15', 'FKC16', 'FJX40', 'FJW13', 'FJW37', 'FKB99', 'FJV82', 'FJW51', 'FJV44', 'FJX50', 'FJX51', 'FJX52', 'FJX53', 'FJX54', 'FJW58', 'FJX91', 'DVC30', 'DVC24', 'DVC53', 'DTY36', 'DVC18', 'DVB02', 'DTY13', 'DVC48', 'DTY12', 'DTY99', 'DVC29', 'DTX17', 'DVC07', 'DVC17', 'DTX00', 'DTY60', 'DTY33', 'DVB68', 'DVC00', 'DVC52', 'DTY88', 'DVB03', 'DTY08', 'DTX22', 'DVB21', 'DTY58', 'DTY59', 'DTW80', 'DVB41', 'DTY56', 'DVC27', 'DTY31', 'DVB91', 'DVB18', 'DVB19', 'DTY87', 'DVC19', 'DVC01', 'DVB58', 'DTY68', 'DTY64', 'DVB10', 'DTX16', 'DTY06', 'DVC26', 'DVB90', 'DVB17', 'DTY92', 'DVB26', 'DVB65', 'DTX84', 'DVB88', 'DTX05', 'DVB37', 'DVB72', 'DTX21', 'DVB15', 'DTX30', 'DVB39', 'DTY63', 'DTX31', 'DVC21', 'DTX09', 'DTX44', 'DVB84', 'DTY57', 'DTY62', 'DTX74', 'DTY24', 'DTY03', 'DTX23', 'DTX91', 'DTX11', 'DTW93', 'DTX63', 'DTX93', 'DTX20', 'DTX68', 'DTX97', 'DTX59', 'DTX47', 'DTW81', 'DTX89', 'DTX80', 'DTX72', 'DTX77', 'DJM19', 'DJJ47', 'DRM16', 'DHR81', 'DHR83', 'DHT33', 'DHX13', 'DHX64', 'DHX65', 'DHR86', 'DHX67', 'DHR91', 'DHX70', 'DHR70', 'DHP23', 'DHP24', 'DHR30', 'DHX52', 'DHR62', 'DHR63', 'DHR64', 'DHR65', 'DHW96', 'DHW97', 'DHP22', 'DHR54', 'DHR55', 'DHX49', 'DHX50', 'DHY12', 'DHR56', 'DHP20', 'DHW90', 'DHW91', 'DHP21', 'DHP53', 'DHX17', 'DHX18', 'DHP57', 'DHR03', 'DHP00', 'DHR08', 'DHR12', 'DHT91', 'DHR13', 'DHT19', 'DHT25', 'DHP35', 'DHP72', 'DHW66', 'DHN97', 'DHP76', 'DHP77', 'DHP78', 'DHT90', 'DHT28', 'DHX47', 'DHP18', 'DHP83', 'DHP88', 'DHR38', 'DHR39', 'DHP16', 'DHW82', 'DHW77', 'DHX72', 'DHT05', 'DHX08', 'DHT08', 'DHW75', 'DHT14', 'DHR26', 'DHR28', 'DHP08', 'DHP10', 'DHR60', 'DHW94', 'DHR74', 'DHP97', 'DHP52', 'DHY09', 'DHR36', 'DHX39', 'DHX40', 'DHP15', 'DHP63', 'DHR04', 'DHR05', 'DHX25', 'DHP05', 'DHR42', 'DHR45', 'DHR94', 'DHR97', 'DHX07', 'DHR16', 'DHX31', 'DHX21', 'DHP43'],
@@ -15,7 +19,6 @@ describe('retrieveVehicle', () => {
 
         query = Object.keys(queryIds).random()
         ids = queryIds[query]
-        id = ids.random()
     })
 
     describe('when user already exists', () => {
@@ -51,43 +54,40 @@ describe('retrieveVehicle', () => {
             })
         )
 
-        it('should get result on matching id but not fav if not previously added', done => {
-            const id = ids.random()
-
-            retrieveVehicle(token, id, (error, vehicle) => {
+        it('should get results on matching query but no favs if not previously added', done =>
+            searchVehicles(token, query, (error, vehicles) => {
                 expect(error).toBeUndefined()
 
-                expect(typeof vehicle.id).toBe('string')
-                expect(typeof vehicle.name).toBe('string')
-                expect(typeof vehicle.image).toBe('string')
-                expect(typeof vehicle.description).toBe('string')
-                expect(typeof vehicle.collection).toBe('string')
-                expect(typeof vehicle.style).toBe('string')
-                expect(typeof vehicle.price).toBe('number')
-                expect(typeof vehicle.isFav).toBe('boolean')
-                expect(vehicle.isFav).toBeFalsy()
+                expect(vehicles).toBeDefined()
+                expect(vehicles.length).toBeGreaterThan(0)
+
+                vehicles.forEach(vehicle => {
+                    expect(typeof vehicle.id).toBe('string')
+                    expect(typeof vehicle.name).toBe('string')
+                    expect(typeof vehicle.thumbnail).toBe('string')
+                    expect(typeof vehicle.price).toBe('number')
+                    expect(typeof vehicle.isFav).toBe('boolean')
+                    expect(vehicle.isFav).toBeFalsy()
+                })
 
                 done()
             })
-        })
+        )
 
-        it('should succeed on non-matching id returning a null vehicle', done => {
-            retrieveVehicle(token, 'asdasdfñlajsfklasldñkfjañlsjflasjflasjfñladjs', (error, vehicle) => {
+        it('should succeed on non-matching query returning an empty array', done => {
+            searchVehicles(token, 'asdasdfñlajsfklasldñkfjañlsjflasjflasjfñladjs', (error, results) => {
                 expect(error).toBeUndefined()
 
-                expect(vehicle).toBeNull()
+                expect(results).toBeDefined()
+                expect(results).toHaveLength(0)
 
                 done()
             })
         })
 
         describe('when fav vehicles already exists', () => {
-            let fav
-
             beforeEach(done => {
                 const favs = [ids.random(), ids.random(), ids.random()]
-
-                fav = favs.random()
 
                 call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                     method: 'PATCH',
@@ -109,11 +109,12 @@ describe('retrieveVehicle', () => {
                 })
             })
 
-            it('should get vehicle on matching id with fav as previously added', done => {
-                retrieveVehicle(token, fav, (error, vehicle) => {
+            it('should get results on matching query with favs as previously added', done => {
+                searchVehicles(token, query, (error, vehicles) => {
                     expect(error).toBeUndefined()
 
-                    expect(vehicle).toBeDefined()
+                    expect(vehicles).toBeDefined()
+                    expect(vehicles.length).toBeGreaterThan(0)
 
                     call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
                         method: 'GET',
@@ -132,19 +133,17 @@ describe('retrieveVehicle', () => {
                         const { favs } = user
 
                         for (const fav of favs)
--                            expect(ids).toContain(fav)
+                            -                            expect(ids).toContain(fav)
 
-                        expect(typeof vehicle.id).toBe('string')
-                        expect(vehicle.id).toBe(fav)
-                        expect(typeof vehicle.name).toBe('string')
-                        expect(typeof vehicle.image).toBe('string')
-                        expect(typeof vehicle.description).toBe('string')
-                        expect(typeof vehicle.collection).toBe('string')
-                        expect(typeof vehicle.style).toBe('string')
-                        expect(typeof vehicle.price).toBe('number')
-                        expect(typeof vehicle.isFav).toBe('boolean')
+                        vehicles.forEach(vehicle => {
+                            expect(typeof vehicle.id).toBe('string')
+                            expect(typeof vehicle.name).toBe('string')
+                            expect(typeof vehicle.thumbnail).toBe('string')
+                            expect(typeof vehicle.price).toBe('number')
+                            expect(typeof vehicle.isFav).toBe('boolean')
 
-                        expect(vehicle.isFav).toBe(favs.includes(vehicle.id))
+                            expect(vehicle.isFav).toBe(favs.includes(vehicle.id))
+                        })
 
                         done()
                     })
@@ -153,7 +152,7 @@ describe('retrieveVehicle', () => {
         })
 
         it('should fail on invalid token', done => {
-            retrieveVehicle(`${token}-wrong`, id, error => {
+            searchVehicles(`${token}-wrong`, query, error => {
                 expect(error).toBeInstanceOf(Error)
                 expect(error.message).toBe('invalid token')
 
@@ -183,23 +182,23 @@ describe('retrieveVehicle', () => {
         })
     })
 
-    it('should fail on non-string id', () => {
+    it('should fail on non-string query', () => {
         token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
 
         expect(() =>
-            retrieveVehicle(token, undefined, () => { })
+            searchVehicles(token, undefined, () => { })
         ).toThrowError(TypeError, 'undefined is not a string')
 
         expect(() =>
-            retrieveVehicle(token, 1, () => { })
+            searchVehicles(token, 1, () => { })
         ).toThrowError(TypeError, '1 is not a string')
 
         expect(() =>
-            retrieveVehicle(token, true, () => { })
+            searchVehicles(token, true, () => { })
         ).toThrowError(TypeError, 'true is not a string')
 
         expect(() =>
-            retrieveVehicle(token, {}, () => { })
+            searchVehicles(token, {}, () => { })
         ).toThrowError(TypeError, '[object Object] is not a string')
     })
 
@@ -207,19 +206,21 @@ describe('retrieveVehicle', () => {
         token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
 
         expect(() =>
-            retrieveVehicle(token, id, undefined)
+            searchVehicles(token, query, undefined)
         ).toThrowError(TypeError, 'undefined is not a function')
 
         expect(() =>
-            retrieveVehicle(token, id, 1)
+            searchVehicles(token, query, 1)
         ).toThrowError(TypeError, '1 is not a function')
 
         expect(() =>
-            retrieveVehicle(token, id, true)
+            searchVehicles(token, query, true)
         ).toThrowError(TypeError, 'true is not a function')
 
         expect(() =>
-            retrieveVehicle(token, id, {})
+            searchVehicles(token, query, {})
         ).toThrowError(TypeError, '[object Object] is not a function')
     })
+
+    // TODO unit test cases for anonymous searches
 })

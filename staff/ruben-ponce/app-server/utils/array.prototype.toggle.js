@@ -4,4 +4,4 @@ if (typeof Array.prototype.toggle === 'undefined')
 
         if (index > -1) this.splice(index, 1)
         else this.push(value)
-}
+    }
