@@ -12,21 +12,21 @@ module.exports = (req, res) => {
 
         return session.save(() => res.redirect('/login'))
     }
-    
+    debugger
     try {
-        toggleFavVehicle (token, id, error => {
-            if(error) {
-                logger.error(error)
-
-                res.redirect('./error')
-            }
-            
+        toggleFavVehicle (token, id)
+        .then( () => {
             const { referer = req.get('referer') } = session
 
             delete session.referer
             delete session.fav
 
             session.save(() => res.redirect(referer))
+        })
+        .catch(error => {
+           logger.error(error)
+
+            res.redirect('./error') 
         })
     } catch ({error}){
         logger.error(error)

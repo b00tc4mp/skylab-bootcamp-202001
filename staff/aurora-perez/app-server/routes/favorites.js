@@ -1,5 +1,4 @@
 const { retrieveFavVehicles } = require ('../logic')
-const { App, Favorites, Search } = require('../components')
 const { logger } = require('../utils')
 
 module.exports = (req, res) => {

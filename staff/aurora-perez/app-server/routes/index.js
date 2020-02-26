@@ -7,7 +7,6 @@ module.exports = {
     logout: require('./logout'),
     acceptCookies: require('./accept-cookies'),
     search: require('./search'),
-    searchHome: require('./search'),
     details: require('./details'),
     toggleFav: require('./toggle-fav'),
     favorites: require('./favorites')

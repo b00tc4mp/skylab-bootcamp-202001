@@ -1,5 +1,3 @@
-const {App, Register } = require ('../components')
-
-module.exports =  ({ session: { acceptCookies } }, res) => {
-    res.send(App({ title: 'Register', body: Register(), acceptCookies }))
+module.exports = ({ session: { acceptCookies } }, res) => {
+    res.render('register', { acceptCookies })
 }
