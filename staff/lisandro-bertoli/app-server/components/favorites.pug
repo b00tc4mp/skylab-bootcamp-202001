@@ -1,0 +1,11 @@
+extends app
+
+
+
+mixin favorites(results)
+    ul.results
+        each result in results
+            -const {id, name, isFav, image, price} = result
+            +item(id, name, isFav, image, price)
+include item
+    +favorites(results)

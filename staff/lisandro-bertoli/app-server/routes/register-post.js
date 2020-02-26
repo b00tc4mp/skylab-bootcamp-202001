@@ -1,5 +1,4 @@
 const { registerUser } = require('../logic')
-const { App, Register } = require('../components')
 const { logger } = require('../utils')
 
 

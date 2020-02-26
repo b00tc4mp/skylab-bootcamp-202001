@@ -7,6 +7,7 @@ module.exports = (req, res) => {
 
     try {
         const { token } = session
+
         retrieveFavorites(token, (error, favorites) => {
             if (error) {
                 logger.error(error)
@@ -16,7 +17,7 @@ module.exports = (req, res) => {
 
             const { acceptCookies } = session
 
-            res.send(App({ title: 'Details', body: Favorites({ favorites }), acceptCookies }))
+            res.render('favorites', { results: favorites, acceptCookies })
         })
     } catch (error) {
         logger.error(error)

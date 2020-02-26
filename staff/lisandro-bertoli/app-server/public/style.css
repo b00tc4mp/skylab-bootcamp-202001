@@ -23,23 +23,27 @@ ul {
 .search {
   border: 2px solid black;
   padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
 }
-.search input {
+.search__query {
   display: block;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
 }
-.search button {
+.search__button {
   display: block;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
 }
 
+@media screen and (min-width: 416px) {
+  .search {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
 @media screen and (min-width: 768px) {
   .search {
     width: 40%;

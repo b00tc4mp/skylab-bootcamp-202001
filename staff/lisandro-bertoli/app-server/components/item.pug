@@ -1,13 +1,13 @@
-mixin item(id, name, isFav, thumbnail, image, price)
+mixin item(id, name, isFav, thumbnail, price)
     article.item
         form(action=`/vehicle/+${id}` method="GET")
-        button(type="submit")
-            li
-            img.item__thumbnail(src=thumbnail)
-            .item__info-wrapper
-                h3.item__name=name
-                span.item__price=`$${price}`
-        form(action="/toggle-favorite/${id}" method="POST")
+            button(type="submit")
+                li
+                img.item__thumbnail(src=thumbnail)
+                .item__info-wrapper
+                    h3.item__name=name
+                    span.item__price=`$${price}`
+        form(action=`/toggle-favorite/${id}` method="POST")
             button(type="submit")
                 if isFav
                     i.fas.fa-heart.item__heart

@@ -1,5 +1,4 @@
 const { authenticateUser } = require('../logic')
-const { App, Login } = require('../components')
 const { logger } = require('../utils')
 
 module.exports = (req, res) => {
