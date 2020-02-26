@@ -8,17 +8,18 @@ module.exports = (req, res) => {
     try {
         const { token } = session
 
-        retrieveFavorites(token, (error, favorites) => {
-            if (error) {
+        retrieveFavorites(token)
+            .then(favorites => {
+                const { acceptCookies } = session
+
+                res.send(favorites)
+                // res.render('favorites', { results: favorites, acceptCookies })
+            })
+            .catch(error => {
                 logger.error(error)
 
                 return res.redirect('/error')
-            }
-
-            const { acceptCookies } = session
-
-            res.render('favorites', { results: favorites, acceptCookies })
-        })
+            })
     } catch (error) {
         logger.error(error)
 

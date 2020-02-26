@@ -14,20 +14,20 @@ module.exports = (req, res) => {
     }
 
     try {
-        toggleFavVehicle(token, id, error => {
-            if (error) {
+        toggleFavVehicle(token, id)
+            .then(() => {
+                const { referer = req.get('referer') } = session
+
+                delete session.referer
+                delete session.favId
+
+                res.redirect(referer)
+            })
+            .catch(error => {
                 logger.error(error)
 
                 res.redirect('/error')
-            }
-
-            const { referer = req.get('referer') } = session
-
-            delete session.referer
-            delete session.favId
-
-            res.redirect(referer)
-        })
+            })
 
     } catch (error) {
         logger.error(error)

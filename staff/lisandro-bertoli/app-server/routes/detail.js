@@ -7,27 +7,21 @@ module.exports = (req, res) => {
 
     if (token) {
         try {
-            retrieveUser(token, (error, user) => {
-                if (error) {
+            retrieveUser(token)
+                .then(user => {
+                    const { username, name } = user
+
+                    return retrieveVehicle(token)
+                        .then(vehicle => {
+                            res.send(App({ title: 'Details', body: Landing({ vehicle, name, username }), acceptCookies }))
+                        })
+
+                })
+                .catch(error => {
                     logger.error(error)
 
                     res.redirect('/error')
-                }
-
-                const { username, name } = user
-
-                retrieveVehicle(token, id, (error, vehicle) => {
-                    if (error) {
-                        logger.error(error)
-
-                        return res.redirect('/error')
-                    }
-
-                    res.send(App({ title: 'Details', body: Landing({ vehicle, name, username }), acceptCookies }))
-
                 })
-
-            })
         } catch (error) {
             logger.error(error)
 
@@ -35,16 +29,15 @@ module.exports = (req, res) => {
         }
     } else {
         try {
-            retrieveVehicle(undefined, id, (error, vehicle) => {
-                if (error) {
+            retrieveVehicle(undefined, id)
+                .then(vehicle => {
+                    res.send(App({ title: 'Details', body: Landing({ vehicle }), acceptCookies }))
+                })
+                .catch(error => {
                     logger.error(error)
 
-                    return res.redirect('/error')
-                }
-
-                res.send(App({ title: 'Details', body: Landing({ vehicle }), acceptCookies }))
-
-            })
+                    res.redirect('/error')
+                })
         } catch (error) {
             logger.error(error)
 

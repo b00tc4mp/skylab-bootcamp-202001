@@ -1,49 +1,26 @@
-const { call } = require('../utils')
+const { fetch } = require('../utils')
 
-module.exports = function (token, callback) {
-    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
+module.exports = function (token) {
     if (typeof token !== 'string') throw new TypeError(token + ' is not a string');
 
 
-    call('https://skylabcoders.herokuapp.com/api/v2/users/', {
+    return fetch('https://skylabcoders.herokuapp.com/api/v2/users/', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
-    }, (error, response) => {
-
-        if (error) return callback(error)
-
-        const user = JSON.parse(response.content)
-        const { error: _error } = user
-
-
-        if (_error) return callback(new Error(_error))
-
-        const { favs } = user
-
-        if (!favs.length) return callback(undefined, favs)
-
-        let favsList = []
-
-        counter = 0
-
-        favs.forEach(id => {
-            call(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles/${id}`, undefined, (error, response) => {
-                if (error) return callback(error);
-
-                counter++
-
-                if (response.status === 200) {
-                    var vehicle = JSON.parse(response.content)
-                    vehicle.isFav = true
-                    favsList.push(vehicle)
-
-                    if (counter === favs.length) {
-                        return callback(undefined, favsList)
-                    }
-                }
-            });
-
-        })
-
     })
+        .then(response => {
+            const user = JSON.parse(response.content)
+            const { error: _error } = user
+
+
+            if (_error) throw new Error(_error)
+
+            const { favs } = user
+
+            return favs
+        })
+        .then(favs => favs.map(fav => fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles/${fav}`)))
+        .then(calls => Promise.all(calls))
+        .then(results => results.map(result => JSON.parse(result.content)))
+        .then(favorites => favorites)
 }

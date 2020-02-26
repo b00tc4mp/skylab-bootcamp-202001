@@ -1,9 +1,8 @@
-const { call } = require('../utils')
+const { fetch } = require('../utils')
 const atob = require('atob')
 
 module.exports = function (token, id, callback) {
     if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
-    if (typeof callback !== 'function') throw new TypeError(`${callback} is not a function`)
     if (token) {
         if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
 
@@ -15,42 +14,38 @@ module.exports = function (token, id, callback) {
         if (!sub) throw new Error('no user id in token')
 
 
-        call(`https://skylabcoders.herokuapp.com/api/v2/users/${sub}`, {
+        return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/${sub}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        }, (error, response) => {
-            if (error) return callback(error)
+        })
+            .then(response => {
+                const user = JSON.parse(response.content), { error: _error } = user
 
-            const user = JSON.parse(response.content), { error: _error } = user
+                if (_error) throw new Error(_error)
 
-            if (_error) return callback(new Error(_error))
+                const { favs = [] } = user
 
-            const { favs = [] } = user
+                return fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles/${id}`, undefined)
+                    .then(response => {
+                        if (response.status === 200) {
+                            const vehicle = JSON.parse(response.content)
 
-            call(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles/${id}`, undefined, (error, response) => {
-                if (error) return callback(error)
+                            vehicle && (vehicle.isFav = favs.includes(vehicle.id))
 
+                            return vehicle
+                        }
+                    })
+            })
+    } else {
+        return fetch(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles/${id}`, undefined)
+            .then(response => {
                 if (response.status === 200) {
                     const vehicle = JSON.parse(response.content)
 
-                    vehicle && (vehicle.isFav = favs.includes(vehicle.id))
-
-
-                    callback(undefined, vehicle)
+                    return vehicle
                 }
             })
-        })
-    } else {
-        call(`https://skylabcoders.herokuapp.com/api/hotwheels/vehicles/${id}`, undefined, (error, response) => {
-            if (error) return callback(error)
-
-            if (response.status === 200) {
-                const vehicle = JSON.parse(response.content)
-
-                callback(undefined, vehicle)
-            }
-        })
     }
 }
