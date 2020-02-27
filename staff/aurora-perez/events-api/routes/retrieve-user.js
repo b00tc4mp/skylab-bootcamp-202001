@@ -8,9 +8,14 @@ module.exports = (req, res) => {
     let [, token] = authorization.split(' ')
     
     try {
-        
-        const user = retrieveUser(token)
-            res.send(user)
+        retrieveUser(token)
+        .then(user=> {
+            const {name, surname, email} = user
+            res
+                .status(201)
+                .json({name, surname, email})
+
+        })
 
             
     } catch ({ message }) {
