@@ -41,5 +41,21 @@ describe('validate', () => {
         })
     })
 
-    // TODO email validation unit tests
+    describe('email', () => {
+        it('should not throw on email target', () => {
+            const email = 'valid@email.com'
+            expect(() => validate.email(email)).to.not.throw()
+        })
+
+        it('should throw Error on invalid email', () => {
+            let email = 'invalidemail'
+            expect(() => validate.email(email)).to.throw(Error, `${email} is not an e-mail`)
+
+            email = 'invalid@mail'
+            expect(() => validate.email(email)).to.throw(Error, `${email} is not an e-mail`)
+
+            email = 'invalid@mai.'
+            expect(() => validate.email(email)).to.throw(Error, `${email} is not an e-mail`)
+        })
+    })
 })
