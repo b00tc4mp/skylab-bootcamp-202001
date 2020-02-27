@@ -1,17 +1,25 @@
+const {validate} = require('../utils')
 const {users} = require('../data')
-const atob = require('atob')
-const jwt = require('jsonwebtoken')
-const { env: { SECRET } } = process
 
-module.exports = token => {
-  jwt.verify(token, SECRET)
+const fs = require('fs').promises
+const path = require('path')
 
-  let [,payload] = token.split('.')
-  let id = JSON.parse(atob(payload)).sub
-  
+const { NotFoundError, NotAllowedError } = require('../errors')
+
+module.exports = id => {
+  validate.string(id, 'id')
+
   let user = users.find(user => user.id === id)
 
-  if (!user) throw new Error('you have been deleted')
-  
-  return Promise.resolve({name: user.name, surname: user.surname, email: user.email})
+  if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
+  if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`) 
+
+  user.retrieved = new Date
+
+  return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
+    .then(() => {
+      const {name, surname, email} = user
+      return {name, surname, email}
+    })
+
 }

@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
+const {jwtVerify} = require('./middlewares')
 
 
 const logger = winston.createLogger({
@@ -33,8 +34,7 @@ app.use(morgan('combined', { stream: accessLogStream }))
 
 app.post('/users', jsonBodyParser, registerUser)
 app.post('/auth/users', jsonBodyParser, authenticateUser)
-
-app.get('/users', retrieveUser)
+app.get('/users', jwtVerify, retrieveUser)
 
 app.listen(port, () => console.log(`${name} ${version} running on port ${port}`))
 

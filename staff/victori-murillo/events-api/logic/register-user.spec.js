@@ -1,23 +1,40 @@
-const {validate} = require('../utils')
+const {expect} = require('chai')
+const {registerUser} = require('.')
 const {users} = require('../data')
 const fs = require('fs').promises
 const path = require('path')
-const uuid = require('uuid/v4')
 
-module.exports = (name, surname, email, password) => {
-  validate.string(name, 'name')
-  validate.string(surname, 'surname')
-  validate.string(email, 'email')
-  validate.email(email)
-  validate.string(password, 'password')
-  
-  let user = users.find(user => user.email === email)
+describe('registerUser', () => {
 
-  if(user) throw new Error(`user with email ${email} already exists`)
+  let name, surname, email, password
 
-  user = {id: uuid(), name, surname, email, password, created: new Date}
+  beforeEach(() => {
+    name = 'name-' + Math.random(),
+    surname = 'surname-' + Math.random(),
+    email = Math.random() + '@mail.com',
+    password = 'password-' + Math.random()
+  })
 
-  users.push(user)
+  it('should succed on new user', () => {
+    registerUser(name, surname, email, password)
+    .then(response => expect(response).to.be.an('undefined'))
+  })
 
-  return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 2))
-}
+  describe('when user already exists', () => {
+    beforeEach(() => {
+      user = {id: uuid(), name, surname, email, password, created: new Date}
+      users.push(user)
+      return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 2))
+    })
+  })
+
+  afterEach(() => {
+    console.log(users)
+    let index = users.findIndex(user => user.email === email)
+    users.splice(index, 1)
+    // users.splice(users.indexOf(), 1)
+    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 2))
+  })
+
+
+})

@@ -5,7 +5,7 @@ const fs = require('fs').promises
 const path = require('path')
 const jwt = require('jsonwebtoken')
 
-const { env: { SECRET } } = process
+const { env: { JWT_SECRET, JWT_EXP } } = process
 
 module.exports = (email, password) => {
   validate.string(email, 'email')
@@ -16,7 +16,7 @@ module.exports = (email, password) => {
 
   if (!user) throw new Error('wrong credentials')
 
-  const token = jwt.sign({ sub: user.id }, SECRET, { expiresIn: '2h'})
+  const token = jwt.sign({ sub: user.id }, JWT_SECRET, { expiresIn: JWT_EXP})
 
   user.authenticated = new Date
 
