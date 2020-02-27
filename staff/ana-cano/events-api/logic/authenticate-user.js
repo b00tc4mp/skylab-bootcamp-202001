@@ -2,6 +2,7 @@ const { validate } = require('../utils') // validar si es string... happy path
 const { users } = require('../data') 
 const jwt = require('jsonwebtoken') //crear token aleatorio
 
+
 const fs = require('fs').promises //crear fichero y transformarlo en promesa
 const path = require('path') //crear ruta
 

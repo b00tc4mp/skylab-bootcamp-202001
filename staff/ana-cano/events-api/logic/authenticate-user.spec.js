@@ -9,7 +9,7 @@ describe('authenticateUser',() => {
     })
 
     it('Should fail if the user have different credentials',()=> {
-        password
+        password = 'password'
         expect(()=> authenticateUser(name, password).to.throw(Error,"wrong credentials"))
     })
    

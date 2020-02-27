@@ -56,5 +56,22 @@
         "email": "mail-0.5771182945230975@gmail.com",
         "password": "password-0.033990304194814414",
         "created": "2020-02-27T09:25:12.542Z"
+    },
+    {
+        "id": "01f5eb65-bf95-4b70-9519-a6a0635df68e",
+        "name": "pepe",
+        "surname": "Cano",
+        "email": "adkhde@gmail.com",
+        "password": "123",
+        "created": "2020-02-27T15:08:06.281Z"
+    },
+    {
+        "id": "923a66cb-44e6-4e68-80ba-92b66e6071e0",
+        "name": "pepe",
+        "surname": "Cano",
+        "email": "antonia@gmail.com",
+        "password": "123",
+        "created": "2020-02-27T15:08:50.837Z",
+        "authenticated": "2020-02-27T15:09:22.066Z"
     }
 ]
