@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const atob = require('atob')
 
 const SECRET = 'dont you dare go hollow'
 
@@ -8,9 +10,4 @@ const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1h' })
 
 let [, payload] = token.split('.')
 payload = JSON.parse(atob(payload))
-
-try {
-    const payload = jwt.verify(token, SECRET)
-} catch (error) {
-
-}
+console.log(payload)
