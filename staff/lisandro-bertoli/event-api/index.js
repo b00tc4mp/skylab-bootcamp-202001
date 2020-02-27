@@ -5,7 +5,7 @@ const { env: { PORT = 8080, NODE_ENV: env }, argv: [, , port = PORT] } = process
 const express = require('express')
 const winston = require('winston')
 const { registerUser, authenticateUser, retrieveUser } = require('./routes')
-const { tokenVerifier } = require('./utils')
+const { jwtValidationMidWare } = require('./mid-wares')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -36,7 +36,7 @@ app.use(morgan('combined', { stream: accessLogStream }))
 
 app.post('/users', jsonBodyParser, registerUser)
 
-app.get('/users', tokenVerifier, retrieveUser)
+app.get('/users', jwtValidationMidWare, retrieveUser)
 
 app.post('/users/auth', jsonBodyParser, authenticateUser)
 

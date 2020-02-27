@@ -1,4 +1,4 @@
 module.exports = {
     validate: require('./validate'),
-    tokenVerifier: require('./token-verifier-mid-ware')
+    jwtValidationMidWare: require('../mid-wares/jwt-validation-mid-ware')
 }
