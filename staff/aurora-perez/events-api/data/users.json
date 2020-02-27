@@ -1,0 +1,20 @@
+[
+    {
+        "id": "d6be0396-fcd1-480c-9f0d-bd0f28fffd4f",
+        "name": "Pepito",
+        "surname": "Grillo",
+        "email": "pepigri4@mail.com",
+        "password": "123",
+        "created": "2020-02-26T17:42:46.668Z",
+        "authenticated": "2020-02-26T17:43:21.095Z"
+    },
+    {
+        "id": "428a1834-d5de-4983-a57c-f582c9764e9c",
+        "name": "pepa",
+        "surname": "pepa",
+        "email": "pepa@gmail.com",
+        "password": "pepa",
+        "created": "2020-02-26T19:36:46.276Z",
+        "authenticated": "2020-02-27T08:08:36.915Z"
+    }
+]
