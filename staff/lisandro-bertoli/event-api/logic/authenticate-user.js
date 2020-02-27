@@ -19,6 +19,6 @@ module.exports = (email, password) => {
 
     user.authenticated = new Date
 
-    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(user, null, 4))
+    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
         .then(() => token)
 }

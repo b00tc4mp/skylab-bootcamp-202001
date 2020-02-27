@@ -1,9 +1,12 @@
-{
-    "id": "4acca4e8-57fc-467e-a3df-75947d62380a",
-    "name": "Lisandro",
-    "surname": "Bertoli",
-    "email": "user@email.com",
-    "password": "123",
-    "created": "2020-02-26T20:59:27.912Z",
-    "authenticated": "2020-02-26T21:25:19.091Z"
-}
+[
+    {
+        "id": "1d6271ac-8b2b-4304-97cf-0b0fe61f0284",
+        "name": "Lisandro",
+        "surname": "Bertoli",
+        "email": "user@email.com",
+        "password": "123",
+        "created": "2020-02-27T09:18:31.831Z",
+        "authenticated": "2020-02-27T09:18:41.174Z",
+        "retrieved": "2020-02-27T09:25:56.315Z"
+    }
+]
