@@ -1,8 +1,6 @@
 const { expect } = require('chai')
 const { authenticateUser, registerUser } = require('../logic')
-const { users } = require('../data')
-const SECRET = 'dont you dare go hollow'
-const jwt = require('jsonwebtoken')
+const uuid = require('uuid/v4')
 
 describe('authenticateUser', () => {
     let name, surname, email, password

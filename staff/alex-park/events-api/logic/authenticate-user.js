@@ -3,6 +3,7 @@ const { users } = require('../data')
 const jwt = require('jsonwebtoken')
 const fs = require('fs').promises
 const path = require('path')
+const uuid = require('uuid/v4')
 const SECRET = 'dont you dare go hollow'
 
 module.exports = (email, password) => {

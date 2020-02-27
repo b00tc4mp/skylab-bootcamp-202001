@@ -2,11 +2,12 @@ require('dotenv').config()
 const atob = require('atob')
 const { validate } = require('../utils')
 const { users } = require('../data')
-const fs = require('fs').promises
-const path = require('path')
+const jwt = require('jsonwebtoken')
+const { env: { SECRET } } = process
 
 module.exports = token => {
     validate.string(token, 'token')
+    jwt.verify(token, SECRET)
 
     let [, payload] = token.split('.')
     const sub = JSON.parse(atob(payload)).sub
@@ -18,6 +19,5 @@ module.exports = token => {
     const { name, surname, email } = user
     user = { name, surname, email }
 
-    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
-    .then(() => user)
+    return Promise.resolve(user)
 }
