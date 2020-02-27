@@ -4,14 +4,14 @@ const validate = require('./validate')
 describe('validate', () => {
     describe('string', () => {
         it('should not throw on string target', () => {
-            const name = 'something'
+            let name = 'something'
             let target = 'a string'
 
             expect(() => validate.string(target, name)).not.to.throw()
         })
 
         it('should throw type-error on non-string target', () => {
-            const name = 'something'
+            let name = 'something'
 
             let target = 1
             expect(() => validate.string(target, name)).to.throw(TypeError, `${name} ${target} is not a string`)
