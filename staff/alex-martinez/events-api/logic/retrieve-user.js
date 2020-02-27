@@ -1,21 +1,25 @@
-// TODO user.retrieved = new Date
-const atob = require('atob')
-const users = require('../data/index')
+const { validate } = require('../utils')
+const { users } = require('../data')
 
-module.exports = (token) => {
-    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
+const fs = require('fs').promises
+const path = require('path')
+const { NotFoundError, NotAllowedError } = require('../errors')
 
-    const [header, payload, signature] = token.split('.')
-    if (!header || !payload || !signature) throw new Error('invalid token')
+module.exports = (id) => {
+    validate.string(id, 'id')
 
-    const { sub } = JSON.parse(atob(payload))
+    const user = users.find(user => user.id === id)
 
-    if (!sub) throw new Error('no user id in token')
+    if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-    const retrieve = users.find(user => user.id === sub)
+    if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
-    if(retrieve) {
-        
-    }
+    user.retrieved = new Date
 
+    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
+        .then(() => {
+            const { name, surname, email } = user
+
+            return { name, surname, email }
+        })
 }
