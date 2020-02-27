@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const atob = require('atob')
 
-const SECRET = 'dont you dare go hollow'
+const SECRET = '👌'
 
 const id = 'user-id-kdjf'
 
