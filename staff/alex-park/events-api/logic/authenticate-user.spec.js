@@ -15,12 +15,10 @@ describe('authenticateUser', () => {
 
     it('should succeed on a valid auth', () => 
         authenticateUser(email, password)
-        .then(token => {
-            expect(token).to.be.a('string')
+        .then(id => {
+            expect(id).to.be.a('string')
 
-            const [, payload ] = token.split('.')
-            expect(payload).to.be.a('string')
-            expect(payload.length > 0).to.be.true
+            expect(id.length > 0).to.be.true
         })
     )
 

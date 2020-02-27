@@ -1,23 +1,24 @@
-require('dotenv').config()
-const atob = require('atob')
 const { validate } = require('../utils')
 const { users } = require('../data')
-const jwt = require('jsonwebtoken')
-const { env: { SECRET } } = process
+const fs = require('fs').promises
+const path = require('path')
+const { NotFoundError, NotAllowedError } = require('../errors')
 
-module.exports = token => {
-    validate.string(token, 'token')
-    jwt.verify(token, SECRET)
+module.exports = id => {
+    validate.string(id, 'id')
 
-    let [, payload] = token.split('.')
-    const sub = JSON.parse(atob(payload)).sub
-    validate.string(sub, 'sub')
+    const user = users.find(user => user.id === id)
 
-    let user = users.find(user => sub === user.id)
-    if (!user) throw new Error('user has not been retrieved')
+    if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-    const { name, surname, email } = user
-    user = { name, surname, email }
+    if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
-    return Promise.resolve(user)
+    user.retrieved = new Date
+
+    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
+    .then(() => {
+        const { name, surname, email } = user
+
+        return { name, surname, email }
+    })
 }
