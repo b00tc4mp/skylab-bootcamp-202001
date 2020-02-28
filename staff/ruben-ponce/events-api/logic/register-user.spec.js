@@ -1,16 +1,26 @@
 const { expect } = require('chai')
-// const validate = require('../utils/validate')
-const { users } = require('../data')
-const { authenticateUser, registerUser } = require('../logic')
+require('dotenv').config()
+const { ObjectId } = require('mongodb')
+const { random } = Math
+const { database } = require('../data')
+const { registerUser } = require('../logic')
+
+const { env: { MONGODB_URL }} = process
+
 
 describe('register', () => {
-    let name, surname, email, password
+    let name, surname, email, password, users
     
+    before(() => {
+        database.connect(MONGODB_URL)
+            .then(() => users = database.collection('users'))
+    })
+
     beforeEach(() => {
-        name = 'rpc-' + Math.random()
-        surname = 'rpc-' + Math.random()
-        email = 'rpc@' + Math.random() + '.com'
-        password = 'rpc-' + Math.random()
+        name = 'rpc-' + random()
+        surname = 'rpc-' + random()
+        email = 'rpc@' + random() + '.com'
+        password = 'rpc-' + random()
     })
 
     it('should succeed on new user', () => {
@@ -18,30 +28,32 @@ describe('register', () => {
             .then(response => {
                 expect(response).to.equal(undefined)
             })
+            .then(() => {
+                return users.findOne({ email })
+            })
+            .then(user => {
+                expect(user).to.exist
+                expect(user._id).to.be.instanceOf(ObjectId)
+                expect(user.name).to.equal(name)
+                expect(user.surname).to.equal(surname)
+                expect(user.email).to.equal(email)
+                expect(user.password).to.equal(password)
+                expect(user.created).to.be.instanceOf(Date)
+            })
     })
 
-    describe('should create all user labels on db correctly', ()  => {
-
-        it('should match with registered email', () => {
-            registerUser(name, surname, email, password)
-                .then(() => { 
-                    let user = users.find(user => user.email === email)
-
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.equal(password)
-                })
-        })
+    it('should fail if the email is already in use', () => {
+        registerUser(name, surname, email, password)
+            .then(() => { throw new Error('should not reach this point')})
+            .catch(error => {
+                expect(error).to.be.defined
+                expect(error).to.be.an('error')
+                expect(error).to.eql(new Error(`user with email ${email} already exists`))
+            })
     })
 
-    // describe('user already exist', ()  => {
-    //     debugger
-    //     registerUser(name, surname, email, password)
-    //     it('should return error when user exist', () => {
-    //         expect(() => registerUser(name, surname, email, password)).to.throw(Error, `user with email ${email} already exists`)
-    //     })
-    // })
-
+    after(() => {
+        database.disconnect()
+    })
 
 })
