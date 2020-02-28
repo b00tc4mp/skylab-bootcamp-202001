@@ -1,22 +1,19 @@
-const {expect} = require('chai')
-const {registerUser} = require('.')
-const fs = require('fs').promises
-const path = require('path')
-const {MongoClient, ObjectID} = require('mongodb')
+require('dotenv').config()
 
+const {expect} = require('chai')
+const {ObjectId} = require('mongodb')
+const {registerUser} = require('.')
+const {database} = require('../data')
+const {env: {MONGODB_URL}} = process
+ 
 describe('registerUser', () => {
 
   let name, surname, email, password, users
 
-  before(() => {
-    const client = new MongoClient('http://localhost:27017', { useUnifiedTopology: true });
-
-    return  client.connect()
-      .then(() => {
-        const db = client.db('events')
-        const users = db.collection('users')
-      })
-  })
+  before(() => 
+    database.connect(MONGODB_URL)
+    .then(() => users = database.collection('users'))
+  )
 
   beforeEach(() => {
     name = 'name-' + Math.random(),
@@ -30,33 +27,33 @@ describe('registerUser', () => {
     .then(result => {
       expect(result).not.to.exist
       expect(result).to.be.undefined
-      return findOne({email})
+      return users.findOne({email})
     })
     .then(user => {
       expect(user).to.exist
-      expect(user).to.be.instanceOf(ObjectID)
+      expect(user._id).to.be.instanceOf(ObjectId)
       expect(user.name).to.equal(name)
       expect(user.surname).to.equal(surname)
       expect(user.email).to.equal(email)
       expect(user.password).to.equal(password)
+      expect(user.created).to.be.instanceOf(Date)
     })
   )
 
   describe('when user already exists', () => {
-    beforeEach(() => {
-      user = {id: uuid(), name, surname, email, password, created: new Date}
-      users.push(user)
-      return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 2))
-    })
+    beforeEach(() => registerUser(name, surname, email, password))
+
+    it('should fail on already existing user', () => {
+      registerUser(name, surname, email, password)
+      .then(() => {throw new Error('should not reach this point')})
+      .catch(error => {
+          expect(error).to.be.instanceOf(Error)
+          expect(error.message).to.equal(`user with email ${email} already exists`)
+      })
+  })
   })
 
-  afterEach(() => {
-    console.log(users)
-    let index = users.findIndex(user => user.email === email)
-    users.splice(index, 1)
-    // users.splice(users.indexOf(), 1)
-    return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 2))
-  })
+  afterEach(() => users.deleteOne({email}))
 
 
 })
