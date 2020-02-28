@@ -1,23 +1,27 @@
 const { validate } = require('../utils')
 const { users } = require('../data')
-const jwt = require('jsonwebtoken')
+const { NotFoundError, NotAllowedError } = require('../errors')
+
 const fs = require('fs').promises
 const path = require('path')
 
-const { env: { SECRET } } = process
+module.exports = id => {
+    validate.string(id, 'id')
 
-module.exports = token => {
-    validate.string(token, 'token')
+    const user = users.find(user => user.id === id )
 
-    const { sub } = jwt.verify(token, SECRET)
+    if (!user) throw new NotFoundError(`user with id ${id} does not exists`)
 
-    const user = users.find(user => user.id === sub )
+    if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
     user.retrieved = new Date
 
-    const {name, surname, email} = user
-
     return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
-    .then(()=> {return {name, surname, email}})
+    
+    .then(()=> {
+        const {name, surname, email} = user
+        
+        return {name, surname, email}
+    })
     
 }

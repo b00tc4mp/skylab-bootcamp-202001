@@ -1,26 +1,36 @@
-// TODO jwt.verify(token)
-const { authenticateUser } = require('../logic')
 const { retrieveUser } = require('../logic')
+const { NotFoundError, NotAllowedError } = require('../errors')
 
 module.exports = (req, res) => {
-    debugger
-    const { headers: { authorization } } = req
-    let [, token] = authorization.split(' ')
-    
+    const { payload: { sub: id } } = req
+
     try {
-        retrieveUser(token)
-        .then(user=> {
-            const {name, surname, email} = user
-            res
-                .status(201)
-                .json({name, surname, email})
+        retrieveUser(id)
+            .then(user =>
+                res.status(200).json(user)
+            )
+            .catch(({ message }) =>
+                res
+                    .status(401)
+                    .json({
+                        error: message
+                    })
+            )
+    } catch (error) {
+        let status = 400
 
-        })
+        switch (true) {
+            case error instanceof NotFoundError:
+                status = 404 // not found
+                break
+            case error instanceof NotAllowedError:
+                status = 403 // forbidden
+        }
 
-            
-    } catch ({ message }) {
+        const { message } = error
+
         res
-            .status(401) //?
+            .status(status)
             .json({
                 error: message
             })
