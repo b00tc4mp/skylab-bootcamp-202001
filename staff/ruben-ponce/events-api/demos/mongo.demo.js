@@ -38,7 +38,7 @@ client.connect()
 
 
     //UPDATE
-                //db.producto.update({"id":"1"},{ $set: {"name":"value"}})
+                //db.producto.updateOne({"id":"1"},{ $set: {"name":"value"}})
         //users.updateOne({"name": 'iep' },{ $set: {"name":"hei maailma"}})
 
     //Multi update in all documents

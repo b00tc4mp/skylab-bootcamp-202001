@@ -20,26 +20,28 @@ describe('register', () => {
             })
     })
 
-    // describe('should create all user labels on db correctly', ()  => {
+    describe('should create all user labels on db correctly', ()  => {
 
-    //     it('should match with registered password', () => {
-    //         registerUser(name, surname, email, password)
-    //             .then(() => { 
-    //                 let user = users.find(user => user.email === email)
+        it('should match with registered email', () => {
+            registerUser(name, surname, email, password)
+                .then(() => { 
+                    let user = users.find(user => user.email === email)
 
-    //                 expect(user.name).to.equal(name)
-    //                 expect(user.surname).to.equal(surname)
-    //                 expect(user.email).to.equal(email)
-    //                 expect(user.password).to.equal(password)
-    //             })
-    //     })
-    // })
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.equal(password)
+                })
+        })
+    })
 
     // describe('user already exist', ()  => {
+    //     debugger
     //     registerUser(name, surname, email, password)
     //     it('should return error when user exist', () => {
     //         expect(() => registerUser(name, surname, email, password)).to.throw(Error, `user with email ${email} already exists`)
     //     })
     // })
+
 
 })
