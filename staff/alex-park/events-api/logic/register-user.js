@@ -3,6 +3,18 @@ const { users } = require('../data')
 const fs = require('fs').promises
 const path = require('path')
 const { v4: uuid } = require('uuid')
+const { MongoClient } = require('mongodb')
+
+const client = new MongoClient("mongodb://localhost:27017", { useUnifiedTopology: true })
+
+client.connect()
+.then(() => {
+    const db = client.db('events')
+    const users = db.collection('users')
+
+    
+})
+
 
 module.exports = (name, surname, email, password) => {
     validate.string(name, 'name')
