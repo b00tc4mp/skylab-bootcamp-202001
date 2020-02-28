@@ -1,12 +1,22 @@
 const {expect} = require('chai')
 const {registerUser} = require('.')
-const {users} = require('../data')
 const fs = require('fs').promises
 const path = require('path')
+const {MongoClient, ObjectID} = require('mongodb')
 
 describe('registerUser', () => {
 
-  let name, surname, email, password
+  let name, surname, email, password, users
+
+  before(() => {
+    const client = new MongoClient('http://localhost:27017', { useUnifiedTopology: true });
+
+    return  client.connect()
+      .then(() => {
+        const db = client.db('events')
+        const users = db.collection('users')
+      })
+  })
 
   beforeEach(() => {
     name = 'name-' + Math.random(),
@@ -15,10 +25,22 @@ describe('registerUser', () => {
     password = 'password-' + Math.random()
   })
 
-  it('should succed on new user', () => {
+  it('should succed on new user', () => 
     registerUser(name, surname, email, password)
-    .then(response => expect(response).to.be.an('undefined'))
-  })
+    .then(result => {
+      expect(result).not.to.exist
+      expect(result).to.be.undefined
+      return findOne({email})
+    })
+    .then(user => {
+      expect(user).to.exist
+      expect(user).to.be.instanceOf(ObjectID)
+      expect(user.name).to.equal(name)
+      expect(user.surname).to.equal(surname)
+      expect(user.email).to.equal(email)
+      expect(user.password).to.equal(password)
+    })
+  )
 
   describe('when user already exists', () => {
     beforeEach(() => {
