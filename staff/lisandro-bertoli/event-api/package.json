@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "test": "npx mocha logic utils",
-    "test-debug": "npx mocha debug logic utils"
+    "test-debug": "npx mocha inspect logic utils"
   },
   "author": "",
   "license": "ISC",

@@ -11,13 +11,17 @@ MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true })
             .then(cursor => cursor.toArray())
             .then(users => users.forEach(user => console.log(user)))
 
-        users.updateOne(
-            { name: "lala" },
-            { $set: { password: "111", email: "pepigri@gri.com" } }
-        ).then(result => console.log(result))
-            .then(() => users.deleteOne({ password: 'ppp' }))
-            .then(() => console.log('LAST ACTION:\n deleted'))
-            .catch(error => console.log('error', error))
+        // users.updateOne(
+        //     { name: "lala" },
+        //     { $set: { password: "111", email: "pepigri@gri.com" } }
+        // )
+        //     .then(() => users.deleteOne({ password: 'ppp' }))
+        //     .then(() => console.log('LAST ACTION:\n deleted'))
+        //     .catch(error => console.log('error', error))
 
-
+        db.createCollection('events')
+            .then(collection => {
+                collection.insertOne({ location: 'outer-space', date: 'when possible' })
+            })
+            .then(value => { debugger })
     })
