@@ -8,6 +8,8 @@ client.connect()
 
         const users = db.collection('users')
 
+        const events = db.collection('events')
+
     //WRITE
         //Create one
         // users.insertOne({name: 'iep', surname: 'iep', email: 'iep@mail.com', password: 'iep'})
@@ -31,10 +33,10 @@ client.connect()
         //      .then(() => console.log('ended'))
 
     //READ
-        const cursor = users.find()
+        // const cursor = users.find()
 
-        cursor.toArray()
-            .then(users => users.forEach(user => console.log(user)))
+        // cursor.toArray()
+        //     .then(users => users.forEach(user => console.log(user)))
 
 
     //UPDATE
@@ -51,4 +53,17 @@ client.connect()
         // users.deleteOne({"surname":"Nota"})
         // users.deleteMany({"surname":"Nota"})
         //     .then(() => console.log('deleted all'))
+
+
+
+    //CREATE EVENT
+    // events.insertOne({ publisher: "yo", title: "event1", description: "desc1", location: "here", date: "12-12-2020" })
+
+    //Retrieve published events - get
+    const cursor = events.find()
+        cursor.toArray()
+        .then(event => event.forEach(event => console.log(event)))
+    //Retrieve last events
+    // 
+
     })

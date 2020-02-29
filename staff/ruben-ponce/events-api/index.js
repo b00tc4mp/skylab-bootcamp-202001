@@ -4,16 +4,17 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, createEvent, retrieveEvents } = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
+const { jwtVerifierMidWare } = require('./mid-wares')
 const { database } = require('./data')
 
 database.connect(MONGODB_URL)
-    .then(() => {        
+    .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
             format: winston.format.json(),
@@ -21,32 +22,36 @@ database.connect(MONGODB_URL)
                 new winston.transports.File({ filename: 'server.log' })
             ]
         })
-        
+
         if (env !== 'production') {
             logger.add(new winston.transports.Console({
                 format: winston.format.simple()
             }))
         }
-        
+
         const jsonBodyParser = bodyParser.json()
-        
+
         const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
-        
+
         const app = express()
-        
+
         app.use(morgan('combined', { stream: accessLogStream }))
-        
+
         app.post('/users', jsonBodyParser, registerUser)
-        
+
         app.post('/users/auth', jsonBodyParser, authenticateUser)
-        
-        app.get('/users', retrieveUser)
-        
+
+        app.get('/users', jwtVerifierMidWare, retrieveUser)
+
+        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+
+        app.get('/events', jwtVerifierMidWare, retrieveEvents)
+
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
-        
+
         process.on('SIGINT', () => {
             logger.info('server abruptly stopped')
-        
+
             process.exit(0)
         })
     })

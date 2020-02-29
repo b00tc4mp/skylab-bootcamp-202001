@@ -1,18 +1,38 @@
 const { retrieveUser } = require('../logic')
-const atob = require('atob')
+const { NotFoundError, NotAllowedError } = require('../errors')
 
 module.exports = (req, res) => {
-    
-    const  { headers: {authorization} } = req
-    const [, payload] = authorization.split('.')
-    const sub = JSON.parse(atob(payload))
-    req.sub = sub.sub
+    const { payload: { sub: id } } = req
 
-    try{
-        retrieveUser(req.sub)
-            .then(user => res.status(200).json(user))
-    }catch ({message}){
-        res.status(401).json({error:message})
+    try {
+        retrieveUser(id)
+            .then(user =>
+                res.status(200).json(user)
+            )
+            .catch(({ message }) =>
+                res
+                    .status(401)
+                    .json({
+                        error: message
+                    })
+            )
+    } catch (error) {
+        let status = 400
+
+        switch (true) {
+            case error instanceof NotFoundError:
+                status = 404 // not found
+                break
+            case error instanceof NotAllowedError:
+                status = 403 // forbidden
+        }
+
+        const { message } = error
+
+        res
+            .status(status)
+            .json({
+                error: message
+            })
     }
-
 }

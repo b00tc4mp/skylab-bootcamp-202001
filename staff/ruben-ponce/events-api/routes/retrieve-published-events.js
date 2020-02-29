@@ -1,16 +1,15 @@
-const { authenticateUser } = require('../logic')
-const jwt = require('jsonwebtoken')
-const { env: { JWT_SECRET,  JWT_EXP } } = process
+const { retrieveEvents } = require('../logic')
 
 module.exports = (req, res) => {
-    const { body: { email, password } } = req
+    
+    const { payload: { sub: id } } = req
 
     try {
-        authenticateUser(email, password)
-            .then(id => {
-                const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: JWT_EXP })
+        
+        retrieveEvents(id)
+            .then(event => {
 
-                res.status(200).json({ token })
+                res.status(200).json(event)
             })
             .catch(({ message }) =>
                 res

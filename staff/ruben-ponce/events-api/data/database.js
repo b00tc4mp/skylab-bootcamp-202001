@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 let client, db
 
@@ -13,11 +13,10 @@ module.exports = {
     },
     collection(name) {
         return db.collection(name)
-        //client.db().collection(name)
     },
     disconnect(){
         return client.close()
-    }
-
+    },
+    ObjectId
 }
 
