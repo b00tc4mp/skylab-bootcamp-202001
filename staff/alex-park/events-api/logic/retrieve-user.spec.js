@@ -1,57 +1,47 @@
 require('dotenv').config()
-const { retrieveUser, authenticateUser } = require('.')
+
+const { env: { TEST_MONGODB_URL } } = process
+const { database, models: { User } } = require('../data')
 const { expect } = require('chai')
-const { NotFoundError, NotAllowedError } = require('../errors')
+const { random } = Math
+const retrieveUser = require('./retrieve-user')
 
 describe('retrieveUser', () => {
-    let id, name, surname, email
-    beforeEach(async () => {
-        name = 'Alex'
-        surname = 'Park'
-        email = 'pepitazo@gmail.com'
-        password = '123'
-        id = await authenticateUser(email, password)
+    before(() =>
+        database.connect(TEST_MONGODB_URL)
+            .then(() => users = database.collection('users'))
+    )
+
+    let name, surname, email, password, users
+
+    beforeEach(() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
     })
 
-    it('should return the user on a successful user retrieve', () => {
-        retrieveUser(id)
-            .then(user => {
-                expect(user.name === name).to.be.true
-                expect(user.surname === surname).to.be.true
-                expect(user.email === email).to.be.true
-            })
+    describe('when user already exists', () => {
+        let id
+
+        beforeEach(() =>
+            users.insertOne(new User({ name, surname, email, password }))
+                .then(({ insertedId }) => id = insertedId.toString())
+        )
+
+        it('should succeed on correct and valid and right data', () =>
+            retrieveUser(id)
+                .then(user => {
+                    expect(user.constructor).to.equal(Object)
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.be.undefined
+                })
+        )
     })
 
-    it('should throw a NotFoundError on a failed user retrieval', () => {
-        authenticateUser(email, password)
-            .catch(error => {
-                // expect(() => retrieveUser(error)).to.throw(NotFoundError, 'user has not been retrieved')
-                expect(error.message === 'user has not been retrieved').to.be.true
-                expect(error.status === 404).to.be.true
-                expect(error instanceof NotFoundError).to.be.true
-            })
-    })
+    // TODO more happies and unhappies
 
-    it('should fail with a NotAllowedError on a deactivated user', () => {
-        authenticateUser('pepitazo10@gmail.com', '123')
-            .then(id =>
-                expect(() => retrieveUser(id)).to.throw(NotAllowedError, `user with id ${id} is deactivated`)
-            )
-    })
-
-    it('should fail on non-string or invalid token', () => {
-
-        id = Boolean(true)
-        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
-
-        id = Number(5)
-        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
-
-        id = Array(1, 2, 3)
-        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
-
-        id = ''
-        expect(() => retrieveUser(id)).to.throw(Error, `id is empty`)
-
-    })
+    after(() => database.disconnect())
 })
