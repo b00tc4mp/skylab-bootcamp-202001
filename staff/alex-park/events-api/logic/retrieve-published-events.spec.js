@@ -4,7 +4,6 @@ const { env: { TEST_MONGODB_URL } } = process
 const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
-const createEvent = require('./create-event')
 const retrievePublishedEvents = require('./retrieve-published-events')
 
 describe('retrievePublishedEvents', () => {
@@ -31,7 +30,24 @@ describe('retrievePublishedEvents', () => {
 
     describe('when no events have been published', () => {
         let id
+        beforeEach(() =>
+            users.insertOne(new User({ name, surname, email, password }))
+                .then(({ insertedId }) => id = insertedId.toString())
+        )
 
+        it('should return a message when no events are found on that user', () =>
+            retrievePublishedEvents(id)
+                .then(message => {
+                    expect(message.toString()).to.equal('No events published yet')
+                    expect(message).to.be.a('string')
+                })
+        )
+
+        afterEach(() => users.deleteMany({}))
+    })
+
+    describe('when at least one event has been published', () => {
+        let id
         beforeEach(() =>
             users.insertOne(new User({ name, surname, email, password }))
                 .then(({ insertedId }) => id = insertedId.toString())
@@ -39,7 +55,8 @@ describe('retrievePublishedEvents', () => {
                 .then(results => users.updateOne({ _id: ObjectId(id) }, { $push: { publishedEvents: results.insertedId } }))
         )
 
-        it('should return a message when no events are found on that user', () =>
+
+        it('should successfuly retrieve all events published by the user', () =>
             retrievePublishedEvents(id)
                 .then(events => {
                     expect(events[0]).to.exist
@@ -50,13 +67,14 @@ describe('retrievePublishedEvents', () => {
                     expect(events[0].publisher.toString()).to.equal(id)
                 })
         )
+
+        afterEach(() => users.deleteMany({}))
+
     })
 
-    describe('when at least one event was published', () => {
-
+    after(() => {
+        events.deleteMany({})
+            .then(() => users.deleteMany({}))
+            .then(() => database.disconnect())
     })
-
-    // TODO more happies and unhappies
-
-    after(() => database.disconnect())
 })

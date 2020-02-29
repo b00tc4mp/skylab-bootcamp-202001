@@ -4,7 +4,7 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents } = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -44,6 +44,8 @@ database.connect(MONGODB_URL)
         app.get('/users', jwtVerifierMidWare, retrieveUser)
 
         app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+
+        app.get('/users/:id/published-events', jwtVerifierMidWare, retrievePublishedEvents)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
