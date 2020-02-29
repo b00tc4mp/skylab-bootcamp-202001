@@ -4,7 +4,7 @@ const { env: { JWT_SECRET, JWT_EXP: expiration } } = process
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req
-
+    debugger
     try {
         authenticateUser(email, password)
             .then(id => {

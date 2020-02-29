@@ -6,5 +6,7 @@ module.exports = class User extends Model {
         super(data, user)
 
         this.created = new Date
+        // this.publishedEvents = new Array
+        // this.subscribedEvents = []
     }
 }

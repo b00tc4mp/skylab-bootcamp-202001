@@ -5,5 +5,5 @@ module.exports = {
     description: String,
     date: Date,
     location: String,
-    pusblisher: ObjectId
+    publisher: ObjectId,
 }

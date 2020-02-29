@@ -4,7 +4,7 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser } = require('./routes')
+
 const { jwtValidationMidWare } = require('./mid-wares')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
@@ -12,6 +12,16 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { database } = require('./data')
+const { registerUser,
+    authenticateUser,
+    retrieveUser,
+    createEvent,
+    retrievePublishedEvents,
+    retrieveLastEvents,
+    subscribeEvent,
+    retrieveSubscribedEvents,
+    updateEvent,
+    deleteEvent } = require('./routes')
 
 database.connect(MONGODB_URL)
     .then(() => {
@@ -43,11 +53,26 @@ database.connect(MONGODB_URL)
 
         app.post('/users/auth', jsonBodyParser, authenticateUser)
 
+        app.post('/users/:id/events', [jwtValidationMidWare, jsonBodyParser], createEvent)
 
-        app.listen(port, () => logger.info(`server ${name} ${version} bergas comidas por Lisandro ${port}`))
+        app.get('/users/:id/events', jwtValidationMidWare, retrievePublishedEvents)
+
+        app.get('/users/:id/subscribed-events', jwtValidationMidWare, retrieveSubscribedEvents)
+
+        app.patch('/users/:id/events', [jwtValidationMidWare, jsonBodyParser], subscribeEvent)
+
+        app.patch('/events/:id', [jwtValidationMidWare, jsonBodyParser], updateEvent)
+
+        app.delete('/users/:id/events/:eid', jwtValidationMidWare, deleteEvent)
+
+        app.get('/events', retrieveLastEvents)
+
+
+
+        app.listen(port, () => logger.info(`server ${name} ${version} started on port ${port}`))
 
         process.on('SIGINT', () => {
-            logger.info('lisandro come bergas')
+            logger.info('server abrutly stopped')
 
             process.exit(0)
         })
