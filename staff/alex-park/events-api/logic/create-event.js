@@ -9,7 +9,9 @@ module.exports = (publisher, title, description, location, date) => {
     validate.type(date, 'date', Date)
 
     const events = database.collection('events')
+    const users = database.collection('users')
 
     return events.insertOne(new Event({ publisher: ObjectId(publisher), title, description, location, date }))
+        .then(results => users.updateOne({ _id: ObjectId(publisher) }, { $push: { publishedEvents: results.insertedId } }))
         .then(() => { })
 }
