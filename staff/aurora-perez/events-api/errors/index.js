@@ -1,4 +1,5 @@
 module.exports = {
+    NotFoundError: require('./not-found-error'),
     NotAllowedError: require('./not-allowed-error'),
-    NotFoundError: require('./not-found-error')
+    ContentError: require('./content-error')
 }

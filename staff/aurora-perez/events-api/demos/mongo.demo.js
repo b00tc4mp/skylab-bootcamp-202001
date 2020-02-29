@@ -40,8 +40,10 @@ client.connect()
         // READ
 
         /*const cursor = users.find()
+
             // cursor.toArray()
             //     .then(users => users.forEach(user => console.log(user)))
+
             // cursor.next()
             //     .then(() => cursor.hasNext())
             //     .then(hasNext => console.log(hasNext))
@@ -65,6 +67,7 @@ client.connect()
             //     .then(user => console.log(user))
             //     .then(() => cursor.hasNext())
             //     .then(hasNext => console.log(hasNext))
+
             ; (function print() {
                 cursor
                     .hasNext()

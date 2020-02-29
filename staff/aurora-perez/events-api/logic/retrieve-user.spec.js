@@ -1,97 +1,47 @@
-const { retrieveUser } = require('.')
-const { expect } = require('chai')
-const { users } = require('../data')
-const { NotFoundError, NotAllowedError } = require('../errors')
+require('dotenv').config()
 
-const fs = require('fs').promises
-const path = require('path')
-const uuid = require('uuid/v4')
+const { env: { TEST_MONGODB_URL } } = process
+const { database, models: { User } } = require('../data')
+const { expect } = require('chai')
+const { random } = Math
+const retrieveUser = require('./retrieve-user')
 
 describe('retrieveUser', () => {
-    let name, surname, email, password
+    before(() =>
+        database.connect(TEST_MONGODB_URL)
+            .then(() => users = database.collection('users'))
+    )
+
+    let name, surname, email, password, users
 
     beforeEach(() => {
-        name = 'name-' + Math.random()
-        surname = 'surname-' + Math.random()
-        email = Math.random() +'@mail.com'
-        password = 'password-' + Math.random()
-        id =  uuid()
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
     })
 
-    describe('when user exists', () => {
-        describe('when user is not deactivated', ()=>{
-            beforeEach(() => {
+    describe('when user already exists', () => {
+        let id
 
-                const user = { id, name, surname, email, password, created: new Date }  
+        beforeEach(() =>
+            users.insertOne(new User({ name, surname, email, password }))
+                .then(({ insertedId }) => id = insertedId.toString())
+        )
 
-                users.push(user)
-
-                return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
-            })
-
-            it('should succeed on valid id, returning the user', ()=> {
-                return retrieveUser(id)
+        it('should succeed on correct and valid and right data', () =>
+            retrieveUser(id)
                 .then(user => {
-                    expect(user).to.be.a('object')
-                    expect(user.name).to.be.equal(name)
-                    expect(user.surname).to.be.equal(surname)
-                    expect(user.email).to.be.equal(email)
+                    expect(user.constructor).to.equal(Object)
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.be.undefined
                 })
-            })
-
-
-
-        })
-
-        describe('when user is deactivated', () => {
-            beforeEach(() => {
-
-                const user = { id, name, surname, email, password, created: new Date, deactivated: true }  
-
-                users.push(user)
-
-                return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 4))
-            })
-
-            it('should throw not-allowed-error', ()=>{
-                expect( ()=> {
-                    retrieveUser(id)
-                }).to.throw(NotAllowedError, `user with id ${id} is deactivated`)
-                
-            })
-
-        })
-
+        )
     })
 
-    describe('when user does not exist', () => {
-        it('should fail throwing not-found-error', ()=> {
-            expect( ()=> {
-                    retrieveUser(id)
-            }).to.throw(NotFoundError, `user with id ${id} does not exists`)
-        })
-    })
+    // TODO more happies and unhappies
 
-    it('should fail on non-string or empty id', () => {
-        id=1
-        expect( ()=> {
-            retrieveUser(id)
-        }).to.throw(TypeError, `id ${id} is not a string`)
-
-        id = true
-        expect( ()=> {
-            retrieveUser(id)
-        }).to.throw(TypeError, `id ${id} is not a string`)
-
-        id = {}
-        expect( ()=> {
-            retrieveUser(id)
-        }).to.throw(TypeError, `id ${id} is not a string`)
-
-        id = ''
-        expect( ()=> {
-            retrieveUser(id)
-        }).to.throw(Error, `id is empty`)
-    })
-
+    after(() => database.disconnect())
 })
