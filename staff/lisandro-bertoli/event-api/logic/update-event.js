@@ -15,13 +15,11 @@ module.exports = (userId, eventId, updates) => {
     for (key in updates) {
         if (!(validKeys.includes(key))) throw new Error(`invalid field ${field}`)
         if (key !== '') {
-            approvedUpdates.key = updates[key]
+            approvedUpdates[key] = updates[key]
         }
     }
 
-
-
-
+    debugger
 
 
     userId = ObjectId(userId)
@@ -29,5 +27,5 @@ module.exports = (userId, eventId, updates) => {
 
     const events = database.collection('events')
 
-    return events.updateOne({ _id: eventId, published: userId }, { $set: { ...approvedUpdates } })
+    return events.updateOne({ _id: eventId, publisher: userId }, { $set: approvedUpdates })
 }
