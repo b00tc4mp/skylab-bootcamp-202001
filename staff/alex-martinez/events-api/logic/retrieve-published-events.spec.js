@@ -4,9 +4,9 @@ const { env: { TEST_MONGODB_URL } } = process
 const { database, models: { User } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
-const authenticateUser = require('./authenticate-user')
+const retrievePublishedEvents = require('./retrieve-published-events')
 
-describe('authenticateUser', () => {
+describe('retrievePublishedEvents', () => {
     before(() =>
         database.connect(TEST_MONGODB_URL)
             .then(() => users = database.collection('users'))
@@ -22,19 +22,21 @@ describe('authenticateUser', () => {
     })
 
     describe('when user already exists', () => {
-        let _id
+        let id
 
         beforeEach(() =>
             users.insertOne(new User({ name, surname, email, password }))
-                .then(({ insertedId }) => _id = insertedId)
+                .then(({ insertedId }) => id = insertedId.toString())
         )
 
-        it('should succeed on correct and valid and right credentials', () =>
-            authenticateUser(email, password)
-                .then(id => {
-                    expect(id).to.be.a('string')
-                    expect(id.length).to.be.greaterThan(0)
-                    expect(id).to.equal(_id.toString())
+        it('should succeed on correct and valid and right data', () =>
+            retrieveUser(id)
+                .then(user => {
+                    expect(user.constructor).to.equal(Object)
+                    expect(user.name).to.equal(name)
+                    expect(user.surname).to.equal(surname)
+                    expect(user.email).to.equal(email)
+                    expect(user.password).to.be.undefined
                 })
         )
     })

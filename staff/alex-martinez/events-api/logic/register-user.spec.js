@@ -1,27 +1,47 @@
-// TODO
-const registerUser  = require('./register-user')
-const {expect} = require('chai')
+require('dotenv').config()
+
+const { expect } = require('chai')
+const { random } = Math
+const { database, database: { ObjectId } } = require('../data')
+const { registerUser } = require('../logic')
+
+const { env: { TEST_MONGODB_URL } } = process
 
 describe('registerUser', () => {
-    let name, surname, email, password
+    let name, surname, email, password, users
 
-    beforeEach(() => {
-        name = 'name-' + Math.random()
-        surname = 'surname-' + Math.random()
-        email =  'a@mail.com' 
-        password = 'password-' + Math.random()
-    })
-
-    it('should succeed on a new user', () => 
-        registerUser(name,surname,email,password)
-        .then(response =>{
-            expect(response).to.be.an('undefined')
-        })
+    before(() =>
+        database.connect(TEST_MONGODB_URL)
+            .then(() => users = database.collection('users'))
     )
 
-
-    describe('when user already exists', () => {
-    
+    beforeEach(() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
     })
 
+    it('should succeed on correct user data', () =>
+        registerUser(name, surname, email, password)
+            .then(result => {
+                expect(result).not.to.exist
+                expect(result).to.be.undefined
+
+                return users.findOne({ email })
+            })
+            .then(user => {
+                expect(user).to.exist
+                expect(user._id).to.be.instanceOf(ObjectId)
+                expect(user.name).to.equal(name)
+                expect(user.surname).to.equal(surname)
+                expect(user.email).to.equal(email)
+                expect(user.password).to.equal(password) // TODO encrypt this field!
+                expect(user.created).to.be.instanceOf(Date)
+            })
+    )
+
+    // TODO unhappy paths and other happies if exist
+
+    after(() => database.disconnect())
 })

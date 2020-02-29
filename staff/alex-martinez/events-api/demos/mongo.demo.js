@@ -86,14 +86,6 @@ client.connect()
             .then(user => console.log(user))
 
         // UPDATE?
-        users.updateOne({ name: 'Menga', surname: ''},{$set: {name: 'Erre'}},{ upsert: true })
-            .then(result => { 
-                const { upsertedId: id } = result
-                const idUpdated = id._id
-                return users.findOne({ _id: idUpdated})
-            })
-            .then(user => console.log(user))
-
 
         // DELETE?
     })
