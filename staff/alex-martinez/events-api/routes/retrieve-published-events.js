@@ -10,11 +10,7 @@ module.exports = (req, res) => {
                 res.status(200).json(events)
             )
             .catch(({ message }) =>
-                res
-                    .status(404)
-                    .json({
-                        error: message
-                    })
+                res.status(404).json({error: message})
             )
     } catch (error) {
         let status = 400
@@ -24,10 +20,6 @@ module.exports = (req, res) => {
 
         const { message } = error
 
-        res
-            .status(status)
-            .json({
-                error: message
-            })
+        res.status(status).json({error: message})
     }
 }
