@@ -19,7 +19,13 @@ module.exports = (req, res) => {
     } catch (error) {
         let status = 400
 
-        if (error instanceof TypeError) status = 422
+        switch (true) {
+            case error instanceof ContentError:
+                status = 401
+                break
+            case error instanceof TypeError:
+                status = 406 //not acceptable
+        }
 
         const { message } = error
         res

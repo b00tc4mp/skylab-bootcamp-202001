@@ -42,14 +42,15 @@ describe('retrievePublishedEvents', () => {
     describe('when user has published events', () => {
         let eventId
 
-        beforeEach(() => {
+        beforeEach(() =>
             events.insertOne(new Event({ publisher: ObjectId(userId), title, description, date, location }))
                 .then(({ insertedId }) => eventId = insertedId.toString())
-        })
+        )
 
         it('should succeed on valid id', () =>
             retrievePublishedEvents(userId)
                 .then(events => {
+
                     expect(events.length).to.be.greaterThan(0)
 
                     events.forEach(event => {

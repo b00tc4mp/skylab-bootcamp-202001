@@ -27,9 +27,16 @@ module.exports = (req, res) => {
                     .status(status)
                     .json({ error: message })
             })
-    } catch ({ message }) {
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof TypeError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
         res
-            .status(400)
+            .status(status)
             .json({ error: message })
     }
 }

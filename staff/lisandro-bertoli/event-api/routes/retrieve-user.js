@@ -1,5 +1,5 @@
 const { retrieveUser } = require('../logic')
-const { NotAllowedError, NotFoundError } = require('../errors')
+const { NotAllowedError, NotFoundError, ContentError } = require('../errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
@@ -11,22 +11,29 @@ module.exports = (req, res) => {
                     .status(200)
                     .json(user)
             })
-            .catch(({ message }) => {
+            .catch(error => {
+                let status = 400
+                switch (true) {
+                    case error instanceof NotFoundError:
+                        status = 404
+                        break
+                    case error instanceof NotAllowedError:
+                        status = 403
+                        break
+                }
+
+                const { message } = error
+
                 res
-                    .status(401)
+                    .status(status)
                     .json({ error: message })
             })
     } catch (error) {
         let status = 400
 
-        switch (true) {
-            case error instanceof NotFoundError:
-                status = 404
-                break
-            case error instanceof NotAllowedError:
-                status = 403
-                break
-        }
+        if (error instanceof ContentError)
+            status = 401
+
         const { message } = error
         res
             .status(status)

@@ -20,21 +20,22 @@ describe('registerUser', () => {
 
     })
 
-    it('should succed no creating a new user, no return value expected', () => {
-        debugger
+    it('should succed no creating a new user, no return value expected', () =>
         registerUser(name, surname, email, password)
-            .then(retVal => {
-                expect(retVal).to.be.undefined
+            .then(retVal => expect(retVal).to.be.undefined)
+            .then(() => users.findOne({ email }))
+            .then(user => {
 
-                expect(user.name).to.be.equal(name)
-                expect(user.username).to.be.equal(username)
-                expect(user.email).to.be.equal(email)
-                expect(user.password).to.be.equal(password)
+                expect(user.name).to.equal(name)
+                expect(user.email).to.equal(email)
+                expect(user.email).to.equal(email)
+                expect(user.password).to.equal(password)
 
-                expect(user).to.have.property(created)
-                expect(user).to.have.property(id)
+                expect(user.created).to.exist
+                expect(user._id).to.exist
             })
-    })
+
+    )
 
     after(() => database.disconnect())
 })

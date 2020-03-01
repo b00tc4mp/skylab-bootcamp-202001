@@ -1,5 +1,5 @@
 const { retrieveSubscribedEvents } = require('../logic')
-
+const { ContentError } = require('../errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
@@ -19,7 +19,13 @@ module.exports = (req, res) => {
     } catch (error) {
         let status = 400
 
-        if (error instanceof TypeError) status = 422
+        switch (true) {
+            case error instanceof ContentError:
+                status = 401
+                break
+            case error instanceof TypeError:
+                status = 406 //not acceptable
+        }
 
         const { message } = error
         res

@@ -18,7 +18,7 @@ module.exports = (req, res) => {
     } catch (error) {
         let status = 400
 
-        if (error instanceof TypeError) status = 422
+        if (error instanceof TypeError) status = 406 //Not Acceptable
 
         const { message } = error
         res

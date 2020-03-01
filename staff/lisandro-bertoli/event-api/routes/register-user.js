@@ -1,4 +1,5 @@
 const { registerUser } = require('../logic')
+const { ContentError, NotallowedError } = require('../errors')
 
 module.exports = (req, res) => {
     const { body: { name, surname, email, password } } = req
@@ -16,10 +17,15 @@ module.exports = (req, res) => {
                     .status(409)
                     .json({ error: message })
             })
-    } catch ({ message }) {
+    } catch (error) {
+        let status = 400
 
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
         res
-            .status(400)
+            .status(status)
             .json({ error: message })
     }
 }

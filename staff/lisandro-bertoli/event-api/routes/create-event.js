@@ -1,4 +1,6 @@
 const { createEvent } = require('../logic')
+const { ContentError } = require('../errors')
+
 
 module.exports = (req, res) => {
     const { body: { title, location, date, description }, params: { id } } = req
@@ -13,9 +15,16 @@ module.exports = (req, res) => {
                     .status(409)
                     .json({ error: message })
             })
-    } catch ({ message }) {
+    } catch (error) {
+        let status = 404
+
+        if (error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
         res
-            .status(400)
+            .status(status)
             .json({ error: message })
     }
 }

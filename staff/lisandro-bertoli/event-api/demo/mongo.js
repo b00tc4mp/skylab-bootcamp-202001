@@ -23,5 +23,5 @@ MongoClient.connect('mongodb://localhost:27017', { useUnifiedTopology: true })
             .then(collection => {
                 collection.insertOne({ location: 'outer-space', date: 'when possible' })
             })
-            .then(value => { debugger })
+            .then(value => { })
     })

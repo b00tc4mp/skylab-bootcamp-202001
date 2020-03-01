@@ -1,10 +1,9 @@
 const { validate } = require('../utils')
 const { database, database: { ObjectId }, models: { Event } } = require('../data')
-const { NotFoundError, NotAllowedError } = require('../errors')
+const { ContentError, NotAllowedError } = require('../errors')
 
 
 module.exports = (userId, eventId, updates) => {
-
     validate.string(userId, 'userId')
     validate.string(eventId, 'eventId')
 
@@ -13,14 +12,14 @@ module.exports = (userId, eventId, updates) => {
     let approvedUpdates = {}
 
     for (key in updates) {
-        if (!(validKeys.includes(key))) throw new Error(`invalid field ${field}`)
-        if (key !== '') {
+        if (!(validKeys.includes(key))) throw new NotAllowedError(`invalid field ${key}`)
+
+        if (updates[key] !== '') {
             approvedUpdates[key] = updates[key]
+        } else {
+            throw new ContentError(`field ${key} is empty`)
         }
     }
-
-    debugger
-
 
     userId = ObjectId(userId)
     eventId = ObjectId(eventId)

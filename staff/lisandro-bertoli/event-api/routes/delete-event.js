@@ -1,7 +1,7 @@
 const { deleteEvent } = require('../logic')
+const { ContentError, NotAllowedError } = require('../errors')
 
 module.exports = (req, res) => {
-    debugger
     const { params: { eid: eventId, id: userId } } = req
 
     try {
@@ -12,16 +12,26 @@ module.exports = (req, res) => {
                     .end()
             })
             .catch(error => {
+                let status = 404
+
+                if (error instanceof NotAllowedError)
+                    status = 403
 
                 const { message } = error
+
                 res
-                    .status(404)
+                    .status(status)
                     .json({ message })
             })
     } catch (error) {
+        let status = 404
+
+        if (error instanceof ContentError)
+            status = 406 // not acceptable
+
         const { message } = error
         res
-            .status(404)
+            .status(status)
             .json({ message })
     }
 }
