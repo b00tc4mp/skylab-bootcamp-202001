@@ -49,6 +49,8 @@ database.connect(MONGODB_URL)
 
         app.get('/lastevents', jwtVerifierMidWare, retrieveLastEvents)
 
+        app.patch('/subscribe', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
+
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
         process.on('SIGINT', () => {
