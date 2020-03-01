@@ -37,7 +37,7 @@ describe('retrieveLastEvents', () => {
                 .then(results => users.updateOne({ _id: ObjectId(id) }, { $push: { publishedEvents: results.insertedId } }))
         )
 
-        it('should successfuly retrieve all events later than now', () =>
+        it('should successfuly retrieve events later than now', () =>
             retrieveLastEvents()
                 .then(events => {
                     expect(events[0]).to.exist
@@ -49,13 +49,22 @@ describe('retrieveLastEvents', () => {
                 })
         )
 
+        it('should retrieve the array of events, regardless of its length', () => 
+            events.insertOne(new Event({ publisher: ObjectId(id), title: `${title}-2`, description: `${description}-2`, location: `${location}-2`, date: new Date('December 25, 2099 21:00:00') }))
+                .then(() => retrieveLastEvents())
+                .then(events => {
+                    expect(events.length).to.equal(2)
+                    expect(events).to.be.instanceOf(Array)
+                })
+        )
+
         afterEach(() => users.deleteMany({}))
 
     })
 
-    after(() => {
+    after(() => 
         events.deleteMany({})
             .then(() => users.deleteMany({}))
             .then(() => database.disconnect())
-    })
+    )
 })
