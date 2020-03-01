@@ -1,4 +1,4 @@
-const { retrievePublishedEvents } = require('../logic')
+const { retrieveLastEvents } = require('../logic')
 
 module.exports = (req, res) => {
     
@@ -6,7 +6,7 @@ module.exports = (req, res) => {
 
     try {
         
-        retrievePublishedEvents(id)
+        retrieveLastEvents()
             .then(event => {
 
                 res.status(200).json(event)

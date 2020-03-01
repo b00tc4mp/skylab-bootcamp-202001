@@ -14,21 +14,20 @@ const { NotAllowedError, NotFoundError } = require('../errors')
  */
 
 module.exports = id => {
-    
     validate.string(id, 'id')
     
     const _id = ObjectId(id)
     
     const users = database.collection('users')
     const events = database.collection('events')
-    const cursor = events.find()
-    return users.findOne({ _id })
+
+    return users.findOne({ _id }, {publisher: id})
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
-
+        
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
-
-            return cursor.toArray()
+        
+            return events.find({publisher: ObjectId(id)}).toArray()
                 .then(event => {
                     return event
                 })  

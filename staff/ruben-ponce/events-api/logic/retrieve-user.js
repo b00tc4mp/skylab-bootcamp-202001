@@ -15,7 +15,7 @@ module.exports = id => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
-
+            debugger
             return users.updateOne({ _id }, { $set: { retrieved: new Date } })
                 .then(() => {
                     const { name, surname, email } = user

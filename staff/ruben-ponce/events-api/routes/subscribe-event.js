@@ -1,12 +1,12 @@
-const { retrievePublishedEvents } = require('../logic')
+const { subscribeEvent } = require('../logic')
 
 module.exports = (req, res) => {
     
-    const { payload: { sub: id } } = req
+    const { payload: { sub: userId }, body: { event: eventId} } = req
 
     try {
         
-        retrievePublishedEvents(id)
+        subscribeEvent(userId, eventId)
             .then(event => {
 
                 res.status(200).json(event)

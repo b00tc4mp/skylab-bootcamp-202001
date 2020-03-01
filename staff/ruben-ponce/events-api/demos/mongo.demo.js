@@ -57,12 +57,12 @@ client.connect()
 
 
     //CREATE EVENT
-    // events.insertOne({ publisher: "yo", title: "event1", description: "desc1", location: "here", date: "12-12-2020" })
+    // events.insertOne({ publisher: "yo", title: "event1", description: "desc1", location: "here", date: 3 })
 
     //Retrieve published events - get
-    const cursor = events.find()
-        cursor.toArray()
-        .then(event => event.forEach(event => console.log(event)))
+    // const cursor = events.find()
+    //     cursor.toArray()
+    //     .then(event => event.forEach(event => console.log(event)))
     //Retrieve last events
     // 
 
