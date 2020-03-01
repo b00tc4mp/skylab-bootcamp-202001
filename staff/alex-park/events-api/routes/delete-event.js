@@ -1,0 +1,1 @@
+const { deleteEvent } = require('../logic')
