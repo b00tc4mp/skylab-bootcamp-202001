@@ -43,6 +43,8 @@ describe('retrieveUser', () => {
 
     // TODO more happies and unhappies
 
-    after(() => users.deleteMany({}))
-        .then(()=> database.disconnect())
+    after(() =>
+        users.deleteMany({})
+            .then(() => database.disconnect())
+    )
 })

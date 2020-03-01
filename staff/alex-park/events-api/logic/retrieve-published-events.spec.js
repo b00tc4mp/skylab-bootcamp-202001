@@ -72,9 +72,9 @@ describe('retrievePublishedEvents', () => {
 
     })
 
-    after(() => {
+    after(() => 
         events.deleteMany({})
             .then(() => users.deleteMany({}))
             .then(() => database.disconnect())
-    })
+    )
 })
