@@ -1,25 +1,36 @@
-const {validate} = require('../utils')
-const {users} = require('../data')
+const { validate } = require('../utils')
+const { database } = require('../data')
+const { NotAllowedError } = require('../errors')
 
-const fs = require('fs').promises
-const path = require('path')
-const jwt = require('jsonwebtoken')
-
-const { env: { JWT_SECRET, JWT_EXP } } = process
+/**
+ * Checks user credentials against the storage
+ * 
+ * @param {string} email user's unique e-mail
+ * @param {string} password user's password
+ * 
+ * @returns {Promise<string>} user id from storage
+ * 
+ * @throws {ContentError} if user data does not follow the format and content rules
+ * @throws {TypeError} if user data does not have the correct type
+ * @throws {NotAllowedError} on wrong credentials
+ */
 
 module.exports = (email, password) => {
   validate.string(email, 'email')
   validate.email(email)
   validate.string(password, 'password')
-  
-  const user = users.find(user => user.email === email && user.password === password)
 
-  if (!user) throw new Error('wrong credentials')
+  const users = database.collection('users')
 
-  const token = jwt.sign({ sub: user.id }, JWT_SECRET, { expiresIn: JWT_EXP})
+  return users.findOne({email, password})
+    .then(user => {
 
-  user.authenticated = new Date
+      if (!user) throw new NotAllowedError(`wrong credentials`)
 
-  return fs.writeFile(path.join(__dirname, '../data/users.json'), JSON.stringify(users, null, 2))
-    .then(() => token)
+      const {_id} = user
+
+      return users.updateOne({_id}, {$set:{authenticated: new Date}})
+        .then(() => _id.toString())
+
+    })
 }

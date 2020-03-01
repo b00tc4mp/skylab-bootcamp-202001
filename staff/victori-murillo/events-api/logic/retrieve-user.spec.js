@@ -1,17 +1,50 @@
-const {users} = require('../data')
-const atob = require('atob')
-const jwt = require('jsonwebtoken')
-const { env: { SECRET } } = process
+require('dotenv').config()
 
-module.exports = token => {
-  jwt.verify(token, SECRET)
+const {env: {TEST_MONGODB_URL}} = process
+const {database, database: {ObjectId}, models: {User}} = require('../data')
+const {expect} = require('chai')
+const { random } = Math
+const retrieveUser = require('./retrieve-user')
 
-  let [,payload] = token.split('.')
-  let id = JSON.parse(atob(payload)).sub
-  
-  let user = users.find(user => user.id === id)
+describe('retrieveUser', () => {
 
-  if (!user) throw new Error('you have been deleted')
-  
-  return Promise.resolve({name: user.name, surname: user.surname, email: user.email})
-}
+  before(() =>
+    database.connect(TEST_MONGODB_URL)
+    .then(() => users = database.collection('users'))
+  )
+
+  let users, name, surname, email, password
+
+  beforeEach(() => {
+    name = `name-${random()}`
+    surname = `surname-${random()}`
+    email = `email-${random()}@mail.com`
+    password = `password-${random()}`
+  })
+
+  describe('when user already exists', () => {
+    let userId
+
+    beforeEach(() => 
+        users.insertOne(new User({name, surname, email, password}))
+        .then(({insertedId}) => userId = insertedId)
+    )
+
+    it('should retrieve the user', () =>
+        retrieveUser(userId.toString())
+        .then(user => {
+            expect(user).to.exist
+            expect(user.name).to.equal(name)
+            expect(user.surname).to.equal(surname)
+            expect(user.email).to.equal(email)
+        })
+    )
+
+    afterEach(() => users.deleteOne({userId}))
+
+  })
+
+
+  after(() => database.disconnect())
+
+})

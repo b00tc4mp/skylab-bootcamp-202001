@@ -1,4 +1,4 @@
 module.exports = {
-  users: require('./users'),
-  database: require('./database')
+  database: require('./database'),
+  models: require('./models')
 }
