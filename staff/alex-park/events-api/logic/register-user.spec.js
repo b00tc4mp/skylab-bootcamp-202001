@@ -43,5 +43,6 @@ describe('registerUser', () => {
 
     // TODO unhappy paths and other happies if exist
 
-    after(() => database.disconnect())
+    after(() => users.deleteMany({})
+    .then(() =>database.disconnect())
 })

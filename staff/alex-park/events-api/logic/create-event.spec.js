@@ -54,5 +54,7 @@ describe('createEvent', () => {
 
     // TODO more happies and unhappies
 
-    after(() => database.disconnect())
+    after(() => users.deleteMany({})
+        .then(() => events.deleteMany({}))
+        .then(() => database.disconnect()))
 })

@@ -38,8 +38,8 @@ describe('retrievePublishedEvents', () => {
         it('should return a message when no events are found on that user', () =>
             retrievePublishedEvents(id)
                 .then(message => {
-                    expect(message.toString()).to.equal('No events published yet')
-                    expect(message).to.be.a('string')
+                    expect(message.length === 0).to.be.true
+                    expect(message).to.be.instanceOf(Array)
                 })
         )
 

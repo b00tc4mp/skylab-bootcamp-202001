@@ -41,5 +41,6 @@ describe('authenticateUser', () => {
 
     // TODO more happies and unhappies
 
-    after(() => database.disconnect())
+    after(() => users.deleteMany({}))
+    .then(() =>database.disconnect())
 })
