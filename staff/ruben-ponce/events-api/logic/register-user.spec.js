@@ -1,59 +1,47 @@
-const { expect } = require('chai')
 require('dotenv').config()
-const { ObjectId } = require('mongodb')
+
+const { expect } = require('chai')
 const { random } = Math
-const { database } = require('../data')
-const { registerUser } = require('../logic')
+const mongoose = require('mongoose')
+const registerUser = require('./register-user')
+const { models: { User } } = require('../data')
 
-const { env: { MONGODB_URL }} = process
+const { env: { TEST_MONGODB_URL } } = process
 
+describe('registerUser', () => {
+    let name, surname, email, password
 
-describe('register', () => {
-    let name, surname, email, password, users
-    
-    before(() => {
-        database.connect(MONGODB_URL)
-            .then(() => users = database.collection('users'))
-    })
+    before(() =>
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    )
 
     beforeEach(() => {
-        name = 'rpc-' + random()
-        surname = 'rpc-' + random()
-        email = 'rpc@' + random() + '.com'
-        password = 'rpc-' + random()
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
     })
 
-    it('should succeed on new user', () => {
+    it('should succeed on correct user data', () =>
         registerUser(name, surname, email, password)
-            .then(response => {
-                expect(response).to.equal(undefined)
-            })
-            .then(() => {
-                return users.findOne({ email })
+            .then(result => {
+                expect(result).not.to.exist
+                expect(result).to.be.undefined
+
+                return User.findOne({ email })
             })
             .then(user => {
                 expect(user).to.exist
-                expect(user._id).to.be.instanceOf(ObjectId)
+                expect(user.id).to.be.a('string')
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
+                expect(user.password).to.equal(password) // TODO encrypt this field!
                 expect(user.created).to.be.instanceOf(Date)
             })
-    })
+    )
 
-    it('should fail if the email is already in use', () => {
-        registerUser(name, surname, email, password)
-            .then(() => { throw new Error('should not reach this point')})
-            .catch(error => {
-                expect(error).to.be.defined
-                expect(error).to.be.an('error')
-                expect(error).to.eql(new Error(`user with email ${email} already exists`))
-            })
-    })
+    // TODO unhappy paths and other happies if exist
 
-    after(() => {
-        database.disconnect()
-    })
-
+    after(() => mongoose.disconnect())
 })

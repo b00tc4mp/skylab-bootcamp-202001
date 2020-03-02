@@ -1,7 +1,7 @@
 const { retrieveSubscribedEvents } = require('../logic')
 
 module.exports = (req, res) => {
-    debugger
+    
     const { payload: { sub: id } } = req
 
     try {

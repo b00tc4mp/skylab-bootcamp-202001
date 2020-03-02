@@ -11,9 +11,10 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
-const { database } = require('./data')
+const mongoose = require('mongoose')
 
-database.connect(MONGODB_URL)
+
+mongoose.connect(MONGODB_URL)
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',

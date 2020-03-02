@@ -1,4 +1,4 @@
-const { database } = require('../data')
+const { models: { Event } } = require('../data')
 
 /**
  * Checks events
@@ -10,11 +10,6 @@ const { database } = require('../data')
 
 module.exports = () => {
     
-    const events = database.collection('events')
-    const cursor = events.find().sort({created: -1})
-    
-        return cursor.toArray()
-            .then(event => {
-                return event
-            })  
+    return Event.find().sort({created: -1})
+            .then(event => event)  
 }
