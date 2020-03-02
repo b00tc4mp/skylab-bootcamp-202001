@@ -32,7 +32,7 @@ describe('createEvent', () => {
         let id
 
         beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
+            users.insertOne(new User({ name, surname, email, password, created: new Date }))
                 .then(({ insertedId }) => id = insertedId.toString())
         )
 

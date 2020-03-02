@@ -25,7 +25,7 @@ describe('authenticateUser', () => {
         let _id
 
         beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
+            users.insertOne(new User({ name, surname, email, password, created: new Date }))
                 .then(({ insertedId }) => _id = insertedId)
         )
 

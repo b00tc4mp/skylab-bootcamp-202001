@@ -1,5 +1,5 @@
 const { validate } = require('../utils')
-const { database, models: { User } } = require('../data')
+const { models: { User } } = require('../data')
 const { NotAllowedError } = require('../errors')
 
 module.exports = (name, surname, email, password) => {
@@ -9,15 +9,12 @@ module.exports = (name, surname, email, password) => {
     validate.email(email)
     validate.string(password, 'password')
 
-    const users = database.collection('users')
+    return User.findOne({ email })
+    .then(user => {
+        if (user) throw new NotAllowedError(`user with email ${email} already exists`)
 
-    return users.findOne({ email })
-        .then(user => {
-            if (user) throw new NotAllowedError(`user with email ${email} already exists`)
+        user = new User({ name, surname, email, password, created: new Date })
 
-            user = new User({ name, surname, email, password })
-
-            return users.insertOne(user)
-        })
-        .then(() => { })
+        return user.save()
+    })
 }
