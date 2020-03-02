@@ -11,7 +11,6 @@ describe('authenticateUser', () => {
         database.connect(TEST_MONGODB_URL)
             .then(() => users = database.collection('users'))
     )
-
     let name, surname, email, password, users
 
     beforeEach(() => {
@@ -20,15 +19,13 @@ describe('authenticateUser', () => {
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
     })
-
+    
     describe('when user already exists', () => {
         let _id
-
         beforeEach(() =>
             users.insertOne(new User({ name, surname, email, password }))
                 .then(({ insertedId }) => _id = insertedId)
         )
-
         it('should succeed on correct and valid and right credentials', () =>
             authenticateUser(email, password)
                 .then(id => {
@@ -38,8 +35,8 @@ describe('authenticateUser', () => {
                 })
         )
     })
-
     // TODO more happies and unhappies
-
-    after(() => database.disconnect())
+    after(() => users.deleteMany({})
+    .then(() =>database.disconnect())
+    )
 })

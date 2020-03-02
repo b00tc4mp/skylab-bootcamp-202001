@@ -1,5 +1,4 @@
 require('dotenv').config()
-
 const { env: { TEST_MONGODB_URL } } = process
 const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
 const { expect } = require('chai')
@@ -14,9 +13,9 @@ describe('createEvent', () => {
                 events = database.collection('events')
             })
     )
-
     let name, surname, email, password, users, events, title, description, date, location
-
+    
+    
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -25,17 +24,16 @@ describe('createEvent', () => {
         title = `title-${random()}`
         description = `description-${random()}`
         date = new Date
+        
         location = `location-${random()}`
     })
-
     describe('when user already exists', () => {
         let id
-
         beforeEach(() =>
             users.insertOne(new User({ name, surname, email, password }))
                 .then(({ insertedId }) => id = insertedId.toString())
         )
-
+        
         it('should succeed on correct and valid and right data', () =>
             createEvent(id, title, description, location, date)
                 .then(() =>
@@ -51,8 +49,8 @@ describe('createEvent', () => {
                 })
         )
     })
-
     // TODO more happies and unhappies
-
-    after(() => database.disconnect())
+    after(() => users.deleteMany({})
+        .then(() => events.deleteMany({}))
+        .then(() => database.disconnect()))
 })

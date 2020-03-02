@@ -3,10 +3,9 @@ const { env: { TEST_MONGODB_URL } } = process
 const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
-const retrievePublishedEvents = require('./retrieve-published-events')
+const retrieveLastEvents = require('./retrieve-last-events')
 
-
-describe('retrievePublishedEvents', () => {
+describe('retrieveLastEvents', () => {
     before(() =>
         database.connect(TEST_MONGODB_URL)
             .then(() => {
@@ -14,8 +13,8 @@ describe('retrievePublishedEvents', () => {
                 events = database.collection('events')
             })
     )
-    let name, surname, email, password, users, events, title, description, date, location
     
+    let name, surname, email, password, users, events, title, description, date, location
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -23,27 +22,10 @@ describe('retrievePublishedEvents', () => {
         password = `password-${random()}`
         title = `title-${random()}`
         description = `description-${random()}`
-        date = new Date
+        date = new Date('December 25, 2099 20:00:00')
         location = `location-${random()}`
     })
-    
-    describe('when no events have been published', () => {
-        let id
-        beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
-                .then(({ insertedId }) => id = insertedId.toString())
-        )
-        it('should return a message when no events are found on that user', () =>
-            retrievePublishedEvents(id)
-                .then(message => {
-                    expect(message.length === 0).to.be.true
-                    expect(message).to.be.instanceOf(Array)
-                })
-        )
-        afterEach(() => users.deleteMany({}))
-    })
-
-    describe('when at least one event has been published', () => {
+    describe('when there are events to display', () => {
         let id
         beforeEach(() =>
             users.insertOne(new User({ name, surname, email, password }))
@@ -51,8 +33,8 @@ describe('retrievePublishedEvents', () => {
                 .then(() => events.insertOne(new Event({ publisher: ObjectId(id), title, description, location, date })))
                 .then(results => users.updateOne({ _id: ObjectId(id) }, { $push: { publishedEvents: results.insertedId } }))
         )
-        it('should successfuly retrieve all events published by the user', () =>
-            retrievePublishedEvents(id)
+        it('should successfuly retrieve events later than now', () =>
+            retrieveLastEvents()
                 .then(events => {
                     expect(events[0]).to.exist
                     expect(events[0].title).to.equal(title)
@@ -62,11 +44,19 @@ describe('retrievePublishedEvents', () => {
                     expect(events[0].publisher.toString()).to.equal(id)
                 })
         )
+        it('should retrieve the array of events, regardless of its length', () => 
+            events.insertOne(new Event({ publisher: ObjectId(id), title: `${title}-2`, description: `${description}-2`, location: `${location}-2`, date: new Date('December 25, 2099 21:00:00') }))
+                .then(() => retrieveLastEvents())
+                .then(events => {
+                    expect(events.length > 0).to.be.true
+                    expect(events).to.be.instanceOf(Array)
+                })
+        )
         afterEach(() => users.deleteMany({}))
     })
-    after(() => {
+    after(() => 
         events.deleteMany({})
             .then(() => users.deleteMany({}))
             .then(() => database.disconnect())
-    })
+    )
 })

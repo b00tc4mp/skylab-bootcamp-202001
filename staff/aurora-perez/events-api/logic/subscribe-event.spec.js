@@ -1,10 +1,12 @@
 require('dotenv').config()
+
 const { env: { TEST_MONGODB_URL } } = process
 const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
 const subscribeEvent = require('./subscribe-event')
-describe('retrievePublishedEvents', () => {
+
+describe('subscribeEvent', () => {
     before(() =>
         database.connect(TEST_MONGODB_URL)
             .then(() => {
@@ -12,7 +14,9 @@ describe('retrievePublishedEvents', () => {
                 events = database.collection('events')
             })
     )
+
     let name, surname, email, password, users, events, title, description, date, location
+    
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -32,9 +36,10 @@ describe('retrievePublishedEvents', () => {
                 .then(({ insertedId }) => eventId = insertedId.toString())
                 .then(eventId => users.updateOne({ _id: ObjectId(userId) }, { $push: { publishedEvents: ObjectId(eventId) } }))
         )
-        it('should succeed on an effective user subscription to an event', () =>
-            subscribeEvent(userId, eventId)
-                .then(result => {
+        it('should succeed on an effective user subscription to an event', () =>{
+        debugger
+            return subscribeEvent(userId, eventId)  
+                .then(result => { 
                     expect(result).to.be.undefined
                 })
                 .then(() => users.findOne({ _id: ObjectId(userId) }))
@@ -43,14 +48,14 @@ describe('retrievePublishedEvents', () => {
                     expect(user.subscribedEvents).to.be.instanceOf(Array)
                     expect(user.subscribedEvents[0].toString()).to.equal(eventId)
                 })
-                .then(()=> events.findOne({_id: ObjectId(eventId) }))
-                .then( event => {
+                .then(() => events.findOne({ _id: ObjectId(eventId) }))
+                .then(event => {
                     expect(event.subscribers).not.to.be.undefined
                     expect(event.subscribers).to.be.instanceOf(Array)
                     expect(event.subscribers[0].toString()).to.equal(userId)
                 })
-                .catch(() => { throw new Error('should not reach this point') })
-        )
+                .catch(({message}) => { console.log(message) })
+        })
         afterEach(() => users.deleteMany({}))
     })
     after(() => 
