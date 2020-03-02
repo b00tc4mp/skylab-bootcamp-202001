@@ -1,18 +1,69 @@
-const {database: db, database: {ObjectId}} = require('../data')
-const {validate} = require('../utils')
+const {database, database: {ObjectId}, models: {User, Event}} = require('../data')
+const {expect} = require('chai')
+const { env: { TEST_MONGODB_URL } } = process
+const {random} = Math
+const {subscribeEvent} = require('.')
 
-module.exports = (userId, eventId) => {
+describe('subscribeEvent', () => {
 
-  validate.string(userId, 'id')
-  validate.string(eventId, 'id')
+  before(() =>
+    database.connect(TEST_MONGODB_URL)
+    .then(() => {
+      const users = database.collection('users')
+      const events = database.collection('events')
+    })
+  )
 
-  const users = db.collection('users')
-  const events = db.collection('events')
+  let users, events, 
+  name, surname, email, password
+  publisher, title, description, location, date, subscribers,
+  eventId
 
-  return events.updateOne({_id: ObjectId(eventId)}, {$addToSet: {subscribers: ObjectId(userId)}} )
-  .then(() => {
-    return users.updateOne({_id: ObjectId(userId)}, {$addToSet: {subscribedEvents: ObjectId(eventId)}})
-    .then(() => {})
+  beforeEach(() => {
+    name = `name-${random()}`
+    surname = `surname-${random()}`
+    email = `email-${random()}@mail.com`
+    password = `password-${random()}`
   })
 
-}
+
+  describe('when user already exists', () => {
+
+    beforeEach(() => {
+      Promise.resolve()
+      .then(() => users.insertOne( new User({name, surname, email, password}) ))
+      .then(({insertedId}) => publisher = insertedId)
+      .then(() => {
+        publisher = random().toString()
+        title = `title-${random()}`
+        description = `description-${random()}`
+        location = `location-${random()}`
+        date = new Date()
+      })
+      .then(() => events.insertOne( new Event({publisher, title, description, location, date}) ))
+      .then(({insertedId}) => eventId = insertedId)
+    })
+
+    it('should succed on new subscribe event', () => {
+      return subscribeEvent(publisher,eventId)
+      .then(result => {
+        expect(result).to.be.undefined
+        expect(result).to.not.exist
+      })
+      .then(() => {
+        return users.findOne({subscribedEvents: {$in: [eventId]}})
+        .then(user => {
+          expect(user._id).to.equal(publisher)
+        })
+      })
+    })
+
+
+
+
+  })
+
+
+
+  
+})
