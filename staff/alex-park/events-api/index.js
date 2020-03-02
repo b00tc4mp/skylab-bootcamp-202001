@@ -65,7 +65,7 @@ database.connect(MONGODB_URL)
 
         app.get('/users/:id/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
 
-        app.delete('/users/:id/delete-event/:eventid?', [jwtVerifierMidWare, jsonBodyParser], deleteEvent)
+        //app.delete('/users/:id/delete-event/:eventid?', [jwtVerifierMidWare, jsonBodyParser], deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

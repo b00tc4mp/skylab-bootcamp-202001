@@ -7,7 +7,7 @@ module.exports = (userId, eventId) => {
 
     const users = database.collection('users'), events = database.collection('events')
     const _userId = ObjectId(userId), _eventId = ObjectId(eventId)
-    debugger
+    
     return users.findOne({ _id: _userId })
         .then(user => {
             if (typeof user.subscribedEvents !== 'undefined') {
