@@ -3,7 +3,7 @@ const { database, database: { ObjectId } } = require('../data')
 const { NotAllowedError } = require('../errors')
 
 module.exports = (userId, eventId, title, description, date, location) => {
-    debugger
+    
     validate.string(userId, 'userId')
     validate.string(eventId, 'eventId')
     if(title) validate.string(title, 'title')
@@ -13,7 +13,6 @@ module.exports = (userId, eventId, title, description, date, location) => {
 
     const users = database.collection('users')
     const events = database.collection('events')
-    debugger
     
     // return users.findOne({ _id: ObjectId(userId)})
     // .then(user => {
