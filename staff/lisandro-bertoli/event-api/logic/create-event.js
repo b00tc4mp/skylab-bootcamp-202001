@@ -1,6 +1,6 @@
 const { validate } = require('../utils')
-const { database, database: { ObjectId }, models: { Event } } = require('../data')
-const { ContentError } = require('../errors')
+const { models: { Event, User } } = require('../data')
+
 
 module.exports = (publisher, title, description, location, date) => {
     validate.string(publisher, 'publisher')
@@ -9,23 +9,23 @@ module.exports = (publisher, title, description, location, date) => {
     validate.string(location, 'location')
     validate.type(date, 'date', Date)
 
-    let _id
+    const event = new Event({ publisher, title, description, date, location })
 
-    try {
-        _id = ObjectId(publisher)
-
-    } catch ({ message }) {
-        throw new ContentError(`invalid id in token`)
-    }
-
-
-
-    const events = database.collection('events')
-    const users = database.collection('users')
-
-    return events.insertOne(new Event({ publisher: _id, title, description, location, date }))
-        .then(({ insertedId }) => {
-            users.updateOne({ _id }, { $push: { publishedEvents: insertedId } })
+    return event.save()
+        .then(({ _id }) => {
+            User.findById(publisher)
+                .then(user => {
+                    debugger
+                    user.publishedEvents.push(_id)
+                    user.save()
+                })
         })
         .then(() => { })
+
+
+    // return Event.insertOne(event)
+    //     .then(({ insertedId }) => {
+    //         users.updateOne({ _id }, { $push: { publishedEvents: insertedId } })
+    //     })
+    //     .then(() => { })
 }

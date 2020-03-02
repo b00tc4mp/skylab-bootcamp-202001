@@ -1,9 +1,8 @@
-const { database } = require('../data')
+const { models: { Event } } = require('../data')
+
 
 module.exports = () => {
-    const events = database.collection('events')
-
-    const cursor = events.find().sort({ created: -1 });
+    const cursor = Event.find().sort({ created: -1 });
 
     let eventsArray = []
 

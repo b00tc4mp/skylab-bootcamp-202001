@@ -1,10 +1,13 @@
-const { ObjectId } = require('../database')
+const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
-module.exports = {
-    name: String,
-    surname: String,
-    email: String,
-    password: String,
-    // publishedEvents: Array,
+module.exports = new Schema({
+    name: { type: String, required: true },
+    surname: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
+    created: { type: Date, required: true, default: Date.now },
+    authenticated: { type: Date },
+    retrieved: { type: Date },
+    publishedEvents: [ObjectId]
     // suscribedEvents: [ObjectId]
-}
+})

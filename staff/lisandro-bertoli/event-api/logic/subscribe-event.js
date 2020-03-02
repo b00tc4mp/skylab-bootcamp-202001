@@ -1,5 +1,5 @@
 const { validate } = require('../utils')
-const { database, database: { ObjectId } } = require('../data')
+const { models: { User, Events } } = require('../data')
 const { NotFoundError, NotAllowedError } = require('../errors')
 
 module.exports = (id, eventId) => {

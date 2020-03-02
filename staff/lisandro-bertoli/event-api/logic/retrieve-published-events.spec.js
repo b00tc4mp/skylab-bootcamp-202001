@@ -1,20 +1,16 @@
 require('dotenv').config()
-const { retrievePublishedEvents } = require('.')
+const retrievePublishedEvents = require('./retrieve-published-events')
+const mongoose = require('mongoose')
 const { expect } = require('chai')
-const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
+const { models: { User, Event } } = require('../data')
 const { env: { TEST_MONGODB_URL } } = process
 const { random } = Math
 
 describe('retrievePublishedEvents', () => {
-    let events, users, userId
+    let userId
 
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => {
-                events = database.collection('events')
-
-                users = database.collection('users')
-            })
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
     let title, description, date, location
@@ -34,8 +30,11 @@ describe('retrievePublishedEvents', () => {
         date = new Date
         location = `location-${random()}`
 
-        return users.insertOne(new User({ name, surname, email, password }))
-            .then(({ insertedId }) => userId = insertedId.toString())
+        return User.create(new User({ name, surname, email, password }))
+            .then(({ id }) => {
+                debugger
+                userId = id
+            })
 
     })
 
@@ -43,8 +42,8 @@ describe('retrievePublishedEvents', () => {
         let eventId
 
         beforeEach(() =>
-            events.insertOne(new Event({ publisher: ObjectId(userId), title, description, date, location }))
-                .then(({ insertedId }) => eventId = insertedId.toString())
+            Event.create({ publisher: userId, title, description, date, location })
+                .then(({ id }) => eventId = id)
         )
 
         it('should succeed on valid id', () =>
@@ -76,6 +75,6 @@ describe('retrievePublishedEvents', () => {
 
     })
 
-    after(() => database.disconnect())
+    after(() => mongoose.disconnect())
 
 })

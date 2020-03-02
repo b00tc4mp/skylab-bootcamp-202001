@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "test": "npx mocha logic utils",
-    "test-debug": "npx mocha inspect logic utils"
+    "test-debug": "npx mocha debug logic utils"
   },
   "author": "",
   "license": "ISC",
@@ -16,7 +16,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^3.5.4",
+    "mongoose": "^5.9.2",
     "morgan": "^1.9.1",
     "uuid": "^7.0.1",
     "winston": "^3.2.1"

@@ -1,7 +1,8 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { database, models: { User } } = require('../data')
+const { models: { User } } = require('../data')
+const mongoose = require('mongoose')
 const { expect } = require('chai')
 const retrieveUser = require('./retrieve-user')
 const { NotFoundError } = require('../errors')
@@ -11,8 +12,7 @@ describe('retrieveUser', () => {
 
 
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => users = database.collection('users'))
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
 
@@ -24,15 +24,15 @@ describe('retrieveUser', () => {
 
     })
     describe('when user exists', () => {
-        let id
+        let _id
         describe('when user is not deactivated', () => {
             beforeEach(() =>
-                users.insertOne(new User({ name, surname, email, password }))
-                    .then(({ insertedId }) => id = insertedId.toString())
+                User.create({ name, surname, email, password })
+                    .then(({ id }) => _id = id)
             )
 
             it('should succeed on valid id, returning the user', () => {
-                return retrieveUser(id)
+                return retrieveUser(_id)
                     .then(user => {
                         expect(user.constructor).to.equal(Object)
                         expect(user.name).to.equal(name)
@@ -85,8 +85,8 @@ describe('retrieveUser', () => {
     })
 
     after(() => {
-        users.deleteMany({})
+        User.deleteMany({})
 
-        return database.disconnect()
+        return mongoose.disconnect()
     })
 })

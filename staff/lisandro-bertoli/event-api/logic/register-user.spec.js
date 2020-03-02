@@ -1,15 +1,16 @@
 require('dotenv').config()
-const { registerUser } = require('.')
+
+const registerUser = require('./register-user')
 const { expect } = require('chai')
-const { database } = require('../data')
+const mongoose = require('mongoose')
 const { env: { TEST_MONGODB_URL } } = process
+const { models: { User } } = require('../data')
 
 describe('registerUser', () => {
-    let name, surname, email, password, users
+    let name, surname, email, password
 
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => users = database.collection('users'))
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
     beforeEach(() => {
@@ -23,7 +24,7 @@ describe('registerUser', () => {
     it('should succed no creating a new user, no return value expected', () =>
         registerUser(name, surname, email, password)
             .then(retVal => expect(retVal).to.be.undefined)
-            .then(() => users.findOne({ email }))
+            .then(() => User.findOne({ email }))
             .then(user => {
 
                 expect(user.name).to.equal(name)
@@ -37,6 +38,6 @@ describe('registerUser', () => {
 
     )
 
-    after(() => database.disconnect())
+    after(() => mongoose.disconnect())
 })
 

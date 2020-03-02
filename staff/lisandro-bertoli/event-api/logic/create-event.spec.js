@@ -1,22 +1,19 @@
 require('dotenv').config()
 
+const mongoose = require('mongoose')
 const { env: { TEST_MONGODB_URL } } = process
-const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
+const { models: { User, Event } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
 const createEvent = require('./create-event')
-const { ContentError } = require('../errors')
+
 
 describe('createEvent', () => {
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => {
-                users = database.collection('users')
-                events = database.collection('events')
-            })
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
-    let name, surname, email, password, users, events, title, description, date, location, dummyId
+    let name, surname, email, password, title, description, date, location, dummyId
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -31,17 +28,17 @@ describe('createEvent', () => {
     })
 
     describe('when user already exists', () => {
-        let id
+        let _id
 
         beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
-                .then(({ insertedId }) => id = insertedId.toString())
+            User.create(({ name, surname, email, password }))
+                .then(({ id }) => _id = id)
         )
 
         it('should succeed on correct and valid and right data', () =>
-            createEvent(id, title, description, location, date)
+            createEvent(_id, title, description, location, date)
                 .then(() =>
-                    events.findOne({ title, description, location, date, publisher: ObjectId(id) })
+                    Event.findOne({ title, description, location, date, publisher: _id })
                 )
                 .then(event => {
                     expect(event).to.exist
@@ -49,27 +46,22 @@ describe('createEvent', () => {
                     expect(event.description).to.equal(description)
                     expect(event.date).to.deep.equal(date)
                     expect(event.location).to.equal(location)
-                    expect(event.publisher.toString()).to.equal(id)
+                    expect(event.publisher.toString()).to.equal(_id)
                 })
         )
 
         it('should add event-id to the user published events', () =>
-            createEvent(id, title, description, location, date)
-                .then(() => events.findOne({ title, description, location, date, publisher: ObjectId(id) })
-                    .then(event => event._id)
-                    .then(eventId =>
-                        users.findOne({ _id: ObjectId(id) })
-                            .then(user => expect(user.publishedEvents).to.deep.include(eventId))
-                    )
+            createEvent(_id, title, description, location, date)
+                .then(() =>
+                    Event.findOne({ title, description, location, date, publisher: _id })
+                        .then(event => event._id)
+                        .then(eventId =>
+                            User.findOne({ publishedEvents: eventId })
+                                .then((user) => expect(user.publishedEvents).to.contain(eventId.toString()))
+
+                        )
                 )
         )
-
-        it('should fail on invalid publisher id', () => {
-            id = '12asdf87'
-            expect(() =>
-                createEvent(id, title, description, location, date)).to.throw(ContentError, `invalid id in token`)
-        })
-
     })
 
 
@@ -146,5 +138,5 @@ describe('createEvent', () => {
 
 
 
-    after(() => database.disconnect())
+    after(() => mongoose.disconnect())
 })

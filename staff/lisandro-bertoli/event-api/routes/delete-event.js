@@ -3,7 +3,6 @@ const { ContentError, NotAllowedError } = require('../errors')
 
 module.exports = (req, res) => {
     const { params: { eid: eventId, id: userId } } = req
-
     try {
         deleteEvent(userId, eventId)
             .then(() => {
