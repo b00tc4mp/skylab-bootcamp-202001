@@ -1,7 +1,7 @@
-const { database } = require('../data')
+// const { database } = require('../data')
 
-module.exports = () => {
-    const events = database.collection('events'), now = new Date
+// module.exports = () => {
+//     const events = database.collection('events'), now = new Date
 
-    return events.find({ date: { $gt: now } }).sort({ date: 1 }).toArray()
-}
+//     return events.find({ date: { $gt: now } }).sort({ date: 1 }).toArray()
+// }

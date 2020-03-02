@@ -26,6 +26,6 @@ module.exports = (email, password) => {
             user.authenticated = new Date
 
             return user.save()
-                .then(() => user._id.toString())
         })
+        .then(({ id}) => id)
 }

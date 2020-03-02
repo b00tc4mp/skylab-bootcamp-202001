@@ -17,4 +17,5 @@ module.exports = (name, surname, email, password) => {
 
         return user.save()
     })
+    .then(() => { })
 }
