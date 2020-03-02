@@ -38,8 +38,9 @@ describe('subscribeEvent', () => {
                 .then(eventId => users.updateOne({ _id: ObjectId(userId) }, { $push: { publishedEvents: ObjectId(eventId) } }))
         )
 
-        it('should succeed on an effective user subscription to an event', () =>
-            subscribeEvent(userId, eventId)
+        it('should succeed on an effective user subscription to an event', () => {
+            debugger
+            return subscribeEvent(userId, eventId)
                 .then(result => {
                     expect(result).to.be.undefined
                 })
@@ -56,12 +57,12 @@ describe('subscribeEvent', () => {
                     expect(event.subscribers[0].toString()).to.equal(userId)
                 })
                 .catch(() => { throw new Error('should not reach this point') })
-        )
+        })
 
         afterEach(() => users.deleteMany({}))
     })
 
-    after(() => 
+    after(() =>
         events.deleteMany({})
             .then(() => users.deleteMany({}))
             .then(() => database.disconnect())
