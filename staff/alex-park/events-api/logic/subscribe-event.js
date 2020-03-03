@@ -3,7 +3,7 @@ const { models: { User, Event } } = require('../data')
 const { SchemaTypes: { ObjectId } } = require('mongoose')
 
 module.exports = (id, _id) => {
-    debugger
+    
     validate.string(id, 'user ID')
     // validate.type(_id, 'event ID', String)
 

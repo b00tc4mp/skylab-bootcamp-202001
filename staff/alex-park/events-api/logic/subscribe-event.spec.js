@@ -27,7 +27,7 @@ describe('subscribeEvent', () => {
 
     describe('when a sub case is possible', () => {
         let userId, eventId
-        debugger
+        
         beforeEach(() =>
             User.create({ name, surname, email, password })
                 .then(({ id }) => userId = id)
@@ -36,12 +36,11 @@ describe('subscribeEvent', () => {
                 .then(() => User.findByIdAndUpdate(userId, { $addToSet: { publishedEvents: eventId } }))
                 .then(() => {})
         )
-        debugger
+        
         it('should succeed on an effective user subscription to an event', () => {
-            debugger
             return subscribeEvent(userId, eventId)
                 .then(() => User.findById(userId))
-                .then(user => { debugger
+                .then(user => { 
                     expect(user.subscribedEvents).not.to.be.undefined
                     expect(user.subscribedEvents).to.be.instanceOf(Array)
                     expect(user.subscribedEvents[0].toString()).to.equal(eventId)
