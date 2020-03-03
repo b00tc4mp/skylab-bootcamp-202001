@@ -1,16 +1,9 @@
 const {validate} = require('../utils')
-const {database} = require('../data')
-const {NotFoundError} = require('../errors')
+const { models: { Event } } = require('../data')
 
 module.exports = () => {
-    // validate.type(date, "date", Date)
 
-    const events = database.collection('events')
+    return Event.find().lean().sort({date: -1})
 
-    return events.find().sort({date: -1}).toArray()
-    .then(events=> {
-        if(!events) throw new NotFoundError('Events not found')
-        return events
-})
 
 }

@@ -1,19 +1,20 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { database, models: { User } } = require('../data')
+const mongoose = require('mongoose')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
+const { models: { User } } = require('../data')
 
 describe('authenticateUser', () => {
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => users = database.collection('users'))
+       mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
+
     )
 
-    let name, surname, email, password, users
-
+    let name, surname, email, password
+ 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -25,8 +26,8 @@ describe('authenticateUser', () => {
         let _id
 
         beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
-                .then(({ insertedId }) => _id = insertedId)
+            User.create({ name, surname, email, password })
+                .then(user => _id = user.id)
         )
 
         it('should succeed on correct and valid and right credentials', () =>

@@ -1,15 +1,15 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { database, models: { User } } = require('../data')
+const { models: { User } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
+const mongoose = require('mongoose')
 
 describe('retrieveUser', () => {
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => users = database.collection('users'))
+      mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
     let name, surname, email, password, users
@@ -22,11 +22,11 @@ describe('retrieveUser', () => {
     })
 
     describe('when user already exists', () => {
-        let id
+        let _id
 
         beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
-                .then(({ insertedId }) => id = insertedId.toString())
+            User.create({name, username, email, password})
+                .then(({id}) => _id = id)
         )
 
         it('should succeed on correct and valid and right data', () =>
@@ -43,5 +43,5 @@ describe('retrieveUser', () => {
 
     // TODO more happies and unhappies
 
-    after(() => database.disconnect())
+    after(() => mongoose.disconnect())
 })

@@ -4,16 +4,17 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, createEvent, retrieveLastEvents, retrievePublishedEvents, subscribeEvent } = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
-const { database } = require('./data')
+const mongoose = require('mongoose')
 
-database.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
@@ -48,6 +49,8 @@ database.connect(MONGODB_URL)
         app.get('/events/:id',jwtVerifierMidWare, retrievePublishedEvents)
 
         app.get('/last-events', jwtVerifierMidWare, retrieveLastEvents)
+
+        app.patch('/subscribe-event', jwtVerifierMidWare, subscribeEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
