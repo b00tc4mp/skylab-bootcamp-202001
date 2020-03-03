@@ -4,7 +4,7 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, updateEvent } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, updateEvent, deleteEvent } = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -55,6 +55,8 @@ mongoose.connect(MONGODB_URL)
         app.get('/subscribed', jwtVerifierMidWare, retrieveSubscribedEvents)
 
         app.patch('/update', [jwtVerifierMidWare, jsonBodyParser], updateEvent)
+
+        app.delete('/delete', [jwtVerifierMidWare, jsonBodyParser], deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 
