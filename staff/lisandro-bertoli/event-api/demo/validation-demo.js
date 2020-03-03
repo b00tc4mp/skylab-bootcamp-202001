@@ -1,0 +1,1 @@
+const { models: { User } } = require('../data')

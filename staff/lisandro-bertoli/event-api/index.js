@@ -53,19 +53,19 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.post('/users/auth', jsonBodyParser, authenticateUser)
 
-        app.post('/users/:id/events', [jwtValidationMidWare, jsonBodyParser], createEvent)
+        app.post('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], createEvent)
 
-        app.get('/users/:id/events', jwtValidationMidWare, retrievePublishedEvents)
+        app.get('/users/:id?/events', jwtValidationMidWare, retrievePublishedEvents)
 
-        app.get('/users/:id/subscribed-events', jwtValidationMidWare, retrieveSubscribedEvents)
+        app.get('/users/:id?/subscribed-events', jwtValidationMidWare, retrieveSubscribedEvents)
 
-        app.patch('/users/:id/events', [jwtValidationMidWare, jsonBodyParser], subscribeEvent)
+        app.patch('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], subscribeEvent)
 
         app.patch('/events/:id', [jwtValidationMidWare, jsonBodyParser], updateEvent)
 
-        app.delete('/users/:id/events/:eid', jwtValidationMidWare, deleteEvent)
+        app.delete('/users/events/:id', jwtValidationMidWare, deleteEvent)
 
-        app.get('/events', retrieveLastEvents)
+        app.get('/events/:page?', retrieveLastEvents)
 
 
 

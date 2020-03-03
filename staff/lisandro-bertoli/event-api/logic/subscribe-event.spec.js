@@ -1,21 +1,18 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { database, database: { ObjectId }, models: { User, Event } } = require('../data')
+const mongoose = require('mongoose')
+const { models: { User, Event } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
 const subscribeEvent = require('./subscribe-event')
 
 describe('subscribeEvent', () => {
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => {
-                users = database.collection('users')
-                events = database.collection('events')
-            })
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
-    let name, surname, email, password, users, events, title, description, date, location
+    let name, surname, email, password, title, description, date, location
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -32,32 +29,35 @@ describe('subscribeEvent', () => {
         let userId
 
         beforeEach(() =>
-            users.insertOne(new User({ name, surname, email, password }))
-                .then(({ insertedId }) => userId = insertedId.toString())
+            User.create(new User({ name, surname, email, password }))
+                .then(({ id }) => userId = id)
         )
         describe('when event exists', () => {
             let eventId
             beforeEach(() =>
-                events.insertOne(new Event({ title, description, location, date, publisher: ObjectId(userId) }))
-                    .then(({ insertedId }) => eventId = insertedId.toString())
+                Event.create(new Event({ title, description, location, date, publisher: userId }))
+                    .then(({ id }) => eventId = id)
             )
 
             it('should succeed adding userId into event subscribers array', () =>
                 subscribeEvent(userId, eventId)
-                    .then(() => events.findOne({ _id: ObjectId(eventId) }))
-                    .then(event => expect(event.subscribers).to.deep.include(ObjectId(userId)))
+                    .then(() => Event.findById(eventId))
+                    .then(event => {
+                        debugger
+                        expect(event.subscribers).to.contain(userId)
+                    })
             )
 
             it('should succeed adding eventId into users subscribed array', () =>
                 subscribeEvent(userId, eventId)
-                    .then(() => users.findOne({ _id: ObjectId(userId) }))
-                    .then(user => expect(user.subscribedEvents).to.deep.include(ObjectId(eventId)))
-            )
+                    .then(() => User.findById(userId)
+                        .then(user => expect(user.subscribedEvents).to.contain(eventId))
+                    )
 
+            )
         })
     })
-
     // TODO more happies and unhappies
 
-    after(() => database.disconnect())
+    after(() => mongoose.disconnect())
 })

@@ -13,11 +13,11 @@ module.exports = (publisher, title, description, location, date) => {
 
     return event.save()
         .then(({ _id }) => {
-            User.findById(publisher)
+            return User.findById(publisher)
                 .then(user => {
                     debugger
                     user.publishedEvents.push(_id)
-                    user.save()
+                    return user.save()
                 })
         })
         .then(() => { })

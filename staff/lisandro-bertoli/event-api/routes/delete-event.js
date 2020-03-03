@@ -2,7 +2,7 @@ const { deleteEvent } = require('../logic')
 const { ContentError, NotAllowedError } = require('../errors')
 
 module.exports = (req, res) => {
-    const { params: { eid: eventId, id: userId } } = req
+    const { params: { id: eventId }, payload: { sub: userId } } = req
     try {
         deleteEvent(userId, eventId)
             .then(() => {

@@ -1,16 +1,16 @@
 const { models: { Event } } = require('../data')
+const { validate } = require('../utils')
 
 
-module.exports = () => {
-    const cursor = Event.find().sort({ created: -1 });
+module.exports = (page) => {
+    validate.string(page, 'page')
 
-    let eventsArray = []
+    const limit = 5
 
-    return (function getNextEvent() {
-        return cursor
-            .hasNext()
-            .then(hasNext => hasNext && cursor.next())
-            .then(result => result && eventsArray.length < 10 && eventsArray.push(result) && getNextEvent())
-            .then(() => eventsArray)
-    })()
+    return Event.find()
+        .sort({ created: -1 })
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .exec()
+
 }

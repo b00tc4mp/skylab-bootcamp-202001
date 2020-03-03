@@ -1,29 +1,28 @@
 const { validate } = require('../utils')
-const { models: { User, Events } } = require('../data')
+const { models: { User, Event } } = require('../data')
 const { NotFoundError, NotAllowedError } = require('../errors')
 
 module.exports = (id, eventId) => {
     validate.string(id, 'userId')
     validate.string(eventId, 'eventId')
 
-    const _id = ObjectId(id)
-    const _eventId = ObjectId(eventId)
+    return User.findById(id)
+        .then(user => {
+            const { subscribedEvents } = user
+            if (subscribedEvents.includes(eventId))
+                throw new NotAllowedError(`user ${id} is already subscribed`)
 
-    const events = database.collection('events')
-    const users = database.collection('users')
-
-    return events.findOne({ _id: _eventId, subscribers: _id })
-        .then(event => {
-            if (event) throw new NotAllowedError(`user ${_id} is already subscribed`)
+            user.subscribedEvents.push(eventId)
+            return user.save()
         })
-        .then(() =>
-            events.updateOne({ _id: _eventId }, { $push: { subscribers: _id } })
-                .then(writeResult => {
-                    if (writeResult.modifiedCount === 0) throw new NotFoundError(`event with id ${_id} does not exist`)
+        .then(() => Event.findById(eventId))
+        .then(event => {
+            if (!event) throw new NotFoundError(`event with id ${eventId} does not exist`)
 
-                    return users.updateOne({ _id }, { $push: { subscribedEvents: _eventId } })
-                })
+            event.subscribers.push(id)
 
-        )
+            return event.save()
+        })
         .then(() => { })
+
 }

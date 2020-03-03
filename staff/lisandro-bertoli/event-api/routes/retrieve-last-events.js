@@ -2,9 +2,10 @@ const { retrieveLastEvents } = require('../logic')
 
 
 module.exports = (req, res) => {
+    let { params: { page = '1' } } = req
 
     try {
-        retrieveLastEvents()
+        retrieveLastEvents(page)
             .then(events => {
                 res
                     .status(200)
