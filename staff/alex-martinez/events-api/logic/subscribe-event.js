@@ -1,30 +1,48 @@
-const { database, database: { ObjectId } } = require('../data')
+const { models: { Event, User } } = require('../data')
 const { validate } = require('../utils')
-const { NotFoundError, NotAllowedError } = require('../errors')
+const {  NotAllowedError } = require('../errors')
 
 module.exports = (id, eventId) => {
 
     validate.string(id, 'userId')
     validate.string(eventId, 'eventId')
-
-    const _id = ObjectId(id)
-    const _eventId = ObjectId(eventId)
  
-    const users = database.collection('users')
-    const events = database.collection('events')
 
-    return events.findOne({ _id: _eventId, subscribers: _id })
+    return Event.find({ _id: eventId, subscribers: id })
+        .then((event) => {
+            console.dir(event)
+            if (event.length > 0) throw new NotAllowedError(`user ${id} is already subscribed`)
+        })
+        .then(() => {
+            return Event.findById( eventId )
+            .then((event) => {
+    
+                event.subscribers.push( id )
+                event.save()
+            })
+        }) 
+        .then(() => {
+            return User.findById( id )
+            .then((user) => {
+
+                user.subscribedEvents.push( eventId )
+                user.save()
+            })
+        })
+        .then(() => {})
+        
+    /* return Event.findById({ _id: eventId, subscribers: id })
         .then(event => {
-            if (event) throw new NotAllowedError(`user ${_id} is already subscribed`)
+            if (event) throw new NotAllowedError(`user ${id} is already subscribed`)
         })
         .then(() =>
-            events.updateOne({ _id: _eventId }, { $push: { subscribers: _id } })
-                .then(writeResult => {
-                    if (writeResult.modifiedCount === 0) throw new NotFoundError(`event with id ${_id} does not exist`)
+            Event.update({  _id: eventId }, { $push: { subscribers: id }}, { new: true } )
+                .then(result => {
+                    if (!result) throw new NotFoundError(`event with id ${eventId} does not exist`)
 
-                    return users.updateOne({ _id }, { $push: { subscribedEvents: _eventId } })
+                    return User.update({ id }, { $push: { subscribedEvents: eventId }}, {new: true})
                 })
 
         )
-        .then(() => { })
+        .then(() => { }) */
 }

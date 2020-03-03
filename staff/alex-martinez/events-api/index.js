@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT] } = process
-
+const mongoose = require('mongoose')
 const express = require('express')
 const winston = require('winston')
 const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, updateEvent } = require('./routes')
@@ -13,7 +13,7 @@ const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
 const { database } = require('./data')
 
-database.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL)
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',

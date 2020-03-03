@@ -1,5 +1,5 @@
 const { subscribeEvent} = require('../logic')
-
+const {  NotAllowedError, NotFoundError } = require('../errors')
 module.exports = (req, res) => {
     const { body: { id: eventId }, payload: { sub: id } } = req
 
