@@ -51,7 +51,7 @@ mongoose.connect(MONGODB_URL)
 
         app.patch('/events/:id', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
 
-        app.get('/users/:id/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
+        app.get('/users/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
 
         app.patch('/events-update/:id', [jwtVerifierMidWare, jsonBodyParser], updateEvent)
 
