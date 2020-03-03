@@ -6,6 +6,7 @@ const express = require('express')
 const winston = require('winston')
 
 const { jwtValidationMidWare } = require('./mid-wares')
+const cors = require('cors')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -21,7 +22,8 @@ const { registerUser,
     subscribeEvent,
     retrieveSubscribedEvents,
     updateEvent,
-    deleteEvent } = require('./routes')
+    deleteEvent,
+    deleteUser } = require('./routes')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -45,6 +47,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         const app = express()
 
+        app.use(cors())
+
         app.use(morgan('combined', { stream: accessLogStream }))
 
         app.post('/users', jsonBodyParser, registerUser)
@@ -64,6 +68,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
         app.patch('/events/:id', [jwtValidationMidWare, jsonBodyParser], updateEvent)
 
         app.delete('/users/events/:id', jwtValidationMidWare, deleteEvent)
+
+        app.delete('/users', [jwtValidationMidWare, jsonBodyParser], deleteUser)
 
         app.get('/events/:page?', retrieveLastEvents)
 

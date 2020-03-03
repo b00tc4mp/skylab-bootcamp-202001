@@ -1,15 +1,12 @@
 import React from 'react'
-import { authenticateUser } from '../logic'
 
-const Register = ({ onToLogin }) => {
+const Register = ({ onSubmit }) => {
 
     const handleOnSubmit = (event) => {
         event.preventDefault()
         const { email, password } = event.target
 
-        authenticateUser(email.value, password.value)
-            .then(() => onToLogin('home'))
-            .catch(error => console.log(error))
+        onSubmit(email.value, password.value)
     }
 
     return <form className="register" onSubmit={handleOnSubmit}>
