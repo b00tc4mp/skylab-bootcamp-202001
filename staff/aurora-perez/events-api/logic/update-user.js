@@ -1,5 +1,4 @@
 const {validate} = require('../utils')
-const {database, database: {ObjectId}} = require('../data')
 
 module.exports= (data, id) => {
     // for(const key in data) {

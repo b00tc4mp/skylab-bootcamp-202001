@@ -7,12 +7,14 @@ const { random } = Math
 const retrieveLastEvents = require('./retrieve-last-events')
 const { models: { User, Event } } = require('../data')
 
+
 describe('retrieveLastEvents', () => {
     before(() =>
-         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
     )
-    
-    let name, surname, email, password, users, events, title, description, date, location
+
+    let name, surname, email, password, title, description, date, location
     
     beforeEach(() => {
         name = `name-${random()}`
@@ -21,42 +23,51 @@ describe('retrieveLastEvents', () => {
         password = `password-${random()}`
         title = `title-${random()}`
         description = `description-${random()}`
-        date = new Date('December 25, 2099 20:00:00')
+        date = new Date
         location = `location-${random()}`
     })
 
-    describe('when there are events to display', () => {
+    describe('when user already exists', () => {
         let _id
+        
         beforeEach(() =>
             User.create({ name, surname, email, password })
+
                 .then(({ id }) => _id = id)
-                .then(() => Event.create({ publisher: _id, title, description, location, date }))
-                .then(event => User.findByIdAndUpdate( _id, { $push: { publishedEvents: event.id } }))
+                .then(() => {
+                    const events = []
+                    const now = new Date()
+
+                    date = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
+                    
+                    for (let i = 0; i < 10; i++)
+                        events.push({ publisher: _id, title, description, date, location })
+                    const old = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
+                    
+                    for (let i = 0; i < 10; i++)
+                        events.push({ publisher: _id, title, description, date: old, location })
+                    return Event.insertMany(events)
+                })
         )
-        it('should successfuly retrieve events later than now', () =>
+        
+        it('should succeed on correct and valid and right data', () =>
             retrieveLastEvents()
                 .then(events => {
-                    expect(events[0]).to.exist
-                    expect(events[0].title).to.equal(title)
-                    expect(events[0].description).to.equal(description)
-                    expect(events[0].date).to.deep.equal(date)
-                    expect(events[0].location).to.equal(location)
-                    expect(events[0].publisher.toString()).to.equal(_id)
+                    expect(events).to.exist
+                    expect(events).to.have.lengthOf(10)
+                    events.forEach(event => {
+                        expect(event.id).to.be.a('string')
+                        expect(event._id).to.be.undefined
+                        expect(event.title).to.equal(title)
+                        expect(event.description).to.equal(description)
+                        expect(event.date).to.deep.equal(date)
+                        expect(event.location).to.equal(location)
+                        expect(event.publisher).to.be.a('string')
+                        expect(event.publisher).to.equal(_id)
+                    })
                 })
         )
-        it('should retrieve the array of events, regardless of its length', () => 
-            Event.create({ publisher: _id, title: `${title}-2`, description: `${description}-2`, location: `${location}-2`, date: new Date('December 25, 2099 21:00:00') })
-                .then(() => retrieveLastEvents())
-                .then(events => {
-                    expect(events.length > 0).to.be.true
-                    expect(events).to.be.instanceOf(Array)
-                })
-        )
-        afterEach(() => User.deleteMany({}))
     })
-    after(() => 
-        Event.deleteMany({})
-            .then(() => User.deleteMany({}))
-            .then(() => mongoose.disconnect())
-    )
+    // TODO more happies and unhappies
+    after(() => Promise.all([User.deleteMany(), Event.deleteMany()]).then(() => mongoose.disconnect()))
 })

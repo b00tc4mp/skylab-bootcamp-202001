@@ -4,16 +4,16 @@ const { env: { TEST_MONGODB_URL } } = process
 const mongoose = require('mongoose')
 const { expect } = require('chai')
 const { random } = Math
-const createEvent = require('./create-event')
+const publishEvent = require('./publish-event')
 const { models: { User, Event } } = require('../data')
 
-describe('createEvent', () => {
+
+describe('publishEvent', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
     )
-
     let name, surname, email, password, title, description, date, location
-
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -24,21 +24,23 @@ describe('createEvent', () => {
         date = new Date
         location = `location-${random()}`
     })
-
     describe('when user already exists', () => {
         let _id
-
         beforeEach(() =>
             User.create({ name, surname, email, password })
                 .then(({ id }) => _id = id)
         )
-
         it('should succeed on correct and valid and right data', () =>
-            createEvent(_id, title, description, location, date)
+            publishEvent(_id, title, description, location, date)
                 .then(() =>
-                    Event.findOne({ title, description, location, date, publisher: _id })
+                    Promise.all([
+                        User.findById(_id),
+                        Event.findOne({ title, description, location, date, publisher: _id })
+                    ])
                 )
-                .then(event => {
+                .then(([user, event]) => {
+                    expect(user).to.exist
+                    expect(user.published).to.contain(event._id)
                     expect(event).to.exist
                     expect(event.title).to.equal(title)
                     expect(event.description).to.equal(description)
@@ -48,8 +50,6 @@ describe('createEvent', () => {
                 })
         )
     })
-
     // TODO more happies and unhappies
-
-    after(() => mongoose.disconnect())
+    after(() => Promise.all([User.deleteMany(), Event.deleteMany()]).then(() => mongoose.disconnect()))
 })

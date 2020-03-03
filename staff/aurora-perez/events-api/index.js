@@ -3,6 +3,7 @@ require('dotenv').config()
 const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT] } = process
 
 const express = require('express')
+const cors = require('cors')
 const winston = require('winston')
 const { registerUser, authenticateUser, retrieveUser, createEvent, updateUser, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, deleteEvent } = require('./routes')
 const { name, version } = require('./package')
@@ -12,8 +13,9 @@ const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
 const { database } = require('./data')
+const mongoose = require('mongoose')
 
-database.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
@@ -35,6 +37,8 @@ database.connect(MONGODB_URL)
 
         const app = express()
 
+        app.use(cors())
+
         app.use(morgan('combined', { stream: accessLogStream }))
 
         app.post('/users', jsonBodyParser, registerUser)
@@ -55,7 +59,7 @@ database.connect(MONGODB_URL)
 
         app.get('/users/:id/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
 
-        app.delete('/users/:id/delete-event', [jwtVerifierMidWare, jsonBodyParser], deleteEvent )
+        //app.delete('/users/:id/delete-event', [jwtVerifierMidWare, jsonBodyParser], deleteEvent )
         
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

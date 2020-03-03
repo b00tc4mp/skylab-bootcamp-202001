@@ -1,6 +1,8 @@
+require('dotenv').config()
 const { authenticateUser } = require('../logic')
 const jwt = require('jsonwebtoken')
 const { env: { JWT_SECRET,  JWT_EXP } } = process
+
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req
