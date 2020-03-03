@@ -2,34 +2,37 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { random } = Math
-const { database, database: { ObjectId } } = require('../data')
-const { registerUser } = require('../logic')
+const mongoose = require('mongoose')
+const registerUser = require('./register-user')
+const { models: { User } } = require('../data')
+
 const { env: { TEST_MONGODB_URL } } = process
 
-
 describe('registerUser', () => {
-    let name, surname, email, password, users
-    
+    let name, surname, email, password
+
     before(() =>
-        database.connect(TEST_MONGODB_URL)
-            .then(() => users = database.collection('users'))
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
+
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
     })
+
     it('should succeed on correct user data', () =>
         registerUser(name, surname, email, password)
             .then(result => {
                 expect(result).not.to.exist
                 expect(result).to.be.undefined
-                return users.findOne({ email })
+
+                return User.findOne({ email })
             })
             .then(user => {
                 expect(user).to.exist
-                expect(user._id).to.be.instanceOf(ObjectId)
+                expect(user.id).to.be.a('string')
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.email).to.equal(email)
@@ -37,8 +40,8 @@ describe('registerUser', () => {
                 expect(user.created).to.be.instanceOf(Date)
             })
     )
+
     // TODO unhappy paths and other happies if exist
-    after(() => users.deleteMany({})
-    .then(() =>database.disconnect())
-    )
+
+    after(() => mongoose.disconnect())
 })

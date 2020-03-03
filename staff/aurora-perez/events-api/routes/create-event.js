@@ -3,7 +3,7 @@ const { ContentError } = require('../errors')
 
 module.exports = (req, res) => {
     const { params: { id }, body: { title, description, location, date } } = req
-    debugger
+    
     try {
         createEvent(id, title, description, location, new Date(date))
             .then(() => res.status(201).end())
