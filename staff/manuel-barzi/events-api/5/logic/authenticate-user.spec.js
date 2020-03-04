@@ -1,19 +1,18 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User } } = require('../data')
+const { mongoose, models: { User } } = require('events-data')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveUser = require('./retrieve-user')
-const mongoose = require('mongoose')
+const authenticateUser = require('./authenticate-user')
 
-describe('retrieveUser', () => {
+describe('authenticateUser', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password, users
+    let name, surname, email, password
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -27,17 +26,15 @@ describe('retrieveUser', () => {
 
         beforeEach(() =>
             User.create({ name, surname, email, password })
-                .then(({ id }) => _id = id)
+                .then(user => _id = user.id)
         )
 
-        it('should succeed on correct and valid and right data', () =>
-            retrieveUser(_id)
-                .then(user => {
-                    expect(user.constructor).to.equal(Object)
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.be.undefined
+        it('should succeed on correct and valid and right credentials', () =>
+            authenticateUser(email, password)
+                .then(id => {
+                    expect(id).to.be.a('string')
+                    expect(id.length).to.be.greaterThan(0)
+                    expect(id).to.equal(_id)
                 })
         )
     })

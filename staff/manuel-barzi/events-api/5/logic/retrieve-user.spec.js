@@ -1,11 +1,10 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User } } = require('../data')
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
-const mongoose = require('mongoose')
+const { mongoose, models: { User } } = require('events-data')
 
 describe('retrieveUser', () => {
     before(() =>
