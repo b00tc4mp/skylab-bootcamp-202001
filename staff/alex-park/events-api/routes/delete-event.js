@@ -1,21 +1,38 @@
 const { deleteEvent } = require('../logic')
-const { NotAllowedError, NotFoundError} = require('../errors')
+const { NotFoundError } = require('../errors')
 
 module.exports = (req, res) => {
-    const {payload: {sub: userId}, body: {eventId}} = req
+    const { params: { id, eventId } } = req
 
     try {
-        deleteEvent(userId, eventId)
-        .then(()=> res.status(200).end())
-        .catch(error => {
-            let status = 400
-            return res.status(status).json({error: error.message})
-        })
-        
+        deleteEvent(id, eventId)
+            .then(() => res.end())
+            .catch(error => {
+                let status = 400
+
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    status = 404
+
+                res
+                    .status(status)
+                    .json({
+                        error: message
+                    })
+            })
     } catch (error) {
         let status = 400
-        return res.status(status).json({error: error.message})
-        
-    }
 
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
+        res
+            .status(status)
+            .json({
+                error: message
+            })
+    }
 }

@@ -10,6 +10,7 @@ const { models: { User, Event } } = require('../data')
 describe('createEvent', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
     )
 
     let name, surname, email, password, users, events, title, description, date, location
@@ -36,9 +37,14 @@ describe('createEvent', () => {
         it('should succeed on correct and valid and right data', () =>
             createEvent(_id, title, description, location, date)
                 .then(() =>
-                    Event.findOne({ title, description, location, date, publisher: _id })
+                    Promise.all([
+                        User.findById(_id),
+                        Event.findOne({ title, description, location, date, publisher: _id })
+                    ])
                 )
-                .then(event => {
+                .then(([user, event]) => {
+                    expect(user).to.exist
+                    expect(user.publishedEvents).to.contain(event._id)
                     expect(event).to.exist
                     expect(event.title).to.equal(title)
                     expect(event.description).to.equal(description)
@@ -51,7 +57,6 @@ describe('createEvent', () => {
 
     // TODO more happies and unhappies
 
-    after(() => User.deleteMany({})
-        .then(() => Event.deleteMany({}))
-        .then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Event.deleteMany()])).then(() => mongoose.disconnect())
+
 })

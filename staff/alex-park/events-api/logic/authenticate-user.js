@@ -18,19 +18,14 @@ module.exports = (email, password) => {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
-    
-    return User.findOne({ email, password }).lean()
+
+    return User.findOne({ email, password })
         .then(user => {
             if (!user) throw new NotAllowedError('wrong credentials')
-            
+
             user.authenticated = new Date
 
-            user.id = user._id.toString()
-            
-            delete user._id
-            
-            console.log(user)
             return user.save()
         })
-        .then(({ id}) => id)
+        .then(({ id }) => id)
 }

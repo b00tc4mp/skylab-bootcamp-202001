@@ -57,15 +57,15 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
 
-        app.get('/users/:id/published-events', jwtVerifierMidWare, retrievePublishedEvents)
+        app.get('/users/:id/events/published', jwtVerifierMidWare, retrievePublishedEvents)
 
-        app.get('/last-events', retrieveLastEvents)
+        app.get('/events', retrieveLastEvents)
 
-        app.patch('/users/:id/sub-event/:eventid?', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
+        app.patch('/users/:id/event/:eventId', jwtVerifierMidWare, subscribeEvent)
 
         app.get('/users/:id/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
 
-        app.delete('/users/:id/delete-event/:eventid?', [jwtVerifierMidWare, jsonBodyParser], deleteEvent)
+        app.delete('/users/:id/delete-event/:eventId', jwtVerifierMidWare, deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

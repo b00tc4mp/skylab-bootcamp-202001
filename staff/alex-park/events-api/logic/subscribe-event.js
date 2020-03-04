@@ -1,13 +1,20 @@
 const { validate } = require('../utils')
 const { models: { User, Event } } = require('../data')
-const { SchemaTypes: { ObjectId } } = require('mongoose')
+const { NotFoundError } = require('../errors')
 
 module.exports = (id, _id) => {
     
     validate.string(id, 'user ID')
-    // validate.type(_id, 'event ID', String)
+    validate.string(_id, 'event ID')
 
-    return User.findByIdAndUpdate(id , { $addToSet: {subscribedEvents: _id }})
-        .then(() => Event.findByIdAndUpdate(_id, { $addToSet: { subscribers: id }}))
-        .then(() => { })
+    return Promise.all([User.findById(id), Event.findById(_id)])
+    .then(([user, event]) => {
+        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        if (!event) throw new NotFoundError(`event with id ${_id} not found`)
+
+        user.subscribedEvents.push(event.id)
+        event.subscribers.push(user.id)
+
+        return Promise.all([user.save(), event.save()])
+    })
 }

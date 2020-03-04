@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     const { body: { email, password } } = req
     debugger
     try {
-        authenticateUser(email, password)
+        return authenticateUser(email, password)
             .then(id => {
                 const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: JWT_EXP })
                 

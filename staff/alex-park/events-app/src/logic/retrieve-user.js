@@ -7,11 +7,11 @@ module.exports = function (token) {
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: undefined
     })
-    .then(response => {
-        const send = JSON.parse(response.content), { error: _error } = send
+        .then(response => response.text())
+        .then(response => {
+            console.log(response)
+            const { name, surname, email } = JSON.parse(response)
 
-        if (_error) throw new Error(_error)
-
-        return { name: send.name, surname: send.surname, username: send.username }
-    })
+            return { name, surname, email }
+        })
 }

@@ -7,11 +7,9 @@ module.exports = function (email, password) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
     })
-        .then(response => {
-            const { error: _error, token } = JSON.parse(response.content)
-
-            if (_error) throw new Error(_error)
-
+        .then(response => response.text())
+        .then(data => {
+            const {token} = JSON.parse(data)
             return token
         })
 }

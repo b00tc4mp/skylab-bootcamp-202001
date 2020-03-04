@@ -1,4 +1,4 @@
-const { createEvent } = require('../logic')
+const { publishEvent: createEvent } = require('../logic')
 const { ContentError } = require('../errors')
 
 module.exports = (req, res) => {
@@ -22,7 +22,7 @@ module.exports = (req, res) => {
         let status = 400
 
         if (error instanceof TypeError || error instanceof ContentError)
-            status = 406
+            status = 406 // not acceptable
 
         const { message } = error
 

@@ -7,6 +7,7 @@ import { registerUser, authenticateUser, retrieveUser } from '../logic'
 function App({name}) {
   const [view, setView] = useState('login')
   let userName
+  
   function handleGoToRegister() { setView('register') }
   function handleGoToLogin () { setView('login') }
 
@@ -15,7 +16,8 @@ function App({name}) {
     .then(token => retrieveUser(token))
     .then(user => {
       userName = user.name
-      setView('home')
+      
+      return setView('home')
     })
   }
 
@@ -35,7 +37,7 @@ function App({name}) {
       </header>
       {view === 'login' && <Login onToRegister={handleGoToRegister} onSubmit={handleLogin}/>}
       {view === 'register' && <Register onToLogin={handleGoToLogin} onSubmit={handleRegister}/>}
-      {view === 'home' && <h2>Hola, {userName}</h2> }
+      {view === 'home' && <h2>Hola, {userName}!</h2> }
     </div>
   )
 }

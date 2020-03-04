@@ -1,15 +1,17 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User, Event } } = require('../data')
 const mongoose = require('mongoose')
+const { Types: { ObjectId } } = mongoose
 const { expect } = require('chai')
 const { random } = Math
 const subscribeEvent = require('./subscribe-event')
+const { models: { User, Event } } = require('../data')
 
 describe('subscribeEvent', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
     )
 
     let name, surname, email, password, title, description, date, location
@@ -25,42 +27,43 @@ describe('subscribeEvent', () => {
         location = `location-${random()}`
     })
 
-    describe('when a sub case is possible', () => {
-        let userId, eventId
-        
+    describe('when user already exists', () => {
+        let _id, _eventId, publisher
+
         beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(({ id }) => userId = id)
-                .then(() => Event.create({ publisher: userId, title, description, location, date }))
-                .then(({_id}) => eventId = _id.toString())
-                .then(() => User.findByIdAndUpdate(userId, { $addToSet: { publishedEvents: eventId } }))
-                .then(() => {})
-        )
-        
-        it('should succeed on an effective user subscription to an event', () => {
-            return subscribeEvent(userId, eventId)
-                .then(() => User.findById(userId))
-                .then(user => { 
-                    expect(user.subscribedEvents).not.to.be.undefined
-                    expect(user.subscribedEvents).to.be.instanceOf(Array)
-                    expect(user.subscribedEvents[0].toString()).to.equal(eventId)
+            Promise.all([
+                User.create({ name, surname, email, password }),
+                Event.create({ title, description, date, location, publisher: publisher = new ObjectId })
+            ])
+                .then(([{ id }, { id: eventId }]) => {
+                    _id = id
+                    _eventId = eventId
                 })
-                .then(() => Event.findById(eventId))
-                .then(event => {
-                    expect(event.subscribers).not.to.be.undefined
-                    expect(event.subscribers).to.be.instanceOf(Array)
-                    expect(event.subscribers[0].toString()).to.equal(userId)
-                })
-                .catch(() => { throw new Error('should not reach this point') })
-        }
         )
 
-        afterEach(() => User.deleteMany({}))
+        it('should succeed on correct and valid and right data', () =>
+            subscribeEvent(_id, _eventId)
+                .then(() =>
+                    Promise.all([
+                        User.findById(_id),
+                        Event.findById(_eventId)
+                    ])
+                )
+                .then(([user, event]) => {
+                    expect(user).to.exist
+                    expect(user.subscribedEvents).to.contain(event._id)
+                    expect(event).to.exist
+                    expect(event.title).to.equal(title)
+                    expect(event.description).to.equal(description)
+                    expect(event.date).to.deep.equal(date)
+                    expect(event.location).to.equal(location)
+                    expect(event.publisher.toString()).to.equal(publisher.toString())
+                    expect(event.subscribedEvents).to.contain(user._id)
+                })
+        )
     })
 
-    after(() =>
-        Event.deleteMany({})
-            .then(() => User.deleteMany({}))
-            .then(() => mongoose.disconnect())
-    )
+    // TODO more happies and unhappies
+
+    after(() => Promise.all([User.deleteMany(), Event.deleteMany()]).then(() => mongoose.disconnect()))
 })

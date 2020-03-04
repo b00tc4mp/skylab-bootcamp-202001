@@ -10,6 +10,7 @@ const retrievePublishedEvents = require('./retrieve-published-events')
 describe('retrievePublishedEvents', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
     )
 
     let name, surname, email, password, title, description, date, location
@@ -44,24 +45,47 @@ describe('retrievePublishedEvents', () => {
     })
 
     describe('when at least one event has been published', () => {
-        let _id
+        let _id, _other
         beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(({ id }) => _id = id)
-                .then(() => Event.create({ publisher: _id, title, description, location, date }))
-                .then(results => User.updateOne({ id: _id }, { $push: { publishedEvents: results.id } }))
+            User.insertMany([
+                { name, surname, email, password },
+                { name, surname, email, password }
+            ])
+                .then(([{ id }, { id: other }]) => {
+                    _id = id
+                    _other = other
+                })
+                .then(() => {
+                    const events = []
+
+                    const now = new Date
+
+                    date = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
+
+                    for (let i = 0; i < 20; i++)
+                        events.push({ publisher: i < 10 ? _id : _other, title, description, date, location })
+
+                    return Event.insertMany(events)
+                })
         )
 
 
         it('should successfuly retrieve all events published by the user', () =>
             retrievePublishedEvents(_id)
                 .then(events => {
-                    expect(events[0]).to.exist
-                    expect(events[0].title).to.equal(title)
-                    expect(events[0].description).to.equal(description)
-                    expect(events[0].date).to.deep.equal(date)
-                    expect(events[0].location).to.equal(location)
-                    expect(events[0].publisher.toString()).to.equal(_id)
+                    expect(events).to.exist
+                    expect(events).to.have.lengthOf(10)
+
+                    events.forEach(event => {
+                        expect(event.id).to.be.a('string')
+                        expect(event._id).to.be.undefined
+                        expect(event.title).to.equal(title)
+                        expect(event.description).to.equal(description)
+                        expect(event.date).to.deep.equal(date)
+                        expect(event.location).to.equal(location)
+                        expect(event.publisher).to.be.a('string')
+                        expect(event.publisher).to.equal(_id)
+                    })
                 })
         )
 
