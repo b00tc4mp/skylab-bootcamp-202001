@@ -1,7 +1,7 @@
-const { models: { User, Event } } = require('../data')
-const { Types: { ObjectId } } = require('mongoose')
-const { validate } = require('../utils')
-const { NotFoundError } = require('../errors')
+const { models: { User, Event } } = require('events-data')
+const { mongoose: { Types: { ObjectId } } } = require('events-data')
+const { validate } = require('events-utils')
+const { NotFoundError } = require('events-errors')
 
 module.exports = id => {
     validate.string(id, 'id')
@@ -13,14 +13,16 @@ module.exports = id => {
             return Event.find({ publisher: ObjectId(id), date: { $gte: new Date } })
                 .lean()
                 .then(events => {
+                    // sanitize
                     events.forEach(event => {
                         event.id = event._id.toString()
+
                         delete event._id
+
                         event.publisher = event.publisher.toString()
                     })
 
                     return events
                 })
-
         })
 }

@@ -1,12 +1,11 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const mongoose = require('mongoose')
+const { mongoose, models: { User, Event } } = require('events-data')
 const { Types: { ObjectId } } = mongoose
 const { expect } = require('chai')
 const { random } = Math
 const subscribeEvent = require('./subscribe-event')
-const { models: { User, Event } } = require('../data')
 
 describe('subscribeEvent', () => {
     before(() =>
@@ -51,14 +50,14 @@ describe('subscribeEvent', () => {
                 )
                 .then(([user, event]) => {
                     expect(user).to.exist
-                    expect(user.subscribedEvents).to.contain(event._id)
+                    expect(user.subscribed).to.contain(event._id)
                     expect(event).to.exist
                     expect(event.title).to.equal(title)
                     expect(event.description).to.equal(description)
                     expect(event.date).to.deep.equal(date)
                     expect(event.location).to.equal(location)
                     expect(event.publisher.toString()).to.equal(publisher.toString())
-                    expect(event.subscribedEvents).to.contain(user._id)
+                    expect(event.subscribed).to.contain(user._id)
                 })
         )
     })

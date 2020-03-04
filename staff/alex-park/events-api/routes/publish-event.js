@@ -1,19 +1,16 @@
-const { deleteEvent } = require('../logic')
-const { NotFoundError } = require('../errors')
+const { publishEvent } = require('../logic')
+const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
-    const { params: { id, eventId } } = req
+    const { params: { id }, body: { title, description, location, date } } = req
 
     try {
-        deleteEvent(id, eventId)
-            .then(() => res.end())
+        publishEvent(id, title, description, location, new Date(date))
+            .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
 
                 const { message } = error
-
-                if (error instanceof NotFoundError)
-                    status = 404
 
                 res
                     .status(status)

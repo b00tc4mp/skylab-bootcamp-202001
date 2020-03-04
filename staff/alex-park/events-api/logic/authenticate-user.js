@@ -1,6 +1,6 @@
-const { validate } = require('../utils')
-const { models: { User } } = require('../data')
-const { NotAllowedError } = require('../errors')
+const { validate } = require('events-utils')
+const { models: { User } } = require('events-data')
+const { NotAllowedError } = require('events-errors')
 
 /**
  * Checks user credentials against the storage
@@ -21,7 +21,7 @@ module.exports = (email, password) => {
 
     return User.findOne({ email, password })
         .then(user => {
-            if (!user) throw new NotAllowedError('wrong credentials')
+            if (!user) throw new NotAllowedError(`wrong credentials`)
 
             user.authenticated = new Date
 

@@ -1,8 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User, Event } } = require('../data')
-const mongoose = require('mongoose')
+const { mongoose, models: { User, Event } } = require('events-data')
 const { expect } = require('chai')
 const { random } = Math
 const retrievePublishedEvents = require('./retrieve-published-events')
@@ -26,26 +25,9 @@ describe('retrievePublishedEvents', () => {
         location = `location-${random()}`
     })
 
-    describe('when no events have been published', () => {
-        let _id
-        beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(({ id }) => _id = id)
-        )
-
-        it('should return a message when no events are found on that user', () =>
-            retrievePublishedEvents(_id)
-                .then(message => {
-                    expect(message.length === 0).to.be.true
-                    expect(message).to.be.instanceOf(Array)
-                })
-        )
-
-        afterEach(() => User.deleteMany({}))
-    })
-
-    describe('when at least one event has been published', () => {
+    describe('when user already exists', () => {
         let _id, _other
+
         beforeEach(() =>
             User.insertMany([
                 { name, surname, email, password },
@@ -69,8 +51,7 @@ describe('retrievePublishedEvents', () => {
                 })
         )
 
-
-        it('should successfuly retrieve all events published by the user', () =>
+        it('should succeed on correct and valid and right data', () =>
             retrievePublishedEvents(_id)
                 .then(events => {
                     expect(events).to.exist
@@ -88,14 +69,9 @@ describe('retrievePublishedEvents', () => {
                     })
                 })
         )
-
-        afterEach(() => User.deleteMany({}))
-
     })
 
-    after(() =>
-        Event.deleteMany({})
-            .then(() => User.deleteMany({}))
-            .then(() => mongoose.disconnect())
-    )
+    // TODO more happies and unhappies
+
+    after(() => Promise.all([User.deleteMany(), Event.deleteMany()]).then(() => mongoose.disconnect()))
 })

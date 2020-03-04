@@ -2,9 +2,8 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { random } = Math
-const mongoose = require('mongoose')
-const { registerUser } = require('../logic')
-const { models: { User } } = require('../data')
+const { mongoose, models: { User } } = require('events-data')
+const registerUser = require('./register-user')
 
 const { env: { TEST_MONGODB_URL } } = process
 
@@ -44,5 +43,5 @@ describe('registerUser', () => {
 
     // TODO unhappy paths and other happies if exist
 
-    after(() => User.deleteMany({}).then(() => mongoose.disconnect()))
+    after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

@@ -26,36 +26,38 @@ describe('validate', () => {
             expect(() => validate.string(target, name)).to.throw(TypeError, `${name} ${target} is not a string`)
         })
 
-        it('should throw type-error on empty string target with default empty flat as true', () => {
+        it('should throw type-error on empty string target with default empty flat to true', () => {
             const name = 'something'
-            let target = ''
 
+            let target = ''
             expect(() => validate.string(target, name)).to.throw(Error, `${name} is empty`)
         })
 
-        it('should not throw on empty string target with empty flat as false', () => {
+        it('should not throw on empty string target with empty flat to false', () => {
             const name = 'something'
-            let target = ''
 
+            let target = ''
             expect(() => validate.string(target, name, false)).not.to.throw()
         })
     })
 
-    describe('email', () => {
-        const emailArr = ['a@gmail.com', 'a@yahoo.com', '123@co.uk', 'hsa@hotmail.com', 'asdsad@gmail.es']
-        // let randomEmail = emailArr[Math.floor(Math.random() * emailArr.length)]
-        
-        it('should not throw error on a valid email address', () => {
-            emailArr.forEach(email => {
-                expect(() => validate.email(email)).not.to.throw()
-            })
-        })
+    // TODO email validation unit tests
 
-        it('should throw an error on an invalid email syntax', () => {
-            const wrongMails = ['123@123', 'sakhdb', 'dsfd@aaaa.a', false]
-            wrongMails.forEach(email => {
-                expect(() => validate.email(email)).to.throw(Error, `${email} is not an email`)
-            })
+    describe('type', () => {
+        it('should succeed on matching non-primitive type', () => {
+            const name = 'something'
+
+            let target = '', type = String
+            expect(()=> validate.type(target, name, type)).to.not.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+
+            target = 'date', type = Date
+            expect(()=> validate.type(target, name, type)).to.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+
+            target = true, type = Boolean
+            expect(()=> validate.type(target, name, type)).not.to.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+
+            target = 'true', type = Boolean
+            expect(()=> validate.type(target, name, type)).to.throw(TypeError, `${name} ${target} is not a ${type.name.toLowerCase()}`)
         })
     })
 })

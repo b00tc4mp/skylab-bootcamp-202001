@@ -4,26 +4,22 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-
-const { 
-    registerUser, 
-    authenticateUser, 
-    retrieveUser, 
-    createEvent, 
-    retrievePublishedEvents, 
-    retrieveLastEvents, 
-    subscribeEvent, 
-    retrieveSubscribedEvents,
-    deleteEvent
+const {
+    registerUser,
+    authenticateUser,
+    retrieveUser,
+    publishEvent,
+    retrieveLastEvents,
+    retrievePublishedEvents,
+    subscribeEvent
 } = require('./routes')
-
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
-const { jwtVerifierMidWare } = require('./mid-wares')
-const mongoose = require('mongoose')
+const { jwtVerifierMidWare, cors } = require('./mid-wares')
+const { mongoose } = require('events-data')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -47,6 +43,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         const app = express()
 
+        app.use(cors)
+
         app.use(morgan('combined', { stream: accessLogStream }))
 
         app.post('/users', jsonBodyParser, registerUser)
@@ -55,17 +53,13 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.get('/users', jwtVerifierMidWare, retrieveUser)
 
-        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
+
+        app.get('/events', jwtVerifierMidWare, retrieveLastEvents)
 
         app.get('/users/:id/events/published', jwtVerifierMidWare, retrievePublishedEvents)
 
-        app.get('/events', retrieveLastEvents)
-
-        app.patch('/users/:id/event/:eventId', jwtVerifierMidWare, subscribeEvent)
-
-        app.get('/users/:id/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
-
-        app.delete('/users/:id/delete-event/:eventId', jwtVerifierMidWare, deleteEvent)
+        app.post('/users/:id/events/:eventId', jwtVerifierMidWare, subscribeEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

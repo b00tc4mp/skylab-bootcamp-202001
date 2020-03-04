@@ -1,17 +1,16 @@
-require('dotenv').config()
 const { authenticateUser } = require('../logic')
 const jwt = require('jsonwebtoken')
-const { env: { JWT_SECRET, JWT_EXP } } = process
+const { env: { JWT_SECRET,  JWT_EXP } } = process
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req
-    debugger
+
     try {
-        return authenticateUser(email, password)
+        authenticateUser(email, password)
             .then(id => {
                 const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: JWT_EXP })
-                
-                return res.status(200).json({ token })
+
+                res.status(200).json({ token })
             })
             .catch(({ message }) =>
                 res
@@ -22,7 +21,7 @@ module.exports = (req, res) => {
             )
     } catch ({ message }) {
         res
-            .status(401)
+            .status(401) //?
             .json({
                 error: message
             })
