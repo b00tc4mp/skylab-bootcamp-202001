@@ -1,7 +1,7 @@
 const { validate } = require('../utils')
 const { models: { User } } = require('../data')
 const { NotAllowedError } = require('../errors')
-
+debugger
 module.exports = (name, surname, email, password) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
