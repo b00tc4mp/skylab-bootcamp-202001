@@ -1,10 +1,10 @@
-import Register from './Register'
+import RegisterUser from './Register'
 import FontSize from './FontSize'
 import Timer from './Timer'
 import Login from './Login'
 
 export {
-  Register,
+  RegisterUser,
   FontSize,
   Timer,
   Login

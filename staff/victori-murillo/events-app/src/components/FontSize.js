@@ -30,7 +30,7 @@ export default function FontSize(props) {
 
     for (let index = 10; index <= 200; index++) {
       if (size.count === index) {
-        options.push(<option key={index} selected value={index}>{index}px</option>)
+        options.push(<option key={index} defaultValue value={index}>{index}px</option>)
       } else {
         options.push(<option key={index} value={index}>{index}px</option>)
       }
@@ -45,7 +45,7 @@ export default function FontSize(props) {
       <button onClick={() => dispatch({type: 'increment'})}>+</button>
       <button onClick={() => dispatch({type: 'decrement'})}>-</button>
       <select onChange={(e) => dispatch({type: 'select', fontSize: e.target.value})}>
-        <option>Select fontSize</option>
+        <option value="" >Select fontSize</option>
         {paintSelect()}
       </select>
     </div>

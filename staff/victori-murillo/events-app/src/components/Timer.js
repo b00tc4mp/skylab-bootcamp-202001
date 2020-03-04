@@ -8,7 +8,7 @@ export default function Timer({size}) {
     const timer = setTimeout(() => setTime(new Date()), 1000)
     return () => clearInterval(timer)
     
-  }, [])
+  }, [time])
 
   
 

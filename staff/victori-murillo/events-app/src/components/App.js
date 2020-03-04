@@ -1,40 +1,35 @@
 import React, { useState } from 'react'
 import { Register, FontSize, Login } from '.'
 import { registerUser } from '../logic'
-import {} from '../sass/app.sass'
+import '../sass/app.sass'
 import Count from './Count'
 
 function App() {
-  //state = {
-    //login: 'login'
- // }
-  //     login
+
   const [view, setView] = useState('login')
 
-  function handleRegister(event) {
+  async function handleRegister(event) {
+
     try {
-      event.preventDefault()
       const { name, surname, email, password } = event.target
 
-      registerUser(name.value, surname.value, email.value, password.value)
-        .then(data => console.log(data.message))
-        .catch(error => console.log(error))
+      await registerUser(name.value, surname.value, email.value, password.value)
+      setView('login')
 
     } catch (error) {
       console.log(error)
+      // handle errors
     }
 
   }
 
-  function handleLogin(event) {
+  async function handleLogin(event) {
     try {
       event.preventDefault()
       const { name, surname, email, password } = event.target
 
-      registerUser(name.value, surname.value, email.value, password.value)
-        .then(data => console.log(data.message))
-        .catch(error => console.log(error))
-
+      await registerUser(name.value, surname.value, email.value, password.value)
+      console.log('nice');
     } catch (error) {
       console.log(error)
     }
