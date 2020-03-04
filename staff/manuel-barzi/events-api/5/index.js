@@ -18,8 +18,8 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
-const { jwtVerifierMidWare } = require('./mid-wares')
-const mongoose = require('mongoose')
+const { jwtVerifierMidWare, cors } = require('./mid-wares')
+const { mongoose } = require('events-data')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -42,6 +42,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
         const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
         const app = express()
+
+        app.use(cors)
 
         app.use(morgan('combined', { stream: accessLogStream }))
 
