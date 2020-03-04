@@ -4,8 +4,8 @@ const { expect } = require('chai')
 // const { ObjectId } = require('mongodb')
 const registerUser = require('./register-user')
 const { env: { TEST_MONGODB_URL } } = process
-const { User } = require('../models')
-const mongoose = require('mongoose')
+const { User } = require('events-models')
+const { mongoose } = require('events-models')
 
 describe('registerUser', () => {
 

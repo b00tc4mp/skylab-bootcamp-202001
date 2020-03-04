@@ -4,8 +4,8 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
-const { User } = require('../models')
-const mongoose = require('mongoose')
+const { User } = require('events-models')
+const { mongoose } = require('events-models')
 
 describe('retrieveUser', () => {
 

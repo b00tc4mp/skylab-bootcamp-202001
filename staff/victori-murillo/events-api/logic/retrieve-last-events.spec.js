@@ -1,5 +1,5 @@
 const {User, Event} = require("../models")
-const mongoose = require('mongoose')
+const { mongoose } = require('events-models')
 
 describe('retrieveLastEvents', () => {
   

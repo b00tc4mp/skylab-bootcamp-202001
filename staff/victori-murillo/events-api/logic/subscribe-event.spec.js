@@ -1,4 +1,4 @@
-const { database, database: { ObjectId }, models: { User, Event } } = require('../models')
+const { database, database: { ObjectId }, models: { User, Event } } = require('events-models')
 const { expect } = require('chai')
 const { env: { TEST_MONGODB_URL } } = process
 const { random } = Math

@@ -5,7 +5,7 @@ const { expect } = require('chai')
 const { random } = Math
 const createEvent = require('./create-event')
 const { Event, User } = require("../models")
-const mongoose = require('mongoose')
+const { mongoose } = require('events-models')
 
 describe('createEvent', () => {
 

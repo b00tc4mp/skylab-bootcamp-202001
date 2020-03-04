@@ -13,7 +13,7 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { jwtVerify } = require('./middlewares')
-const mongoose = require('mongoose')
+const { mongoose } = require('events-models')
 const cors = require('cors')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -1,4 +1,4 @@
-// const {database, database:{ObjectId}} = require('../models')
+// const {database, database:{ObjectId}} = require('events-models')
 // const {validate} = require("../utils")
 
 // module.exports = async(id) => {

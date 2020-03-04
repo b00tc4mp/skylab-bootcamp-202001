@@ -1,5 +1,5 @@
-const { validate } = require('../utils')
-const {SchemaTypes: ObjectId} = require('mongoose')
+const { validate } = require('events-utils')
+const {SchemaTypes: ObjectId} = require('events-models')
 
 
 module.exports = (data, id) => {

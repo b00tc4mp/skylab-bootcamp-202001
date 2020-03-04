@@ -4,7 +4,6 @@ import { registerUser } from '../logic'
 import {} from '../sass/app.sass'
 import Count from './Count'
 
-
 function App() {
   //state = {
     //login: 'login'

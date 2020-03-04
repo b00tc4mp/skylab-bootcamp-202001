@@ -4,8 +4,8 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
-const mongoose = require('mongoose')
-const { User } = require('../models')
+const { mongoose } = require('events-models')
+const { User } = require('events-models')
 
 describe('authenticateUser', () => {
     before(() => mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }))

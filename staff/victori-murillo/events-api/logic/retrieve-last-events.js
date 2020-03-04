@@ -1,4 +1,4 @@
-const { Event } = require('../models')
+const { Event } = require('events-models')
 
 module.exports = () => Event.find({ date: { $gte: new Date } })
   .lean()
