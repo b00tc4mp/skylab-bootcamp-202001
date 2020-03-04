@@ -1,8 +1,8 @@
 require('dotenv').config()
+
 const retrievePublishedEvents = require('./retrieve-published-events')
-const mongoose = require('mongoose')
 const { expect } = require('chai')
-const { models: { User, Event } } = require('../data')
+const { mongoose, models: { User, Event } } = require('events-data')
 const { env: { TEST_MONGODB_URL } } = process
 const { random } = Math
 

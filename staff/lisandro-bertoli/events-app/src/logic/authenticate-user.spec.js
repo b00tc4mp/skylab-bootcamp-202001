@@ -1,94 +1,71 @@
 import authenticateUser from './authenticate-user'
+const { mongoose, models: { User } } = require('events-data')
+const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
+const { random } = Math
 
 describe('authenticateUser', () => {
+    beforeAll(async () => {
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        return await Promise.resolve(User.deleteMany())
+    })
+
     let name, surname, email, password
-    debugger
+
     beforeEach(() => {
-        name = 'name-' + Math.random()
-        surname = 'surname-' + Math.random()
-        email = `${Math.random()}@mail.com`
-        password = 'password-' + Math.random()
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
     })
 
     describe('when user already exists', () => {
-        beforeEach(() =>
-            fetch(`https://localhost:8080/users`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, surname, email, password })
-            })
-                .then(response => response.json()
-                    .then(result => {
-
-                        const { error } = result
-
-                        if (error) throw new Error(error)
-
-                    })
-                )
+        beforeEach(async () =>
+            await User.create(new User({ name, surname, email, password }))
         )
 
-        it('should succeed on correct credentials', () =>
-            authenticateUser(email, password)
-                .then(token => {
-                    expect(typeof token).toBe('string')
+        it('should succeed on correct credentials', async () => {
 
-                    const [header, payload, signature] = token.split('.')
-                    expect(header.length).toBeGreaterThan(0)
-                    expect(payload.length).toBeGreaterThan(0)
-                    expect(signature.length).toBeGreaterThan(0)
-                })
-        )
+            const token = await authenticateUser(email, password)
 
-        it('should fail on incorrect password', () => {
-            authenticateUser(email, `${password}-wrong`)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe('email and/or password wrong')
-                })
+            expect(typeof token).toBe('string')
+
+            const [header, payload, signature] = token.split('.')
+            expect(header.length).toBeGreaterThan(0)
+            expect(payload.length).toBeGreaterThan(0)
+            expect(signature.length).toBeGreaterThan(0)
+
         })
 
-        it('should fail on incorrect email', () => {
-            authenticateUser(`${email}-wrong`, password)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe('email and/or password wrong')
-
-                })
+        it('should fail on incorrect password', async () => {
+            try {
+                await authenticateUser(email, `${password}-wrong`)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe('wrong credentials')
+            }
         })
-
-        // afterEach(() => {
-        //     return fetch(`https://localhost:8080/users/auth`, {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({ email, password })
-        //     })
-        //         .then(response => {
-
-
-        //             const { error: _error, token } = JSON.parse(response.content)
-
-        //             if (_error) throw new Error(_error)
-
-        //             return fetch(`https://localhost:8080/users`, {
-        //                 method: 'DELETE',
-        //                 headers: {
-        //                     'Content-Type': 'application/json',
-        //                     'Authorization': `Bearer ${token}`
-        //                 },
-        //                 body: JSON.stringify({ password })
-        //             })
-        //                 .then(response => {
-        //                     if (response.content) {
-        //                         const { error } = JSON.parse(response.content)
-
-        //                         if (error) throw new Error(error)
-        //                     }
-        //                 })
-        //         })
-        // })
     })
 
+    it('should fail on incorrect email', async () => {
+        try {
+            await authenticateUser(`$wrong-${email}`, password)
+            throw new Error('should not reach this point')
+
+        } catch (error) {
+            expect(error).toBeInstanceOf(Error)
+            expect(error.message).toBe('wrong credentials')
+        }
+
+
+
+    })
+    afterAll(async () => {
+        await Promise.resolve(User.deleteMany())
+        return await mongoose.disconnect()
+    })
 })
+
+
+
+

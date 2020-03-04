@@ -1,76 +1,72 @@
-import registerUser from './register-user'
+const registerUser = require('./register-user')
+const { mongoose, models: { User } } = require('events-data')
+const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
+const { random } = Math
 
 describe('registerUser', () => {
+    beforeAll(async () => {
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        return await Promise.resolve(User.deleteMany())
+    })
+
+
     let name, surname, email, password
 
     beforeEach(() => {
-        name = 'name-' + Math.random()
-        surname = 'surname-' + Math.random()
-        email = `${Math.random()}@email.com`
-        password = 'password-' + Math.random()
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        password = `password-${random()}`
     })
 
-    it('should succeed on new user', () => {
-        registerUser(name, surname, email, password)
-            .then(response => {
+    it('should succeed on new user', async () => {
+        const response = await registerUser(name, surname, email, password)
 
-                expect(response).toBeUndefined()
-            })
+        expect(response).toBeUndefined()
+
+        const user = await User.findOne({ name, surname, email, password })
+
+        expect(user).toBeDefined()
+        expect(typeof user.id).toBe('string')
+        expect(user.name).toBe(name)
+        expect(user.surname).toBe(surname)
+        expect(user.email).toBe(email)
+        expect(user.password).toBe(password) // TODO encrypt this field!
+        expect(user.created).toBeInstanceOf(Date)
     })
 
     describe('when user already exists', () => {
-        beforeEach(() => {
-            return fetch('http://localhost:8080/users', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, surname, email, password })
-            })
-                .catch(error => {
-                    throw new Error(error)
-
+        beforeEach(async () => {
+            try {
+                return await fetch('http://localhost:8080/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, surname, email, password })
                 })
+
+            } catch (error) {
+                throw new Error(error)
+            }
         })
 
-        it('should fail on already existing user', () => {
-            registerUser(name, surname, email, password)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).toBeDefined()
-                    expect(error.message).toBe(`user ${email} already exists`)
+        it('should fail on already existing user', async () => {
+            try {
+                await registerUser(name, surname, email, password)
 
-                })
+                throw new Error('should not reach this point')
+            } catch (error) {
+
+                expect(error).toBeDefined()
+                expect(error.message).toBe(`user ${email} already exists`)
+            }
+
         })
-
-        // afterEach(() => {
-        //     return fetch(`http://localhost:8080/users/auth`, {
-        //         method: 'POST',
-        //         headers: { 'Content-Type': 'application/json' },
-        //         body: JSON.stringify({ email, password })
-        //     })
-        //         .then(response => {
-
-        //             const { error: _error, token } = JSON.parse(response.content)
-
-        //             if (_error) throw new Error(_error)
-
-        //             return fetch(`http://localhost:8080/users`, {
-        //                 method: 'DELETE',
-        //                 headers: {
-        //                     'Content-Type': 'application/json',
-        //                     'Authorization': `Bearer ${token}`
-        //                 },
-        //                 body: JSON.stringify({ password })
-        //             })
-        //                 .then(response => {
-        //                     if (response.content) {
-        //                         const { error } = JSON.parse(response.content)
-
-        //                         if (error) throw new Error(error)
-        //                     }
-        //                     debugger
-        //                 })
-        //         })
-        // })
     })
 
+    afterAll(async () => {
+        await Promise.resolve(User.deleteMany())
+        return await mongoose.disconnect()
+    })
 })
+
+

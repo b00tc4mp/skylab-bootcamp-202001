@@ -1,5 +1,6 @@
-const { validate } = require('../utils')
-const { models: { Event, User } } = require('../data')
+const { validate } = require('events-utils')
+const { models: { Event, User } } = require('events-data')
+const { NotFoundError } = require('events-errors')
 
 
 module.exports = (publisher, title, description, location, date) => {
@@ -9,18 +10,21 @@ module.exports = (publisher, title, description, location, date) => {
     validate.string(location, 'location')
     validate.type(date, 'date', Date)
 
-    const event = new Event({ publisher, title, description, date, location })
 
-    return event.save()
-        .then(({ _id }) => {
-            return User.findById(publisher)
-                .then(user => {
-                    debugger
-                    user.publishedEvents.push(_id)
-                    return user.save()
-                })
+
+    return User.findById(publisher)
+        .then(user => {
+            if (!user) throw new NotFoundError(`user with id ${publisher} does not exist`)
+
+            const event = new Event({ publisher, title, description, date, location })
+
+            user.publishedEvents.push(event.id)
+
+            return Promise.all([user.save(), event.save()])
         })
         .then(() => { })
+
+
 
 
     // return Event.insertOne(event)

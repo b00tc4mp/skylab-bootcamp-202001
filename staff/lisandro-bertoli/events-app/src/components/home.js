@@ -16,7 +16,7 @@ const Home = ({ name }) => {
     return <section className="home">
         <h1>Title</h1>
         <h2>{name}</h2>
-        <button onClick={showEvents}></button>
+        <p>Want to see the latest events?<button onClick={showEvents}>Click here</button></p>
         {events && <Events results={events} />}
     </section>
 }

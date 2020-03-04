@@ -1,32 +1,26 @@
-const atob = require('atob')
+const { validate } = require('events-utils')
+const { NotFoundError } = require('events-errors')
+
+export default function (token) {
+    validate.string(token, 'token')
+    validate.token(token)
 
 
-module.exports = function (token) {
-    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
-
-    const [header, payload, signature] = token.split('.')
-    if (!header || !payload || !signature) throw new Error('invalid token')
-
-    const { sub } = JSON.parse(atob(payload))
-
-    if (!sub) throw new Error('no user id in token')
-
-    return fetch(`http://localhost:8080/users`, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
-    })
-        .then(response => response.json())
-        .then(data => {
-
-
-            const { error: _error } = data
-
-            if (_error) throw new Error(_error)
-
-            const { name, surname, username } = data
-
-            return { name, surname, username }
-
+    return (async () => {
+        const response = await fetch(`http://localhost:8080/users`, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
         })
+
+        const data = await response.json()
+        const { error: _error } = data
+
+        if (_error) throw new Error(_error)
+
+        const { name, surname, username } = data
+
+        return { name, surname, username }
+
+    })()
 }
 

@@ -1,25 +1,36 @@
-export default function (name, surname, email, password) {
-    if (typeof name !== 'string') throw new TypeError(`name ${name} is not a string`)
-    if (!name.trim()) throw new Error('name is empty')
-    if (typeof surname !== 'string') throw new TypeError(`surname ${surname} is not a string`)
-    if (!surname.trim()) throw new Error('surname is empty')
-    if (typeof email !== 'string') throw new TypeError(`email ${email} is not a string`)
-    if (!email.trim()) throw new Error('email is empty')
-    if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
-    if (!password.trim()) throw new Error('password is empty')
+const API_URL = process.env.REACT_APP_API_URL
+
+const { validate } = require('events-utils')
+
+module.exports = function (name, surname, email, password) {
+    validate.email(email, 'email')
+    validate.string(email, 'email')
+    validate.string(name, 'name')
+    validate.string(surname, 'surname')
+    validate.string(password, 'password')
 
 
-    return fetch(`http://localhost:8080/users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, surname, email, password })
-    })
-        .then(response => {
-            if (response.status === 201) return
-            else if (response.status === 409) {
-                const { error } = JSON.parse(response.content)
+    return (async () => {
 
-                throw new Error(error)
-            } else throw new Error('Unknown error')
+
+        const response = await fetch(`${API_URL}/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, surname, email, password })
         })
+        debugger
+        if (response.status === 201) return
+
+        if (response.status === 409) {
+            return response.json()
+                .then(response => {
+                    const { error } = response
+
+                    throw new Error(error)
+
+                })
+        } else throw new Error('Unknown error')
+
+    })()
 }
+

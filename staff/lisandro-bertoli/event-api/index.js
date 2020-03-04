@@ -12,7 +12,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
-const mongoose = require('mongoose')
+const { mongoose } = require('events-data')
 const { registerUser,
     authenticateUser,
     retrieveUser,
@@ -75,11 +75,16 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
 
 
-        app.listen(port, () => logger.info(`server ${name} ${version} started on port ${port}`))
+        app.listen(port, () => {
+            logger.info(`server ${name} ${version} started on port ${port}`)
+        })
 
         process.on('SIGINT', () => {
             logger.info('server abrutly stopped')
 
             process.exit(0)
         })
+    })
+    .catch(error => {
+        console.log(error.message)
     })

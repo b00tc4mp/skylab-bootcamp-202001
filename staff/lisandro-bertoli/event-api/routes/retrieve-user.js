@@ -1,5 +1,5 @@
 const { retrieveUser } = require('../logic')
-const { NotAllowedError, NotFoundError, ContentError } = require('../errors')
+const { NotAllowedError, NotFoundError, ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req

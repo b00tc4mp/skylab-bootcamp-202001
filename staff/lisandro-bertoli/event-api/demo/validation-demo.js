@@ -1,1 +1,1 @@
-const { models: { User } } = require('../data')
+const { models: { User } } = require('events-data')

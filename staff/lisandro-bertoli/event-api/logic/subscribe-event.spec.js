@@ -1,8 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const mongoose = require('mongoose')
-const { models: { User, Event } } = require('../data')
+const { mongoose, models: { User, Event } } = require('events-data')
 const { expect } = require('chai')
 const { random } = Math
 const subscribeEvent = require('./subscribe-event')

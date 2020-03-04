@@ -2,9 +2,8 @@ require('dotenv').config()
 
 const registerUser = require('./register-user')
 const { expect } = require('chai')
-const mongoose = require('mongoose')
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User } } = require('../data')
+const { mongoose, models: { User } } = require('events-data')
 
 describe('registerUser', () => {
     let name, surname, email, password

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Register from './register'
 import Login from './login'
 import Home from './home'
@@ -7,30 +7,53 @@ import { authenticateUser, retrieveUser, registerUser } from '../logic'
 
 function App() {
 
-  const [view, setView] = useState('register')
+  const [view, setView] = useState()
   const [user, setUser] = useState()
 
-  const handleLogin = (email, password) => {
-    authenticateUser(email, password)
-      .then(token => {
-        sessionStorage.token = token
-        return retrieveUser(token)
-          .then(({ name }) => {
-            setView('home')
-            setUser(name)
+  const handleLogin = async (email, password) => {
+    try {
+      const token = await authenticateUser(email, password)
 
-          })
-      })
-      .catch(error => console.log(error))
+      sessionStorage.token = token
+
+      const user = await retrieveUser(token)
+
+      setView('home')
+      setUser(user.name)
+
+    } catch (error) {
+      console.log(error.message)
+    }
 
   }
 
-  const handleRegister = (name, surname, email, password) => {
-    registerUser(name, surname, email, password)
-      .then(() => {
-        setView('login')
-      })
+  const handleRegister = async (name, surname, email, password) => {
+    try {
+      await registerUser(name, surname, email, password)
+      debugger
+      setView('login')
+
+    } catch (error) {
+      console.log(error.message)
+    }
   }
+
+  useEffect(async () => {
+    const { token } = sessionStorage
+    try {
+      if (token) {
+        const user = await retrieveUser(token)
+
+        setView('home')
+        setUser(user.name)
+      } else {
+        setView('register')
+      }
+
+    } catch (error) {
+      console.log(error.message)
+    }
+  }, [])
 
 
   return (

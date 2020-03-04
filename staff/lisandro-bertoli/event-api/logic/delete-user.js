@@ -1,5 +1,5 @@
-const { validate } = require('../utils')
-const { models: { User } } = require('../data')
+const { validate } = require('events-utils')
+const { models: { User } } = require('events-data')
 
 
 module.exports = (_id, password) => {

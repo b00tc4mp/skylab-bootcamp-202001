@@ -1,4 +1,5 @@
-const { ContentError } = require('../errors')
+const { ContentError } = require('events-errors')
+const atob = require('atob')
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -12,6 +13,16 @@ module.exports = {
 
     email(target) {
         if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} is not an e-mail`) // TODO custom error?
+    },
+
+    token(token) {
+
+        const [header, payload, signature] = token.split('.')
+        if (!header || !payload || !signature) throw new Error('invalid token')
+
+        const { sub } = JSON.parse(atob(payload))
+
+        if (!sub) throw new Error('no user id in token')
     },
 
     type(target, name, type) {

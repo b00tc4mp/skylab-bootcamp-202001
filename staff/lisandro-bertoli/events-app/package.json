@@ -7,6 +7,9 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "atob": "^2.1.2",
+    "axios": "^0.19.2",
+    "events-errors": "file:../events-errors",
+    "events-utils": "file:../events-utils",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0"
@@ -34,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "events-data": "file:../events-data",
     "node-sass": "^4.13.1"
   }
 }
