@@ -6,6 +6,22 @@ module.exports = id => {
 
 
     return Event.find({ subscribers: id })
-        .then(events => events)
+        .lean()
+        .then(events => {
+            events.forEach(event => {
+                event.id = event._id.toString()
+
+                delete event._id
+                delete event.__v
+
+                event.subscribers.forEach(subscriber => {
+                    subscriber.toString()
+                })
+
+                event.publisher = event.publisher.toString()
+            })
+
+            return events
+        })
 
 }

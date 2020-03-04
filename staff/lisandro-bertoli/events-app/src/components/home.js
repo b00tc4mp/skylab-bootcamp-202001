@@ -5,11 +5,12 @@ import { retrieveLastEvents } from '../logic'
 const Home = ({ name }) => {
     const [events, setEvents] = useState()
 
-    const showEvents = (event) => {
+    const showEvents = async (event) => {
         event.preventDefault()
 
-        return retrieveLastEvents()
-            .then(events => setEvents(events))
+        const _events = await retrieveLastEvents()
+
+        return setEvents(_events)
     }
 
 

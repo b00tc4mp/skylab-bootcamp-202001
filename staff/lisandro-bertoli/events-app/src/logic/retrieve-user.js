@@ -1,10 +1,9 @@
 const { validate } = require('events-utils')
-const { NotFoundError } = require('events-errors')
+
 
 export default function (token) {
     validate.string(token, 'token')
     validate.token(token)
-
 
     return (async () => {
         const response = await fetch(`http://localhost:8080/users`, {

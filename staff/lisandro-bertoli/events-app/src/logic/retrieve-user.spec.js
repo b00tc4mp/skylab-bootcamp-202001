@@ -3,7 +3,6 @@ const API_URL = process.env.REACT_APP_API_URL
 const MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 const { random } = Math
 const { retrieveUser } = require('.')
-const { NotFoundError } = require('events-errors')
 
 describe('retrieveUser', () => {
     let name, surname, email, password

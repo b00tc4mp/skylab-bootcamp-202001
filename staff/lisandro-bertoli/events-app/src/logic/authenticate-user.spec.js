@@ -57,8 +57,6 @@ describe('authenticateUser', () => {
             expect(error.message).toBe('wrong credentials')
         }
 
-
-
     })
     afterAll(async () => {
         await Promise.resolve(User.deleteMany())

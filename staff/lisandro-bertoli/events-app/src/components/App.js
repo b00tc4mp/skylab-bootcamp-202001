@@ -38,21 +38,25 @@ function App() {
     }
   }
 
-  useEffect(async () => {
-    const { token } = sessionStorage
-    try {
-      if (token) {
-        const user = await retrieveUser(token)
+  useEffect(() => {
+    (async () => {
+      const { token } = sessionStorage
 
-        setView('home')
-        setUser(user.name)
-      } else {
-        setView('register')
+      try {
+        if (token) {
+          const user = await retrieveUser(token)
+
+          setView('home')
+          setUser(user.name)
+        } else {
+          setView('register')
+        }
+
+      } catch (error) {
+        console.log(error.message)
       }
 
-    } catch (error) {
-      console.log(error.message)
-    }
+    })()
   }, [])
 
 

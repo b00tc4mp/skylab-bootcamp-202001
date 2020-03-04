@@ -18,6 +18,10 @@ module.exports = (page = '1') => {
 
                 delete event._id
                 delete event.__v
+                debugger
+                event.subscribers.forEach(subscriber => {
+                    subscriber.toString()
+                })
 
                 event.publisher = event.publisher.toString()
             })
