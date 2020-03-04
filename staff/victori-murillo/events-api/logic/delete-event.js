@@ -1,17 +1,14 @@
-const {database: db, database: {ObjectId}} = require('../data')
-const {validate} = require('../utils')
+const { validate } = require('../utils')
+const { Event } = require('../models')
 
 module.exports = (userId, eventId) => {
   validate.string(userId, 'id')
   validate.string(eventId, 'id')
 
-  const events = db.collection('events')
-  const _id = ObjectId(eventId)
+  return Event.deleteOne({ _id: eventId, publisher: 's' })
+    .then(({ deletedCount }) => {
 
-  return events.deleteOne({_id, publisher: 's'})
-  .then(({deletedCount}) => {
-
-    if (!deletedCount) throw new Error('The Event wasn\'t deleted')
-  })
+      if (!deletedCount) throw new Error('The Event wasn\'t deleted')
+    })
 
 }

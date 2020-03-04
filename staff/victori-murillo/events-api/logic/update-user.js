@@ -1,5 +1,6 @@
-const { database: db, database: {ObjectId} } = require('../data')
 const { validate } = require('../utils')
+const {SchemaTypes: ObjectId} = require('mongoose')
+
 
 module.exports = (data, id) => {
   for (const key in data) {

@@ -10,14 +10,16 @@ const client = new MongoClient('mongodb://localhost:27017', { useUnifiedTopology
 client.connect()
     .then(() => {
         const db = client.db('events')
+
         const users = db.collection('users')
 
         // let's CRUD
 
         // CREATE
 
-        // users.insertOne({ name: 'Fula', surname: 'Nita', email: 'menganita@gmail.com', password: '123' })
+        // users.insertOne({ name: 'Menga', surname: 'Nota', email: 'menganita@gmail.com', password: '123' })
         //     .then(result => {
+        //         debugger
         //         console.log(result)
         //     })
 
@@ -75,37 +77,15 @@ client.connect()
 
         // CREATE-READ
 
-        // users.insertOne({ name: 'Menga', surname: 'Nota', email: 'menganita@gmail.com', password: '123' })
-        //     .then(result => {
-        //         const { insertedId: id } = result
+        users.insertOne({ name: 'Menga', surname: 'Nota', email: 'menganita@gmail.com', password: '123' })
+            .then(result => {
+                const { insertedId: id } = result
 
-        //         return users.findOne({ _id: id })
-        //     })
-        //     .then(user => console.log(user))
+                return users.findOne({ _id: id })
+            })
+            .then(user => console.log(user))
 
         // UPDATE?
 
-
-        // users.update({_id: ObjectId("5e57ea9690a2e2b9e693e634")}, {$set: name: 'name1'} )
-        //     .then(result => {
-        //         debugger
-        //         console.log(result)
-        //     })
-
-        // users.updateOne(
-        //     {_id: ObjectID('5e57ea9690a2e2b9e693e634')}, 
-        //     {$set: {name: 'YYY'}}
-        // )
-        // .then(result => {
-        //     debugger
-        //     console.log(result)
-        // })
-
         // DELETE?
-
-        // users.deleteMany()
-        // .then(res => {
-        //     debugger
-        //     console.log(res)
-        // })
     })

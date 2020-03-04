@@ -1,18 +1,17 @@
-const {database: db, database: {ObjectId}} = require('../data')
 const {validate} = require('../utils')
+const {User, Event} = require('../models')
 
 module.exports = (userId, eventId) => {
 
   validate.string(userId, 'id')
   validate.string(eventId, 'id')
 
-  const users = db.collection('users')
-  const events = db.collection('events')
+  return Promise.all([User.findById])
 
-  return events.updateOne({_id: ObjectId(eventId)}, {$addToSet: {subscribers: ObjectId(userId)}} )
-  .then(() => {
-    return users.updateOne({_id: ObjectId(userId)}, {$addToSet: {subscribedEvents: ObjectId(eventId)}})
-    .then(() => {})
-  })
+  // return events.updateOne({_id: eventId}, {$addToSet: {subscribers: userId}} )
+  // .then(() => {
+  //   return users.updateOne({_id: userId}, {$addToSet: {subscribedEvents: eventId}})
+  //   .then(() => {})
+  // })
 
 }

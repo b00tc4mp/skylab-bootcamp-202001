@@ -1,12 +1,12 @@
-const {database, database:{ObjectId}} = require('../data')
-const {validate} = require("../utils")
+// const {database, database:{ObjectId}} = require('../models')
+// const {validate} = require("../utils")
 
-module.exports = async(id) => {
+// module.exports = async(id) => {
 
-  validate.string(id, 'id')
+//   validate.string(id, 'id')
 
-  const users = database.collection('users')
+//   const users = database.collection('users')
 
-  await users.deleteOne({_id: ObjectId(id)})
-  // .then(() => {})
-}
+//   await users.deleteOne({_id: ObjectId(id)})
+//   // .then(() => {})
+// }

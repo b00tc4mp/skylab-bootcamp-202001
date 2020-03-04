@@ -1,13 +1,8 @@
-const { database: db, database: {ObjectId} } = require('../data')
-const { validate } = require('../utils')
+const { Event } = require('../models')
 
 module.exports = (data, eventId) => {
-  //check fields
-  // const fields = []
 
-  const events = db.collection('events')
-  const _id = ObjectId(eventId)
 
-  return events.updateOne({_id}, {$set: data })
-  .then(() => {})
+  return Event.updateOne({ _id: eventId }, { $set: data })
+    .then(() => { })
 }

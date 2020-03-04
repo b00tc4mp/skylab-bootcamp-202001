@@ -1,19 +1,17 @@
 require('dotenv').config()
 
-const {env: {TEST_MONGODB_URL}} = process
-const {database, database: {ObjectId}, models: {User}} = require('../data')
-const {expect} = require('chai')
+const { env: { TEST_MONGODB_URL } } = process
+const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
+const { User } = require('../models')
+const mongoose = require('mongoose')
 
 describe('retrieveUser', () => {
 
-  before(() =>
-    database.connect(TEST_MONGODB_URL)
-    .then(() => users = database.collection('users'))
-  )
+  before(() => mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true }))
 
-  let users, name, surname, email, password
+  let name, surname, email, password
 
   beforeEach(() => {
     name = `name-${random()}`
@@ -23,28 +21,24 @@ describe('retrieveUser', () => {
   })
 
   describe('when user already exists', () => {
-    let userId
+    let _id
 
-    beforeEach(() => 
-        users.insertOne(new User({name, surname, email, password}))
-        .then(({insertedId}) => userId = insertedId)
+    beforeEach(() =>
+      User.create(({ name, surname, email, password }))
+        .then(({ id }) => _id = id)
     )
 
     it('should retrieve the user', () =>
-        retrieveUser(userId.toString())
+      retrieveUser(_id)
         .then(user => {
-            expect(user).to.exist
-            expect(user.name).to.equal(name)
-            expect(user.surname).to.equal(surname)
-            expect(user.email).to.equal(email)
+          expect(user).to.exist
+          expect(user.name).to.equal(name)
+          expect(user.surname).to.equal(surname)
+          expect(user.email).to.equal(email)
         })
     )
-
-    afterEach(() => users.deleteOne({userId}))
+    afterEach(() => User.deleteOne({ _id }))
 
   })
-
-
-  after(() => database.disconnect())
-
+  after(() => mongoose.disconnect())
 })

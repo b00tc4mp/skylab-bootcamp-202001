@@ -1,13 +1,11 @@
-const {database: db, database: {ObjectId}} = require("../data")
-const {validate} = require('../utils')
+
+const { validate } = require('../utils')
+const { User, Event } = require('../models')
 
 module.exports = (id) => {
   validate.string(id, 'id')
 
-  const users = db.collection('users')
-  const events = db.collection('events')
-
-  return users.findOne({_id: ObjectId(id)})
-  .then(user => events.find({_id: {"$in": user.subscribedEvents }}).toArray()
-  .then(events => {return {events, user: user.name}}))
+  return User.findOne({ _id: id })
+    .then(user => Event.find({ id: { "$in": user.subscribedEvents } }).toArray()
+      .then(events => { return { events, user: user.name } }))
 } 

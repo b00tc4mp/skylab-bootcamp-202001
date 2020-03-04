@@ -1,19 +1,14 @@
-const {database, database: {ObjectId}} = require("../data")
+
 const {validate} = require("../utils")
+const { User, Event } = require('../models')
 
 module.exports = (id) => {
   validate.string(id, 'id')
-  
-  const events = database.collection('events')
-  const users = database.collection('users')
 
-  const _id = ObjectId(id)
-
-  return events.find({publisher: _id}).toArray()
+  return Event.find({publisher: id}).toArray()
   .then(events => 
-    users.findOne({_id})
+    User.findOne({id})
     .then(user => {
-      debugger
       return {events, user: user.name}
     })
   )

@@ -1,28 +1,17 @@
-const { database } = require('../data')
+const { Event } = require('../models')
 
-module.exports = () => database.collection('events')
-  .find()
-  .sort({created: -1})
-  .toArray()
-
-
-  // Getting data as streaming -->
-// module.exports = () => {
-
-//   const events = database.collection('events')
-//   const allEvents = [];
-
-//   const cursor = events.find()
-
-//   return (function print() {
-//     return cursor
-//       .hasNext()
-//       .then(hasNext => hasNext && cursor.next())
-//       .then(result => result && allEvents.push(result) && print())
-//       .then(() => allEvents)
-
-//   })();
-
-
-// }
-
+module.exports = () => Event.find({ date: { $gte: new Date } })
+  .lean()
+  .then(events => {
+    events.forEach(event => {
+      console.log(event)
+      event.id = event._id.toString()
+      delete event._id
+      delete event.__v
+      
+      event.publisher = event.publisher.toString()
+      console.log(event)
+    })
+    
+    return events
+  })
