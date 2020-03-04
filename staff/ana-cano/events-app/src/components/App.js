@@ -4,6 +4,12 @@ import logo from './logo.svg'
 // import './App.css'
 import './App.sass'
 
+function App() {
+  const [view, setView] = useState('register')
+  const changeView = view => setView(view)
+
+  return 
+}
     <Register />
 
 
