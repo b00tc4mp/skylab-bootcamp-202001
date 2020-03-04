@@ -14,10 +14,11 @@ module.exports = function (name, surname, email, password) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, surname, email, password })
     })
+        .then(response => response.text())
         .then(response => {
-            
+
             if (response.status === 201) return
-            const { error } = JSON.parse(response.content)
+            const { error } = JSON.parse(response)
             if (error) throw new Error(error)
         })
 }

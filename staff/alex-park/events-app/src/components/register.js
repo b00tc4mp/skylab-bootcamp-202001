@@ -1,6 +1,7 @@
 import React from 'react'
+import Feedback from './feedback'
 
-function Register({ onSubmit, onToLogin }) {
+function Register({ onSubmit, onToLogin, error }) {
     return <div className='register-container'>
         <h2>Register</h2>
         <form className='register-form' onSubmit={event => {
@@ -18,10 +19,11 @@ function Register({ onSubmit, onToLogin }) {
             <input type='text' name='surname' placeholder='Surname'></input>
             <input type='text' name='email' placeholder='example@gmai.com'></input>
             <input type='password' name='password' placeholder='Password'></input>
+            {error && <Feedback message={error}/>}
             <button>Submit</button>
         </form>
 
-        <a href='' onClick={event => {
+        <a href='#' onClick={event => {
             event.preventDefault()
 
             onToLogin()

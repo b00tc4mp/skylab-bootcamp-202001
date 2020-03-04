@@ -9,7 +9,9 @@ module.exports = function (email, password) {
     })
         .then(response => response.text())
         .then(data => {
-            const {token} = JSON.parse(data)
+            const { error, token } = JSON.parse(data)
+
+            if (error) throw new Error(error)
             return token
         })
 }

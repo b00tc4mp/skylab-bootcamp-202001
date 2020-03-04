@@ -1,43 +1,65 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import logo from './logo.svg'
 import './App.sass'
 import { Login, Register } from '.'
 import { registerUser, authenticateUser, retrieveUser } from '../logic'
 
-function App({name}) {
+function App() {
   const [view, setView] = useState('login')
-  let userName
-  
-  function handleGoToRegister() { setView('register') }
-  function handleGoToLogin () { setView('login') }
+  const [name, setName] = useState('')
+  const [error, setError] = useState('')
 
-  function handleLogin (email, password) {
-    return authenticateUser(email, password)
-    .then(token => retrieveUser(token))
-    .then(user => {
-      userName = user.name
-      
-      return setView('home')
-    })
+  function __handleError__(error) {
+    setError(error)
+
+    setTimeout(() => {
+      setError('')
+    }, 3000)
   }
 
-  function handleRegister (name, surname, email, password) { debugger
-    return registerUser(name, surname, email, password)
-    .then(() => { 
-      alert('successfully registered!')
-      setView('login')
-    })
+  function handleGoToRegister() { setView('register') }
+  function handleGoToLogin() { setView('login') }
+
+  function handleLogin(email, password) {
+
+    try {
+      return authenticateUser(email, password)
+        .then(token => retrieveUser(token))
+        .then(user => {
+          setName(user.name)
+          return setView('home')
+        })
+        .catch(({ message }) => {
+          return __handleError__(message)
+        })
+    } catch ({ message }) {
+      return __handleError__(message)
+    }
+  }
+
+  function handleRegister(name, surname, email, password) {
+
+    try {
+      registerUser(name, surname, email, password)
+        .then(() => {
+          setView('login')
+        })
+        .catch(({ message }) => {
+          if (message) __handleError__(message)
+        })
+    } catch ({ message }) {
+      if (message) __handleError__(message)
+    }
   }
 
   return (
     <div className="App">
-      <h1>Hello, {name}!</h1>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-      {view === 'login' && <Login onToRegister={handleGoToRegister} onSubmit={handleLogin}/>}
-      {view === 'register' && <Register onToLogin={handleGoToLogin} onSubmit={handleRegister}/>}
-      {view === 'home' && <h2>Hola, {userName}!</h2> }
+
+      <img src={logo} className="App-logo" alt="logo" />
+
+      {view === 'login' && <Login onToRegister={handleGoToRegister} onSubmit={handleLogin} error={error} />}
+      {view === 'register' && <Register onToLogin={handleGoToLogin} onSubmit={handleRegister} error={error} />}
+      {view === 'home' && <h1>Hola, {name}!</h1>}
     </div>
   )
 }

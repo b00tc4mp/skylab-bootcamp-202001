@@ -9,7 +9,6 @@ module.exports = function (token) {
     })
         .then(response => response.text())
         .then(response => {
-            console.log(response)
             const { name, surname, email } = JSON.parse(response)
 
             return { name, surname, email }
