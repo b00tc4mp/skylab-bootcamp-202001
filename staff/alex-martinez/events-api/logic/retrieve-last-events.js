@@ -1,5 +1,5 @@
 
-const { models: { Event } } = require('../data')
+const { models: { Event } } = require('events-data')
 
 module.exports = () => {
 
