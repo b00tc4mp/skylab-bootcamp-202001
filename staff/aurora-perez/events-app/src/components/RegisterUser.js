@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default ({onSubmit}) => {
+export default ({onSubmit, setView}) => {
     return (
         <form onSubmit = { (event) =>{
             event.preventDefault()
@@ -14,8 +14,12 @@ export default ({onSubmit}) => {
             <input type="text" placeholder="email" name="email"/>
             <input type="password" placeholder="password" name="password"/>
             <button>Register</button>
-            
-        </form>
+            <a href="" onClick={event => {
+                event.preventDefault()
+
+                setView('login')
+            }}>Login</a>
+            </form>
         
     )
 }
