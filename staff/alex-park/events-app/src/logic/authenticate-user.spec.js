@@ -1,35 +1,32 @@
 const { authenticateUser } = require('.')
-const { fetch } = require('../utils')
-require('../specs/specs-helper')
+const { mongoose: { User }, mongoose } = require('events-data')
+const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 
 describe('authenticateUser', () => {
-    let name, surname, username, password
+    let name, surname, email, password
+
+    beforeAll(() =>
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => User.deleteMany())
+    )
 
     beforeEach(() => {
         name = 'name-' + Math.random()
         surname = 'surname-' + Math.random()
-        username = 'username-' + Math.random()
+        email = 'email-' + Math.random()
         password = 'password-' + Math.random()
     })
 
     describe('when user already exists', () => {
         beforeEach(() =>
-            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, surname, username, password })
-            })
-                .then(response => {
-                    if (response.content) {
-                        const { error } = JSON.parse(response.content)
+            User.create({ name, surname, email, password })
+                .then(() => { })
 
-                        if (error) throw new Error(error)
-                    }
-                })
+
         )
 
         it('should succeed on correct credentials', () =>
-            authenticateUser(username, password)
+            authenticateUser(email, password)
                 .then(token => {
                     expect(token).toBeA('string')
 
@@ -41,20 +38,20 @@ describe('authenticateUser', () => {
         )
 
         it('should fail on incorrect password', () =>
-            authenticateUser(username, `${password}-wrong`)
+            authenticateUser(email, `${password}-wrong`)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe('username and/or password wrong')
+                    expect(error.message).toBe('email and/or password wrong')
                 })
         )
 
-        it('should fail on incorrect username', () =>
-            authenticateUser(`${username}-wrong`, password)
+        it('should fail on incorrect email', () =>
+            authenticateUser(`${email}-wrong`, password)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).toBeInstanceOf(Error)
-                    expect(error.message).toBe('username and/or password wrong')
+                    expect(error.message).toBe('email and/or password wrong')
                 })
         )
 
@@ -62,7 +59,7 @@ describe('authenticateUser', () => {
             fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ email, password })
             })
                 .then(response => {
                     const { error: _error, token } = JSON.parse(response.content)
@@ -89,45 +86,45 @@ describe('authenticateUser', () => {
     })
 
     it('should fail when user does not exist', () =>
-        authenticateUser(username, password)
+        authenticateUser(email, password)
             .then(() => { throw new Error('should not reach this point') })
             .catch(error => {
                 expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe('username and/or password wrong')
+                expect(error.message).toBe('email and/or password wrong')
             })
     )
 
-    it('should fail on non-string username', () => {
-        username = 1
+    it('should fail on non-string email', () => {
+        email = 1
         expect(() =>
-            authenticateUser(username, password)
-        ).toThrowError(TypeError, `username ${username} is not a string`)
+            authenticateUser(email, password)
+        ).toThrowError(TypeError, `email ${email} is not a string`)
 
-        username = true
+        email = true
         expect(() =>
-            authenticateUser(username, password)
-        ).toThrowError(TypeError, `username ${username} is not a string`)
+            authenticateUser(email, password)
+        ).toThrowError(TypeError, `email ${email} is not a string`)
 
-        username = undefined
+        email = undefined
         expect(() =>
-            authenticateUser(username, password)
-        ).toThrowError(TypeError, `username ${username} is not a string`)
+            authenticateUser(email, password)
+        ).toThrowError(TypeError, `email ${email} is not a string`)
     })
 
     it('should fail on non-string password', () => {
         password = 1
         expect(() =>
-            authenticateUser(username, password)
+            authenticateUser(email, password)
         ).toThrowError(TypeError, `password ${password} is not a string`)
 
         password = true
         expect(() =>
-            authenticateUser(username, password)
+            authenticateUser(email, password)
         ).toThrowError(TypeError, `password ${password} is not a string`)
 
         password = undefined
         expect(() =>
-            authenticateUser(username, password)
+            authenticateUser(email, password)
         ).toThrowError(TypeError, `password ${password} is not a string`)
     })
 })

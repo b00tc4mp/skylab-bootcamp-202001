@@ -1,24 +1,32 @@
+// import 'dotenv'
+import { validate } from 'events-utils'
 
-module.exports = function (name, surname, email, password) {
-    // if (typeof name !== 'string') throw new TypeError(`name ${name} is not a string`)
-    // if (!name.trim()) throw new Error('name is empty')
-    // if (typeof surname !== 'string') throw new TypeError(`surname ${surname} is not a string`)
-    // if (!surname.trim()) throw new Error('surname is empty')
-    // if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
-    // if (!username.trim()) throw new Error('username is empty')
-    // if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
-    // if (!password.trim()) throw new Error('password is empty')
+const API_URL = process.env.REACT_APP_API_URL
 
-    return fetch(`/users/`, {
+function registerUser(name, surname, email, password) {
+    validate.string(name, 'name')
+    validate.string(surname, 'surname')
+    validate.string(email, 'email')
+    validate.email(email)
+    validate.string(password, 'password')
+    
+    return fetch(`${API_URL}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, surname, email, password })
     })
-        .then(response => response.text())
         .then(response => {
-
             if (response.status === 201) return
-            const { error } = JSON.parse(response)
-            if (error) throw new Error(error)
+
+            if (response.status === 409) {
+                return response.json()
+                    .then(response => {
+                        const { error } = response
+
+                        throw new Error(error)
+                    })
+            } else throw new Error('Unknown error')
         })
 }
+
+export default registerUser

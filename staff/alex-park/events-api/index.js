@@ -55,7 +55,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
 
-        app.get('/events', jwtVerifierMidWare, retrieveLastEvents)
+        app.get('/events', retrieveLastEvents)
 
         app.get('/users/:id/events/published', jwtVerifierMidWare, retrievePublishedEvents)
 
