@@ -1,9 +1,10 @@
-module.exports = {
-    registerUser: require('./register-user'),
-    authenticateUser: require('./authenticate-user'),
-    retrieveUser: require('./retrieve-user'),
-    publishEvent: require('./publish-event'),
-    retrieveLastEvents: require('./retrieve-last-events'),
-    retrievePublishedEvents: require('./retrieve-published-events'),
-    subscribeEvent: require('./subscribe-event')
+import registerUser from './register-user'
+import authenticateUser from './authenticate-user'
+import retrieveUser from './retrieve-user'
+
+
+export {
+    registerUser, 
+    authenticateUser, 
+    retrieveUser
 }

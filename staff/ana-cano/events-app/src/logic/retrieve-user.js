@@ -1,19 +1,29 @@
-const { validate } = require('events-utils')
-const { models: { User } } = require('events-data')
-const { NotAllowedError } = require('events-errors')
+import { validate } from 'events-utils'
 
-module.exports = id => {
-    validate.string(id, 'id')
+export default function (token) {
+    validate.string(token, 'token')
 
-    return User.findById(id)
-        .then(user => {
-            if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
+    const [, payload] = token.split('.')
 
-            if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
+    const { sub } = JSON.parse(atob(payload))
 
-            user.retrieved = new Date
+    if (!sub) throw new Error('no user id in token')
 
-            return user.save()
+    return (async () => {
+
+        const response = await fetch(`http://localhost:8085/users/`, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
         })
-        .then(({ name, surname, email }) => ({ name, surname, email }))
+        const body = await response.json()
+
+
+        const { error: _error } = body
+
+        if (_error) throw new Error(_error)
+
+        const { name, surname, email } = body
+
+        return { name, surname, email }
+    })()
 }

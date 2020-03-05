@@ -1,22 +1,27 @@
-const { validate } = require('events-utils')
-const { models: { User } } = require('events-data')
-const { NotAllowedError } = require('events-errors')
 
-module.exports = (name, surname, email, password) => {
+import { validate } from 'events-utils'
+const API_URL = process.env.REACT_APP_API_URL
+
+export default function (name, surname, email, password) {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
 
-    return User.findOne({ email })
-        .then(user => {
-            if (user) throw new NotAllowedError(`user with email ${email} already exists`)
-
-            user = new User({ name, surname, email, password, created: new Date })
-
-            return user.save()
+    return (async () => {
+        const response = await fetch(`${API_URL}/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, surname, email, password })
         })
-        .then(() => { })
 
+        if (response.status === 201) return
+
+        if (response.status === 409) {
+            const body = await response.json()
+            const { error } = body
+            throw new Error(error)
+        } else throw new Error('Unknown error')
+    })()
 }

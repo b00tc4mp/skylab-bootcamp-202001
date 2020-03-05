@@ -1,47 +1,107 @@
-require('dotenv').config()
+const { retrieveUser } = require('.')
+const { fetch } = require('events-utils')
+require('../specs/specs-helper.js')
 
-const { env: { TEST_MONGODB_URL } } = process
-const { expect } = require('chai')
-const { random } = Math
-const retrieveUser = require('./retrieve-user')
-const { mongoose, models: { User } } = require('events-data')
-
-describe('retrieveUser', () => {
-    before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany())
-    )
-
-    let name, surname, email, password, users
+fdescribe('retrieveUser', () => {
+    let name, surname, username, password, token
 
     beforeEach(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
-        password = `password-${random()}`
+        name = 'name-' + Math.random()
+        surname = 'surname-' + Math.random()
+        username = 'username-' + Math.random()
+        password = 'password-' + Math.random()
     })
 
     describe('when user already exists', () => {
-        let _id
-
         beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(({ id }) => _id = id)
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, surname, username, password })
+            }).then(response => {
+                if (response.content) {
+                    const { error } = JSON.parse(response.content)
+
+                    if (error) throw new Error(error)
+                }
+
+                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                }).then(response => {
+                    const { error: _error, token: _token } = JSON.parse(response.content)
+
+                    if (_error) throw new Error(_error)
+
+                    token = _token
+                })
+            })
         )
 
-        it('should succeed on correct and valid and right data', () =>
-            retrieveUser(_id)
-                .then(user => {
-                    expect(user.constructor).to.equal(Object)
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
-                    expect(user.password).to.be.undefined
-                })
+        it('should succeed on correct token', () =>
+            retrieveUser(token).then(user => {
+                expect(user).toBeDefined()
+
+                const VALID_KEYS = ['name', 'surname', 'username']
+                Object.keys(user).forEach(key => VALID_KEYS.includes(key))
+
+                expect(user.name).toBe(name)
+                expect(user.surname).toBe(surname)
+                expect(user.username).toBe(username)
+                expect(user.password).toBeUndefined()
+            })
         )
+
+        it('should fail on invalid token', () => {
+            retrieveUser(`${token}-wrong`).then(()=>{
+                throw new Error('should not reach this point')
+            }).catch(error => {
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe('invalid token')
+            })
+        })
+
+        afterEach(() => {
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            }).then(response => {
+                if (response.content) {
+                    const { error } = JSON.parse(response.content)
+
+                    if (error) throw new Error(error)
+                }
+            })
+        })
     })
 
-    // TODO more happies and unhappies
+    it('should fail on non-string token', () => {
+        token = 1
+        expect(() =>
+            retrieveUser(token, () => { })
+        ).toThrowError(TypeError, `token ${token} is not a string`)
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+        token = true
+        expect(() =>
+            retrieveUser(token, () => { })
+        ).toThrowError(TypeError, `token ${token} is not a string`)
+
+        token = undefined
+        expect(() =>
+            retrieveUser(token, () => { })
+        ).toThrowError(TypeError, `token ${token} is not a string`)
+    })
+
+    it('should fail on invalid token format', () => {
+        token = 'abc'
+
+        expect(() =>
+            retrieveUser(token, () => { })
+        ).toThrowError(Error, 'invalid token')
+    })
 })

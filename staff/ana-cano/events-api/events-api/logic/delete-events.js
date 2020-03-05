@@ -1,7 +1,9 @@
-const { validate } = require('../utils')
+const { validate } = require('events-utils')
 const { models: { Event } } = require('../data')
 ​
+
 module.exports = (_id, publisher) => {
+
     validate.string(_id, 'id')
     validate.string(publisher, 'publisher')
 ​

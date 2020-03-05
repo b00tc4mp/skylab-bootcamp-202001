@@ -19,7 +19,7 @@ function Register({onRegister, goToLogin}){
     <input type="email" name="email" placeholder="email"/>
     <input type="password" name="password" placeholder="password"/>
     <button type="submit">Register</button>
-    <a href="" onClick={goToLogin}></a>
+    <a href="" onClick={goToLogin}>Go to Login</a>
     </form>
 
     }

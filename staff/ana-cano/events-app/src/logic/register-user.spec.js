@@ -1,47 +1,65 @@
-require('dotenv').config()
-
-const { expect } = require('chai')
-const { random } = Math
-const { mongoose, models: { User } } = require('events-data')
-const registerUser = require('./register-user')
-
-const { env: { TEST_MONGODB_URL } } = process
+const { registerUser } = require('.')
+// const { fetch } = require('events-utils')
 
 describe('registerUser', () => {
-    let name, surname, email, password
-
-    before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany())
-    )
+    let name, surname, username, password
 
     beforeEach(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
-        password = `password-${random()}`
+        name = 'name-' + Math.random()
+        surname = 'surname-' + Math.random()
+        username = 'username-' + Math.random()
+        password = 'password-' + Math.random()
     })
 
-    it('should succeed on correct user data', () =>
-        registerUser(name, surname, email, password)
-            .then(result => {
-                expect(result).not.to.exist
-                expect(result).to.be.undefined
+    it('should succeed on new user', () => {
+        return registerUser(name, surname, username, password).then(response => {
+            expect(response).toBeUndefined()
+        })
+    })
 
-                return User.findOne({ email })
+    describe('when user already exists', () => {
+        beforeEach(() =>
+            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, surname, username, password })
             })
-            .then(user => {
-                expect(user).to.exist
-                expect(user.id).to.be.a('string')
-                expect(user.name).to.equal(name)
-                expect(user.surname).to.equal(surname)
-                expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password) // TODO encrypt this field!
-                expect(user.created).to.be.instanceOf(Date)
+        )
+
+        it('should fail on already existing user', () => {
+            return registerUser(name, surname, username, password).then(()=>{
+                throw new Error('should not reach this point')
+            }).catch(error => {
+                expect(error).toBeDefined()
+                expect(error.message).toBe(`user with username "${username}" already exists`)
             })
-    )
+        })
+    })
 
-    // TODO unhappy paths and other happies if exist
+    afterEach(() => {
+        return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        }).then(response => {
+            const { error: _error, token } = JSON.parse(response.content)
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+            if (_error) throw new Error(_error)
+
+            return fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ password })
+            }).then(response=>{
+                if (response.content) {
+                    const { error } = JSON.parse(response.content)
+
+                    if (error) throw new Error(error)
+                }
+            })
+        })
+    })
 })
