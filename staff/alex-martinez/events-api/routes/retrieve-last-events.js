@@ -1,32 +1,29 @@
-const { retrieveLastEvents} = require('../logic')
-const { NotFoundError, NotAllowedError } = require('events-errors')
+const { retrieveLastEvents } = require('../logic')
+
 
 module.exports = (req, res) => {
+    let { params: { page = '1' } } = req
 
     try {
-        retrieveLastEvents()
-            .then(events =>
-                res.status(200).json(events)
-            )
-            .catch(({ message }) =>
+        retrieveLastEvents(page)
+            .then(events => {
                 res
-                    .status(404)
-                    .json({
-                        error: message
-                    })
-            )
+                    .status(200)
+                    .json(events)
+            })
+            .catch(({ message }) => {
+                res
+                    .status(401)
+                    .json({ error: message })
+            })
     } catch (error) {
         let status = 400
 
-        if(error instanceof NotFoundError)
-            status = 404 // not found
+        if (error instanceof TypeError) status = 406 //Not Acceptable
 
         const { message } = error
-
         res
             .status(status)
-            .json({
-                error: message
-            })
+            .json({ error: message })
     }
 }

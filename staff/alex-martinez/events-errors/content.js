@@ -1,3 +1,4 @@
+
 module.exports = class ContentError extends Error {
     constructor(...args) {
         super(...args)

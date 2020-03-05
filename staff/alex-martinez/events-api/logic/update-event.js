@@ -1,12 +1,14 @@
-const { models: { Event } } = require('events-data')
 const { validate } = require('events-utils')
+const { models: { Event } } = require('events-data')
 
-module.exports = (id, eventId, newValues) => {
 
-    validate.string(id, 'userId')
+module.exports = (userId, eventId, updates) => {
+    validate.string(userId, 'userId')
     validate.string(eventId, 'eventId')
 
-    return Event.findOneAndUpdate( { _id: _eventId, publisher: _id }, { $set: newValues } )
-        .then(()=> {})
 
+    return Event.updateOne({ _id: eventId, publisher: userId }, { $set: updates }, { runValidators: true })
+        .then(({ nModified }) => {
+            if (Object.keys(updates).length !== nModified) throw new Error('at leat one field is invalid, the valid fields were modified')
+        })
 }

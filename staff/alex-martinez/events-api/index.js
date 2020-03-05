@@ -1,18 +1,31 @@
 require('dotenv').config()
 
 const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT] } = process
-const { mongoose } = require('events-data')
+
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, updateEvent } = require('./routes')
+
+const { jwtValidationMidWare } = require('./mid-wares')
+const cors = require('cors')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
-const { jwtVerifierMidWare } = require('./mid-wares')
+const { mongoose } = require('events-data')
+const { registerUser,
+    authenticateUser,
+    retrieveUser,
+    createEvent,
+    retrievePublishedEvents,
+    retrieveLastEvents,
+    subscribeEvent,
+    retrieveSubscribedEvents,
+    updateEvent,
+    deleteEvent,
+    deleteUser } = require('./routes')
 
-mongoose.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
@@ -34,32 +47,44 @@ mongoose.connect(MONGODB_URL)
 
         const app = express()
 
+        app.use(cors())
+
         app.use(morgan('combined', { stream: accessLogStream }))
 
         app.post('/users', jsonBodyParser, registerUser)
 
+        app.get('/users', jwtValidationMidWare, retrieveUser)
+
         app.post('/users/auth', jsonBodyParser, authenticateUser)
 
-        app.get('/users', jwtVerifierMidWare, retrieveUser)
+        app.post('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], createEvent)
 
-        app.post('/users/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+        app.get('/users/:id?/events', jwtValidationMidWare, retrievePublishedEvents)
 
-        app.get('/users/:id/events', jwtVerifierMidWare, retrievePublishedEvents)
+        app.get('/users/:id?/subscribed-events', jwtValidationMidWare, retrieveSubscribedEvents)
 
-        app.get('/events', retrieveLastEvents)
+        app.patch('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], subscribeEvent)
 
-        app.patch('/events/:id', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
+        app.patch('/events/:id', [jwtValidationMidWare, jsonBodyParser], updateEvent)
 
-        app.get('/users/subscribed-events', jwtVerifierMidWare, retrieveSubscribedEvents)
+        app.delete('/users/events/:id', jwtValidationMidWare, deleteEvent)
 
-        app.patch('/events-update/:id', [jwtVerifierMidWare, jsonBodyParser], updateEvent)
+        app.delete('/users', [jwtValidationMidWare, jsonBodyParser], deleteUser)
+
+        app.get('/events/:page?', retrieveLastEvents)
 
 
-        app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
+
+        app.listen(port, () => {
+            logger.info(`server ${name} ${version} started on port ${port}`)
+        })
 
         process.on('SIGINT', () => {
-            logger.info('server abruptly stopped')
+            logger.info('server abrutly stopped')
 
             process.exit(0)
         })
+    })
+    .catch(error => {
+        console.log(error.message)
     })

@@ -1,5 +1,6 @@
-const { subscribeEvent} = require('../logic')
-const {  NotAllowedError, NotFoundError } = require('events-errors')
+const { subscribeEvent } = require('../logic')
+const { NotFoundError, NotAllowedError } = require('events-errors')
+
 module.exports = (req, res) => {
     const { body: { id: eventId }, payload: { sub: id } } = req
 
@@ -26,9 +27,16 @@ module.exports = (req, res) => {
                     .status(status)
                     .json({ error: message })
             })
-    } catch ({ message }) {
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof TypeError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
         res
-            .status(400)
+            .status(status)
             .json({ error: message })
     }
 }

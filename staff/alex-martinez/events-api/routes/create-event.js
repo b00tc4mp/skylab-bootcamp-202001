@@ -1,36 +1,30 @@
 const { createEvent } = require('../logic')
 const { ContentError } = require('events-errors')
 
+
 module.exports = (req, res) => {
-    const { payload: { sub: id }, body: { title, description, location, date } } = req
+    const { body: { title, location, date, description }, payload: { sub: id } } = req
 
     try {
         createEvent(id, title, description, location, new Date(date))
-            .then(() => res.status(201).end())
-            .catch(error => {
-                let status = 400
-
-                const { message } = error
-
-                res
-                    .status(status)
-                    .json({
-                        error: message
-                    })
+            .then(() => {
+                res.status(201).end()
             })
-            debugger
+            .catch(({ message }) => {
+                res
+                    .status(409)
+                    .json({ error: message })
+            })
     } catch (error) {
-        let status = 400
+        let status = 404
 
-        if (error instanceof TypeError || error instanceof ContentError)
+        if (error instanceof ContentError)
             status = 406 // not acceptable
 
         const { message } = error
 
         res
             .status(status)
-            .json({
-                error: message
-            })
+            .json({ error: message })
     }
 }

@@ -1,7 +1,6 @@
 const { validate } = require('events-utils')
-const {  models: { User } } = require('events-data')
+const { models: { User } } = require('events-data')
 const { NotAllowedError } = require('events-errors')
-
 /**
  * Checks user credentials against the storage
  * 
@@ -14,6 +13,7 @@ const { NotAllowedError } = require('events-errors')
  * @throws {TypeError} if user data does not have the correct type
  * @throws {NotAllowedError} on wrong credentials
  */
+
 module.exports = (email, password) => {
     validate.string(email, 'email')
     validate.email(email)
@@ -21,7 +21,7 @@ module.exports = (email, password) => {
 
     return User.findOne({ email, password })
         .then(user => {
-            if (!user) throw new NotAllowedError(`wrong credentials`)
+            if (!user) throw new NotAllowedError('wrong credentials')
 
             user.authenticated = new Date
 

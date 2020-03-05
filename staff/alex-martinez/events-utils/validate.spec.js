@@ -41,23 +41,21 @@ describe('validate', () => {
         })
     })
 
-    // TODO email validation unit tests
+    describe('email', () => {
+        it('should not throw on email target', () => {
+            const email = 'valid@email.com'
+            expect(() => validate.email(email)).to.not.throw()
+        })
 
-    describe('type', () => {
-        it('should succeed on matching non-primitive type', () => {
-            const name = 'something'
+        it('should throw Error on invalid email', () => {
+            let email = 'invalidemail'
+            expect(() => validate.email(email)).to.throw(Error, `${email} is not an e-mail`)
 
-            let target = '', type = String
-            expect(()=> validate.type(target, name, type)).to.not.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+            email = 'invalid@mail'
+            expect(() => validate.email(email)).to.throw(Error, `${email} is not an e-mail`)
 
-            target = 'date', type = Date
-            expect(()=> validate.type(target, name, type)).to.throw(TypeError, `${name} ${target} is not a ${type.name}`)
-
-            target = true, type = Boolean
-            expect(()=> validate.type(target, name, type)).not.to.throw(TypeError, `${name} ${target} is not a ${type.name}`)
-
-            target = 'true', type = Boolean
-            expect(()=> validate.type(target, name, type)).to.throw(TypeError, `${name} ${target} is not a ${type.name.toLowerCase()}`)
+            email = 'invalid@mai.'
+            expect(() => validate.email(email)).to.throw(Error, `${email} is not an e-mail`)
         })
     })
 })

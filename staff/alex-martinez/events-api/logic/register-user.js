@@ -2,6 +2,7 @@ const { validate } = require('events-utils')
 const { models: { User } } = require('events-data')
 const { NotAllowedError } = require('events-errors')
 
+
 module.exports = (name, surname, email, password) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
@@ -9,14 +10,20 @@ module.exports = (name, surname, email, password) => {
     validate.email(email)
     validate.string(password, 'password')
 
+
+
     return User.findOne({ email })
         .then(user => {
-            if (user) throw new NotAllowedError(`user with email ${email} already exists`)
+            if (user) throw new NotAllowedError(`user ${email} already exists`)
 
-            user = new User({ name, surname, email, password, created: new Date })
+            user = new User({ name, surname, email, password })
 
             return user.save()
         })
         .then(() => { })
 
 }
+
+
+
+

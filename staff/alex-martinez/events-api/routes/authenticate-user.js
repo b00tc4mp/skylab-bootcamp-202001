@@ -1,6 +1,7 @@
 const { authenticateUser } = require('../logic')
 const jwt = require('jsonwebtoken')
-const { env: { JWT_SECRET,  JWT_EXP } } = process
+const { env: { JWT_SECRET, JWT_EXP: expiration } } = process
+const { ContentError, NotAllowedError } = require('events-errors')
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req
@@ -8,20 +9,37 @@ module.exports = (req, res) => {
     try {
         authenticateUser(email, password)
             .then(id => {
-                const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-                res.status(200).json({ token })
-            })
-            .catch(({ message }) =>
+                const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: expiration })
                 res
-                    .status(401)
+                    .status(200)
+                    .json({
+                        token
+                    })
+            })
+            .catch(error => {
+                let status = 404
+
+                if (error instanceof NotAllowedError)
+                    status = 401
+
+                const { message } = error
+
+                res
+                    .status(status)
                     .json({
                         error: message
                     })
-            )
-    } catch ({ message }) {
+            })
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
         res
-            .status(401) //?
+            .status(status)
             .json({
                 error: message
             })

@@ -1,3 +1,3 @@
 module.exports = {
-    jwtVerifierMidWare: require('./jwt-verifier-mid-ware')
+    jwtValidationMidWare: require('./jwt-validation-mid-ware')
 }

@@ -1,25 +1,21 @@
 const { registerUser } = require('../logic')
-const { NotAllowedError, ContentError } = require('events-errors')
+const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
     const { body: { name, surname, email, password } } = req
 
     try {
         registerUser(name, surname, email, password)
-            .then(() => res.status(201).end())
-            .catch(error => {
-                let status = 400
+            .then(() => {
 
-                if (error instanceof NotAllowedError)
-                    status = 409 // conflict
+                res.status(201).end()
+            })
 
-                const { message } = error
+            .catch(({ message }) => {
 
                 res
-                    .status(status)
-                    .json({
-                        error: message
-                    })
+                    .status(409)
+                    .json({ error: message })
             })
     } catch (error) {
         let status = 400
@@ -28,11 +24,8 @@ module.exports = (req, res) => {
             status = 406 // not acceptable
 
         const { message } = error
-
         res
             .status(status)
-            .json({
-                error: message
-            })
+            .json({ error: message })
     }
 }
