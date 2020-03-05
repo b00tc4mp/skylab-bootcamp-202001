@@ -7,7 +7,7 @@ import { authenticateUser, retrieveUser, registerUser } from '../logic'
 
 function App() {
 
-  const [view, setView] = useState()
+  const [view, setView] = useState('login')
   const [user, setUser] = useState()
 
   const handleLogin = async (email, password) => {
@@ -49,7 +49,7 @@ function App() {
           setView('home')
           setUser(user.name)
         } else {
-          setView('register')
+          setView('login')
         }
 
       } catch (error) {
