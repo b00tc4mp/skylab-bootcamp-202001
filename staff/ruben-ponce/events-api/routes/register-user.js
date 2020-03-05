@@ -1,5 +1,5 @@
 const { registerUser } = require('../logic')
-const { NotAllowedError, ContentError } = require('../errors')
+const { NotAllowedError, ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
     const { body: { name, surname, email, password } } = req
@@ -27,7 +27,7 @@ module.exports = (req, res) => {
         if (error instanceof TypeError || error instanceof ContentError)
             status = 406 // not acceptable
 
-        const { message } = error
+        message = error.message
 
         res
             .status(status)

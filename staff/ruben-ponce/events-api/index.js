@@ -11,11 +11,13 @@ const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
-const mongoose = require('mongoose')
+const { mongoose } = require('events-data')
+const cors = require('cors')
 
 
-mongoose.connect(MONGODB_URL)
+mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
+
         const logger = winston.createLogger({
             level: env === 'development' ? 'debug' : 'info',
             format: winston.format.json(),
@@ -36,31 +38,29 @@ mongoose.connect(MONGODB_URL)
 
         const app = express()
 
-        var cors = require('cors')
-
         app.use(cors())
 
         app.use(morgan('combined', { stream: accessLogStream }))
 
         app.post('/users', jsonBodyParser, registerUser)
 
-        app.post('/users/auth', jsonBodyParser, authenticateUser)
-
         app.get('/users', jwtVerifierMidWare, retrieveUser)
 
+        app.post('/users/auth', jsonBodyParser, authenticateUser)
+
         app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
-        
-        app.get('/events/:id', jwtVerifierMidWare, retrievePublishedEvents)
 
-        app.get('/lastevents', jwtVerifierMidWare, retrieveLastEvents)
+        app.get('/events/:id', [jwtVerifierMidWare, jsonBodyParser], retrievePublishedEvents)
 
-        app.patch('/subscribe', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
+        app.get('/eventslast', retrieveLastEvents)
 
-        app.get('/subscribed', jwtVerifierMidWare, retrieveSubscribedEvents)
+        app.patch('/users/events', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
 
-        app.patch('/update', [jwtVerifierMidWare, jsonBodyParser], updateEvent)
+        app.get('/users/events/subscribed', [jwtVerifierMidWare, jsonBodyParser], retrieveSubscribedEvents)
 
-        app.delete('/delete', [jwtVerifierMidWare, jsonBodyParser], deleteEvent)
+        app.patch('/users/events/edit', [jwtVerifierMidWare, jsonBodyParser], updateEvent)
+
+        app.delete('/users/events/delete', [jwtVerifierMidWare, jsonBodyParser], deleteEvent)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

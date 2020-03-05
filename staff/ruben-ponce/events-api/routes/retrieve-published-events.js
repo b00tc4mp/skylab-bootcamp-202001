@@ -1,26 +1,34 @@
 const { retrievePublishedEvents } = require('../logic')
+const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
-    
-    const { payload: { sub: id } } = req
+    const { params: { id } } = req
 
     try {
-        
         retrievePublishedEvents(id)
-            .then(event => {
+            .then(events => res.status(200).json(events))
+            .catch(error => {
+                let status = 404
 
-                res.status(200).json(event)
-            })
-            .catch(({ message }) =>
+                let { message } = error
+
                 res
-                    .status(401)
+                    .status(status)
                     .json({
                         error: message
                     })
+            }
             )
-    } catch ({ message }) {
+    } catch (error) {
+        let status = 404
+
+        if (error instanceof ContentError)
+            status = 400 // not acceptable
+
+        message = error.message
+
         res
-            .status(401) //?
+            .status(status)
             .json({
                 error: message
             })

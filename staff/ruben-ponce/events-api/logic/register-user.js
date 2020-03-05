@@ -1,11 +1,11 @@
-const { validate } = require('../utils')
-const { models: { User } } = require('../data')
-const { NotAllowedError } = require('../errors')
-debugger
+const { validate } = require('events-utils')
+const { models: { User } } = require('events-data')
+const { NotAllowedError } = require('events-errors')
+
 module.exports = (name, surname, email, password) => {
+    debugger
     validate.string(name, 'name')
     validate.string(surname, 'surname')
-    validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
 
@@ -18,5 +18,4 @@ module.exports = (name, surname, email, password) => {
             return user.save()
         })
         .then(() => { })
-
 }

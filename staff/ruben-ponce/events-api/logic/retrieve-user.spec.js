@@ -1,24 +1,25 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User } } = require('../data')
-const { expect } = require('chai')
-const { random } = Math
-const retrieveUser = require('./retrieve-user')
-const mongoose = require('mongoose')
+const { retrieveUser } = require('.')
+const chai = require('chai')
+const { mongoose } = require('events-data')
+const { models: { User } } = require('events-data')
+const expect = chai.expect
+const { NotFoundError, NotAllowedError } = require('events-errors')
 
 describe('retrieveUser', () => {
-    before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    )
+    let name, surname, email, password
 
-    let name, surname, email, password, users
+    before(() => {
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    })
 
     beforeEach(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
-        password = `password-${random()}`
+        name = 'name-' + Math.random()
+        surname = 'surname-' + Math.random()
+        email = Math.random() + '@mail.com'
+        password = 'password-' + Math.random()
     })
 
     describe('when user already exists', () => {
@@ -39,9 +40,39 @@ describe('retrieveUser', () => {
                     expect(user.password).to.be.undefined
                 })
         )
+
+        it('should fail on invalid id', () =>
+            expect(() => {
+                retrieveUser(`${_id}--wrong`)
+                    .then(() => { throw new Error('should not reach this point') })
+                    .catch((error) => {
+                        expect(error).to.eql(NotFoundError, `user with id ${id} does not exist`)
+                    })
+            })
+        )
+
+        afterEach(() => {
+            User.deleteOne({ _id })
+                .then(() => { })
+        })
     })
 
-    // TODO more happies and unhappies
+    it('should fail on invalid id format', () => {
+        id = 1
+        expect(() =>
+            retrieveUser(id)
+        ).to.throw(TypeError, `id ${id} is not a string`)
+
+        id = true
+        expect(() =>
+            retrieveUser(id)
+        ).to.throw(TypeError, `id ${id} is not a string`)
+
+        id = undefined
+        expect(() =>
+            retrieveUser(id)
+        ).to.throw(TypeError, `id ${id} is not a string`)
+    })
 
     after(() => mongoose.disconnect())
 })

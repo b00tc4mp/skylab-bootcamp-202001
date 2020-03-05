@@ -4,14 +4,14 @@ const validate = require('./validate')
 describe('validate', () => {
     describe('string', () => {
         it('should not throw on string target', () => {
-            let name = 'something'
+            const name = 'something'
             let target = 'a string'
 
             expect(() => validate.string(target, name)).not.to.throw()
         })
 
         it('should throw type-error on non-string target', () => {
-            let name = 'something'
+            const name = 'something'
 
             let target = 1
             expect(() => validate.string(target, name)).to.throw(TypeError, `${name} ${target} is not a string`)
@@ -41,29 +41,23 @@ describe('validate', () => {
         })
     })
 
-    describe('email', () => {
-        it('should not throw error on correct mail', () => {
-            let mail = 'pinkmac@gmail.com'
-            expect(() => validate.email(mail)).not.to.throw()
-            mail = 'pinkmac@gmail.es'
-            expect(() => validate.email(mail)).not.to.throw()
-            mail = 'pinkmac@hotmail.es'
-            expect(() => validate.email(mail)).not.to.throw()
-            mail = 'pinkmac@mac.co.uk'
-            expect(() => validate.email(mail)).not.to.throw()
-        })
+    // TODO email validation unit tests
 
-        it('shoul throw error on incorrect mail', () => {
-            mail = 'pinkmacgmailcom'
-            expect(() => validate.email(mail)).to.throw(`${mail} is not an e-mail`)
-            mail = 'pinkmac@gmailcom'
-            expect(() => validate.email(mail)).to.throw(`${mail} is not an e-mail`)
-            mail = 'pinkmacgmail.com'
-            expect(() => validate.email(mail)).to.throw(`${mail} is not an e-mail`)
-            mail = 'pinkmac@gmail..com'
-            expect(() => validate.email(mail)).to.throw(`${mail} is not an e-mail`)
-            mail = 'pinkmac@gmail.1'
-            expect(() => validate.email(mail)).to.throw(`${mail} is not an e-mail`)
+    describe('type', () => {
+        it('should succeed on matching non-primitive type', () => {
+            const name = 'something'
+
+            let target = '', type = String
+            expect(()=> validate.type(target, name, type)).to.not.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+
+            target = 'date', type = Date
+            expect(()=> validate.type(target, name, type)).to.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+
+            target = true, type = Boolean
+            expect(()=> validate.type(target, name, type)).not.to.throw(TypeError, `${name} ${target} is not a ${type.name}`)
+
+            target = 'true', type = Boolean
+            expect(()=> validate.type(target, name, type)).to.throw(TypeError, `${name} ${target} is not a ${type.name.toLowerCase()}`)
         })
     })
 })

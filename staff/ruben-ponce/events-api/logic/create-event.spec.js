@@ -1,18 +1,19 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const mongoose = require('mongoose')
+const { models: { User, Event } } = require('events-data')
+//const { SchemaTypes: { ObjectId } } = require('mongoose')
 const { expect } = require('chai')
 const { random } = Math
 const createEvent = require('./create-event')
-const { models: { User, Event } } = require('../data')
+const { mongoose } = require('events-data')
 
 describe('createEvent', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
-    let name, surname, email, password, title, description, date, location
+    let name, surname, email, password, users, events, title, description, date, location
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -26,17 +27,18 @@ describe('createEvent', () => {
     })
 
     describe('when user already exists', () => {
-        let _id
+        let id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
-                .then(({ id }) => _id = id)
+            User.create(new User({ name, surname, email, password }))
+                .then((user) => id = user.id)
         )
 
-        it('should succeed on correct and valid and right data', () =>
-            createEvent(_id, title, description, location, date)
+        it('should succeed on valid data', () => {
+
+            return createEvent(id, title, description, location, date)
                 .then(() =>
-                    Event.findOne({ title, description, location, date, publisher: _id })
+                    Event.findOne({ title, description, location, date, publisher: id })
                 )
                 .then(event => {
                     expect(event).to.exist
@@ -44,10 +46,30 @@ describe('createEvent', () => {
                     expect(event.description).to.equal(description)
                     expect(event.date).to.deep.equal(date)
                     expect(event.location).to.equal(location)
-                    expect(event.publisher.toString()).to.equal(_id)
+                    expect(event.publisher.toString()).to.equal(id)
                 })
-        )
+        })
+
+        it('should fail on incorrect data', () => {
+            return createEvent(id, `${title}-wrong`, description, location, date)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch((error) => {
+                    expect(error).to.exist
+                    expect(error).to.be.an('error')
+                })
+        })
+
+        afterEach(() => {
+            Event.deleteOne({ title })
+            User.deleteOne({ id })
+        })
+
     })
+
+    // describe('when user does not exist', () => {
+
+    // })
+
 
     // TODO more happies and unhappies
 

@@ -8,5 +8,5 @@ module.exports = {
     subscribeEvent: require('./subscribe-event'),
     retrieveSubscribedEvents: require('./retrieve-subscribed-events'),
     updateEvent: require('./update-event'),
-    deleteEvent: require('./delete.event')
+    deleteEvent: require('./delete-event')
 }

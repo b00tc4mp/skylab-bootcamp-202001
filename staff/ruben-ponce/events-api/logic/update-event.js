@@ -1,33 +1,25 @@
-const { validate } = require('../utils')
-const { database, database: { ObjectId } } = require('../data')
-const { NotAllowedError } = require('../errors')
+const { validate } = require('events-utils')
+const { models: { User, Event } } = require('events-data')
+const { NotAllowedError, ContentError } = require('events-errors')
+const { SchemaTypes: { ObjectId } } = require('mongoose')
 
-module.exports = (userId, eventId, title, description, date, location) => {
-    
+module.exports = (userId, eventId, updates) => {
     validate.string(userId, 'userId')
     validate.string(eventId, 'eventId')
-    if(title) validate.string(title, 'title')
-    if(description)validate.string(description, 'description')
-    if(date)validate.type(date, 'date', Date)
-    if(location)validate.string(location, 'location')
 
-    const users = database.collection('users')
-    const events = database.collection('events')
-    
-    // return users.findOne({ _id: ObjectId(userId)})
-    // .then(user => {
-    //     if(user) throw new NotAllowedError('unexpected token')
-        return events.findOne({ _id: ObjectId(eventId) })
-    // })
-        .then(event => { 
-            let _title, _description, _date, _location
+    const validKeys = ['title', 'description', 'date', 'location']
+    let approvedUpdates = {}
 
-                title ? _title = title : _title = event.title
-                description ? _description = description : _description = event.description
-                date ? _date = date : _date = event.date
-                location ? _location = location : _location = event.location
+    for (key in updates) {
+        if (!(validKeys.includes(key))) throw new NotAllowedError(`invalid field ${key}`)
 
-            }) 
-            .then(() => events.updateOne({ _id: ObjectId(eventId) }, { $set: { title: title, description: description, date: date, location: location } } ))
-            .then(() => {})
+        if (updates[key] !== '') {
+            approvedUpdates[key] = updates[key]
+
+        } else {
+            throw new ContentError(`field ${key} is empty`)
+        }
+    }
+
+    return Event.findByIdAndUpdate(eventId, { $set: approvedUpdates })
 }

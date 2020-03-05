@@ -1,26 +1,36 @@
 const { retrieveLastEvents } = require('../logic')
+const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
-    
-    try {
-        
-        retrieveLastEvents()
-            .then(event => {
 
-                res.status(200).json(event)
-            })
-            .catch(({ message }) =>
+    try {
+        retrieveLastEvents()
+            .then(events => res.status(200).json(events))
+            .catch(error => {
+                let status = 400
+
+                let { message } = error
+
                 res
-                    .status(401)
+                    .status(status)
                     .json({
                         error: message
                     })
+            }
             )
-    } catch ({ message }) {
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof ContentError)
+            status = 406 // not acceptable
+
+        message = error.message
+
         res
-            .status(401) //?
+            .status(status)
             .json({
                 error: message
             })
     }
+
 }
