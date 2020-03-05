@@ -1,6 +1,8 @@
-export default async function (token, title, description, location, date) {
-    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
+const { validate } = require('events-utils')
 
+export default async function (token, title, description, location, date) {
+    validate.string(token)
+    
     const [header, payload, signature] = token.split('.')
     if (!header || !payload || !signature) throw new Error('invalid token')
 
@@ -13,8 +15,5 @@ export default async function (token, title, description, location, date) {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ title, description, location, date })
     })
-
-    //const res = await create.json()
-
     return await create
 }

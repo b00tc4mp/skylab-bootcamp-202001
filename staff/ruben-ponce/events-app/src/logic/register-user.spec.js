@@ -11,7 +11,7 @@ describe('registerUser', () => {
 
     beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        await User.deleteMany()
+        return await User.deleteMany()
     })
 
     let name, surname, email, password, id
@@ -25,7 +25,7 @@ describe('registerUser', () => {
 
     it('should succeed on new user', async () => {
         const result = await registerUser(name, surname, email, password)
-        debugger
+
         expect(result).toBeUndefined()
 
         const user = await User.findOne({ email })
@@ -37,21 +37,20 @@ describe('registerUser', () => {
         expect(user.password).toBe(password)
     })
 
-    it('should fail on already existing user', () => {
-        expect(() =>
-            registerUser(name, surname, email, password)
-                .then(error => {
-                    expect(error).to.eql(Error(`user with email "${email}" already exists`))
-                })
-        )
+    it('should fail on already existing user', async () => {
+        try{
+            await registerUser(name, surname, email, password)
+        }catch(error){
+            expect(error).toBe(Error(`user with email "${email}" already exists`))
+        }        
     })
 
-    // afterEach(() => {
-    //     User.deleteOne({ _id: id })
-    // })
+    afterEach(() => {
+       return User.deleteOne({ _id: id })
+    })
 
     afterAll(async () => {
-        // await User.deleteMany()
-        await mongoose.disconnect()
+        await User.deleteMany()
+        return await mongoose.disconnect()
     })
 })
