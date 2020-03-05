@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import { Register, FontSize, Login } from '.'
+import { RegisterUser, FontSize, Login } from '.'
 import { registerUser } from '../logic'
 import '../sass/app.sass'
 import Count from './Count'
 
 function App() {
-
   const [view, setView] = useState('login')
 
   async function handleRegister(event) {
@@ -40,7 +39,7 @@ function App() {
     <div className="App">
       
       <FontSize />
-      {view === "register" && <Register handleRegister={handleRegister} setView={setView} />}
+      {view === "register" && <RegisterUser handleRegister={handleRegister} setView={setView} />}
       {view === "login" && <Login handleLogin={handleLogin} setView={setView} />}
       <Count />
     </div>
