@@ -1,23 +1,42 @@
-import { validate } from 'events-utils'
-const { env: { REACT_APP_API_URL: API_URL } } = process
+require('dotenv').config()
 
-export default async (username, password) => {
-  validate.string(username)
-  validate.string(password)
+const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
+console.log(TEST_MONGODB_URL);
+const { random } = Math
+const { AUTH } = require('../components')
+const { mongoose } = require('events-models')
+const { User } = require('events-models')
 
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
+describe('registerUser', async () => {
+  await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+
+  let name, surname, email, password
+
+  beforeEach(() => {
+    name = 'name-' + random()
+    surname = 'surname-' + random()
+    email = 'email' + random() + '@mail.com'
+    password = 'password-' + random()
   })
 
-  console.log(response)
-  debugger
-  // if (error) return callback(error)
+  describe('when user already exist', () => {
+    let _id
 
-  // const { error: _error, token } = JSON.parse(response.content)
+    beforeEach(async () => {
+      await User.create({ name, surname, email, password })
+      _id = user.id
+    })
 
-  // if (_error) return callback(new Error(_error))
+    it('should succed on right credentials', async () => {
+      const id = await RegisterUser(email, password)
+      expect(id).to.be.a('string')
+      expect(id.length).to.be.greaterThan(0)
+      expect(id).to.equal(_id)
+    })
+  })
 
-  // callback(undefined, token)
-}
+  after(async () => {
+    await mongoose.disconnect()
+  })
+})
+

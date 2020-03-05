@@ -1,6 +1,6 @@
 const { random } = Math
 const { mongoose, User } = require('events-models')
-import registerUser from './register-user'
+const registerUser = require('./register-user')
 
 const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
 
@@ -33,12 +33,10 @@ describe('registerUser', () => {
         expect(user.email).toBe(email)
         expect(user.password).toBe(password) // TODO encrypt this field!
         expect(user.created).toBeInstanceOf(Date)
+
     })
 
     // TODO unhappy paths and other happies if exist
 
-    afterAll(async() => {
-        // await User.deleteMany()
-        await mongoose.disconnect()
-    })
+    afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
 })
