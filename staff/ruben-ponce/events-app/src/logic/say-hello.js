@@ -1,1 +1,0 @@
-export default function (name) { return Promise.resolve(`hello ${name}!`) }

@@ -48,12 +48,10 @@ describe('authenticate-user', () => {
         it('should fail on incorrect password', async () => {
 
             try {
-
+                await authenticate(email, `${password}-wrong`)
             } catch(error) {
-
+                expect(error.message).toBe(`wrong credentials`)
             }
-            await authenticate(email, `${password}-wrong`)
-            expect(error.message).toBe(`wrong credentials`)
         })
 
         it('should fail when user does not exist', async () => {
@@ -74,33 +72,50 @@ describe('authenticate-user', () => {
                 expect(error).toEqual(TypeError(`email ${email} is not a string`))
             }
 
-            // let error =  await authenticate(1, password)
-            // expect(error.message).toBe(`TypeError: email ${email} is not a string`)
+            try{
+                email = true
+                await authenticate(email, password)
+            }catch(error){
+                expect(error).toEqual(TypeError(`email ${email} is not a string`))
+            }
 
-            // error = await authenticate(true, password)
-            // expect(error).toBe(TypeError, `email ${email} is not a string`)
-
-            // error = await authenticate(undefined, password)
-            // expect(error).toBe(TypeError, `email ${email} is not a string`)
+            try{
+                email = undefined
+                await authenticate(email, password)
+            }catch(error){
+                expect(error).toEqual(TypeError(`email ${email} is not a string`))
+            }
         })
 
-    // it('should fail on non-string password', () => {
-    //     email = random() + '@mail.com'
-    //     password = 1
-    //     expect(() =>
-    //         authenticate(email, password)
-    //     ).toThrowError(TypeError, `password ${password} is not a string`)
+    it('should fail on non-string password', async () => {
 
-    //     password = true
-    //     expect(() =>
-    //         authenticate(email, password)
-    //     ).toThrowError(TypeError, `password ${password} is not a string`)
+        try {
+            email = '-' + Math.random() + '@mail.com'
+            password = 1
 
-    //     password = undefined
-    //     expect(() =>
-    //         authenticate(email, password)
-    //     ).toThrowError(TypeError, `password ${password} is not a string`)
-    // })
+            await authenticate(email, password)
+        } catch (error) {
+            expect(error).toEqual(TypeError(`password ${password} is not a string`))
+        }
+
+        try {
+            email = '-' + Math.random() + '@mail.com'
+            password = true
+
+            await authenticate(email, password)
+        } catch (error) {
+            expect(error).toEqual(TypeError(`password ${password} is not a string`))
+        }
+
+        try {
+            email = '-' + Math.random() + '@mail.com'
+            password = undefined
+
+            await authenticate(email, password)
+        } catch (error) {
+            expect(error).toEqual(TypeError(`password ${password} is not a string`))
+        }
+    })
 
     afterEach(async () => {
         return await User.deleteOne({ _id: id })
