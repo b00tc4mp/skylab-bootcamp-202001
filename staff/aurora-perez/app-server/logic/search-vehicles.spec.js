@@ -1,5 +1,5 @@
 const { searchVehicles } = require('.')
-const { fetch } = require('../utils')
+const { fetch } = require('events-utils')
 require('../utils/array.prototype.random')
 require('../specs/specs-helper')
 

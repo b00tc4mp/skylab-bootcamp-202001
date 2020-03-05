@@ -1,5 +1,5 @@
 const toggleFavVehicle = require('./toggle-fav-vehicle')
-const { fetch } = require('../utils')
+const { fetch } = require('events-utils')
 require('../specs/specs-helper.js')
 require('../utils/array.prototype.random.js')
 

@@ -6,10 +6,10 @@ import {registerUser, authenticateUser, lastEvents} from '../logic'
 function App() {
   const [view, setView] = useState('login')
 
-  function handleRegister (name, surname, email, password){
+  async function handleRegister (name, surname, email, password){
     try{
-      registerUser(name, surname, email, password)
-      .then(()=> setView('login'))
+      await registerUser(name, surname, email, password)
+      setView('login')
 
     }catch(error){
       console.log(error.message)

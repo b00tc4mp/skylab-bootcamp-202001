@@ -1,4 +1,4 @@
-const { models: { Event } } = require('../data')
+const { models: { Event } } = require('events-data')
 
 module.exports = () => Event.find({ date: { $gte: new Date } })
     .lean()
@@ -11,8 +11,8 @@ module.exports = () => Event.find({ date: { $gte: new Date } })
         })
         return events
     })
-// const { models: { Event } } = require('../data')
-// const { validate } = require('../utils')
+// const { models: { Event } } = require('events-data')
+// const { validate } = require('events-utils')
 
 // module.exports = () => {
 

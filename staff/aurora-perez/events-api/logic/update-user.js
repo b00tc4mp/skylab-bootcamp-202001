@@ -1,4 +1,4 @@
-const {validate} = require('../utils')
+const {validate} = require('events-utils')
 
 module.exports= (data, id) => {
     // for(const key in data) {

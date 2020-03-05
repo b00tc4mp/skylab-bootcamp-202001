@@ -1,5 +1,5 @@
 const { retrieveVehicle } = require ('../logic')
-const { logger } = require('../utils')
+const { logger } = require('events-utils')
 
 module.exports = (req, res) => {
     const { session: { token, acceptCookies, query }, params: { id } } = req

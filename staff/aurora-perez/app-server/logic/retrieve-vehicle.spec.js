@@ -1,5 +1,5 @@
 const retrieveVehicle = require('./retrieve-vehicle')
-const { call } = require('../utils')
+const { call } = require('events-utils')
 require('../utils/array.prototype.random.js')
 
 

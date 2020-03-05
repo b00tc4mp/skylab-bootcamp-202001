@@ -1,12 +1,25 @@
-import axios from 'axios'
+import { validate } from 'events-utils'
 
-export default (email, password) => {
-    if (typeof email !== 'string') throw new TypeError(`email ${email} is not a string`)
-    if (!email.trim()) throw new Error('email is empty')
-    if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
-    if (!password.trim()) throw new Error('password is empty')
+const API_URL = process.env.REACT_APP_API_URL
 
-    return axios.post('http://localhost:8085/users/auth', {email, password})
-    .then(response => response.data.token)
+export default async (email, password) => {
+    validate.string(email, 'email')
+    validate.email(email)
+    validate.string(password, 'password')
+
+    const response = await fetch(`${API_URL}/users/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+        
+    const data = await response.json()
+
+    const { error, token } = data 
+
+    if(error) throw new Error(error)
+
+    return token
+        
+
 }
-

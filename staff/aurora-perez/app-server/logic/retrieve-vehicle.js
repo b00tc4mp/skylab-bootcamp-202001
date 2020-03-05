@@ -1,4 +1,4 @@
-const { call } = require('../utils')
+const { call } = require('events-utils')
 const atob = require('atob')
 
 module.exports = function (token, id, callback) {

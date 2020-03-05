@@ -1,14 +1,32 @@
-import axios from 'axios'
+import { validate } from 'events-utils'
 
-export default (name, surname, email, password) => {
-    if (typeof name !== 'string') throw new TypeError(`name ${name} is not a string`)
-    if (!name.trim()) throw new Error('name is empty')
-    if (typeof surname !== 'string') throw new TypeError(`surname ${surname} is not a string`)
-    if (!surname.trim()) throw new Error('surname is empty')
-    if (!email.trim()) throw new Error('email is empty')
-    if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
-    if (!password.trim()) throw new Error('password is empty')
+const API_URL = process.env.REACT_APP_API_URL
+//const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 
-    return axios.post('http://localhost:8085/users', {name, surname, email, password})
+export default async (name, surname, email, password)=> {
+    validate.string(name, 'name')
+    validate.string(surname, 'surname')
+    validate.string(email, 'email')
+    validate.email(email)
+    validate.string(password, 'password')
+
+        const response = await fetch(`${API_URL}/users`, {
+        //const response = await fetch(`http://localhost:8085/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, surname, email, password })
+        })
+        
+        if (response.status === 201) return
+
+        if (response.status === 409) {
+            const responseObj = await response.json()
+
+            const { error } = responseObj
+            throw new Error(error)
+
+        } else throw new Error('Unknown error')
+
+       
+    
 }
-
