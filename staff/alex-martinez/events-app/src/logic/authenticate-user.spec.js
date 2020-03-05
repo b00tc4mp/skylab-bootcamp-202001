@@ -1,6 +1,6 @@
 import authenticateUser from './authenticate-user'
 const { mongoose, models: { User } } = require('events-data')
-const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
+const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = process
 const { random } = Math
 
 describe('authenticateUser', () => {
