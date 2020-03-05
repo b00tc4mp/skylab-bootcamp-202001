@@ -1,102 +1,121 @@
-const retrieveUser = require('./retrieve-user')
-const { fetch } = require('../utils')
+import {retrieveUser} from '.'
+const jwt = require('jsonwebtoken')
+const { models: { User }, mongoose } = require('events-data')
+const { random } = Math
+const { ContentError } = require('events-errors')
+
+const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
+const JWT_SECRET = process.env.REACT_APP_JWT_SECRET
+const JWT_EXP = process.env.REACT_APP_JWT_EXP
 
 describe('retrieveUser', () => {
-    let name, surname, username, password, token
+    beforeAll(async () => {
+        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        return await User.deleteMany()
+    })
+
+    let name, surname, email, password
 
     beforeEach(() => {
-        name = 'name-' + Math.random()
-        surname = 'surname-' + Math.random()
-        username = 'username-' + Math.random()
-        password = 'password-' + Math.random()
+        name = 'name-' + random()
+        surname = 'surname-' + random()
+        email = 'email-' + random() + '@gmail.com'
+        password = 'password-' + random()
     })
 
-    describe('when user already exists', () => {
-        beforeEach(() =>
-            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, surname, username, password })
-            })
-            .then(response => {
-                if (response.content) {
-                    const { error } = JSON.parse(response.content)
+    describe('when the user exists and can be retrieved', () => {
+        let id, _token
+        beforeEach(async () => {
+            await User.create({ name, surname, email, password })
+            const response = await User.findOne({ name, surname, email, password })
+            
+            id = response.id
 
-                    if (error) throw new Error(error)
-                }
+            const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-                return fetch(`https://skylabcoders.herokuapp.com/api/v2/users/auth`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                })
-                .then(response => {
-                    const { error: _error, token: _token } = JSON.parse(response.content)
+            _token = token.toString()
+            
+            return _token
+        })
 
-                    if (_error) throw new Error(_error)
+        it('should succeed on new a valid user retrieval', async () => {
+            const user = await retrieveUser(_token)
+            expect(user).toBeDefined()
+            expect(user.name).toBe(name)
+            expect(user.surname).toBe(surname)
+            expect(user.email).toBe(email)
+            expect(user._id).toBe(id)
 
-                    token = _token
-                })
-            })
-        )
+            return
+        })
 
-        it('should succeed on correct token', () =>
-            retrieveUser(token)
-            .then(user => {
-                expect(user).toBeDefined()
-
-                const VALID_KEYS = ['name', 'surname', 'username']
-                Object.keys(user).forEach(key => VALID_KEYS.includes(key))
-                
-                expect(user.name).toBe(name)
-                expect(user.surname).toBe(surname)
-                expect(user.username).toBe(username)
-                expect(user.password).toBeUndefined()
-            })
-        )
-
-        it('should fail on invalid token', () =>      
-            retrieveUser(`${token}-wrong`) 
-            .then(() => {throw new Error('should not reach this point')})
-            .catch(error => {
-                expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe('invalid token')
-            })
-        )
-
-        afterEach(() => 
-            fetch(`https://skylabcoders.herokuapp.com/api/v2/users`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ password })
-            }) 
-            .then(response => {
-                if (response.content) {
-                    const { error } = JSON.parse(response.content)
-
-                    if (error) throw new Error(error)
-                }
-            })
-        )
+        afterEach(async () => await User.deleteMany())
     })
 
-    it('should fail on non-string token', () => {
-        token = 1
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(TypeError, `token ${token} is not a string`)
+    describe('when the user cannot be retrieved', () => {
+        let _id, token
+        beforeEach(async () => {
+            await User.create({ name, surname, email, password })
+            const { id } = User.findOne({ name, surname, email, password })
+            _id = id
 
-        token = true
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(TypeError, `token ${token} is not a string`)
+            token = await jwt.sign({ sub: _id }, JWT_SECRET, { expiresIn: JWT_EXP })
+            await User.deleteMany()
 
-        token = undefined
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(TypeError, `token ${token} is not a string`)
+            return token
+        })
+
+        it('should fail when the user cannot be retrieved', async () => {
+
+            let _error
+            try {
+                return await retrieveUser(token)
+            } catch (error) {
+                _error = error
+            }
+            expect(_error).toBeDefined()
+            expect(_error.message).toBe(`user with id ${_id} does not exist`)
+
+        })
+    })
+
+    // describe('trying to register on invalid data', () => {
+
+    //     it('should fail on a non string password', async () => {
+    //         let _error
+    //         password = 45438
+    //         try {
+    //             await retrieveUser(name, surname, email, password)
+    //         } catch (error) {
+    //             _error = error
+    //         } expect(_error.message).toBe(`password ${password} is not a string`)
+
+    //         password = false
+    //         try {
+    //             await retrieveUser(name, surname, email, password)
+    //         } catch (error) {
+    //             _error = error
+    //         } expect(_error.message).toBe(`password ${password} is not a string`)
+
+    //         password = undefined
+    //         try {
+    //             await retrieveUser(name, surname, email, password)
+    //         } catch (error) {
+    //             _error = error
+    //         } expect(_error.message).toBe(`password ${password} is not a string`)
+
+    //         password = []
+    //         try {
+    //             await retrieveUser(name, surname, email, password)
+    //         } catch (error) {
+    //             _error = error
+    //         } expect(_error.message).toBe(`password ${password} is not a string`)
+    //     })
+
+    // })
+
+    afterAll(async () => {
+        await User.deleteMany()
+        return await mongoose.disconnect()
     })
 })

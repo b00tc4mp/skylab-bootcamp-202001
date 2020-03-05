@@ -2,20 +2,21 @@ import { validate } from 'events-utils'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-function retrieveUser(token) {
+async function retrieveUser(token){
     validate.string(token, 'token')
 
-    return fetch(`${API_URL}/users/`, {
+    const response = await fetch(`${API_URL}/users/`, {
         method: "GET",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: undefined
     })
-        .then(response => response.json())
-        .then(({error, name, surname, email}) => {
-            if (error) throw new Error(error)
 
-            return { name, surname, email }
-        })
+    const  {error, name, surname, email } = await response.json()
+    if (error) throw new Error(error)
+
+    return { name, surname, email }
+
+
 }
 
 export default retrieveUser
