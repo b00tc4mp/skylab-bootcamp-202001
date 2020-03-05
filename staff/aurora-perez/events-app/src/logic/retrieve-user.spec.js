@@ -2,6 +2,8 @@ const { random } = Math
 const {mongoose, models: { User }} = require("events-data")
 const { retrieveUser } = require(".")
 
+const API_URL = process.env.REACT_APP_API_URL
+
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 
 describe('retrieveUser', () => {
@@ -25,12 +27,12 @@ describe('retrieveUser', () => {
 
             debugger
 
-            const response = await fetch(`${TEST_MONGODB_URL}/users/auth`, {
+            const response = await fetch(`${API_URL}/users/auth`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password })
             })
-            data = await response.json()
+            let data = await response.json()
 
             const { token } = data
         })
