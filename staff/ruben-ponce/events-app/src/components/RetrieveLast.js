@@ -2,10 +2,10 @@ import React from 'react'
 import Event from './Event'
 import Feedback from './Feedback'
 
-function RetrieveLast({ events, subscribe, error }) {
+function RetrieveLast({ events, subscribe, error, userId }) {
     return <section>
         <h1>Here are the last events published:</h1>
-        {events && events.map(event => <Event event={event} subscribe={subscribe}/>)}
+        {events && events.map(event => <Event event={event} subscribe={subscribe} userId={userId}/>)}
         {/* {!events.length && <p>You have no events published yet!</p>} */}
         {error && <Feedback error={error}/>}
     </section>

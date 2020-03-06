@@ -5,6 +5,7 @@ import createEvent from './create-event'
 import retrievePublished from './retrieve-published-events'
 import retrieveLastEvents from './retrieve-last-events'
 import subscribeEvent from './subscribe-event'
+import retrieveUserId from './retrieve-user-id'
 
 
 export {
@@ -14,5 +15,6 @@ export {
     createEvent,
     retrievePublished,
     retrieveLastEvents,
-    subscribeEvent
+    subscribeEvent,
+    retrieveUserId
 }

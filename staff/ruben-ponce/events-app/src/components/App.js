@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import { Login, Register, Home, PublishEvent, RetrievePublished, RetrieveLast } from './'
 import './App.sass'
-import { authenticate, registerUser, retrieveUser, createEvent, retrievePublished, retrieveLastEvents, subscribeEvent } from '../logic'
+import { authenticate, registerUser, retrieveUser, createEvent, retrievePublished, retrieveLastEvents, subscribeEvent, retrieveUserId } from '../logic'
 
 function App() {
 
@@ -10,6 +10,7 @@ function App() {
     const [token, setToken] = useState()
     const [events, setEvents] = useState(undefined)
     const [error, setError] = useState(undefined)
+    const [userId, setUserId] = useState()
 
 
     //const [viewSection, setViewSection] = useState()
@@ -22,6 +23,9 @@ function App() {
             const token = await auth
 
             setToken(token)
+
+            const userId = retrieveUserId(token)
+            setUserId(userId)
 
             const user = await retrieveUser(token)
 
@@ -79,10 +83,6 @@ function App() {
             setEvents(events)
 
             return events
-            // .then(events => {
-            //     setEvents(events)
-            // })
-            // .catch(error => console.log('async error: ' + error))
         }
         catch (error) {
             setError(error.message)
@@ -153,9 +153,9 @@ function App() {
 
             {view === 'publish' && <PublishEvent onSubmit={handleCreateEvent} error={error} />}
 
-            {view === 'published' && <RetrievePublished events={events} subscribe={handleSubscribe} error={error} />}
+            {view === 'published' && <RetrievePublished events={events} subscribe={handleSubscribe} error={error} userId={userId}/>}
 
-            {view === 'last' && <RetrieveLast events={events} subscribe={handleSubscribe} error={error} />}
+            {view === 'last' && <RetrieveLast events={events} subscribe={handleSubscribe} error={error} userId={userId} />}
 
         </Fragment>
 

@@ -5,7 +5,7 @@ module.exports = async function (name, surname, email, password) {
     validate.string(surname, 'surname')
     validate.string(email, 'email')
     validate.string(password, 'password')
-    debugger
+    
     const register = await fetch(`http://localhost:8085/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
