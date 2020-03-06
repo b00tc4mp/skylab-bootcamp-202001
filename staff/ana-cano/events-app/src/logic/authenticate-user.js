@@ -1,7 +1,9 @@
 import { validate } from 'events-utils'
-const API_URL = process.env.REACT_APP_API_URL
+const { NotAllowedError } = require('events-errors')
 
-export default function (email, password) {
+const { env: { REACT_APP_API_URL: API_URL } } = process
+
+module.exports = function (email, password) {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
@@ -14,12 +16,26 @@ export default function (email, password) {
             body: JSON.stringify({ email, password })
         })
 
-        const body = await response.json()
+        const { status } = response
 
-        const { error: _error, token } = body
+        if(status === 200) {
+            const { token } = await response.json()
 
-        if (_error) throw new Error(_error)
+            return token
+        }
 
-        return token
+        if (status >= 400 && status < 500) {
+            const { error } = await response.json()
+
+            if(status === 401) {
+                throw new NotAllowedError(error)
+
+            }
+
+            throw new Error(error)
+
+        }
+        throw new Error('server error')
+        
     })()
 }

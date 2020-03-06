@@ -1,3 +1,66 @@
+const { random } = Math
+const { mongoose, models : { User } } = require('events-data')
+const { authenticateUser } = require('.')
+
+const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = PROCESS
+
+describe('authenticateUser', () => {
+    beforeAll(() =>
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
+            .then(()=> User.deleteMany())
+        )
+
+        let name, surname, email, password
+
+        beforeEach(()=> {
+            name = `name-${random()}`
+            surname = `surname-${random()}`
+            email = `email-${email}@gmail.com`
+            password = `pasword-${random()}`
+        })
+
+        describe('when user already exist', ()=> {
+            let _id
+
+            beforeEach(()=>
+                User.create({ name, surname, email, password}))
+                .then(user => _id = user.id)
+        })
+
+        it('should succed on correct and right credentials', ()=>{
+            authenticateUser(email, password)
+                .then(token=>{
+                    expect(typeof token).toBe('string')
+                    expect(token.length).toBeGreatherThan(0)
+
+                    const { sub } = JSON.parse(atob(token.split('.')[1]))
+                    expect(sub).toBe(_id)
+
+                }) 
+
+        })
+        
+        afterAll(()=> User.deleteMany().then(()=> mongoose.disconect()))
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const { authenticateUser } = require('.')
 const { fetch } = require('events-utils')
 require('../specs/specs-helper')
