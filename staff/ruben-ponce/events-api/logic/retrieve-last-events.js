@@ -1,12 +1,8 @@
 const { models: { Event } } = require('events-data')
 
 module.exports = () => {
-
-    //let lastEvents = []
-
-    // const cursor = 
     
-    return Event.find({ date: { $gte: new Date } }).sort({ date: 1 })
+    return Event.find(/*{ date: { $gte: new Date } }*/).sort({ date: 1 })
         .lean()
         .then(events => {
             events.forEach(event => {
@@ -18,14 +14,4 @@ module.exports = () => {
             })
             return events
         })
-
-        
-        //.sort({ created: -1 })
-    // return (function print() {
-    //     return cursor
-    //         .hasNext()
-    //         .then(hasNext => hasNext && cursor.next())
-    //         .then(result => result && lastEvents.push(result) && print())
-    //         .then(() => lastEvents)
-    // })()
 }
