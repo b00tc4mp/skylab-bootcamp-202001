@@ -1,5 +1,5 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
-const creditCard = require('./credit-card')
+// const creditCard = require('./credit-card')
 
 module.exports = new Schema({
     name: { type: String, required: true },
@@ -14,7 +14,7 @@ module.exports = new Schema({
     },
     subscribed: {
         type: [{ type: ObjectId, ref: 'Event' }]
-    },
+    }
     //creditCards: { type: [{ type: CreditCard }] }
-    creditCards: [creditCard]
+    // creditCards: [creditCard]
 })

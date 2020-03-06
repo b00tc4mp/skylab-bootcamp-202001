@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
-const { creditCard } = require('../schemas')
+// const mongoose = require('mongoose')
+// const { creditCard } = require('../schemas')
 
-module.exports = mongoose.model('CreditCard', creditCard)
+// module.exports = mongoose.model('CreditCard', creditCard)
