@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react'
 import Register from './register'
 import Login from './login'
 import Home from './home'
+import Page from './Page'
 import { authenticateUser, retrieveUser, registerUser } from '../logic'
 
 
 function App() {
 
-  const [view, setView] = useState()
+  const [page, setPage] = useState()
   const [user, setUser] = useState()
+  const [error, setError] = useState()
 
   const handleLogin = async (email, password) => {
     try {
@@ -18,11 +20,11 @@ function App() {
 
       const user = await retrieveUser(token)
 
-      setView('home')
+      setPage('home')
       setUser(user.name)
 
-    } catch (error) {
-      console.log(error.message)
+    } catch ({ message }) {
+      setError(message)
     }
 
   }
@@ -30,11 +32,11 @@ function App() {
   const handleRegister = async (name, surname, email, password) => {
     try {
       await registerUser(name, surname, email, password)
-      debugger
-      setView('login')
 
-    } catch (error) {
-      console.log(error.message)
+      setPage('login')
+
+    } catch ({ message }) {
+      setError(message)
     }
   }
 
@@ -46,14 +48,14 @@ function App() {
         if (token) {
           const user = await retrieveUser(token)
 
-          setView('home')
+          setPage('home')
           setUser(user.name)
         } else {
-          setView('register')
+          setPage('register')
         }
 
-      } catch (error) {
-        console.log(error.message)
+      } catch ({ message }) {
+        setError(message)
       }
 
     })()
@@ -62,10 +64,11 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Events-App</h1>
-      {view === 'register' && <Register onSubmit={handleRegister} />}
-      {view === 'login' && <Login onSubmit={handleLogin} />}
-      {view === 'home' && <Home name={user} />}
+      <Page name={page}>
+        {page === 'register' && <Register error={error} onSubmit={handleRegister} />}
+        {page === 'login' && <Login error={error} onSubmit={handleLogin} />}
+        {page === 'home' && <Home name={user} />}
+      </Page>
     </div >
   )
 }

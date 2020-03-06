@@ -1,12 +1,12 @@
 import React from 'react'
-import EventItem from './event-item'
+import Item from './Item'
 
 
 const Events = ({ results }) => {
 
     return <section className="events">
         <ul>
-            {results.map(result => <EventItem key={result.id} event={result} />)}
+            {results.map(result => <Item key={result.id} event={result} />)}
         </ul>
         {/* <button onClick={}> Next Page</button> */}
     </section>

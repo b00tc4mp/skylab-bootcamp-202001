@@ -1,4 +1,3 @@
-
 const API_URL = process.env.REACT_APP_API_URL
 const { validate } = require('events-utils')
 
@@ -15,9 +14,9 @@ export default function (email, password) {
         })
         const data = await response.json()
 
-        const { error: _error, token } = data
+        const { error, token } = data
 
-        if (_error) throw new Error(_error)
+        if (error) throw new Error(error)
 
         return token
     })()

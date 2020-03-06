@@ -10,8 +10,6 @@ module.exports = (publisher, title, description, location, date) => {
     validate.string(location, 'location')
     validate.type(date, 'date', Date)
 
-
-
     return User.findById(publisher)
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${publisher} does not exist`)
@@ -23,13 +21,4 @@ module.exports = (publisher, title, description, location, date) => {
             return Promise.all([user.save(), event.save()])
         })
         .then(() => { })
-
-
-
-
-    // return Event.insertOne(event)
-    //     .then(({ insertedId }) => {
-    //         users.updateOne({ _id }, { $push: { publishedEvents: insertedId } })
-    //     })
-    //     .then(() => { })
 }
