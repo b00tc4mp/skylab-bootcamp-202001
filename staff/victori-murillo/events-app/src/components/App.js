@@ -1,50 +1,23 @@
-import React, { useState } from 'react'
-import { Register, FontSize, Login } from '.'
-import { registerUser } from '../logic'
-import '../sass/app.sass'
-import Count from './Count'
+import React, { createContext } from 'react'
+import Toolbar from './Toolbar'
 
-function App() {
-
-  const [view, setView] = useState('login')
-
-  async function handleRegister(event) {
-
-    try {
-      const { name, surname, email, password } = event.target
-
-      await registerUser(name.value, surname.value, email.value, password.value)
-      setView('login')
-
-    } catch (error) {
-      console.log(error)
-      // handle errors
-    }
-
+const themes = {
+  light: {
+    foreground: "#000000",
+    background: "#eeeeee"
+  },
+  dark: {
+    foreground: "#ffffff",
+    background: "#222222"
   }
-
-  async function handleLogin(event) {
-    try {
-      event.preventDefault()
-      const { name, surname, email, password } = event.target
-
-      await registerUser(name.value, surname.value, email.value, password.value)
-      console.log('nice');
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
-
-  return (
-    <div className="App">
-      
-      <FontSize />
-      {view === "register" && <Register handleRegister={handleRegister} setView={setView} />}
-      {view === "login" && <Login handleLogin={handleLogin} setView={setView} />}
-      <Count />
-    </div>
-  );
 }
 
-export default App;
+const ThemeContext = createContext(themes.light)
+
+export default () => {
+  return (
+    <ThemeContext.Provider value={themes.dark} >
+      <Toolbar />
+    </ThemeContext.Provider>
+  )
+}
