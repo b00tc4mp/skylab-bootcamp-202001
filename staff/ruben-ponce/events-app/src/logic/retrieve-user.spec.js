@@ -1,11 +1,6 @@
-//require('dotenv').config()
-
-//const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
-debugger
 const { mongoose, models: { User } } = require('events-data')
-//const { NotAllowedError } = require('events-errors')
-const { registerUser, authenticate, retrieveUser } = require('./')
+const { authenticate, retrieveUser } = require('./')
 
 describe('retrieve-user', () => {
 

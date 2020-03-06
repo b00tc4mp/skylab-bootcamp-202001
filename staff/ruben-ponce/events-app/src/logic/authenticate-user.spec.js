@@ -87,43 +87,43 @@ describe('authenticate-user', () => {
             }
         })
 
-    it('should fail on non-string password', async () => {
+        it('should fail on non-string password', async () => {
 
-        try {
-            email = '-' + Math.random() + '@mail.com'
-            password = 1
+            try {
+                email = '-' + Math.random() + '@mail.com'
+                password = 1
 
-            await authenticate(email, password)
-        } catch (error) {
-            expect(error).toEqual(TypeError(`password ${password} is not a string`))
-        }
+                await authenticate(email, password)
+            } catch (error) {
+                expect(error).toEqual(TypeError(`password ${password} is not a string`))
+            }
 
-        try {
-            email = '-' + Math.random() + '@mail.com'
-            password = true
+            try {
+                email = '-' + Math.random() + '@mail.com'
+                password = true
 
-            await authenticate(email, password)
-        } catch (error) {
-            expect(error).toEqual(TypeError(`password ${password} is not a string`))
-        }
+                await authenticate(email, password)
+            } catch (error) {
+                expect(error).toEqual(TypeError(`password ${password} is not a string`))
+            }
 
-        try {
-            email = '-' + Math.random() + '@mail.com'
-            password = undefined
+            try {
+                email = '-' + Math.random() + '@mail.com'
+                password = undefined
 
-            await authenticate(email, password)
-        } catch (error) {
-            expect(error).toEqual(TypeError(`password ${password} is not a string`))
-        }
+                await authenticate(email, password)
+            } catch (error) {
+                expect(error).toEqual(TypeError(`password ${password} is not a string`))
+            }
+        })
+
+        afterEach(async () => {
+            return await User.deleteOne({ _id: id })
+        })
+
+        afterAll(async () => {
+            await User.deleteMany()
+            return await mongoose.disconnect()
+        })
     })
-
-    afterEach(async () => {
-        return await User.deleteOne({ _id: id })
-    })
-
-    afterAll(async () => {
-        await User.deleteMany()
-        return await mongoose.disconnect()
-    })
-})
 })
