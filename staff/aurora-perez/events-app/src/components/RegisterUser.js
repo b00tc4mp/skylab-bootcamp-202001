@@ -1,6 +1,7 @@
 import React from 'react'
+import Feedback from './Feedback'
 
-export default ({onSubmit, setView}) => {
+export default ({onSubmit, setView, error}) => {
     return (
         <form onSubmit = { (event) =>{
             event.preventDefault()
@@ -19,6 +20,7 @@ export default ({onSubmit, setView}) => {
 
                 setView('login')
             }}>Login</a>
+            {error && <Feedback message={error} level="warn" />}
             </form>
         
     )

@@ -1,6 +1,7 @@
 import React from 'react'
+import Feedback from './Feedback'
 
-export default ({onSubmit, setView}) => {
+export default ({onSubmit, setView, error}) => {
     return (
         <form onSubmit = { (event) =>{
             event.preventDefault()
@@ -13,12 +14,14 @@ export default ({onSubmit, setView}) => {
             <input type="password" placeholder="password" name="password"/>
             <button>Login</button>
 
+
             <a href="" onClick={event => {
                 event.preventDefault()
 
                 setView('register')
             }}>Register</a>
            
+            {error && <Feedback message={error} level="warn" />}
         </form>
         
     )

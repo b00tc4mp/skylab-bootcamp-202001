@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "events-data": "file:../events-data",
-    "events-error": "file:../events-errors",
+    "events-errors": "file:../events-errors",
     "events-utils": "file:../events-utils",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",

@@ -1,32 +1,36 @@
 import { validate } from 'events-utils'
+const { NotAllowedError } = require('events-errors')
 
 const API_URL = process.env.REACT_APP_API_URL
-//const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 
-export default async (name, surname, email, password)=> {
+export default (name, surname, email, password)=> {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
 
+    return (async () => {
         const response = await fetch(`${API_URL}/users`, {
-        //const response = await fetch(`http://localhost:8085/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, surname, email, password })
         })
-        
-        if (response.status === 201) return
 
-        if (response.status === 409) {
-            const responseObj = await response.json()
+        const { status } = response
 
-            const { error } = responseObj
+        if (status === 201) return
+
+        if (status >= 400 && status < 500) {
+            const { error } = await response.json()
+
+            if (status === 409) {
+                throw new NotAllowedError(error)
+            }
+
             throw new Error(error)
+        }
 
-        } else throw new Error('Unknown error')
-
-       
-    
+        throw new Error('server error')
+    })()
 }

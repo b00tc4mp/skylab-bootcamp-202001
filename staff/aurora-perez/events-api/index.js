@@ -5,7 +5,7 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 const express = require('express')
 const cors = require('cors')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent, updateUser, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, deleteEvent } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, publishEvent, updateUser, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, deleteEvent } = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -46,7 +46,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.get('/users', jwtVerifierMidWare, retrieveUser)
 
-        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], createEvent)
+        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
 
         app.patch('/users', jsonBodyParser, jwtVerifierMidWare, updateUser)
 

@@ -1,10 +1,16 @@
-import React, {useState} from 'react'
-import {RegisterUser, Login, Home} from './'
-import {registerUser, authenticateUser, lastEvents} from '../logic'
+import React, {useState, useEffect} from 'react'
+import {RegisterUser, Login, Home, Feedback, Events} from './'
+import {registerUser, authenticateUser, retrieveLastEvents, publishEvent} from '../logic'
 
 
 function App() {
   const [view, setView] = useState('login')
+  const [error, setError] = useState()
+  const [lastEvents, setLastEvents] = useState()
+
+  useEffect( ()=>{
+    setTimeout(() => setError(), 3000);
+  }, [error] )
 
   async function handleRegister (name, surname, email, password){
     try{
@@ -12,7 +18,7 @@ function App() {
       setView('login')
 
     }catch(error){
-      console.log(error.message)
+      setError(error.message)
     }
   }
 
@@ -20,29 +26,51 @@ function App() {
   function handleLogin (email, password){
     try{
       return authenticateUser(email, password)
+      .then(token => sessionStorage.token=token)
       .then(()=> setView('home'))
+      .catch(error=>{
+        return setError(error.message)
+      })
 
     }catch(error){
-      console.log(error.message)
+      setError(error.message)
     }
   }
 
 
   function handleLastEvents (){
+    
     try{
-      return lastEvents()
-      .then(response => console.log(response))
+      return retrieveLastEvents()
+      .then(events => {
+        console.log(events)
+        return setLastEvents(events)})
 
     }catch(error){
-      console.log(error.message)
+      setError(error.message)
     }
+  }
+
+  const handlePublishEvent = async (newEvent) => {
+
+    try {
+    const {token} = sessionStorage
+    await publishEvent(token, newEvent)
+    handleLastEvents()
+      
+    } catch (error) {
+    //handle errors
+      
+    }
+
   }
 
   return <div className="App">
     <h1>Events App</h1>
-    {view==='register' && <RegisterUser onSubmit = {handleRegister} setView={setView}/>}
-    {view==='login' && <Login onSubmit = {handleLogin} setView={setView}/>}
-    {view==='home' && <Home onSubmit = {handleLastEvents} />}
+    {view==='register' && <RegisterUser onSubmit={handleRegister} setView={setView} error={error}/>}
+    {view==='login' && <Login onSubmit={handleLogin} setView={setView} error={error}/>}
+    {view==='home' && <Home lastEvents={handleLastEvents} createEvent={handlePublishEvent}/>}
+    {lastEvents && <Events results={lastEvents} />}
 
       
   </div>
