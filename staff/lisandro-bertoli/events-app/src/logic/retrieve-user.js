@@ -2,8 +2,7 @@ const { validate } = require('events-utils')
 
 
 export default function (token) {
-    validate.string(token, 'token')
-    validate.token(token)
+    validate.jwt(token)
 
     return (async () => {
         const response = await fetch(`http://localhost:8080/users`, {

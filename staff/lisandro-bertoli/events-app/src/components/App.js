@@ -51,7 +51,7 @@ function App() {
           setPage('home')
           setUser(user.name)
         } else {
-          setPage('register')
+          setPage('login')
         }
 
       } catch ({ message }) {
@@ -63,6 +63,7 @@ function App() {
 
 
   return (
+
     <div className="App">
       <Page name={page}>
         {page === 'register' && <Register error={error} onSubmit={handleRegister} />}

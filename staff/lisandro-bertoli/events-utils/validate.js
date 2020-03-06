@@ -15,14 +15,16 @@ module.exports = {
         if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} is not an e-mail`) // TODO custom error?
     },
 
-    token(token) {
+    jwt(token) {
+        this.type(token, 'token', String)
 
-        const [header, payload, signature] = token.split('.')
-        if (!header || !payload || !signature) throw new Error('invalid token')
+        const parts = token.split('.')
 
-        const { sub } = JSON.parse(atob(payload))
+        if (parts.length !== 3) throw new ContentError('invalid token')
 
-        if (!sub) throw new Error('no user id in token')
+        const [header, payload, signature] = parts
+
+        if (!header.trim().length || !payload.trim().length || !signature.trim().length) throw new ContentError('invalid token')
     },
 
     type(target, name, type) {

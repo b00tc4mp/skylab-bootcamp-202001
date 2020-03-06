@@ -2,6 +2,8 @@ const registerUser = require('./register-user')
 const { mongoose, models: { User } } = require('events-data')
 const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
 const { random } = Math
+const bcrypt = require('bcryptjs')
+
 
 describe('registerUser', () => {
     beforeAll(async () => {
@@ -24,15 +26,17 @@ describe('registerUser', () => {
 
         expect(response).toBeUndefined()
 
-        const user = await User.findOne({ name, surname, email, password })
-
+        const user = await User.findOne({ email })
+        debugger
         expect(user).toBeDefined()
         expect(typeof user.id).toBe('string')
         expect(user.name).toBe(name)
         expect(user.surname).toBe(surname)
         expect(user.email).toBe(email)
-        expect(user.password).toBe(password) // TODO encrypt this field!
         expect(user.created).toBeInstanceOf(Date)
+
+        const validPassowrd = bcrypt.compare(password, user.password)
+        expect(validPassowrd).toBeTruthy() // TODO encrypt this field!
     })
 
     describe('when user already exists', () => {

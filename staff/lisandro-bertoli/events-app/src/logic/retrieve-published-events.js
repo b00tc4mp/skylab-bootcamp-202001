@@ -2,8 +2,7 @@ const { validate } = require('events-utils')
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (token) => {
-    validate.string(token, 'token')
-    validate.token(token, 'token')
+    validate.jwt(token, 'token')
 
     const [, payload] = token.split('.')
     const { sub } = payload

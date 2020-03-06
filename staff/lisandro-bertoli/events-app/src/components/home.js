@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Events from './Events'
-import { retrieveLastEvents, PublishEvent, retrievePublishedEvents } from '../logic'
+import { retrieveLastEvents, PublishEvent, retrievePublishedEvents, subscribeToEvent } from '../logic'
 import Publish from './Publish'
+
 
 const Home = ({ name }) => {
     const [events, setEvents] = useState()
@@ -11,17 +12,16 @@ const Home = ({ name }) => {
     const changeView = async (view) => {
         if (view === 'events') {
             const events = await retrieveLastEvents()
+
             setEvents(events)
         } else {
             const { token } = sessionStorage
+
             const events = await retrievePublishedEvents(token)
             setEvents(events)
-
         }
-
         setView(view)
     }
-
 
     const showPublishForm = async (event) => {
         event.preventDefault()
@@ -33,7 +33,10 @@ const Home = ({ name }) => {
         PublishEvent(token, title, description, location, date)
     }
 
-
+    const handleSubscription = async (eventId) => {
+        const { token } = sessionStorage
+        await subscribeToEvent(token, eventId)
+    }
 
     return <section className="home">
         <h2>Welcome, {name}</h2>
@@ -41,14 +44,14 @@ const Home = ({ name }) => {
             event.preventDefault()
             changeView('events')
         }}>Latest Events</button>
-        {view === 'events' && <Events results={events} />}
+        {view === 'events' && <Events results={events} onSubscribe={handleSubscription} />}
         <button onClick={showPublishForm}>Publishe an Event</button>
         {publish && <Publish onSubmit={handlePublishEvent} />}
         <button onClick={(event) => {
             event.preventDefault()
             changeView('published')
         }}>Published Events</button>
-        {view === 'published' && <Events results={events} />}
+        {view === 'published' && <Events results={events} onSubscribe={handleSubscription} />}
 
     </section >
 }

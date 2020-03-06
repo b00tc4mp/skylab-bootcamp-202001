@@ -1,11 +1,11 @@
 const API_URL = process.env.REACT_APP_API_URL
 const { validate } = require('events-utils')
 
-export default function (email, password) {
+module.exports = function (email, password) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')
-
+    console.log(this)
     return (async () => {
         const response = await fetch(`${API_URL}/users/auth`, {
             method: 'POST',

@@ -4,8 +4,7 @@ const API_URL = process.env.REACT_APP_API_URL
 
 
 export default (token, title, description, location, date) => {
-    validate.string(token, 'token')
-    validate.token(token, 'token')
+    validate.jwt(token, 'token')
     validate.string(title, 'title')
     validate.string(description, 'description')
     validate.string(location, 'location')

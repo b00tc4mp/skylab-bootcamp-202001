@@ -30,12 +30,6 @@ describe('retrievePublishedEvents', () => {
 
         const userId = await User.create(new User({ name, surname, email, password }))
         return userId
-
-        /* .then(({ id }) => {
-                debugger
-                userId = id
-            }) */
-
     })
 
     describe('when user has published events', () => {
