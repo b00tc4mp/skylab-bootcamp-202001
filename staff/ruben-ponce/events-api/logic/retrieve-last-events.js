@@ -3,6 +3,7 @@ const { models: { Event } } = require('events-data')
 module.exports = () => {
     
     return Event.find(/*{ date: { $gte: new Date } }*/).sort({ date: 1 })
+    .populate('publisher', 'name surname')
         .lean()
         .then(events => {
             events.forEach(event => {
@@ -10,7 +11,7 @@ module.exports = () => {
 
                 delete event._id
 
-                event.publisher = event.publisher.toString()
+                event.publisher = event.publisher.name
             })
             return events
         })
