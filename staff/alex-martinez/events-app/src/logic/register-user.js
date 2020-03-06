@@ -18,7 +18,7 @@ module.exports = function (name, surname, email, password) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, surname, email, password })
         })
-        debugger
+
         if (response.status === 201) return
 
         if (response.status === 409) {
