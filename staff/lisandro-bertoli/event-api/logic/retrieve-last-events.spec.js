@@ -49,8 +49,16 @@ describe('retrieveLastEvents', () => {
                         expect(event.description).to.equal(description)
                         expect(event.date).to.deep.equal(date)
                         expect(event.location).to.equal(location)
-                        expect(event.publisher).to.be.a('string')
-                        expect(event.publisher).to.equal(_id)
+                        expect(event.publisher).to.be.an('object')
+
+                        return User.find(event.publisher)
+                            .then(user => {
+                                expect(user).to.exist
+                                expect(user.id).to.equal(_id)
+                                // expect(event.publisher.name).to.equal(user.name)
+                                // expect(event.publisher.id).to.equal(user.name)
+
+                            })
                     })
                 })
         )

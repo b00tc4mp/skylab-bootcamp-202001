@@ -13,7 +13,7 @@ module.exports = id => {
 
                 delete event._id
                 delete event.__v
-                debugger
+
                 event.subscribers.forEach(subscriber => {
                     subscriber.toString()
                 })

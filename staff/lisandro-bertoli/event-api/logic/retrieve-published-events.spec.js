@@ -32,7 +32,7 @@ describe('retrievePublishedEvents', () => {
 
         return User.create(new User({ name, surname, email, password }))
             .then(({ id }) => {
-                debugger
+
                 userId = id
             })
 
@@ -57,7 +57,7 @@ describe('retrievePublishedEvents', () => {
                         expect(event.description).to.equal(description)
                         expect(event.date).to.be.deep.equal(date)
                         expect(event.title).to.equal(title)
-                        expect(event._id.toString()).to.equal(eventId)
+                        expect(event.id).to.equal(eventId)
                         expect(event.publisher.toString()).to.equal(userId)
                     })
                 })

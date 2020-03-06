@@ -4,6 +4,7 @@ const registerUser = require('./register-user')
 const { expect } = require('chai')
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('events-data')
+const bcrypt = require('bcryptjs')
 
 describe('registerUser', () => {
     let name, surname, email, password
@@ -29,14 +30,15 @@ describe('registerUser', () => {
                 expect(user.name).to.equal(name)
                 expect(user.email).to.equal(email)
                 expect(user.email).to.equal(email)
-                expect(user.password).to.equal(password)
-
                 expect(user.created).to.exist
                 expect(user._id).to.exist
+
+                return bcrypt.compare(password, user.password)
+                    .then(validPassword => expect(validPassword).to.be.true)
             })
 
     )
 
-    after(() => mongoose.disconnect())
+    after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })
 

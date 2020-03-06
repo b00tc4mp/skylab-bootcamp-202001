@@ -42,7 +42,7 @@ describe('subscribeEvent', () => {
                 subscribeEvent(userId, eventId)
                     .then(() => Event.findById(eventId))
                     .then(event => {
-                        debugger
+
                         expect(event.subscribers).to.contain(userId)
                     })
             )

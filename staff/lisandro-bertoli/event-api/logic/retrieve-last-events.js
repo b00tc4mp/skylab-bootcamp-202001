@@ -7,6 +7,7 @@ module.exports = (page = '1') => {
     let limit = 5
 
     return Event.find({ date: { $gte: new Date } })
+        .populate('publisher', 'name id')
         .sort({ date: -1 })
         .limit(limit)
         .skip((page - 1) * limit)
@@ -15,15 +16,14 @@ module.exports = (page = '1') => {
             // sanitize
             events.forEach(event => {
                 event.id = event._id.toString()
-
+                debugger
                 delete event._id
                 delete event.__v
-                debugger
+
                 event.subscribers.forEach(subscriber => {
                     subscriber.toString()
                 })
 
-                event.publisher = event.publisher.toString()
             })
             return events
         })

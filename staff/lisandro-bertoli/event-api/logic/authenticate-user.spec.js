@@ -5,10 +5,12 @@ const { mongoose, models: { User } } = require('events-data')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
+const bcrypt = require('bcryptjs')
 
 describe('authenticateUser', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => { User.deleteMany() })
     )
 
     let name, surname, email, password
@@ -24,7 +26,10 @@ describe('authenticateUser', () => {
         let _id
 
         beforeEach(() =>
-            User.create(new User({ name, surname, email, password }))
+            bcrypt.hash(password, 10)
+                .then(password =>
+                    User.create(new User({ name, surname, email, password }))
+                )
                 .then(({ id }) => _id = id)
         )
 
@@ -38,5 +43,5 @@ describe('authenticateUser', () => {
         )
     })
 
-    after(() => mongoose.disconnect())
+    after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })
