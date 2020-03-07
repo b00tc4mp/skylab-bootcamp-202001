@@ -1,7 +1,8 @@
 const API_URL = process.env.REACT_APP_API_URL
 const { validate } = require('events-utils')
+import context from './context'
 
-module.exports = function (email, password) {
+export default (function (email, password) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')
@@ -18,8 +19,9 @@ module.exports = function (email, password) {
 
         if (error) throw new Error(error)
 
-        return token
+        this.token = token
+
+        return
     })()
-}
 
-
+}).bind(context)

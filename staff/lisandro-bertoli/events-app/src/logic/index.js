@@ -13,5 +13,7 @@ export {
     retrieveLastEvents,
     PublishEvent,
     retrievePublishedEvents,
-    subscribeToEvent
+    subscribeToEvent,
+    isLoggedIn,
+    logout
 }

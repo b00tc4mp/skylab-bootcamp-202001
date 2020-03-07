@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "events-errors": "file:../events-errors",
     "events-utils": "file:../events-utils",
+    "jsonwebtoken": "^8.5.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0"

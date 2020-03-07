@@ -51,12 +51,13 @@ describe('retrieveLastEvents', () => {
                         expect(event.location).to.equal(location)
                         expect(event.publisher).to.be.an('object')
 
-                        return User.find(event.publisher)
+                        return User.findById(event.publisher)
                             .then(user => {
                                 expect(user).to.exist
+                                debugger
                                 expect(user.id).to.equal(_id)
-                                // expect(event.publisher.name).to.equal(user.name)
-                                // expect(event.publisher.id).to.equal(user.name)
+                                expect(event.publisher.name).to.equal(user.name)
+
 
                             })
                     })

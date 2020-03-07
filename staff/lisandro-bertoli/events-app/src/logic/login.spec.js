@@ -1,9 +1,11 @@
-import authenticateUser from './authenticate-user'
+import login from './login'
 const { mongoose, models: { User } } = require('events-data')
 const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
 const { random } = Math
+const bcrypt = require('bcryptjs')
+import context from './context'
 
-describe('authenticateUser', () => {
+describe('login', () => {
     beforeAll(async () => {
         await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Promise.resolve(User.deleteMany())
@@ -19,17 +21,20 @@ describe('authenticateUser', () => {
     })
 
     describe('when user already exists', () => {
-        beforeEach(async () =>
-            await User.create(new User({ name, surname, email, password }))
-        )
+        beforeEach(async () => {
+            const _password = await bcrypt.hash(password, 10)
+
+            await User.create(new User({ name, surname, email, password: _password }))
+        })
 
         it('should succeed on correct credentials', async () => {
 
-            const token = await authenticateUser(email, password)
+            const returnValue = await login(email, password)
 
-            expect(typeof token).toBe('string')
+            expect(returnValue).toBeUndefined()
 
-            const [header, payload, signature] = token.split('.')
+
+            const [header, payload, signature] = context.token.split('.')
             expect(header.length).toBeGreaterThan(0)
             expect(payload.length).toBeGreaterThan(0)
             expect(signature.length).toBeGreaterThan(0)
@@ -38,7 +43,7 @@ describe('authenticateUser', () => {
 
         it('should fail on incorrect password', async () => {
             try {
-                await authenticateUser(email, `${password}-wrong`)
+                await login(email, `${password}-wrong`)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).toBeInstanceOf(Error)
@@ -49,7 +54,7 @@ describe('authenticateUser', () => {
 
     it('should fail on incorrect email', async () => {
         try {
-            await authenticateUser(`$wrong-${email}`, password)
+            await login(`$wrong-${email}`, password)
             throw new Error('should not reach this point')
 
         } catch (error) {
