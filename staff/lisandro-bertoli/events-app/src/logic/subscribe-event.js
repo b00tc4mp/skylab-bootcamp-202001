@@ -1,7 +1,7 @@
+import context from './context'
 const { validate } = require('events-utils')
 const { NotFoundError, NotAllowedError } = require('events-errors')
 const API_URL = process.env.REACT_APP_API_URL
-import context from './context'
 
 export default (function (eventId) {
     validate.string(eventId, 'eventId')

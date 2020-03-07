@@ -1,6 +1,6 @@
+import context from './context'
 const API_URL = process.env.REACT_APP_API_URL
 const { validate } = require('events-utils')
-import context from './context'
 
 export default (function (email, password) {
     validate.email(email, 'email')

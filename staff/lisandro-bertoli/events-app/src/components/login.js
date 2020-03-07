@@ -13,7 +13,7 @@ const Register = ({ onSubmit, error }) => {
     return <form className="register" onSubmit={handleOnSubmit}>
         <input type="text" name="email" placeholder="email@example.com" />
         <input type="password" name="password" placeholder="Password" />
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
         {error && <Feedback message={error} />}
     </form>
 }

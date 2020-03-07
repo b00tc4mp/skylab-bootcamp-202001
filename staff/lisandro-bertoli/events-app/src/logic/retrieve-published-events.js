@@ -1,15 +1,14 @@
-const { validate } = require('events-utils')
+import context from './context'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (token) => {
-    validate.jwt(token, 'token')
+export default (function () {
 
-    const [, payload] = token.split('.')
+    const [, payload] = this.token.split('.')
     const { sub } = payload
 
     return (async () => {
         const response = await fetch(`${API_URL}/users/${sub}/events`, {
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` }
         })
         const results = await response.json()
 
@@ -17,4 +16,4 @@ export default (token) => {
         return results
     })()
 
-}
+}).bind(context)

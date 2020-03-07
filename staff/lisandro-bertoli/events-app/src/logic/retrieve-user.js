@@ -1,6 +1,4 @@
-const { validate } = require('events-utils')
 import context from './context'
-
 
 export default (function () {
     debugger

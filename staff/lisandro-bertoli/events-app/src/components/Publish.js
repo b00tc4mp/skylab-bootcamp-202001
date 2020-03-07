@@ -5,9 +5,8 @@ export default ({ onSubmit }) => {
     function handleOnSubmit(event) {
         event.preventDefault()
         const { title, description, date, location } = event.target
-        const { token } = sessionStorage
 
-        onSubmit(token, title.value, description.value, new Date(date.value), location.value)
+        onSubmit(title.value, description.value, new Date(date.value), location.value)
     }
 
     return <form action="" onSubmit={handleOnSubmit}>

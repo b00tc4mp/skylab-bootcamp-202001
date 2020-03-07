@@ -1,30 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useContext } from 'react'
 import Register from './register'
 import Login from './login'
 import Home from './home'
 import Page from './Page'
-import { authenticateUser, retrieveUser, registerUser } from '../logic'
+import { login, registerUser, isLoggedIn } from '../logic'
+import { Context } from './ContextProvider'
 
 
 function App() {
+  const [state, setState] = useContext(Context)
 
-  const [page, setPage] = useState()
-  const [user, setUser] = useState()
-  const [error, setError] = useState()
+  useEffect(() => {
+    (async () => {
+      try {
+        if (isLoggedIn()) {
+          setState({ page: 'home' })
+        } else {
+          setState({ page: 'login' })
+        }
+
+      } catch ({ message }) {
+        setState({ error: message })
+      }
+    })()
+  }, [])
 
   const handleLogin = async (email, password) => {
     try {
-      const token = await authenticateUser(email, password)
+      await login(email, password)
 
-      sessionStorage.token = token
-
-      const user = await retrieveUser(token)
-
-      setPage('home')
-      setUser(user.name)
+      setState({ page: 'home' })
 
     } catch ({ message }) {
-      setError(message)
+      setState({ error: message })
+
     }
 
   }
@@ -33,42 +42,21 @@ function App() {
     try {
       await registerUser(name, surname, email, password)
 
-      setPage('login')
+      setState({ page: 'login' })
 
     } catch ({ message }) {
-      setError(message)
+      setState({ error: message })
     }
   }
 
-  useEffect(() => {
-    (async () => {
-      const { token } = sessionStorage
-
-      try {
-        if (token) {
-          const user = await retrieveUser(token)
-
-          setPage('home')
-          setUser(user.name)
-        } else {
-          setPage('login')
-        }
-
-      } catch ({ message }) {
-        setError(message)
-      }
-
-    })()
-  }, [])
-
-
+  const { page, error } = state
   return (
 
     <div className="App">
       <Page name={page}>
         {page === 'register' && <Register error={error} onSubmit={handleRegister} />}
         {page === 'login' && <Login error={error} onSubmit={handleLogin} />}
-        {page === 'home' && <Home name={user} />}
+        {page === 'home' && <Home />}
       </Page>
     </div >
   )

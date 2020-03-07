@@ -1,5 +1,5 @@
-const { validate } = require('events-utils')
 import context from './context'
+const { validate } = require('events-utils')
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (title, description, location, date) {

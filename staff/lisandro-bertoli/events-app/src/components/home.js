@@ -1,57 +1,70 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Events from './Events'
-import { retrieveLastEvents, PublishEvent, retrievePublishedEvents, subscribeToEvent } from '../logic'
+import { retrieveLastEvents, PublishEvent, retrievePublishedEvents, subscribeToEvent, logout, isLoggedIn, retrieveUser } from '../logic'
 import Publish from './Publish'
+import { Context } from './ContextProvider'
 
 
-const Home = ({ name }) => {
+const Home = () => {
     const [events, setEvents] = useState()
-    const [publish, setPublish] = useState()
-    const [view, setView] = useState()
+    const [name, setName] = useState()
 
-    const changeView = async (view) => {
-        if (view === 'events') {
-            const events = await retrieveLastEvents()
+    const [state, setState] = useContext(Context)
 
-            setEvents(events)
-        } else {
-            const { token } = sessionStorage
+    useEffect(() => {
+        if (isLoggedIn()) {
 
-            const events = await retrievePublishedEvents(token)
-            setEvents(events)
-        }
-        setView(view)
-    }
+            (async () => {
+                try {
+                    const { name: _name } = await retrieveUser()
 
-    const showPublishForm = async (event) => {
-        event.preventDefault()
+                    setName(_name)
 
-        setPublish(true)
-    }
+                    setState({ page: 'home' })
+                } catch ({ message }) {
+                    setState({ error: message })
+                }
 
-    const handlePublishEvent = async (token, title, description, date, location) => {
-        PublishEvent(token, title, description, location, date)
+            })()
+        } else setState({ page: 'login' })
+    })
+
+
+    const handlePublishEvent = async (title, description, date, location) => {
+        PublishEvent(title, description, location, date)
     }
 
     const handleSubscription = async (eventId) => {
-        const { token } = sessionStorage
-        await subscribeToEvent(token, eventId)
+        await subscribeToEvent(eventId)
+    }
+
+    const handleGetLatestEvents = async (event) => {
+        event.preventDefault()
+        const events = await retrieveLastEvents()
+
+        setEvents(events)
+    }
+
+    const handleGetPublishedEvents = async (event) => {
+        event.preventDefault()
+        const events = await retrievePublishedEvents()
+
+        setEvents(events)
+    }
+
+    const handleLogout = (event) => {
+        event.preventDefault()
+        logout()
     }
 
     return <section className="home">
-        <h2>Welcome, {name}</h2>
-        <button onClick={(event) => {
-            event.preventDefault()
-            changeView('events')
-        }}>Latest Events</button>
-        {view === 'events' && <Events results={events} onSubscribe={handleSubscription} />}
-        <button onClick={showPublishForm}>Publishe an Event</button>
-        {publish && <Publish onSubmit={handlePublishEvent} />}
-        <button onClick={(event) => {
-            event.preventDefault()
-            changeView('published')
-        }}>Published Events</button>
-        {view === 'published' && <Events results={events} onSubscribe={handleSubscription} />}
+        <h2>Welcome, {name}</h2><button onClick={handleLogout}>Logout</button>
+        <button onClick={handleGetLatestEvents}>Latest Events</button>
+        <button onClick={handleGetPublishedEvents}>Published Events</button>
+
+        <Publish onSubmit={handlePublishEvent} />
+
+        {events && <Events results={events} onSubscribe={handleSubscription} />}
 
     </section >
 }
