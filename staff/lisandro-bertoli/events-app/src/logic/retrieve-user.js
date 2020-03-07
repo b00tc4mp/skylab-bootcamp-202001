@@ -1,13 +1,13 @@
 const { validate } = require('events-utils')
+import context from './context'
 
 
-export default function (token) {
-    validate.jwt(token)
-
+export default (function () {
+    debugger
     return (async () => {
         const response = await fetch(`http://localhost:8080/users`, {
             method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` }
+            headers: { 'Authorization': `Bearer ${this.token}` }
         })
 
         const data = await response.json()
@@ -15,10 +15,10 @@ export default function (token) {
 
         if (_error) throw new Error(_error)
 
-        const { name, surname, username } = data
+        const { name, surname, email } = data
 
-        return { name, surname, username }
+        return { name, surname, email }
 
     })()
-}
+}).bind(context)
 

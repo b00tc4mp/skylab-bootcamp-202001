@@ -1,8 +1,11 @@
 const { mongoose, models: { User } } = require('events-data')
-const API_URL = process.env.REACT_APP_API_URL
+const TEST_JWT_SECRET = process.env.REACT_APP_JWT_SECRET
 const MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 const { random } = Math
 const { retrieveUser } = require('.')
+import context from './context'
+const jwt = require('jsonwebtoken')
+
 
 describe('retrieveUser', () => {
     let name, surname, email, password
@@ -10,6 +13,7 @@ describe('retrieveUser', () => {
 
     beforeAll(async () => {
         await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        context.clear()
         return await Promise.resolve(User.deleteMany())
     })
 
@@ -21,31 +25,27 @@ describe('retrieveUser', () => {
 
     })
     describe('when user exists', () => {
-        let token
+
         describe('when user is not deactivated', () => {
             beforeEach(async () => {
-                await User.create({ name, surname, email, password })
+                const user = await User.create({ name, surname, email, password })
 
-                const response = await fetch(`${API_URL}/users/auth`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email, password })
-                })
-
-                const { token: _token } = await response.json()
-
-                token = _token
+                context.token = await jwt.sign({ sub: user.id }, TEST_JWT_SECRET)
             })
 
             it('should succeed on valid id, returning the user', async () => {
-                const user = await retrieveUser(token)
+                const user = await retrieveUser()
 
-                // expect(user.constructor).to.equal(Object)
+                expect(user.constructor).toBe(Object)
                 expect(user.name).toBe(name)
                 expect(user.surname).toBe(surname)
-                // expect(user.email).toBe(email)
-                // expect(user.password).toBeUndefined()
+                expect(user.email).toBe(email)
+                expect(user.password).toBeUndefined()
 
+            })
+
+            afterEach(() => {
+                context.clear()
             })
         })
         // describe('when user is deactivated', () => {
@@ -65,39 +65,24 @@ describe('retrieveUser', () => {
     })
 
     describe('when user does not exist', () => {
-
-        let token = '507f1f77bcf86cd799439011'
-        it('should fail throwing not-found-error', async () => {
+        it('should fail throwing jwt malformed', async () => {
             try {
-                await retrieveUser(token)
+                await retrieveUser()
 
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe(`invalid token`)
+                expect(error.message).toBe(`jwt malformed`)
 
             }
 
         })
     })
 
-    it('should fail on non-string or empty id', () => {
-        let token = 1
-        expect(() => retrieveUser(token)).toThrow(TypeError, `token ${token} is not a string`)
-
-        token = true
-        expect(() => retrieveUser(token)).toThrow(TypeError, `token ${token} is not a string`)
-
-        token = {}
-        expect(() => retrieveUser(token)).toThrow(TypeError, `token ${token} is not a string`)
-
-        token = ''
-        expect(() => retrieveUser(token)).toThrow(Error, `token is empty`)
-    })
 
     afterAll(async () => {
         await User.deleteMany({})
-
+        context.clear()
         return await mongoose.disconnect()
     })
 })
