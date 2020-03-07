@@ -3,9 +3,6 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, createEvent, updateUser, deleteUser,
-  retrieveLastEvents, retrievePublishedEvents, subscribeEvent,
-  retrieveSubscribedEvents, updateEvent, deleteEvent } = require('./routes')
 
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
@@ -15,6 +12,9 @@ const path = require('path')
 const { jwtVerify } = require('./middlewares')
 const { mongoose } = require('events-models')
 const cors = require('cors')
+
+
+const users = require("./handlers/users")
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -40,27 +40,20 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
     app.use(cors())
     app.use(morgan('combined', { stream: accessLogStream }))
 
-    // Public Routes
-    app.get('/', (req, res) => res.send("Welcome to API Events"))
-    app.post('/users', jsonBodyParser, registerUser)
-    app.post('/auth/users', jsonBodyParser, authenticateUser)
 
-    // Private Routes
-    app.get('/users', jwtVerify, retrieveUser)
-    app.patch('/users', jsonBodyParser, jwtVerify, updateUser)
-    app.delete('/users', jwtVerify, deleteUser)
-
+    app.use([jsonBodyParser])
+    app.use(users)
     // // Events Routes
-    app.post('/users/events', jsonBodyParser, jwtVerify, createEvent)
+    // app.post('/users/events', jwtVerify, createEvent)
 
-    app.get('/events/:id?', jwtVerify, retrieveLastEvents)
-    app.get('/users/:id?/published-events', jwtVerify, retrievePublishedEvents)
-    app.patch('/users/:id?/subscribe-events', jsonBodyParser, jwtVerify, subscribeEvent)
+    // app.get('/events/:id?', jwtVerify, retrieveLastEvents)
+    // app.get('/users/:id?/published-events', jwtVerify, retrievePublishedEvents)
+    // app.patch('/users/:id?/subscribe-events', jwtVerify, subscribeEvent)
 
-    app.get('/users/:id?/subscribed-events', jwtVerify, retrieveSubscribedEvents)
-    app.patch('/users/events/:eventId', jsonBodyParser, jwtVerify, updateEvent)
+    // app.get('/users/:id?/subscribed-events', jwtVerify, retrieveSubscribedEvents)
+    // app.patch('/users/events/:eventId', jwtVerify, updateEvent)
 
-    app.delete('/events/:eventId', jwtVerify, deleteEvent)
+    // app.delete('/events/:eventId', jwtVerify, deleteEvent)
 
 
     app.listen(port, () => console.log(`${name} ${version} running on port ${port}`))
