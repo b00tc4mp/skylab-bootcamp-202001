@@ -15,7 +15,7 @@ const bcrypt = require('bcryptjs')
  * @throws {NotAllowedError} on wrong credentials
  */
 
-module.exports = (email, password) => {
+module.exports = ({ email, password }) => {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')

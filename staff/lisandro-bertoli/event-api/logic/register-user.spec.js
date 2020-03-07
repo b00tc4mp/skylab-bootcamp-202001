@@ -22,7 +22,7 @@ describe('registerUser', () => {
     })
 
     it('should succed no creating a new user, no return value expected', () =>
-        registerUser(name, surname, email, password)
+        registerUser({ name, surname, email, password })
             .then(retVal => expect(retVal).to.be.undefined)
             .then(() => User.findOne({ email }))
             .then(user => {

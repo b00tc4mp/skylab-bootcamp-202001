@@ -1,8 +1,9 @@
 const { Router } = require('express')
 const router = Router()
-const { jwtValidationMidWare } = require('../mid-wares')
+const { jwtValidationMidWare, errorHandler } = require('../mid-wares')
 
-const { registerUser,
+
+const { //registerUser,
     authenticateUser,
     retrieveUser,
     createEvent,
@@ -12,18 +13,21 @@ const { registerUser,
     retrieveSubscribedEvents,
     updateEvent,
     deleteEvent,
-    deleteUser } = require('./handlers')
+    deleteUser,
+    user } = require('./handlers')
 
 
 const bodyParser = require('body-parser')
 
 const jsonBodyParser = bodyParser.json()
 
-router.post('/users', jsonBodyParser, registerUser)
+router.post('/users', jsonBodyParser, user.register)
+
 
 router.get('/users', jwtValidationMidWare, retrieveUser)
 
-router.post('/users/auth', jsonBodyParser, authenticateUser)
+router.post('/users/auth', jsonBodyParser, user.authenticate)
+
 
 router.post('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], createEvent)
 
@@ -40,5 +44,7 @@ router.delete('/users/events/:id', jwtValidationMidWare, deleteEvent)
 router.delete('/users', [jwtValidationMidWare, jsonBodyParser], deleteUser)
 
 router.get('/events/:page?', retrieveLastEvents)
+
+router.use(errorHandler)
 
 module.exports = router

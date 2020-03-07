@@ -34,7 +34,7 @@ describe('authenticateUser', () => {
         )
 
         it('should succeed on correct and valid and right credentials', () =>
-            authenticateUser(email, password)
+            authenticateUser({ email, password })
                 .then(id => {
                     expect(id).to.be.a('string')
                     expect(id.length).to.be.greaterThan(0)

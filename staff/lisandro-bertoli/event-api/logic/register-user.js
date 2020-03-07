@@ -4,7 +4,7 @@ const { NotAllowedError } = require('events-errors')
 const bcrypt = require('bcryptjs')
 
 
-module.exports = (name, surname, email, password) => {
+module.exports = ({ name, surname, email, password }) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
