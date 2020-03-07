@@ -4,6 +4,7 @@ const { expect } = require('chai')
 const { random } = Math
 const { mongoose, models: { User } } = require('events-data')
 const registerUser = require('./register-user')
+const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
@@ -38,7 +39,10 @@ describe('registerUser', () => {
                 expect(user.email).to.equal(email)
                 expect(user.password).to.equal(password) // TODO encrypt this field!
                 expect(user.created).to.be.instanceOf(Date)
+
+                return bcrypt.compare(password, user.password)
             })
+            .then(validPassword => expect(validPassword).to.be.true)
     )
 
     // TODO unhappy paths and other happies if exist

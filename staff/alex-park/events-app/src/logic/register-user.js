@@ -1,5 +1,6 @@
 import { validate } from 'events-utils'
 const API_URL = process.env.REACT_APP_API_URL
+const { NotAllowedError } = require('events-errors')
 
 async function registerUser(name, surname, email, password) {
     validate.string(name, 'name')
@@ -18,13 +19,15 @@ async function registerUser(name, surname, email, password) {
 
     if (status === 201) return
 
-    else if (status === 409) {
-        const conflict = await response.json()
-        const { error } = conflict
+    if (status >= 400 && status < 500) {
+        const { error } = await response.json()
+        
+        if (status === 409) throw new NotAllowedError(error)
 
         throw new Error(error)
     }
-    else throw new Error('Unknown error')
+    
+    throw new Error('server error')
 }
 
 export default registerUser

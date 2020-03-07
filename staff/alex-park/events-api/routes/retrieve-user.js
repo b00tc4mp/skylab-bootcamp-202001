@@ -9,13 +9,19 @@ module.exports = (req, res) => {
             .then(user =>
                 res.status(200).json(user)
             )
-            .catch(({ message }) =>
+            .catch(error => {
+                let status = 400
+                if (error instanceof NotAllowedError)
+                    status = 401
+
+                const { message } = error
+
                 res
-                    .status(401)
+                    .status(status)
                     .json({
                         error: message
                     })
-            )
+            })
     } catch (error) {
         let status = 400
 

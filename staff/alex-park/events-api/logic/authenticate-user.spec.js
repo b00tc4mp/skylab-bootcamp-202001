@@ -5,6 +5,7 @@ const { mongoose, models: { User } } = require('events-data')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
+const bcrypt = require('bcryptjs')
 
 describe('authenticateUser', () => {
     before(() =>
@@ -25,7 +26,10 @@ describe('authenticateUser', () => {
         let _id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
+            bcrypt.hash(password, 10)
+                .then(password =>
+                    User.create({ name, surname, email, password })
+                )
                 .then(user => _id = user.id)
         )
 
