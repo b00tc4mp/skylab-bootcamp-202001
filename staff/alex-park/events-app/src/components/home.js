@@ -4,18 +4,18 @@ import { retrieveUser, isLoggedIn, logout, publishEvent, retrieveLastEvents } fr
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
 
-export default withRouter(function ({ history }){
+export default withRouter(function ({ history }) {
     const [, setState] = useContext(Context)
     const [name, setName] = useState()
 
     useEffect(() => {
-        if(isLoggedIn())
+        if (isLoggedIn())
             (async () => {
                 try {
                     const { name } = await retrieveUser()
 
                     setName(name)
-
+                    
                     setState({ page: 'home' })
                 } catch ({ message }) {
                     setState({ error: message, page: 'login' })
@@ -32,8 +32,8 @@ export default withRouter(function ({ history }){
         history.push('/login')
     }
 
-    function handleCreateEvent(title, description, date, location) { 
-        //TODO 
+    function handleCreateEvent(title, description, date, location) {
+        // TODO
     }
 
     return <>

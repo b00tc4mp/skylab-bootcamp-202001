@@ -7,7 +7,7 @@ const {
     retrieveLastEvents,
     retrievePublishedEvents,
     subscribeEvent
-} = require('./routes')
+} = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierMidWare } = require('../mid-wares')
 const jsonBodyParser = bodyParser.json()

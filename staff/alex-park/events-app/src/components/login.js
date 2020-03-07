@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Login.sass'
 import Feedback from './Feedback'
 
@@ -25,11 +25,11 @@ export default function ({ onSubmit, onGoToRegister, error, onMount }) {
     }
 
     return <>
-        <form className='login' onSubmit={handleSubmit}>
-            <input type='text' name='email' placeholder='example@gmail.com'/>
-            <input type='password' name='password' placeholder='Password'/>
+        <form className="register" onSubmit={handleSubmit}>
+            <input type="email" name="email" placeholder="email" />
+            <input type="password" name="password" placeholder="password" />
             <button>Login</button>
-            {error && <Feedback message={error} level='warn'/>}
+            {error && <Feedback message={error} level="warn" />}
             <p>Go to <a href="" onClick={handleGoToRegister}>register</a></p>
         </form>
     </>

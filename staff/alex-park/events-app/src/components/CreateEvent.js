@@ -18,12 +18,12 @@ export default function ({ onSubmit, error }) {
 
     return <>
         <form className="create-event" onSubmit={handleSubmit}>
-            <input type='text' name='title' placeholder='Title'/>
-            <textarea type='text' name='description' placeholder='Description of the event'/>
-            <input type='date' name='date' placeholder='Date'/>
-            <input type='text' name='location' placeholder='Location'/>
+            <input type="text" name="title" placeholder="title" />
+            <textarea type="text" name="description" placeholder="description" />
+            <input type="date" name="date" placeholder="date" />
+            <input type="text" name="location" placeholder="location" />
             <button>Create Event</button>
         </form>
-        {error && <Feedback message={error} level='warn'/>}
+        {error && <Feedback message={error} level="warn" />}
     </>
 }
