@@ -1,19 +1,17 @@
-const { retrievePublishedEvents } = require('../logic')
-const { NotFoundError } = require('events-errors')
+const { registerUser } = require('../../logic')
+const { NotAllowedError, ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
+    const { body: { name, surname, email, password } } = req
 
     try {
-        retrievePublishedEvents(id)
-            .then(events =>
-                res.status(200).json(events)
-            )
+        registerUser(name, surname, email, password)
+            .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
 
-                if (error instanceof NotFoundError)
-                    status = 404
+                if (error instanceof NotAllowedError)
+                    status = 409 // conflict
 
                 const { message } = error
 

@@ -1,9 +1,6 @@
 import React from 'react'
-import './feedback.sass'
+import './Feedback.sass'
 
-
-function Feedback({message}){
-return <p className='feedback'>{message}</p>
+export default function ({ message, level }) {
+    return <p className={`feedback feedback--${level}`}>{message}</p>
 }
-
-export default Feedback

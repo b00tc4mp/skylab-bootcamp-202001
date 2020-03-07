@@ -1,3 +1,4 @@
+import { validate } from 'events-utils'
 import { NotAllowedError } from 'events-errors'
 import context from './context'
 
@@ -5,21 +6,26 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function () {
+export default (function (email, password) {
+    validate.string(email, 'email')
+    validate.email(email)
+    validate.string(password, 'password')
+
     return (async () => {
-        const response = await fetch(`${API_URL}/users`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${this.token}`
-            }
+        const response = await fetch(`${API_URL}/users/auth`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
         })
 
         const { status } = response
 
         if (status === 200) {
-            const user = await response.json()
+            const { token } = await response.json()
+            
+            this.token = token
 
-            return user
+            return
         }
 
         if (status >= 400 && status < 500) {

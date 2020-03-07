@@ -1,19 +1,15 @@
-const { subscribeEvent } = require('../logic')
-const { ContentError } = require('events-errors')
+const { retrieveLastEvents } = require('../../logic')
 
 module.exports = (req, res) => {
-    const { params: { id, eventId } } = req
-
     try {
-        subscribeEvent(id, eventId)
-            .then(() => res.end())
+        retrieveLastEvents()
+            .then(events =>
+                res.status(200).json(events)
+            )
             .catch(error => {
                 let status = 400
 
                 const { message } = error
-                
-                if (error instanceof NotFoundError)
-                    status = 404
 
                 res
                     .status(status)
@@ -23,9 +19,6 @@ module.exports = (req, res) => {
             })
     } catch (error) {
         let status = 400
-
-        if (error instanceof TypeError || error instanceof ContentError)
-            status = 406 // not acceptable
 
         const { message } = error
 

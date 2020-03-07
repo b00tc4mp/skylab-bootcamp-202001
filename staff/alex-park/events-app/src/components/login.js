@@ -1,27 +1,36 @@
 import React from 'react'
-import Feedback from './feedback'
+import './Login.sass'
+import Feedback from './Feedback'
 
-function Login({ onToRegister, onSubmit, error }) {
-    return <div className='login-container'>
-        <h2>Login</h2>
-        <form className='login-form' onSubmit={event => {
-            event.preventDefault()
+export default function ({ onSubmit, onGoToRegister, error, onMount }) {
+    useEffect(() => {
+        onMount()
+    }, [])
 
-            const email = event.target.email.value
-            const password = event.target.password.value
+    function handleSubmit(event) {
+        event.preventDefault()
 
-            onSubmit(email, password)
-        }}>
-            <input type='text' name='email' placeholder='example@mail.com'></input>
-            <input type='password' name='password' placeholder='password'></input>
-            {error && <Feedback message={error}/>}
+        const { target: {
+            email: { value: email },
+            password: { value: password }
+        } } = event
+
+        onSubmit(email, password)
+    }
+
+    function handleGoToRegister(event) {
+        event.preventDefault()
+
+        onGoToRegister()
+    }
+
+    return <>
+        <form className='login' onSubmit={handleSubmit}>
+            <input type='text' name='email' placeholder='example@gmail.com'/>
+            <input type='password' name='password' placeholder='Password'/>
             <button>Login</button>
+            {error && <Feedback message={error} level='warn'/>}
+            <p>Go to <a href="" onClick={handleGoToRegister}>register</a></p>
         </form>
-        <a href='#' onClick={event => {
-            event.preventDefault()
-            onToRegister()
-        }}>Go to Register</a>
-    </div>
+    </>
 }
-
-export default Login

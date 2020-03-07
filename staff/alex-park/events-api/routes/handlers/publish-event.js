@@ -1,17 +1,14 @@
-const { registerUser } = require('../logic')
-const { NotAllowedError, ContentError } = require('events-errors')
+const { publishEvent } = require('../../logic')
+const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
-    const { body: { name, surname, email, password } } = req
+    const { params: { id }, body: { title, description, location, date } } = req
 
     try {
-        registerUser(name, surname, email, password)
+        publishEvent(id, title, description, location, new Date(date))
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
-
-                if (error instanceof NotAllowedError)
-                    status = 409 // conflict
 
                 const { message } = error
 

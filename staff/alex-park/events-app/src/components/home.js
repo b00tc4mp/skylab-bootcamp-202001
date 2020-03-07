@@ -1,19 +1,44 @@
-import React from 'react'
-import Feedback from './feedback'
+import React, { useState, useEffect, useContext } from 'react'
+import CreateEvent from './CreateEvent'
+import { retrieveUser, isLoggedIn, logout, publishEvent, retrieveLastEvents } from '../logic'
+import { Context } from './ContextProvider'
+import { withRouter } from 'react-router-dom'
 
-function Home ({ name, error, onPublishEvent, onRetrieveLastEvents }) {
-    return <div className='home-container'>
-        <h2>{`Hello ${name}! What do you wanna do?`}</h2>
-        <button onClick={event => {
-            event.preventDefault()
-            onPublishEvent()
-        }}>Publish an event</button>
+export default withRouter(function ({ history }){
+    const [, setState] = useContext(Context)
+    const [name, setName] = useState()
 
-        <button onClick={event => {
-            event.preventDefault()
-            onRetrieveLastEvents()
-        }}>Retrieve Last Events</button>
-    </div>
-}
+    useEffect(() => {
+        if(isLoggedIn())
+            (async () => {
+                try {
+                    const { name } = await retrieveUser()
 
-export default Home
+                    setName(name)
+
+                    setState({ page: 'home' })
+                } catch ({ message }) {
+                    setState({ error: message, page: 'login' })
+                }
+            })()
+        else setState({ page: 'login' })
+    }, [])
+
+    function handleLogout() {
+        logout()
+
+        setState({ page: 'login' })
+
+        history.push('/login')
+    }
+
+    function handleCreateEvent(title, description, date, location) { 
+        //TODO 
+    }
+
+    return <>
+        <h1>Hello, {name}!</h1>
+        <button onClick={handleLogout}>Logout</button>
+        <CreateEvent onSubmit={handleCreateEvent} />
+    </>
+})

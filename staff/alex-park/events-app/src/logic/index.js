@@ -1,11 +1,13 @@
-import authenticateUser from './authenticate-user'
 import registerUser from './register-user'
+import login from './login'
 import retrieveUser from './retrieve-user'
-import retrieveLastEvents from './retrieve-last-events'
+import isLoggedIn from './is-logged-in'
+import logout from './logout'
 
 export {
-    authenticateUser,
     registerUser,
+    login,
     retrieveUser,
-    retrieveLastEvents
+    isLoggedIn,
+    logout
 }
