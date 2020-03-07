@@ -1,4 +1,4 @@
-const { createEvent } = require('../logic')
+const { createEvent } = require('../../logic')
 const { ContentError } = require('events-errors')
 
 

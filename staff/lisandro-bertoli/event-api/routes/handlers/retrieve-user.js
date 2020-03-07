@@ -1,18 +1,18 @@
-const { subscribeEvent } = require('../logic')
-const { NotFoundError, NotAllowedError } = require('events-errors')
+const { retrieveUser } = require('../../logic')
+const { NotAllowedError, NotFoundError, ContentError } = require('events-errors')
 
 module.exports = (req, res) => {
-    const { body: { id: eventId }, payload: { sub: id } } = req
+    const { payload: { sub: id } } = req
 
     try {
-
-        subscribeEvent(id, eventId)
-            .then(() => {
-                res.status(201).end()
+        retrieveUser(id)
+            .then(user => {
+                res
+                    .status(200)
+                    .json(user)
             })
-            .catch((error) => {
+            .catch(error => {
                 let status = 400
-
                 switch (true) {
                     case error instanceof NotFoundError:
                         status = 404
@@ -23,6 +23,7 @@ module.exports = (req, res) => {
                 }
 
                 const { message } = error
+
                 res
                     .status(status)
                     .json({ error: message })
@@ -30,11 +31,10 @@ module.exports = (req, res) => {
     } catch (error) {
         let status = 400
 
-        if (error instanceof TypeError)
-            status = 406 // not acceptable
+        if (error instanceof ContentError)
+            status = 401
 
         const { message } = error
-
         res
             .status(status)
             .json({ error: message })

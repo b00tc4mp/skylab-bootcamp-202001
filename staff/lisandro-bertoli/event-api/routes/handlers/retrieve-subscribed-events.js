@@ -1,4 +1,4 @@
-const { retrieveSubscribedEvents } = require('../logic')
+const { retrieveSubscribedEvents } = require('../../logic')
 const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {

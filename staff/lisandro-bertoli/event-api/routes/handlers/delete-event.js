@@ -1,4 +1,4 @@
-const { deleteEvent } = require('../logic')
+const { deleteEvent } = require('../../logic')
 const { ContentError, NotAllowedError } = require('events-errors')
 
 module.exports = (req, res) => {

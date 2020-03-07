@@ -1,4 +1,4 @@
-const { retrievePublishedEvents } = require('../logic')
+const { retrievePublishedEvents } = require('../../logic')
 
 
 module.exports = (req, res) => {

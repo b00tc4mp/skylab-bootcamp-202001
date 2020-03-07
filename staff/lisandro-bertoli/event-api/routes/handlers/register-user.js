@@ -1,4 +1,4 @@
-const { registerUser } = require('../logic')
+const { registerUser } = require('../../logic')
 const { ContentError } = require('events-errors')
 
 module.exports = (req, res) => {

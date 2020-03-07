@@ -5,25 +5,15 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 const express = require('express')
 const winston = require('winston')
 
-const { jwtValidationMidWare } = require('./mid-wares')
+
 const cors = require('cors')
 const { name, version } = require('./package')
-const bodyParser = require('body-parser')
+
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
 const { mongoose } = require('events-data')
-const { registerUser,
-    authenticateUser,
-    retrieveUser,
-    createEvent,
-    retrievePublishedEvents,
-    retrieveLastEvents,
-    subscribeEvent,
-    retrieveSubscribedEvents,
-    updateEvent,
-    deleteEvent,
-    deleteUser } = require('./routes')
+const router = require('./routes')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
@@ -41,7 +31,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
             }))
         }
 
-        const jsonBodyParser = bodyParser.json()
+
 
         const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
@@ -51,29 +41,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.use(morgan('combined', { stream: accessLogStream }))
 
-        app.post('/users', jsonBodyParser, registerUser)
-
-        app.get('/users', jwtValidationMidWare, retrieveUser)
-
-        app.post('/users/auth', jsonBodyParser, authenticateUser)
-
-        app.post('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], createEvent)
-
-        app.get('/users/:id?/events', jwtValidationMidWare, retrievePublishedEvents)
-
-        app.get('/users/:id?/subscribed-events', jwtValidationMidWare, retrieveSubscribedEvents)
-
-        app.patch('/users/:id?/events', [jwtValidationMidWare, jsonBodyParser], subscribeEvent)
-
-        app.patch('/events/:id', [jwtValidationMidWare, jsonBodyParser], updateEvent)
-
-        app.delete('/users/events/:id', jwtValidationMidWare, deleteEvent)
-
-        app.delete('/users', [jwtValidationMidWare, jsonBodyParser], deleteUser)
-
-        app.get('/events/:page?', retrieveLastEvents)
-
-
+        app.use('/api', router)
 
         app.listen(port, () => {
             logger.info(`server ${name} ${version} started on port ${port}`)

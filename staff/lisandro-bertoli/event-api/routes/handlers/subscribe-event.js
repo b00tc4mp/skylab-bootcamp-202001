@@ -1,21 +1,21 @@
-const { updateEvent } = require('../logic')
-const { ContentError, NotAllowedError } = require('events-errors')
+const { subscribeEvent } = require('../../logic')
+const { NotFoundError, NotAllowedError } = require('events-errors')
 
 module.exports = (req, res) => {
-    const { body, params: { id: eventId }, payload: { sub: userId } } = req
+    const { body: { id: eventId }, payload: { sub: id } } = req
 
     try {
 
-        updateEvent(userId, eventId, body)
+        subscribeEvent(id, eventId)
             .then(() => {
                 res.status(201).end()
             })
-            .catch(error => {
+            .catch((error) => {
                 let status = 400
 
                 switch (true) {
-                    case error instanceof ContentError:
-                        status = 406
+                    case error instanceof NotFoundError:
+                        status = 404
                         break
                     case error instanceof NotAllowedError:
                         status = 403
@@ -31,7 +31,7 @@ module.exports = (req, res) => {
         let status = 400
 
         if (error instanceof TypeError)
-            status = 416
+            status = 406 // not acceptable
 
         const { message } = error
 

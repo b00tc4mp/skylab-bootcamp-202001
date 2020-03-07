@@ -1,4 +1,4 @@
-const { deleteUser } = require('../logic')
+const { deleteUser } = require('../../logic')
 
 
 module.exports = (req, res) => {
