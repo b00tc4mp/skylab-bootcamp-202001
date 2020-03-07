@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+body .divlogin, body .divregister {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("https://wallpapershome.com/images/pages/pic_v/17125.jpg");
+}
+
+.login {
+  margin: auto;
+  margin-top: 40%;
+  height: 50%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+.login__tittle {
+  margin-top: 15%;
+  margin-bottom: 20%;
+  height: 5%;
+  width: 50%;
+  align-self: center;
+}
+.login__username, .login__password {
+  text-align: center;
+  border: 0;
+  border-bottom: 2px solid black;
+  background-color: rgba(255, 255, 255, 0);
+  margin-bottom: 15%;
+  height: 5%;
+  width: 50%;
+  align-self: center;
+  color: black;
+}
+.login__username::-webkit-input-placeholder, .login__password::-webkit-input-placeholder {
+  color: black;
+}
+.login__button {
+  align-self: center;
+  height: 8%;
+  width: 50%;
+  border: 2px solid black;
+  background-color: transparent;
+  border-radius: 20px;
+  margin-bottom: 5%;
+}
+
+.register {
+  margin: auto;
+  margin-top: 30%;
+  height: 70%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+.register__tittle {
+  margin-top: 15%;
+  margin-bottom: 20%;
+  height: 5%;
+  width: 50%;
+  align-self: center;
+}
+.register__name, .register__surname, .register__username, .register__password {
+  text-align: center;
+  border: 0;
+  border-bottom: 2px solid black;
+  background-color: rgba(255, 255, 255, 0);
+  margin-bottom: 10%;
+  height: 5%;
+  width: 50%;
+  align-self: center;
+  color: black;
+}
+.register__name::-webkit-input-placeholder, .register__surname::-webkit-input-placeholder, .register__username::-webkit-input-placeholder, .register__password::-webkit-input-placeholder {
+  color: black;
+}
+.register__button {
+  align-self: center;
+  height: 8%;
+  width: 50%;
+  border: 2px solid black;
+  background-color: transparent;
+  border-radius: 20px;
+  margin-bottom: 5%;
+}
+
+/*# sourceMappingURL=style.css.map */
