@@ -49,13 +49,21 @@ function App() {
     }
   }
 
+  const handleGoToRegister = () => {
+    setState({ page: 'register', error: undefined })
+  }
+
+  const handleGoToLogin = () => {
+    setState({ page: 'login', error: undefined })
+  }
+
   const { page, error } = state
   return (
 
     <div className="App">
       <Page name={page}>
-        {page === 'register' && <Register error={error} onSubmit={handleRegister} />}
-        {page === 'login' && <Login error={error} onSubmit={handleLogin} />}
+        {page === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
+        {page === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
         {page === 'home' && <Home />}
       </Page>
     </div >
