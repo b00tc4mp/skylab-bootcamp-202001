@@ -1,15 +1,15 @@
 const { validate } = require('events-utils')
 const { NotFoundError, NotAllowedError } = require('events-errors')
 const API_URL = process.env.REACT_APP_API_URL
+import context from './context'
 
-module.exports = (token, eventId) => {
-    validate.jwt(token, 'token')
+export default (function (eventId) {
     validate.string(eventId, 'eventId')
 
     return (async () => {
         const response = await fetch(`${API_URL}/users/events`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` },
             body: JSON.stringify({ id: eventId })
         })
 
@@ -30,4 +30,4 @@ module.exports = (token, eventId) => {
 
     })()
 
-}
+}).bind(context)

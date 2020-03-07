@@ -1,8 +1,10 @@
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
-const API_URL = process.env.REACT_APP_API_URL
+const TEST_JWT_SECRET = process.env.REACT_APP_JWT_SECRET
 const { mongoose, models: { User, Event } } = require('events-data')
 const { random } = Math
-const subscribeEvent = require('./subscribe-event')
+import subscribeEvent from './subscribe-event'
+import context from './context'
+const jwt = require('jsonwebtoken')
 
 fdescribe('subscribeEvent', () => {
     beforeAll(async () => {
@@ -25,23 +27,13 @@ fdescribe('subscribeEvent', () => {
     })
 
     describe('when user already exists', () => {
-        let token, userId
+        let userId
 
         beforeEach(async () => {
 
             const user = await User.create(new User({ name, surname, email, password }))
-
             userId = user.id
-
-            const response = await fetch(`${API_URL}/users/auth`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            })
-
-            const { token: _token } = await response.json()
-
-            token = _token
+            context.token = await jwt.sign({ sub: user.id }, TEST_JWT_SECRET)
 
         })
         describe('when event exists', () => {
@@ -55,26 +47,26 @@ fdescribe('subscribeEvent', () => {
 
             it('should succeed adding userId into event subscribers array', async () => {
 
-                await subscribeEvent(token, eventId)
-                const event = await Event.findById(eventId)
+                await subscribeEvent(eventId)
+                const event = await Event.findById(eventId).lean()
+                debugger
+                expect(event.subscribers.toString()).toBe(userId)
 
-                expect(event.subscribers).toContain(userId)
             })
-
             it('should succeed adding eventId into users subscribed array', async () => {
 
-                await subscribeEvent(token, eventId)
-                const user = await User.findById(userId)
+                await subscribeEvent(eventId)
+                const user = await User.findById(userId).lean()
 
 
-                expect(user.subscribedEvents).toContain(eventId)
+                expect(user.subscribedEvents.toString()).toBe(eventId)
             })
         })
-    })
-    // TODO more happies and unhappies
+        // TODO more happies and unhappies
 
-    afterAll(async () => {
-        await Promise.all([User.deleteMany(), Event.deleteMany()])
-        return await mongoose.disconnect()
+        afterAll(async () => {
+            await Promise.all([User.deleteMany(), Event.deleteMany()])
+            return await mongoose.disconnect()
+        })
     })
 })
