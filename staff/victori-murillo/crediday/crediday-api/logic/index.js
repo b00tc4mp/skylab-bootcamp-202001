@@ -1,4 +1,10 @@
 module.exports = {
-  registerUser: require('./register-user'),
-  registerCompany: require('./register-company')
+  registerCompany: require('./company/register-company'),
+  retrieveCompany: require('./company/retrieve-company'),
+  retrieveAllCompanies: require('./company/retrieve-all-companies'),
+  
+  registerUser: require('./user/register-user'),
+  authenticateUser: require('./user/authenticate-user'),
+  retrieveUser: require('./user/retrieve-user'),
+  
 }

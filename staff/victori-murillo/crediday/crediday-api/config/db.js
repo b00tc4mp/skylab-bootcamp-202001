@@ -2,13 +2,13 @@ const mongoose = require('mongoose')
 const chalk = require('chalk')
 const { env: { MONGODB_URL } } = process
 
-var connected = chalk.blue
+var connected = chalk.cyan
 var error = chalk.bold.yellow
 var disconnected = chalk.bold.red
 var termination = chalk.bold.magenta
 
 module.exports = () => {
-
+    
     mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
     mongoose.connection.on('error', function (err) {
