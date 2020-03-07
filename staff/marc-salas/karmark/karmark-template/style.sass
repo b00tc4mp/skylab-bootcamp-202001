@@ -2,7 +2,11 @@ body
     margin: 0
     padding: 0
     text-align: center
-    .divlogin, .divregister
+    width: 100vw
+    textarea:focus, input:focus
+        outline: none
+    .divlogin, .divregister, .divhome
+        margin-right: 0
         display: flex
         height: 100vh
         width: 100vw
@@ -10,3 +14,4 @@ body
 
 @import login
 @import register
+@import home
