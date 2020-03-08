@@ -1,15 +1,17 @@
 import React from 'react'
+import './Events.sass'
+import './Event.sass'
 
 export default ({results}) => {
     return (
-        <ul>
+        <ul className = "events">
         {results.map(event => {
-            return <li>
+            return <li className="event">
             <h2>{event.title}</h2>
             <p>Description: {event.description}</p>
             <p>Date: {event.date}</p>
             <p>Location: {event.location}</p>
-            <p>Publisher: {event.publisher.name}</p>
+            <p>Publisher: {event.publisher}</p>
             </li>
         })}
         </ul>

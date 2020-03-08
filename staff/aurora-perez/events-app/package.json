@@ -9,6 +9,7 @@
     "events-data": "file:../events-data",
     "events-errors": "file:../events-errors",
     "events-utils": "file:../events-utils",
+    "moment": "^2.24.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-scripts": "3.4.0"
