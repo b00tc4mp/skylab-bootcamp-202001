@@ -12,7 +12,7 @@ module.exports = new Schema({
     level: {
         type: String,
         required: true,
-        enum: ['begginer', 'intermediate', 'advanced', 'expert']
+        enum: ['begginer', 'intermediate', 'advanced', 'ripper']
     },
     resort: String,
     location: {
@@ -31,6 +31,7 @@ module.exports = new Schema({
     description: String,
     creator: { type: ObjectId, ref: 'User' },
     comments: [{ type: ObjectId, ref: 'Comment' }],
-    created: { type: Date, required: true },
-    modified: Date
+    created: { type: Date, default: Date.now },
+    modified: Date,
+    verified: Boolean
 }) 
