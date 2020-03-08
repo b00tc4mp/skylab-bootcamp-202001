@@ -4,4 +4,4 @@ module.exports = class ContentError extends Error {
 
         this.name = ContentError.name
     }
-}ç
+}

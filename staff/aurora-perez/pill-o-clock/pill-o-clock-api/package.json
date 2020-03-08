@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node .",
     "watch": "nodemon .",
-    "test": "npx mocha logic utils",
-    "test-debug": "npx mocha debug logic utils"
+    "test": "npx mocha logic",
+    "test-debug": "npx mocha debug logic"
   },
   "keywords": [],
   "author": "",
