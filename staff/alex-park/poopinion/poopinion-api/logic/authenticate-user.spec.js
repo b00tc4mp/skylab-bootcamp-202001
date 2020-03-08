@@ -48,12 +48,14 @@ describe('authenticateUser', () => {
 
         it('should fail on incorrect credentials', () => {
             authenticateUser(`wrong-${email}`, password)
+                .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
                     expect(message).to.equal('wrong credentials')
                 })
 
             authenticateUser(email, `${password}-wrong`)
+                .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
                     expect(message).to.equal('wrong credentials')

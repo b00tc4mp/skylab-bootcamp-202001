@@ -29,6 +29,7 @@ describe('retrieveUser', () => {
         beforeEach(() =>
             User.create({ name, surname, email, password, age, gender })
                 .then(({ id }) => _id = id)
+                .then(() => { })
         )
 
         it('should succeed on correct and valid and right data', () =>
@@ -41,6 +42,42 @@ describe('retrieveUser', () => {
                     expect(user.age).to.equal(age)
                     expect(user.gender).to.equal(gender)
                     expect(user.password).to.be.undefined
+                })
+                .then(() => { })
+        )
+    })
+
+    describe('when the user does not exist', () => {
+        beforeEach(() => User.deleteMany().then(() => { }))
+
+        it('should fail on a non-existing user', () =>
+            retrieveUser(_id)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`user with id ${_id} does not exist`)
+                })
+                .then(() => { })
+        )
+    })
+
+    describe('when the user is deactivated', () => {
+        beforeEach(() =>
+            User.create({ name, surname, email, password, age, gender, deactivated: true })
+                .then(({ id }) => _id = id)
+                .then(() => User.findById(_id))
+                .then(user => {
+                    user._doc.deactivated = true
+                    return user.save()
+                })
+                .then(() => {})
+        )
+        it('should fail to retrieve a deactivated user', () =>
+            retrieveUser(_id)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`user with id ${_id} is deactivated`)
                 })
         )
     })

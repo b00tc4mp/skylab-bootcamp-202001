@@ -1,6 +1,6 @@
 const { validate } = require('poopinion-utils')
 const { models: { User } } = require('poopinion-data')
-const { NotAllowedError } = require('poopinion-errors')
+const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 
 module.exports = id => {
     validate.string(id, 'id')
