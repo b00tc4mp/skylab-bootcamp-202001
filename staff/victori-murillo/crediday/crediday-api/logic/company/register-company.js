@@ -11,9 +11,6 @@ module.exports = async (data) => {
   validate.string(user.username, 'username')
   validate.length(user.username, 3, 30)
 
-  // console.log(typeof PASSWORD, PASSWORD);
-
-
   const companyFound = await Company.findOne({ name: company.name.toLowerCase() })
   if (companyFound) throw new Error('The company name is already taken')
 
@@ -26,7 +23,7 @@ module.exports = async (data) => {
     username: user.username,
     firstName: user.username,
     company: newCompany.id,
-    role: 'admin',
+    role: 'owner',
     password: await hash(PASSWORD, 10)
   })
 
