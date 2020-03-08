@@ -12,7 +12,7 @@ describe('retrieveUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password, age, gender
+    let name, surname, email, password, age, gender, _id
     const GENDERS = ['male', 'female', 'non-binary']
 
     beforeEach(() => {
@@ -25,7 +25,6 @@ describe('retrieveUser', () => {
     })
 
     describe('when user already exists', () => {
-        let _id
 
         beforeEach(() =>
             User.create({ name, surname, email, password, age, gender })
@@ -46,7 +45,19 @@ describe('retrieveUser', () => {
         )
     })
 
-    // TODO more happies and unhappies
+    it('should fail on a non-string id', () => {
+        _id = 9328743289
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+
+        _id = false
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+
+        _id = undefined
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+
+        _id = []
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+    })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

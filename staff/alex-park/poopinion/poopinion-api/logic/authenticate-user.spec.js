@@ -6,6 +6,7 @@ const { expect } = require('chai')
 const { random, floor } = Math
 const authenticateUser = require('./authenticate-user')
 const bcrypt = require('bcryptjs')
+const { ContentError } = require('poopinion-errors')
 
 describe('authenticateUser', () => {
     before(() =>
@@ -44,9 +45,55 @@ describe('authenticateUser', () => {
                     expect(id).to.equal(_id)
                 })
         )
+
+        it('should fail on incorrect credentials', () => {
+            authenticateUser(`wrong-${email}`, password)
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal('wrong credentials')
+                })
+
+            authenticateUser(email, `${password}-wrong`)
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal('wrong credentials')
+                })
+        })
     })
 
-    // TODO more happies and unhappies
+    it('should fail on a non-string and non-valid email', () => {
+        email = 9328743289
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = false
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = undefined
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = []
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = 'kfjsnfksdn'
+        expect(() => authenticateUser(email, password)).to.throw(ContentError, `${email} is not an e-mail`)
+
+        email = 'kfjsnfksdn@123'
+        expect(() => authenticateUser(email, password)).to.throw(ContentError, `${email} is not an e-mail`)
+    })
+
+    it('should fail on a non-string password', () => {
+        password = 9328743289
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = false
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = undefined
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = []
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+    })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

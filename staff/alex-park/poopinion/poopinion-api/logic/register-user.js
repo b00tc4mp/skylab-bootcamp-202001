@@ -7,7 +7,7 @@ module.exports = (name, surname, email, password, age, gender) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
-    validate.type(Number(age), 'age', Number)
+    validate.type(age, 'age', Number)
     validate.string(gender, 'gender')
     validate.email(email)
     validate.string(password, 'password')
@@ -19,7 +19,7 @@ module.exports = (name, surname, email, password, age, gender) => {
             return bcrypt.hash(password, 10)
         })
         .then(password => {
-            user = new User({ name, surname, email, age, gender, password, created: new Date })
+            user = new User({ name, surname, email, age: Number(age), gender, password, created: new Date })
 
             return user.save()
         })

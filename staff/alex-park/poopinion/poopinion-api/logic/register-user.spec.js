@@ -5,6 +5,7 @@ const { random, floor } = Math
 const { mongoose, models: { User } } = require('poopinion-data')
 const registerUser = require('./register-user')
 const bcrypt = require('bcryptjs')
+const { ContentError } = require('poopinion-errors')
 
 const { env: { TEST_MONGODB_URL } } = process
 
@@ -43,13 +44,107 @@ describe('registerUser', () => {
                 expect(user.gender).to.equal(gender)
                 expect(user.age).to.equal(age)
                 expect(user.created).to.be.instanceOf(Date)
+                expect(user.favToilets).to.be.instanceOf(Array)
+                expect(user.thumbsVotes).to.be.instanceOf(Array)
+                expect(user.publishedToilets).to.be.instanceOf(Array)
+                expect(user.comments).to.be.instanceOf(Array)
 
                 return bcrypt.compare(password, user.password)
             })
             .then(validPassword => expect(validPassword).to.be.true)
     )
 
-    // TODO unhappy paths and other happies if exist
+    it('should fail to register if the user email already exists', () =>
+        registerUser(name, surname, email, password, age, gender)
+        .catch(({message}) => {
+            expect(message).not.to.be.undefined
+            expect(message).to.equal(`user with email ${email} already exists`)
+        })
+    )
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+it('should fail on a non-string name', () => {
+    name = 9328743289
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `name ${name} is not a string`)
+
+    name = false
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `name ${name} is not a string`)
+
+    name = undefined
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `name ${name} is not a string`)
+
+    name = []
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `name ${name} is not a string`)
+})
+
+it('should fail on a non-string surname', () => {
+    surname = 9328743289
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `surname ${surname} is not a string`)
+
+    surname = false
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `surname ${surname} is not a string`)
+
+    surname = undefined
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `surname ${surname} is not a string`)
+
+    surname = []
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `surname ${surname} is not a string`)
+})
+
+it('should fail on a non-string and non-valid email', () => {
+    email = 9328743289
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `email ${email} is not a string`)
+
+    email = false
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `email ${email} is not a string`)
+
+    email = undefined
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `email ${email} is not a string`)
+
+    email = []
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `email ${email} is not a string`)
+
+    email = 'kfjsnfksdn'
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(ContentError, `${email} is not an e-mail`)
+
+    email = 'kfjsnfksdn@123'
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(ContentError, `${email} is not an e-mail`)
+})
+
+it('should fail on a non-string password', () => {
+    password = 9328743289
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `password ${password} is not a string`)
+
+    password = false
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `password ${password} is not a string`)
+
+    password = undefined
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `password ${password} is not a string`)
+
+    password = []
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `password ${password} is not a string`)
+})
+
+it('should fail on a non-number age', () => {
+    age = {}
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a number`)
+
+    age = []
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a number`)
+})
+
+it('should fail on a non-string gender', () => {
+    gender = 9328743289
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `gender ${gender} is not a string`)
+
+    gender = false
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `gender ${gender} is not a string`)
+
+    gender = undefined
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `gender ${gender} is not a string`)
+
+    gender = []
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `gender ${gender} is not a string`)
+})
+
+after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })
