@@ -1,12 +1,12 @@
 const { Router } = require('express')
 const router = Router()
 
-const body = require('body-parser').json()
+const bodyParser = require('body-parser').json()
 const { errorHandler, status, jwtVerify, validateRole } = require('../middleware')
 const { company, user, credit } = require('./handlers')
 
 module.exports = router
-  .use(body)
+  .use(bodyParser)
   .use(status)
 
   .post('/companies', company.register)

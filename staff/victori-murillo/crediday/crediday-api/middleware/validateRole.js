@@ -2,11 +2,11 @@ const { User } = require('../models')
 
 module.exports = async (req, res, next) => {
   try {
-    const { payload: { sub: id } } = req
+    const { payload: { sub: _id } } = req
 
-    const user = await User.findOne({ id, role: 'developer' })
+    const user = await User.findOne({ _id, role: 'owner' })
 
-    if (!user) throw new Error('You dont have permission')
+    if (!user) throw new Error("You do not have permission")
     next()
     
   } catch (error) {

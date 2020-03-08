@@ -3,8 +3,7 @@ const validate = require('../../utils/validate')
 const { hash } = require('bcryptjs')
 const { env: { PASSWORD } } = process
 
-module.exports = async (data) => {
-  const { company, user } = data
+module.exports = async ({ company, user }) => {
 
   validate.string(company.name, 'name')
   validate.length(company.name, 'company', 3, 30)
@@ -20,7 +19,6 @@ module.exports = async (data) => {
 
   const userFound = await User.findOne({ username: user.username.toLowerCase() })
   if (userFound) throw new Error('The username is already taken')
-
 
   const newCompany = await Company.create(company)
 

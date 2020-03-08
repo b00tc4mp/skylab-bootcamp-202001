@@ -1,6 +1,7 @@
 const { model, Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 const schema = new Schema({
+
   username: {
     type: String,
     trim: true,
@@ -82,17 +83,20 @@ const schema = new Schema({
 
   collectorsDontSee: [String],
 
-  credits: [{
-    type: ObjectId,
-    ref: 'Credit'
-  }],
+  
 
   company: {
     type: ObjectId,
     ref: 'Company',
     required: true
-  }
-})
+  },
+
+  credits: [{
+    type: ObjectId,
+    ref: 'Credit'
+  }]
+  
+}, { versionKey: false })
 
 schema.pre('save', function (next) {
   this.firstName = this.firstName.trim()[0].toUpperCase() + this.firstName.trim().slice(1).toLowerCase()

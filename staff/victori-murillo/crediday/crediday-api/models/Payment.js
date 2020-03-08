@@ -39,8 +39,13 @@ const schema = new Schema({
 
   // registerBy: String,
 
-  collectedBy: String,
+  collectedBy: {
+    type: ObjectId,
+    ref: 'User'
+  },
   collectedBy_ID: String,
+
+  // should I remove company and user???
 
   credit: {
     type: ObjectId,
@@ -48,18 +53,18 @@ const schema = new Schema({
     required: true
   },
 
-  company: {
-    type: ObjectId,
-    ref: 'Company',
-    required: true
-  },
+  // company: {
+  //   type: ObjectId,
+  //   ref: 'Company',
+  //   required: true
+  // },
 
-  user: {
-    type: ObjectId,
-    ref: 'User',
-    required: true
-  }
+  // user: {
+  //   type: ObjectId,
+  //   ref: 'User',
+  //   required: true
+  // }
 
-})
+}, { versionKey: false })
 
 module.exports = model("Payment", schema)

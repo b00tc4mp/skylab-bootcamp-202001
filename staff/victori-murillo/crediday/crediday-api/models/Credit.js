@@ -119,17 +119,17 @@ const schema = new Schema({
     required: true
   },
 
-  company: {
-    type: ObjectId,
-    ref: 'Company',
-    required: true
-  },
+  // company: {
+  //   type: ObjectId,
+  //   ref: 'Company',
+  //   required: true
+  // },
 
   payments: [{
     type: Schema.Types.ObjectId,
     ref: 'Payment'
   }]
 
-})
+}, { versionKey: false })
 
 module.exports = model("Credit", schema)
