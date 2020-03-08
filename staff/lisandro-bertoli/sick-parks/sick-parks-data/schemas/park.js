@@ -14,6 +14,7 @@ module.exports = new Schema({
         required: true,
         enum: ['begginer', 'intermediate', 'advanced', 'expert']
     },
+    resort: String,
     location: {
         type: {
             type: String,
