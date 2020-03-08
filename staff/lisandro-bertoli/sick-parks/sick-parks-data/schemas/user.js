@@ -1,27 +1,34 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
-    name: { type: String, required: true },
-    surname: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
+    name: { type: String, required: true, trim: true },
+    surname: { type: String, required: true, trim: true },
+    email: { type: String, required: true, trim: true },
+    password: { type: String, required: true, trim: true },
     image: { type: String },
     allowLocation: Boolean,
     location: {
         type: {
             type: String,
-            enum: ['Point'],
-            required: true
+            enum: ['Point']
         },
         coordinates: {
-            type: [Number],
-            required: true
+            type: [Number]
         }
     },
-    parks: [{ type: ObjectId, ref: 'Park' }],
     notifications: Boolean,
-    contributions: Array,
-    rejections: Array,
-    created: Date,
+    parks: [{
+        type: ObjectId,
+        ref: 'Park'
+    }],
+    contributions: [{
+        type: ObjectId,
+        ref: 'Park'
+    }],
+    rejections: [{
+        type: ObjectId,
+        ref: 'Park'
+    }],
+    created: { type: Date, trim: true, default: Date.now },
     authenticated: Date
 })
