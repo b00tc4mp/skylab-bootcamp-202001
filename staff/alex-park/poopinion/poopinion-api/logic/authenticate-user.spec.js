@@ -3,7 +3,7 @@ require('dotenv').config()
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('poopinion-data')
 const { expect } = require('chai')
-const { random } = Math
+const { random, floor } = Math
 const authenticateUser = require('./authenticate-user')
 const bcrypt = require('bcryptjs')
 
@@ -13,13 +13,16 @@ describe('authenticateUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password
+    let name, surname, email, password, age, gender
+    const GENDERS = ['male', 'female', 'non-binary']
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
+        age = floor(random() * 120)
+        gender = GENDERS[floor(random() * GENDERS.length)]
     })
 
     describe('when user already exists', () => {
@@ -28,7 +31,7 @@ describe('authenticateUser', () => {
         beforeEach(() =>
             bcrypt.hash(password, 10)
                 .then(password =>
-                    User.create({ name, surname, email, password })
+                    User.create({ name, surname, email, password, age, gender })
                 )
                 .then(user => _id = user.id)
         )

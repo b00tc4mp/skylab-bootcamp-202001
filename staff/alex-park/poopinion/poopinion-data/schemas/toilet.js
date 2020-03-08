@@ -3,29 +3,74 @@ const { Schema, Types: { ObjectId } } = require('mongoose')
 module.exports = new Schema({
     place: { type: String, required: true },
     created: { type: Date, required: true, default: Date.now },
-    rating: {
-        cleanness: {
-            type: [{ type: Number, required: true }]
-        },
-        looks: {
-            type: [{ type: Number, required: true }]
-        },
-        multipleToilets: {
-            type: [{ type: Boolean, required: true }]
-        },
-        paymentRequired: {
-            type: [{ type: Boolean, required: true }]
-        },
-        paperDeployment: {
-            type: [{ type: Boolean, required: true }]
-        },
-        overallRating: {
-            type: [{ type: Number, required: true }]
-        },
-        image: { type: image }
-    },
-    geolocation: {
-        latitude: { type: Number, required: true },
-        longitude: { type: Number, required: true }
-    }
+    publisher: { type: ObjectId, ref: 'User' },
+    comments: [{ type: ObjectId, ref: 'Comments' }],
+    // geolocation: {
+    //     type: "FeatureCollection",
+    //     features: [
+    //         {
+    //             type: "Feature",
+    //             properties: {},
+    //             geometry: {
+    //                 type: "Point",
+    //                 coordinates: [{
+    //                     longitude: {type: Number, required: true},
+    //                     latitude: {type: Number, required: true}
+    //                 }]
+    //             }
+    //         }
+    //     ]
+    // }
 })
+
+ // rating: {
+    //     cleanness: {
+    //         type: [{
+    //             type: {
+    //                 rater: { type: ObjectId, required: true, ref: 'Comment' },
+    //                 rating: { type: Number, required: true }
+    //             }
+    //         }]
+    //     },
+    //     looks: {
+    //         type: [{
+    //             type: {
+    //                 rater: { type: ObjectId, required: true, ref: 'Comment' },
+    //                 rating: { type: Number, required: true }
+    //             }
+    //         }]
+    //     },
+    //     multipleToilets: {
+    //         type: [{
+    //             type: {
+    //                 rater: { type: ObjectId, required: true, ref: 'Comment' },
+    //                 rating: { type: Boolean, required: true }
+    //             }
+    //         }]
+    //     },
+    //     paymentRequired: {
+    //         type: [{
+    //             type: {
+    //                 rater: { type: ObjectId, required: true, ref: 'Comment' },
+    //                 rating: { type: Boolean, required: true }
+    //             }
+    //         }]
+    //     },
+    //     paperDeployment: {
+    //         type: [{
+    //             type: {
+    //                 rater: { type: ObjectId, required: true, ref: 'Comment' },
+    //                 rating: { type: Boolean, required: true }
+    //             }
+    //         }]
+    //     },
+    //     overallRating: {
+    //         type: [{
+    //             type: {
+    //                 rater: { type: ObjectId, required: true, ref: 'Comment' },
+    //                 rating: { type: Number, required: true }
+    //             }
+    //         }]
+    //     },
+    //     image: { type: String }
+    // },

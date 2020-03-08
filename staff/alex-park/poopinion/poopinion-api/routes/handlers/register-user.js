@@ -2,10 +2,10 @@ const { registerUser } = require('../../logic')
 const { NotAllowedError, ContentError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    const { body: { name, surname, email, password } } = req
+    const { body: { name, surname, email, password, age, gender } } = req
 
     try {
-        registerUser(name, surname, email, password)
+        registerUser(name, surname, email, password, age, gender)
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
