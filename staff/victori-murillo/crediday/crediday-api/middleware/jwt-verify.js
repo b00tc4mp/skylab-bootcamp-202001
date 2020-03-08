@@ -15,7 +15,8 @@ module.exports = (req, res, next) => {
     req.payload = payload
 
     next()
-  } catch ({ message }) {
-    res.status(401).json({ error: message })
+    
+  } catch (error) {
+    next(error)
   }
 }

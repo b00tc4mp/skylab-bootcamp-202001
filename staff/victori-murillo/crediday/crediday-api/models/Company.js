@@ -15,6 +15,8 @@ module.exports = model('Company', new Schema({
     default: Date.now
   },
 
+  originCountry: String,
+
   // identification: String,
 
   // userQuantity: Number,

@@ -82,15 +82,15 @@ const schema = new Schema({
 
   collectorsDontSee: [String],
 
-  // credits: [{
-  //   type: ObjectId,
-  //   ref: 'Credit'
-  // }],
+  credits: [{
+    type: ObjectId,
+    ref: 'Credit'
+  }],
 
   company: {
     type: ObjectId,
     ref: 'Company',
-    // required: true
+    required: true
   }
 })
 

@@ -2,8 +2,8 @@ const { Router } = require('express')
 const router = Router()
 
 const body = require('body-parser').json()
-const { errorHandler, status, jwtVerify } = require('../middleware')
-const { user, company } = require('./handlers')
+const { errorHandler, status, jwtVerify, validateRole } = require('../middleware')
+const { company, user, credit } = require('./handlers')
 
 module.exports = router
   .use(body)
@@ -15,7 +15,7 @@ module.exports = router
   .use(jwtVerify)
 
   .get('/companies/:id', company.retrieve)
-  .get('/companies', company.retrieveAll)
+  .get('/companies', validateRole, company.retrieveAll)
   // .patch('/companies/:id', company.update)
   // .delete('/companies/:id', company.delete)
 
@@ -24,6 +24,8 @@ module.exports = router
   // .get('/users/companies/:id', user.retrieveAll)
   // .patch('/users/:id', user.update)
   // .patch('/users/:id', user.delete)
+
+  .post('/credits', credit.register)
 
 
   .use(errorHandler)
