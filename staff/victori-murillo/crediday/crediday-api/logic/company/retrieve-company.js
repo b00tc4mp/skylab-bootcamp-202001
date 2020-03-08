@@ -12,7 +12,6 @@ module.exports = async (_id, query) => {
   if (!companyFound) throw new Error('Company Not Found')
 
   companyFound.id = companyFound._id.toString()
-  delete companyFound.__v
   delete companyFound._id
 
   return companyFound

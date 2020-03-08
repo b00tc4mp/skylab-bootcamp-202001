@@ -15,6 +15,8 @@ module.exports = model('Company', new Schema({
     default: Date.now
   },
 
+  originCountry: String,
+
   // identification: String,
 
   // userQuantity: Number,
@@ -36,12 +38,17 @@ module.exports = model('Company', new Schema({
   //   default: 0
   // },
 
-  Accounting: {
+  history: [{
+    type: ObjectId,
+    ref: 'User'
+  }],
+
+  accounting: {
     type: ObjectId,
     ref: 'Box'
   },
 
-  Setting: {
+  setting: {
     type: ObjectId,
     ref: 'Box'
   },
@@ -51,4 +58,4 @@ module.exports = model('Company', new Schema({
     ref: 'User'
   }]
 
-}))
+}, { versionKey: false }))

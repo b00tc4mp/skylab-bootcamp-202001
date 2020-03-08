@@ -13,7 +13,6 @@ module.exports = async (query) => {
   companies.forEach(company => {
     company.id = company._id.toString()
     delete company._id
-    delete company.__v
   })
 
   return companies

@@ -3,16 +3,16 @@ const validate = require('../../utils/validate')
 const { hash } = require('bcryptjs')
 const { env: { PASSWORD } } = process
 
-module.exports = async (data) => {
-  const { company, user } = data
+module.exports = async ({ company, user }) => {
 
   validate.string(company.name, 'name')
-  validate.length(company.name, 3, 30)
+  validate.length(company.name, 'company', 3, 30)
+
   validate.string(user.username, 'username')
-  validate.length(user.username, 3, 30)
+  validate.length(user.username, 'username', 3, 30)
 
-  // console.log(typeof PASSWORD, PASSWORD);
-
+  validate.string(PASSWORD, 'password')
+  validate.length(PASSWORD, 'password', 5, 30)
 
   const companyFound = await Company.findOne({ name: company.name.toLowerCase() })
   if (companyFound) throw new Error('The company name is already taken')
@@ -26,10 +26,10 @@ module.exports = async (data) => {
     username: user.username,
     firstName: user.username,
     company: newCompany.id,
-    role: 'admin',
+    role: 'owner',
     password: await hash(PASSWORD, 10)
   })
 
-  newCompany.users.push(newUser)
+  newCompany.users.push(newUser.id)
   await newCompany.save()
 }
