@@ -1,0 +1,76 @@
+.container_home {
+  color: #273742;
+}
+
+.li_ordered {
+  font-size: 17px;
+  margin: 5px 0px;
+}
+
+.span_name {
+  font-size: 17px;
+}
+
+.span_add {
+  color: green;
+  margin-left: 5px;
+  
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  
+}
+
+.span_add:hover {
+  border-bottom: 2px solid green;
+  font-size: 26px;
+}
+
+.span_info {
+  background-color: blue;
+  color: white;
+  padding: 0px 5px;
+  margin-left: 5px;
+  border-radius: 100%;
+
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.span_info:hover {
+  padding: 1px 7px;
+  font-size: 22px;
+}
+
+.container_newUser {
+  display: flex;
+  justify-content: center;
+  /* border: 1px solid red; */
+}
+
+.button_newUser {
+  font-size: 30px;
+  background-color: darkgreen;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.button_newUser:hover {
+  background-color: #00BB27;
+}
+
+.call-icon {
+  cursor: pointer;
+  text-decoration: none;
+  color: #273742;
+}
+
+.call-icon:hover {
+  color: #00BB27;
+  /* font-size: 18px; */
+}
+

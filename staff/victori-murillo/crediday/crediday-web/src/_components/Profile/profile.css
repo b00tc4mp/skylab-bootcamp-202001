@@ -1,0 +1,201 @@
+.container_profile {
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10px;
+  /* border-collapse: collapse; */
+}
+
+.container_edit_add {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+
+.update-client {
+  background-color: #1F618D;
+  color: white;
+  padding: 5px 15px;
+  font-size: 22px;
+  border-radius: 5px 0px 0px 5px;
+  min-width: 50px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: 0px solid green;
+}
+
+.add-credit {
+  background-color: white;
+  color: #1F618D;
+  padding: 4px 9px;
+  font-size: 22px;
+  
+  min-width: 50px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #1F618D;
+  margin-left: -2px;
+}
+
+.add-credit:hover {
+  color: green;
+  padding: 3px 8px;
+  border: 2px solid #1F618D;
+}
+
+.remove-client {
+  background-color: #1F618D;
+  border: 1px solid red;
+  min-width: 100px;
+  margin: 10px;
+}
+
+.container_profile_bottons button {
+  background-color: #009d00;
+}
+
+.profile_buttons {
+  border: 1px solid red;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.button_balance {
+  background-color: #1F618D;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px 0px 0px 5px;
+  border: 0px solid #1F618D;
+}
+
+.button_balance_collector {
+  background-color: #1F618D;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 0px solid #1F618D;
+}
+
+.button_edit_balance {
+  background-color: white;
+  color: #1F618D;
+  cursor: pointer;
+  padding: 4px 9px;
+  font-size: 18px;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #1F618D;
+  margin-left: -2px;
+  display: inline-table;
+}
+
+.button_edit_balance:hover {
+  color: green;
+  padding: 3px 8px;
+  border: 2px solid #1F618D;
+}
+
+/* Upload Pays Button */
+
+.button_upload_pays {
+  background-color: white;
+  color: green;
+  cursor: pointer;
+  padding: 4px 9px;
+  font-size: 18px;
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid green;
+  border-left: 0px;
+  margin-left: -3px;
+  display: inline-table;
+}
+
+.button_upload_pays:hover {
+  color: green;
+  padding: 3px 8px;
+  border: 2px solid green;
+  
+}
+
+
+.button_payment {
+  background-color: #009d00;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  border: 0px solid #1F618D;
+}
+
+.button_edit_payment {
+  background-color: white;
+  color: green;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 18px;
+
+  border-radius: 0px 5px 5px 0px;
+  border: 0px solid #1F618D;
+}
+
+.button_cancel {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.container-button-profile {
+  text-align: center;
+}
+
+.mobile-iphone5 {
+  display: none;
+  /* display: table-cell; */
+}
+
+#profile_frecuency_button {
+  background-color: #eee;
+  color: #1F618D;
+  cursor: default;
+}
+
+.profile_frecuency {
+  margin: -4px 0px 0px -5px;
+  padding: 0px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#row_profile:nth-child(even) #profile_frecuency_button {
+  background-color: #eee;
+}
+
+#row_profile:nth-child(odd) #profile_frecuency_button {
+  background-color: white;
+}
+
+
+
+@media (min-width: 376px) {
+  .mobile-iphone5 {
+    display: table-cell;
+  }
+}
+
+@media (min-width: 600px) {
+  .container-button-profile {
+    text-align: start;
+  }
+}
+

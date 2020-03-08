@@ -1,0 +1,40 @@
+.cus_navbar {
+  /* position: relative; */
+  width: 100%;
+  height: 40px;
+  /* border: 1px solid red; */
+  background-color: #273742;
+}
+
+.close-customer {
+  position: absolute;
+  top: -4px;
+  right: 5px;
+  font-size: 38px;
+  transform: rotate(45deg);
+  cursor: pointer;
+  color: white;
+  /* background-color: red; */
+}
+
+.profile_name {
+  margin-top: 10px;
+  font-size: 22px;
+  background-color: #1F618D;
+  color: white;
+  cursor: pointer;
+  padding: 5px 15px;
+  /* font-size: 18px; */
+  border-radius: 5px;
+}
+
+.profile_edit {
+  margin-top: 10px;
+  font-size: 18px;
+  background-color: white;
+  color: #1F618D;;
+  cursor: pointer;
+  padding: 5px 10px;
+  /* font-size: 18px; */
+  border-radius: 5px;
+}

@@ -1,0 +1,165 @@
+.bg-modal-payment {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content-payment {
+  z-index: 2;
+  position: relative;
+
+  width: 100%;
+  max-height: 100%;
+
+  background-color: white;
+  border-radius: 4px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.nav-modal-payment {
+  min-height: 40px;
+  width: 100%;
+  background-color: #273742;
+  position: relative;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+
+.close-payments {
+  position: absolute;
+  top: -5px;
+  right: 4px;
+  font-size: 38px;
+  transform: rotate(45deg);
+  cursor: pointer;
+  color: white;
+}
+
+.form-payment {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.payment_span {
+  margin: 10px;
+}
+
+.payment_date {
+  font-size: 20px;
+  text-align: center;
+  border: 0px;
+}
+
+.button_save_payment {
+  padding: 10px;
+  font-size: 18px;
+  margin: 20px;
+  color: white;
+  border-radius: 10px;
+  background-color: green;
+  cursor: pointer;
+
+  width: 50%;
+}
+
+.input-payments {
+  margin-bottom: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid purple; */
+}
+
+.container-label-input-payments {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  /* border: 1px solid yellow; */
+}
+
+.label-payment {
+  font-size: 20px;
+}
+
+.payment_input {
+  border: 1px solid grey;
+  border-radius: 5px;
+  width: 130px;
+  height: 40px;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+.div_fixed {
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}
+
+.container-select {
+  display: flex;
+}
+
+.container-select select {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.username-payment {
+  margin-bottom: 10px;
+  font-size: 20px;
+  /* background-color: #273742; */
+  background-color: #273742;
+  opacity: 0.9;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+
+
+
+@media (min-width: 400px) {
+
+  .container-label-input {
+    width: 70%;
+  }
+
+  .modal-content-payment {
+    width: 360px;
+  }
+
+}
+
+
+@media (min-width: 600px) {
+
+  .container-label-input-payments {
+    /* width: 50%; */
+    margin-top: 20px;
+  }
+
+}

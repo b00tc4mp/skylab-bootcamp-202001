@@ -1,0 +1,131 @@
+.bg-modal-signup {
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content-signup {
+  min-width: 320px;
+  max-height: 100%;
+
+  position: relative;
+  
+  border-radius: 5px;
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 2;
+  background-color: white;
+}
+
+.nav-modal-signup {
+  height: 55px;
+  width: 100%;
+  background-color: #273742;
+  position: absolute;
+  top: 0;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.form-signup {
+  padding-top: 75px;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 1px solid red; */
+}
+
+.form-signup input {
+  height: 40px;
+  width: 250px;
+  padding-left: 10px;
+  border: 2px solid #273742;
+  border-radius: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.close-alert {
+  position: absolute;
+  top: -7px;
+  right: 5px;
+  font-size: 38px;
+  transform: rotate(45deg);
+  color: white;
+  cursor: pointer;
+}
+
+.button-save-company {
+  height: 45px;
+  width: 190px;
+  padding: 10px;
+  font-size: 17px;
+  margin-bottom: 20px;
+  color: white;
+  border-radius: 10px;
+  background-color: green;
+  cursor: pointer;
+  
+}
+
+.close-signup{
+  position: absolute;
+  top: -7px;
+  right: 4px;
+  font-size: 50px;
+  transform: rotate(45deg);
+  color: white;
+  cursor: pointer;
+}
+
+.h3-content {
+  padding: 20px 40px 0px 40px;
+}
+
+.form-signup h3 {
+  padding-bottom: 10px;
+}
+
+#message {
+  /* This padding-top if for the navbar not overlap the message */
+  padding-top: 55px;
+
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+@media (min-width: 321px) {
+  .modal-content-signup {
+    min-width: 100%;
+    /* width: 0; */
+  }
+}
+
+@media (min-width: 500px) {
+  .modal-content-signup {
+    min-width: 420px;
+  }
+
+  #message {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
