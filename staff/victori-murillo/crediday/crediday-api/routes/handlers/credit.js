@@ -1,8 +1,9 @@
-const { registerCompany } = require('../../logic')
+const { registerCredit } = require('../../logic')
+const { asyncHandler } = require('../../middleware')
 
 module.exports = {
-  register: async (req, res, next) => {
-    await registerCompany(req.body)
-    res.status(200).json({message: 'Company registered successfully'})
-  }
+  register: asyncHandler(async (req, res, next) => {
+    await registerCredit(req.body)
+    res.status(200).json({ message: 'Credit registered successfully' })
+  })
 }

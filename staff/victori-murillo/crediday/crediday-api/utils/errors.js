@@ -21,5 +21,13 @@ module.exports = {
 
       this.name = ContentError.name
     }
+  },
+
+  ContentLength: class ContentLength extends Error {
+    constructor(...args) {
+      super(...args)
+
+      this.name = ContentLength.name
+    }
   }
 }
