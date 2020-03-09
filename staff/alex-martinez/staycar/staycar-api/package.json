@@ -23,6 +23,7 @@
     "nodemon": "^2.0.2"
   },
   "scripts": {
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
