@@ -9,6 +9,7 @@ module.exports = (name, surname, email, password, age, gender) => {
     validate.string(email, 'email')
     validate.type(age, 'age', Number)
     validate.string(gender, 'gender')
+    validate.gender(gender)
     validate.email(email)
     validate.string(password, 'password')
 

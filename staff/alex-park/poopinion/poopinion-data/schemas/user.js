@@ -9,6 +9,7 @@ module.exports = new Schema({
     password: { type: String, required: true },
     created: { type: Date, required: true, default: Date.now },
     authenticated: { type: Date },
+    deactivated: { type: Boolean, default: false },
     retrieved: { type: Date },
     favToilets: {
         type: [{ type: ObjectId, ref: 'Toilet' }]

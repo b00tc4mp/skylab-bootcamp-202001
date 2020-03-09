@@ -14,6 +14,11 @@ module.exports = {
         if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} is not an e-mail`) // TODO custom error?
     },
 
+    gender(target) {
+        const GENDERS = ['male', 'female', 'non-binary']
+        if (!GENDERS.includes(target)) throw new ContentError(`${target} is not included on the gender list`)
+    },
+
     type(target, name, type) {
         if (type === String || type === Number || type === Boolean) {
             type = type.name.toLowerCase()

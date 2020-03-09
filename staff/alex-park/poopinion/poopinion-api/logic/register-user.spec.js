@@ -144,6 +144,12 @@ it('should fail on a non-string gender', () => {
 
     gender = []
     expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `gender ${gender} is not a string`)
+
+    gender = 'mal'
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(ContentError, `${gender} is not included on the gender list`)
+
+    gender = 'fem'
+    expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(ContentError, `${gender} is not included on the gender list`)
 })
 
 after(() => User.deleteMany().then(() => mongoose.disconnect()))

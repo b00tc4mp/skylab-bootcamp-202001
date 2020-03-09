@@ -65,11 +65,7 @@ describe('retrieveUser', () => {
         beforeEach(() =>
             User.create({ name, surname, email, password, age, gender, deactivated: true })
                 .then(({ id }) => _id = id)
-                .then(() => User.findById(_id))
-                .then(user => {
-                    user._doc.deactivated = true
-                    return user.save()
-                })
+                .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
                 .then(() => {})
         )
         it('should fail to retrieve a deactivated user', () =>
