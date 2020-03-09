@@ -4,7 +4,8 @@ module.exports = new Schema({
     place: { type: String, required: true },
     created: { type: Date, required: true, default: Date.now },
     publisher: { type: ObjectId, ref: 'User' },
-    comments: [{ type: ObjectId, ref: 'Comments' }],
+    comments: [{ type: ObjectId, ref: 'Comment' }],
+    geolocation: { type: Array }
     // geolocation: {
     //     type: "FeatureCollection",
     //     features: [
