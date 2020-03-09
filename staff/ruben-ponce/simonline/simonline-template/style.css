@@ -1,0 +1,413 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: black;
+  text-decoration: none;
+  font-size: 1.3rem;
+  box-sizing: border-box;
+}
+
+.p1 {
+  border: 2px solid black;
+  border-collapse: collapse;
+  width: 100%;
+  height: 60vh;
+  animation: colorchange 50s infinite;
+}
+@keyframes colorchange {
+  0% {
+    background: red;
+  }
+  25% {
+    background: yellow;
+  }
+  50% {
+    background: green;
+  }
+  75% {
+    background: blue;
+  }
+  100% {
+    background: red;
+  }
+}
+
+.landing {
+  text-align: center;
+  display: grid;
+  grid-template: repeat(4, auto)/1fr;
+}
+.landing__title {
+  font-size: 2rem;
+  grid-area: 1/1/1/1;
+  margin: 0.5rem 0;
+}
+.landing__img {
+  margin: 0 auto;
+  grid-area: 2/1/2/1;
+}
+.landing__login {
+  grid-area: 3/1/3/1;
+  cursor: pointer;
+  margin: 1rem 0;
+}
+.landing__login:hover {
+  color: white;
+}
+.landing__register {
+  grid-area: 4/1/4/1;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+.landing__register:hover {
+  color: white;
+}
+
+.home {
+  text-align: center;
+  display: grid;
+  grid-template: repeat(5, auto)/1fr;
+}
+.home__logout {
+  cursor: pointer;
+  text-align: right;
+  margin: 1rem 1rem 0 1rem;
+  grid-area: 1/1/1/1;
+  font-size: 1rem;
+}
+.home__logout:hover {
+  color: white;
+}
+.home__single-player {
+  cursor: pointer;
+  grid-area: 2/1/2/1;
+}
+.home__single-player:hover {
+  color: white;
+}
+.home__multi-player {
+  cursor: pointer;
+  grid-area: 3/1/3/1;
+}
+.home__multi-player:hover {
+  color: white;
+}
+.home__options {
+  cursor: pointer;
+  grid-area: 4/1/4/1;
+}
+.home__options:hover {
+  color: white;
+}
+.home__hall-of-fame {
+  cursor: pointer;
+  grid-area: 5/1/5/1;
+}
+.home__hall-of-fame:hover {
+  color: white;
+}
+
+.multiplayer {
+  text-align: center;
+  display: grid;
+  grid-template: repeat(3, auto)/1fr;
+}
+.multiplayer__top-menu {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem 0 1rem;
+  grid-area: 1/1/1/1;
+}
+.multiplayer__top-menu__back {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.multiplayer__top-menu__back:hover {
+  color: white;
+}
+.multiplayer__top-menu__logout {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.multiplayer__top-menu__logout:hover {
+  color: white;
+}
+.multiplayer__top-menu__title {
+  margin: 0;
+  padding: 0;
+}
+.multiplayer__create-group {
+  grid-area: 2/1/2/1;
+  cursor: pointer;
+}
+.multiplayer__create-group:hover {
+  color: white;
+}
+.multiplayer__join-group {
+  grid-area: 3/1;
+  cursor: pointer;
+}
+.multiplayer__join-group:hover {
+  color: white;
+}
+
+.create-group {
+  text-align: center;
+  display: grid;
+  grid-template: repeat(3, auto)/1fr;
+}
+.create-group__top-menu {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem 0 1rem;
+  grid-area: 1/1/1/1;
+}
+.create-group__top-menu__back {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.create-group__top-menu__back:hover {
+  color: white;
+}
+.create-group__top-menu__logout {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.create-group__top-menu__logout:hover {
+  color: white;
+}
+.create-group__label {
+  background-color: transparent;
+  border: none;
+  text-align: center;
+  grid-area: 2/1/2/1;
+}
+.create-group__button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  grid-area: 3/1/3/1;
+}
+.create-group__button:hover {
+  color: white;
+}
+
+.join-group {
+  text-align: center;
+  display: grid;
+  grid-template: 20% 80%/1fr;
+}
+.join-group__top-menu {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem 0 1rem;
+  grid-area: 1/1/1/1;
+}
+.join-group__top-menu__back {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.join-group__top-menu__back:hover {
+  color: white;
+}
+.join-group__top-menu__logout {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.join-group__top-menu__logout:hover {
+  color: white;
+}
+.join-group__groups {
+  grid-area: 2/1/2/1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.join-group__groups a {
+  cursor: pointer;
+}
+.join-group__groups a:hover {
+  color: white;
+}
+
+.group {
+  text-align: center;
+  display: grid;
+  grid-template: 10% 90%/auto;
+  overflow: scroll;
+}
+.group__top-menu {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem 0 1rem;
+  grid-area: 1/1/1/1;
+  width: 100%;
+}
+.group__top-menu__back {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.group__top-menu__back:hover {
+  color: white;
+}
+.group__top-menu__title {
+  cursor: pointer;
+}
+.group__top-menu__title:hover {
+  color: white;
+}
+.group__top-menu__logout {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.group__top-menu__logout:hover {
+  color: white;
+}
+.group__players {
+  grid-area: 2/1/2/1;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.group__players p {
+  margin: 0.4rem;
+}
+
+.game {
+  text-align: center;
+  display: grid;
+  grid-template: 10% 70% 20%/1fr;
+}
+.game__top-menu {
+  grid-area: 1/1;
+  text-align: right;
+}
+.game__top-menu__logout {
+  cursor: pointer;
+  margin: 1rem;
+  font-size: 1rem;
+}
+.game__top-menu__logout:hover {
+  color: white;
+}
+.game__board {
+  width: 100%;
+  grid-area: 2/1;
+  margin: 0 auto;
+}
+.game__board__container {
+  margin: 0 auto;
+  width: 280px;
+  height: 280px;
+  position: relative;
+}
+.game__board__container__red {
+  cursor: pointer;
+  background-color: #b02222;
+  width: 140px;
+  height: 140px;
+  border-top-left-radius: 200px;
+  border: 2px solid black;
+  float: left;
+}
+.game__board__container__red:hover {
+  background-color: red;
+}
+.game__board__container__green {
+  cursor: pointer;
+  background-color: green;
+  width: 140px;
+  height: 140px;
+  border-top-right-radius: 200px;
+  border: 2px solid black;
+  float: right;
+}
+.game__board__container__green:hover {
+  background-color: #04ee04;
+}
+.game__board__container__blue {
+  cursor: pointer;
+  background-color: #1f4db0;
+  width: 140px;
+  height: 140px;
+  border-bottom-right-radius: 200px;
+  border: 2px solid black;
+  float: right;
+}
+.game__board__container__blue:hover {
+  background-color: #0037ff;
+}
+.game__board__container__yellow {
+  cursor: pointer;
+  background-color: #c9c920;
+  width: 140px;
+  height: 140px;
+  border-bottom-left-radius: 200px;
+  border: 2px solid black;
+  float: left;
+}
+.game__board__container__yellow:hover {
+  background-color: #f9f900;
+}
+.game__board__container__gray {
+  width: 65px;
+  height: 65px;
+  background-color: gray;
+  border-radius: 50%;
+  border: 2px solid black;
+  position: absolute;
+  top: 39%;
+  right: 38.5%;
+}
+.game__footer {
+  grid-area: 3/1;
+}
+.game__footer__text {
+  font-size: 1rem;
+}
+
+.options {
+  text-align: center;
+  display: grid;
+  grid-template: 10% 90%/1fr;
+}
+.options__top-menu {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 1rem 0 1rem;
+}
+.options__top-menu__back {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.options__top-menu__back:hover {
+  color: white;
+}
+.options__top-menu__logout {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.options__top-menu__logout:hover {
+  color: white;
+}
+.options__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.options__body__sound {
+  cursor: pointer;
+}
+.options__body__sound:hover {
+  color: white;
+}
+.options__body__theme {
+  cursor: pointer;
+}
+.options__body__theme:hover {
+  color: white;
+}
+
+/*# sourceMappingURL=style.css.map */
