@@ -1,6 +1,6 @@
-const { validate } = require('events-utils')
-const { models: { User } } = require('events-data')
-const { NotAllowedError } = require('events-errors')
+const { validate } = require('staycar-utils')
+const { models: { User } } = require('staycar-data')
+const { NotAllowedError } = require('staycar-errors')
 const bcrypt = require('bcryptjs')
 
 /**

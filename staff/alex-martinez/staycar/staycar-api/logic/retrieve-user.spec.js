@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('staycar-data')
 
 describe('retrieveUser', () => {
     before(() =>

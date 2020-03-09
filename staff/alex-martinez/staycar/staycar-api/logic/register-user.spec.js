@@ -2,13 +2,13 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { random } = Math
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('staycar-data')
 const registerUser = require('./register-user')
 const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
-describe.only('registerUser', () => {
+describe('registerUser', () => {
     let name, surname, username, password
 
     before(() =>
@@ -37,7 +37,6 @@ describe.only('registerUser', () => {
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.username).to.equal(username)
-                expect(user.created).to.be.instanceOf(Date)
 
                 return bcrypt.compare(password, user.password)
             })
