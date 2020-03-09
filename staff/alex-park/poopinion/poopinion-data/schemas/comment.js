@@ -5,26 +5,16 @@ module.exports = new Schema({
     created: { type: Date, required: true, default: Date.now },
     commentedAt: { type: ObjectId, required: true, ref: 'Toilet' },
     rating: {
-        cleanness: {
-            type: { type: Number, required: true }
-        },
-        looks: {
-            type: { type: Number, required: true }
-        },
-        multipleToilets: {
-            type: { type: Boolean, required: true }
-        },
-        paymentRequired: {
-            type: { type: Boolean, required: true }
-        },
-        paperDeployment: {
-            type: { type: Boolean, required: true }
-        },
-        overallRating: {
-            type: { type: Number, required: true }
-        },
-        textArea: { type: String }
+        type: {
+            cleanness: { type: Number, required: true },
+            looks: { type: Number, required: true },
+            multipleToilets: { type: Boolean, required: true },
+            paymentRequired: { type: Boolean, required: true },
+            paperDeployment: { type: Boolean, required: true },
+            overallRating: { type: Number, required: true },
+            textArea: { type: String }
+        }
     },
-    thumbsUp: { type: Number },
-    thumbsDown: { type: Number }
+    thumbsUp: [{ type: Number }],
+    thumbsDown: [{ type: Number }]
 })

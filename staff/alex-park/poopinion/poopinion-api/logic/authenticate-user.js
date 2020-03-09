@@ -11,8 +11,6 @@ const bcrypt = require('bcryptjs')
  * 
  * @returns {Promise<string>} user id from storage
  * 
- * @throws {ContentError} if user data does not follow the format and content rules
- * @throws {TypeError} if user data does not have the correct type
  * @throws {NotAllowedError} on wrong credentials
  */
 module.exports = (email, password) => {

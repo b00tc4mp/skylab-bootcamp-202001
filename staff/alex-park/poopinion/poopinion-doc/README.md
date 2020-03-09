@@ -18,7 +18,7 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 
 ### Use cases
 
-To do...
+![](./images/use-cases.png)
 
 ## Technical description
 

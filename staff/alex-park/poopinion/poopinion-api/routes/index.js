@@ -2,7 +2,8 @@ const { Router } = require('express')
 const {
     registerUser,
     authenticateUser,
-    retrieveUser
+    retrieveUser,
+    publishToilet
 } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -15,5 +16,7 @@ router.post('/users', jsonBodyParser, registerUser)
 router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
+
+router.post('/users/:id/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
 
 module.exports = router
