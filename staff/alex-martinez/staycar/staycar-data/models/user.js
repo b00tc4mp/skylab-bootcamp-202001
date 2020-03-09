@@ -1,4 +1,4 @@
-const {mongoose, Schema } = require('mongoose')
+const {Schema, model } = require('mongoose')
 
 const UserSchema = new Schema({
     name: { type: String, required: true, trim: true },
@@ -8,4 +8,4 @@ const UserSchema = new Schema({
     authenticated: { type: Date }
 })
 
-module.exports = mongoose.model('User', UserSchema)
+module.exports = model('User', UserSchema)
