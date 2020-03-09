@@ -1,7 +1,7 @@
 const {Schema, model } = require('mongoose')
 
 const LotSchema = new Schema({
-    plate_number: {type : String, required: true, trim: true, unique: true},
+    plateNumber: {type : String, required: true, trim: true, unique: true},
     occupied: { type: Boolean, required: true, default: false}
 })
 
