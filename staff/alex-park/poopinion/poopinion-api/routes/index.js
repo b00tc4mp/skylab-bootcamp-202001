@@ -4,6 +4,7 @@ const {
     authenticateUser,
     retrieveUser,
     publishToilet,
+    deleteToilet,
     publishComment,
     deleteComment
 } = require('./handlers')
@@ -20,6 +21,8 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.post('/users/:id/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
+
+router.delete('/users/:id/toilet/:toiletId/delete', jwtVerifierMidWare, deleteToilet)
 
 router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
 
