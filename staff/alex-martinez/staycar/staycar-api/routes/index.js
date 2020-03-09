@@ -1,6 +1,6 @@
 const { Router } = require('express')
 //require handlers
-const { registerUser, authenticateUser, retrieveUser, entryVehicle } = require('./handlers')
+const { registerUser, authenticateUser, retrieveUser, entryVehicle, addLotsAmount } = require('./handlers')
 //
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -17,6 +17,8 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.post('/ticket', jsonBodyParser, entryVehicle)
+
+router.post('/parking', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
 //
 
 

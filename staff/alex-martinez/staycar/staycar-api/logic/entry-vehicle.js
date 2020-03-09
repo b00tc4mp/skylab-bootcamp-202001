@@ -11,7 +11,7 @@ module.exports = (carPlate) => {
         if (car) throw new NotAllowedError(`this plate ${carPlate} is inside`)
     })
     .then(() => {
-        const ticket = new Ticket({ car_plate: carPlate, entry_hour: new Date() })
+        const ticket = new Ticket({ carPlate, entryHour: new Date() })
         
         return ticket.save()
     })

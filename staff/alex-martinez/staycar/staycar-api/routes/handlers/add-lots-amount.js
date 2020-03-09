@@ -1,11 +1,11 @@
-const { entryVehicle } = require('../../logic')
+const { addLotsAmount } = require('../../logic')
 const { NotAllowedError, ContentError } = require('staycar-errors')
 
 module.exports = ( req, res ) => {
-    const { body: { carPlate }} = req
-    
+    const { payload: { sub: id } , body: { totalLots } } = req
+
     try{
-        entryVehicle(carPlate)
+        addLotsAmount(id,totalLots)
         .then(() => res.status(201).end())
         .catch(error => {
             let status = 400
