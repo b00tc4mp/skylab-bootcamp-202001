@@ -41,7 +41,6 @@ export default class App extends Component {
     credDone: false,
 
     usersDontSee: []
-
   }
 
   toggleSidebar = () => this.setState({displaySidebar: !this.state.displaySidebar})
@@ -76,8 +75,6 @@ export default class App extends Component {
       .then(() => this.getCredits())
       .catch(e => console.log(e))
   }
-
-
 
   // getCreditsAll = () => {
   //   console.log("getting All")

@@ -16,8 +16,6 @@ import {isAdmin, isCollector} from '../../_utils/isLoggedIn'
 import Alert from '../Alert/Alert'
 
 
-
-
 export default class CollectDay extends Component {
   state = {
     date: getDateToday(),

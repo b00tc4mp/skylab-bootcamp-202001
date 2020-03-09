@@ -11,7 +11,7 @@ const isAdmin = () => {
     return false
   }
   
-} 
+}
 
 const isCollector = () => localStorage.getItem("role") === "Collector" ? true : false
 
