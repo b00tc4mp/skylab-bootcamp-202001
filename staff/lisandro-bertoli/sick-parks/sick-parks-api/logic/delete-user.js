@@ -9,7 +9,7 @@ module.exports = ({ _id, password }) => {
 
     return (async () => {
         const user = await User.findById(_id)
-        debugger
+
         if (!user) throw new NotFoundError(`user with id ${_id} does not exist`)
 
         const validPassword = await bcrypt.compare(password, user.password)

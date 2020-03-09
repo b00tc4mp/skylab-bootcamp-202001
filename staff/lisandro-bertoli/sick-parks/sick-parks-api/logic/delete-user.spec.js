@@ -57,7 +57,7 @@ describe('deleteUser', () => {
 
     it('should fail on incorrect id', async () => {
         let _id = '5e6536527984d5537dd3f385'
-        debugger
+
         try {
             await deleteUser({ _id, password })
             throw new Error('should not reach this point')

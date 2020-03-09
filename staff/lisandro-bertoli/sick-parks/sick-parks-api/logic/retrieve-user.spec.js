@@ -69,9 +69,6 @@ describe('retrieveUser', () => {
         expect(() => retrieveUser(id)).to.throw(Error, `id is empty`)
     })
 
-    after(() => {
-        User.deleteMany({})
+    after(() => User.deleteMany().then(() => mongoose.disconnect()))
 
-        return mongoose.disconnect()
-    })
 })

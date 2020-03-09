@@ -1,4 +1,7 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
+const Feature = require('./feature')
+const Comment = require('./comment')
+
 
 
 module.exports = new Schema({
@@ -33,5 +36,6 @@ module.exports = new Schema({
     comments: [Comment],
     created: { type: Date, default: Date.now },
     modified: Date,
+    approvals: Number,
     verified: Boolean
 }) 
