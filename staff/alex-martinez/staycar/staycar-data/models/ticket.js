@@ -1,7 +1,7 @@
 const {model, Schema } = require('mongoose')
 
 const TicketSchema = new Schema({
-    //plate_number: {type: String, required: true, unique: true, trim: true},
+    car_plate: {type: String, required: true, unique: true, trim: true},
     //date: {type: Date, required: true},
     entry_hour: {type: Date, required: true},
     exit_hour: {type: Date},

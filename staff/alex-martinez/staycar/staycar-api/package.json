@@ -13,7 +13,10 @@
     "morgan": "^1.9.1",
     "staycar-data": "file:../staycar-data",
     "staycar-errors": "file:../staycar-errors",
+<<<<<<< HEAD
     "staycar-utils": "file:../staycar-utils",
+=======
+>>>>>>> feature/staycar-utils
     "uuid": "^7.0.2",
     "winston": "^3.2.1"
   },
