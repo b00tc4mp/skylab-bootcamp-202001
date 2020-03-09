@@ -11,7 +11,7 @@ module.exports = (name, surname, username, password) => {
 
     return User.findOne({ username })
         .then(user => {
-            if (user) throw new NotAllowedError(`user with username ${username} aready exists`)
+            if (user) throw new NotAllowedError(`user with username ${username} already exists`)
 
             return bcrypt.hash(password, 10)
         })

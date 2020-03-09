@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "watch": "nodemon .",
-    "test": "npx mocha logic/*.spec.js",
+    "test": "npx mocha logic/*.spec.js --runInBand --no-cache",
     "test-debug": "npx mocha --inspect-brk logic/*.spec.js"
   },
   "keywords": [],

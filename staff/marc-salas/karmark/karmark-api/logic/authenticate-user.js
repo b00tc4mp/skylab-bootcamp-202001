@@ -1,5 +1,5 @@
 const {validate} = require('karmark-utils')
-const {models: {User}} = require('karmark-utils')
+const {models: {User}} = require('karmark-data')
 const {NotAllowedError} = require('karmark-errors')
 const bcrypt = require('bcryptjs')
 

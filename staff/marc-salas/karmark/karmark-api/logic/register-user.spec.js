@@ -64,7 +64,7 @@ describe('registerUser', () => {
                     .catch((error) => {
                         expect(error).to.exist
                         expect(error).to.be.instanceOf(NotAllowedError)
-                        expect(error.message).to.equal()
+                        expect(error.message).to.equal(`user with username ${username} already exists`)
                         
                     })
             })
