@@ -4,9 +4,9 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Drug } } = require('pill-o-clock-data')
 const { expect } = require('chai')
 const { random } = Math
-const addMedication = require('./add-medication')
+const deleteMedication = require('./delete-medication')
 
-describe('addMedication', () => {
+describe('deleteMedication', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Drug.deleteMany()]))
@@ -31,24 +31,17 @@ describe('addMedication', () => {
     describe('when user already exists', () => {
 
         beforeEach(() => 
-            User.create({ name, surname, gender, age, phone, profile, email, password })
-                .then(({ id }) => _id = id)
-            .then(()=> Drug.create({drugName, description}))
-            .then(() => {})
-        )
-
-        it('should succeed on correct and valid and right data', () =>
-            addMedication(_id, drugName)
-                .then(() => User.findById(_id).lean() )
-                .then((user) => {
-                    expect(user).to.exist
-                    expect(user.medication[0].drugName).to.contain(drugName)
+            Promise.all([User.create({ name, surname, gender, age, phone, profile, email, password }), Drug.create({drugName, description}) ])
+                .then(([user, drug]) => {
+                    _id = user.id
+                    User.update({name: name}, { $addToSet: {medication: drug}})
                 })
+                .then(() => {})
         )
-
+        
         it('should fail if the drug does not exist', () => {
             drugName = `${drugName}-wrong`
-            addMedication(_id, drugName)
+            deleteMedication(_id, drugName)
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist
@@ -57,6 +50,16 @@ describe('addMedication', () => {
                     
                 })
         })
+
+        it('should succeed on correct and valid and right data', () =>
+            deleteMedication(_id, drugName)
+                .then(() => User.findById(_id).lean() )
+                .then((user) => {
+                    expect(user).to.exist
+                    expect(user.medication[0]).to.be.undefined
+                })
+        )
+
 
     })
 

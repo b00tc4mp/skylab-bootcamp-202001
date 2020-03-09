@@ -7,7 +7,8 @@
     "start": "node .",
     "watch": "nodemon .",
     "test": "npx mocha logic",
-    "test-debug": "npx mocha debug logic"
+    "test-debug": "npx mocha debug logic",
+    "debug": "npx node debug ."
   },
   "keywords": [],
   "author": "",

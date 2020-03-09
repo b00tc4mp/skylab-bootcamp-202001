@@ -3,7 +3,8 @@ const {
     registerUser,
     authenticateUser,
     retrieveUser,
-    addMedication
+    addMedication,
+    deleteMedication
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -19,6 +20,8 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-router.post('/users/:id/medication', [jwtVerifierMidWare, jsonBodyParser], addMedication)
+router.post('/users/:id/add-medication', [jwtVerifierMidWare, jsonBodyParser], addMedication)
+
+router.post('/users/:id/delete-medication', [jwtVerifierMidWare, jsonBodyParser], deleteMedication)
 
 module.exports = router

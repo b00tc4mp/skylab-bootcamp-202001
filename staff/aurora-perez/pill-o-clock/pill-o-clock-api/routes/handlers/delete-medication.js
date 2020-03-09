@@ -1,12 +1,12 @@
-const { addMedication } = require('../../logic')
+const { deleteMedication } = require('../../logic')
 const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     const { params: { id }, body: { drugName } } = req
 
     try {
-        addMedication(id, drugName) 
-            .then(() => res.status(201).end())
+        deleteMedication(id, drugName)
+            .then(() => res.status(200).end())
             .catch(error => {
                 let status = 400
 
