@@ -11,7 +11,7 @@ const publishComment = require('./publish-comment')
 describe('publishComment', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        return await Promise.all([User.deleteMany(), Park.deleteMany()])
+        return await [User.deleteMany(), Park.deleteMany()]
     })
 
     let name, surname, email, password

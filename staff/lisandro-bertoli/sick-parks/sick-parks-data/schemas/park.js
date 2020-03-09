@@ -36,6 +36,6 @@ module.exports = new Schema({
     comments: [Comment],
     created: { type: Date, default: Date.now },
     modified: Date,
-    approvals: Number,
-    verified: Boolean
+    approvals: [{ type: ObjectId, ref: 'User', default: [] }],
+    verified: { type: Boolean, default: false }
 }) 

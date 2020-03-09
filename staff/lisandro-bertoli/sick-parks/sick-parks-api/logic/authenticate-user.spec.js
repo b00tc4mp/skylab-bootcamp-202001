@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('sick-parks-data')
-const { ContentError, NotAllowedError } = require('sick-parks-errors')
+const { NotAllowedError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
