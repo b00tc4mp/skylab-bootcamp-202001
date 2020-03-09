@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs')
 module.exports = (username, password) => {
     validate.string(username, 'username')
     validate.string(password, 'password')
-    debugger
     return User.findOne({ username })
         .then(user => {
             if (user) throw new NotAllowedError(`user with username ${username} already exists`)

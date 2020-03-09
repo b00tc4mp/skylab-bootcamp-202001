@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('simonline-data')
 
 describe('retrieveUser', () => {
     before(() =>
@@ -12,20 +12,18 @@ describe('retrieveUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password, users
+    let username, password
 
     beforeEach(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        username = `username-${random()}`
         password = `password-${random()}`
     })
 
-    describe('when user already exists', () => {
+    describe('when username already exists', () => {
         let _id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
+            User.create({ username, password })
                 .then(({ id }) => _id = id)
         )
 
@@ -33,9 +31,7 @@ describe('retrieveUser', () => {
             retrieveUser(_id)
                 .then(user => {
                     expect(user.constructor).to.equal(Object)
-                    expect(user.name).to.equal(name)
-                    expect(user.surname).to.equal(surname)
-                    expect(user.email).to.equal(email)
+                    expect(user.username).to.equal(username)
                     expect(user.password).to.be.undefined
                 })
         )

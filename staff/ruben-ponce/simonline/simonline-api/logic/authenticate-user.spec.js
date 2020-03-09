@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
@@ -13,28 +13,26 @@ describe('authenticateUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password
+    let username, password
 
     beforeEach(() => {
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        username = `username-${random()}`
         password = `password-${random()}`
     })
 
-    describe('when user already exists', () => {
+    describe('when username already exists', () => {
         let _id
 
         beforeEach(() =>
             bcrypt.hash(password, 10)
                 .then(password =>
-                    User.create({ name, surname, email, password })
+                    User.create({ username, password })
                 )
                 .then(user => _id = user.id)
         )
 
         it('should succeed on correct and valid and right credentials', () =>
-            authenticateUser(email, password)
+            authenticateUser(username, password)
                 .then(id => {
                     expect(id).to.be.a('string')
                     expect(id.length).to.be.greaterThan(0)
