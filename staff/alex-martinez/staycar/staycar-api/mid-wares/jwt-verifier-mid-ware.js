@@ -1,4 +1,4 @@
-/* const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const { env: { JWT_SECRET } } = process
 
 module.exports = (req, res, next) => {
@@ -19,4 +19,4 @@ module.exports = (req, res, next) => {
     } catch ({ message }) {
         res.status(401).json({ error: message })
     }
-} */
+}
