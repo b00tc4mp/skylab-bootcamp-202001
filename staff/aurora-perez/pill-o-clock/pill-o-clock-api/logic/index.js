@@ -3,6 +3,7 @@ module.exports = {
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     addMedication: require('./add-medication'),
-    deleteMedication: require('./delete-medication')
+    deleteMedication: require('./delete-medication'),
+    retrieveMedication: require('./retrieve-medication')
 
 }

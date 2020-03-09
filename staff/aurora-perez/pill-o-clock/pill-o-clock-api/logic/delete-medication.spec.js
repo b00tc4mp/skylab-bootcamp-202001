@@ -34,9 +34,10 @@ describe('deleteMedication', () => {
             Promise.all([User.create({ name, surname, gender, age, phone, profile, email, password }), Drug.create({drugName, description}) ])
                 .then(([user, drug]) => {
                     _id = user.id
-                    User.update({name: name}, { $addToSet: {medication: drug}})
+                    user.medication.push(drug)
+                    return user.save()
                 })
-                .then(() => {})
+            .then(() => {})
         )
         
         it('should fail if the drug does not exist', () => {
@@ -52,15 +53,45 @@ describe('deleteMedication', () => {
         })
 
         it('should succeed on correct and valid and right data', () =>
-            deleteMedication(_id, drugName)
+            User.findById(_id).lean()
+                .then((user) => {
+                    expect(user.medication).to.exist
+                    expect(user.medication[0]).to.exist
+                })
+
+            .then( () => deleteMedication(_id, drugName)
                 .then(() => User.findById(_id).lean() )
                 .then((user) => {
                     expect(user).to.exist
                     expect(user.medication[0]).to.be.undefined
                 })
+            )
         )
 
 
+    })
+
+    it('should fail on a non-string id', () => {
+        id = 9328743289
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = false
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = undefined
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = []
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = 'kfjsnfksdn'
+
+    })
+    it('should fail on a non-string drugName', () => {
+        drugName = 9328743289
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        drugName = false
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        drugName = undefined
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        drugName = []
+        expect(() => deleteMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
     })
 
 

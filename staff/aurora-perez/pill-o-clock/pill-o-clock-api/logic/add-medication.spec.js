@@ -59,6 +59,28 @@ describe('addMedication', () => {
         })
 
     })
+    it('should fail on a non-string id', () => {
+        id = 9328743289
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = false
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = undefined
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = []
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
+        id = 'kfjsnfksdn'
+
+    })
+    it('should fail on a non-string drugName', () => {
+        drugName = 9328743289
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        drugName = false
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        drugName = undefined
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        drugName = []
+        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+    })
 
 
     after(() => Promise.all([User.deleteMany(), Drug.deleteMany()]).then(() => mongoose.disconnect()))

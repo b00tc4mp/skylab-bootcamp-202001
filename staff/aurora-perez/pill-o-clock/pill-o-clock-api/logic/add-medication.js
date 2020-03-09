@@ -2,7 +2,7 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { User, Drug } } = require('pill-o-clock-data')
 const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 
-module.exports = (id, drugName) => { debugger
+module.exports = (id, drugName) => { 
     validate.string(id, 'id')
     validate.string(drugName, 'drugName')
 

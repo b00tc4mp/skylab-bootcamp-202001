@@ -12,7 +12,7 @@ describe('retrieveUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, gender, age, phone, profile, email, password, users
+    let name, surname, gender, age, phone, profile, email, password
 
     beforeEach(() => {
         name = `name-${random()}`
