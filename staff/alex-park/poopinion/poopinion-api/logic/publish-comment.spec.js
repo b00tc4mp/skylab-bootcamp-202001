@@ -6,7 +6,7 @@ const { random, floor } = Math
 const publishComment = require('./publish-comment')
 const { mongoose, models: { User, Toilet, Comment } } = require('poopinion-data')
 
-describe('publishToilet', () => {
+describe('publishComment', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()]))
@@ -78,72 +78,98 @@ describe('publishToilet', () => {
         })
     })
 
-    // describe('when the user does not exist', () => {
-    //     beforeEach(() => User.deleteMany().then(() => { }))
+    describe('when the user does not exist', () => {
+        beforeEach(() => User.deleteMany().then(() => { }))
 
-    //     it('should fail on a non-existing user', () =>
-    //         publishToilet(_id, place)
-    //             .then(() => { throw new Error('should not reach this point') })
-    //             .catch(({ message }) => {
-    //                 expect(message).not.to.be.undefined
-    //                 expect(message).to.equal(`user with id ${_id} does not exist`)
-    //             })
-    //             .then(() => { })
-    //     )
-    // })
+        it('should fail on a non-existing user', () =>
+            publishComment(_id, _toiletId, rating)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`user with id ${_id} does not exist`)
+                })
+                .then(() => { })
+        )
+    })
 
-    // describe('when the user is deactivated', () => {
-    //     beforeEach(() =>
-    //         User.create({ name, surname, email, password, age, gender })
-    //             .then(({ id }) => _id = id)
-    //             .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
-    //             .then(() => { })
-    //     )
-    //     it('should fail to retrieve a deactivated user', () =>
-    //         publishToilet(_id, place)
-    //             .then(() => { throw new Error('should not reach this point') })
-    //             .catch(({ message }) => {
-    //                 expect(message).not.to.be.undefined
-    //                 expect(message).to.equal(`user with id ${_id} is deactivated`)
-    //             })
-    //     )
-    // })
+    describe('when the user is deactivated', () => {
+        beforeEach(() =>
+            User.create({ name, surname, email, password, age, gender })
+                .then(({ id }) => _id = id)
+                .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
+                .then(() => { })
+        )
+        it('should fail to retrieve a deactivated user', () =>
+            publishComment(_id, _toiletId, rating)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`user with id ${_id} is deactivated`)
+                })
+        )
+    })
 
-    // describe('unhappy paths', () => {
-    //     beforeEach(() =>
-    //         User.create({ name, surname, email, password, age, gender })
-    //             .then(({ id }) => _id = id)
-    //             .then(() => { })
-    //     )
+    describe('when the toilet does not exist', () => {
+        beforeEach(() =>
+            Toilet.deleteMany()
+                .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: false } }))
+                .then(() => { })
+        )
 
-    //     it('should fail on a non-string place', () => {
-    //         place = 9328743289
-    //         expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+        it('should fail on a non-existing toilet', () =>
+            publishComment(_id, _toiletId, rating)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`toilet with id ${_toiletId} does not exist`)
+                })
+                .then(() => { })
+        )
 
-    //         place = false
-    //         expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+        afterEach(() => Promise.resolve(User.deleteMany()).then(() => { }))
+    })
 
-    //         place = undefined
-    //         expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+    describe('unhappy paths', () => {
+        let __id
+        beforeEach(() =>
+            Promise.resolve(User.create({ name, surname, email, password, age, gender }))
+                .then(({ id }) => {
+                    _id = id
+                    __id = id
+                })
+                .then(() => Promise.resolve(Toilet.create({ publisher: _id, place })))
+                .then(({ id }) => _toiletId = id)
+                .then(() => { })
+        )
 
-    //         place = []
-    //         expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
-    //     })
+        it('should fail on a non-string user id', () => {
+            _id = 9328743289
+            expect(() => publishComment(_id, _toiletId, rating)).to.throw(TypeError, `id ${_id} is not a string`)
 
-    //     it('should fail on a non-string id', () => {
-    //         _id = 9328743289
-    //         expect(() => publishToilet(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+            _id = false
+            expect(() => publishComment(_id, _toiletId, rating)).to.throw(TypeError, `id ${_id} is not a string`)
 
-    //         _id = false
-    //         expect(() => publishToilet(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+            _id = undefined
+            expect(() => publishComment(_id, _toiletId, rating)).to.throw(TypeError, `id ${_id} is not a string`)
 
-    //         _id = undefined
-    //         expect(() => publishToilet(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+            _id = []
+            expect(() => publishComment(_id, _toiletId, rating)).to.throw(TypeError, `id ${_id} is not a string`)
+        })
 
-    //         _id = []
-    //         expect(() => publishToilet(_id)).to.throw(TypeError, `id ${_id} is not a string`)
-    //     })
-    // })
+        it('should fail on a non-string id', () => {
+            _toiletId = 9328743289
+            expect(() => publishComment(__id, _toiletId, rating)).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+
+            _toiletId = false
+            expect(() => publishComment(__id, _toiletId, rating)).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+
+            _toiletId = undefined
+            expect(() => publishComment(__id, _toiletId, rating)).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+
+            _toiletId = []
+            expect(() => publishComment(__id, _toiletId, rating)).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+        })
+    })
 
     after(() =>
         Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])

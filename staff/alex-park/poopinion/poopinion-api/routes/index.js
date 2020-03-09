@@ -3,7 +3,9 @@ const {
     registerUser,
     authenticateUser,
     retrieveUser,
-    publishToilet
+    publishToilet,
+    publishComment,
+    deleteComment
 } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -18,5 +20,9 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.post('/users/:id/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
+
+router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
+
+router.delete('/users/:id/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
 
 module.exports = router
