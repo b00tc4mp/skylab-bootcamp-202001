@@ -67,7 +67,6 @@ describe('authenticateUser', () => {
         expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
         email = []
         expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
-        email = 'kfjsnfksdn'
 
     })
     it('should fail on a non-string password', () => {
@@ -80,5 +79,7 @@ describe('authenticateUser', () => {
         password = []
         expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
     })
+    
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
+
 })

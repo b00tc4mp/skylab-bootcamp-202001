@@ -49,7 +49,16 @@ describe('retrieveUser', () => {
         )
     })
 
-    // TODO more happies and unhappies
+    it('should fail on a non-string id', () => {
+        _id = 9328743289
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        _id = false
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        _id = undefined
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        _id = []
+        expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+    })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

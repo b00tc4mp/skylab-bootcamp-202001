@@ -12,7 +12,7 @@ describe('addMedication', () => {
             .then(() => Promise.all([User.deleteMany(), Drug.deleteMany()]))
     )
 
-    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id
+    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, __id
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -32,7 +32,9 @@ describe('addMedication', () => {
 
         beforeEach(() => 
             User.create({ name, surname, gender, age, phone, profile, email, password })
-                .then(({ id }) => _id = id)
+                .then(({ id }) => {
+                    _id = id
+                })
             .then(()=> Drug.create({drugName, description}))
             .then(() => {})
         )
@@ -59,28 +61,39 @@ describe('addMedication', () => {
         })
 
     })
-    it('should fail on a non-string id', () => {
-        id = 9328743289
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
-        id = false
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
-        id = undefined
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
-        id = []
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `id ${id} is not a string`)
-        id = 'kfjsnfksdn'
 
+    describe('unhuppy path syncronous', () => {
+        beforeEach(() => 
+            User.create({ name, surname, gender, age, phone, profile, email, password })
+        .then(({id}) => {
+            __id = id
+        })
+        )
+        it('should fail on a non-string id', () => {
+            let idWrong
+            idWrong = 9328743289
+            expect(() => addMedication(idWrong, drugName)).to.throw(TypeError, `id ${idWrong} is not a string`)
+            idWrong = false
+            expect(() => addMedication(idWrong, drugName)).to.throw(TypeError, `id ${idWrong} is not a string`)
+            idWrong = undefined
+            expect(() => addMedication(idWrong, drugName)).to.throw(TypeError, `id ${idWrong} is not a string`)
+            idWrong = []
+            expect(() => addMedication(idWrong, drugName)).to.throw(TypeError, `id ${idWrong} is not a string`)
+
+        })
+
+        it('should fail on a non-string drugName', () => {
+            drugName = 9328743289
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            drugName = false
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            drugName = undefined
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            drugName = []
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        })
     })
-    it('should fail on a non-string drugName', () => {
-        drugName = 9328743289
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        drugName = false
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        drugName = undefined
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        drugName = []
-        expect(() => addMedication(id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-    })
+        
 
 
     after(() => Promise.all([User.deleteMany(), Drug.deleteMany()]).then(() => mongoose.disconnect()))

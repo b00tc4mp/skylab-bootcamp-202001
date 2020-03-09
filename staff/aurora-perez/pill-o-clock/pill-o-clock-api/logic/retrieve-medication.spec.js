@@ -48,4 +48,16 @@ describe('retrieveMedication', ()=> {
         )
 
     })
+
+
+    it('should fail on a non-string id', () => {
+        _id = 9328743289
+        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        _id = false
+        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        _id = undefined
+        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        _id = []
+        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+    })
 })
