@@ -63,7 +63,7 @@ telemetria.on('message', throttle(state => {
   const formattedState = parseState(state.toString());
   io.sockets.emit('dronestate', formattedState);
   
-}, 100))
+}, 300))
 
  
 
