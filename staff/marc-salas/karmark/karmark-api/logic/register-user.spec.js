@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { describe, it, before, beforeEach, after } = require('mocha')
+// const { describe, it, before, beforeEach, after } = require('mocha')
 const { expect } = require('chai')
 const { random } = Math
 const { mongoose, models: { User } } = require('karmark-data')
@@ -25,7 +25,6 @@ describe('registerUser', () => {
     })
 
     it('should succed on correct user data', async () => {
-        debugger
         const result = await registerUser(name, surname, username, password)
 
         expect(result).to.not.exist
@@ -60,11 +59,12 @@ describe('registerUser', () => {
     it('should throw a NotAllowedError if the user already exist', async () => {
         const user = await registerUser(name, surname, username, password)
             .then(async () => {
-               const user2 = await registerUser(name, surname, username, password)
+               const _user = await registerUser(name, surname, username, password)
                     .then(() => console.log('should not reach this point'))
                     .catch((error) => {
                         expect(error).to.exist
                         expect(error).to.be.instanceOf(NotAllowedError)
+                        expect(error.message).to.equal()
                         
                     })
             })
