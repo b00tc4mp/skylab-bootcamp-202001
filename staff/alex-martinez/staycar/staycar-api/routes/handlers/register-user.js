@@ -1,24 +1,38 @@
-const { validate } = require('events-utils')
-const { models: { User } } = require('events-data')
-const { NotAllowedError } = require('events-errors')
-const bcrypt = require('bcryptjs')
+const { registerUser } = require('../../logic')
+const { NotAllowedError, ContentError } = require('events-errors')
 
-module.exports = (name, surname, username, password) => {
-    validate.string(name, 'name')
-    validate.string(surname, 'surname')
-    validate.string(username, 'username')
-    validate.string(password, 'password')
+module.exports = (req, res) => {
+    const { body: { name, surname, username, password } } = req
 
-    return User.findOne({ username })
-        .then(user => {
-            if (user) throw new NotAllowedError(`user with username ${username} already exists`)
+    try {
+        registerUser(name, surname, username, password)
+            .then(() => res.status(201).end())
+            .catch(error => {
+                let status = 400
 
-            return bcrypt.hash(password, 10)
-        })
-        .then(password => {
-            user = new User({ name, surname, username, password, created: new Date })
+                if (error instanceof NotAllowedError)
+                    status = 409 // conflict
 
-            return user.save()
-        })
-        .then(() => { })
+                const { message } = error
+
+                res
+                    .status(status)
+                    .json({
+                        error: message
+                    })
+            })
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
+        res
+            .status(status)
+            .json({
+                error: message
+            })
+    }
 }

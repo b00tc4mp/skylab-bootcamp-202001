@@ -1,36 +1,44 @@
-const { validate } = require('events-utils')
-const { models: { User } } = require('events-data')
-const { NotAllowedError } = require('events-errors')
-const bcrypt = require('bcryptjs')
+const { authenticateUser } = require('../../logic')
+const jwt = require('jsonwebtoken')
+const { env: { JWT_SECRET, JWT_EXP } } = process
+const { NotAllowedError, ContentError } = require('events-errors')
 
-/**
- * Checks user credentials against the storage
- * 
- * @param {string} username user's unique username
- * @param {string} password user's password
- * 
- * @returns {Promise<string>} user id from storage
- * 
- * @throws {ContentError} if user data does not follow the format and content rules
- * @throws {TypeError} if user data does not have the correct type
- * @throws {NotAllowedError} on wrong credentials
- */
-module.exports = (username, password) => {
-    validate.string(username, 'username')
-    validate.string(password, 'password')
+module.exports = (req, res) => {
+    const { body: { username, password } } = req
 
-    return User.findOne({ username })
-        .then(user => {
-            if (!user) throw new NotAllowedError(`wrong credentials`)
+    try {
+        authenticateUser(username, password)
+            .then(id => {
+                const token = jwt.sign({ sub: id }, JWT_SECRET, { expiresIn: JWT_EXP })
 
-            return bcrypt.compare(password, user.password)
-                .then(validPassword => {
-                    if (!validPassword) throw new NotAllowedError(`wrong credentials`)
+                res.status(200).json({ token })
+            })
+            .catch(error => {
+                let status = 400
 
-                    user.authenticated = new Date
+                if (error instanceof NotAllowedError)
+                    status = 401 // not authorized
 
-                    return user.save()
-                })
-                .then(({ id }) => id)
-        })
+                const { message } = error
+
+                res
+                    .status(status)
+                    .json({
+                        error: message
+                    })
+            })
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
+        res
+            .status(status)
+            .json({
+                error: message
+            })
+    }
 }

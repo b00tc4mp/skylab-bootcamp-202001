@@ -1,17 +1,40 @@
-const { validate } = require('events-utils')
-const { models: { User } } = require('events-data')
-const { NotFoundError } = require('events-errors')
+const { retrieveUser } = require('../../logic')
+const { NotAllowedError } = require('events-errors')
 
-module.exports = id => {
-    validate.string(id, 'id')
+module.exports = (req, res) => {
+    const { payload: { sub: id } } = req
 
-    return User.findById(id)
-        .then(user => {
-            if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
+    try {
+        retrieveUser(id)
+            .then(user =>
+                res.status(200).json(user)
+            )
+            .catch(error => {
+                let status = 400
 
-            //user.retrieved = new Date
+                if (error instanceof NotAllowedError)
+                    status = 401 // not authorized
 
-            return user.save()
-        })
-        .then(({ name, surname, username }) => ({ name, surname, username }))
+                const { message } = error
+
+                res
+                    .status(status)
+                    .json({
+                        error: message
+                    })
+            })
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
+        res
+            .status(status)
+            .json({
+                error: message
+            })
+    }
 }
