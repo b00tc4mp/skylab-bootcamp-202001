@@ -27,10 +27,10 @@ module.exports = new Schema({
         }
     },
     image: String,
-    features: [{ type: ObjectId, ref: 'Feature' }],
+    features: [Feature],
     description: String,
     creator: { type: ObjectId, ref: 'User' },
-    comments: [{ type: ObjectId, ref: 'Comment' }],
+    comments: [Comment],
     created: { type: Date, default: Date.now },
     modified: Date,
     verified: Boolean
