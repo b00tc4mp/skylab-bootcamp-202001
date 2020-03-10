@@ -45,3 +45,16 @@
     transform: rotate(360deg);
   }
 }
+.charts{
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+.charts > div{
+  width: 50%;
+  height: 45vh;
+}
