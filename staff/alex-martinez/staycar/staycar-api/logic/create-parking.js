@@ -8,8 +8,7 @@ module.exports = (id, pkName) => {
     return (async () => {
         const user = await User.find({id})
         if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
-        debugger
-        await Parking.create({ parkingName: pkName })
-        
+    
+        return await Parking.create({ parkingName: pkName })
     })()
 }

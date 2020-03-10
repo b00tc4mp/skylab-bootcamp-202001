@@ -16,13 +16,14 @@ describe('crateParking', () => {
             .then(() => Promise.all([User.deleteMany(), Parking.deleteMany()]))
     )
 
-    let name, surname, username, password
+    let name, surname, username, password, parkingName
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         username = `username-${random()}`
         password = `password-${random()}`
+        parkingName = `parkingName-${random()}`
     })
 
     describe('when user already exists', () => {
@@ -37,9 +38,9 @@ describe('crateParking', () => {
         )
 
         it('should succed on correct user id', () =>
-            createParking(_id )
+            createParking(_id, parkingName )
                 .then((res) => {
-                    expect(res).to.be.an('undefined')
+                    expect(res).to.be.an('object')
                 })
         )
     })

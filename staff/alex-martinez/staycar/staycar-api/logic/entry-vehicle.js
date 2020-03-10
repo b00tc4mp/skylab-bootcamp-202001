@@ -1,7 +1,5 @@
 const { validate } = require("staycar-utils");
-const {
-  models: { Ticket, Parking }
-} = require("staycar-data");
+const { models: { Ticket, Parking } } = require("staycar-data");
 const { NotAllowedError } = require("../../staycar-errors");
 
 module.exports = (carPlate, idParking) => {

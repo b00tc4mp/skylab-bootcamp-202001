@@ -24,7 +24,8 @@
   },
   "scripts": {
     "start": "node .",
-    "test": "npx mocha logic"
+    "test": "npx mocha logic",
+    "test-debug": "npx mocha inspect logic/*.spec.js"
   },
   "author": "",
   "license": "ISC"
