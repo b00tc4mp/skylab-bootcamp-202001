@@ -1,17 +1,19 @@
-const { createGroup } = require('../../logic')
+const { retrieveGame } = require('../../logic')
 const { NotAllowedError, ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
-    const { body: { name, owner } } = req
+    const { payload: { sub: id } } = req
 
     try {
-        createGroup(name, owner)
-            .then(() => res.status(201).end())
+        retrieveGame(id)
+            .then(game =>
+                res.status(200).json(game)
+            )
             .catch(error => {
                 let status = 400
 
                 if (error instanceof NotAllowedError)
-                    status = 409 // conflict
+                    status = 401 // not authorized
 
                 const { message } = error
 

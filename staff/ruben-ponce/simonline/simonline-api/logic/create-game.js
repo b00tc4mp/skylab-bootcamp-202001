@@ -1,5 +1,5 @@
 const { validate } = require('simonline-utils')
-const { models: { User, Group } } = require('simonline-data')
+const { models: { User, Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 
 module.exports = (name, owner ) => {
@@ -15,18 +15,11 @@ module.exports = (name, owner ) => {
             _user = user
         })
         .then(() => {
-            return Group.findOne({name})
-                .then(group => {
-                    if(group) throw new NotAllowedError(`group with name ${name} already exist`)
-                })
-        })
-        .then(() => {
-            let group = new Group({ name, owner })
-            id = group.id
-            debugger
-            return group.save()
+            let game = new Game({ name, owner })
+            id = game.id
+            return game.save()
                 .then(() =>{
-                    return Group.findByIdAndUpdate(id, { $addToSet: {players: _user.id, ingame: _user.id}})
+                    return Game.findByIdAndUpdate(id, { $addToSet: {players: _user.id}})
                 })
         })
         .then (() => { })
