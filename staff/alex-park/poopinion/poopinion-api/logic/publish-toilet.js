@@ -22,7 +22,7 @@ module.exports = (id, place) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
-            const toilet = new Toilet({ place, created: new Date, publisher: id })
+            const toilet = new Toilet({ place, created: new Date, publisher: id, geolocation: [50,50] })
             
             user.publishedToilets.push(toilet)
             return Promise.all([user.save(), toilet.save()])

@@ -79,11 +79,11 @@ describe('deleteToilet', () => {
     describe('when the user does not exist', () => {
         beforeEach(() => User.deleteMany().then(() => { }))
 
-        it('should fail on a non-existing user', () =>
+        it('should fail to remove a toilet if the user does not exist', () =>
             deleteToilet(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
-                    debugger
+                    
                     expect(message).not.to.be.undefined
                     expect(message).to.equal(`user with id ${_id} does not exist`)
                 })
@@ -99,7 +99,7 @@ describe('deleteToilet', () => {
                 .then(() => { })
         )
 
-        it('should fail to retrieve a deactivated user', () =>
+        it('should fail to remove a toilet if the user is deactivated', () =>
             deleteToilet(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {

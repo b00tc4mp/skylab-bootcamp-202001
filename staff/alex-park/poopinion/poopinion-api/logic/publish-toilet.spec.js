@@ -38,7 +38,7 @@ describe('publishToilet', () => {
             publishToilet(_id, place)
                 .then(() => Toilet.findOne({ publisher: _id }))
                 .then(toilet => {
-                    debugger
+                    
                     expect(toilet.publisher.toString()).to.equal(_id)
                     expect(toilet.place).to.equal(place)
                     expect(toilet.comments instanceof Array).to.equal(true)
@@ -61,7 +61,7 @@ describe('publishToilet', () => {
     describe('when the user does not exist', () => {
         beforeEach(() => User.deleteMany().then(() => { }))
 
-        it('should fail on a non-existing user', () =>
+        it('should fail to post a toilet if the user does not exist', () =>
             publishToilet(_id, place)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
@@ -79,7 +79,7 @@ describe('publishToilet', () => {
                 .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
                 .then(() => { })
         )
-        it('should fail to retrieve a deactivated user', () =>
+        it('should fail to post a toilet if the user is deactivated', () =>
             publishToilet(_id, place)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {

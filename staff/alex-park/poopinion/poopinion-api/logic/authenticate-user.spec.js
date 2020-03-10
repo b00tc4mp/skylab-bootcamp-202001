@@ -63,38 +63,41 @@ describe('authenticateUser', () => {
         })
     })
 
-    it('should fail on a non-string and non-valid email', () => {
-        email = 9328743289
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+    describe('unhappy paths', () => {
 
-        email = false
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+        it('should fail on a non-string and non-valid email', () => {
+            email = 9328743289
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
 
-        email = undefined
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+            email = false
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
 
-        email = []
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+            email = undefined
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
 
-        email = 'kfjsnfksdn'
-        expect(() => authenticateUser(email, password)).to.throw(ContentError, `${email} is not an e-mail`)
+            email = []
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
 
-        email = 'kfjsnfksdn@123'
-        expect(() => authenticateUser(email, password)).to.throw(ContentError, `${email} is not an e-mail`)
-    })
+            email = 'kfjsnfksdn'
+            expect(() => authenticateUser(email, password)).to.throw(ContentError, `${email} is not an e-mail`)
 
-    it('should fail on a non-string password', () => {
-        password = 9328743289
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+            email = 'kfjsnfksdn@123'
+            expect(() => authenticateUser(email, password)).to.throw(ContentError, `${email} is not an e-mail`)
+        })
 
-        password = false
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+        it('should fail on a non-string password', () => {
+            password = 9328743289
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
 
-        password = undefined
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+            password = false
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
 
-        password = []
-        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+            password = undefined
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+            password = []
+            expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+        })
     })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))

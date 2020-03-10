@@ -5,7 +5,7 @@ module.exports = new Schema({
     created: { type: Date, required: true, default: Date.now },
     publisher: { type: ObjectId, ref: 'User' },
     comments: [{ type: ObjectId, ref: 'Comment' }],
-    geolocation: { type: Array }
+    geolocation: [{ type: Number }]
     // geolocation: {
     //     type: "FeatureCollection",
     //     features: [

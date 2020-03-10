@@ -23,7 +23,7 @@ module.exports = (id, toiletId) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
-            debugger
+            
             return Promise.resolve(toilet.comments.forEach(comment => {
                 const oneId = comment.id
                 User.find({ comments: comment.id })

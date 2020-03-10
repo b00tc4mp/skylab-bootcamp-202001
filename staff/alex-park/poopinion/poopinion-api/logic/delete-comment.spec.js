@@ -76,11 +76,11 @@ describe('deleteComment', () => {
     describe('when the user does not exist', () => {
         beforeEach(() => User.deleteMany().then(() => { }))
 
-        it('should fail on a non-existing user', () =>
+        it('should fail to remove a comment on a non-existing user', () =>
             deleteComment(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
-                    debugger
+                    
                     expect(message).not.to.be.undefined
                     expect(message).to.equal(`user with id ${_id} does not exist`)
                 })
@@ -96,7 +96,7 @@ describe('deleteComment', () => {
                 .then(() => { })
         )
 
-        it('should fail to retrieve a deactivated user', () =>
+        it('should fail to remove a comment if the user is deactivated', () =>
             deleteComment(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
@@ -114,7 +114,7 @@ describe('deleteComment', () => {
                 .then(() => { })
         )
 
-        it('should fail on a non-existing toilet', () =>
+        it('should fail to remove a comment on a non-existing toilet', () =>
             deleteComment(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
@@ -124,19 +124,19 @@ describe('deleteComment', () => {
                 .then(() => { })
         )
     })
-    debugger
+    
     describe('when the comment does not exist', () => {
         beforeEach(() =>
             Promise.resolve(Toilet.create({ place, publisher: _id }))
                 .then(({ id }) => _toiletId = id)
                 .then(() => {
-                    debugger
+                    
                     return Comment.deleteMany()
                 })
                 .then(() => { })
         )
 
-        it('should fail on a non-existing comment', () =>
+        it('should fail to attempt a comment removal on a non-existing comment', () =>
             deleteComment(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {

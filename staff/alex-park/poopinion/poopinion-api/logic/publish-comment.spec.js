@@ -62,7 +62,7 @@ describe('publishComment', () => {
                 })
                 .then(() => User.findById(_id).populate('comments').lean())
                 .then(user => {
-                    debugger
+                    
                     expect(user.comments instanceof Array).to.equal(true)
                     expect(user.comments[0].publisher.toString()).to.equal(_id)
                     expect(user.comments[0].rating).not.to.be.undefined
@@ -81,7 +81,7 @@ describe('publishComment', () => {
     describe('when the user does not exist', () => {
         beforeEach(() => User.deleteMany().then(() => { }))
 
-        it('should fail on a non-existing user', () =>
+        it('should fail to post a comment if the user does not exist', () =>
             publishComment(_id, _toiletId, rating)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
@@ -99,7 +99,7 @@ describe('publishComment', () => {
                 .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
                 .then(() => { })
         )
-        it('should fail to retrieve a deactivated user', () =>
+        it('should fail to post a comment if the user is deactivated', () =>
             publishComment(_id, _toiletId, rating)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
@@ -116,7 +116,7 @@ describe('publishComment', () => {
                 .then(() => { })
         )
 
-        it('should fail on a non-existing toilet', () =>
+        it('should fail to post a comment if the toilet post does not exist', () =>
             publishComment(_id, _toiletId, rating)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
