@@ -1,0 +1,576 @@
+body {
+  height: 100vh;
+  width: 100%;
+}
+
+main {
+  width: 100%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Buda", cursive;
+}
+
+.register h2, .login h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.register a, .login a {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.item .item__footer, .item .item__photo, .main .main__photo__img, .header .header__account, .header .header__logo, .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item, .main .main__search, .main, body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Buda", cursive;
+}
+
+.register h2, .login h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.register a, .login a {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.item .item__footer, .item .item__photo, .main .main__photo__img, .header .header__account, .header .header__logo, .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item, .main .main__search, .main, body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  background-color: #60eed6;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 0.5em;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+.login img {
+  width: 85%;
+}
+.login--hide {
+  display: none;
+}
+.login h2 {
+  background-color: #60eed6;
+  padding: 0.5em;
+}
+.login input {
+  display: block;
+  text-align: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  font-size: 1.25em;
+  width: 50%;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+.login button {
+  display: block;
+  text-align: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+.login a {
+  display: block;
+  text-align: center;
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Buda", cursive;
+}
+
+.register h2, .login h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.register a, .login a {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.item .item__footer, .item .item__photo, .main .main__photo__img, .header .header__account, .header .header__logo, .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item, .main .main__search, .main, body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  background-color: #60eed6;
+}
+
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 0.5em;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+.register img {
+  width: 85%;
+}
+.register--hide {
+  display: none;
+}
+.register h2 {
+  background-color: #60eed6;
+  padding: 0.5em;
+}
+.register input {
+  display: block;
+  text-align: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  font-size: 1.25em;
+  width: 50%;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+.register button {
+  display: block;
+  text-align: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+.register a {
+  display: block;
+  text-align: center;
+  font-size: 1em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Buda", cursive;
+}
+
+.login h2, .register h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.login a, .register a {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.item .item__footer, .item .item__photo, .main .main__photo__img, .header .header__account, .header .header__logo, .header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item, .main .main__search, .main, body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  display: flex;
+  background-color: #60eed6;
+}
+
+.header {
+  background-color: #c0c9c7;
+  height: 10%;
+  width: 100%;
+}
+.header .sidepanel {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 20em;
+  top: 0;
+  left: 0;
+  background-color: #4e4b4b;
+  overflow-x: hidden;
+  transition: 0.25s;
+  padding-top: 3em;
+}
+.header .sidepanel a {
+  padding: 0.25em 0.25em 0.25em 1em;
+  text-decoration: none;
+  font-size: 1.5em;
+  color: #818181;
+  display: block;
+  transition: 0.2s;
+}
+.header .sidepanel a:hover {
+  color: #f1f1f1;
+}
+.header .sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 0.25em;
+  font-size: 1.5em;
+}
+.header .openbtn {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-left: 1em;
+  width: 15%;
+  border: none;
+}
+.header .openbtn:hover {
+  background-color: #444;
+}
+.header .header__logo {
+  justify-content: center;
+}
+.header .header__logo img {
+  display: block;
+  text-align: center;
+  width: 55%;
+}
+.header .header__account {
+  justify-content: flex-start;
+  width: 30%;
+}
+.header .header__account__logout {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-left: 0.05em;
+  margin-right: 0.5em;
+  display: block;
+  text-align: left;
+}
+.header .header__account__user {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 0.05em;
+  display: block;
+  text-align: right;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Buda", cursive;
+}
+
+.login h2, .register h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.login a, .register a {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.item .item__footer, .item .item__photo, .main .main__photo__img, .header, .header .header__logo, .header .header__account {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item, .main .main__search, .main, body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  display: flex;
+  flex-direction: center;
+  justify-content: flex-start;
+  background-color: #60eed6;
+}
+
+.header {
+  background-color: #c0c9c7;
+  height: 10%;
+  width: 100%;
+}
+.header .sidepanel {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 20em;
+  top: 0;
+  left: 0;
+  background-color: #4e4b4b;
+  overflow-x: hidden;
+  transition: 0.25s;
+  padding-top: 3em;
+}
+.header .sidepanel a {
+  padding: 0.25em 0.25em 0.25em 1em;
+  text-decoration: none;
+  font-size: 1.5em;
+  color: #818181;
+  display: block;
+  transition: 0.2s;
+}
+.header .sidepanel a:hover {
+  color: #f1f1f1;
+}
+.header .sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 0.25em;
+  font-size: 1.5em;
+}
+.header .openbtn {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-left: 1em;
+  width: 15%;
+  border: none;
+}
+.header .openbtn:hover {
+  background-color: #444;
+}
+.header .header__logo {
+  justify-content: center;
+}
+.header .header__logo img {
+  display: block;
+  text-align: center;
+  width: 55%;
+}
+.header .header__account {
+  justify-content: flex-start;
+  width: 30%;
+}
+.header .header__account__logout {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-left: 0.05em;
+  margin-right: 0.5em;
+  display: block;
+  text-align: left;
+}
+.header .header__account__user {
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 0.05em;
+  display: block;
+  text-align: right;
+}
+
+.main {
+  align-items: center;
+}
+.main .main__photo__img {
+  background-color: #c0c9c7;
+  margin-top: 1.5em;
+  margin-bottom: 2.5em;
+  width: 100%;
+}
+.main .main__search {
+  align-items: center;
+}
+.main .main__search input {
+  display: flex;
+  text-align: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  font-size: 1.25em;
+  width: 100%;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+.main .main__search button {
+  display: block;
+  text-align: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  width: 100%;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  margin: 0.5em;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: "Buda", cursive;
+}
+
+.login h2, .register h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.login a, .register a {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.item .item__footer, .item .item__photo, .header, .header .header__logo, .header .header__account, .main .main__photo__img {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.item, body, .main, .main .main__search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body {
+  display: flex;
+  flex-direction: center;
+  justify-content: flex-start;
+  background-color: #60eed6;
+  width: 100%;
+}
+
+.item {
+  background-color: #ffffff;
+  align-items: center;
+  border: 1px solid black;
+  margin: 1.5em;
+}
+.item .item__photo {
+  background-color: #c0c9c7;
+  width: 100%;
+}
+.item .item__h4 {
+  color: #857f7f;
+}
+.item h2 {
+  font-weight: bold;
+}
+.item span {
+  font-size: 1em;
+}
+.item .item__footer {
+  align-items: center;
+  height: 3em;
+  width: 100%;
+}
+.item .item__footer__call {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  height: 1.75em;
+  width: 100%;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+  margin-left: 0.5em;
+}
+.item .item__footer__envelope {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  height: 1.75em;
+  width: 100%;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+.item .item__footer__heart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  height: 1.75em;
+  width: 100%;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+  margin-right: 0.5em;
+}
+
+/*# sourceMappingURL=style.css.map */
