@@ -46,6 +46,7 @@ module.exports = new Schema({
             enum: ['duplicate', 'unreal']
         }
     }],
+    underReview: { type: Boolean, default: false },
     approvals: [{ type: ObjectId, ref: 'User', default: [] }],
     verified: { type: Boolean, default: false }
 }) 
