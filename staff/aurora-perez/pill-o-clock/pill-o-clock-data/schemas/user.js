@@ -16,7 +16,7 @@ module.exports = new Schema({
     retrieved: { type: Date },
     alarmSet: [{ type: Date }],
     medication: [drug],
-    receipt: {
+    prescription: {
         type: [{ type: ObjectId, ref: 'Guideline' }]
     }
     

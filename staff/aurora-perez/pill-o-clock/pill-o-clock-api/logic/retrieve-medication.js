@@ -5,7 +5,6 @@ const { NotFoundError } = require('pill-o-clock-errors')
 module.exports = id => {
     validate.string(id, 'id')
 
-    debugger
     return User.findById(id)
         .then(user => {
             
