@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css?family=Buda:300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-    <title>ShareMySpot - Home</title>
+    <title>ShareMySpot - Results</title>
 </head>
 <body>
     <header class="header">
@@ -37,12 +37,35 @@
             <i class="header__account__user fas fa-user"></i>
         </div>     
     </header>
-    <main class="main">
-        <img class="main__photo__img" src="../images/homeBckgrnd.png" alt="ShareMySpotLogo">
-        <form class="main__search">
-            <input class="main__input" type="text" placeholder="Search by location">
-            <button class="main__search">Search</button>
-        </form>
+    <main>
+        <div class="item">
+            <img class="item__photo" src="https://fakeimg.pl/350x350/?text=Photos">
+            <h4 class="item__h4">Garage on Arenys St. 123, Sant Cugat del Valles</h4>
+            <h2 class="item__h2">12 €/per day</h2><span>(*) See conditions</span>
+            <h3 class="item__h3">DESCRIPTION:</h3>
+            <p class="item__p">Parking place for rent. From Mon. to Fri. 9am to 5pm (While I'am at work). Please check the calendar for availability</p>
+            <h3 class="item__h3">PARKING FEATURES:</h3>
+            <ul class="item__ul">
+                <li>Surveillance</li>
+                <li>Fits an extra bike / motorbike</li>
+                <li>Fits an extra bike / motorbike</li>
+                <li>Accepts barter exchange</li>
+            </ul>
+            <h3 class="item__h3">FULL ADDRESS:</h3>
+            <p class="item__p">Arenys St. 123,<br>Sant Cugat del Valles,<br>Barcelona</p>
+            <button class="item__detail" href="#">Check for Availability</button>
+            <h3 class="item__h3">PUBLISHER:</h3>
+            <p class="item__p">Chiara<br>Parking ID: 123456</p>
+
+        </div>
     </main>
+    <footer>
+        <div class="detail__footer">
+            <i class="detail__footer__call fas fa-phone"></i>
+            <i class="detail__footer__envelope far fa-envelope"></i>
+            <i class="detail__footer__heart fas fa-heart"></i>
+        </div>
+        <button class="detail__mAbook" href="#">Place your reservation!</button>
+    </footer>
 </body>
 </html>
