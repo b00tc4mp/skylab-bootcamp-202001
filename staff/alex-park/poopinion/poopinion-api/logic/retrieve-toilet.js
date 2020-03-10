@@ -16,7 +16,10 @@ module.exports = toiletId => {
     return Toilet.findById(toiletId)
         .then(toilet => {
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
+            toilet.id = toilet._id.toString()
+            delete toilet._id
 
-            return Toilet.findById(toiletId).populate('publisher').populate('comments').lean()
+            return toilet.save()
         })
+        .then(() => Toilet.findById(toiletId).populate('publisher', 'name surname email age gender').populate('comments').lean())
 }

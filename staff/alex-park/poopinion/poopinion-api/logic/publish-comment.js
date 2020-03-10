@@ -21,7 +21,7 @@ module.exports = (id, toiletId, rating) => {
 
     return Promise.all([User.findById(id), Toilet.findById({ _id: toiletId })])
         .then(([user, toilet]) => {
-            
+
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
@@ -33,6 +33,12 @@ module.exports = (id, toiletId, rating) => {
             user.comments.push(comment)
             toilet.comments.push(comment)
             return Promise.all([user.save(), toilet.save(), comment.save()])
+        })
+        .then(([, , comment]) => {
+            comment.id = comment._id.toString()
+            delete comment._id
+
+            return comment.save()
         })
         .then(() => { })
 }

@@ -21,6 +21,8 @@ module.exports = id => {
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
             user.retrieved = new Date
+            user.id = user._id.toString()
+            delete user._id
 
             return user.save()
         })
