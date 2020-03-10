@@ -1,4 +1,7 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
+const Feature = require('./feature')
+const Comment = require('./comment')
+
 
 
 module.exports = new Schema({
@@ -27,11 +30,22 @@ module.exports = new Schema({
         }
     },
     image: String,
-    features: [{ type: ObjectId, ref: 'Feature' }],
+    features: [Feature],
     description: String,
     creator: { type: ObjectId, ref: 'User' },
-    comments: [{ type: ObjectId, ref: 'Comment' }],
+    comments: [Comment],
     created: { type: Date, default: Date.now },
     modified: Date,
-    verified: Boolean
+    reports: [{
+        user: {
+            type: ObjectId,
+            ref: 'User'
+        },
+        problem: {
+            type: String,
+            enum: ['duplicate', 'unreal']
+        }
+    }],
+    approvals: [{ type: ObjectId, ref: 'User', default: [] }],
+    verified: { type: Boolean, default: false }
 }) 
