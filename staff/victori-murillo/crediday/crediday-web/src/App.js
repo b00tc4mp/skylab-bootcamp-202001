@@ -1,32 +1,47 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Home, Login, Register, Drawer } from './components'
+import { Home, Login, Register } from './components'
+import { Drawer } from './components/presentational'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-// const jwt = require('jsonwebtoken') 
-import jwt from 'jsonwebtoken'
 import { Context } from './components/ContextProvider'
+
+import jwt from 'jsonwebtoken'
+
+// const { env: { REACT_APP_JWT_SECRET: JWT_SECRET } } = process
+const JWT_SECRET = process.env.REACT_APP_JWT_SECRET
 
 export default () => {
   const [view, setView] = useState()
-  const { token, setToken } = useContext(Context)
+
+  useContext(Context)
+
+  function verifyToken() {
+    try {
+      const { session } = sessionStorage
+
+      if (!session) throw new Error("theres no session in session storage")
+      jwt.verify(session, JWT_SECRET)
+      return true
+
+    } catch (error) {
+
+      sessionStorage.clear()
+      return false
+    }
+  }
 
   useEffect(() => {
     try {
       const { session } = sessionStorage
-      if (!session) throw new Error('There is not token')
-      
-      jwt.verify(sessionStorage.session, 'i cant say it')
+      if (!session) throw new Error('There is not token in session storage')
 
+      verifyToken()
       setView('drawer')
 
     } catch (error) {
-      const {lastSession} = localStorage
+      const { lastSession } = localStorage
 
-      console.log(error.message)
-
-      if (lastSession) 
-        setView('login')
-      else
-        setView('home')
+      // go to login or Home (public routes)
+      lastSession ? setView('login') : setView('home')
     }
 
   })
@@ -46,8 +61,11 @@ export default () => {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Route exact path="/drawer">
-          <Drawer />
+        <Route path="/drawer">
+          {verifyToken() ? <Drawer /> : <Redirect to="/login" />}
+        </Route>
+        <Route>
+          <Redirect to={`/home`} />
         </Route>
       </Switch>
     </BrowserRouter>

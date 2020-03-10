@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -8,11 +8,10 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
-import { Context } from './ContextProvider'
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    minWidth: '100%'
   },
   title: {
     fontWeight: 'bold',
@@ -32,17 +31,15 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ]
 
-export default function DenseTable() {
+export default function DenseTable(props) {
   const { table, title } = useStyles()
 
-  const { users } = useContext(Context)
-
-
   return (
-    <TableContainer component={Paper}>
-      <Table className={table} size="small" aria-label="a dense table">
+    <TableContainer component={Paper} style={{width: '100%'}}>
+      <Table className={table} size="medium" aria-label="a dense table">
         <TableHead>
           <TableRow>
+            {/* Create dinamic table */}
             <TableCell style={{ fontWeight: 'bold' }}>Nombre</TableCell>
             <TableCell className={title}>ID</TableCell>
             <TableCell className={title}>Fat&nbsp(g)</TableCell>
@@ -51,7 +48,7 @@ export default function DenseTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users && users.map(user => (
+          {false && [].map(user => (
             <TableRow key={user.id}>
               <TableCell component="th" scope="row">
                 {user.firstName}

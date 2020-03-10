@@ -1,14 +1,16 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import {AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem,
-  ListItemIcon, ListItemText, Toolbar, Typography} from '@material-ui/core'
-import {MoveToInbox as InboxIcon, Mail as MailIcon, Menu as MenuIcon } from '@material-ui/icons'
+import {
+  AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem,
+  ListItemIcon, ListItemText, Toolbar, Typography
+} from '@material-ui/core'
+
+import { MoveToInbox as InboxIcon, Mail as MailIcon, Menu as MenuIcon } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
-import { Context } from './ContextProvider'
-import axios from 'axios'
+import { useLocation, useHistory } from 'react-router-dom'
 
-import Table from './Table'
+import { ListCustomers } from '../'
 
 const drawerWidth = 230
 
@@ -41,7 +43,7 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(0, 0, 0, 0),
+    padding: theme.spacing(0, 0, 0, 0)
   },
 }))
 
@@ -51,22 +53,13 @@ function ResponsiveDrawer(props) {
   const theme = useTheme()
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
-  const { users, setUsers } = useContext(Context)
+  const history = useHistory()
 
-  useEffect(() => {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${sessionStorage.session}`
-    axios.get('http://localhost:8000/users-companies')
-      .then(({ data }) => {
-        console.log(data.users)
-        setUsers(data.users)
-      })
-      .catch(e => console.log(e.message))
+  // let location = useLocation()
+  // console.log(location)
 
-  }, [])
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen)
-  }
+  const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
+  
 
   const drawer = (
     <div>
@@ -78,8 +71,8 @@ function ResponsiveDrawer(props) {
 
       <Divider />
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
+        {['Clientes', 'Créditos', 'Configuración'].map((text, index) => (
+          <ListItem button key={text} onClick={() => history.push('/drawer/clientes')} >
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
@@ -87,7 +80,7 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+        {['Semanal', 'Mensual', 'Control de Caja'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
@@ -104,7 +97,7 @@ function ResponsiveDrawer(props) {
 
         <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
 
-          <Typography variant="h6" noWrap >
+          <Typography variant="h6" noWrap onClick={() => history.push('/drawer')} >
             Company Name
           </Typography>
           <IconButton
@@ -150,9 +143,10 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+      <main className={classes.content} >
         <div className={classes.toolbar} />
-        <Table />
+        {/* {location === 'customers' && } */}
+        <ListCustomers />
       </main>
     </div>
   )
