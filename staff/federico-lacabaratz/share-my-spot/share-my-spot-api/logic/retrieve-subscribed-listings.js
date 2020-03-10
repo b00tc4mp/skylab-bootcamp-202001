@@ -1,11 +1,11 @@
 const { validate } = require('listings-utils')
-const { models: { Event } } = require('events-data')
+const { models: { listing } } = require('listings-data')
 
 module.exports = (userId) => {
     validate.string(userId, 'userId')
 
-    return Event.find({ usersSubscribed: userId})
-        .then(event => {
-            return event
+    return listing.find({ usersSubscribed: userId})
+        .then(listing => {
+            return listing
         })
 }

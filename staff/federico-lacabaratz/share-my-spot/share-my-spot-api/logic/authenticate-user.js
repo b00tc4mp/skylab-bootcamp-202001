@@ -1,6 +1,6 @@
 const { validate } = require('listings-utils')
-const { models: { User } } = require('events-data')
-const { NotAllowedError } = require('events-errors')
+const { models: { User } } = require('listings-data')
+const { NotAllowedError } = require('listings-errors')
 
 /**
  * Checks user credentials against the storage

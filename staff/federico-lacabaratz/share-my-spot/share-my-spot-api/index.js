@@ -4,7 +4,7 @@ const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT
 
 const express = require('express')
 const winston = require('winston')
-const { registerUser, authenticateUser, retrieveUser, publishEvent, retrievePublishedEvents, retrieveLastEvents, subscribeEvent, retrieveSubscribedEvents, updateEvent, unsubscribeEvent } = require('./routes')
+const { registerUser, authenticateUser, retrieveUser, publishlisting, retrievePublishedlistings, retrieveLastlistings, subscribelisting, retrieveSubscribedlistings, updatelisting, unsubscribelisting } = require('./routes')
 const { name, version } = require('./package')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -12,7 +12,7 @@ const fs = require('fs')
 const path = require('path')
 const { jwtVerifierMidWare } = require('./mid-wares')
 const cors = require('cors')
-const { mongoose } = require('events-data')
+const { mongoose } = require('listings-data')
 mongoose.set('useFindAndModify', false);
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -47,19 +47,19 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.get('/users', jwtVerifierMidWare, retrieveUser)
 
-        app.post('/users/:id/events', [jwtVerifierMidWare, jsonBodyParser], publishEvent)
+        app.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], publishlisting)
 
-        app.get('/events', jwtVerifierMidWare, retrievePublishedEvents)
+        app.get('/listings', jwtVerifierMidWare, retrievePublishedlistings)
 
-        app.get('/lastevents', retrieveLastEvents)
+        app.get('/lastlistings', retrieveLastlistings)
 
-        app.patch('/users/subscribeEvent', [jwtVerifierMidWare, jsonBodyParser], subscribeEvent)
+        app.patch('/users/subscribelisting', [jwtVerifierMidWare, jsonBodyParser], subscribelisting)
 
-        app.get('/users/subscribedEvents', jwtVerifierMidWare, retrieveSubscribedEvents)
+        app.get('/users/subscribedlistings', jwtVerifierMidWare, retrieveSubscribedlistings)
 
-        app.patch('/users/updateEvent/:id', [jwtVerifierMidWare, jsonBodyParser], updateEvent)
+        app.patch('/users/updatelisting/:id', [jwtVerifierMidWare, jsonBodyParser], updatelisting)
 
-        app.delete('/users/deleteEvent', [jwtVerifierMidWare, jsonBodyParser], unsubscribeEvent)
+        app.delete('/users/deletelisting', [jwtVerifierMidWare, jsonBodyParser], unsubscribelisting)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
 

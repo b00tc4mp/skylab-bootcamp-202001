@@ -1,10 +1,10 @@
-const { models: { Event } } = require('events-data')
+const { models: { listing } } = require('listings-data')
 
 module.exports = () => {
 
 
-    return Event.find().sort({ created: -1 })
-        .then(events => {
-            return events
+    return listing.find().sort({ created: -1 })
+        .then(listings => {
+            return listings
         })
 }

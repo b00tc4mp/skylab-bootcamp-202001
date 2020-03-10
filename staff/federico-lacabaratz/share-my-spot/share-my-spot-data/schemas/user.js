@@ -8,11 +8,11 @@ module.exports = new Schema({
     created: { type: Date, required: true, default: Date.now },
     authenticated: { type: Date },
     retrieved: { type: Date },
-    publishedEvents: {
-        type: [{ type: [ObjectId], ref: 'Event' }]
+    publishedlistings: {
+        type: [{ type: [ObjectId], ref: 'listing' }]
     },
-    subscribedToEvent: {
+    subscribedTolisting: {
         type:
-            [{ type: [ObjectId], ref: 'Event' }]
+            [{ type: [ObjectId], ref: 'listing' }]
     }
 })

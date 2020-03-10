@@ -1,15 +1,15 @@
-const { models: { Event } } = require('events-data')
+const { models: { listing } } = require('listings-data')
 const { validate } = require('listings-utils')
-const { NotFoundError } = require('events-errors')
+const { NotFoundError } = require('listings-errors')
 
 module.exports = id => {
     validate.string(id, 'id')
 
-    return Event.find({ publisher: id })
-        .then(event => {
-            if (!event) throw new NotFoundError(`event with id ${id} does not exist`)
+    return listing.find({ publisher: id })
+        .then(listing => {
+            if (!listing) throw new NotFoundError(`listing with id ${id} does not exist`)
             
-            return event
+            return listing
         })
         
 }

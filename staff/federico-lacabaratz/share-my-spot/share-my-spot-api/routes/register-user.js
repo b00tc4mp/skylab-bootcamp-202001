@@ -1,5 +1,5 @@
 const { registerUser } = require('../logic')
-const { NotAllowedError, ContentError } = require('events-errors')
+const { NotAllowedError, ContentError } = require('listings-errors')
 
 module.exports = (req, res) => {
     const { body: { name, surname, email, password } } = req

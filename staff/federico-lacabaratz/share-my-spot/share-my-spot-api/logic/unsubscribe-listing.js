@@ -1,20 +1,20 @@
 const { validate } = require('listings-utils')
-const { models: { Event, User } } = require('events-data')
+const { models: { listing, User } } = require('listings-data')
 
-module.exports = (userId, eventId) => {
+module.exports = (userId, listingId) => {
     validate.string(userId, 'userId')
-    validate.string(eventId, 'eventId')
+    validate.string(listingId, 'listingId')
 
-    return Event.deleteOne({ _id: eventId, publisher: userId })
+    return listing.deleteOne({ _id: listingId, publisher: userId })
 
         // .then(() => {
-        //     return User.update({ $pull: { subscribedToEvent: eventId } })
+        //     return User.update({ $pull: { subscribedTolisting: listingId } })
         // })
         // .then(() => {
-        //     return User.update({ $pull: { publishedEvents: eventId } })
-        //     //     // const userToModify = User.find({subscribedToEvent: eventId})
+        //     return User.update({ $pull: { publishedlistings: listingId } })
+        //     //     // const userToModify = User.find({subscribedTolisting: listingId})
 
-        //     //     // userToModify.filter(result => result !== User.find({subscribedToEvent: eventId})
+        //     //     // userToModify.filter(result => result !== User.find({subscribedTolisting: listingId})
         // })
         .then(() => { })
 }

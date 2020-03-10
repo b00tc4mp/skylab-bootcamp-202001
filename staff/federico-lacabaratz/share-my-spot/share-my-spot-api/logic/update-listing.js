@@ -1,10 +1,10 @@
 const { validate } = require('listings-utils')
-const { models: { Event } } = require('events-data')
+const { models: { listing } } = require('listings-data')
 
-module.exports = (userId, body, eventId) => {
+module.exports = (userId, body, listingId) => {
     validate.string(userId, 'userId')
-    validate.string(eventId, 'eventId')
+    validate.string(listingId, 'listingId')
 
-    return Event.findOneAndUpdate({ _id: eventId, publisher: userId }, { $set: body })
+    return listing.findOneAndUpdate({ _id: listingId, publisher: userId }, { $set: body })
         .then(() => { })
 }

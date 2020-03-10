@@ -1,13 +1,13 @@
-const { retrievePublishedEvents } = require('../logic')
-const {  NotFoundError } = require('events-errors')
+const { retrievePublishedlistings } = require('../logic')
+const {  NotFoundError } = require('listings-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
 
     try {
-        retrievePublishedEvents(id)
-            .then(event =>
-                res.status(200).json(event)
+        retrievePublishedlistings(id)
+            .then(listing =>
+                res.status(200).json(listing)
             )
             .catch(({ message }) =>
                 res

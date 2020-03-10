@@ -1,13 +1,13 @@
-const { updateEvent } = require('../logic')
-const { NotFoundError } = require('events-errors')
+const { updatelisting } = require('../logic')
+const { NotFoundError } = require('listings-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body, params: {id: eventId} } = req
+    const { payload: { sub: userId }, body, params: {id: listingId} } = req
 
     try {
-        updateEvent(userId, body, eventId)
+        updatelisting(userId, body, listingId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully updated this event" })
+                res.status(200).json({ message: "You've successfully updated this listing" })
             )
             .catch(({ message }) =>
                 res

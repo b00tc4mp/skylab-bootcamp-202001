@@ -1,12 +1,12 @@
-const { retrieveLastEvents } = require('../logic')
-const {  ContentError } = require('events-errors')
+const { retrieveLastlistings } = require('../logic')
+const {  ContentError } = require('listings-errors')
 
 module.exports = (req, res) => {
 
     try {
-        retrieveLastEvents()
-            .then(event =>
-                res.status(200).json(event)
+        retrieveLastlistings()
+            .then(listing =>
+                res.status(200).json(listing)
             )
             .catch(({ message }) =>
                 res

@@ -1,22 +1,22 @@
 const { validate } = require('listings-utils')
-const { models: { User, Event } } = require('events-data')
+const { models: { User, listing } } = require('listings-data')
 
 
-module.exports = (userId, eventId) => {
+module.exports = (userId, listingId) => {
     validate.string(userId, 'userId')
-    validate.string(eventId, 'eventId')
+    validate.string(listingId, 'listingId')
 
 
-    return User.findOne({ _id: userId, subscribedToEvent: eventId})
+    return User.findOne({ _id: userId, subscribedTolisting: listingId})
         .then(user => {
 
-            if (user) throw new Error('user is already subscribed to this event')
+            if (user) throw new Error('user is already subscribed to this listing')
         })
         .then(() => {
-            return User.updateOne({ _id: userId }, { $push: { subscribedToEvent: eventId } })
+            return User.updateOne({ _id: userId }, { $push: { subscribedTolisting: listingId } })
         })
         .then(() => {
-            return Event.updateOne({ _id: eventId }, { $push: { usersSubscribed: userId } })
+            return listing.updateOne({ _id: listingId }, { $push: { usersSubscribed: userId } })
                 .then(() => { })
         })
 }
