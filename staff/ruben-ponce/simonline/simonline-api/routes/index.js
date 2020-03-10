@@ -4,7 +4,8 @@ const {
     authenticateUser,
     retrieveUser,
     createGame,
-    retrieveGame
+    retrieveGames,
+    joinGame
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
 const bodyParser = require('body-parser')
@@ -21,7 +22,8 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.post('/games', jsonBodyParser, createGame)
 
-router.get('/game', jwtVerifierMidWare, retrieveGame)
+router.get('/game', jwtVerifierMidWare, retrieveGames)
 
+router.patch('/users/:id/games/:gameId', jwtVerifierMidWare, joinGame)
 
 module.exports = router

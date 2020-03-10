@@ -1,11 +1,10 @@
-const { retrieveGame } = require('../../logic')
+const { retrieveGames } = require('../../logic')
 const { NotAllowedError, ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
 
     try {
-        retrieveGame(id)
+        retrieveGames()
             .then(game =>
                 res.status(200).json(game)
             )
