@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
-describe.only('authenticateUser', () => {
+describe('authenticateUser', () => {
     let username, password, _id
 
     before(() =>
@@ -22,17 +22,65 @@ describe.only('authenticateUser', () => {
         username = `username-${random()}`
         password = `password-${random()}`
 
-        bcrypt.hash(password, 10)
-            .then((password) => User.create({ name, surname, username, password }))
+        return bcrypt.hash(password, 10)
+            .then((password) => User.create({ name, surname, username, password, created: new Date }))
             .then((user) => _id = user.id)
-        debugger
     })
     it('should succed on correct username and password', async () => {
-        debugger
         const id = await authenticateUser(username, password)
         expect(id).to.exist
         expect(id).to.be.a('string')
+        expect(id).to.equal(_id)
     })
-    //after(() => Promise.all([User.deleteMany()]).then(() => mongoose.disconnect()))
+    it('should fail on non string username', async () => {
+        let _username = 5
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username 5 is not a string'))
+        _username = true
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username true is not a string'))
+        _username = []
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username  is not a string'))
+        _username = {}
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username [object Object] is not a string'))
+    })
+    it('should fail on non string password', async () => {
+        let _password = 5
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password 5 is not a string'))
+        _password = true
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password true is not a string'))
+        _password = []
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password  is not a string'))
+        _password = {}
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password [object Object] is not a string'))
+    })
+    it('should fail on empty username', async () =>{
+        const _username = ''
+        await expect(() =>authenticateUser(_username, password)).to.throw(ContentError, ('username is empty'))
+    })
+    it('should fail on empty password', async () =>{
+        const _password = ''
+        await expect(() =>authenticateUser(username, _password)).to.throw(ContentError, ('password is empty'))
+    })
+    it('should fail on incorrect username', async () => {
+        const _username = 'wrongUser'
+        await authenticateUser(_username, password)
+            .then (() => console.log('should not reach this point'))
+            .catch((error) => {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(NotAllowedError)
+                expect(error.message).to.equal(`wrong credentials`)
+            })
+    } )
+    it('should fail on incorrect password', async () => {
+        const _password = 'wrongPassword'
+        await authenticateUser(username, _password)
+            .then (() => console.log('should not reach this point'))
+            .catch((error) => {
+                expect(error).to.exist
+                expect(error).to.be.instanceOf(NotAllowedError)
+                expect(error.message).to.equal(`wrong credentials`)
+            })
+    } )
+
+    after(() => Promise.all([User.deleteMany()]).then(() => mongoose.disconnect()))
 
 })
