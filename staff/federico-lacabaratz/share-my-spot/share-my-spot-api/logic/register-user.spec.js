@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { random } = Math
-const { mongoose, models: { User } } = require('listings-data')
+const { mongoose, models: { User } } = require('share-my-spot-data')
 const registerUser = require('./register-user')
 
 const { env: { TEST_MONGODB_URL } } = process

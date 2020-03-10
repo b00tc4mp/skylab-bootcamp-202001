@@ -1,13 +1,13 @@
-const { updatelisting } = require('../logic')
-const { NotFoundError } = require('listings-errors')
+const { unsubscribeEvent } = require('../logic')
+const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body, params: {id: listingId} } = req
+    const { payload: { sub: userId }, body: {eventId} } = req
 
     try {
-        updatelisting(userId, body, listingId)
+        unsubscribeEvent(userId, eventId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully updated this listing" })
+                res.status(200).json({ message: "You've successfully unsubscribe this event from the database" })
             )
             .catch(({ message }) =>
                 res

@@ -1,13 +1,13 @@
-const { retrieveSubscribedlistings } = require('../logic')
-const {  NotFoundError } = require('listings-errors')
+const { retrieveSubscribedEvents } = require('../logic')
+const {  NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
 
     try {
-        retrieveSubscribedlistings(id)
-            .then(listing =>
-                res.status(200).json(listing)
+        retrieveSubscribedEvents(id)
+            .then(event =>
+                res.status(200).json(event)
             )
             .catch(({ message }) =>
                 res

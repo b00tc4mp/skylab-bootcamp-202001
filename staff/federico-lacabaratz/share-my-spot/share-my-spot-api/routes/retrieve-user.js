@@ -1,5 +1,5 @@
 const { retrieveUser } = require('../logic')
-const { NotFoundError, NotAllowedError } = require('listings-errors')
+const { NotFoundError, NotAllowedError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req

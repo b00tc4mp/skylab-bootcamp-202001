@@ -1,5 +1,5 @@
 const { registerUser } = require('../logic')
-const { NotAllowedError, ContentError } = require('listings-errors')
+const { NotAllowedError, ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
     const { body: { name, surname, email, password } } = req

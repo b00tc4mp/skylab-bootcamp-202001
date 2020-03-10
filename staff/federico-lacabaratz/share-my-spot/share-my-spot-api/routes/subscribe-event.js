@@ -1,12 +1,13 @@
-const { retrieveLastlistings } = require('../logic')
-const {  ContentError } = require('listings-errors')
+const { subscribeEvent } = require('../logic')
+const {  NotAllowedError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
+    const { payload: { sub: userId }, body: {eventId} } = req
 
     try {
-        retrieveLastlistings()
-            .then(listing =>
-                res.status(200).json(listing)
+        subscribeEvent(userId, eventId)
+            .then(() =>
+                res.status(200).json({message: "You're now subscribed to this event(unless you're already subscribed?)"})
             )
             .catch(({ message }) =>
                 res
@@ -19,8 +20,8 @@ module.exports = (req, res) => {
         let status = 400
 
         switch (true) {
-            case error instanceof ContentError:
-                status = 406 // not allowed
+            case error instanceof NotAllowedError:
+                status = 404 // not found
                 break
         }
 

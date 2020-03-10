@@ -1,4 +1,4 @@
 const mongoose = require('mongoose')
-const { listing } = require('../schemas')
+const { event } = require('../schemas')
 
-module.exports = mongoose.model('listing', listing)
+module.exports = mongoose.model('Event', event)

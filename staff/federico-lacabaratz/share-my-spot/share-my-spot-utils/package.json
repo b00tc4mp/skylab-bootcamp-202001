@@ -1,11 +1,10 @@
 {
-  "name": "listings-utils",
+  "name": "share-my-spot-utils",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "dependencies": {
     "atob": "^2.1.2",
-    "listings-errors": "file:../listings-errors"
+    "share-my-spot-errors": "file:../share-my-spot-errors"
   },
   "devDependencies": {
     "chai": "^4.2.0",
@@ -16,5 +15,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }

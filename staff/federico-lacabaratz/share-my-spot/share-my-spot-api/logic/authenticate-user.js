@@ -1,6 +1,6 @@
-const { validate } = require('listings-utils')
-const { models: { User } } = require('listings-data')
-const { NotAllowedError } = require('listings-errors')
+const { validate } = require('share-my-spot-utils')
+const { models: { User } } = require('share-my-spot-data')
+const { NotAllowedError } = require('share-my-spot-errors')
 
 /**
  * Checks user credentials against the storage

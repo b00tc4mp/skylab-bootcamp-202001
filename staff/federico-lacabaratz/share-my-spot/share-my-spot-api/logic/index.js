@@ -2,11 +2,11 @@ module.exports = {
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
-    publishListing: require('./publish-listing'),
-    retrievePublishedListings: require('./retrieve-published-listings'),
-    retrieveLastListings: require('./retrieve-last-listings'),
-    subscribeListing: require('./subscribe-listing'),
-    retrieveSubscribedListings: require('./retrieve-subscribed-listings'),
-    updateListing: require('./update-listing'),
-    unsubscribeListing: require('./unsubscribe-listing')
+    publishEvent: require('./publish-event'),
+    retrievePublishedEvents: require('./retrieve-published-events'),
+    retrieveLastEvents: require('./retrieve-last-events'),
+    subscribeEvent: require('./subscribe-event'),
+    retrieveSubscribedEvents: require('./retrieve-subscribed-events'),
+    updateEvent: require('./update-event'),
+    unsubscribeEvent: require('./unsubscribe-event')
 }

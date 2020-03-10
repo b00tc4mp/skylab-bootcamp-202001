@@ -1,4 +1,4 @@
 module.exports = {
     User: require('./user'),
-    listing: require('./listing')
+    Event: require('./event')
 }
