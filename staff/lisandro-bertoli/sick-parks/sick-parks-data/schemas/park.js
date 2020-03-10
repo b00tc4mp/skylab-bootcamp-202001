@@ -1,6 +1,7 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
 const Feature = require('./feature')
 const Comment = require('./comment')
+const Polygon = require('./polygon')
 
 
 
@@ -19,15 +20,23 @@ module.exports = new Schema({
     },
     resort: String,
     location: {
-        type: {
+        type: String,
+        enum: ['FeatureCollection'],
+        features: {
             type: String,
-            enum: ['Polygon'],
-            required: true
-        },
-        coordinates: {
-            type: [[[Number]]],
-            required: true
+            enum: ['Feature'],
+            properties: Object,
+            geometry: Polygon //TODO check if works
         }
+        // type: {
+        //     type: String,
+        //     enum: ['Polygon'],
+        //     required: true
+        // },
+        // coordinates: {
+        //     type: [[[Number]]],
+        //     required: true
+        // }
     },
     image: String,
     features: [Feature],
