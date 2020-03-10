@@ -4,7 +4,45 @@ body
     @extend %flexColumnCenter
     background-color: $genbg-color
 
-.register
+.header
+    @extend %flexRowCenter
+    background-color: $genbg-inputColor
+    height: 10%
+    width: 100%
+
+    .sidepanel  
+        width: 0
+        position: fixed
+        z-index: 1
+        height: 20em
+        top: 0
+        left: 0
+        background-color: #4e4b4b
+        overflow-x: hidden
+        transition: 0.25s
+        padding-top: 2.5em
+
+
+    .sidepanel a 
+        padding: 0.25em 0.25em 0.25em 1em
+        text-decoration: none
+        font-size: 1.5em
+        color: #818181
+        display: block
+        transition: 0.2s
+
+
+    .sidepanel a:hover 
+        color: #f1f1f1
+
+
+    .sidepanel .closebtn 
+        position: absolute
+        top: 0
+        right: 0.25em
+        font-size: 1.5em
+
+.updateUser
     display: flex
     justify-content: center
     align-items: center
@@ -42,13 +80,5 @@ body
         border: 1px solid black
         font-size: 1.2em
         border-radius: 0.5em
-        padding: 0.5em
-        margin: 0.5em
-    
-    a
-        @extend %text-linkDescription
-        display: block
-        text-align: center
-        font-size: 1em
         padding: 0.5em
         margin: 0.5em

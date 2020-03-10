@@ -4,7 +4,7 @@ body
     display: flex
     background-color: $genbg-color
     height: auto
-    margin-bottom: 3.5em
+    margin-bottom: 1.5em
 
 .header
     @extend %flexRowCenter
@@ -86,74 +86,47 @@ body
             display: block
             text-align: right
 
-.item
+.mYourListings
     @extend %flexColumnCenter
     background-color: $color-white
     align-items: center
     border: 1px solid black
+    padding-top: 1.5em
+    padding-bottom: 1.5em
     margin: 1.5em
 
-    .item__photo
-        @extend %flexRowCenter
-        background-color: $genbg-inputColor
-        width: 100%
-
-    .item__h4
-        color: $color-gray
-
-    h2
+    .item__h3
+        text-align: center
+        margin: 0.5em
         font-weight: bold
-    
-    span
+    p
+        text-align: center
         font-size: 1em
+        color: $color-gray    
+        margin: 0.5em
 
-    .item__footer
-        @extend %flexRowCenter
+footer
+   .detail__footer
+        display: flex
+        flex-direction: row
+        justify-content: space-around
         align-items: center
-        height: 3em
-        width: 100%
 
-        &__edit
-            display: flex
-            flex-direction: row
-            justify-content: center
-            align-items: center
+        &__call
             background-color: $genbg-inputColor
             border: 1px solid black
             height: 1.75em
-            width: 30%
+            width: 35%
             font-size: 1.2em
             border-radius: 0.5em
-            margin-bottom: 0.5em
+            margin-left: 1.5em
 
-.footer
-    @extend %flexRowCenter
-    position: fixed 
-    bottom: 0
-    left: 0
-    right: 0
-    height: 3.5em
-    background-color: $genbg-inputColor
-    width: 100%
-    
-    &__toSortBy
-        display: flex
-        flex-direction: row
-        justify-content: center
-        align-items: center
-        background-color: $genbg-inputColor
-        height: 1.75em
-        width: 100%
-        font-size: 1.2em
-        margin-left: 0.5em
 
-    &__toFilter
-        display: flex
-        flex-direction: row
-        justify-content: center
-        align-items: center
-        background-color: $genbg-inputColor
-        height: 1.75em
-        width: 100%
-        font-size: 1.2em
-        margin-right: 0.5em
+        &__envelope
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 35%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-right: 1.5em
