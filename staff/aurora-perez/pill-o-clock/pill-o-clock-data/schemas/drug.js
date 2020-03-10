@@ -1,4 +1,4 @@
-const { Schema, Types: { ObjectId } } = require('mongoose')
+const { Schema } = require('mongoose')
 
 module.exports = new Schema({
     drugName: { type: String, required: true },

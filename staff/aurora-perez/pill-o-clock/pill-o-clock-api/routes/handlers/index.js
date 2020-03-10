@@ -5,5 +5,6 @@ module.exports = {
     addMedication: require('./add-medication'),
     deleteMedication: require('./delete-medication'),
     retrieveMedication: require('./retrieve-medication'),
-    addPrescription: require('./add-prescription')
+    addPrescription: require('./add-prescription'),
+    retrievePrescription: require('./retrieve-prescription')
 }

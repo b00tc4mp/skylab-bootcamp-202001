@@ -1,5 +1,6 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
 const drug = require('./drug')
+const guideline = require('./guideline')
 
 module.exports = new Schema({
     name: { type: String, required: true },
@@ -16,8 +17,6 @@ module.exports = new Schema({
     retrieved: { type: Date },
     alarmSet: [{ type: Date }],
     medication: [drug],
-    prescription: {
-        type: [{ type: ObjectId, ref: 'Guideline' }]
-    }
+    prescription: [guideline]
     
 })

@@ -6,7 +6,8 @@ const {
     addMedication,
     deleteMedication,
     retrieveMedication,
-    addPrescription
+    addPrescription,
+    retrievePrescription
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -29,5 +30,7 @@ router.post('/users/:id/delete-medication', [jwtVerifierMidWare, jsonBodyParser]
 router.get('/users/medication', jwtVerifierMidWare, retrieveMedication)
 
 router.post('/users/:id/add-prescription', [jwtVerifierMidWare, jsonBodyParser], addPrescription)
+
+router.get('/users/prescription', jwtVerifierMidWare, retrievePrescription)
 
 module.exports = router
