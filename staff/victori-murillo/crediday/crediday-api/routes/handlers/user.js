@@ -1,4 +1,4 @@
-const { registerUser, authenticateUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveAllUsers } = require('../../logic')
 const { asyncHandler } = require("../../middleware")
 const { env: { JWT_EXP: expiresIn, JWT_SECRET } } = process
 const { sign } = require('jsonwebtoken')
@@ -15,8 +15,14 @@ module.exports = {
   }),
 
   retrieve: asyncHandler(async (req, res, next) => {
-    const sub = await authenticateUser(req.body)
-    res.status(200).json({ token: sign({ sub }, JWT_SECRET, { expiresIn }) })
+    const user = await retrieveUser(req.payload.sub)
+    res.status(200).json({ user })
+  }),
+
+  retrieveAll: asyncHandler(async (req, res, next) => {
+    console.log('hiii')
+    const users = await retrieveAllUsers(req.payload.com)
+    res.status(200).json({ users })
   }),
 
   // update: asyncHandler(async (req, res, next) => {

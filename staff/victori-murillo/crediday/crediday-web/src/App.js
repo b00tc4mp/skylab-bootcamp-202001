@@ -1,19 +1,41 @@
-import React from 'react'
-import { Home, Login, Register, Dashboard } from './components'
+import React, { useState, useEffect, useContext } from 'react'
+import { Home, Login, Register, Drawer } from './components'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-
-function isLoggedIn() {
-  console.log(localStorage)
-}
+// const jwt = require('jsonwebtoken') 
+import jwt from 'jsonwebtoken'
+import { Context } from './components/ContextProvider'
 
 export default () => {
-  isLoggedIn()
+  const [view, setView] = useState()
+  const { token, setToken } = useContext(Context)
+
+  useEffect(() => {
+    try {
+      const { session } = sessionStorage
+      if (!session) throw new Error('There is not token')
+      
+      jwt.verify(sessionStorage.session, 'i cant say it')
+
+      setView('drawer')
+
+    } catch (error) {
+      const {lastSession} = localStorage
+
+      console.log(error.message)
+
+      if (lastSession) 
+        setView('login')
+      else
+        setView('home')
+    }
+
+  })
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/" >
-          {true ? <Redirect to="/login" /> : <Home />}
+          {view && <Redirect to={`/${view}`} />}
         </Route>
         <Route exact path="/home">
           <Home />
@@ -24,8 +46,8 @@ export default () => {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Route exact path="/dashboard">
-          <Dashboard />
+        <Route exact path="/drawer">
+          <Drawer />
         </Route>
       </Switch>
     </BrowserRouter>

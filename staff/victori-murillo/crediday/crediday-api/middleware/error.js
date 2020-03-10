@@ -12,7 +12,6 @@ module.exports = (err, req, res, next) => {
     if (message.length === 1) message = message[0]
   }
 
-  console.log(err)
   if (name === 'ContentLength') status = 411
   
 

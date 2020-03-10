@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -15,19 +15,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import { useHistory } from "react-router-dom"
+import { Copyright } from '.'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/" >
-        CrediDay
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { Context } from './ContextProvider'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -168,11 +158,11 @@ export default () => {
       </AppBar>
       {/* Hero unit */}
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <Typography component="h2" variant="h3" align="center" color="textPrimary" gutterBottom>
+        <Typography component="h2" variant="h4" align="center" color="textPrimary" gutterBottom>
           Planes Mensuales
         </Typography>
         <div style={{ margin: '0px 15px' }}>
-          <Typography variant="h5" align="justify" color="textSecondary" component="p">
+          <Typography variant="h6" align="justify" color="textSecondary" component="p">
             Controla y automatiza tus inversiones y personal de trabajo con CrediDay App. Lleva el registro de cada
             mínimo detalle de donde está tu dinero y cuanto produce con los reportes diarios, semanales y
             mensuales.
@@ -182,7 +172,7 @@ export default () => {
       </Container>
       {/* End hero unit */}
       <Container maxWidth="md" component="main">
-        <Grid container spacing={5} alignItems="flex-start">
+        <Grid container spacing={5} alignItems="flex-end">
           {tiers.map(tier => (
             // Enterprise card is full width at sm breakpoint
             <Grid item key={tier.title} xs={12} sm={tier.title === 'Enterprise' ? 12 : 6} md={4}>

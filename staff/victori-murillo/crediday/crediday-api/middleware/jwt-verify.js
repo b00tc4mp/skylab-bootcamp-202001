@@ -3,7 +3,7 @@ const { env: { JWT_SECRET } } = process
 
 module.exports = (req, res, next) => {
   try {
-
+    console.log(req.headers)
     const { headers: { authorization } } = req
     if (!authorization) throw new Error('no authorization header provided')
 

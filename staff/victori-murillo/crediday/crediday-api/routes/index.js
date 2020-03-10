@@ -1,11 +1,12 @@
 const { Router } = require('express')
 const router = Router()
-
+const cors = require('cors')
 const bodyParser = require('body-parser').json()
 const { errorHandler, status, jwtVerify, validateRole } = require('../middleware')
 const { company, user, credit } = require('./handlers')
 
 module.exports = router
+  .use(cors())
   .use(bodyParser)
   .use(status)
 
@@ -20,8 +21,8 @@ module.exports = router
   // .delete('/companies/:id', company.delete)
 
   .post('/users', user.register)
-  .get('/users/:id', user.authenticate)
-  // .get('/users/companies/:id', user.retrieveAll)
+  .get('/users/:id', user.retrieve)
+  .get('/users-companies', user.retrieveAll)
   // .patch('/users/:id', user.update)
   // .patch('/users/:id', user.delete)
 

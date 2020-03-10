@@ -7,6 +7,5 @@ module.exports = async (id) => {
   const userFound = await User.findOne({ id }).lean()
   if (!userFound) throw new Error('Not Found')
 
-  console.log(userFound);
   return userFound
 }

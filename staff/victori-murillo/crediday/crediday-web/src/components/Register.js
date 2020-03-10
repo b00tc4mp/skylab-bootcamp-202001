@@ -121,7 +121,7 @@ export default () => {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link onClick={() => history.push('/login')} variant="body2">
+              <Link onClick={() => history.push('/login')} variant="body2" style={{cursor: 'pointer'}} >
                 Ya tienes una cuenta? Inicia sesión
               </Link>
             </Grid>
