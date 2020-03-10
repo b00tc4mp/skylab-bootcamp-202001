@@ -107,7 +107,7 @@ describe('approvePark', () => {
                     await park.save()
                 }
 
-                debugger
+
 
             })
 
@@ -116,7 +116,7 @@ describe('approvePark', () => {
 
                 const _park = await Park.findById(parkId).lean()
 
-                debugger
+
 
                 expect(_park.verified).to.be.true
             })
@@ -138,7 +138,7 @@ describe('approvePark', () => {
                 await approvePark({ userId, parkId })
                 throw new Error('should not reach this point')
             } catch (error) {
-                debugger
+
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.be.equal(`user with id ${userId} does not exist`)
             }
@@ -158,7 +158,7 @@ describe('approvePark', () => {
                 await approvePark({ userId, parkId })
                 throw new Error('should not reach this point')
             } catch (error) {
-                debugger
+
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.be.equal(`park with id ${parkId} does not exist`)
             }

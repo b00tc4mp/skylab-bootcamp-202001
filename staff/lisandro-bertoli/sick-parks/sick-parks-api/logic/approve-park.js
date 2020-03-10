@@ -24,7 +24,6 @@ module.exports = async ({ userId, parkId }) => {
     }
 
     await park.save()
-    debugger
     return
 
 }

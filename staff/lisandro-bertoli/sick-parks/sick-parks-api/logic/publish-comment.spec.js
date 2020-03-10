@@ -108,7 +108,6 @@ describe('publishComment', () => {
     it('should fail on incorrect parkId', async () => {
         const { id: userId } = await User.create({ name, surname, email, password })
         let parkId = 'asdfasdfasfd'
-        debugger
 
         try {
             await publishComment({ userId, parkId }, body)
