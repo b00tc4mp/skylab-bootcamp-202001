@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User } = require('crediday-models')
 
 module.exports = async (req, res, next) => {
   try {

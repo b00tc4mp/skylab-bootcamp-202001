@@ -1,5 +1,5 @@
-const { User } = require('../../models')
-const validate = require('../../utils/validate')
+const { User } = require('crediday-models')
+const { validate } = require('crediday-utils')
 
 module.exports = async (id) => {
   validate.string(id, 'id')

@@ -83,8 +83,6 @@ const schema = new Schema({
 
   collectorsDontSee: [String],
 
-  
-
   company: {
     type: ObjectId,
     ref: 'Company',

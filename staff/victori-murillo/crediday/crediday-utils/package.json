@@ -1,0 +1,16 @@
+{
+  "name": "crediday-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "validate.js",
+  "dependencies": {
+    "crediday-errors": "file:../crediday-errors"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

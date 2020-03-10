@@ -1,5 +1,5 @@
-const { User, Comp } = require('../../models')
-const validate = require('../../utils/validate')
+const { User } = require('crediday-models')
+const { validate } = require('crediday-utils')
 const { compare } = require('bcryptjs')
 
 module.exports = async ({ username, password }) => {
