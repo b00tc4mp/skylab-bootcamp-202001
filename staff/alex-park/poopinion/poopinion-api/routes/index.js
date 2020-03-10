@@ -7,6 +7,7 @@ const {
     deleteToilet,
     searchToilets,
     retrieveToilet,
+    toggleFavToilet,
     publishComment,
     deleteComment
 } = require('./handlers')
@@ -26,12 +27,14 @@ router.post('/users/:id/toilet', [jwtVerifierMidWare, jsonBodyParser], publishTo
 
 router.delete('/users/:id/toilet/:toiletId/delete', jwtVerifierMidWare, deleteToilet)
 
-router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
-
-router.delete('/users/:id/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
-
 router.get('/toilets', searchToilets)
 
 router.get('/toilets/:toiletId', retrieveToilet)
+
+router.patch('/users/:id/toilet/:toiletId/favorite', jwtVerifierMidWare, toggleFavToilet)
+
+router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
+
+router.delete('/users/:id/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
 
 module.exports = router
