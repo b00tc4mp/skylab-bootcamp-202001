@@ -47,7 +47,7 @@ describe('toggleFavToilet', () => {
                 .then(() => { })
         )
 
-        it('should successfully add the toilet post on favorites array for the user', () => {
+        it('should successfully add/remove the toilet post on favorites array (depending if its on it already or not) for the user', () => {
             return toggleFavToilet(_id, _toiletId)
                 .then(() => User.findById(_id).lean())
                 .then(user => {

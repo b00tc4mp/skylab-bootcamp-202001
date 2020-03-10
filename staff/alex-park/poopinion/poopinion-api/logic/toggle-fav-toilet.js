@@ -3,7 +3,7 @@ const { models: { User, Toilet } } = require('poopinion-data')
 const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 
 /**
- * Adds the specific toilet post on favToilets array of specific user
+ * Adds the specific toilet post on favToilets array of specific user. Removes it if it's already on favToilets array
  * 
  * @param {string} id user's unique id
  * @param {string} toiletId toilet's unique id
