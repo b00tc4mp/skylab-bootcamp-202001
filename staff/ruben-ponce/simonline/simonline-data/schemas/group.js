@@ -2,8 +2,8 @@ const { Schema, Types: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     name: { type: String, required: true },
-    players: [{ type: ObjectId, ref: 'User' }],
-    ingame: [{ type: ObjectId, ref: 'User' }],
+    players: [{ type: ObjectId, ref: 'User', required: true}],
+    ingame: [{ type: ObjectId, ref: 'User', required: true}],
     watching: [{ type: ObjectId, ref: 'User' }],
     currentplayer: { type: String, ref: 'User' },
     combinationgame: [{ type: Object }],
