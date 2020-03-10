@@ -19,6 +19,9 @@ module.exports = (params, body) => {
 
         if (!park) throw new NotFoundError(`park with id ${parkId} does not exist`)
 
+
+        if (park.verified) throw new NotAllowedError(`park ${parkId} has already been verified`)
+
         park.reports.forEach(_report => {
             if (_report.user._id.toString() === userId && _report.problem === problem)
                 throw new NotAllowedError(`user ${userId} alredy filed this report`)

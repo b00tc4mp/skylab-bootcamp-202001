@@ -7,7 +7,7 @@ const { expect } = require('chai')
 const { random, floor } = Math
 const reportPark = require('./report-park')
 
-describe.only('reportPark', () => {
+describe('reportPark', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [User.deleteMany(), Park.deleteMany()]
@@ -140,5 +140,7 @@ describe.only('reportPark', () => {
         //TODO more unhappy paths
 
     })
+
+    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
 })
 

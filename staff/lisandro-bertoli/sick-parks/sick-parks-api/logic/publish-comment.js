@@ -15,7 +15,7 @@ module.exports = async ({ userId, parkId }, { body }) => {
 
     if (!park) throw new NotFoundError(`park with id ${parkId} does not exist`)
 
-    const comment = await Comment.create({ postedBy: userId, body })
+    const comment = await Comment.create({ postedBy: userId, body }) //TODO change to new Comment()???
 
     park.comments.push(comment)
 
