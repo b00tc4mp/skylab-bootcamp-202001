@@ -27,13 +27,23 @@ describe('retrieveUser', () => {
                 .then(({ id }) => _id = id)
         )
 
-        it('should succeed on correct and valid and right data', () =>
+        it('should succeed on correct and valid data', () =>
             retrieveUser(_id)
                 .then(user => {
                     expect(user.constructor).to.equal(Object)
                     expect(user.username).to.equal(username)
                     expect(user.password).to.be.undefined
                 })
+        )
+
+        it('should fail on invalid id', () =>
+            expect(() => {
+                retrieveUser(`${_id}--wrong`)
+                    .then(() => { throw new Error('should not reach this point') })
+                    .catch((error) => {
+                        expect(error).to.eql(NotFoundError, `user with id ${id} does not exist`)
+                    })
+            })
         )
     })
 

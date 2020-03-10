@@ -3,7 +3,8 @@ const {
     registerUser,
     authenticateUser,
     retrieveUser,
-    createGroup
+    createGroup,
+    retrieveGroup
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
 const bodyParser = require('body-parser')
@@ -19,5 +20,8 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.post('/groups', jsonBodyParser, createGroup)
+
+router.get('/group', jwtVerifierMidWare, retrieveGroup)
+
 
 module.exports = router

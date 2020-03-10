@@ -21,7 +21,7 @@ describe('registerUser', () => {
         password = `password-${random()}`
     })
 
-    it('should succeed on correct user data', () =>
+    it('should succeed registered on correct user data', () =>
         registerUser(username, password)
             .then(result => {
                 expect(result).not.to.exist
@@ -39,7 +39,27 @@ describe('registerUser', () => {
             .then(validPassword => expect(validPassword).to.be.true)
     )
 
-    // TODO unhappy paths and other happies if exist
+    it('should fail register on invalid data', () => {
+
+        username = 1
+        password = 1
+
+        expect(() => 
+            registerUser(username, password)
+            .then(error => {
+                expect(error).to.eql(Error(`user with username "${username}" is not a string`))
+            })
+        )
+    })
+
+    it('should fail on already user exist', () => {
+        expect(() => 
+            registerUser(username, password)
+            .then(error => {
+                expect(error).to.eql(Error(`user with username "${username}" already exists`))
+            })
+        )
+    })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

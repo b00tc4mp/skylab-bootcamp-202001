@@ -6,9 +6,13 @@ module.exports = (name, owner ) => {
     validate.string(name, 'name')
     validate.string(owner, 'owner')
 
+    let id, _user
+
     return User.findOne({username:owner})
         .then(user => {
             if(!user) throw new NotFoundError(`owner with username ${owner} does not exist`)
+            id = user.id
+            _user = user
         })
         .then(() => {
             return Group.findOne({name})
@@ -18,7 +22,12 @@ module.exports = (name, owner ) => {
         })
         .then(() => {
             let group = new Group({ name, owner })
-        
+            id = group.id
+            debugger
             return group.save()
+                .then(() =>{
+                    return Group.findByIdAndUpdate(id, { $addToSet: {players: _user.id, ingame: _user.id}})
+                })
         })
+        .then (() => { })
 }
