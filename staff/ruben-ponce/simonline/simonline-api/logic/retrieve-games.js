@@ -3,7 +3,7 @@ const { mongoose: { Types: { ObjectId } } } = require('simonline-data')
 
 module.exports = () => {
     return Game.find({})
-        .then(event => {
-            return event
+        .then(game => {
+            return game
         })
 }

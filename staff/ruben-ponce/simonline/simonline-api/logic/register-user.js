@@ -13,7 +13,7 @@ module.exports = (username, password) => {
             return bcrypt.hash(password, 10)
         })
         .then(password => {
-            user = new User({ username, password, created: new Date })
+            user = new User({ username, password})
 
             return user.save()
         })

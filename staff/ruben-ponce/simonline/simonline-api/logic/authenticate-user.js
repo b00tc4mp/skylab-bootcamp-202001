@@ -6,13 +6,11 @@ const bcrypt = require('bcryptjs')
 /**
  * Checks user credentials against the storage
  * 
- * @param {string} email user's unique e-mail
+ * @param {string} username unique username
  * @param {string} password user's password
  * 
- * @returns {Promise<string>} user id from storage
+ * @returns {Promise<string>} user id from db
  * 
- * @throws {ContentError} if user data does not follow the format and content rules
- * @throws {TypeError} if user data does not have the correct type
  * @throws {NotAllowedError} on wrong credentials
  */
 module.exports = (username, password) => {
@@ -26,8 +24,6 @@ module.exports = (username, password) => {
             return bcrypt.compare(password, user.password)
                 .then(validPassword => {
                     if (!validPassword) throw new NotAllowedError(`wrong credentials`)
-
-                    user.authenticated = new Date
 
                     return user.save()
                 })
