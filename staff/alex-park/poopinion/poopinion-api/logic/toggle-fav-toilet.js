@@ -17,20 +17,20 @@ module.exports = (id, toiletId) => {
     validate.string(id, 'id')
     validate.string(toiletId, 'toilet ID')
 
-    return Promise.all([User.findById(id).lean(), Toilet.findById(toiletId)])
+    return Promise.all([User.findById(id).lean(), Toilet.findById(toiletId).lean()])
         .then(([user, toilet]) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
             
-            if (!user.favToilets.length) return User.findByIdAndUpdate(user._id.toString(), { $addToSet: { favToilets: toilet.id } }).then(() => { })
+            if (!user.favToilets.length) return Promise.all([User.findByIdAndUpdate(user._id.toString(), { $addToSet: { favToilets: toilet._id.toString() } }), Toilet.findByIdAndUpdate(toilet._id.toString(), { $addToSet: { isFavedBy: user._id.toString() } })]).then(() => { })
             
             for (let i = 0; i < user.favToilets.length; i++) {
                 let fav = user.favToilets[i].toString()
-                if (fav === toiletId) return User.findByIdAndUpdate(user._id.toString(), { $pull: { favToilets: toilet.id } })
+                if (fav === toiletId) return Promise.all([User.findByIdAndUpdate(user._id.toString(), { $pull: { favToilets: toilet._id.toString() } }), Toilet.findByIdAndUpdate(toilet._id.toString(), { $pull: { isFavedBy: user._id.toString() } })]).then(() => { })
             }
 
-            return User.findByIdAndUpdate(user._id.toString(), { $addToSet: { favToilets: toilet.id } })
+            return Promise.all([User.findByIdAndUpdate(user._id.toString(), { $addToSet: { favToilets: toilet._id.toString() } }), Toilet.findByIdAndUpdate(toilet._id.toString(), { $addToSet: { isFavedBy: user._id.toString() } })]).then(() => { })
         })
         .then(() => { })
 }

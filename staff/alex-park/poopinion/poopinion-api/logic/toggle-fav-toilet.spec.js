@@ -49,9 +49,11 @@ describe('toggleFavToilet', () => {
 
         it('should successfully add/remove the toilet post on favorites array (depending if its on it already or not) for the user', () => {
             return toggleFavToilet(_id, _toiletId)
-                .then(() => User.findById(_id).lean())
-                .then(user => {
+                .then(() => Promise.all([User.findById(_id).lean(), Toilet.findById(_toiletId).lean()]))
+                .then(([user, toilet]) => {
                     expect(user.favToilets.length).to.equal(1)
+                    expect(toilet.isFavedBy.length).to.equal(1)
+                    expect(toilet.isFavedBy[0].toString()).to.equal(_id)
                     return expect(user.favToilets[0].toString()).to.equal(_toiletId)
                 })
                 .then(() => User.findById(_id).populate('favToilets').lean())
@@ -61,15 +63,19 @@ describe('toggleFavToilet', () => {
                     expect(favToilets[0].publisher.toString()).to.equal(_id)
                 })
                 .then(() => toggleFavToilet(_id, _toiletId))
-                .then(() => User.findById(_id).lean())
-                .then(user => {
+                .then(() => Promise.all([User.findById(_id).lean(), Toilet.findById(_toiletId).lean()]))
+                .then(([user, toilet]) => {
                     expect(user.favToilets.length).to.equal(0)
                     expect(user.favToilets).to.be.instanceOf(Array)
+                    expect(toilet.isFavedBy.length).to.equal(0)
+                    return expect(toilet.isFavedBy).to.be.instanceOf(Array)
                 })
                 .then(() => toggleFavToilet(_id, _toiletId))
-                .then(() => User.findById(_id).lean())
-                .then(user => {
+                .then(() => Promise.all([User.findById(_id).lean(), Toilet.findById(_toiletId).lean()]))
+                .then(([user, toilet]) => {
                     expect(user.favToilets.length).to.equal(1)
+                    expect(toilet.isFavedBy.length).to.equal(1)
+                    expect(toilet.isFavedBy[0].toString()).to.equal(_id)
                     return expect(user.favToilets[0].toString()).to.equal(_toiletId)
                 })
                 .then(() => User.findById(_id).populate('favToilets').lean())
@@ -79,10 +85,12 @@ describe('toggleFavToilet', () => {
                     expect(favToilets[0].publisher.toString()).to.equal(_id)
                 })
                 .then(() => toggleFavToilet(_id, _toiletId))
-                .then(() => User.findById(_id).lean())
-                .then(user => {
+                .then(() => Promise.all([User.findById(_id).lean(), Toilet.findById(_toiletId).lean()]))
+                .then(([user, toilet]) => {
                     expect(user.favToilets.length).to.equal(0)
                     expect(user.favToilets).to.be.instanceOf(Array)
+                    expect(toilet.isFavedBy.length).to.equal(0)
+                    return expect(toilet.isFavedBy).to.be.instanceOf(Array)
                 })
                 .then(() => { })
         })

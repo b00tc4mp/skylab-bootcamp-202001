@@ -8,6 +8,7 @@ const {
     searchToilets,
     retrieveToilet,
     toggleFavToilet,
+    retrieveFavToilets,
     publishComment,
     deleteComment
 } = require('./handlers')
@@ -32,6 +33,8 @@ router.get('/toilets', searchToilets)
 router.get('/toilets/:toiletId', retrieveToilet)
 
 router.patch('/users/:id/toilet/:toiletId/favorite', jwtVerifierMidWare, toggleFavToilet)
+
+router.get('/users/:id/favorites', jwtVerifierMidWare, retrieveFavToilets)
 
 router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
 

@@ -7,6 +7,7 @@ module.exports = {
     searchToilets: require('./search-toilets'),
     retrieveToilet: require('./retrieve-toilet'),
     toggleFavToilet: require('./toggle-fav-toilet'),
+    retrieveFavToilets: require('./retrieve-fav-toilets'),
     publishComment: require('./publish-comment'),
     deleteComment: require('./delete-comment')
 }
