@@ -6,6 +6,7 @@ const {
     publishToilet,
     deleteToilet,
     searchToilets,
+    retrieveToilet,
     publishComment,
     deleteComment
 } = require('./handlers')
@@ -30,5 +31,7 @@ router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBody
 router.delete('/users/:id/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
 
 router.get('/toilets', searchToilets)
+
+router.get('/toilets/:toiletId', retrieveToilet)
 
 module.exports = router

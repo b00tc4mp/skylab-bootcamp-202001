@@ -70,8 +70,9 @@ describe('deleteToilet', () => {
                 })
                 .then(() => Toilet.findById(_toiletId))
                 .catch(({ message }) => {
+                    
                     expect(message).to.exist
-                    expect(message).to.equal(`toilet with id ${toiletId} does not exist`)
+                    expect(message).to.equal(`toilet with id ${_toiletId} does not exist`)
                 })
         })
     })
