@@ -5,7 +5,8 @@ module.exports = new Schema({
     surname: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true },
     password: { type: String, required: true, trim: true },
-    image: { type: String },
+    age: Number,
+    image: String,
     allowLocation: Boolean,
     location: {
         type: {
