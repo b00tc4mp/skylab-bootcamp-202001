@@ -36,6 +36,16 @@ module.exports = new Schema({
     comments: [Comment],
     created: { type: Date, default: Date.now },
     modified: Date,
+    reports: [{
+        user: {
+            type: ObjectId,
+            ref: 'User'
+        },
+        problem: {
+            type: String,
+            enum: ['duplicate', 'unreal']
+        }
+    }],
     approvals: [{ type: ObjectId, ref: 'User', default: [] }],
     verified: { type: Boolean, default: false }
 }) 
