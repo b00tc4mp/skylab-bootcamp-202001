@@ -25,7 +25,7 @@ describe('addPrescription', () => {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = new Date
+        time = random()
 
     })
 
@@ -42,12 +42,11 @@ describe('addPrescription', () => {
 
         it('should succeed on correct and valid and right data', () =>
             addPrescription(_id, drugName, time)
-                .then(() => User.findById(_id).populate('prescription').lean() )
+                .then(() => User.findById(_id).lean() )
                 .then((user) => {
                     expect(user).to.exist 
                     expect(user.prescription[0]).to.exist
-                    debugger
-                    expect(Date(user.prescription[0].schedule[0].times[0])).to.equal(Date(time))
+                    expect(user.prescription[0].times[0]).to.equal(time)
                 })
         )
 
