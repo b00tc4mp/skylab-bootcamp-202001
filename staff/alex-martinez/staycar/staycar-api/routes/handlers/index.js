@@ -3,5 +3,6 @@ module.exports = {
     registerUser: require('./register-user'),
     retrieveUser: require('./retrieve-user'),
     entryVehicle: require('./entry-vehicle'),
-    addLotsAmount: require('./add-lots-amount')
+    addLotsAmount: require('./add-lots-amount'),
+    createParking: require('./create-parking')
 }

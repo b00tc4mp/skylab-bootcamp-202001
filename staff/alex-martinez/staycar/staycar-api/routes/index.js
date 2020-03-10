@@ -1,6 +1,11 @@
 const { Router } = require('express')
 //require handlers
-const { registerUser, authenticateUser, retrieveUser, entryVehicle, addLotsAmount } = require('./handlers')
+const { registerUser, 
+    authenticateUser, 
+    retrieveUser, 
+    entryVehicle, 
+    addLotsAmount,
+    createParking } = require('./handlers')
 //
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -18,7 +23,8 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.post('/ticket', jsonBodyParser, entryVehicle)
 
-router.post('/parking', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
+router.post('/parking/create', jwtVerifierMidWare, jsonBodyParser, createParking)
+router.patch('/parking/:id/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
 //
 
 

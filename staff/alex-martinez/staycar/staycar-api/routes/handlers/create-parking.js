@@ -1,13 +1,13 @@
-const { addLotsAmount } = require('../../logic')
+const { createParking } = require('../../logic')
 const { NotAllowedError, ContentError } = require('staycar-errors')
 
-module.exports = ( req, res ) => {
-    const { payload: { sub: id } , body: { totalLots } } = req
-    
-    let idParking = req.params.id
+module.exports = (req, res) => {
+    const { payload: { sub: id } } = req
+    const name = req.body.parkingName
+    debugger
     try{
-        addLotsAmount(id, idParking ,totalLots)
-        .then(() => res.status(200).end())
+        createParking(id, name)
+        .then(() => res.status(201).end())
         .catch(error => {
             let status = 400
 
