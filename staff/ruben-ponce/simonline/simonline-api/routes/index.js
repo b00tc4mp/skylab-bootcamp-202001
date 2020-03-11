@@ -25,7 +25,7 @@ router.post('/games', jsonBodyParser, createGame)
 
 router.get('/games', jwtVerifierMidWare, retrieveGames)
 
-router.patch('/users/:id/games/:gameId', jwtVerifierMidWare, joinGame)
+router.patch('/users/:id/games/:gameId', [jwtVerifierMidWare, jsonBodyParser], joinGame)
 
 router.patch('/users/games/combination', [jwtVerifierMidWare, jsonBodyParser], updateCombination)
 

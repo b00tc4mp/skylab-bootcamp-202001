@@ -6,7 +6,9 @@ module.exports = (req, res) => {
 
     try {
         joinGame(id, gameId)
-            .then(() => res.end())
+        .then(playersName => 
+            res.status(200).json(playersName)
+        )
             .catch(error => {
                 let status = 400
 
