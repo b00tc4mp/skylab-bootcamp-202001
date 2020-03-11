@@ -1,4 +1,5 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
+const Point = require('./point')
 
 module.exports = new Schema({
     name: { type: String, required: true, trim: true },
@@ -8,15 +9,8 @@ module.exports = new Schema({
     age: Number,
     image: String,
     allowLocation: Boolean,
-    location: {
-        type: {
-            type: String,
-            enum: ['Point']
-        },
-        coordinates: {
-            type: [Number]
-        }
-    },
+    location: Point,
+    followers: { type: ObjectId, ref: 'User' },
     notifications: Boolean,
     parks: [{
         type: ObjectId,
