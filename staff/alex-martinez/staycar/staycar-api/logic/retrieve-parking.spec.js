@@ -6,13 +6,13 @@ const { random } = Math
 const retrieveParking = require('./retrieve-parking')
 const { mongoose, models: { User, Parking } } = require('staycar-data')
 
-describe.only('retrieveParking', () => {
+describe('retrieveParking', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => User.deleteMany())
     )
 
-    let name, surname, username, password, pkName
+    let name, surname, username, password, pkName, rate
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -20,6 +20,7 @@ describe.only('retrieveParking', () => {
         username = `username-${random()}`
         password = `password-${random()}`
         pkName = `pkname-${random()}`
+        rate = random()
     })
 
     describe('when user already exists', () => {
@@ -29,7 +30,7 @@ describe.only('retrieveParking', () => {
             User.create({ name, surname, username, password })
                 .then(({ id }) => _id = id)
                 .then(() => {
-                    Parking.create({parkingName: pkName})
+                    Parking.create({parkingName: pkName, rate: rate})
                 })
 
         )

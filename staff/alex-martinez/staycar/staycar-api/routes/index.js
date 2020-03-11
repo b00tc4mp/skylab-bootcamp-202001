@@ -22,7 +22,7 @@ router.post('/users', jsonBodyParser, registerUser)
 router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-router.post('/:id/ticket', jsonBodyParser, entryVehicle)
+router.post('/:name/ticket', jsonBodyParser, entryVehicle)
 
 router.post('/parking/create', jwtVerifierMidWare, jsonBodyParser, createParking)
 router.get('/parking/:name', jwtVerifierMidWare, retrieveParking)

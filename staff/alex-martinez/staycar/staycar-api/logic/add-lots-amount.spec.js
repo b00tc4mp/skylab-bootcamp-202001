@@ -16,7 +16,7 @@ describe('addLotsAmount', () => {
             .then(() => Promise.all([User.deleteMany(), Parking.deleteMany()]))
     )
 
-    let name, surname, username, password, totalLots, pkName
+    let name, surname, username, password, totalLots, pkName, rate
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -25,6 +25,7 @@ describe('addLotsAmount', () => {
         password = `password-${random()}`
         totalLots = round(random()*(20-1)+parseInt(1))
         pkName = `pkname-${random()}`
+        rate = random()
     })
 
     describe('when user already exists', () => {
@@ -38,7 +39,7 @@ describe('addLotsAmount', () => {
                 .then(user => _id = user.id)  
                 .then(() => 
                     
-                    Parking.create({parkingName: pkName})
+                    Parking.create({parkingName: pkName, rate})
                 )
         )
 

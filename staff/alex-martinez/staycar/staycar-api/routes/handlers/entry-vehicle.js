@@ -3,10 +3,11 @@ const { NotAllowedError, ContentError } = require('staycar-errors')
 
 module.exports = ( req, res ) => {
     const { body: { carPlate } } = req
-    const idParking = req.params.id
+    //const idParking = req.params.id
+    const pkName = req.params.name
     try{
         
-        entryVehicle(carPlate, idParking)
+        entryVehicle(carPlate, pkName)
         .then(() => res.status(201).end())
         .catch(error => {
             let status = 400
