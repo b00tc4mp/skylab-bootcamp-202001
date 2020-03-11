@@ -14,7 +14,7 @@ module.exports = (id, gameId) => {
 
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            // if (game.players.includes(user.id)) throw new NotAllowedError(`user with id ${id} already subscribed to this game`)
+            if (game.players.includes(user.id)) throw new NotAllowedError(`user with id ${id} already subscribed to this game`)
 
             game.players.push(user.id)
 
