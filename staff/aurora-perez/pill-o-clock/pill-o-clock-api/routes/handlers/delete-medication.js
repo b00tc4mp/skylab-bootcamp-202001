@@ -2,7 +2,7 @@ const { deleteMedication } = require('../../logic')
 const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
-    const { params: { id }, body: { drugName } } = req
+    const { payload: { sub: id }, body: { drugName } } = req
 
     try {
         deleteMedication(id, drugName)

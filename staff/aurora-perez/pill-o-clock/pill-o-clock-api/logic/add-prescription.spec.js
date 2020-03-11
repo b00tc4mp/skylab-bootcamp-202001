@@ -84,6 +84,7 @@ describe('addPrescription', () => {
 
         })
 
+
         it('should fail on a non-string drugName', () => {
             drugName = 9328743289
             expect(() => addPrescription(__id, drugName, time)).to.throw(TypeError, `drugName ${drugName} is not a string`)

@@ -2,7 +2,7 @@ const { addPrescription } = require('../../logic')
 const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
-    let { params: { id }, body: { drugName, time } } = req
+    const { payload: { sub: id }, body: { drugName, time } } = req
 
     try {
         addPrescription(id, drugName, time) 

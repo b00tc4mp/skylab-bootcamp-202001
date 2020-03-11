@@ -9,7 +9,8 @@ const {
     addPrescription,
     retrievePrescription,
     deletePrescription,
-    addProgress
+    addProgress,
+    retrieveProgress
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -25,18 +26,20 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-router.post('/users/:id/add-medication', [jwtVerifierMidWare, jsonBodyParser], addMedication)
+router.post('/users/add-medication', [jwtVerifierMidWare, jsonBodyParser], addMedication)
 
-router.post('/users/:id/delete-medication', [jwtVerifierMidWare, jsonBodyParser], deleteMedication)
+router.post('/users/delete-medication', [jwtVerifierMidWare, jsonBodyParser], deleteMedication)
 
 router.get('/users/medication', jwtVerifierMidWare, retrievePrescriptedMedication)
 
-router.post('/users/:id/add-prescription', [jwtVerifierMidWare, jsonBodyParser], addPrescription)
+router.post('/users/add-prescription', [jwtVerifierMidWare, jsonBodyParser], addPrescription)
 
 router.get('/users/prescription', jwtVerifierMidWare, retrievePrescription)
 
-router.delete('/users/:id/prescription/:drugId', jwtVerifierMidWare, deletePrescription)
+router.delete('/users/prescription/:drugId', jwtVerifierMidWare, deletePrescription)
 
-router.post('/users/:id/add-progress', [jwtVerifierMidWare, jsonBodyParser], addProgress)
+router.post('/users/add-progress', [jwtVerifierMidWare, jsonBodyParser], addProgress)
+
+router.get('/users/retrieve-progress', jwtVerifierMidWare, retrieveProgress)
 
 module.exports = router

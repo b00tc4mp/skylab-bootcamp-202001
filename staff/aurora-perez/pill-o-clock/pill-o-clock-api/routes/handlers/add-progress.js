@@ -2,7 +2,7 @@ const { addProgress } = require('../../logic')
 const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
-    const { params: { id }, body: { check } } = req
+    const { payload: { sub: id }, body: { check } } = req
 
     try {
         addProgress(id, check) 
