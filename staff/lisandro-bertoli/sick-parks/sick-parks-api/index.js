@@ -31,7 +31,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         const app = express()
 
-        app.use(cors)
+        app.use(cors())
 
         app.use(morgan('combined', { stream: accessLogStream }))
 
@@ -45,3 +45,4 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
             process.exit(0)
         })
     })
+    .catch(error => logger.error(error))

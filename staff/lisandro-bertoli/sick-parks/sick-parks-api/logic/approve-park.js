@@ -2,10 +2,10 @@ const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { models: { Park, User } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 
-module.exports = async ({ userId, parkId }) => {
+module.exports = async (userId, { id: parkId }) => {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
-
+    //CHANGES IN PARAMS CHECK TO MODIFY TESTS
     const user = await User.findById(userId)
     if (!user) throw new NotFoundError(`user with id ${userId} does not exist`)
 

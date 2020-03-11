@@ -2,9 +2,9 @@ const { validate } = require('sick-parks-utils')
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { models: { User } } = require('sick-parks-data')
 
-module.exports = (id) => {
+module.exports = ({ sub: id }) => {
     validate.string(id, 'id')
-
+    //MODIFIED HOW PARAMS ARE GIVEN(obj) chek tests
     return User.findById(id)
         .then(user => {
 
