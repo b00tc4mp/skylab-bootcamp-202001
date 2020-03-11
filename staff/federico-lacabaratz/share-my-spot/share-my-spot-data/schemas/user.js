@@ -5,14 +5,16 @@ module.exports = new Schema({
     surname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    phone: { type: Number },
     created: { type: Date, required: true, default: Date.now },
     authenticated: { type: Date },
     retrieved: { type: Date },
-    publishedEvents: {
-        type: [{ type: [ObjectId], ref: 'Event' }]
+    favs: [],
+    publishedListings: {
+        type: [{ type: [ObjectId], ref: 'Listing' }]
     },
-    subscribedToEvent: {
+    subscribedToListing: {
         type:
-            [{ type: [ObjectId], ref: 'Event' }]
+            [{ type: [ObjectId], ref: 'Listing' }]
     }
 })
