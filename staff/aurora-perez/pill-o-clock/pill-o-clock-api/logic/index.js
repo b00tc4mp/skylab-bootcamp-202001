@@ -9,5 +9,6 @@ module.exports = {
     retrievePrescription: require('./retrieve-prescription'),
     deletePrescription: require('./delete-prescription'),
     addProgress: require('./add-progress'),
-    retrieveProgress: require('./retrieve-progress')
+    retrieveProgress: require('./retrieve-progress'),
+    addContact: require('./add-contact')
 }

@@ -37,7 +37,7 @@ describe('addProgress', () => {
         )
 
         it('should succeed on correct and valid and right data', () => {
-            debugger
+            
             addProgress(_id, check)
                 .then(() => User.findById(_id).lean() )
                 .then((user) => {

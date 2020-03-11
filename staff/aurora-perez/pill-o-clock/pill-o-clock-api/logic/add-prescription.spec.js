@@ -71,33 +71,71 @@ describe('addPrescription', () => {
             __id = id
         })
         )
-        it('should fail on a non-string id', () => {
+
+        it('should fail on a non string id', async () => {
             let idWrong
             idWrong = 9328743289
-            expect(() => addPrescription(idWrong, drugName, time)).to.throw(TypeError, `id ${idWrong} is not a string`)
+            try {
+                await addPrescription(idWrong, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+
             idWrong = false
-            expect(() => addPrescription(idWrong, drugName, time)).to.throw(TypeError, `id ${idWrong} is not a string`)
+            try {
+                await addPrescription(idWrong, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+
             idWrong = undefined
-            expect(() => addPrescription(idWrong, drugName, time)).to.throw(TypeError, `id ${idWrong} is not a string`)
+            try {
+                await addPrescription(idWrong, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+
             idWrong = []
-            expect(() => addPrescription(idWrong, drugName, time)).to.throw(TypeError, `id ${idWrong} is not a string`)
-
+            try {
+                await addPrescription(idWrong, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
         })
 
-
-        it('should fail on a non-string drugName', () => {
+        it('should fail on a non string id', async () => {
+            let drugName
             drugName = 9328743289
-            expect(() => addPrescription(__id, drugName, time)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-            drugName = false
-            expect(() => addPrescription(__id, drugName, time)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-            drugName = undefined
-            expect(() => addPrescription(__id, drugName, time)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-            drugName = []
-            expect(() => addPrescription(__id, drugName, time)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        })
-    })
-        
+            try {
+                await addPrescription(__id, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`drugName ${drugName} is not a string`)
 
+            drugName = false
+            try {
+                await addPrescription(__id, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`drugName ${drugName} is not a string`)
+
+            drugName = undefined
+            try {
+                await addPrescription(__id, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`drugName ${drugName} is not a string`)
+
+            drugName = []
+            try {
+                await addPrescription(__id, drugName, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).to.equal(`drugName ${drugName} is not a string`)
+        })
+
+
+    })
 
 after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
 })

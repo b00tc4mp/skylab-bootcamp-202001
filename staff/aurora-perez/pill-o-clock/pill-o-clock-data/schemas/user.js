@@ -19,6 +19,6 @@ module.exports = new Schema({
     medication: [drug],
     prescription: [guideline],
     progress: [{type: Boolean}],
-    myContacts: [{type: String}] //type string o objectID??¿ embebido??
+    contacts: [{type: String}] //type string o objectID??¿ embebido??
     
 })
