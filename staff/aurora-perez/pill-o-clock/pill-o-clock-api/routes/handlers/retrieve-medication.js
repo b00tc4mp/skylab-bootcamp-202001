@@ -1,11 +1,11 @@
-const { retrieveMedication } = require('../../logic')
+const { retrievePrescriptedMedication } = require('../../logic')
 const { NotAllowedError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
     
     try {
-        retrieveMedication(id)
+        retrievePrescriptedMedication(id)
             .then(medication =>
                 res.status(200).json(medication)
             )

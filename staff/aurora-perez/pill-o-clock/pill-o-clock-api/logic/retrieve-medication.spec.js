@@ -3,11 +3,11 @@ require('dotenv').config()
 const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
-const retrieveMedication = require('./retrieve-medication')
+const retrievePrescriptedMedication = require('./retrieve-prescripted-medication')
 const { mongoose, models: { User, Drug } } = require('pill-o-clock-data')
 
 
-describe('retrieveMedication', ()=> {
+describe('retrievePrescriptedMedication', ()=> {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => User.deleteMany())
@@ -39,7 +39,7 @@ describe('retrieveMedication', ()=> {
                 .then(() => {})
         )
         it('should succeed on correct and valid date', ()=>
-            retrieveMedication(_id) 
+            retrievePrescriptedMedication(_id) 
                 .then(medication => { 
                     expect(medication instanceof Array).to.equal(true)
                     expect(medication[0].drugName).to.equal(drugName)
@@ -52,12 +52,12 @@ describe('retrieveMedication', ()=> {
 
     it('should fail on a non-string id', () => {
         _id = 9328743289
-        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        expect(() => retrievePrescriptedMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
         _id = false
-        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        expect(() => retrievePrescriptedMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
         _id = undefined
-        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        expect(() => retrievePrescriptedMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
         _id = []
-        expect(() => retrieveMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        expect(() => retrievePrescriptedMedication(_id)).to.throw(TypeError, `id ${_id} is not a string`)
     })
 })

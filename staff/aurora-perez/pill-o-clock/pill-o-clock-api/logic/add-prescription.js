@@ -5,7 +5,6 @@ const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 module.exports = async (id, drugName, time) => { 
     validate.string(drugName, 'drugName')
     validate.type(time, 'time', Number)
-    debugger
    
     let _drugName = drugName
 

@@ -5,7 +5,7 @@ const {
     retrieveUser,
     addMedication,
     deleteMedication,
-    retrieveMedication,
+    retrievePrescriptedMedication,
     addPrescription,
     retrievePrescription,
     deletePrescription
@@ -28,7 +28,7 @@ router.post('/users/:id/add-medication', [jwtVerifierMidWare, jsonBodyParser], a
 
 router.post('/users/:id/delete-medication', [jwtVerifierMidWare, jsonBodyParser], deleteMedication)
 
-router.get('/users/medication', jwtVerifierMidWare, retrieveMedication)
+router.get('/users/medication', jwtVerifierMidWare, retrievePrescriptedMedication)
 
 router.post('/users/:id/add-prescription', [jwtVerifierMidWare, jsonBodyParser], addPrescription)
 
