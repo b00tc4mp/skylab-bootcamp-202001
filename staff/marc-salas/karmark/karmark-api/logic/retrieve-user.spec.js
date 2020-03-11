@@ -36,16 +36,16 @@ describe('retrieveUser', () => {
     })
     it('should fail on not sring id', async () => {
         let _id = 5
-        await expect(()=> retrieveUser(_id)).to.throw(TypeError, ('id 5 is not a string'))
+        await expect(()=> retrieveUser(_id)).to.throw(TypeError, (`id ${_id} is not a string`))
         
         _id = true
-        await expect(()=> retrieveUser(_id)).to.throw(TypeError, ('id true is not a string'))
+        await expect(()=> retrieveUser(_id)).to.throw(TypeError, (`id ${_id} is not a string`))
         
         _id = []
-        await expect(()=> retrieveUser(_id)).to.throw(TypeError, ('id  is not a string'))
+        await expect(()=> retrieveUser(_id)).to.throw(TypeError, (`id ${_id} is not a string`))
         
         _id = {}
-        await expect(()=> retrieveUser(_id)).to.throw(TypeError, ('id [object Object] is not a string'))
+        await expect(()=> retrieveUser(_id)).to.throw(TypeError, (`id ${_id} is not a string`))
     })
     it('should fail on empty id', async () => {
         let _id = ''

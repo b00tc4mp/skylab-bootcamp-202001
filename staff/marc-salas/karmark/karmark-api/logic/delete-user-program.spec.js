@@ -3,7 +3,6 @@ require('dotenv').config()
 const {expect} = require('chai')
 const {random} = Math
 const {mongoose, models:{User, Program}} = require('karmark-data')
-const {ContentError, NotAllowedError} = require('karmark-errors')
 const {deleteUserProgram} = require('./')
 const bcrypt = require('bcryptjs')
 
@@ -40,29 +39,29 @@ describe('deleteUserProgram', () =>{
     })
     it('shpuld fail on non string author', async() => {
         userId = 4
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('author 4 is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`author ${userId} is not a string`))
 
         userId = true
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('author true is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`author ${userId} is not a string`))
 
         userId = []
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('author  is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`author ${userId} is not a string`))
 
         userId = {}
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('author [object Object] is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`author ${userId} is not a string`))
     })
     it('shpuld fail on non string id', async() => {
         _id = 4
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('id 4 is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`id ${_id} is not a string`))
 
         _id = true
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('id true is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`id ${_id} is not a string`))
 
         _id = []
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('id  is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`id ${_id} is not a string`))
 
         _id = {}
-        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, ('id [object Object] is not a string'))
+        await expect(() => deleteUserProgram(userId, _id)).to.throw(TypeError, (`id ${_id} is not a string`))
     })
     after(() => Promise.all([User.deleteMany(), Program.deleteMany()]).then(() => mongoose.disconnect()))
 

@@ -34,23 +34,23 @@ describe('authenticateUser', () => {
     })
     it('should fail on non string username', async () => {
         let _username = 5
-        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username 5 is not a string'))
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, (`username ${_username} is not a string`))
         _username = true
-        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username true is not a string'))
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, (`username ${_username} is not a string`))
         _username = []
-        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username  is not a string'))
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, (`username ${_username} is not a string`))
         _username = {}
-        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, ('username [object Object] is not a string'))
+        await expect(() =>authenticateUser(_username, password)).to.throw(TypeError, (`username ${_username} is not a string`))
     })
     it('should fail on non string password', async () => {
         let _password = 5
-        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password 5 is not a string'))
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, (`password ${_password} is not a string`))
         _password = true
-        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password true is not a string'))
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, (`password ${_password} is not a string`))
         _password = []
-        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password  is not a string'))
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, (`password ${_password} is not a string`))
         _password = {}
-        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, ('password [object Object] is not a string'))
+        await expect(() =>authenticateUser(username, _password)).to.throw(TypeError, (`password ${_password} is not a string`))
     })
     it('should fail on empty username', async () =>{
         const _username = ''

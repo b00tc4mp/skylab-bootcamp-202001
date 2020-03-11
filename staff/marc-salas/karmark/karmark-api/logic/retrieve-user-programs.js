@@ -7,8 +7,8 @@ module.exports = (id)  => {
 
     return User.findById(id).populate('programs')
         .then(user =>{
-            debugger
-            if (!user) throw new NotFoundError (`user dont exist`)
+
+            if (!user) throw new NotFoundError(`user not found`)
 
             return user.programs
         })

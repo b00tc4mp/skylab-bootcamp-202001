@@ -47,44 +47,44 @@ describe('createProgram', () => {
     })
     it('should file on non string name', async () => {
         let programName = 4
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('name 4 is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`name ${programName} is not a string`))
 
         programName = true
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('name true is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`name ${programName} is not a string`))
 
         programName = []
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('name  is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`name ${programName} is not a string`))
 
         programName = {}
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('name [object Object] is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`name ${programName} is not a string`))
 
     })
     it('should file on non string id', async () => {
         let _id = 4
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('author 4 is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`author ${_id} is not a string`))
 
         _id = true
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('author true is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`author ${_id} is not a string`))
 
         _id = []
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('author  is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`author ${_id} is not a string`))
 
         _id = {}
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('author [object Object] is not a string'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`author ${_id} is not a string`))
 
     })
     it('should file on non Array code', async () => {
         let code = 4
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('code 4 is not a Array'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`code ${code} is not a Array`))
 
         code = true
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('code true is not a Array'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`code ${code} is not a Array`))
 
         code = {}
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('code [object Object] is not a Array'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`code ${code} is not a Array`))
 
         code = 'spec'
-        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, ('code spec is not a Array'))
+        await expect(() => createProgram({ name: programName, created: new Date, author: _id, code })).to.throw(TypeError, (`code ${code} is not a Array`))
 
     })
     it('should file on empty name', async () => {
