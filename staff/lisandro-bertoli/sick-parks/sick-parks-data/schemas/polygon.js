@@ -8,7 +8,7 @@ module.exports = new Schema({
     },
     coordinates: {
         type: [[[Number]]],
-        index: { type: '2dsphere', sparse: false }
+        index: { type: '2dsphere', sparse: false },
         required: true
     }
 }, { _id: false })
