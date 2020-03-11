@@ -2,7 +2,7 @@ const { retrieveFavToilets } = require('../../logic')
 const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    const { params: { id } } = req
+    const { payload: { sub: id } } = req
 
     try {
         retrieveFavToilets(id)
@@ -19,9 +19,9 @@ module.exports = (req, res) => {
                     case error instanceof NotAllowedError:
                         status = 403 // forbidden
                 }
-        
+
                 const { message } = error
-        
+
                 res
                     .status(status)
                     .json({

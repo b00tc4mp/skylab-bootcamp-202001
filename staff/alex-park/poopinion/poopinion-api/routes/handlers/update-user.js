@@ -1,11 +1,13 @@
-const { toggleThumbUp } = require('../../logic')
+const { updateUser } = require('../../logic')
 const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    const { params: { commentId }, payload: { sub: id } } = req
+    let { payload: { sub: id }, body: { data } } = req
+    const { password } = data
+    delete data.password
 
     try {
-        toggleThumbUp(id, commentId)
+        updateUser(id, data, password)
             .then(() =>
                 res.status(200).end()
             )

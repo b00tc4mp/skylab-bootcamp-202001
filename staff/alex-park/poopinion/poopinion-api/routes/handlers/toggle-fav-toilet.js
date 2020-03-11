@@ -2,7 +2,7 @@ const { toggleFavToilet } = require('../../logic')
 const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    const { params: { id, toiletId } } = req
+    const { params: { toiletId }, payload: { sub: id } } = req
 
     try {
         toggleFavToilet(id, toiletId)

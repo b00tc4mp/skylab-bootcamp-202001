@@ -3,6 +3,7 @@ const {
     registerUser,
     authenticateUser,
     retrieveUser,
+    updateUser,
     publishToilet,
     deleteToilet,
     searchToilets,
@@ -26,24 +27,26 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-router.post('/users/:id/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
+router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
 
-router.delete('/users/:id/toilet/:toiletId/delete', jwtVerifierMidWare, deleteToilet)
+router.post('/users/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
+
+router.delete('/users/toilet/:toiletId/delete', jwtVerifierMidWare, deleteToilet)
 
 router.get('/toilets', searchToilets)
 
 router.get('/toilets/:toiletId', retrieveToilet)
 
-router.patch('/users/:id/toilet/:toiletId/favorite', jwtVerifierMidWare, toggleFavToilet)
+router.patch('/users/toilet/:toiletId/favorite', jwtVerifierMidWare, toggleFavToilet)
 
-router.get('/users/:id/favorites', jwtVerifierMidWare, retrieveFavToilets)
+router.get('/users/favorites', jwtVerifierMidWare, retrieveFavToilets)
 
-router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
+router.post('/users/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
 
-router.delete('/users/:id/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
+router.delete('/users/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
 
-router.patch('/users/:id/comment/:commentId/thumb-up', jwtVerifierMidWare, toggleThumbUp)
+router.patch('/users/comment/:commentId/thumb-up', jwtVerifierMidWare, toggleThumbUp)
 
-router.patch('/users/:id/comment/:commentId/thumb-down', jwtVerifierMidWare, toggleThumbDown)
+router.patch('/users/comment/:commentId/thumb-down', jwtVerifierMidWare, toggleThumbDown)
 
 module.exports = router

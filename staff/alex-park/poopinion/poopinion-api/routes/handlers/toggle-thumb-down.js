@@ -2,7 +2,7 @@ const { toggleThumbDown } = require('../../logic')
 const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    const { params: { id, commentId } } = req
+    const { params: { commentId }, payload: { sub: id } } = req
 
     try {
         toggleThumbDown(id, commentId)
