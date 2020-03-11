@@ -9,7 +9,7 @@ module.exports = (id)  => {
         .then(user =>{
 
             if (!user) throw new NotFoundError(`user not found`)
-
+            console.log(user.programs)
             return user.programs
         })
 

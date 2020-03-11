@@ -2,11 +2,11 @@ const jwt = require ('jsonwebtoken')
 const {env: {JWT_SECRET}} = process
 
 module.exports = (req, res, next) => {
-    const {headers: {authoritzation}} = req
+    const {headers: {authorization}} = req
 
-    if(!authoritzation) return res.status(401).json({error:'no authoritation header provided'})
+    if(!authorization) return res.status(401).json({error:'no authorization header provided'})
 
-    const [bearer, token] = authoritzation.split(' ')
+    const [bearer, token] = authorization.split(' ')
 
     if (bearer.toLowerCase() !== 'bearer') return res.status(401).json({ error: 'invalid authorization header' })
 

@@ -13,7 +13,7 @@ module.exports = ({name, author, code}) => {
         
         const program = new Program({name, created: new Date, author, code})
 
-        user.programs = program.id
+        user.programs.push(program)  
 
         return Promise.all([user.save(), program.save()])
     })
