@@ -4,5 +4,6 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     createGame: require('./create-game'),
     retrieveGames: require('./retrieve-games'),
-    joinGame: require('./join-game')
+    joinGame: require('./join-game'),
+    updateCombination: require('./update-combination')
 }
