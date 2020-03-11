@@ -4,6 +4,7 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     updateUser: require('./update-user'),
     publishToilet: require('./publish-toilet'),
+    updateToilet: require('./update-toilet'),
     deleteToilet: require('./delete-toilet'),
     searchToilets: require('./search-toilets'),
     retrieveToilet: require('./retrieve-toilet'),

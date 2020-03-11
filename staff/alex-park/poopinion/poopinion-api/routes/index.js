@@ -5,6 +5,7 @@ const {
     retrieveUser,
     updateUser,
     publishToilet,
+    updateToilet,
     deleteToilet,
     searchToilets,
     retrieveToilet,
@@ -30,6 +31,8 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
 
 router.post('/users/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
+
+router.patch('/users/toilet/:toiletId', [jwtVerifierMidWare, jsonBodyParser], updateToilet)
 
 router.delete('/users/toilet/:toiletId/delete', jwtVerifierMidWare, deleteToilet)
 
