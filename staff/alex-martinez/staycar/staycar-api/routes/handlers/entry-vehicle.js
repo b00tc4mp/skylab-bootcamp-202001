@@ -2,10 +2,11 @@ const { entryVehicle } = require('../../logic')
 const { NotAllowedError, ContentError } = require('staycar-errors')
 
 module.exports = ( req, res ) => {
-    const { body: { carPlate }} = req
-    
+    const { body: { carPlate } } = req
+    const idParking = req.params.id
     try{
-        entryVehicle(carPlate)
+        
+        entryVehicle(carPlate, idParking)
         .then(() => res.status(201).end())
         .catch(error => {
             let status = 400
@@ -21,6 +22,7 @@ module.exports = ( req, res ) => {
                     error: message
                 })
         })
+
     
     }catch(error){
         let status = 400

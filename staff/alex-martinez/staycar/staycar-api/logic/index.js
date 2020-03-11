@@ -4,5 +4,6 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     entryVehicle: require('./entry-vehicle'),
     addLotsAmount: require('./add-lots-amount'),
-    createParking: require('./create-parking')
+    createParking: require('./create-parking'),
+    generateQr: require('./generate-qr')
 }
