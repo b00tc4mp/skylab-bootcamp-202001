@@ -43,8 +43,8 @@ export function keyUp(e){
 
 export  function keyDown(e) {
 
-    const v = 50
-    const negV = -50
+    const v = 70
+    const negV = -70
     
     if(e.code === "Enter"){
         console.log('Take Off')

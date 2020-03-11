@@ -1,4 +1,24 @@
-function Telemetry(){
+
+import React, {useState} from 'react';
+import socket from '../socket';
+  
+
+
+export default function (){
+
+    const DroneState = () =>{
+        const [droneState, setDroneState] = useState('No Data');
+        socket.on('dronestate', data => {
+          setDroneState(data)
+        })
+        socket.on('disconnect', () => {
+          setDroneState('No Data')
+        })
+        return droneState;
+    }
+
+    const { pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz } = DroneState()
+
     
     return<>
     <section className="telemetria">
