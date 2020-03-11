@@ -3,6 +3,7 @@ const {
     registerUser,
     authenticateUser,
     retrieveUser,
+    updateUser,
     publishListing,
     retrieveLastListings,
     retrievePublishedListings,
@@ -17,9 +18,11 @@ const router = new Router()
 
 router.post('/users', jsonBodyParser, registerUser)
 
-// router.post('/users/auth', jsonBodyParser, authenticateUser)
+router.post('/users/auth', jsonBodyParser, authenticateUser)
 
-// router.get('/users', jwtVerifierMidWare, retrieveUser)
+router.get('/users', jwtVerifierMidWare, retrieveUser)
+
+router.patch('/users', jwtVerifierMidWare, updateUser)
 
 // router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], publishListing)
 
