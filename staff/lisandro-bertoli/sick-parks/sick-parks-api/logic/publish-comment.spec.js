@@ -72,24 +72,15 @@ describe('publishComment', () => {
         })
 
         it('should succeed on creating a new comment in the park', async () => {
-            const comment = await publishComment({ parkId, userId }, body)
+            await publishComment({ parkId, userId }, body)
             const park = await Park.findOne({ _id: parkId }).lean()
 
 
             expect(park).to.have.property("comments")
-            expect(comment).to.exist
-            expect(park.comments[0]._id.toString()).to.be.equal(comment.id)
-            expect(park.comments[0].body).to.equal(comment.body)
+            expect(park.comments[0].body).to.equal(body.body)
 
         })
 
-        it('shouled succeed on populating the comment with the user name and id', async () => {
-            const comment = await publishComment({ parkId, userId }, body)
-
-            expect(comment.postedBy.name).to.equal(name)
-            expect(comment.postedBy.id).to.equal(userId)
-
-        })
     })
 
     it('should fail on incorrect user id', async () => {
