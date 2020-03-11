@@ -12,6 +12,7 @@ const {
     toggleFavToilet,
     retrieveFavToilets,
     publishComment,
+    updateComment,
     deleteComment,
     toggleThumbUp,
     toggleThumbDown
@@ -45,6 +46,8 @@ router.patch('/users/toilet/:toiletId/favorite', jwtVerifierMidWare, toggleFavTo
 router.get('/users/favorites', jwtVerifierMidWare, retrieveFavToilets)
 
 router.post('/users/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
+
+router.patch('/users/comment/:commentId', [jwtVerifierMidWare, jsonBodyParser], updateComment)
 
 router.delete('/users/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
 
