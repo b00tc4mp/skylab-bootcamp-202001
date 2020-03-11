@@ -10,7 +10,9 @@ const {
     toggleFavToilet,
     retrieveFavToilets,
     publishComment,
-    deleteComment
+    deleteComment,
+    toggleThumbUp,
+    toggleThumbDown
 } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -39,5 +41,9 @@ router.get('/users/:id/favorites', jwtVerifierMidWare, retrieveFavToilets)
 router.post('/users/:id/toilet/:toiletId/comment', [jwtVerifierMidWare, jsonBodyParser], publishComment)
 
 router.delete('/users/:id/toilet/:toiletId/comment/:commentId/delete', jwtVerifierMidWare, deleteComment)
+
+router.patch('/users/:id/comment/:commentId/thumb-up', jwtVerifierMidWare, toggleThumbUp)
+
+router.patch('/users/:id/comment/:commentId/thumb-down', jwtVerifierMidWare, toggleThumbDown)
 
 module.exports = router
