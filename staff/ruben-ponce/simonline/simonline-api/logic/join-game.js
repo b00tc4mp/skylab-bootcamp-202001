@@ -22,11 +22,10 @@ module.exports = (id, gameId) => {
         })
         .then(() => { 
             return Game.findById(gameId)
-            .populate('players', 'username')
+            .populate('players', 'username id')
                 .then(({players}) => {
-                    debugger
                     players.forEach(player => {
-                        playersName.push(player.username)
+                        playersName.push([player.username, player.id])
                     })
                     return playersName
                 })

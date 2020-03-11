@@ -1,11 +1,13 @@
 const { validate } = require('simonline-utils')
 const { models: { Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
+const { random } = Math 
 
-module.exports = (combination, gameId) => {
-    validate.type(combination, 'combination', Number)
+module.exports = (gameId) => {
     validate.string(gameId, 'gameId')
-    debugger
+
+    let combination = Math.floor(random() * 4)
+    
     return Game.findById(gameId)
         .then((game) => {
 

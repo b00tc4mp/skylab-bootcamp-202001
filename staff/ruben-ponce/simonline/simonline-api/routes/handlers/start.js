@@ -1,12 +1,14 @@
-const { updateCombination } = require('../../logic')
+const { start } = require('../../logic')
 const { NotFoundError ,ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
-    const { body: { gameId } } = req
+    const { params: { gameId } } = req
 
     try {
-        updateCombination(gameId)
-            .then(() => res.end())
+        start(gameId)
+            .then(firstStatus => 
+                res.status(200).json(firstStatus)
+            )
             .catch(error => {
                 let status = 400
 
