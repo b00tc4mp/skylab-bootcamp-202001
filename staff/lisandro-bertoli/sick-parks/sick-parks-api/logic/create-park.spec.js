@@ -62,7 +62,7 @@ describe('createPark', () => {
 
     })
 
-    describe.only('when user exists', () => {
+    describe('when user exists', () => {
 
 
         let userId
