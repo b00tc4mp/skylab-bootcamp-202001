@@ -1,7 +1,5 @@
 const { validate } = require("staycar-utils")
-const {
-  models: { User, Parking }
-} = require("staycar-data")
+const { models: { User, Parking } } = require("staycar-data")
 const { NotFoundError } = require("staycar-errors")
 
 module.exports = (id, idParking, number) => {
@@ -34,7 +32,7 @@ module.exports = (id, idParking, number) => {
       }
 
       await parking.save()
-      return { }
+      return 
     } 
 
     for (let i = lots.length + 1; i <= number; i++) {
@@ -47,6 +45,6 @@ module.exports = (id, idParking, number) => {
 
     await parking.save()
 
-    return {}
+    return 
   })();
 };

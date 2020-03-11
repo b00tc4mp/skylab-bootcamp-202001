@@ -1,42 +1,45 @@
-const { validate } = require("staycar-utils");
-const {
-  models: { Ticket, Parking }
-} = require("staycar-data");
-const { NotAllowedError } = require("../../staycar-errors");
+const { validate } = require("staycar-utils")
+const { models: { Ticket, Parking } } = require("staycar-data")
+const { NotAllowedError } = require("../../staycar-errors")
+const generateQr = require("./generate-qr")
 
-module.exports = (carPlate, idParking) => {
+module.exports = async (carPlate, idParking) => {
   validate.string(carPlate, "carPlate")
   validate.string(idParking, "idParking")
 
-  return (async () => {
-    const car = await Ticket.findOne({ carPlate });
-    if (car) throw new NotAllowedError(`this plate ${carPlate} is inside`);
+  const car = await Ticket.findOne({ carPlate })
+  if (car) throw new NotAllowedError(`this plate ${carPlate} is inside`)
 
-    const parking = await Parking.find({idParking}).lean();
+  const parking = await Parking.findOne({ _id: idParking })
 
-    let { totalLots, occupiedLots } = parking;
+  let { totalLots, occupiedLots, lots } = parking
 
-    let freeLots = totalLots - occupiedLots;
+  let freeLots = totalLots - occupiedLots
 
-    if (freeLots === 0) throw new NotAllowedError("parking full. Entry not allowed");
+  if (freeLots === 0)
+    throw new NotAllowedError("parking full. Entry not allowed")
 
-    await Ticket.create({ carPlate, entryHour: new Date() });
+  parking.occupiedLots++
+  console.log(parking)
 
-    occupiedLots++;
+  let condition = true
 
-    const {lots} = parking
+  do {
+    let random = Math.floor(Math.random() * lots.length)
 
-    (function checkLot() {
-        
-        const random = Math.floor(Math.random())*freeLots
-        if(lots[random].status) {
-            checkLot()
-        }
-        return lots[random].status = true
-    })()
+    if (lots[random].status === false) {
+      lots[random].status = true
+      condition = false
+    }
     
-    parking.save()
+  } while (condition);
 
-    return {};
-  })();
-};
+  parking.lots = lots
+
+  await generateQr(carPlate)
+
+  await Ticket.create({ carPlate, entryHour: new Date() })
+
+  await parking.save()
+
+}

@@ -8,6 +8,7 @@ const { name, version } = require('./package')
 const morgan = require('morgan')
 const fs = require('fs')
 const path = require('path')
+
 const  cors  = require('cors')
 const { mongoose } = require('staycar-data')
 const router = require('./routes')
@@ -35,6 +36,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
     app.use(cors())
 
     app.use(morgan('combined', { stream: accessLogStream }))
+
+    app.use(express.static(path.join(__dirname, './public')))
 
     app.use('/api', router)
 
