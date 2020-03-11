@@ -15,8 +15,10 @@ module.exports = new Schema({
     created: { type: Date, required: true, default: Date.now },
     authenticated: { type: Date },
     retrieved: { type: Date },
-    alarmSet: [{ type: Date }],
+    alarmSet: [{ type: Date }], //no se si se usará, tenemos times en guideline
     medication: [drug],
-    prescription: [guideline]
+    prescription: [guideline],
+    progress: [{type: Boolean}],
+    myContacts: [{type: String}] //type string o objectID??¿ embebido??
     
 })

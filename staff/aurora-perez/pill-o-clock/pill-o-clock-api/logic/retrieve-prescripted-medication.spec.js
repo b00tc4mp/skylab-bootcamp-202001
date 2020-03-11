@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrievePrescriptedMedication = require('./retrieve-prescripted-medication')
-const { mongoose, models: { User, Drug } } = require('pill-o-clock-data')
+const { mongoose, models: { User, Drug, Guideline } } = require('pill-o-clock-data')
 
 
 describe('retrievePrescriptedMedication', ()=> {
@@ -13,7 +13,7 @@ describe('retrievePrescriptedMedication', ()=> {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id
+    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, time
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -26,24 +26,30 @@ describe('retrievePrescriptedMedication', ()=> {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
+        time = `time-${random()}`
     })
 
     describe ('when user alredy exists', ()=> {
         beforeEach(() => 
             Promise.all([User.create({ name, surname, gender, age, phone, profile, email, password }), Drug.create({drugName, description}) ])
                 .then(([user, drug]) => {
-                    _id = user.id
-                    user.medication.push(drug)
+                    userId = user.id
+                    drugId= drug.id
+
+                    const prescription = new Guideline({prescribed: userId, drug: drugId, times: time})
+                    user.prescription.push(prescription)
                     return user.save()
                 })
-                .then(() => {})
+            .then(() => {})
         )
         it('should succeed on correct and valid date', ()=>
-            retrievePrescriptedMedication(_id) 
-                .then(medication => { 
-                    expect(medication instanceof Array).to.equal(true)
-                    expect(medication[0].drugName).to.equal(drugName)
-                    expect(medication[0].description).to.equal(description)
+            Promise.all([retrievePrescriptedMedication(userId), User.findById(userId)])
+                .then(([prescription, user ])=> { 
+                    expect(prescription instanceof Array).to.equal(true)
+                    expect(user.prescription).to.exist
+                    expect(user.prescription[0]).to.exist
+                    expect(user.prescription[0].drug.toString()).to.equal(drugId)
+                    expect(user.prescription[0].prescribed.toString()).to.equal(userId)
                 })
         )
 
