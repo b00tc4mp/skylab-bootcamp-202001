@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import './App.sass';
 import socket from '../socket';
 import { gamepadConnect, gamepadDisconnect, check } from "../logic/gamepad";
 import {keyDown, keyUp} from '../logic/keyboard'
 import "chartjs-plugin-streaming";
-
-
-import {Line, Bar} from 'react-chartjs-2';
+import JMuxer from 'jmuxer';
+import {Line} from 'react-chartjs-2';
 
 
 
@@ -146,6 +145,29 @@ function App() {
       document.addEventListener('keydown', keyDown);
       document.addEventListener('keyup', keyUp);
     }
+
+    window.onload = function() {
+      var socketURL = 'ws://localhost:8080';
+      var jmuxer = new JMuxer({
+          node: 'player',
+          mode: 'video',
+          flushingTime: 1,
+          fps: 30
+        });
+  
+        var ws = new WebSocket(socketURL);
+        ws.binaryType = 'arraybuffer';
+        ws.addEventListener('message',function(event) {
+            jmuxer.feed({
+              video: new Uint8Array(event.data)
+            });
+        });
+  
+        ws.addEventListener('error', function(e) {
+          console.log('Socket Error');
+        });
+    }
+    
     
   }, []);
 
@@ -155,11 +177,6 @@ function App() {
   const { pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz } = state
 
 
-
-  const heightGra = Number(tof)
-
-  
-  
  
   const temperatureOpt = {
     scales: {
@@ -273,32 +290,15 @@ function App() {
   return (
     <div className="Drone">
       <header className="App-header">
-        {/* {<img src={logo} className="App-logo" alt="logo" />}
-
-        {<h3>{status}</h3>} */}
-        <section className="telemetria">
-          <div><p>Pitch</p><p>{pitch}</p></div>
-          <div><p>Roll</p><p>{roll}</p></div>
-          <div><p>Yaw</p><p>{yaw}</p></div>
-          <div><p>V en X</p><p>{vgx}</p></div>
-          <div><p>V en Y</p><p>{vgy}</p></div>
-          <div><p>V en Z</p><p>{vgz}</p></div>
-          <div><p>Temp min</p><p>{templ}</p></div>
-          <div><p>Temp max</p><p>{temph}</p></div>
-          <div><p>Tof</p><p>{tof}</p></div>
-          <div><p>Altura</p><p>{h}</p></div>
-          <div><p>Bateria</p><p>{bat}</p></div>
-          <div><p>Barometro</p><p>{baro}</p></div>
-          <div><p>Tiempo de vuelo</p><p>{time}</p></div>
-          <div><p>AC en X</p><p>{agx}</p></div>
-          <div><p>AC en Y</p><p>{agy}</p></div>
-          <div><p>AC en Z</p><p>{agz}</p></div>
-        </section>
+        <img src={logo} className="App-logo" alt="logo" />
+        <h3>{status}</h3>
+      </header>
+ 
         <section className="charts">
-          <div>
-            <Line data={height} options={heightOpt} />
-          </div>
-          <div>
+          {/* <div> */}
+            {/* <Line className="height" height={50} data={height} options={heightOpt} /> */}
+          {/* </div> */}
+          {/* <div>
             <Line data={temperature} options={temperatureOpt}  />
           </div>
           <div>
@@ -306,12 +306,14 @@ function App() {
           </div>
           <div>
             <Line data={aceleration} options={acelerationOpt}/>
-          </div>
-        {/* <Bar data={temperature} options={temperatureOpt}/> */}
+          </div> */}
+        <video className="video" id='player'  autoPlay muted/>
         </section>
         
-
-      </header>
+        
+        
+      
+      
 
     </div>
   );
