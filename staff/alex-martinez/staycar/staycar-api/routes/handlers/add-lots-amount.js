@@ -4,9 +4,9 @@ const { NotAllowedError, ContentError } = require('staycar-errors')
 module.exports = ( req, res ) => {
     const { payload: { sub: id } , body: { totalLots } } = req
     
-    let idParking = req.params.id
+    let pkname = req.params.name
     try{
-        addLotsAmount(id, idParking ,totalLots)
+        addLotsAmount(id, pkname ,totalLots)
         .then(() => res.status(200).end())
         .catch(error => {
             let status = 400

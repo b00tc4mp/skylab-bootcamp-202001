@@ -37,7 +37,7 @@ describe('crateParking', () => {
                 .then(user => _id = user.id)
         )
 
-        it('should succed on correct user id', () =>
+        it('should succed on create new parking', () =>
             createParking(_id, parkingName )
                 .then((res) => {
                     expect(res).to.be.an('object')

@@ -10,20 +10,21 @@ const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
-describe.only('addLotsAmount', () => {
+describe('addLotsAmount', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Parking.deleteMany()]))
     )
 
-    let name, surname, username, password, totalLots
+    let name, surname, username, password, totalLots, pkName
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         username = `username-${random()}`
-        password = `password-${random()}`,
-        totalLots = round(random()*(20-1)+parseInt(1));
+        password = `password-${random()}`
+        totalLots = round(random()*(20-1)+parseInt(1))
+        pkName = `pkname-${random()}`
     })
 
     describe('when user already exists', () => {
@@ -37,14 +38,12 @@ describe.only('addLotsAmount', () => {
                 .then(user => _id = user.id)  
                 .then(() => 
                     
-                    Parking.create({parkingName: 'testpk'})
+                    Parking.create({parkingName: pkName})
                 )
-                .then(pk => pkId = pk.id)
-                
         )
 
         it('should succed on correct data', () =>
-            addLotsAmount(_id, pkId, totalLots)
+            addLotsAmount(_id, pkName, totalLots)
                 .then((res) => {
                     expect(res).to.be.an('undefined')
                 })
