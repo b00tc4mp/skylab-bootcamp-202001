@@ -15,10 +15,17 @@ module.exports = {
   retrieveAll: asyncHandler(async (req, res, next) => {
     const companies = await retrieveAllCompanies(req.query)
     res.json({ companies })
-  }),
+  })
+
+  // TODO after Bootcamp
 
   // update: asyncHandler(async (req, res, next) => {
   //   await update(req.body)
   //   res.status(201).json({ message: 'Company and User registered successfully' })
-  // })
+  // }),
+
+  // delete: asyncHandler(async (req, res, next) => {
+  //   await update(req.body)
+  //   res.status(201).json({ message: 'Company and User registered successfully' })
+  // }),
 }

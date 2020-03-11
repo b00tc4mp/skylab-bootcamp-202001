@@ -7,6 +7,7 @@ module.exports = {
   authenticateUser: require('./user/authenticate-user'),
   retrieveUser: require('./user/retrieve-user'),
   retrieveAllUsers: require('./user/retrieve-all-users'),
+  updateUser: require('./user/update-user'),
 
   registerCredit: require('./credit/register-credit'),
   

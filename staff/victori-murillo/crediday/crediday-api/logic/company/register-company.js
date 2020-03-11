@@ -1,12 +1,12 @@
+require('dotenv').config()
 const { Company, User } = require('crediday-models')
-const { validate } = require('crediday-utils')
+const validate = require('crediday-utils')
 const { hash } = require('bcryptjs')
 const { env: { PASSWORD } } = process
 
 module.exports = async ({ company, user }) => {
-
   validate.string(company.name, 'name')
-  validate.length(company.name, 'company', 3, 30)
+  validate.length(company.name, 'company', 3, 20)
 
   validate.string(user.username, 'username')
   validate.length(user.username, 'username', 3, 30)

@@ -3,7 +3,6 @@ const { validate } = require('crediday-utils')
 
 module.exports = async (company) => {
   
-
   validate.string(company.name, 'name')
   validate.length(company.name, 3, 30)
   validate.string(user.username, 'username')

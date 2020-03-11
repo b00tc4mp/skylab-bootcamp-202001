@@ -23,10 +23,10 @@ module.exports = router
   .post('/users', user.register)
   .get('/users/:id', user.retrieve)
   .get('/users-companies', user.retrieveAll)
-  // .patch('/users/:id', user.update)
+  .patch('/users/:id', user.update)
   // .patch('/users/:id', user.delete)
 
-  .post('/credits', credit.register)
+  .post('/credits/:id', credit.register)
 
 
   .use(errorHandler)

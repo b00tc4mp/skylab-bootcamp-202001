@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const { mongoose } = require('crediday-models')
 const chalk = require('chalk')
 const { env: { MONGODB_URL } } = process
 
@@ -8,7 +8,7 @@ var disconnected = chalk.bold.red
 var termination = chalk.bold.magenta
 
 module.exports = () => {
-    
+
     mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 
     mongoose.connection.on('error', function (err) {

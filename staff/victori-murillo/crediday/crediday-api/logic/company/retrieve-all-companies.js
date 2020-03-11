@@ -1,6 +1,6 @@
 const { Company } = require('crediday-models')
-const { validate } = require('crediday-utils')
-module.exports = async (query) => {
+
+module.exports = async (query = {}) => {
 
   const fields = Object.keys(Company.schema.obj)
   const filter = Object.keys(query).filter(key => fields.some(field => field === key))
