@@ -8,7 +8,10 @@ module.exports = {
   retrieveUser: require('./user/retrieve-user'),
   retrieveAllUsers: require('./user/retrieve-all-users'),
   updateUser: require('./user/update-user'),
+  deleteUser: require('./user/delete-user'),
 
   registerCredit: require('./credit/register-credit'),
+
+  registerPayment: require('./credit/register-payment'),
   
 }

@@ -40,7 +40,6 @@ const schema = new Schema({
     required: [function () {
       return this.role === "customer" ? false : true
     }, `This role must have a password`]
-
   },
 
   email: {
@@ -67,7 +66,7 @@ const schema = new Schema({
   homeAddress: String,
   workAddress: String,
 
-  token: String,
+  // token: String,
 
   //Datos para Ingresar al Sistema
 

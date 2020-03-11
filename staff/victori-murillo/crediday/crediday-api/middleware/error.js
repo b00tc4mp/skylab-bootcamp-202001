@@ -5,6 +5,10 @@ module.exports = (err, req, res, next) => {
   let status = 400
   let error = 'error'
 
+  console.log(name)
+
+  if (name === 'CastError') message = 'Invalid id'
+
   if (name === 'ValidationError') {
     message = Object.values(err.errors).map(value => value.message)
 
@@ -13,7 +17,6 @@ module.exports = (err, req, res, next) => {
   }
 
   if (name === 'ContentLength') status = 411
-  
 
   res.status(status).json({ [error]: message })
 }

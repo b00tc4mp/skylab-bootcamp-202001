@@ -17,16 +17,15 @@ module.exports = router
 
   .get('/companies/:id', company.retrieve)
   .get('/companies', validateRole, company.retrieveAll)
-  // .patch('/companies/:id', company.update)
-  // .delete('/companies/:id', company.delete)
 
   .post('/users', user.register)
   .get('/users/:id', user.retrieve)
   .get('/users-companies', user.retrieveAll)
-  .patch('/users/:id', user.update)
-  // .patch('/users/:id', user.delete)
+  .patch('/users/:id?', user.update)
+  .delete('/users/:id', user.delete)
 
   .post('/credits/:id', credit.register)
-
+  // .patch('/credits/:id', credit.register)
+  // .delete('/credits/:id', credit.register)
 
   .use(errorHandler)

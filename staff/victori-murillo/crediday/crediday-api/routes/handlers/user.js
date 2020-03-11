@@ -1,4 +1,4 @@
-const { registerUser, authenticateUser, retrieveUser, retrieveAllUsers, updateUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrieveAllUsers, updateUser, deleteUser } = require('../../logic')
 const { asyncHandler } = require("../../middleware")
 const { env: { JWT_EXP: expiresIn, JWT_SECRET } } = process
 const { sign } = require('jsonwebtoken')
@@ -24,14 +24,14 @@ module.exports = {
     res.status(200).json({ users })
   }),
 
-  update: asyncHandler(async ({ payload: { sub: id } }, res, next) => {
-    if (id) id = 
-    await updateUser(req.payload.sub, req.body)
+  update: asyncHandler(async ({ payload, body, params: { id } }, res, next) => {
+    if (!id) id = payload.sub
+    await updateUser(id, payload.com, body)
     res.status(200).json({ message: 'User updated successfully' })
   }),
 
-  // delete: asyncHandler(async (req, res, next) => {
-  //   const sub = await authenticateUser(req.body)
-  //   res.status(200).json({ token: jwt.sign({ sub }, 'secret', { expiresIn }) })
-  // })
+  delete: asyncHandler(async ({payload, params}, res, next) => {
+    await deleteUser(params.id, payload.com)
+    res.status(200).json({ message: 'User deleted successfully' })
+  })
 }
