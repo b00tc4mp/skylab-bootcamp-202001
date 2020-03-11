@@ -20,23 +20,8 @@ module.exports = new Schema({
     },
     resort: String,
     location: {
-        type: String,
-        enum: ['FeatureCollection'],
-        features: {
-            type: String,
-            enum: ['Feature'],
-            properties: Object,
-            geometry: Polygon //TODO check if works
-        }
-        // type: {
-        //     type: String,
-        //     enum: ['Polygon'],
-        //     required: true
-        // },
-        // coordinates: {
-        //     type: [[[Number]]],
-        //     required: true
-        // }
+        type: Polygon,
+        required: true
     },
     image: String,
     features: [Feature],

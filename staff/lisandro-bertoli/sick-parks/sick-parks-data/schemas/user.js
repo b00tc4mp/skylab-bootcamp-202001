@@ -9,19 +9,8 @@ module.exports = new Schema({
     age: Number,
     image: String,
     allowLocation: Boolean,
-    location: {
-        type: String,
-        enum: ['Feature'],
-        properties: Object,
-        geometry: Point // TODO check if works
-        // type: {
-        //     type: String,
-        //     enum: ['Point']
-        // },
-        // coordinates: {
-        //     type: [Number]
-        // }
-    },
+    location: Point,
+    followers: { type: ObjectId, ref: 'User' },
     notifications: Boolean,
     parks: [{
         type: ObjectId,

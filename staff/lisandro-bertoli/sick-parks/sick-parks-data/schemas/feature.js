@@ -7,20 +7,16 @@ module.exports = new Schema({
     size: { type: String, required: true, enum: ['s', 'm', 'l', 'xl'] },
     description: String,
     image: String,
-    location: {
-        type: String,
-        enum: ['Feature'],
-        properties: Object,
-        geometry: Point //TODO check if works
-        // type: {
-        //     type: String,
-        //     enum: ['Point'],
-        //     required: true
-        // },
-        // coordinates: {
-        //     type: [Number],
-        //     required: true
-        // }
-    }
+    location: Point
+    // type: {
+    //     type: String,
+    //     enum: ['Point'],
+    //     required: true
+    // },
+    // coordinates: {
+    //     type: [Number],
+    //     required: true
+    // }
+
 
 }) 
