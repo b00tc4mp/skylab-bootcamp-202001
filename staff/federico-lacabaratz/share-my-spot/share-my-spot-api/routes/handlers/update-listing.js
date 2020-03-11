@@ -1,13 +1,13 @@
-const { retrieveUser } = require('../logic')
-const { NotFoundError, NotAllowedError } = require('share-my-spot-errors')
+const { updateListing } = require('../../logic')
+const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
+    const { payload: { sub: userId }, body, params: {id: listingId} } = req
 
     try {
-        retrieveUser(id)
-            .then(user =>
-                res.status(200).json(user)
+        updateListing(userId, body, listingId)
+            .then(() =>
+                res.status(200).json({ message: "You've successfully updated this listing" })
             )
             .catch(({ message }) =>
                 res
@@ -23,8 +23,6 @@ module.exports = (req, res) => {
             case error instanceof NotFoundError:
                 status = 404 // not found
                 break
-            case error instanceof NotAllowedError:
-                status = 403 // forbidden
         }
 
         const { message } = error

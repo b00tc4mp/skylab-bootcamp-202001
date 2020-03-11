@@ -1,15 +1,15 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User, Event } } = require('share-my-spot-data')
+const { mongoose, models: { User, Listing } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveLastEvents = require('./retrieve-last-events')
+const retrieveLastListings = require('./retrieve-last-listings')
 
-describe('retrieveLastEvents', () => {
+describe('retrieveLastListings', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
+            .then(() => Promise.all([User.deleteMany(), Listing.deleteMany()]))
     )
 
     let name, surname, email, password, title, description, date, location
@@ -32,39 +32,39 @@ describe('retrieveLastEvents', () => {
             User.create({ name, surname, email, password })
                 .then(({ id }) => _id = id)
                 .then(() => {
-                    const events = []
+                    const listings = []
 
                     const now = new Date()
 
                     date = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
 
                     for (let i = 0; i < 10; i++)
-                        events.push({ publisher: _id, title, description, date, location })
+                        listings.push({ publisher: _id, title, description, date, location })
 
                     const old = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate())
 
                     for (let i = 0; i < 10; i++)
-                        events.push({ publisher: _id, title, description, date: old, location })
+                        listings.push({ publisher: _id, title, description, date: old, location })
 
-                    return Event.insertMany(events)
+                    return Listing.insertMany(listings)
                 })
         )
 
         it('should succeed on correct and valid and right data', () =>
-            retrieveLastEvents()
-                .then(events => {
-                    expect(events).to.exist
-                    expect(events).to.have.lengthOf(10)
+            retrieveLastListings()
+                .then(listings => {
+                    expect(listings).to.exist
+                    expect(listings).to.have.lengthOf(10)
 
-                    events.forEach(event => {
-                        expect(event.id).to.be.a('string')
-                        expect(event._id).to.be.undefined
-                        expect(event.title).to.equal(title)
-                        expect(event.description).to.equal(description)
-                        expect(event.date).to.deep.equal(date)
-                        expect(event.location).to.equal(location)
-                        expect(event.publisher).to.be.a('string')
-                        expect(event.publisher).to.equal(_id)
+                    listings.forEach(listing => {
+                        expect(listing.id).to.be.a('string')
+                        expect(listing._id).to.be.undefined
+                        expect(listing.title).to.equal(title)
+                        expect(listing.description).to.equal(description)
+                        expect(listing.date).to.deep.equal(date)
+                        expect(listing.location).to.equal(location)
+                        expect(listing.publisher).to.be.a('string')
+                        expect(listing.publisher).to.equal(_id)
                     })
                 })
         )
@@ -72,5 +72,5 @@ describe('retrieveLastEvents', () => {
 
     // TODO more happies and unhappies
 
-    after(() => Promise.all([User.deleteMany(), Event.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Listing.deleteMany()]).then(() => mongoose.disconnect()))
 })

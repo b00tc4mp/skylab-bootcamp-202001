@@ -1,4 +1,4 @@
-const { registerUser } = require('../logic')
+const { registerUser } = require('../../logic')
 const { NotAllowedError, ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {

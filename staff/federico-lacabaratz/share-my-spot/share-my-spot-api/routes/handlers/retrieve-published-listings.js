@@ -1,12 +1,13 @@
-const { retrieveLastEvents } = require('../logic')
-const {  ContentError } = require('share-my-spot-errors')
+const { retrievePublishedListings } = require('../../logic')
+const {  NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
+    const { payload: { sub: id } } = req
 
     try {
-        retrieveLastEvents()
-            .then(event =>
-                res.status(200).json(event)
+        retrievePublishedListings(id)
+            .then(listing =>
+                res.status(200).json(listing)
             )
             .catch(({ message }) =>
                 res
@@ -19,8 +20,8 @@ module.exports = (req, res) => {
         let status = 400
 
         switch (true) {
-            case error instanceof ContentError:
-                status = 406 // not allowed
+            case error instanceof NotFoundError:
+                status = 404 // not found
                 break
         }
 

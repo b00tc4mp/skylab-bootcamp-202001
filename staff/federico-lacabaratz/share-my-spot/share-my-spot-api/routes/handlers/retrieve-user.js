@@ -1,13 +1,13 @@
-const { unsubscribeEvent } = require('../logic')
-const { NotFoundError } = require('share-my-spot-errors')
+const { retrieveUser } = require('../../logic')
+const { NotFoundError, NotAllowedError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body: {eventId} } = req
+    const { payload: { sub: id } } = req
 
     try {
-        unsubscribeEvent(userId, eventId)
-            .then(() =>
-                res.status(200).json({ message: "You've successfully unsubscribe this event from the database" })
+        retrieveUser(id)
+            .then(user =>
+                res.status(200).json(user)
             )
             .catch(({ message }) =>
                 res
@@ -23,6 +23,8 @@ module.exports = (req, res) => {
             case error instanceof NotFoundError:
                 status = 404 // not found
                 break
+            case error instanceof NotAllowedError:
+                status = 403 // forbidden
         }
 
         const { message } = error

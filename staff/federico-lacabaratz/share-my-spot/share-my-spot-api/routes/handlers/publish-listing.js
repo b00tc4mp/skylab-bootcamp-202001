@@ -1,11 +1,11 @@
-const { publishEvent } = require('../logic')
+const { publishListing } = require('../../logic')
 const { ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
     const { params: { id }, body: { title, description, location, date } } = req
 
     try {
-        publishEvent(id, title, description, location, new Date(date))
+        publishListing(id, title, description, location, new Date(date))
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
