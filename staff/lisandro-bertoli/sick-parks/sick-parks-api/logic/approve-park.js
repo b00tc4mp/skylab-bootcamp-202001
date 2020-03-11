@@ -15,14 +15,15 @@ module.exports = async (userId, { id: parkId }) => {
     if (park.approvals.includes(user._id)) throw new NotAllowedError(`user with id ${userId} already approved`)
 
 
-    park.approvals.push(user._id)
+    park.approvals.push(user)
+    user.contributions.push(park)
 
     if (park.approvals.length >= 5) {
         park.verified = true
         await park.save()
         return
     }
-
+    await user.save()
     await park.save()
     return
 
