@@ -1,16 +1,13 @@
-const { createParking } = require('../../logic')
+const { exitVehicle } = require('../../logic')
 const { NotAllowedError, ContentError } = require('staycar-errors')
 
-module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
-    const {body: {parkingName, rate, totalLots}} = req
-    // const name = req.body.parkingName
-    // const price = req.body.rate
-    
-    
+module.exports = ( req, res ) => {
+    const { params: {carplate, parkingname} } = req
+    debugger
     try{
-        createParking(id, parkingName, rate, totalLots)
-        .then(() => res.status(201).end())
+        
+        exitVehicle(carplate, parkingname)
+        .then(() => res.status(201).json({"message": "Thank you, see you soon"}))
         .catch(error => {
             let status = 400
 
@@ -25,6 +22,7 @@ module.exports = (req, res) => {
                     error: message
                 })
         })
+
     
     }catch(error){
         let status = 400

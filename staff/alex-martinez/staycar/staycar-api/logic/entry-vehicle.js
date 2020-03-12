@@ -40,12 +40,12 @@ module.exports =  (carPlate, parkingName) => {
   
     parking.lots = lots
   
-    await generateQr(carPlate)
+    //await generateQr(carPlate)
   
     await Ticket.create({ carPlate, entryHour: new Date(), parkingName })
     //entryHour = moment().format('MMMM Do YYYY, h:mm:ss')
     //await Ticket.create({ carPlate, entryHour, parkingName })
   
-    await parking.save()
+    parking.save()
   })()
 }
