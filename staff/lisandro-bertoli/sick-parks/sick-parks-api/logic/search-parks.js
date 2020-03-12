@@ -2,15 +2,30 @@ const { models: { Park } } = require('sick-parks-data')
 const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 
-module.exports = ({ q }) => {
+module.exports = ({ q, _location }) => {
     validate.string(q, 'query')
 
     return (async () => {
         const results = await Park.find({
+            // $and: [
+            //     {
             $or: [
                 { name: { $regex: q } },
                 { resort: { $regex: q } },
                 { level: { $regex: q } }]
+            // },
+            // {
+            // location: {
+            //     $near: {
+            //         $geometry: {
+            //             type: 'Point',
+            //             coordinates: _location
+            //         }
+            //     }
+            // }
+            //     }
+
+            // ]
         }).lean()
 
         if (!results.length) return results

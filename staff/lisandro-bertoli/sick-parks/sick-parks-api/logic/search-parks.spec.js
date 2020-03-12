@@ -13,7 +13,10 @@ describe('searchParks', () => {
     })
     let name, size, level, location, resort
     let name2, size2, level2, location2, resort2
-
+    let _location = [
+        1.142578125,
+        42.52879629320373
+    ]
     beforeEach(() => {
         name = `parkName-${random()}`
         size = `l`
@@ -91,7 +94,7 @@ describe('searchParks', () => {
 
         it('should suceed on finding parks', async () => {
             let q = 'begg'
-            let results = await searchParks({ q })
+            let results = await searchParks({ q, _location })
 
             results.forEach(result => {
                 expect(result.name).to.be.oneOf([park1.name, park2.name])
@@ -104,7 +107,7 @@ describe('searchParks', () => {
 
             q = 'Grin'
 
-            results = await searchParks({ q })
+            results = await searchParks({ q, _location })
 
             results.forEach(result => {
                 expect(result.name).to.equal(park1.name)
@@ -119,7 +122,7 @@ describe('searchParks', () => {
 
     it('should return empty array when no results', async () => {
         let q = 'Random'
-        const result = await searchParks({ q })
+        const result = await searchParks({ q, _location })
 
         expect(result).to.be.an('array')
         expect(result).to.have.length(0)
