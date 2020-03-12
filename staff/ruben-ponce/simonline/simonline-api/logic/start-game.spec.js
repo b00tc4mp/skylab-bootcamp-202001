@@ -36,8 +36,8 @@ describe('startGame', () => {
 
                 return Game.create({ name, owner })
                 .then(game => {
-                    for (let i = 0; i < users.length; i++)
-                        game.players.push(users[i])
+                    game.players = users
+                    gameId = game.id
                     
                     return game.save()
                 })
@@ -54,16 +54,16 @@ describe('startGame', () => {
                     expect(game.name).to.equal(name)
                     expect(game.owner).to.equal(owner)
                     expect(game.status).to.equal("started")
-
+                    expect(game.players.length).to.equal(10)
+                    expect(game.combinationgame.length).to.equal(1)
+                    expect(game.date).to.exist
+                    expect(game.combinationplayer).to.be.empty
+                    expect(game.watching).to.be.empty
                 })
-        })
-
-        afterEach(() => {
-            Game.deleteOne({ gameId })
-            User.deleteOne({ username })
         })
 
     })
 
-    after(() => mongoose.disconnect())
+    // after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
+
 })

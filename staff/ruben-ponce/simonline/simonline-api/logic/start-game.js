@@ -1,5 +1,5 @@
-const { validate/*, shuffle */} = require('simonline-utils')
-// import { shuffle } from '../../simonline-utils/shuffle'
+const validate = require('simonline-utils/validate')
+require('../../simonline-utils/shuffle')()
 const { models: { Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 const { random } = Math 
@@ -15,16 +15,6 @@ module.exports = (gameId) => {
             
             let combination = Math.floor(random() * 4)
             
-            if (typeof Array.prototype.shuffle === 'undefined')
-                Array.prototype.shuffle = function() {
-                for (var i = 0; i < this.length; i++) {
-                    var randomIndex = Math.floor(Math.random() * this.length)
-                    var currentValue = this[i]
-                    this[i] = this[randomIndex]
-                    this[randomIndex] = currentValue
-                }
-            }
-
             game.players.shuffle()
             game.combinationgame.push(combination)
             game.date = Date.now()
