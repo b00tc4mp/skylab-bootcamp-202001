@@ -7,7 +7,8 @@ const { registerUser,
     addLotsAmount,
     createParking,
     retrieveParking,
-    retrieveTicket } = require('./handlers')
+    retrieveTicket,
+    validateTicket } = require('./handlers')
 //
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -28,6 +29,7 @@ router.post('/:name/ticket', jsonBodyParser, entryVehicle)
 router.post('/parking/create', jwtVerifierMidWare, jsonBodyParser, createParking)
 router.get('/parking/:name', jwtVerifierMidWare, retrieveParking)
 router.get('/ticket/:carplate/:parkingname', retrieveTicket)
+router.patch('/ticket/:id/validated', validateTicket)
 //router.patch('/parking/:id/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
 router.patch('/parking/:name/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
 //
