@@ -13,7 +13,7 @@ module.exports =  (carPlate, parkingName) => {
     if(!ticket.validated) throw new NotAllowedError('this ticket was not validated')
   
     const parking = await Parking.findOne({ parkingName })
-    
+    debugger
     let { lots } = parking
   
   
@@ -22,6 +22,7 @@ module.exports =  (carPlate, parkingName) => {
     let condition = false
   
     do {
+    
       let random = Math.floor(Math.random() * lots.length)
   
       if (lots[random].status === true) {
@@ -30,7 +31,7 @@ module.exports =  (carPlate, parkingName) => {
         condition = true
       }
       
-    } while (condition);
+    } while (condition===false);
   
     parking.lots = lots
   
@@ -39,6 +40,6 @@ module.exports =  (carPlate, parkingName) => {
     //await Ticket.create({ carPlate, entryHour: new Date(), parkingName })
 
     //HACER EL REPORT AQUI
-    //await parking.save()
+    parking.save()
   })()
 }

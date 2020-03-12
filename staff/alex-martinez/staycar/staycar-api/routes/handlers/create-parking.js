@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     const {body: {parkingName, rate, totalLots}} = req
     // const name = req.body.parkingName
     // const price = req.body.rate
-    debugger
+    
     
     try{
         createParking(id, parkingName, rate, totalLots)
