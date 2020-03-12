@@ -5,7 +5,7 @@ const { models: { User, Park } } = require('sick-parks-data')
 module.exports = (parkId, userId) => {
     validate.string(parkId, 'parkId')
     if (userId || userId === '') validate.string(userId, 'userId')
-
+    //TODO CHECK FOR CHANGES ON PARAMTERS TO CHANGE TESTSSS!!!
     return (async () => {
         if (userId) {
             const user = await User.findById(userId)

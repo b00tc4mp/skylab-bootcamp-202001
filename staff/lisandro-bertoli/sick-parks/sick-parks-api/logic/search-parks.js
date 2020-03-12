@@ -5,29 +5,31 @@ const { validate } = require('sick-parks-utils')
 module.exports = ({ q, _location }) => {
     validate.string(q, 'query')
 
+    //REMEMBER TO ADD THE INDEX TO location.coordinates FROM SHEL
+
     return (async () => {
         const results = await Park.find({
-            // $and: [
-            //     {
-            $or: [
-                { name: { $regex: q } },
-                { resort: { $regex: q } },
-                { level: { $regex: q } }]
-            // },
-            // {
-            // location: {
-            //     $near: {
-            //         $geometry: {
-            //             type: 'Point',
-            //             coordinates: _location
-            //         }
-            //     }
-            // }
-            //     }
+            $and: [
+                {
+                    $or: [
+                        { name: { $regex: q } },
+                        { resort: { $regex: q } },
+                        { level: { $regex: q } }]
+                },
+                {
+                    "location.coordinates": {
+                        $near: {
+                            $geometry: {
+                                type: 'Point',
+                                coordinates: _location
+                            }
+                        }
+                    }
+                }
 
-            // ]
+            ]
         }).lean()
-
+        debugger
         if (!results.length) return results
 
         const sanitizedResults = results.map(result => {
