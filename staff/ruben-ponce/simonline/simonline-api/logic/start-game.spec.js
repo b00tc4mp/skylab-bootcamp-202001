@@ -6,6 +6,7 @@ const { expect } = require('chai')
 const { random } = Math
 const startGame = require('./start-game')
 const { mongoose } = require('simonline-data')
+require('../../simonline-utils/shuffle')()
 // mongoose.set('useFindAndModify', false)
 
 /* Insert players, shuffle, and current */
@@ -37,6 +38,7 @@ describe('startGame', () => {
                 return Game.create({ name, owner })
                 .then(game => {
                     game.players = users
+                    game.players.shuffle()
                     gameId = game.id
                     
                     return game.save()
