@@ -6,8 +6,6 @@ const { expect } = require('chai')
 const { random } = Math
 const createGame = require('./create-game')
 const { mongoose } = require('simonline-data')
-mongoose.set('useFindAndModify', false)
-
 
 describe('createGame', () => {
     before(() =>

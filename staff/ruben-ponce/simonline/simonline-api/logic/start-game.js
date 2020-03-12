@@ -1,11 +1,12 @@
-const { validate } = require('simonline-utils')
+const { validate/*, shuffle */} = require('simonline-utils')
+// import { shuffle } from '../../simonline-utils/shuffle'
 const { models: { Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 const { random } = Math 
 
 module.exports = (gameId) => {
     validate.string(gameId, 'gameId')
-    
+
     return Game.findById(gameId)
     .populate('players', 'username id')
         .then((game) => {
@@ -27,7 +28,7 @@ module.exports = (gameId) => {
             game.players.shuffle()
             game.combinationgame.push(combination)
             game.date = Date.now()
-            game.currentplayer = players[0]//indice
+            game.currentplayer = game.players[0]//indice
             game.status = "started"
             return game.save()
         })

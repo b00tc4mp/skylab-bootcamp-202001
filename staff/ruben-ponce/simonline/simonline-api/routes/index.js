@@ -7,7 +7,7 @@ const {
     retrieveGames,
     joinGame,
     updateCombination,
-    start
+    startGame
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
 const bodyParser = require('body-parser')
@@ -30,6 +30,6 @@ router.patch('/users/:id/games/:gameId', [jwtVerifierMidWare, jsonBodyParser], j
 
 router.patch('/users/games/combination', [jwtVerifierMidWare, jsonBodyParser], updateCombination)
 
-router.patch('/users/games/:gameId/start', [jwtVerifierMidWare, jsonBodyParser], start)
+router.patch('/users/games/:gameId/start', [jwtVerifierMidWare, jsonBodyParser], startGame)
 
 module.exports = router

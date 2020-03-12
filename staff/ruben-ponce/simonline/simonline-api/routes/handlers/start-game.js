@@ -1,11 +1,11 @@
-const { start } = require('../../logic')
+const { startGame } = require('../../logic')
 const { NotFoundError ,ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
     const { params: { gameId } } = req
 
     try {
-        start(gameId)
+        startGame(gameId)
             .then(firstStatus => 
                 res.status(200).json(firstStatus)
             )
