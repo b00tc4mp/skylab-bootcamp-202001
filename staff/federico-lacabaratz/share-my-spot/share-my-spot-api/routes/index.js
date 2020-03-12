@@ -9,7 +9,9 @@ const {
     retrievePublishedListings,
     subscribeListing
 } = require('./handlers')
+
 const { jwtVerifierMidWare } = require('../mid-wares')
+
 const bodyParser = require('body-parser')
 
 const jsonBodyParser = bodyParser.json()
@@ -22,7 +24,7 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-router.patch('/users', jwtVerifierMidWare, updateUser)
+router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
 
 // router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], publishListing)
 

@@ -1,70 +1,36 @@
-function updateUser(token, data, callback) {
-    if (typeof token !== 'string') throw new TypeError(`token ${token} is not a string`)
+const { validate } = require('share-my-spot-utils')
+const { models: { User } } = require('share-my-spot-data')
+const { ContentError, NotAllowedError } = require('share-my-spot-errors')
+const bcrypt = require('bcryptjs')
 
-    const [header, payload, signature] = token.split('.')
-    if (!header || !payload || !signature) throw new Error('invalid token')
+module.exports = async (userId, body) => {
+    validate.string(userId, 'userId')
+    validate.string(email, 'email')
+    validate.email(email)
+    validate.string(password, 'password')
+    validate.number(phone, 'phone')
 
-    const { sub } = JSON.parse(atob(payload))
+    const validFields = ['email', 'password', 'oldPassword', 'phone']
 
-    if (!sub) throw new Error('no user id in token')
+    for (key in body) {
+        if (!validFields.includes(key)) throw new NotAllowedError(`field ${key} cannot be modified`)
 
-    if (typeof data !== 'object') throw new TypeError(`data ${data} is not an object`)
-
-    if (typeof callback !== 'function') throw new TypeError(`callback ${callback} is not a function`)
-
-    const { name, surname, username, password, oldPassword } = data
-
-    if (name !== undefined) {
-        if (typeof name !== 'string') throw new TypeError(`name ${name} is not a string`)
-        if (!name.trim().length) throw new Error(`name is empty or blank`)
+        if (key === 'password' && !body.oldPassword) throw new ContentError('Old password is needed to change password')
     }
 
-    if (surname !== undefined) {
-        if (typeof surname !== 'string') throw new TypeError(`surname ${surname} is not a string`)
-        if (!surname.trim().length) throw new Error(`surname is empty or blank`)
+    const user = await User.findById(userId)
+
+    if (body.password) {
+        const result = await bcrypt.compare(body.oldPassword, user.password)
+
+        if (!result) throw new NotAllowedError('wrong credentials')
+        body.password = await bcrypt.hash(10, body.password)
     }
 
-    if (username !== undefined) {
-        if (typeof username !== 'string') throw new TypeError(`username ${username} is not a string`)
-        if (!username.trim().length) throw new Error(`username is empty or blank`)
+    for (key in body) {
+        user[key] = body[key]
     }
-
-    if (password !== undefined) {
-        if (typeof password !== 'string') throw new TypeError(`password ${password} is not a string`)
-        if (!password.trim().length) throw new Error(`password is empty or blank`)
-    }
-
-    if (oldPassword !== undefined) {
-        if (typeof oldPassword !== 'string') throw new TypeError(`oldPassword ${oldPassword} is not a string`)
-        if (!oldPassword.trim().length) throw new Error(`oldPassword is empty or blank`)
-    }
-
-    if (password && !oldPassword) throw new Error('oldPassword is not defined')
-    if (!password && oldPassword) throw new Error('password is not defined')
-
-    const keys = Object.keys(data)
-
-    const VALID_KEYS = ['name', 'surname', 'username', 'password', 'oldPassword']
-
-    for (const key of keys)
-        if (!VALID_KEYS.includes(key)) throw new Error(`property ${key} is not allowed`)
-
-    call(`https://skylabcoders.herokuapp.com/api/v2/users/`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(data)
-    }, (error, response) => {
-        if (error) return callback(error)
-
-        if (response.content) {
-            const { error } = JSON.parse(response.content)
-
-            if (error) return callback(new Error(error))
-        }
-
-        callback()
-    })
+    
+    await user.save()
+    return 
 }

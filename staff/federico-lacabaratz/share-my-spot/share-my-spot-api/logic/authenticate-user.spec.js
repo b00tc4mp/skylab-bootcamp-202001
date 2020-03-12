@@ -5,10 +5,11 @@ const { mongoose, models: { User } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
+const bcrypt = require('bcryptjs')
 
 describe('authenticateUser', () => {
 
-    beforeAll(async () => {
+    before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Promise.resolve(User.deleteMany())
     })
@@ -23,17 +24,24 @@ describe('authenticateUser', () => {
     })
 
     describe('when user already exists', () => {
-        
-        beforeEach(() => {
-            User.create({ name, surname, email, password })
-        })
+        let _id
 
-        it('should succeed on correct credentials', async () => {
-            const result = await authenticateUser(email, password)
+        beforeEach(() =>
+            bcrypt.hash(password, 10)
+                .then(password =>
+                    User.create({ name, surname, email, password })
+                )
+                .then(user => _id = user.id)
+        )
 
-            expect(typeof result).toBe('string')
-            expect(result.length).toBeGreaterThan(0)
-        })
+        it('should succeed on correct and valid and right credentials', () =>
+            authenticateUser(email, password)
+                .then(id => {
+                    expect(id).to.be.a('string')
+                    expect(id.length).to.be.greaterThan(0)
+                    expect(id).to.equal(_id)
+                })
+        )
 
         it('should fail on incorrect email', async () => {
             email = `email-${random()}@mail.com`
@@ -43,8 +51,8 @@ describe('authenticateUser', () => {
 
                 throw new Error('you should not reach this point')
             } catch (error) {
-                expect(error).toBeDefined()
-                expect(error.message).toBe(`wrong credentials`)
+                expect(error).to.exist
+                expect(error.message).to.equal(`wrong credentials`)
             }
         })
 
@@ -56,8 +64,8 @@ describe('authenticateUser', () => {
 
                 throw new Error('you should not reach this point')
             } catch (error) {
-                expect(error).toBeDefined()
-                expect(error.message).toBe(`wrong credentials`)
+                expect(error).to.exist
+                expect(error.message).to.equal(`wrong credentials`)
             }
         })
     })
@@ -71,8 +79,8 @@ describe('authenticateUser', () => {
 
                 throw new Error('you should not reach this point')
             } catch (error) {
-                expect(error).toBeDefined()
-                expect(error.message).toBe(`wrong credentials`)
+                expect(error).to.exist
+                expect(error.message).to.equal(`wrong credentials`)
             }
         })
 
@@ -80,37 +88,37 @@ describe('authenticateUser', () => {
         email = 1
         expect(() =>
             authenticateUser(email, password)
-        ).toThrowError(TypeError, `email ${email} is not a string`)
+        ).to.throw(TypeError, `email ${email} is not a string`)
 
         email = true
         expect(() =>
             authenticateUser(email, password)
-        ).toThrowError(TypeError, `email ${email} is not a string`)
+        ).to.throw(TypeError, `email ${email} is not a string`)
 
         email = undefined
         expect(() =>
             authenticateUser(email, password)
-        ).toThrowError(TypeError, `email ${email} is not a string`)
+        ).to.throw(TypeError, `email ${email} is not a string`)
     })
 
     it('should fail on non-string password', () => {
         password = 1
         expect(() =>
             authenticateUser(email, password)
-        ).toThrowError(TypeError, `password ${password} is not a string`)
+        ).to.throw(TypeError, `password ${password} is not a string`)
 
         password = true
         expect(() =>
             authenticateUser(email, password)
-        ).toThrowError(TypeError, `password ${password} is not a string`)
+        ).to.throw(TypeError, `password ${password} is not a string`)
 
         password = undefined
         expect(() =>
             authenticateUser(email, password)
-        ).toThrowError(TypeError, `password ${password} is not a string`)
+        ).to.throw(TypeError, `password ${password} is not a string`)
     })
 
-    afterAll(async () => {
+    after(async () => {
         await Promise.resolve(User.deleteMany())
         return await mongoose.disconnect()
     })
