@@ -4,9 +4,10 @@ const {
     authenticateUser,
     retrieveUser,
     updateUser,
-    publishListing,
+    createListing,
     retrieveLastListings,
     retrievePublishedListings,
+    updateListing,
     subscribeListing
 } = require('./handlers')
 
@@ -26,17 +27,17 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
 
-// router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], publishListing)
+router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], createListing)
 
-// router.get('/listings', jwtVerifierMidWare, retrievePublishedListings)
+router.get('/listings', jwtVerifierMidWare, retrievePublishedListings)
 
-// router.get('/lastlistings', retrieveLastListings)
+router.get('/lastlistings', retrieveLastListings)
+
+router.patch('/users/updateListing/:id', [jwtVerifierMidWare, jsonBodyParser], updateListing)
 
 // router.patch('/users/subscribeListing', [jwtVerifierMidWare, jsonBodyParser], subscribeListing)
 
 // router.get('/users/subscribedListings', jwtVerifierMidWare, retrieveSubscribedListings)
-
-// router.patch('/users/updateListing/:id', [jwtVerifierMidWare, jsonBodyParser], updateListing)
 
 // router.delete('/users/deleteListing', [jwtVerifierMidWare, jsonBodyParser], unsubscribeListing)
 

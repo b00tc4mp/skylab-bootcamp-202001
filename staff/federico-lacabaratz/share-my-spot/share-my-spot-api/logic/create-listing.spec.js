@@ -4,9 +4,9 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Listing } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const { random } = Math
-const publishListing = require('./publish-listing')
+const createListing = require('./create-listing')
 
-describe('publishListing', () => {
+describe('createListing', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Listing.deleteMany()]))
@@ -34,7 +34,7 @@ describe('publishListing', () => {
         )
 
         it('should succeed on correct and valid and right data', () =>
-            publishListing(_id, title, description, location, date)
+            createListing(_id, title, description, location, date)
                 .then(() =>
                     Promise.all([
                         User.findById(_id),
@@ -43,7 +43,7 @@ describe('publishListing', () => {
                 )
                 .then(([user, listing]) => {
                     expect(user).to.exist
-                    expect(user.published).to.contain(listing._id)
+                    expect(user.publishedListings).to.contain(listing._id)
                     expect(listing).to.exist
                     expect(listing.title).to.equal(title)
                     expect(listing.description).to.equal(description)

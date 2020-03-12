@@ -5,10 +5,6 @@ const bcrypt = require('bcryptjs')
 
 module.exports = async (userId, body) => {
     validate.string(userId, 'userId')
-    validate.string(email, 'email')
-    validate.email(email)
-    validate.string(password, 'password')
-    validate.number(phone, 'phone')
 
     const validFields = ['email', 'password', 'oldPassword', 'phone']
 
@@ -24,7 +20,7 @@ module.exports = async (userId, body) => {
         const result = await bcrypt.compare(body.oldPassword, user.password)
 
         if (!result) throw new NotAllowedError('wrong credentials')
-        body.password = await bcrypt.hash(10, body.password)
+        body.password = await bcrypt.hash(body.password, 10)
     }
 
     for (key in body) {
