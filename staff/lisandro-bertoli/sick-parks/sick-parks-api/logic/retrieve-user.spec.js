@@ -31,7 +31,7 @@ describe('retrieveUser', () => {
             )
 
             it('should succeed on valid id, returning the user', () => {
-                return retrieveUser(_id)
+                return retrieveUser({ sub: _id })
                     .then(user => {
                         expect(user.constructor).to.equal(Object)
                         expect(user.name).to.equal(name)
@@ -47,7 +47,7 @@ describe('retrieveUser', () => {
 
         let id = '507f1f77bcf86cd799439011'
         it('should fail throwing not-found-error', () => {
-            return retrieveUser(id)
+            return retrieveUser({ sub: id })
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(error => {
                     expect(error).to.be.instanceOf(NotFoundError)
@@ -57,16 +57,16 @@ describe('retrieveUser', () => {
     })
     it('should fail on non-string or empty id', () => {
         let id = 1
-        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => retrieveUser({ sub: id })).to.throw(TypeError, `id ${id} is not a string`)
 
         id = true
-        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => retrieveUser({ sub: id })).to.throw(TypeError, `id ${id} is not a string`)
 
         id = {}
-        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => retrieveUser({ sub: id })).to.throw(TypeError, `id ${id} is not a string`)
 
         id = ''
-        expect(() => retrieveUser(id)).to.throw(Error, `id is empty`)
+        expect(() => retrieveUser({ sub: id })).to.throw(Error, `id is empty`)
     })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))

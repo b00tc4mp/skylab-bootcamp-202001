@@ -35,30 +35,32 @@ describe('createPark', () => {
         park.resort = `resort${random()}`
         park.description = `description${random()}`
         park.location = {
-
             "type": "Polygon",
-            "coordinates": [
-                [
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
                     [
-                        1.06292724609375,
-                        42.413318349422475
-                    ],
-                    [
-                        1.42547607421875,
-                        42.31997030030749
-                    ],
-                    [
-                        1.28265380859375,
-                        42.45791402988027
-                    ],
-                    [
-                        1.06292724609375,
-                        42.413318349422475
+                        [
+                            -0.32958984375,
+                            42.56926437219384
+                        ],
+                        [
+                            -0.2471923828125,
+                            42.45588764197166
+                        ],
+                        [
+                            -0.0714111328125,
+                            42.50450285299051
+                        ],
+                        [
+                            -0.32958984375,
+                            42.56926437219384
+                        ]
                     ]
                 ]
-            ]
+            }
         }
-
 
     })
 
@@ -81,7 +83,7 @@ describe('createPark', () => {
             expect(_park.level).to.equal(park.level)
             expect(_park.flow).to.equal(park.flow)
             expect(_park.resort).to.equal(park.resort)
-            expect(_park.location).to.deep.equal(park.location)
+            expect(_park.location).to.deep.equal(park.location.geometry)
             expect(_park.description).to.deep.equal(park.description)
             expect(_park.creator.toString()).to.equal(userId)
         })
@@ -94,24 +96,5 @@ describe('createPark', () => {
         })
     })
 
-
-
-
-
-
-
-
-
-    // let features = {}
-    // let park = { name, size, flow, level, resort, location, image, description }
-    // describe('when parameters types are invalid', () => {
-    //     name = 1
-    //     it('should fail on non-string name', () => {
-    //         expect(() => {
-    //             createPark({ park, features })
-
-    //         }).to.throw(TypeError)
-    //     })
-    // })
-
+    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
 })

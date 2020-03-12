@@ -72,7 +72,7 @@ describe('approvePark', () => {
 
 
             it('should succeed on incrementing approvals by 1', async () => {
-                await approvePark({ userId, parkId })
+                await approvePark(userId, { id: parkId })
 
                 const park = await Park.findById(parkId)
 
@@ -82,10 +82,10 @@ describe('approvePark', () => {
             })
 
             it('should fail when user already gave approval', async () => {
-                await approvePark({ userId, parkId })
+                await approvePark(userId, { id: parkId })
 
                 try {
-                    await approvePark({ userId, parkId })
+                    await approvePark(userId, { id: parkId })
                     throw new Error('should not reach this point')
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)
@@ -112,7 +112,7 @@ describe('approvePark', () => {
             })
 
             it('should succeed on verifying the park', async () => {
-                await approvePark({ userId, parkId })
+                await approvePark(userId, { id: parkId })
 
                 const _park = await Park.findById(parkId).lean()
 
@@ -135,7 +135,7 @@ describe('approvePark', () => {
 
         it('should fail and throw', async () => {
             try {
-                await approvePark({ userId, parkId })
+                await approvePark(userId, { id: parkId })
                 throw new Error('should not reach this point')
             } catch (error) {
 
@@ -155,7 +155,7 @@ describe('approvePark', () => {
 
         it('should fail and throw', async () => {
             try {
-                await approvePark({ userId, parkId })
+                await approvePark(userId, { id: parkId })
                 throw new Error('should not reach this point')
             } catch (error) {
 

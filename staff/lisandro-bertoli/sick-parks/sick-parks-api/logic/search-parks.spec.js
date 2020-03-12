@@ -6,7 +6,7 @@ const { expect } = require('chai')
 const { random } = Math
 const searchParks = require('./search-parks')
 
-describe.only('searchParks', () => {
+describe('searchParks', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Park.deleteMany()
@@ -21,26 +21,30 @@ describe.only('searchParks', () => {
         resort = `Grindelwald`
         location = {
             "type": "Polygon",
-            "coordinates": [
-                [
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
                     [
-                        1.06292724609375,
-                        42.413318349422475
-                    ],
-                    [
-                        1.42547607421875,
-                        42.31997030030749
-                    ],
-                    [
-                        1.28265380859375,
-                        42.45791402988027
-                    ],
-                    [
-                        1.06292724609375,
-                        42.413318349422475
+                        [
+                            -0.32958984375,
+                            42.56926437219384
+                        ],
+                        [
+                            -0.2471923828125,
+                            42.45588764197166
+                        ],
+                        [
+                            -0.0714111328125,
+                            42.50450285299051
+                        ],
+                        [
+                            -0.32958984375,
+                            42.56926437219384
+                        ]
                     ]
                 ]
-            ]
+            }
         }
 
         name2 = `parkName-${random()}`
@@ -49,26 +53,30 @@ describe.only('searchParks', () => {
         resort2 = `Laax`
         location2 = {
             "type": "Polygon",
-            "coordinates": [
-                [
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
                     [
-                        1.06292724609375,
-                        42.413318349422475
-                    ],
-                    [
-                        1.42547607421875,
-                        42.31997030030749
-                    ],
-                    [
-                        1.28265380859375,
-                        42.45791402988027
-                    ],
-                    [
-                        1.06292724609375,
-                        42.413318349422475
+                        [
+                            1.06292724609375,
+                            42.413318349422475
+                        ],
+                        [
+                            1.42547607421875,
+                            42.31997030030749
+                        ],
+                        [
+                            1.28265380859375,
+                            42.45791402988027
+                        ],
+                        [
+                            1.06292724609375,
+                            42.413318349422475
+                        ]
                     ]
                 ]
-            ]
+            }
         }
 
     })
@@ -76,6 +84,7 @@ describe.only('searchParks', () => {
     describe('when parks exists', () => {
         let park1, park2
         beforeEach(async () => {
+            debugger
             park1 = await Park.create({ name, size, level, resort, location })
             park2 = await Park.create({ name: name2, size: size2, level: level2, resort: resort2, location: location2 })
         })
@@ -115,5 +124,7 @@ describe.only('searchParks', () => {
         expect(result).to.be.an('array')
         expect(result).to.have.length(0)
     })
+
+    after(() => Park.deleteMany().then(() => mongoose.disconnect()))
 
 })

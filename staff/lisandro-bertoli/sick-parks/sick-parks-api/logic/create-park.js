@@ -29,6 +29,7 @@ module.exports = (userId, { park, features }) => {
 
         newPark.features.push(...newFeatures)
         newPark.creator = user
+        newPark.location = park.location.geometry
         user.parks.push(newPark)
 
         await newPark.save()
