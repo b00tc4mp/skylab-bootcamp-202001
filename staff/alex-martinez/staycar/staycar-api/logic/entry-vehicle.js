@@ -2,12 +2,12 @@ const { validate } = require("staycar-utils")
 const { models: { Ticket, Parking } } = require("staycar-data")
 const { NotAllowedError } = require("../../staycar-errors")
 const generateQr = require("./generate-qr")
+const moment = require('moment');
+
 
 module.exports =  (carPlate, parkingName) => {
   validate.string(carPlate, "carPlate")
-  //validate.string(idParking, "idParking")
   validate.string(parkingName, 'parkingName')
-  debugger
   
   return (async () => {
 
@@ -15,7 +15,7 @@ module.exports =  (carPlate, parkingName) => {
     if (car) throw new NotAllowedError(`this plate ${carPlate} is inside`)
   
     const parking = await Parking.findOne({ parkingName })
-    debugger
+    
     let { totalLots, occupiedLots, lots } = parking
   
     let freeLots = totalLots - occupiedLots
@@ -24,7 +24,6 @@ module.exports =  (carPlate, parkingName) => {
       throw new NotAllowedError("parking full. Entry not allowed")
   
     parking.occupiedLots++
-    console.log(parking)
   
     let condition = true
   
@@ -43,7 +42,9 @@ module.exports =  (carPlate, parkingName) => {
   
     await generateQr(carPlate)
   
-    await Ticket.create({ carPlate, entryHour: new Date() })
+    await Ticket.create({ carPlate, entryHour: new Date(), parkingName })
+    //entryHour = moment().format('MMMM Do YYYY, h:mm:ss')
+    //await Ticket.create({ carPlate, entryHour, parkingName })
   
     await parking.save()
   })()

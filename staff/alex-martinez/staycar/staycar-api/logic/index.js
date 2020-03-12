@@ -6,5 +6,6 @@ module.exports = {
     addLotsAmount: require('./add-lots-amount'),
     createParking: require('./create-parking'),
     generateQr: require('./generate-qr'),
-    retrieveParking: require('./retrieve-parking')
+    retrieveParking: require('./retrieve-parking'),
+    retrieveTicket: require('./retrieve-ticket')
 }

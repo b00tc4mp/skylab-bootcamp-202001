@@ -39,7 +39,6 @@ describe.only('entryVehicle', () => {
     })
 
     describe('when user already exists', () => {
-        let _id
 
         beforeEach(() =>
             bcrypt.hash(password, 10)
@@ -59,8 +58,9 @@ describe.only('entryVehicle', () => {
             entryVehicle(carPlate, parkingName)
                 .then(res => {
                     expect(res).to.be.an('undefined')
+                    //Parking.find()...
                 })
-                .catch(error => console.log(error.message))
+                //.catch(error => console.log(error.message))
         })
     })
 
