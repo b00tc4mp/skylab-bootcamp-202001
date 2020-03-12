@@ -7,9 +7,6 @@ const { random } = Math
 const startGame = require('./start-game')
 const { mongoose } = require('simonline-data')
 require('../../simonline-utils/shuffle')()
-// mongoose.set('useFindAndModify', false)
-
-/* Insert players, shuffle, and current */
 
 describe('startGame', () => {
     before(() =>
@@ -30,7 +27,7 @@ describe('startGame', () => {
         
         beforeEach(async() => {
             let users = []
-            /* 10 players and one game */
+
             for (let i = 0; i < 10; i++)
                 await User.create({ username, password })
                     .then(user => users.push(user.id))
@@ -66,6 +63,6 @@ describe('startGame', () => {
 
     })
 
-    // after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
 
 })
