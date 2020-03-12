@@ -13,7 +13,7 @@ module.exports = (idTicket) => {
         ticket.validated = true
         
         
-        ticket.save()
+        await ticket.save()
     
     })()
 }

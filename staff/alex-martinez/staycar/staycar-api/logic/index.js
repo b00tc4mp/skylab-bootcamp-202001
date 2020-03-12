@@ -8,5 +8,6 @@ module.exports = {
     generateQr: require('./generate-qr'),
     retrieveParking: require('./retrieve-parking'),
     retrieveTicket: require('./retrieve-ticket'),
-    validateTicket: require('./validate-ticket')
+    validateTicket: require('./validate-ticket'),
+    exitVehicle: require('./exit-vehicle')
 }

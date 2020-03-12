@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     try {
         validateTicket(idParking)
             .then(() =>
-                res.status(200).json({"message": "thank you, see you soon"})
+                res.status(200).json({"message": "your ticket was validated"})
             )
             .catch(error => {
                 let status = 400
