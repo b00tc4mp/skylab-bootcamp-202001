@@ -2,23 +2,23 @@ const { validate } = require("staycar-utils")
 const { models: { User, Parking } } = require("staycar-data")
 const { NotFoundError } = require("staycar-errors")
 
-module.exports = (id, idParking, number) => {
+module.exports = (id, nameParking, number) => {
   validate.string(id, "id")
-  validate.string(idParking, "idParking")
+  validate.string(nameParking, "nameParking")
   validate.type(number, "number", Number)
   if (number <= 0)
     throw new TypeError("the number of lots must be biger than 0")
 
   return (async () => {
     
-    const user = await User.findById({ _id: id })
+    const user = await User.findById( id )
     
     if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-    const parking = await Parking.findById({ _id: idParking })
-
+    const parking = await Parking.findOne({ parkingName: nameParking })
+    
     if (!parking)
-      throw new NotFoundError(`parking with id ${id} does not exist`)
+      throw new NotFoundError(`parking with name ${name} does not exist`)
 
     let { lots } = parking
 

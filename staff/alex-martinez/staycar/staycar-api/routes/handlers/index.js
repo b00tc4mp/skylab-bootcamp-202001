@@ -4,5 +4,7 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     entryVehicle: require('./entry-vehicle'),
     addLotsAmount: require('./add-lots-amount'),
-    createParking: require('./create-parking')
+    createParking: require('./create-parking'),
+    retrieveParking: require('./retrieve-parking'),
+    retrieveTicket: require('./retrieve-ticket')
 }
