@@ -1,4 +1,4 @@
-const { createPark, approvePark } = require('../../logic')
+const { createPark, approvePark, reportPark, deletePark } = require('../../logic')
 const { asyncHandler } = require('../../mid-wares')
 
 module.exports = {
@@ -14,5 +14,11 @@ module.exports = {
         const { sub } = req.payload
         await approvePark(sub, req.params)
         res.status(200).end()
+    }),
+    report: asyncHandler(async (req, res, nex) => {
+        debugger
+        const review = await reportPark(req.params, req.body)
+        if (review) deletePark(req.params.pid)
+        res.status(201).end()
     })
 }

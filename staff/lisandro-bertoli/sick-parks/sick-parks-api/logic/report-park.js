@@ -3,9 +3,9 @@ const { models: { Park, User } } = require('sick-parks-data')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 module.exports = (params, body) => {
-    const { userId, parkId } = params
+    const { id: userId, pid: parkId } = params
     const { problem } = body
-
+    debugger
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
     validate.string(problem, 'problem')
@@ -50,7 +50,7 @@ module.exports = (params, body) => {
             if (duplicate === 5 || unreal === 5) park.underReview = true
 
         })
-
+        debugger
         await user.save()
         await park.save()
 

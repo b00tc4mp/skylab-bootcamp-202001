@@ -21,6 +21,8 @@ router.post('/users/:id/parks', [jwtValidationMidWare, jsonBodyParser], park.cre
 
 router.patch('/users/:id/parks/:id', jwtValidationMidWare, park.approve)
 
+router.patch('/users/:id/parks/:pid/report', [jwtValidationMidWare, jsonBodyParser], park.report)
+
 router.use(errorHandler)
 
 module.exports = router
