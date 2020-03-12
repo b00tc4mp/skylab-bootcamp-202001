@@ -7,14 +7,19 @@ const schema = new Schema({
     required: true
   },
 
-  hour: {
-    type: String,
-    required: true
-  },
+  // hour: {
+  //   type: String,
+  //   required: true
+  // },
 
+  // datePayment: {
+  //   type: String,
+  //   required: true
+  // },
+  
   datePayment: {
-    type: String,
-    required: true
+    type: Date,
+    default: Date.now
   },
 
   amountPayment: {
@@ -43,9 +48,8 @@ const schema = new Schema({
     type: ObjectId,
     ref: 'User'
   },
-  collectedBy_ID: String,
 
-  // should I remove company and user???
+  collectedBy_ID: String,
 
   credit: {
     type: ObjectId,
@@ -53,17 +57,11 @@ const schema = new Schema({
     required: true
   },
 
-  // company: {
-  //   type: ObjectId,
-  //   ref: 'Company',
-  //   required: true
-  // },
-
-  // user: {
-  //   type: ObjectId,
-  //   ref: 'User',
-  //   required: true
-  // }
+  company: {
+    type: ObjectId,
+    ref: 'Company',
+    required: true
+  },
 
 }, { versionKey: false })
 

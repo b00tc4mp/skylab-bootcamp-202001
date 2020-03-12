@@ -3,7 +3,7 @@ const router = Router()
 const cors = require('cors')
 const bodyParser = require('body-parser').json()
 const { errorHandler, status, jwtVerify, validateRole } = require('../middleware')
-const { company, user, credit } = require('./handlers')
+const { company, user, credit, payment } = require('./handlers')
 
 module.exports = router
   .use(cors())
@@ -24,8 +24,10 @@ module.exports = router
   .patch('/users/:id?', user.update)
   .delete('/users/:id', user.delete)
 
-  .post('/credits/:id', credit.register)
+  .post('/credits/users/:id', credit.register)
   // .patch('/credits/:id', credit.register)
   // .delete('/credits/:id', credit.register)
+
+  .post('/payments/credits/:id', payment.register)
 
   .use(errorHandler)

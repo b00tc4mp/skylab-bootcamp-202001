@@ -1,8 +1,7 @@
 const { User, Company } = require('crediday-models')
 const validate = require('crediday-utils')
 
-module.exports = async ({ sub, com }, body) => {
-  const { firstName } = body
+module.exports = async (companyId, { firstName }) => {
 
   validate.string(firstName, 'firstName')
   validate.length(firstName, 'firstName', 3, 30)
@@ -10,14 +9,12 @@ module.exports = async ({ sub, com }, body) => {
   // History of everything -- absolute control
   // Logins, new users, new payments, new credits, delete payments
 
-  // TODO --> LIMIT users
+  const company = await Company.findOne({ _id: companyId }).lean()
+  if (!company) throw new Error('Company does not exist')
 
-  const { users } = await Company.findOne({ _id: com }).lean()
+  const users = await User.find({ company: company._id })
+
   if (users.length >= 350) throw new Error('Maximum user limit')
 
-  const newUser = await User.create({ ...body, company: com })
-
-  const companyFound = await Company.findOne({ _id: com })
-  companyFound.users.push(newUser._id)
-  await companyFound.save()
+  await User.create({ firstName, company: companyId })
 }

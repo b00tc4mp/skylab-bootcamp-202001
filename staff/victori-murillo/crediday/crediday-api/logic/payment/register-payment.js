@@ -1,10 +1,9 @@
-const { Credit } = require('crediday-models')
-const { validate } = require('crediday-utils')
+const { Payment } = require('crediday-models')
+const validate = require('crediday-utils')
 
-module.exports = async (credit) => {
+module.exports = async (creditId, body) => {
 
-  // validate.string(firstName, 'firstName')
-  // validate.length(firstName, 3, 30)
+  // TO DO --> validate with destructuring and every single key
 
-  await Credit.create(credit)
+  await Payment.create({ credit: creditId, ...body })
 }

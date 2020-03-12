@@ -38,10 +38,10 @@ module.exports = model('Company', new Schema({
   //   default: 0
   // },
 
-  history: [{
-    type: ObjectId,
-    ref: 'User'
-  }],
+  // history: [{
+  //   type: ObjectId,
+  //   ref: 'User'
+  // }],
 
   accounting: {
     type: ObjectId,
@@ -52,10 +52,5 @@ module.exports = model('Company', new Schema({
     type: ObjectId,
     ref: 'Box'
   },
-
-  users: [{
-    type: ObjectId,
-    ref: 'User'
-  }]
 
 }, { versionKey: false }))

@@ -3,14 +3,12 @@ const { Schema, model, SchemaTypes: { ObjectId } } = require('mongoose')
 const schema = new Schema({
 
   // Dates ISO
-  // dateConstituted: {
-  constitutedDate: {
+  dateConstituted: {
     type: Date,
     default: Date.now
   },
 
-  // dateCancelled: {
-  canceledDate: {
+  dateCancelled: {
     type: String,
     default: ''
   },
@@ -60,14 +58,10 @@ const schema = new Schema({
     required: true
   },
 
-  
-
   // this is in type: Frecuencia, si no cancela en esta fecha inician los intereses
   dateToCancel: {
     type: String,
   },
-
-  
 
   creditState: {
     type: Boolean,
@@ -119,11 +113,11 @@ const schema = new Schema({
     required: true
   },
 
-  // company: {
-  //   type: ObjectId,
-  //   ref: 'Company',
-  //   required: true
-  // },
+  company: {
+    type: ObjectId,
+    ref: 'Company',
+    required: true
+  },
 
   payments: [{
     type: Schema.Types.ObjectId,

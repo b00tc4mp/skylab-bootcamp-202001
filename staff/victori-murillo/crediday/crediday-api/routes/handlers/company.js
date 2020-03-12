@@ -7,7 +7,7 @@ module.exports = {
     res.json({ message: 'Company and User registered successfully' })
   }),
 
-  retrieve: asyncHandler(async ({params, query}, res, next) => {
+  retrieve: asyncHandler(async ({ params, query }, res, next) => {
     const company = await retrieveCompany(params.id, query)
     res.json({ company })
   }),

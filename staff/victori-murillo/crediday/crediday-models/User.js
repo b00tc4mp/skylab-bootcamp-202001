@@ -7,7 +7,7 @@ const schema = new Schema({
     trim: true,
     lowercase: true,
     minlength: [3, 'The name must have at least 3 characters'],
-    maxlength: [30, 'The name must have at least 3 characters'],
+    maxlength: [30, 'The name must have max 30 characters'],
 
     required: [function () {
       return this.role === "customer" ? false : true

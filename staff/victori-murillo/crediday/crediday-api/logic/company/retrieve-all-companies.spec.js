@@ -17,11 +17,11 @@ describe('registerCompany', () => {
     companyName = (`companyname${random()}`).slice(0, 19)
     username = (`username${random()}`).slice(0, 29)
 
-    await registerCompany({ company: { name: companyName }, user: { username } })
+    await registerCompany({ companyName, username })
   })
 
 
-  it('should return all companies, 1 company', () => {
+  it.only('should return all companies, 1 company', () => {
 
     return retrieveAllCompanies()
       .then(companies => {

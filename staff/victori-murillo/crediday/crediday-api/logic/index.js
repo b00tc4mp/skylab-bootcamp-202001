@@ -12,6 +12,6 @@ module.exports = {
 
   registerCredit: require('./credit/register-credit'),
 
-  registerPayment: require('./credit/register-payment'),
+  registerPayment: require('./payment/register-payment'),
   
 }

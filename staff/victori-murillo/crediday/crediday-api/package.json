@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha logic/company",
+    "test": "npx mocha logic",
     "test-debug": "npx mocha debug logic utils"
   },
   "keywords": [],
