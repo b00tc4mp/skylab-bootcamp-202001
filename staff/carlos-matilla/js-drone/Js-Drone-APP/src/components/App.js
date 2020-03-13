@@ -1,84 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.sass';
-import { gamepadConnect, gamepadDisconnect, check } from "../logic/gamepad";
-import {keyDown, keyUp} from '../logic/keyboard'
-// import JMuxer from 'jmuxer';
-import Telemetry from './Telemetry';
-import Charts from './charts'
-import socket from '../socket';
+import React, { useEffect, useState, useContext } from 'react';
 
 
-
-function DroneStatus() {
-  const [status, setStatus] = useState('DISCONNECTED');
-  socket.on('status', () => {
-    setStatus('CONNECTED')
-  })
-  socket.on('disconnect', () => {
-    setStatus('DISCONNECTED')
-  })
-  return status;
-}
+import { Context } from './ContextProvider'
+import { Route, withRouter, Redirect } from 'react-router-dom'
+import {Home, Page, Login, Register} from './'
+import {login, registerUser, isLoggedIn} from './../logic'
 
 
-
-
-function App() {
-
+export default withRouter(function ({ history }) {
+  const [state, setState] = useContext(Context)
   useEffect(() => {
-    window.addEventListener("gamepadconnected", gamepadConnect);
-    window.addEventListener("gamepaddisconnected", gamepadDisconnect);
-    
-    
-    if(!check){ 
-      document.addEventListener('keydown', keyDown);
-      document.addEventListener('keyup', keyUp);
+    if (isLoggedIn()) {
+      setState({ page: 'home' })
+
+      history.push('/home')
+    } else {
+      setState({ page: 'login' })
+
+      history.push('/login')
     }
+  }, [])
 
-    // window.onload = function() {
-    //   var socketURL = 'ws://localhost:8080';
-    //   var jmuxer = new JMuxer({
-    //       node: 'player',
-    //       mode: 'video',
-    //       flushingTime: 1,
-    //       fps: 30
-    //     });
-  
-    //     var ws = new WebSocket(socketURL);
-    //     ws.binaryType = 'arraybuffer';
-    //     ws.addEventListener('message',function(event) {
-    //         jmuxer.feed({
-    //           video: new Uint8Array(event.data)
-    //         });
-    //     });
-  
-    //     ws.addEventListener('error', function(e) {
-    //       console.log('Socket Error');
-    //     });
-    // }
-    
-    
-  }, []);
 
-  const status = DroneStatus();
- 
+  async function handleRegister(name, surname, email, password) {
+    try {
+      await registerUser(name, surname, email, password)
 
-  return (
-    <div className="Drone">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h3>{status}</h3>
-      </header>
-      <Telemetry />
-        {/* <section className="video-container">
-          <video className="video" id='player'  autoPlay muted/>
-        </section> */}
-        
-        <Charts />
-        
-    </div>
-  );
-}
+      history.push('/login')
+    } catch ({ message }) {
+      setState({ error: message })
+    }
+  }
 
-export default App;
+  async function handleLogin(email, password) {
+    try {
+      await login(email, password)
+
+      history.push('/home')
+    } catch ({ message }) {
+      setState({ ...state, error: message })
+    }
+  }
+
+  function handleGoToLogin() {
+    history.push('/login')
+  }
+
+  function handleGoToRegister() {
+    history.push('/register')
+  }
+
+  function handleMountLogin() {
+    setState({ page: 'login' })
+  }
+
+  function handleMountRegister() {
+    setState({ page: 'register' })
+  }
+
+
+  const { page, error } = state
+
+  return <div className="app">
+    <Page name={page}>
+      <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/login" />} />
+      <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} error={error} onGoToLogin={handleGoToLogin} onMount={handleMountRegister} />} />
+      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} error={error} onGoToRegister={handleGoToRegister} onMount={handleMountLogin} />} />
+      <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />} />
+    </Page>
+  </div>
+})

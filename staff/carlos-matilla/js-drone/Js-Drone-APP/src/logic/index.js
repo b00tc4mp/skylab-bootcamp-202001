@@ -1,7 +1,14 @@
-import gamepad from './gamepad'
-import keyboard from './keyboard'
+import isLoggedIn from './is-logged-in'
+import login from './login'
+import registerUser from './register-user'
+import logout from './logout'
+import retrieveUser from './retrieve-user'
 
-export default{
-    gamepad,
-    keyboard
+
+export {
+    isLoggedIn,
+    login,
+    registerUser,
+    logout,
+    retrieveUser
 }

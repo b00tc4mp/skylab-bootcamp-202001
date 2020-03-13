@@ -22,7 +22,7 @@ const parse = (x => {
 
 
 let start
-export let check = false
+
 
 
 export const gameLoop = () => {
@@ -132,13 +132,13 @@ export const gameLoop = () => {
 }
 
 export const gamepadConnect = evt => {
-  check= true
+ 
   start = requestAnimationFrame(gameLoop)
    
 }
 
 export const gamepadDisconnect = () => {
   console.log("Gamepad disconnected.")
-  check = false
+  
   cancelAnimationFrame(start)
 }
