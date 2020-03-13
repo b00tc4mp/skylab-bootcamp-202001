@@ -55,7 +55,7 @@ describe('save-session', () => {
         )
     })
 
-    // TODO more happies and unhappies
+   
 
     after(() => Promise.all([User.deleteMany(), Session.deleteMany()]).then(() => mongoose.disconnect()))
 })
