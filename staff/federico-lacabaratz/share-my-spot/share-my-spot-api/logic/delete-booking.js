@@ -12,7 +12,7 @@ module.exports = (userId, bookingId) => {
                 return User.find({ bookings: bookingId })
             }
             else {
-                throw new NotAllowedError('This user cannot cancel this book')
+                throw new NotAllowedError('This user cannot delete this booking')
             }
         })
         .then(usersArray => {

@@ -1,13 +1,13 @@
-const { unsubscribeListing } = require('../../logic')
+const { deleteListing } = require('../../logic')
 const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: userId }, body: {listingId} } = req
 
     try {
-        unsubscribeListing(userId, listingId)
+        deleteListing(userId, listingId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully unsubscribe this listing from the database" })
+                res.status(200).json({ message: "You've successfully deleted this listing from the database" })
             )
             .catch(({ message }) =>
                 res

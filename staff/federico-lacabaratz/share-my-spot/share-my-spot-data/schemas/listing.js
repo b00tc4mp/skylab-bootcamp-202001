@@ -12,7 +12,6 @@ module.exports = new Schema({
     height: {type: Number, required: true},
     area: {type: Number, required: true},
     description: {type: String, required: true},
-    photos: {type: Buffer},
     price: {type: Number, required: true},
     acceptsBarker: {type: Boolean, required: true, default: false},
     surveillance: {type: Boolean, required: true, default: false},

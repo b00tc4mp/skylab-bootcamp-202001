@@ -8,6 +8,7 @@ const {
     retrieveLastListings,
     retrievePublishedListings,
     updateListing,
+    deleteListing,
     subscribeListing
 } = require('./handlers')
 
@@ -35,11 +36,13 @@ router.get('/lastlistings', retrieveLastListings)
 
 router.patch('/users/updateListing/:id', [jwtVerifierMidWare, jsonBodyParser], updateListing)
 
+router.delete('/users/deleteListing', [jwtVerifierMidWare, jsonBodyParser], deleteListing)
+
 // router.patch('/users/subscribeListing', [jwtVerifierMidWare, jsonBodyParser], subscribeListing)
 
 // router.get('/users/subscribedListings', jwtVerifierMidWare, retrieveSubscribedListings)
 
-// router.delete('/users/deleteListing', [jwtVerifierMidWare, jsonBodyParser], unsubscribeListing)
+// router.delete('/users/deleteBooking', [jwtVerifierMidWare, jsonBodyParser], deleteBooking)
 
 module.exports = router
 

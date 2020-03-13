@@ -1,5 +1,9 @@
 const { validate } = require('share-my-spot-utils')
 const { models: { User, Listing } } = require('share-my-spot-data')
+const fs = require('fs')
+const path = require('path')
+
+const filesDir = path.join(__dirname, `../data/listings`)
 
 module.exports = (publisher, title, description, addressLocation, addressStNumber, addressOther, dateStarts, dateEnds, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, photos, price, acceptsBarker, surveillance, isCovered) => {
     validate.string(publisher, 'publisher')
@@ -32,12 +36,14 @@ module.exports = (publisher, title, description, addressLocation, addressStNumbe
     return User.findById(publisher)
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${publisher} does not exist`)
-            
+
             const listing = new Listing({ publisher, title, description, addressLocation, addressStNumber, addressOther, dateStarts, dateEnds, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, photos, price, acceptsBarker, surveillance, isCovered, created: new Date })
-            
+
             user.publishedListings.push(listing.id)
-            
+
             return Promise.all([user.save(), listing.save()])
-            .then(() => {})
+                .then(() => fs.mkdirSync(filesDir, listing.id, (err) => {
+                    if (err) throw err
+                }))
         })
-    }
+}

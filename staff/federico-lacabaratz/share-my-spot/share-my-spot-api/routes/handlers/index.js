@@ -6,8 +6,9 @@ module.exports = {
     createListing: require('./create-listing'),
     retrievePublishedListings: require('./retrieve-published-listings'),
     retrieveLastListings: require('./retrieve-last-listings'),
-    updateListing: require('./update-listing')
+    updateListing: require('./update-listing'),
+    deleteListing: require('./delete-listing')
     // subscribeListing: require('./subscribe-listing'),
     // retrieveSubscribedListings: require('./retrieve-subscribed-listings'),
-    // unsubscribeListing: require('./unsubscribe-listing')
+    // deleteBooking: require('./delete-booking')
 }
