@@ -2,7 +2,7 @@ const { validate } = require('sick-parks-utils')
 const { models: { Park, User, Comment } } = require('sick-parks-data')
 const { NotFoundError } = require('sick-parks-errors')
 
-module.exports = async ({ userId, parkId }, { body }) => {
+module.exports = async (userId, parkId, { body }) => {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
     validate.string(body, 'body')
@@ -15,7 +15,7 @@ module.exports = async ({ userId, parkId }, { body }) => {
 
     if (!park) throw new NotFoundError(`park with id ${parkId} does not exist`)
 
-    const comment = new Comment({ postedBy: userId, body })
+    const comment = new Comment({ postedBy: user, body })
     park.comments.push(comment)
 
     await park.save()

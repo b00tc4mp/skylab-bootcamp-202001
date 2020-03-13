@@ -8,6 +8,7 @@ module.exports = ({ id: parkId }) => {
     return (async () => {
         const park = await Park.findById(parkId)
             .populate('creator', 'name')
+            .populate('comments.postedBy', 'name')
             .lean()
 
         if (!park) throw new NotFoundError(`park ${parkId} does not exist`)

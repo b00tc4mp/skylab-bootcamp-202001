@@ -72,7 +72,7 @@ describe('publishComment', () => {
         })
 
         it('should succeed on creating a new comment in the park', async () => {
-            await publishComment({ parkId, userId }, body)
+            await publishComment(userId, parkId, body)
             const park = await Park.findOne({ _id: parkId }).lean()
 
 
@@ -88,7 +88,7 @@ describe('publishComment', () => {
         let parkId = 'asdfasdfasfd'
 
         try {
-            await publishComment({ userId, parkId }, body)
+            await publishComment(userId, parkId, body)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.be.instanceOf(NotFoundError)
@@ -101,7 +101,7 @@ describe('publishComment', () => {
         let parkId = 'asdfasdfasfd'
 
         try {
-            await publishComment({ userId, parkId }, body)
+            await publishComment(userId, parkId, body)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.be.instanceOf(NotFoundError)
