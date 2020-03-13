@@ -41,14 +41,6 @@ export default () => {
       setFeedBack(true)
     }
 
-    
-    
-
-
-
-  
-
-
   }
 
   const divStyle = {

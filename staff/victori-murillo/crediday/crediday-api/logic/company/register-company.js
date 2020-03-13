@@ -1,13 +1,15 @@
-require('dotenv').config()
+require('dotenv').config({ path: './.env' })
 const { Company, User } = require('crediday-models')
 const validate = require('crediday-utils')
+const sendMail = require('crediday-utils/send-mail')
 const { hash } = require('bcryptjs')
-const { env: { PASSWORD } } = process
+const { env: { PASSWORD, GMAIL, GMAIL_PASSWORD, FROM_MAIL } } = process
 
 module.exports = async ({ companyName, username }) => {
+  debugger
   // TO DO --> Improve with destructuring
   // TO DO --> validate with destructuring and every single key
-  
+
   validate.string(companyName, 'companyName')
   validate.length(companyName, 'companyName', 3, 20)
 
@@ -36,6 +38,11 @@ module.exports = async ({ companyName, username }) => {
   const confirmUser = await User.findOne({ _id: newUser._id })
   if (!confirmUser) throw new Error('User was not created')
 
-  // newCompany.users.push(newUser.id)
-  // await newCompany.save()
+  const response = await sendMail(
+    {
+      mail: 'victori.developer@gmail.com',
+      password: GMAIL_PASSWORD
+    }, 
+    newCompany.name, newUser.username, PASSWORD)
+  if (response instanceof Error) throw new Error(response.message)
 }

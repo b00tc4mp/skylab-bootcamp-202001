@@ -31,4 +31,7 @@ module.exports = router
 
   .post('/payments/credits/:id', payment.register)
 
+
+  
+
   .use(errorHandler)

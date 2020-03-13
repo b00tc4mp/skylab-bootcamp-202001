@@ -8,7 +8,7 @@ module.exports = {
         //if (typeof target !== 'string') throw new TypeError(`${name} ${target} is not a string`)
         this.type(target, name, String)
 
-        if (empty && !target.trim()) throw new ContentError(`${name} is empty`)
+        if (empty && !target.trim()) throw new ContentError(`${name} vacío`)
     },
 
     email(target) {
