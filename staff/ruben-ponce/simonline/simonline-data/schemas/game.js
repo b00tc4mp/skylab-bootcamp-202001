@@ -9,6 +9,6 @@ module.exports = new Schema({
     combinationPlayer: [{ type: Object }],
     owner: { type: String, required: true, ref: 'User'},
     status: { type: String, required: true, default: "waiting"},
-    date: { type: Date, required: true, default: Date.now },
+    date: { type: String, required: true, default: Date.now() },
     timeRemaining: { type: Number }
 })
