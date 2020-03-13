@@ -1,0 +1,191 @@
+require('dotenv').config()
+
+const { env: { TEST_MONGODB_URL } } = process
+const { mongoose, models: { Park, User } } = require('sick-parks-data')
+const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { expect } = require('chai')
+const { random } = Math
+const updatePark = require('./update-park')
+
+
+describe('updatePark', () => {
+    before(async () => {
+        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        return await [Park.deleteMany(), User.deleteMany()]
+    })
+
+    let parkName, size, level, location
+    let name, surname, email, password
+
+    beforeEach(() => {
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}`
+        password = `password-${random()}`
+
+
+        parkName = `parkName-${random()}`
+        size = `l`
+        level = `begginer`
+        location = {
+            // "type": "Polygon",
+            // "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            1.06292724609375,
+                            42.413318349422475
+                        ],
+                        [
+                            1.42547607421875,
+                            42.31997030030749
+                        ],
+                        [
+                            1.28265380859375,
+                            42.45791402988027
+                        ],
+                        [
+                            1.06292724609375,
+                            42.413318349422475
+                        ]
+                    ]
+                ]
+            }
+        }
+    })
+
+    describe('when user and park exist', () => {
+        let userId, parkId
+
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+
+        })
+
+        describe('when user is the creator', () => {
+            let newName, newSize, newLevel, newLocation
+            beforeEach(async () => {
+                const { id: _id } = await Park.create({ name: parkName, size, level, location, creator: userId })
+                parkId = _id
+
+                newName = 'newName'
+                newSize = 'xl'
+                newLevel = 'advanced'
+                newLocation = {
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [
+                                [
+                                    -5.5810546875,
+                                    42.771211138625894
+                                ],
+                                [
+                                    -5.482177734375,
+                                    42.50450285299051
+                                ],
+                                [
+                                    -5.328369140625,
+                                    42.74701217318067
+                                ],
+                                [
+                                    -5.5810546875,
+                                    42.771211138625894
+                                ]
+                            ]
+                        ]
+                    }
+                }
+            })
+
+            it('should succeed on valid fields', async () => {
+                await updatePark(userId, parkId, { name: newName, location: newLocation, size: newSize, level: newLevel })
+
+                const park = await Park.findById(parkId).lean()
+
+                expect(park.name).to.equal(newName)
+                expect(park.size).to.equal(newSize)
+                expect(park.level).to.equal(newLevel)
+                expect(park.location).to.deep.equal(newLocation)
+            })
+
+            it('should fail on invalid field', async () => {
+                let invalid = 'invalid'
+                try {
+                    await updatePark(userId, parkId, { invalid, name: newName, location: newLocation, size: newSize, level: newLevel })
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.instanceOf(NotAllowedError)
+                    expect(error.message).to.equal(`field ${invalid} is not a valid`)
+                }
+            })
+        })
+
+        describe('when user did not create the park', () => {
+            let update = {}
+            let invalidUser
+            beforeEach(async () => {
+                const { id: _id } = await Park.create({ name: parkName, size, level, location, creator: userId })
+                parkId = _id
+                const { id } = await User.create({ name, surname, email, password })
+                invalidUser = id
+            })
+
+            it('should fail and throw', async () => {
+                try {
+                    await updatePark(invalidUser, parkId, update)
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.instanceOf(NotAllowedError)
+                    expect(error.message).to.equal(`user ${invalidUser} did not create this park`)
+                }
+            })
+        })
+    })
+
+
+    it('should fail on non string user id', () => {
+        let userId = 1
+        let parkId = 'string'
+        let update = {}
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `userId ${userId} is not a string`)
+
+        userId = undefined
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `userId ${userId} is not a string`)
+
+        userId = true
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `userId ${userId} is not a string`)
+    })
+
+    it('should fail on non string parkId id', () => {
+        let userId = 'string'
+        let parkId = 1
+        let update = {}
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `parkId ${parkId} is not a string`)
+
+        parkId = undefined
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `parkId ${parkId} is not a string`)
+
+        parkId = true
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `parkId ${parkId} is not a string`)
+    })
+
+    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+
+})

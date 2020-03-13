@@ -7,7 +7,7 @@ const { random } = Math
 const retrievePublishedParks = require('./retrieve-published-parks')
 
 
-describe.only('retrievePublishedParks', () => {
+describe('retrievePublishedParks', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [Park.deleteMany(), User.deleteMany()]
