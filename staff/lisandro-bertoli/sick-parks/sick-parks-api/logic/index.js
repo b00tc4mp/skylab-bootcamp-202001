@@ -7,5 +7,9 @@ module.exports = {
     reportPark: require('./report-park'),
     deletePark: require('./delete-park'),
     retrievePark: require('./retrieve-park'),
-    retrieveParkLocation: require('./retrieve-park-location')
+    retrieveParkLocation: require('./retrieve-park-location'),
+    updateUser: require('./update-user'),
+    searchParks: require('./search-parks'),
+    updatePark: require('./update-park'),
+    retrievePublishedParks: require('./retrieve-published-parks')
 }

@@ -88,7 +88,7 @@ describe('retrievePark', () => {
         })
 
         it('should succeed on retrieving the park', async () => {
-            const result = await retrievePark({ parkId })
+            const result = await retrievePark({ id: parkId })
 
             expect(result.name).to.equal(parkName)
             expect(result.id).to.equal(parkId)
@@ -115,7 +115,7 @@ describe('retrievePark', () => {
 
         it('should fail on wrong id', async () => {
             try {
-                await retrievePark({ parkId })
+                await retrievePark({ id: parkId })
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.an.instanceOf(NotFoundError)
@@ -126,17 +126,17 @@ describe('retrievePark', () => {
         it('should fail on non string id', () => {
             let parkId = 1
             expect(() => {
-                retrievePark({ parkId })
+                retrievePark({ id: parkId })
             }).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
             parkId = undefined
             expect(() => {
-                retrievePark({ parkId })
+                retrievePark({ id: parkId })
             }).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
             parkId = true
             expect(() => {
-                retrievePark({ parkId })
+                retrievePark({ id: parkId })
             }).to.throw(TypeError, `parkId ${parkId} is not a string`)
         })
     })

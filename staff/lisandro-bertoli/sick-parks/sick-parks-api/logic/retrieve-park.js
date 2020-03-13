@@ -2,7 +2,7 @@ const { models: { Park } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 
-module.exports = ({ parkId }) => {
+module.exports = ({ id: parkId }) => {
     validate.string(parkId, 'parkId')
 
     return (async () => {

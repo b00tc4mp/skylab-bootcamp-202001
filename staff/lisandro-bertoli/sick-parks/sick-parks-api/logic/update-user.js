@@ -50,9 +50,9 @@ module.exports = function (id, data) {
         const verifiedPassword = await bcrypt.compare(oldPassword, _user.password)
         if (!verifiedPassword) throw new NotAllowedError('wrong credentials')
 
-        const _password = await bcrypt.hash(password, 10)
+        data.password = await bcrypt.hash(password, 10)
 
-        await User.findByIdAndUpdate(id, { name, email, allowLocation, notifications, password: _password, oldPassword })
+        await User.findByIdAndUpdate(id, { $set: data })
 
         return
     })()

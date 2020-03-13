@@ -1,4 +1,4 @@
-const { registerUser, authenticateUser, retrieveUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, retrievePublishedParks, updateUser } = require('../../logic')
 const { asyncHandler } = require('../../mid-wares')
 const jwt = require('jsonwebtoken')
 const { env: { JWT_SECRET, JWT_EXP: expiration } } = process
@@ -21,6 +21,16 @@ module.exports = {
     retrieve: asyncHandler(async (req, res, next) => {
         const user = await retrieveUser(req.payload)
         res.status(200).json(user)
+    }),
+    update: asyncHandler(async (req, res, next) => {
+        const { sub } = req.payload
+        await updateUser(sub, req.body)
+        res.status(200).json({ messag: 'user updated' })
+    }),
+    retrieveParks: asyncHandler(async (req, res, next) => {
+        const { sub: id } = req.payload
+        const results = await retrievePublishedParks(id)
+        res.status(200).json({ results })
     })
 
 }

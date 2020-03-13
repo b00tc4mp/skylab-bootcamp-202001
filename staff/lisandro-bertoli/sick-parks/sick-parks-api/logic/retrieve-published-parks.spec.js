@@ -69,7 +69,7 @@ describe('retrievePublishedParks', () => {
         })
 
         it('should succeed on correct credentials', async () => {
-            const result = await retrievePublishedParks({ id: userId })
+            const result = await retrievePublishedParks(userId)
 
             expect(result[0].name).to.equal(parkName)
             expect(result[0].id).to.equal(parkId)
@@ -89,7 +89,7 @@ describe('retrievePublishedParks', () => {
 
         it('should fail returning empty array', async () => {
 
-            const result = await retrievePublishedParks({ id: userId })
+            const result = await retrievePublishedParks(userId)
 
             expect(result).to.be.instanceOf(Array)
             expect(result.length).to.equal(0)
@@ -102,17 +102,17 @@ describe('retrievePublishedParks', () => {
     it('should fail on non string id', () => {
         let userId = 1
         expect(() => {
-            retrievePublishedParks({ id: userId })
+            retrievePublishedParks(userId)
         }).to.throw(TypeError, `userId ${userId} is not a string`)
 
         userId = undefined
         expect(() => {
-            retrievePublishedParks({ id: userId })
+            retrievePublishedParks(userId)
         }).to.throw(TypeError, `userId ${userId} is not a string`)
 
         userId = true
         expect(() => {
-            retrievePublishedParks({ id: userId })
+            retrievePublishedParks(userId)
         }).to.throw(TypeError, `userId ${userId} is not a string`)
     })
 

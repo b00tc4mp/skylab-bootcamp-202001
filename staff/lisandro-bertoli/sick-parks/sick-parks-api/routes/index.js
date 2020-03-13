@@ -15,13 +15,25 @@ router.post('/users', jsonBodyParser, user.register)
 
 router.post('/users/auth', jsonBodyParser, user.authenticate)
 
+router.patch('/users/:id', [jwtValidationMidWare, jsonBodyParser], user.update)
+
 router.get('/users/:id', [jwtValidationMidWare], user.retrieve)
+
+router.get('/users/:id/parks', [jwtValidationMidWare], user.retrieveParks)
 
 router.post('/users/:id/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
 
-router.patch('/users/:id/parks/:id', jwtValidationMidWare, park.approve)
+router.patch('/users/:id/parks/:id/approve', jwtValidationMidWare, park.approve)
 
 router.patch('/users/:id/parks/:pid/report', [jwtValidationMidWare, jsonBodyParser], park.report)
+
+router.patch('/users/:id/parks/:pid/update', [jwtValidationMidWare, jsonBodyParser], park.update)
+
+router.get('/parks/:id', park.retrieve)
+
+router.get('/parks/:id/location', park.retrieveLocation)
+
+router.get('/parks', park.search)
 
 router.use(errorHandler)
 

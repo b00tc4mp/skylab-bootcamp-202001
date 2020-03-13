@@ -4,7 +4,6 @@ const { validate } = require('sick-parks-utils')
 
 module.exports = ({ q, _location }) => {
     validate.string(q, 'query')
-
     //REMEMBER TO ADD THE INDEX TO location.coordinates FROM SHEL
 
     return (async () => {
@@ -35,7 +34,7 @@ module.exports = ({ q, _location }) => {
         const sanitizedResults = results.map(result => {
             result.id = result._id.toString()
 
-            const { id, name, resort, size, verified } = result
+            const { id, name, resort, size, verified } = result //TODO send location
 
             return { id, name, resort, size, verified }
         })

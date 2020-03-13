@@ -8,10 +8,10 @@ module.exports = new Schema({
     password: { type: String, required: true, trim: true },
     age: Number,
     image: String,
-    allowLocation: Boolean,
+    allowLocation: { type: Boolean, default: false },
     location: Point,
     followers: { type: ObjectId, ref: 'User' },
-    notifications: Boolean,
+    notifications: { type: Boolean, default: true },
     parks: [{
         type: ObjectId,
         ref: 'Park'
@@ -26,4 +26,4 @@ module.exports = new Schema({
     }],
     created: { type: Date, trim: true, default: Date.now },
     authenticated: Date
-})
+}, { reatainKeyOrder: true })

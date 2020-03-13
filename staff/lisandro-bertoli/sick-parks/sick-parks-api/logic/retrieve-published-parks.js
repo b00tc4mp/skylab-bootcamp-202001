@@ -3,7 +3,7 @@ const { validate } = require('sick-parks-utils')
 
 
 
-module.exports = ({ id }) => {
+module.exports = (id) => {
     validate.string(id, 'userId')
 
     return (async () => {
@@ -18,7 +18,7 @@ module.exports = ({ id }) => {
 
             return { id, name, resort, size, verified }
         })
-        debugger
+
         return sanitizedResults
     })()
 
