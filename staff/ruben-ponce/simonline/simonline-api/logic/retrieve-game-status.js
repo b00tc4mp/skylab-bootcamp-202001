@@ -8,7 +8,7 @@ module.exports = (gameId) => {
 
     return Game.findById(gameId)
         .then((game) => {
-
+            debugger
             let timeRemaining = game.timeRemaining
             let dateStarted = game.date
             let dateNow = Date.now()
@@ -20,8 +20,8 @@ module.exports = (gameId) => {
 
             if (game.status === "preStarted") {
 
-                debugger
                 let discountTimeRemaining = ((dateStarted - dateNow) / 1000)
+                debugger
                 let setTimeRemaining = timeRemaining + discountTimeRemaining //+-time
 
                 game.timeRemaining = setTimeRemaining

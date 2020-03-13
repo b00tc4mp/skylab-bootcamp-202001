@@ -4,7 +4,8 @@ const { env: { MONGODB_URL } } = process
 const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveGameStatus = require('./start-game')
+require('../../simonline-utils/shuffle')()
+const retrieveGameStatus = require('./retrieve-game-status')
 const { mongoose } = require('simonline-data')
 
 describe('retrieveGameStatus', () => {
@@ -43,16 +44,18 @@ describe('retrieveGameStatus', () => {
                     game.currentPlayer = game.players[0]//indice
                     game.status = "preStarted"
                     game.timeRemaining = 400
-                    
                     return game.save()
                 })
         })
 
         it('should succeed on valid retrieved data', () => {
             return retrieveGameStatus(gameId)
-            .then(() => {
-                Game.findOne({ gameId })
-            })
+                .then(() => {
+                    return Game.findOne({ name, owner })
+                })
+                .then((game) => {
+                    console.log(game)
+                })
         })
 
     })
