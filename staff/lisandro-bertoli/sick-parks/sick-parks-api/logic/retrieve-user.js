@@ -4,7 +4,7 @@ const { models: { User } } = require('sick-parks-data')
 
 module.exports = ({ sub: id }) => {
     validate.string(id, 'id')
-    //MODIFIED HOW PARAMS ARE GIVEN(obj) chek tests
+
     return User.findById(id)
         .then(user => {
 
@@ -16,5 +16,5 @@ module.exports = ({ sub: id }) => {
 
             return user.save()
         })
-        .then(({ name, surname, email }) => ({ name, surname, email }))
+        .then(({ name, surname, email, contributions, image, allowLocation, notifications }) => ({ name, surname, email, contributions, image, allowLocation, notifications }))
 }
