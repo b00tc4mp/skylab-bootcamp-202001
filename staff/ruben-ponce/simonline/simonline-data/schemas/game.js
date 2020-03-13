@@ -4,10 +4,11 @@ module.exports = new Schema({
     name: { type: String, required: true },
     players: [{ type: ObjectId, ref: 'User', required: true}],
     watching: [{ type: ObjectId, ref: 'User' }],
-    currentplayer: { type: ObjectId, ref: 'User' },
-    combinationgame: [{ type: Object }],
-    combinationplayer: [{ type: Object }],
+    currentPlayer: { type: ObjectId, ref: 'User' },
+    combinationGame: [{ type: Object }],
+    combinationPlayer: [{ type: Object }],
     owner: { type: String, required: true, ref: 'User'},
     status: { type: String, required: true, default: "waiting"},
-    date: { type: Date, required: true, default: Date.now }
+    date: { type: Date, required: true, default: Date.now },
+    timeRemaining: { type: Number }
 })
