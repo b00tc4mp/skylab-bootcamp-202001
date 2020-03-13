@@ -1,5 +1,6 @@
 const { validate } = require('staycar-utils')
 const { models: { User, Parking } } = require('staycar-data')
+const { NotFoundError } = require('staycar-errors')
 
 module.exports = (id, pkName, price, totalLots) => {
     validate.string(id, 'id')

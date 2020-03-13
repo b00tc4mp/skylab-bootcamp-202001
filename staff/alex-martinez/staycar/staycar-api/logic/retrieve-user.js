@@ -11,5 +11,5 @@ module.exports = id => {
 
             return user.save()
         })
-        .then(({ name, surname, username }) => ({ name, surname, username }))
+        .then(({ id, name, surname, username }) => ({ id, name, surname, username }))
 }
