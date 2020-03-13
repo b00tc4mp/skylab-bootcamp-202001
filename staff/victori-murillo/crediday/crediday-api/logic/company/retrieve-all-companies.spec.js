@@ -1,14 +1,15 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose } = require('crediday-models')
+const { mongoose, Company, User } = require('crediday-models')
 const { expect } = require('chai')
 const { random } = Math
 const { retrieveAllCompanies, registerCompany } = require('../')
 
-describe('registerCompany', () => {
+describe('retrieveAllCompanies', () => {
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    await Promise.all([Company.deleteMany(), User.deleteMany()])
   })
 
   let companyName, username
@@ -21,7 +22,7 @@ describe('registerCompany', () => {
   })
 
 
-  it.only('should return all companies, 1 company', () => {
+  it('should return all companies, 1 company', () => {
 
     return retrieveAllCompanies()
       .then(companies => {
@@ -37,7 +38,7 @@ describe('registerCompany', () => {
         expect(companies.length).to.equal(2)
 
         companies.forEach(company => {
-          expect(company).to.have.all.keys('id', 'name', 'registrationdDate', 'history', 'users')
+          expect(company).to.have.all.keys('id', 'name', 'registrationdDate')
         })
       })
   })
@@ -79,10 +80,13 @@ describe('registerCompany', () => {
 
         companies.forEach(company => {
           expect(company).to.not.have.any.keys('_id', 'unknown')
-          expect(company).to.have.all.keys('id', 'name', 'registrationdDate', 'history', 'users')
+          expect(company).to.have.all.keys('id', 'name', 'registrationdDate')
         })
       })
   })
 
-  after(() => mongoose.disconnect())
+  after(async () => {
+    await Promise.all([Company.deleteMany(), User.deleteMany()])
+    await mongoose.disconnect()
+  })
 })

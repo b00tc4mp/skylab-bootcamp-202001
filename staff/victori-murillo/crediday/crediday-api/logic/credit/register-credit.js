@@ -1,18 +1,18 @@
 const { Credit, Company } = require('crediday-models')
 const validate = require('crediday-utils')
 
-module.exports = async (id, body) => {
+module.exports = async (userId, body) => {
   const { company } = body
-  console.log(company)
 
-  validate.string(id, 'id')
+  validate.string(userId, 'userId')
+
+  // the right way, is destructuring and check every single key in the obj
   validate.type(body, 'body', Object)
-
 
   const companyFound = await Company.findOne({ _id: company })
   if (!companyFound) throw new Error('Company doesnt exist')
   //TO DO -> ONLY ALLOW REGISTER BY THE SAME COMPANY
   // TO DO --> validate with destructuring and every single key
 
-  await Credit.create({ user: id, ...body })
+  await Credit.create({ user: userId, ...body })
 }

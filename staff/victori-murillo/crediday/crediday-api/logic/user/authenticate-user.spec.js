@@ -25,67 +25,9 @@ describe('authenticateUser', () => {
     describe('when company or username already exists', () => {
 
         beforeEach(async () => {
-            await registerCompany({ company: { name: companyName }, user: { username } })
+
         })
 
-        it('should fail with company name already exists', () =>
-            registerCompany({ company: { name: companyName }, user: { username } })
-                .then(() => { throw new Error('should not reach here') })
-                .catch(error => {
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.be.a('string')
-                    expect(error.message).to.equal('The company name is already taken')
-                })
-        )
-
-        it('should fail with username already exists', () => {
-            return registerCompany({ company: { name: companyName + 'a' }, user: { username } })
-                .then(() => { throw new Error('should not reach here') })
-                .catch(error => {
-                    expect(error).to.be.an.instanceof(Error)
-                    expect(error.message).to.be.a('string')
-                    expect(error.message).to.equal('The username is already taken')
-                })
-        })
-
-
-    })
-
-    it('should fail with name field from company is empty', () => {
-        return registerCompany({ company: { name: '' }, user: { username } })
-            .then(() => { throw new Error('should not reach here') })
-            .catch(error => {
-                expect(error).to.be.an.instanceof(ContentError)
-                expect(error.message).to.be.a('string')
-                expect(error.message).to.equal('name is empty')
-            })
-    })
-
-    it('should fail with username field from user is empty', () => {
-        return registerCompany({ company: { name: companyName }, user: { username: '' } })
-            .then(() => { throw new Error('should not reach here') })
-            .catch(error => {
-                expect(error).to.be.an.instanceof(ContentError)
-                expect(error.message).to.be.a('string')
-                expect(error.message).to.equal('username is empty')
-            })
-    })
-
-    it('should add a company and user successfully', () => {
-        return registerCompany({ company: { name: companyName }, user: { username } })
-            .then(response => {
-                expect(response).to.be.an('undefined')
-
-                return Promise.all([Company.findOne({ name: companyName }), User.findOne({ username })])
-            })
-            .then(([company, user]) => {
-                debugger
-                expect(company.name).to.equal(companyName)
-                expect(user.username).to.equal(username)
-                const firstName = username.slice(0, 1).toUpperCase() + username.slice(1).toLowerCase()
-                expect(user.firstName).to.equal(firstName)
-                expect(user.role).to.equal('owner')
-            })
     })
 
     after(() =>

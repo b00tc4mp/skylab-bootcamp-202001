@@ -25,7 +25,8 @@ module.exports = router
   .delete('/users/:id', user.delete)
 
   .post('/credits/users/:id', credit.register)
-  // .patch('/credits/:id', credit.register)
+  .get('/credits/users/:id', credit.retrieve)
+  // .patch('/credits/:id', credit.update)
   // .delete('/credits/:id', credit.register)
 
   .post('/payments/credits/:id', payment.register)

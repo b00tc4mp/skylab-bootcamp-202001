@@ -11,6 +11,7 @@ module.exports = {
   deleteUser: require('./user/delete-user'),
 
   registerCredit: require('./credit/register-credit'),
+  retrieveCredit: require('./credit/retrieve-credit'),
 
   registerPayment: require('./payment/register-payment'),
   

@@ -15,7 +15,6 @@ module.exports = {
   }),
 
   retrieve: asyncHandler(async (req, res, next) => {
-    console.log('here')
     const user = await retrieveUser(req.payload.sub)
     res.status(200).json({ user })
   }),

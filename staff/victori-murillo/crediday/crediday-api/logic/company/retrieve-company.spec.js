@@ -1,88 +1,50 @@
-// require('dotenv').config()
+require('dotenv').config()
 
-// const { env: { TEST_MONGODB_URL } } = process
-// const { mongoose } = require('crediday-models')
-// const { expect } = require('chai')
-// const { random } = Math
-// const retrieveCompany = require('./retrieve-company')
+const { env: { TEST_MONGODB_URL } } = process
+const { mongoose, Company, User, mongoose: { Mongoose: { prototype: { CastError } } } } = require('crediday-models')
+const { expect } = require('chai')
+const { random } = Math
+const retrieveCompany = require('./retrieve-company')
 
-// describe('registerCompany', () => {
-//   before(async () => {
-//     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-//   })
+describe('retrieveCompany', () => {
+  before(async () => {
+    await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    await Promise.all([Company.deleteMany(), User.deleteMany()])
+  })
 
-//   let companyName, username
+  let companyName, username, company
 
-//   beforeEach(async () => {
-//     companyName = (`companyname${random()}`).slice(0, 19)
-//     username = (`username${random()}`).slice(0, 29)
+  beforeEach(async () => {
+    companyName = (`companyname${random()}`).slice(0, 19)
+    username = (`username${random()}`).slice(0, 29)
 
-//     await registerCompany({ company: { name: companyName }, user: { username } })
-//   })
+    company = await Company.create({ name: companyName })
+  })
 
 
-//   it('should return all companies, 1 company', () => {
+  it('should return the company', () => {
 
-//     return retrieveAllCompanies()
-//       .then(companies => {
-//         expect(companies).to.be.an('array')
-//         expect(companies[0].name).to.equal(companyName);
-//       })
-//   })
+    return retrieveCompany(company.id)
+      .then(_company => {
+        expect(_company).to.be.an('object')
+        expect(_company.id).to.equal(company.id)
+        expect(_company.name).to.equal(companyName);
+      })
+  })
 
-//   it('should return 2 companies with all properties', () => {
-//     return retrieveAllCompanies()
-//       .then(companies => {
-//         expect(companies).to.be.an('array')
-//         expect(companies.length).to.equal(2)
+  it('should fail with wrong syntax company id', () => {
+    const randomCompanyId = `${random()}`
 
-//         companies.forEach(company => {
-//           expect(company).to.have.all.keys('id', 'name', 'registrationdDate', 'history', 'users')
-//         })
-//       })
-//   })
+    return retrieveCompany(randomCompanyId)
+      .then(_company => { throw new Error('should now reach this point') })
+      .catch(error => {
+        expect(error).to.instanceOf(CastError)
+        expect(error.message).to.equal(`Cast to ObjectId failed for value "${randomCompanyId}" at path "_id" for model "Company"`)
+      })
+  })
 
-//   it('should return 3 companies with id and name', () => {
-//     return retrieveAllCompanies({ name: '' })
-//       .then(companies => {
-
-//         expect(companies).to.be.an('array')
-//         expect(companies.length).to.equal(3)
-
-//         companies.forEach(company => {
-//           expect(company).to.have.all.keys('id', 'name')
-//           expect(company).to.not.have.any.keys('_id')
-//         })
-//       })
-//   })
-
-//   it('should return 4 companies with registrationdDate and name', () => {
-//     return retrieveAllCompanies({ registrationdDate: '', name: '' })
-//       .then(companies => {
-
-//         expect(companies).to.be.an('array')
-//         expect(companies.length).to.equal(4)
-
-//         companies.forEach(company => {
-//           expect(company).to.have.all.keys('id', 'name', 'registrationdDate')
-//           expect(company).to.not.have.any.keys('_id')
-//         })
-//       })
-//   })
-
-//   it('should return 5 companies without unknown property', () => {
-//     return retrieveAllCompanies({ unknown: '' })
-//       .then(companies => {
-
-//         expect(companies).to.be.an('array')
-//         expect(companies.length).to.equal(5)
-
-//         companies.forEach(company => {
-//           expect(company).to.not.have.any.keys('_id', 'unknown')
-//           expect(company).to.have.all.keys('id', 'name', 'registrationdDate', 'history', 'users')
-//         })
-//       })
-//   })
-
-//   after(() => mongoose.disconnect())
-// })
+  after(async () => {
+    await Promise.all([Company.deleteMany(), User.deleteMany()])
+    await mongoose.disconnect()
+  })
+})

@@ -54,7 +54,7 @@ const schema = new Schema({
 
   paymentByDefault: {
     type: String,
-    enum: ["Cash", "BN", "BCR", "BAC"],
+    enum: ["cash", "bn", "bcr", "bac"],
     required: true
   },
 
