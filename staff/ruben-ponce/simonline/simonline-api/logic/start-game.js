@@ -11,15 +11,17 @@ module.exports = (gameId) => {
     .populate('players', 'username id')
         .then((game) => {
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
-            if (game.status === "started") throw new NotAllowedError(`game with id ${gameId} is started`)
+            
+            if (game.status === "started" || game.status === "preStarted") throw new NotAllowedError(`game with id ${gameId} is started`)
             
             let combination = Math.floor(random() * 4)
             
             game.players.shuffle()
-            game.combinationgame.push(combination)
+            game.combinationGame.push(combination)
             game.date = Date.now()
-            game.currentplayer = game.players[0]//indice
-            game.status = "started"
+            game.currentPlayer = game.players[0]//indice
+            game.status = "preStarted"
+            game.timeRemaining = 400
             return game.save()
         })
         .then(game => {

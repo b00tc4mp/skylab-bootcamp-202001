@@ -16,6 +16,8 @@ module.exports = (id, gameId) => {
 
             if (game.players.includes(user.id)) throw new NotAllowedError(`user with id ${id} already subscribed to this game`)
 
+            if (game.status === "started" || game.status === "preStarted") throw new NotAllowedError(`game of ${game.name} already start`)
+
             game.players.push(user.id)
 
             return Promise.all([game.save()])

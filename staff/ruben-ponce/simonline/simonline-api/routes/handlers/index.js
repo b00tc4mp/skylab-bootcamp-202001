@@ -6,5 +6,6 @@ module.exports = {
     retrieveGames: require('./retrieve-games'),
     joinGame: require('./join-game'),
     updateCombination: require('./update-combination'),
-    startGame: require('./start-game')
+    startGame: require('./start-game'),
+    retrieveGameStatus: require('./retrieve-game-status')
 }

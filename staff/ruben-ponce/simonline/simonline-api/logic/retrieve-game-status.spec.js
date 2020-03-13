@@ -1,16 +1,15 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL } } = process
+const { env: { MONGODB_URL } } = process
 const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
-const startGame = require('./start-game')
+const retrieveGameStatus = require('./start-game')
 const { mongoose } = require('simonline-data')
-require('../../simonline-utils/shuffle')()
 
-describe('startGame', () => {
+describe('retrieveGameStatus', () => {
     before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
     let name, owner, username, password
@@ -27,6 +26,7 @@ describe('startGame', () => {
         
         beforeEach(async() => {
             let users = []
+            let combination = Math.floor(random() * 4)
 
             for (let i = 0; i < 10; i++)
                 await User.create({ username, password })
@@ -37,28 +37,22 @@ describe('startGame', () => {
                     game.players = users
                     game.players.shuffle()
                     gameId = game.id
+                    game.players.shuffle()
+                    game.combinationGame.push(combination)
+                    game.date = Date.now()
+                    game.currentPlayer = game.players[0]//indice
+                    game.status = "preStarted"
+                    game.timeRemaining = 400
                     
                     return game.save()
                 })
         })
 
-        it('should succeed on valid data', () => {
-
-            return startGame(gameId)
-                .then(() =>
-                    Game.findOne({ name, owner })
-                )
-                .then(game => {
-                    expect(game).to.exist
-                    expect(game.name).to.equal(name)
-                    expect(game.owner).to.equal(owner)
-                    expect(game.status).to.equal("preStarted")
-                    expect(game.players.length).to.equal(10)
-                    expect(game.combinationGame.length).to.equal(1)
-                    expect(game.date).to.exist
-                    expect(game.combinationPlayer).to.be.empty
-                    expect(game.watching).to.be.empty
-                })
+        it('should succeed on valid retrieved data', () => {
+            return retrieveGameStatus(gameId)
+            .then(() => {
+                Game.findOne({ gameId })
+            })
         })
 
     })
