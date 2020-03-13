@@ -72,7 +72,7 @@ describe('reportPark', () => {
         })
 
         it('should succeed on reporting the problem', async () => {
-            const underReview = await reportPark({ userId, parkId }, body)
+            const underReview = await reportPark({ id: userId, pid: parkId }, body)
 
             const park = await Park.findOne({ _id: parkId }).lean()
 
@@ -83,7 +83,7 @@ describe('reportPark', () => {
         })
 
         it('should add the parkId to the contributions of the user', async () => {
-            await reportPark({ userId, parkId }, body)
+            await reportPark({ id: userId, pid: parkId }, body)
 
             const user = await User.findOne({ _id: userId }).lean()
 
@@ -114,7 +114,7 @@ describe('reportPark', () => {
 
             it('should set the park under review', async () => {
 
-                const underReview = await reportPark({ userId, parkId }, body)
+                const underReview = await reportPark({ id: userId, pid: parkId }, body)
                 const _park = await Park.findById(parkId).lean()
 
                 expect(_park.underReview).to.equal(true)
@@ -124,10 +124,10 @@ describe('reportPark', () => {
 
         describe('when user already reported the problem', () => {
             it('should fail and throw', async () => {
-                await reportPark({ userId, parkId }, body)
+                await reportPark({ id: userId, pid: parkId }, body)
                 try {
 
-                    await reportPark({ userId, parkId }, body)
+                    await reportPark({ id: userId, pid: parkId }, body)
                     throw new Error('should not reach this point')
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)

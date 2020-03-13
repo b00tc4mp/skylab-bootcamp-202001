@@ -3,7 +3,6 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 module.exports = (userId, { park, features }) => {
-
     for (key in park)
         if (key !== 'location') validate.string(park[key], `${park[key]}`)
 
@@ -29,10 +28,10 @@ module.exports = (userId, { park, features }) => {
 
         newPark.features.push(...newFeatures)
         newPark.creator = user
-        if (park.location.geometry) {
-            newPark.location = park.location.geometry
+        // if (park.location.geometry) {
+        //     newPark.location = park.location.geometry
 
-        }
+        // }
         user.parks.push(newPark)
 
         await newPark.save()

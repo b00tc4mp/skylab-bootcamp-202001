@@ -5,7 +5,7 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 module.exports = (params, body) => {
     const { id: userId, pid: parkId } = params
     const { problem } = body
-    //TODO check change in params to update tests!
+
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
     validate.string(problem, 'problem')

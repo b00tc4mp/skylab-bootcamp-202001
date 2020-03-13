@@ -71,7 +71,7 @@ describe('deletePark', () => {
 
     describe('when park exists and user exist', () => {
         it('should succeed deleting the park from parks collection', async () => {
-            await deletePark({ parkId, userId })
+            await deletePark(parkId, userId)
 
             const park = await Park.findById(parkId)
 
@@ -79,7 +79,7 @@ describe('deletePark', () => {
         })
 
         it('should remove the park from the user parks', async () => {
-            await deletePark({ parkId, userId })
+            await deletePark(parkId, userId)
 
             const user = await User.findById(userId)
 
@@ -102,7 +102,7 @@ describe('deletePark', () => {
         })
 
         it('should succeed removing the park if no previous approvals', async () => {
-            await deletePark({ parkId })
+            await deletePark(parkId)
 
             const park = await Park.findById(parkId)
             expect(park).to.equal(null)
@@ -143,7 +143,7 @@ describe('deletePark', () => {
 
                 await park.save()
 
-                await deletePark({ parkId })
+                await deletePark(parkId)
 
                 const _park = await Park.findById(parkId)
 
@@ -161,7 +161,7 @@ describe('deletePark', () => {
 
                 park.save()
 
-                await deletePark({ parkId })
+                await deletePark(parkId)
 
                 const _park = await Park.findById(parkId)
                 expect(_park.id).to.not.equal(null)
@@ -181,7 +181,7 @@ describe('deletePark', () => {
         })
         it('should fail on non existing user and throw ', async () => {
             try {
-                await deletePark({ parkId, userId })
+                await deletePark(parkId, userId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -191,7 +191,7 @@ describe('deletePark', () => {
 
         it('should fail on incorrect user as park creator and throw', async () => {
             try {
-                await deletePark({ parkId, userId: _userId })
+                await deletePark(parkId, _userId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
@@ -211,7 +211,7 @@ describe('deletePark', () => {
 
         it('should fail on non existing park and throw ', async () => {
             try {
-                await deletePark({ parkId })
+                await deletePark(parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -221,7 +221,7 @@ describe('deletePark', () => {
 
         it('should fail on incorrect user as park creator and throw', async () => {
             try {
-                await deletePark({ parkId: _parkId })
+                await deletePark(_parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
@@ -232,30 +232,30 @@ describe('deletePark', () => {
 
     it('should fail on non-string or park id', () => {
         let parkId = 1
-        expect(() => deletePark({ parkId })).to.throw(TypeError, `parkId ${parkId} is not a string`)
+        expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = true
-        expect(() => deletePark({ parkId })).to.throw(TypeError, `parkId ${parkId} is not a string`)
+        expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = {}
-        expect(() => deletePark({ parkId })).to.throw(TypeError, `parkId ${parkId} is not a string`)
+        expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = ''
-        expect(() => deletePark({ parkId })).to.throw(Error, `parkId is empty`)
+        expect(() => deletePark(parkId)).to.throw(Error, `parkId is empty`)
     })
 
     it('should fail on non-string user id when provided', () => {
         let userId = 1
-        expect(() => deletePark({ parkId, userId })).to.throw(TypeError, `userId ${userId} is not a string`)
+        expect(() => deletePark(parkId, userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
         userId = true
-        expect(() => deletePark({ parkId, userId })).to.throw(TypeError, `userId ${userId} is not a string`)
+        expect(() => deletePark(parkId, userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
         userId = {}
-        expect(() => deletePark({ parkId, userId })).to.throw(TypeError, `userId ${userId} is not a string`)
+        expect(() => deletePark(parkId, userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
         userId = ''
-        expect(() => deletePark({ parkId, userId })).to.throw(Error, `userId is empty`)
+        expect(() => deletePark(parkId, userId)).to.throw(Error, `userId is empty`)
     })
 
     after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))

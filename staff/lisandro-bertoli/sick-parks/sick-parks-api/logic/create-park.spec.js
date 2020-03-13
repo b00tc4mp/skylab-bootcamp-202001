@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const { expect } = require('chai')
-const { ContentError } = require('sick-parks-errors')
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { Park, User } } = require('sick-parks-data')
 const { random } = Math
@@ -13,7 +12,6 @@ describe('createPark', () => {
         return Promise.all([User.deleteMany(), Park.deleteMany()])
     })
 
-    // let name, size, flow, level, resort, image, description, location
     let userName, surname, email, password
     let features = []
     let park = {}
@@ -35,33 +33,30 @@ describe('createPark', () => {
         park.resort = `resort${random()}`
         park.description = `description${random()}`
         park.location = {
-            "type": "Polygon",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
+            geometry: {
+                type: "Polygon",
+                coordinates: [
                     [
                         [
-                            -0.32958984375,
-                            42.56926437219384
+                            1.06292724609375,
+                            42.413318349422475
                         ],
                         [
-                            -0.2471923828125,
-                            42.45588764197166
+                            1.42547607421875,
+                            42.31997030030749
                         ],
                         [
-                            -0.0714111328125,
-                            42.50450285299051
+                            1.28265380859375,
+                            42.45791402988027
                         ],
                         [
-                            -0.32958984375,
-                            42.56926437219384
+                            1.06292724609375,
+                            42.413318349422475
                         ]
                     ]
                 ]
             }
         }
-
     })
 
     describe('when user exists', () => {
@@ -83,7 +78,7 @@ describe('createPark', () => {
             expect(_park.level).to.equal(park.level)
             expect(_park.flow).to.equal(park.flow)
             expect(_park.resort).to.equal(park.resort)
-            expect(_park.location).to.deep.equal(park.location.geometry)
+            expect(_park.location).to.deep.equal(park.location)
             expect(_park.description).to.deep.equal(park.description)
             expect(_park.creator.toString()).to.equal(userId)
         })

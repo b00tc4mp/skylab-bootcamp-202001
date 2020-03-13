@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 
 
 
-describe.only('updateUser', () => {
+describe('updateUser', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await User.deleteMany()
