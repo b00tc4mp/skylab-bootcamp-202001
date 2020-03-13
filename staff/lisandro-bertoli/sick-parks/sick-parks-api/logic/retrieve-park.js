@@ -1,4 +1,4 @@
-const { models: { User, Park } } = require('sick-parks-data')
+const { models: { Park } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 
@@ -20,9 +20,9 @@ module.exports = ({ parkId }) => {
             delete feature._id
         })
 
-        const { name, id, resort, features, description, creator } = park
+        const { name, id, resort, features, description, creator, comments } = park
 
-        return { name, creator, id, resort, description, features }
+        return { name, creator, id, resort, description, features, comments }
     })()
 }
 

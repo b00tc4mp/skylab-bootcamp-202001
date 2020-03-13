@@ -174,7 +174,7 @@ describe('searchParks', () => {
 
     it('should return empty array when no results', async () => {
         let q = 'Random'
-        debugger
+
         const result = await searchParks({ q, _location })
         expect(result).to.be.an('array')
         expect(result).to.have.length(0)

@@ -1,46 +1,23 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { Park, User, Feature } } = require('sick-parks-data')
+const { mongoose, models: { Park } } = require('sick-parks-data')
 
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random } = Math
-const retrievePark = require('./retrieve-park')
+const retrieveParkLocation = require('./retrieve-park-location')
 
 
-describe('retrievePark', () => {
+describe.only('retrieveParkLocation', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        return await [Park.deleteMany(), User.deleteMany()]
+        return await Park.deleteMany()
     })
 
     let parkName, size, level, location
-    let name, surname, email, password
-    let feature = {}
 
     beforeEach(() => {
-
-        feature.name = "transition"
-        feature.size = "xl"
-        feature.level = "advanced"
-        feature.location = {
-            "type": "Point",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    9.221359491348265,
-                    46.83083830264651
-                ]
-            }
-        }
-
-
-        name = `name-${random()}`
-        surname = `surname-${random()}`
-        email = `email-${random()}`
-        password = `password-${random()}`
-
 
         parkName = `parkName-${random()}`
         size = `l`
@@ -48,8 +25,6 @@ describe('retrievePark', () => {
         resort = `${random()}`
         level = `begginer`
         location = {
-            "type": "Polygon",
-            "properties": {},
             "geometry": {
                 "type": "Polygon",
                 "coordinates": [
@@ -77,29 +52,21 @@ describe('retrievePark', () => {
     })
 
     describe('when park exists', () => {
-        let userId, parkId
+        let parkId
 
         beforeEach(async () => {
-            const feat = new Feature(feature)
-            const { id } = await User.create({ name, surname, email, password })
-            userId = id
-            const park = await Park.create({ name: parkName, size, level, resort, description, location, creator: id, features: [feat] })
+            const park = await Park.create({ name: parkName, size, level, resort, description, location })
             parkId = park.id
         })
 
-        it('should succeed on retrieving the park', async () => {
-            const result = await retrievePark({ parkId })
+        it('should succeed on correct id', async () => {
+            debugger
+            const result = await retrieveParkLocation({ parkId })
 
             expect(result.name).to.equal(parkName)
             expect(result.id).to.equal(parkId)
             expect(result.resort).to.equal(resort)
-            expect(result.description).to.equal(description)
-
-            expect(result.features[0].name).to.equal(feature.name)
-            expect(result.features[0].size).to.equal(feature.size)
-
-            expect(result.creator.name).to.equal(name)
-            expect(result.creator.id).to.equal(userId)
+            expect(result.location).to.deep.equal(location)
 
         })
     })
@@ -115,7 +82,7 @@ describe('retrievePark', () => {
 
         it('should fail on wrong id', async () => {
             try {
-                await retrievePark({ parkId })
+                await retrieveParkLocation({ parkId })
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.an.instanceOf(NotFoundError)
@@ -126,20 +93,20 @@ describe('retrievePark', () => {
         it('should fail on non string id', () => {
             let parkId = 1
             expect(() => {
-                retrievePark({ parkId })
+                retrieveParkLocation({ parkId })
             }).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
             parkId = undefined
             expect(() => {
-                retrievePark({ parkId })
+                retrieveParkLocation({ parkId })
             }).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
             parkId = true
             expect(() => {
-                retrievePark({ parkId })
+                retrieveParkLocation({ parkId })
             }).to.throw(TypeError, `parkId ${parkId} is not a string`)
         })
     })
 
-    after(() => Promise.all([Park.deleteMany(), User.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Park.deleteMany().then(() => mongoose.disconnect()))
 })
