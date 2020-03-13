@@ -33,7 +33,7 @@ describe('deleteUser', () => {
 
 
         it('should succeed removing the user', async () => {
-            const returnVal = await deleteUser({ _id, password })
+            const returnVal = await deleteUser(_id, password)
 
             expect(returnVal).to.be.undefined
 
@@ -46,7 +46,7 @@ describe('deleteUser', () => {
         it('should fail on incorrect password', async () => {
             password = password + 'wrong'
             try {
-                await deleteUser({ _id, password })
+                await deleteUser(_id, password)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
@@ -59,7 +59,7 @@ describe('deleteUser', () => {
         let _id = '5e6536527984d5537dd3f385'
 
         try {
-            await deleteUser({ _id, password })
+            await deleteUser(_id, password)
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.be.instanceOf(NotFoundError)

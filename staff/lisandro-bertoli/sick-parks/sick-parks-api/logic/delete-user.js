@@ -3,7 +3,7 @@ const { models: { User } } = require('sick-parks-data')
 const bcrypt = require('bcryptjs')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
-module.exports = ({ _id, password }) => {
+module.exports = (_id, password) => {
     validate.string(_id, 'userId')
     validate.string(password, 'password')
 

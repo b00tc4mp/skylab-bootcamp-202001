@@ -4,7 +4,8 @@ const {
     retrieveUser,
     retrievePublishedParks,
     updateUser,
-    publishComment
+    publishComment,
+    deleteUser
 } = require('../../logic')
 const { asyncHandler } = require('../../mid-wares')
 const jwt = require('jsonwebtoken')
@@ -44,6 +45,13 @@ module.exports = {
         const { id } = req.params
         await publishComment(sub, id, req.body)
         res.status(201).end()
+    }),
+    delete: asyncHandler(async (req, res, next) => {
+        const { sub } = req.payload
+        const { password } = req.body
+        await deleteUser(sub, password)
+        res.status(200).json({ message: 'user deleted' })
+
     })
 
 }
