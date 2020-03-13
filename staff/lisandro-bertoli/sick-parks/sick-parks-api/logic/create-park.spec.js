@@ -77,7 +77,7 @@ describe('createPark', () => {
         it('should create a new park', async () => {
             const _id = await createPark(userId, { park, features })
             const _park = await Park.findById(_id).lean()
-            debugger
+
             expect(_park.name).to.equal(park.name)
             expect(_park.size).to.equal(park.size)
             expect(_park.level).to.equal(park.level)

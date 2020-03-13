@@ -6,7 +6,7 @@ const { expect } = require('chai')
 const { random, sqrt, pow } = Math
 const searchParks = require('./search-parks')
 
-describe.only('searchParks', () => {
+describe('searchParks', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Park.deleteMany()
@@ -125,15 +125,13 @@ describe.only('searchParks', () => {
     describe('when parks exists', () => {
         let park1, park2
         beforeEach(async () => {
-            debugger
             park1 = await Park.create({ name, size, level, resort, location })
             park2 = await Park.create({ name: name2, size: size2, level: level2, resort: resort2, location: location2 })
-            debugger
         })
 
         // it('should order the results by distance', async () => {
         //     let q = 'begg'
-        //     debugger
+        //    
         //     let results = await searchParks({ q, _location })
 
         //     expect(results[0].resort).to.equal(first)

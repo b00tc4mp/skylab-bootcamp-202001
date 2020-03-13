@@ -9,27 +9,27 @@ module.exports = ({ q, _location }) => {
 
     return (async () => {
         const results = await Park.find({
-            $and: [
-                {
-                    $or: [
-                        { name: { $regex: q } },
-                        { resort: { $regex: q } },
-                        { level: { $regex: q } }]
-                },
-                {
-                    "location.coordinates": {
-                        $near: {
-                            $geometry: {
-                                type: 'Point',
-                                coordinates: _location
-                            }
-                        }
-                    }
-                }
+            // $and: [
+            // {
+            $or: [
+                { name: { $regex: q } },
+                { resort: { $regex: q } },
+                { level: { $regex: q } }]
+            // },
+            //     {
+            //         "location.coordinates": {
+            //             $near: {
+            //                 $geometry: {
+            //                     type: 'Point',
+            //                     coordinates: _location
+            //                 }
+            //             }
+            //         }
+            //     }
 
-            ]
+            // ]
         }).lean()
-        debugger
+
         if (!results.length) return results
 
         const sanitizedResults = results.map(result => {
@@ -40,7 +40,6 @@ module.exports = ({ q, _location }) => {
             return { id, name, resort, size, verified }
         })
 
-        debugger
         return sanitizedResults
     })()
 

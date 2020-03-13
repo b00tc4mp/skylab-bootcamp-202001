@@ -12,7 +12,7 @@ module.exports = (parkId, userId) => {
             if (!user) throw new NotFoundError(`user ${userId} does not exist`)
 
             const { deletedCount } = await Park.deleteOne({ _id: parkId, creator: userId })
-            debugger
+
             if (deletedCount === 0) throw new NotAllowedError(`user ${userId} did not create this park`)
 
             const parks = user.parks.filter(id => id !== parkId)
@@ -28,7 +28,7 @@ module.exports = (parkId, userId) => {
         if (!park.underReview) throw new NotAllowedError(`park ${parkId} is not under review. A user id is required`)
 
         const difference = park.approvals.length - park.reports.length
-        debugger
+
         if (!park.approvals.length || difference < 0) {
             await Park.deleteOne({ _id: parkId })
             await User.updateOne({ _id: park.creator }, { $pull: { parks: { $in: [parkId] } } })

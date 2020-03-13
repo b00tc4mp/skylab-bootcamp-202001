@@ -50,7 +50,7 @@ module.exports = (params, body) => {
             if (duplicate === 5 || unreal === 5) park.underReview = true
 
         })
-        debugger
+
         await user.save()
         await park.save()
 

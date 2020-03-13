@@ -19,7 +19,6 @@ module.exports = {
         res.status(200).json({ token })
     }),
     retrieve: asyncHandler(async (req, res, next) => {
-        debugger
         const user = await retrieveUser(req.payload)
         res.status(200).json(user)
     })

@@ -75,7 +75,7 @@ const area = {
 }
 
 const Area = mongoose.model('Area', area)
-debugger
+
 mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
 

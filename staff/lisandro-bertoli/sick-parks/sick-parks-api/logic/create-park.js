@@ -3,15 +3,15 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 module.exports = (userId, { park, features }) => {
-    debugger
+
     for (key in park)
         if (key !== 'location') validate.string(park[key], `${park[key]}`)
 
     //TODO Find way to make this validation right
     // features.forEach(feature => {
-    //     debugger
+    //     
     //     for (key in feature) {
-    //         debugger
+    //         
     //         if (key !== 'location') validate.string(feature[key], `${feature[key]}`)
     //     }
     // })
@@ -34,7 +34,7 @@ module.exports = (userId, { park, features }) => {
 
         }
         user.parks.push(newPark)
-        debugger
+
         await newPark.save()
         await user.save()
 
