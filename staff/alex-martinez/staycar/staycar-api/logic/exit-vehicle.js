@@ -34,9 +34,7 @@ module.exports =  (carPlate, parkingName) => {
     } while (condition===false);
   
     parking.lots = lots
-
-
-    //HACER EL REPORT AQUI
+    
     parking.save()
   })()
 }

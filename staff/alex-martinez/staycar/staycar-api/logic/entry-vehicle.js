@@ -1,9 +1,7 @@
 const { validate } = require("staycar-utils")
 const { models: { Ticket, Parking } } = require("staycar-data")
 const { NotAllowedError } = require("../../staycar-errors")
-const generateQr = require("./generate-qr")
-const moment = require('moment');
-
+//const generateQr = require("./generate-qr")
 
 module.exports =  (carPlate, parkingName) => {
   validate.string(carPlate, "carPlate")

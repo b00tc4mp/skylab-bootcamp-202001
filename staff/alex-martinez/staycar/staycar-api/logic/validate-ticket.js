@@ -14,6 +14,6 @@ module.exports = (idTicket) => {
         
         
         await ticket.save()
-    
+        return ticket
     })()
 }

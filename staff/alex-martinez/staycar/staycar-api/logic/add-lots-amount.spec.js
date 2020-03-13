@@ -45,8 +45,9 @@ describe('addLotsAmount', () => {
 
         it('should succed on correct data', () =>
             addLotsAmount(_id, pkName, totalLots)
-                .then((res) => {
-                    expect(res).to.be.an('undefined')
+                .then((pk) => {
+                    expect(pk.parkingName).to.be.equal(pkName)
+                    expect(pk.totalLots).to.be.equal(totalLots)
                 })
         )
     })

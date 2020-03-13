@@ -45,6 +45,6 @@ module.exports = (id, nameParking, number) => {
 
     await parking.save()
 
-    return 
+    return parking
   })();
 };

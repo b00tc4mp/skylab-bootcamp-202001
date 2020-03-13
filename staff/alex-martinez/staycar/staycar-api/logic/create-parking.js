@@ -4,6 +4,8 @@ const { models: { User, Parking } } = require('staycar-data')
 module.exports = (id, pkName, price, totalLots) => {
     validate.string(id, 'id')
     validate.string(pkName, 'pkName')
+    validate.type(price, "price", Number)
+    validate.type(totalLots, "totalLots", Number)
 
     return (async () => {
         const user = await User.find({id})
