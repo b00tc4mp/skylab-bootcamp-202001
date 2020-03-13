@@ -11,6 +11,7 @@ module.exports = {
     updateUser: require('./update-user'),
     searchParks: require('./search-parks'),
     updatePark: require('./update-park'),
+    deletePark: require('./delete-park'),
     publishComment: require('./publish-comment'),
     retrievePublishedParks: require('./retrieve-published-parks')
 }

@@ -31,6 +31,8 @@ router.patch('/users/:id/parks/:pid/report', [jwtValidationMidWare, jsonBodyPars
 
 router.patch('/users/:id/parks/:pid/update', [jwtValidationMidWare, jsonBodyParser], park.update)
 
+router.delete('/users/:id/parks/:pid/', jwtValidationMidWare, park.delete)
+
 router.get('/parks/:id', park.retrieve)
 
 router.get('/parks/:id/location', park.retrieveLocation)

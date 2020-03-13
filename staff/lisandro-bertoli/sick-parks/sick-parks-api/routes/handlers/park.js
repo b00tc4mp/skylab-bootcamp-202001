@@ -43,6 +43,12 @@ module.exports = {
         await updatePark(id, parkId, req.body)
         res.status(200).json({ message: 'park updated' })
     }),
+    delete: asyncHandler(async (req, res, nex) => {
+        const { sub } = req.payload
+        const { pid: parkId } = req.params
+        await deletePark(parkId, sub)
+        res.status(200).end()
+    }),
     retrieveLocation: asyncHandler(async (req, res, next) => {
         const { id } = req.params
         const result = await retrieveParkLocation(id)

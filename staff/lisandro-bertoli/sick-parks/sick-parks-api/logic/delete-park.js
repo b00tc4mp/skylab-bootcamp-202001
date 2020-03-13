@@ -5,7 +5,7 @@ const { models: { User, Park } } = require('sick-parks-data')
 module.exports = (parkId, userId) => {
     validate.string(parkId, 'parkId')
     if (userId || userId === '') validate.string(userId, 'userId')
-    //TODO CHECK FOR CHANGES ON PARAMTERS TO CHANGE TESTSSS!!!
+
     return (async () => {
         if (userId) {
             const user = await User.findById(userId)
@@ -15,7 +15,7 @@ module.exports = (parkId, userId) => {
 
             if (deletedCount === 0) throw new NotAllowedError(`user ${userId} did not create this park`)
 
-            const parks = user.parks.filter(id => id !== parkId)
+            const parks = user.parks.filter(id => id.toString() !== parkId)
             user.parks = parks
 
             await user.save()
