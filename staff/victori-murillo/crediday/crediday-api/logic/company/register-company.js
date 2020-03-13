@@ -44,5 +44,6 @@ module.exports = async ({ companyName, username }) => {
       password: GMAIL_PASSWORD
     }, 
     newCompany.name, newUser.username, PASSWORD)
+    
   if (response instanceof Error) throw new Error(response.message)
 }
