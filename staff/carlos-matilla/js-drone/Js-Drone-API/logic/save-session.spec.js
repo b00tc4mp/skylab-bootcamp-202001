@@ -1,60 +1,61 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User, Event } } = require('events-data')
+const { mongoose, models: { User, Session } } = require('events-data')
 const { expect } = require('chai')
 const { random } = Math
-const publishEvent = require('./publish-event')
+const saveSession= require('./save-session')
 
-describe('publishEvent', () => {
+describe('save-session', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => Promise.all([User.deleteMany(), Event.deleteMany()]))
+            .then(() => Promise.all([User.deleteMany(), Session.deleteMany()]))
     )
 
-    let name, surname, email, password, title, description, date, location
+    let name, surname, username, password, height, temperature, date, speed, time
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        username = `email-${random()}@mail.com`
         password = `password-${random()}`
-        title = `title-${random()}`
-        description = `description-${random()}`
+        height = `title-${random()}`
+        temperature = `description-${random()}`
         date = new Date
-        location = `location-${random()}`
+        speed = `location-${random()}`
+        time = `time-${random()}`
     })
 
     describe('when user already exists', () => {
         let _id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
+            User.create({ name, surname, username, password })
                 .then(({ id }) => _id = id)
         )
 
         it('should succeed on correct and valid and right data', () =>
-            publishEvent(_id, title, description, location, date)
+            saveSessiont(id, height, temperature, date, speed, time)
                 .then(() =>
                     Promise.all([
-                        User.findById(_id),
-                        Event.findOne({ title, description, location, date, publisher: _id })
+                        User.findById(id),
+                        Session.findOne({ height, temperature, date, speed, time })
                     ])
                 )
                 .then(([user, event]) => {
                     expect(user).to.exist
-                    expect(user.published).to.contain(event._id)
-                    expect(event).to.exist
-                    expect(event.title).to.equal(title)
-                    expect(event.description).to.equal(description)
-                    expect(event.date).to.deep.equal(date)
-                    expect(event.location).to.equal(location)
-                    expect(event.publisher.toString()).to.equal(_id)
+                    expect(user.sessions).to.contain(session.id)
+                    expect(session).to.exist
+                    expect(session.height).to.equal(height)
+                    expect(session.temperature).to.equal(temperature)
+                    expect(session.date).to.deep.equal(date)
+                    expect(session.speed).to.equal(speed)
+                    
                 })
         )
     })
 
     // TODO more happies and unhappies
 
-    after(() => Promise.all([User.deleteMany(), Event.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Session.deleteMany()]).then(() => mongoose.disconnect()))
 })
