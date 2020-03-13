@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.sass';
 import { gamepadConnect, gamepadDisconnect, check } from "../logic/gamepad";
 import {keyDown, keyUp} from '../logic/keyboard'
-import JMuxer from 'jmuxer';
+// import JMuxer from 'jmuxer';
 import Telemetry from './Telemetry';
 import Charts from './charts'
 import socket from '../socket';
@@ -36,27 +36,27 @@ function App() {
       document.addEventListener('keyup', keyUp);
     }
 
-    window.onload = function() {
-      var socketURL = 'ws://localhost:8080';
-      var jmuxer = new JMuxer({
-          node: 'player',
-          mode: 'video',
-          flushingTime: 1,
-          fps: 30
-        });
+    // window.onload = function() {
+    //   var socketURL = 'ws://localhost:8080';
+    //   var jmuxer = new JMuxer({
+    //       node: 'player',
+    //       mode: 'video',
+    //       flushingTime: 1,
+    //       fps: 30
+    //     });
   
-        var ws = new WebSocket(socketURL);
-        ws.binaryType = 'arraybuffer';
-        ws.addEventListener('message',function(event) {
-            jmuxer.feed({
-              video: new Uint8Array(event.data)
-            });
-        });
+    //     var ws = new WebSocket(socketURL);
+    //     ws.binaryType = 'arraybuffer';
+    //     ws.addEventListener('message',function(event) {
+    //         jmuxer.feed({
+    //           video: new Uint8Array(event.data)
+    //         });
+    //     });
   
-        ws.addEventListener('error', function(e) {
-          console.log('Socket Error');
-        });
-    }
+    //     ws.addEventListener('error', function(e) {
+    //       console.log('Socket Error');
+    //     });
+    // }
     
     
   }, []);
@@ -71,9 +71,9 @@ function App() {
         <h3>{status}</h3>
       </header>
       <Telemetry />
-        <section className="video-container">
+        {/* <section className="video-container">
           <video className="video" id='player'  autoPlay muted/>
-        </section>
+        </section> */}
         
         <Charts />
         
