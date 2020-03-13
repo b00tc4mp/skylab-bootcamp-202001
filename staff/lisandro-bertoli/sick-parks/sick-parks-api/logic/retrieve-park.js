@@ -15,14 +15,16 @@ module.exports = ({ parkId }) => {
         park.id = park._id.toString()
         park.creator.id = park.creator._id.toString()
         delete park.creator._id
+        delete park._id
+        delete park.__v
+        delete park.location
         park.features.forEach(feature => {
             feature.id = feature._id.toString()
             delete feature._id
+
         })
 
-        const { name, id, resort, features, description, creator, comments } = park
-
-        return { name, creator, id, resort, description, features, comments }
+        return park
     })()
 }
 
