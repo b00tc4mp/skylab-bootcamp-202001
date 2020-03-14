@@ -20,6 +20,7 @@
 		334794A1366A0D907889C061 /* libPods-pilloclockapp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 511737152DBECE3D570CC1AB /* libPods-pilloclockapp-tvOS.a */; };
 		A58D8F0675C77E02DFFEFAAB /* libPods-pilloclockapp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21DC2F7E3C721E5F2E4ED436 /* libPods-pilloclockapp-tvOSTests.a */; };
 		AAE8650A107EEF4882152DC8 /* libPods-pilloclockapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90C4F844138CD2BC4116D15F /* libPods-pilloclockapp.a */; };
+		8E4324ABF8C84CBCAAF56C67 /* Sensei-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BF7140C6BAB425EBC6DE7CE /* Sensei-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F641D1B95B78C1E18501E346 /* Pods-pilloclockapp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pilloclockapp-tvOS.release.xcconfig"; path = "Target Support Files/Pods-pilloclockapp-tvOS/Pods-pilloclockapp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		F74F0A75A808F66A157481F5 /* Pods-pilloclockappTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pilloclockappTests.release.xcconfig"; path = "Target Support Files/Pods-pilloclockappTests/Pods-pilloclockappTests.release.xcconfig"; sourceTree = "<group>"; };
+		8BF7140C6BAB425EBC6DE7CE /* Sensei-Medium.ttf */ = {isa = PBXFileReference; name = "Sensei-Medium.ttf"; path = "../assets/fonts/Sensei-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				EAACABDD0C7445E66FE1071D /* Pods */,
+				1D832946CDC84A1596685AE3 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +200,15 @@
 			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		1D832946CDC84A1596685AE3 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				8BF7140C6BAB425EBC6DE7CE /* Sensei-Medium.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -285,7 +297,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -338,6 +350,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				8E4324ABF8C84CBCAAF56C67 /* Sensei-Medium.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

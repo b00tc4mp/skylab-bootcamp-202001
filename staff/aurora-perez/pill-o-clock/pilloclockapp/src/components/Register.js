@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Button } from 'react-native'
+import React, {useState, useEffect} from 'react'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Button, Picker } from 'react-native'
 
 
-function Register ({onSubmit}) {
+function Register ({onSubmit, onToLogin, error}) {
     const [name, setName] = useState('')
     const [surname, setSurname] = useState('')
     const [gender, setGender] = useState('')
@@ -17,38 +17,66 @@ function Register ({onSubmit}) {
         <ScrollView>
             <View style={styles.container}>
             <TouchableOpacity>
-                <Text style = {styles.title}>Register</Text>
-                <TextInput style = {styles.input} placeholder= 'Name' onChangeText = {text => setName(text)}/>
-                <TextInput style = {styles.input} placeholder= 'Surname' onChangeText = {text => setSurname(text)}/>
-                <TextInput style = {styles.input} placeholder= 'Gender' onChangeText = {text => setGender(text)}/>
-                <TextInput style = {styles.input} placeholder= 'Age' onChangeText = {text => setAge(parseInt(text))}/>
-                <TextInput style = {styles.input} placeholder= 'Phone number' onChangeText = {text => setPhone(text)}/>
-                <TextInput style = {styles.input} placeholder= 'Profile' onChangeText = {text => setProfile(text)}/>
-                <TextInput style = {styles.input} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
-                <TextInput style = {styles.input} placeholder= 'Password' onChangeText= {text => setPassword(text)}/>
-                <Button title= 'Submit' onPress={()=> onSubmit({name, surname, gender, age, phone, profile, email, password})}/>
+                <Text style = {[styles.text, styles.title]}>Register</Text>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Name' onChangeText = {text => setName(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Surname' onChangeText = {text => setSurname(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Gender (F /M /Non-binary)' onChangeText = {text => setGender(text.toLowerCase())}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Age' onChangeText = {text => setAge(parseInt(text))}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Phone number' onChangeText = {text => setPhone(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (Pacient / Pharmacist)' onChangeText = {text => setProfile(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Password' secureTextEntry={true} onChangeText= {text => setPassword(text)}/>
+                <Text style = {[styles.text, styles.button]} onPress={()=> onSubmit({name, surname, gender, age, phone, profile, email, password})}>Submit</Text>
+                <Text style = {[styles.text, styles.toLogin]} onPress={()=>onToLogin()}>Are you already registered? Go to Login!</Text>
+           
+                {error && <Text style={styles.error}>{error}</Text>}
             </TouchableOpacity>
             </View>
+            
         </ScrollView>
+
     )
 }
 
 //TODO gender, afe, profile
 
 const styles = StyleSheet.create({
+    text : {
+        fontFamily : 'Sensei-Medium'
+    },
+
     container : {
         flex : 1,
         marginTop : 100,
     },
     
     input : {
-        marginTop : 20
-
+        marginTop : 30,
+        fontSize : 17
     },
 
     title : {
         fontSize : 40,
+        color : '#297885'
+    },
+
+    button : {
+        marginTop : 35,
+        fontSize : 25,
+        color : '#297885'
+    },
+
+    toLogin : {
+        marginTop : 20,
+        fontSize : 15,
+        alignItems : 'center',
+        color : '#79BABF'
+    },
+
+    error : {
+        marginTop : 20
     }
+
 })
 
 export default Register

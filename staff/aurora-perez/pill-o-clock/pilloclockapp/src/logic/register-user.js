@@ -1,19 +1,16 @@
 const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
+import fetch from 'node-fetch'
 
-//const { env: { REACT_APP_API_URL: API_URL } } = process
-
-//const API_URL = process.env.REACT_APP_API_URL
 async function registerUser (name, surname, gender, age, phone, profile, email, password) {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
-    validate.string(gender, 'gender')
     validate.gender(gender)
     validate.type(age, 'age', Number)
     validate.string(phone, 'phone')
     validate.string(profile, 'profile')
     validate.string(email, 'email')
-    //validate.email(email)
+    validate.email(email)
     validate.string(password, 'password') 
     
     const response = await fetch(`http://192.168.1.85:8085/api/users`, {
