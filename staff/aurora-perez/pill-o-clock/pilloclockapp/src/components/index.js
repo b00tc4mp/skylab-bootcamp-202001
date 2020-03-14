@@ -1,5 +1,5 @@
 import Register from './Register'
 
-module.exports = { 
+export { 
     Register
 }

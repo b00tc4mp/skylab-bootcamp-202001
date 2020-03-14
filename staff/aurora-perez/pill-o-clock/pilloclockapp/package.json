@@ -10,10 +10,6 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "pill-o-clock-data": "file:../pill-o-clock-data",
-    "pill-o-clock-errors": "file:../pill-o-clock-errors",
-    "pill-o-clock-utils": "file:../pill-o-clock-utils",
     "react": "16.9.0",
     "react-native": "0.61.5"
   },

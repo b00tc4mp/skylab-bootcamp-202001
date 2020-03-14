@@ -23,6 +23,7 @@ function Register ({onSubmit}) {
                 <TextInput style = {styles.input} placeholder= 'Gender' onChangeText = {text => setGender(text)}/>
                 <TextInput style = {styles.input} placeholder= 'Age' onChangeText = {text => setAge(parseInt(text))}/>
                 <TextInput style = {styles.input} placeholder= 'Phone number' onChangeText = {text => setPhone(text)}/>
+                <TextInput style = {styles.input} placeholder= 'Profile' onChangeText = {text => setProfile(text)}/>
                 <TextInput style = {styles.input} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
                 <TextInput style = {styles.input} placeholder= 'Password' onChangeText= {text => setPassword(text)}/>
                 <Button title= 'Submit' onPress={()=> onSubmit({name, surname, gender, age, phone, profile, email, password})}/>
