@@ -21,7 +21,7 @@ module.exports = (gameId) => {
             game.date = new Date()
             game.currentPlayer = game.players[0]//indice
             game.status = "preStarted"
-            game.timeRemaining = 60
+            game.timeRemaining = 40
             return game.save()
         })
         .then(game => {

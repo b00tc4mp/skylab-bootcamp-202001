@@ -14,20 +14,25 @@ module.exports = (gameId) => {
             let timeRemaining = game.timeRemaining
             let dateNow = new Date()
 
-            /* 60sec countdown before start game */ /* OK */
-            if (game.status === "preStarted" && ((dateNow - dateStarted) / 1000) > timeRemaining) {
-                    game.status = "started"
-                    game.date = new Date()
-                    game.timeRemaining = 40 //Each turn time
+            /* Last player win */
+            if(game.players.length === 1) {
+                game.status = "finished"
             }
 
-            /* 100sec countdown on turn */
+            /* 40sec countdown on turn */
             if(game.status === "started" && ((dateNow - dateStarted) / 1000) > timeRemaining) {
                 game.watching.push(game.currentPlayer)
                 var i = game.players.indexOf(game.currentPlayer)
                 game.players.splice(i,1)
                 game.currentPlayer = game.players[0]
                 game.date = new Date()
+            }
+
+            /* 60sec countdown before start game */ /* OK */
+            if (game.status === "preStarted" && ((dateNow - dateStarted) / 1000) > timeRemaining) {
+                    game.status = "started"
+                    game.date = new Date()
+                    game.timeRemaining = 40 //Each turn time
             }
 
             return game.save()
