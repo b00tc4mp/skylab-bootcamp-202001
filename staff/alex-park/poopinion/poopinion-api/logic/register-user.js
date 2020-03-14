@@ -18,7 +18,6 @@ const bcrypt = require('bcryptjs')
  * @throws {NotAllowedError} if a user with that same email already exists on the database
  */
 module.exports = (name, surname, email, password, age, gender) => {
-    debugger
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')

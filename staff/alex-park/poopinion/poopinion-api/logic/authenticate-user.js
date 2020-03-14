@@ -1,6 +1,6 @@
 const { validate } = require('poopinion-utils')
 const { models: { User } } = require('poopinion-data')
-const { NotAllowedError } = require('poopinion-errors')
+const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 const bcrypt = require('bcryptjs')
 
 /**
@@ -11,7 +11,7 @@ const bcrypt = require('bcryptjs')
  * 
  * @returns {Promise<string>} user id from storage
  * 
- * @throws {NotAllowedError} on wrong credentials
+ * @throws {NotAllowedError} on wrong credentials or deactivated user
  */
 module.exports = (email, password) => {
     validate.string(email, 'email')
@@ -20,7 +20,9 @@ module.exports = (email, password) => {
 
     return User.findOne({ email })
         .then(user => {
+            debugger
             if (!user) throw new NotAllowedError(`wrong credentials`)
+            if (user.deactivated) throw new NotFoundError(`user with id ${user.id} is deactivated`)
 
             return bcrypt.compare(password, user.password)
                 .then(validPassword => {

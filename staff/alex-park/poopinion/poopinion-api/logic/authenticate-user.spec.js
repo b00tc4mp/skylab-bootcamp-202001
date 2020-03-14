@@ -28,7 +28,6 @@ describe('authenticateUser', () => {
 
     describe('when user already exists', () => {
         let _id
-
         beforeEach(() =>
             bcrypt.hash(password, 10)
                 .then(password =>
@@ -61,6 +60,26 @@ describe('authenticateUser', () => {
                     expect(message).to.equal('wrong credentials')
                 })
         })
+    })
+
+    describe('when the user is deactivated', () => {
+        let _id
+        beforeEach(() =>
+            User.create({ name, surname, email, password, age, gender })
+                .then(({ id }) => _id = id)
+                .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
+                .then(() => { })
+        )
+
+        it('should fail to auth if the user is deactivated', () =>
+            authenticateUser(email, password)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`user with id ${_id} is deactivated`)
+                })
+                .then(() => { })
+        )
     })
 
     describe('unhappy paths', () => {

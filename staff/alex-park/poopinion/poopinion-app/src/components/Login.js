@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, ScrollView, Image } from 'react-native'
 
-function Login({ onSubmit }) {
+function Login({ onSubmit, error, goToRegister }) {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
@@ -11,10 +11,11 @@ function Login({ onSubmit }) {
                 <Text style={styles.header}>Login</Text>
                 <TouchableOpacity>
                     <TextInput placeholder='youremail@mail.com' onChangeText={(text) => setEmail(text)} />
-                    <TextInput placeholder='Password' onChangeText={(text) => setPassword(text)} />
+                    <TextInput placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                 </TouchableOpacity>
                 {error && <Text style={styles.error}>{error}</Text>}
                 <Button title='Submit' onPress={() => onSubmit(email, password)} />
+                <Text onPress={goToRegister} style={styles.anchor}>Sign Up</Text>
             </View>
         </ScrollView>
     </>)
@@ -35,6 +36,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 30,
         color: 'red'
+    },
+    anchor: {
+        color: 'blue',
+        fontWeight: 'bold',
+        marginVertical: 20
     }
 })
 

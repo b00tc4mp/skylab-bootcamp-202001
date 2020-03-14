@@ -22,10 +22,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "atob": "^2.1.2",
     "babel-preset-expo": "~8.0.0",
     "bcryptjs": "^2.4.3",
     "jest": "^25.1.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.4"
   },
   "private": true
 }

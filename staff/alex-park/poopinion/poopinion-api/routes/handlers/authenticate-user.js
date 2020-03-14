@@ -1,7 +1,7 @@
 const { authenticateUser } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { JWT_SECRET, JWT_EXP } } = process
-const { NotAllowedError, ContentError } = require('poopinion-errors')
+const { NotAllowedError, ContentError, NotFoundError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req
@@ -18,6 +18,9 @@ module.exports = (req, res) => {
 
                 if (error instanceof NotAllowedError)
                     status = 401
+
+                if (error instanceof NotFoundError)
+                    status = 404
 
                 const { message } = error
 

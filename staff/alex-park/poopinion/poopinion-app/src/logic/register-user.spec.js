@@ -74,7 +74,7 @@ describe('registerUser', () => {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`name ${name} is not a string`)
+            } expect(_error.message).toBe(`name is empty`)
             name = []
             try {
                 await registerUser(name, surname, email, password, age, gender)
@@ -102,7 +102,7 @@ describe('registerUser', () => {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`surname ${surname} is not a string`)
+            } expect(_error.message).toBe(`surname is empty`)
             surname = []
             try {
                 await registerUser(name, surname, email, password, age, gender)
@@ -130,7 +130,7 @@ describe('registerUser', () => {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`email ${email} is not a string`)
+            } expect(_error.message).toBe(`email is empty`)
             email = []
             try {
                 await registerUser(name, surname, email, password, age, gender)
@@ -174,7 +174,7 @@ describe('registerUser', () => {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`password ${password} is not a string`)
+            } expect(_error.message).toBe(`password is empty`)
             password = []
             try {
                 await registerUser(name, surname, email, password, age, gender)
