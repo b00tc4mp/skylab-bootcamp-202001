@@ -2,6 +2,7 @@ const { validate } = require('share-my-spot-utils')
 const { models: { User, Listing } } = require('share-my-spot-data')
 const fs = require('fs')
 const path = require('path')
+const { NotFoundError } = require('share-my-spot-errors')
 
 const filesDir = path.join(__dirname, `../data/listings`)
 
@@ -42,8 +43,8 @@ module.exports = (publisher, title, description, addressLocation, addressStNumbe
             user.publishedListings.push(listing.id)
 
             return Promise.all([user.save(), listing.save()])
-                .then(() => fs.mkdirSync(filesDir, listing.id, (err) => {
-                    if (err) throw err
-                }))
+                // .then(() => fs.mkdirSync(filesDir, listing.id, (err) => {
+                //     if (err) throw err
+                // }))
         })
 }

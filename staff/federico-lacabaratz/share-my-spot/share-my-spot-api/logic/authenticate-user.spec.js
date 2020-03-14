@@ -85,7 +85,7 @@ describe('authenticateUser', () => {
         })
 
     it('should fail on non-string email', () => {
-        email = 1
+        let email = 1
         expect(() =>
             authenticateUser(email, password)
         ).to.throw(TypeError, `email ${email} is not a string`)
@@ -102,7 +102,7 @@ describe('authenticateUser', () => {
     })
 
     it('should fail on non-string password', () => {
-        password = 1
+        let password = 1
         expect(() =>
             authenticateUser(email, password)
         ).to.throw(TypeError, `password ${password} is not a string`)

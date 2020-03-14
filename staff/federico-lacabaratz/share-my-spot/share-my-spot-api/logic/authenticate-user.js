@@ -1,8 +1,7 @@
 const { validate } = require('share-my-spot-utils')
 const { models: { User } } = require('share-my-spot-data')
 const { NotAllowedError } = require('share-my-spot-errors')
-const bcrypt = require('bcryptjs')
-
+const { compare } = require('bcryptjs')
 
 /**
  * Checks user credentials against the storage
@@ -16,23 +15,44 @@ const bcrypt = require('bcryptjs')
  * @throws {TypeError} if user data does not have the correct type
  * @throws {NotAllowedError} on wrong credentials
  */
-module.exports = (email, password) => {
+
+module.exports = async (email, password) => {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
 
-    return User.findOne({ email })
-        .then(user => {
-            if (!user) throw new NotAllowedError(`wrong credentials`)
+    const user = await User.findOne({ email })
 
-            return bcrypt.compare(password, user.password)
-                .then(validPassword => {
-                    if (!validPassword) throw new NotAllowedError(`wrong credentials`)
+    if (!user) throw new NotAllowedError('wrong credentials')
 
-                    user.authenticated = new Date
+    const validPassword = await compare(password, user.password)
 
-                    return user.save()
-                })
-                .then(({ id }) => id)
-        })
+    if (!validPassword) throw new NotAllowedError('wrong credentials')
+
+    user.authenticated = await new Date
+
+    const { id } = await user.save()
+
+    return id
 }
+
+// module.exports = (email, password) => {
+//     validate.string(email, 'email')
+//     validate.email(email)
+//     validate.string(password, 'password')
+
+//     return User.findOne({ email })
+//         .then(user => {
+//             if (!user) throw new NotAllowedError(`wrong credentials`)
+
+//             return bcrypt.compare(password, user.password)
+//                 .then(validPassword => {
+//                     if (!validPassword) throw new NotAllowedError(`wrong credentials`)
+
+//                     user.authenticated = new Date
+
+//                     return user.save()
+//                 })
+//                 .then(({ id }) => id)
+//         })
+// }
