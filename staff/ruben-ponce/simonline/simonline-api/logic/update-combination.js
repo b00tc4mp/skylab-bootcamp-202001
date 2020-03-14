@@ -13,7 +13,7 @@ module.exports = (gameId) => {
 
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            game.combinationgame.push(combination)
+            game.combinationGame.push(combination)
 
             return game.save()
         })
