@@ -5,18 +5,27 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest",
+    "test:debug": "node --inspect-brk test --runInBand --no-cache"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
     "expo": "~36.0.0",
+    "node-fetch": "^2.6.0",
+    "poopinion-data": "file:../poopinion-data",
+    "poopinion-utils": "file:../poopinion-utils",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
     "babel-preset-expo": "~8.0.0",
-    "@babel/core": "^7.0.0"
+    "bcryptjs": "^2.4.3",
+    "jest": "^25.1.0",
+    "moment": "^2.24.0"
   },
   "private": true
 }

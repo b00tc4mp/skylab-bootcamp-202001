@@ -1,10 +1,13 @@
-import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { Register } from './src/components'
+import { registerUser } from './src/logic'
 
 export default function App() {
   const [latitude, setLatitude] = useState()
   const [longitude, setLongitude] = useState()
   const [ready, setReady] = useState(false)
+  const [view, setView] = useState('register')
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -13,30 +16,20 @@ export default function App() {
     })
   })
 
-  function handleSeeGeo() {
-    setReady(!ready)
+  async function handleRegister(name, surname, email, age, gender, password) {
+
+    const user = await registerUser(name, surname, email, age, gender, password)
+    Alert.alert(user)
   }
 
-  return (
-    <View style={styles.container}>
-      <View>
-        {ready && <Text>
-          Latitude: {latitude}
-
-          Latitude: {longitude}
-         </Text>}
-        <Button title='See location' onPress={handleSeeGeo}></Button>
-      </View>
-    </View>
-  );
+  return (<View style={styles.container}>
+    {view === 'register' && <Register onSubmit={handleRegister} />}
+  </View>);
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#333',
-    alignItems: 'stretch',
-    justifyContent: 'center',
-    padding: 20
+    alignContent: 'center',
   }
 });
