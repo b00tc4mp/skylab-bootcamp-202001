@@ -4,23 +4,15 @@ const { NotFoundError, NotAllowedError } = require('simonline-errors')
 
 module.exports = (name, owner ) => {
     validate.string(name, 'name')
-    validate.string(owner, 'owner')
+    validate.string(owner, 'owner') // id
 
-    let id, _user
-
-    return User.findOne({username:owner})
+    return User.findById(owner)
         .then(user => {
-            if(!user) throw new NotFoundError(`owner with username ${owner} does not exist`)
-            id = user.id
-            _user = user
-        })
-        .then(() => {
-            let game = new Game({ name, owner })
-            id = game.id
+            if(!user) throw new NotFoundError(`owner with id ${owner} does not exist`)
+
+            const game = new Game({ name, owner, players: [owner] })
+
             return game.save()
-                .then(() =>{
-                    return Game.findByIdAndUpdate(id, { $addToSet: {players: _user.id}})
-                })
         })
         .then (() => { })
 }

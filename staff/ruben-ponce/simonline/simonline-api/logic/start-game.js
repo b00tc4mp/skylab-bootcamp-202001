@@ -4,26 +4,31 @@ const { models: { Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 const { random } = Math 
 
-module.exports = (gameId) => {
+module.exports = (playerId, gameId) => {
+    validate.string(playerId, 'playerId')
     validate.string(gameId, 'gameId')
+
+    // TODO User.findById(playerId)
 
     return Game.findById(gameId)
     .populate('players', 'username id')
         .then((game) => {
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            if (game.status === "started" || game.status === "preStarted") throw new NotAllowedError(`game with id ${gameId} is started`)
+            // TODO check playerId is game.owner (not any other player than this one)
+
+            if (game.status === "started") throw new NotAllowedError(`game with id ${gameId} is started`)
             
-            let combination = Math.floor(random() * 4)
+            const combination = Math.floor(random() * 4)
             
             game.players.shuffle()
-            game.combinationGame.push(combination)
-            game.date = new Date()
-            game.currentPlayer = game.players[0]//indice
-            game.status = "preStarted"
-            game.timeRemaining = 40
+            game.pushCombination.push(combination)
+            game.turnStart = new Date()
+            game.currentPlayer = game.players[0]
+            game.status = "started"
+            game.turnTimeout = 40
+
             return game.save()
         })
-        .then(game => {
-            return game})
+        .then(() => {})
 }

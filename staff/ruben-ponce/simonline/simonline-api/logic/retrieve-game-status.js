@@ -1,42 +1,49 @@
-const validate = require('simonline-utils/validate')
-const { models: { User, Game } } = require('simonline-data')
-const { NotFoundError, NotAllowedError } = require('simonline-errors')
-var moment = require('moment')
+const validate = require("simonline-utils/validate");
+const {
+  models: { User, Game }
+} = require("simonline-data");
+const { NotFoundError, NotAllowedError } = require("simonline-errors");
+var moment = require("moment");
 
-module.exports = (gameId) => {
-    validate.string(gameId, 'gameId')
+module.exports = (playerId, gameId) => {
+  validate.string(playerId, "playerId");
+  validate.string(gameId, "gameId");
 
-    return Game.findById(gameId)
-        .then((game) => {
-            if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
+  // TODO User.findById(playerId) => check the user exists
 
-            let dateStarted = game.date
-            let timeRemaining = game.timeRemaining
-            let dateNow = new Date()
+  return Game.findById(gameId)
+    .then(game => {
+      if (!game) throw new NotFoundError(`game with id ${gameId} not found`);
 
-            /* Last player win */
-            if(game.players.length === 1) {
-                game.status = "finished"
-            }
+      // TODO check user is inside this game (that means checking this userId is inside game.players, otherwise throw error)
 
-            /* 40sec countdown on turn */
-            if(game.status === "started" && ((dateNow - dateStarted) / 1000) > timeRemaining) {
-                game.watching.push(game.currentPlayer)
-                var i = game.players.indexOf(game.currentPlayer)
-                game.players.splice(i,1)
-                game.currentPlayer = game.players[0]
-                game.date = new Date()
-            }
+      const { status } = game;
 
-            /* 60sec countdown before start game */ /* OK */
-            if (game.status === "preStarted" && ((dateNow - dateStarted) / 1000) > timeRemaining) {
-                    game.status = "started"
-                    game.date = new Date()
-                    game.timeRemaining = 40 //Each turn time
-            }
+      if (status === "started") {
+        const { turnStart, turnTimeout } = game;
 
-            return game.save()
-        })
-        .then(game => {
-            return game})
-}
+        const timeNow = new Date();
+
+        const elapsedTime = (timeNow - turnStart) / 1000;
+
+        /* 40sec countdown on turn */
+        if (elpasedTime > turnTimeout) {
+          game.watching.push(game.currentPlayer);
+          //var i = game.players.indexOf(game.currentPlayer)
+          //game.players.splice(i,1)
+
+          // TODO check if (game.watching === game.players.length - 1) then status = 'finished'
+          // TODO search next player in game.players and then set its id here
+          game.currentPlayer = game.players[0];
+          // REDO
+          game.turnStart = new Date();
+
+          /* Matching betwen combinationPlayer and combinationGame */
+          return game.save();
+        }
+      }
+
+      return game;
+    })
+    .then(game => game);
+};
