@@ -84,40 +84,6 @@ describe('authenticateUser', () => {
             }
         })
 
-    it('should fail on non-string email', () => {
-        let email = 1
-        expect(() =>
-            authenticateUser(email, password)
-        ).to.throw(TypeError, `email ${email} is not a string`)
-
-        email = true
-        expect(() =>
-            authenticateUser(email, password)
-        ).to.throw(TypeError, `email ${email} is not a string`)
-
-        email = undefined
-        expect(() =>
-            authenticateUser(email, password)
-        ).to.throw(TypeError, `email ${email} is not a string`)
-    })
-
-    it('should fail on non-string password', () => {
-        let password = 1
-        expect(() =>
-            authenticateUser(email, password)
-        ).to.throw(TypeError, `password ${password} is not a string`)
-
-        password = true
-        expect(() =>
-            authenticateUser(email, password)
-        ).to.throw(TypeError, `password ${password} is not a string`)
-
-        password = undefined
-        expect(() =>
-            authenticateUser(email, password)
-        ).to.throw(TypeError, `password ${password} is not a string`)
-    })
-
     after(async () => {
         await Promise.resolve(User.deleteMany())
         return await mongoose.disconnect()

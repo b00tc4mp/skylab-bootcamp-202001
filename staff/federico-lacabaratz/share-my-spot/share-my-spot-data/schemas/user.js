@@ -8,7 +8,6 @@ module.exports = new Schema({
     phone: { type: Number },
     created: { type: Date, required: true, default: Date.now },
     authenticated: { type: Date },
-    favs: { type: [{ type: ObjectId, ref: 'User'}]},
     publishedListings: {
         type: [{ type: [ObjectId], ref: 'Listing' }]
     },
