@@ -26,6 +26,7 @@ export default function App () {
   }
 
   function handleToLogin (){
+    setError(null)
     setView('login')
   }
 
@@ -40,6 +41,7 @@ export default function App () {
   }
 
   function handleToRegister () {
+    setError(null)
     setView('register')
   }
 
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
         flex : 1,
         justifyContent : 'center',
         alignItems : 'center',
+        backgroundColor : '#beebe9'
     },
 
     title : {

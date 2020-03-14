@@ -26,10 +26,12 @@ function Register ({onSubmit, onToLogin, error}) {
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (Pacient / Pharmacist)' onChangeText = {text => setProfile(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Password' secureTextEntry={true} onChangeText= {text => setPassword(text)}/>
+                
                 <Text style = {[styles.text, styles.button]} onPress={()=> onSubmit({name, surname, gender, age, phone, profile, email, password})}>Submit</Text>
+            
                 <Text style = {[styles.text, styles.toLogin]} onPress={()=>onToLogin()}>Are you already registered? Go to Login!</Text>
            
-                {error && <Text style={styles.error}>{error}</Text>}
+                {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
             </TouchableOpacity>
             </View>
             
@@ -48,6 +50,9 @@ const styles = StyleSheet.create({
     container : {
         flex : 1,
         marginTop : 100,
+        backgroundColor : '#fffdf9',
+        borderRadius : 30,
+        padding : 30
     },
     
     input : {
@@ -63,7 +68,12 @@ const styles = StyleSheet.create({
     button : {
         marginTop : 35,
         fontSize : 25,
-        color : '#297885'
+        color : '#fffdf9',
+        alignSelf : 'center',
+        backgroundColor : '#297885',
+        padding : 10,
+        borderRadius : 10,
+        overflow: 'hidden'
     },
 
     toLogin : {
@@ -74,7 +84,8 @@ const styles = StyleSheet.create({
     },
 
     error : {
-        marginTop : 20
+        marginTop : 20,
+        padding : 10
     }
 
 })
