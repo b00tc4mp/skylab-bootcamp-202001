@@ -40,7 +40,7 @@ describe('retrieveGameStatus', () => {
                     gameId = game.id
                     game.players.shuffle()
                     game.combinationGame.push(combination)
-                    game.date = Date.now()
+                    game.date = new Date()
                     game.currentPlayer = game.players[0]//indice
                     game.status = "preStarted"
                     game.timeRemaining = 400
@@ -48,14 +48,11 @@ describe('retrieveGameStatus', () => {
                 })
         })
 
-        it('should succeed on valid retrieved data', () => {
-            return retrieveGameStatus(gameId)
-                .then(() => {
-                    return Game.findOne({ name, owner })
-                })
-                .then((game) => {
-                    console.log(game)
-                })
+        it('should succeed on valid retrieved data', async () => {
+
+        const game = await retrieveGameStatus(gameId)
+        console.log(game)
+            
         })
 
     })
