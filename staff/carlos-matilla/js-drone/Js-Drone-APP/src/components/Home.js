@@ -1,51 +1,41 @@
 import React, { useState, useEffect, useContext } from 'react'
-import logo from './logo.svg';
+
 import './Home.sass';
 import { gamepadConnect, gamepadDisconnect } from "../logic/gamepad";
 import {keyDown, keyUp} from '../logic/keyboard'
 import JMuxer from 'jmuxer';
 import {logout, isLoggedIn, retrieveUser} from './../logic'
-import {Telemetry, Charts} from './';
-import socket from '../socket';
+import {Telemetry, Charts, NavbarLeft, NavbarRight} from './';
+
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
 
 
-function DroneStatus() {
-    const [status, setStatus] = useState('DISCONNECTED');
-    socket.on('status', () => {
-      setStatus('CONNECTED')
-    })
-    socket.on('disconnect', () => {
-      setStatus('DISCONNECTED')
-    })
-    return status;
-}
-  
+
 
 export default withRouter(function ({ history }) {
 
     const [, setState] = useContext(Context)
     const [name, setName] = useState()
+    
 
     useEffect(() => {
       if (isLoggedIn())
             (async () => {
                 try {
-                    const { name } = await retrieveUser()
+                    const { name, sessions } = await retrieveUser()
 
                     setName(name)
-                    
+                    console.log(sessions)
                     setState({ page: 'home' })
                 } catch ({ message }) {
                     setState({ error: message, page: 'login' })
                 }
             })()
         else setState({ page: 'login' })
+
         window.addEventListener("gamepadconnected", gamepadConnect);
         window.addEventListener("gamepaddisconnected", gamepadDisconnect);
-        document.addEventListener('keydown', keyDown);
-        document.addEventListener('keyup', keyUp);
     
         window.onload = function() {
           var socketURL = 'ws://localhost:8080';
@@ -72,30 +62,75 @@ export default withRouter(function ({ history }) {
         
       }, []);
     
-      const status = DroneStatus();
+
+      function onFly(){
+
+      }
+      
      
       function handleLogout() {
+        console.log('apagao')
         logout()
 
         setState({ page: 'login' })
 
         history.push('/login')
     }
+   async function toggleKeyboard(){
+        
+        await gamepadDisconnect()
+        
+       handleKeyboard()
+   }
 
-      return (
-        <div className="Drone">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <h3>{status}</h3>
-                <h1>Hello, {name}!</h1>
-                <button onClick={handleLogout}>Logout</button>
-            </header>
-            <Telemetry />
-            <section className="video-container">
-                <video className="video" id='player'  autoPlay muted/>
-            </section>
-            {/* <Charts /> */}
+   function toggleGamepad(){
+        document.removeEventListener('keydown', keyDown);
+        document.removeEventListener('keyup', keyUp);
+        gamepadConnect()
+       
+
+   }
+
+   
             
+            
+            
+            
+   
+
+    function handleKeyboard(){
+        
+            document.addEventListener('keydown', keyDown);
+            document.addEventListener('keyup', keyUp);
+        
+    }
+      return <> 
+      <NavbarLeft toggleKeyboard={toggleKeyboard} toggleGamepad={toggleGamepad}/>
+      <div className="home">
+        
+        <header className="Home-header">
+            
+        <Telemetry />
+            
+            
+        </header>
+        
+        {/* <section className="video-container">
+            
+            
+
+        </section> */}
+        <div className="aspect-ratio--16x9">
+            <div className="aspect-ratio__inner-wrapper">
+                <video className="video" id='player' playsInline autoPlay muted/>
+            </div>
         </div>
-      )
+        
+        <Charts />
+            
+       
+        </div>
+        <NavbarRight  handleLogout={handleLogout}/>
+        
+        </>
 })

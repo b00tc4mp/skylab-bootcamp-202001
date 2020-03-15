@@ -61,12 +61,12 @@ export default withRouter(function ({ history }) {
 
   const { page, error } = state
 
-  return <div className="app">
+  return <>
     <Page name={page}>
       <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/login" />} />
       <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} error={error} onGoToLogin={handleGoToLogin} onMount={handleMountRegister} />} />
       <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} error={error} onGoToRegister={handleGoToRegister} onMount={handleMountLogin} />} />
       <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />} />
     </Page>
-  </div>
+  </>
 })

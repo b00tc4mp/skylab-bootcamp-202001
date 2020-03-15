@@ -228,9 +228,9 @@ export default function(){
   
       
       return<>
-      <Line data={height} options={heightOpt} /> 
-      <Line data={temperature} options={temperatureOpt}  />
+      <Line data={height} options={heightOpt} height={75}/> 
+      {/* <Line data={temperature} options={temperatureOpt}  />
       <Line data={speed} options={speedOpt} />
-      <Line data={aceleration} options={acelerationOpt}/>
+      <Line data={aceleration} options={acelerationOpt}/> */}
       </>
 }

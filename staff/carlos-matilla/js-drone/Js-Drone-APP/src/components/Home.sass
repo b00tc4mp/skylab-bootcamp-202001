@@ -1,21 +1,15 @@
-.App 
-  text-align: center
+.home
+  margin-left: 6rem
+  margin-right: 6rem
+  height: 100vh
 
 
-.App-logo 
-  height: 8vmin
-  pointer-events: none
 
 
-@media (prefers-reduced-motion: no-preference) 
-  .App-logo 
-    animation: App-logo-spin infinite 20s linear
-  
 
-
-.App-header 
-  background-color: #282c34
-  min-height: 8vh
+.Home-header 
+  background-color:#e4e4e4
+  height: 5rem
   display: flex
   align-items: center
   justify-content: center
@@ -23,35 +17,38 @@
   color: white
 
 
-.App-link 
-  color: #61dafb
-
-.telemetria
-    display: flex
-    justify-content: center
-    width: 100%
-    height: 12vh
-    font-size: 1rem
-    background-color: #676767
-    color: white
-
-.telemetria > div
-  margin: 1rem
 
 
-@keyframes App-logo-spin 
-  from 
-    transform: rotate(0deg)
+
+
+// .video-container
+//   position: relative
+//   overflow: hidden
+//   width: 100%
+//   height: 100%
+//   margin-top: 1.5rem
+//   padding-bottom: 56.25%
   
-  to 
-    transform: rotate(360deg)
-  
-
-.video-container
-  position: relative
-  height: 82vh
-  width: 100%
-  display: flex
-  justify-content: center
     
+// .video
+//   width: 100%
+//   height: 0
+//   padding-bottom: 56.25%
   
+.aspect-ratio--16x9 
+  width: 100%
+  height: 0
+  padding-bottom: 56.25%
+  position: relative
+
+.aspect-ratio__inner-wrapper 
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+.video 
+  width: 100%
+  height: 100%
+  object-fit: cover

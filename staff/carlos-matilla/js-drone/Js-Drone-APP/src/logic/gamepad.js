@@ -122,9 +122,14 @@ export const gameLoop = () => {
 
 
   if (gp.axes) {
-     console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
+    let channelA = parse(gp.axes[0])
+    let channelB = invert(parse(gp.axes[1]))
+    let channelC = parse(gp.axes[3])
+    let channelD = parse(gp.axes[2])
 
-    socket.emit('gamepad', `rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
+    // console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
+
+    socket.emit('gamepad', `rc ${channelA} ${channelB} ${channelC} ${channelD}`)
 
   }
 
