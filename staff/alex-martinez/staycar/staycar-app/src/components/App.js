@@ -1,26 +1,15 @@
 import React, { useEffect, useContext } from 'react';
-import { login, isLoggedIn } from '../logic'
+import { login, entryVehicle } from '../logic'
 import { Context } from './ContextProvider'
 
-import { Home, Login, EntryCar } from '.'
+import { Home, Login, EntryVehicle } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
+
 
 export default withRouter(function ({ history }) {
 
   const [state, setState] = useContext(Context)
-
-  /* useEffect(() => {
-    if (isLoggedIn()) {
-      setState({page: 'home'})
-
-      history.push('/home')
-    } else {
-      setState({page:'home'})
-
-      history.push('/home')
-    }
-  }, []) */
 
   async function handleLogin(username, password) {
     try {
@@ -28,6 +17,15 @@ export default withRouter(function ({ history }) {
 
       history.push('/home')
     } catch ({ message }) {
+      setState({ ...state, error: message })
+    }
+  }
+
+  async function handleEntryVehicle(carPlate) {
+    try {
+      await entryVehicle(carPlate)
+
+    }catch({message}) {
       setState({ ...state, error: message })
     }
   }
@@ -40,9 +38,9 @@ export default withRouter(function ({ history }) {
 
   return <>
     <Route exact path="/" render={() => <Redirect to="/home"/>}/>
-    <Route path="/login" render={() => <> <Login onSubmit={handleLogin} error={error} onMount={handleMountLogin} /> </>}/>
+    <Route path="/login" render={() => <> <Login onSubmit={handleLogin} error={error} /> </>}/>
     <Route path="/home" render={() =>  <Home /> }/>
-    <Route path="/entrance" render={() => <> <Home /> <EntryCar /> </>} />
+    <Route path="/entrance" render={() => <> <Home /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </>} />
   </>
 
 })

@@ -2,8 +2,8 @@ import App from './App'
 import Header from './Header'
 import Home from './Home'
 import Map from './Map'
-import EntryCar from './EntryCar'
-import ExitCar from './ExitCar'
+import EntryVehicle from './EntryVehicle'
+import ExitCar from './ExitVehicle'
 import Report from './Report'
 import Login from './Login'
 import Atm from './Atm'
@@ -15,7 +15,7 @@ export {
     Header,
     Home,
     Map,
-    EntryCar,
+    EntryVehicle,
     ExitCar,
     Report,
     Login,

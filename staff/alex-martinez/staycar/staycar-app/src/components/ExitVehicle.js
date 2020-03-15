@@ -1,5 +1,5 @@
 import React from 'react'
-import './ExitCar.sass'
+import './ExitVehicle.sass'
 
 
 export default function() {

@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './Login.sass'
 import Feedback from './Feedback'
 import parking from './icons/pk-parking.png'
 
-export default function ({ onSubmit, error, onMount }) {
-
-    useEffect(() => {
-        onMount()
-    }, [])
+export default function ({ onSubmit, error }) {
 
     function handleSubmit(event) {
         event.preventDefault()
