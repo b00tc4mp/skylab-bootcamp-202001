@@ -10,7 +10,8 @@ module.exports = {
     deleteListing: require('./delete-listing'),
     createListing: require('./create-listing'),
     saveListingPhoto: require('./save-listing-photo'),
-    retrieveListingPhoto: require('./retrieve-listing-photo')
+    retrieveListingPhoto: require('./retrieve-listing-photo'),
+    createBooking: require('./create-booking')
     // subscribeListing: require('./subscribe-listing'),
     // retrieveSubscribedListings: require('./retrieve-subscribed-listings'),
     // deleteBooking: require('./delete-booking')
