@@ -1,7 +1,7 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
 const Feature = require('./feature')
 const Comment = require('./comment')
-const Polygon = require('./polygon')
+const Point = require('./point')
 
 
 
@@ -20,10 +20,11 @@ module.exports = new Schema({
     },
     resort: String,
     location: {
-        type: Polygon,
+        type: Point,
         required: true
     },
     image: String,
+    rating: Number,
     features: [Feature],
     description: String,
     creator: { type: ObjectId, ref: 'User' },

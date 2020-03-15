@@ -3,6 +3,6 @@ module.exports = {
     user: require('./user'),
     park: require('./park'),
     feature: require('./feature'),
-    polygon: require('./polygon'),
+    // polygon: require('./polygon'),
     point: require('./point')
 }
