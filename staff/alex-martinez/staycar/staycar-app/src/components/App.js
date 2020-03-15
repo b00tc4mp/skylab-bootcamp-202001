@@ -2,8 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { isLoggedIn } from '../logic'
 import { Context } from './ContextProvider'
 
-import Header from './Header'
-import Home from './Home'
+import { Header, Home, Map, EntryCar, ExitCar, Report, Login } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -23,14 +22,14 @@ export default withRouter(function({history}) {
     }
   }, []) */
 
-  return (<div>
+  return <div>
 
     <Header />
     <Home />
-  
+    <EntryCar />
   </div>
     
-  )
+  
 })
 
 
