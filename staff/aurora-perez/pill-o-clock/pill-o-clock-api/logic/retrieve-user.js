@@ -1,6 +1,6 @@
 const { validate } = require('pill-o-clock-utils')
 const { models: { User } } = require('pill-o-clock-data')
-const { NotAllowedError } = require('pill-o-clock-errors')
+const { NotAllowedError, NotFoundError } = require('pill-o-clock-errors')
 
 module.exports = id => {
     validate.string(id, 'id')

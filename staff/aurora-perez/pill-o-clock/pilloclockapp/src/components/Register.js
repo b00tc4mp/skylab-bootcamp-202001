@@ -23,7 +23,7 @@ function Register ({onSubmit, onToLogin, error}) {
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Gender (F /M /Non-binary)' onChangeText = {text => setGender(text.toLowerCase())}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Age' onChangeText = {text => setAge(parseInt(text))}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Phone number' onChangeText = {text => setPhone(text)}/>
-                <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (Pacient / Pharmacist)' onChangeText = {text => setProfile(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (patient / Pharmacist)' onChangeText = {text => setProfile(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Password' secureTextEntry={true} onChangeText= {text => setPassword(text)}/>
                 

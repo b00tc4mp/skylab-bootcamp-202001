@@ -1,17 +1,19 @@
 const { random, floor } = Math
 const { mongoose, models: { User } } = require('../data')
+const { NotAllowedError, NotFoundError } = require('../errors')
 
-import login  from './login'
+import login from './login'
 
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
 
+
 describe('login', () => {
- let name, password, gender, age, phone, profile, email, password
+
+    let name, surname, gender, age, phone, profile, email, password
     
     const GENDERS = ['male', 'female','non-binary']
-    
-    
+
     beforeAll(async () => {
         await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
@@ -20,7 +22,7 @@ describe('login', () => {
 
     beforeEach(() => {
         name = `name-${random()}`
-        password = `password-${random()}`
+        surname = `surname-${random()}`
         phone = `${random()}`
         age = floor(random() * 100)
         gender = GENDERS[floor(random() * GENDERS.length)]
@@ -31,107 +33,131 @@ describe('login', () => {
 
     describe('when user already exists', () => {
         let _id
-
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
-
-            await User.create({ name, password, gender, age, phone, profile, email, password: _password})
+            await User.create({name, surname, gender, age, phone, profile, email, password: _password})
                 .then(user => _id = user.id)
         })
 
-        it('should succeed on correct and valid and right credentials', () =>
-            login(email, password)
-                .then(token => {
+        it('should succeed on correct and valid and right credentials', async () => {
+            const token = await login(email, password)
+            expect(token).toBeDefined()
+            expect(token.length).toBeGreaterThan(0)
+            expect(typeof token).toEqual('string')
+            const sub = JSON.parse(atob(token.split('.')[1])).sub
+            expect(sub).toEqual(_id)
+        })
 
-                    expect(typeof token).toBe('string')
-                    expect(token.length).toBeGreaterThan(0)
+        it('should fail to auth on wrong email', async () => {
+            let _error
+            try {
+                await login(`wrong-${email}`, password)
+            } catch (error) {
+                _error = error
+            }
+            expect(_error).toBeDefined()
+            expect(_error).toBeInstanceOf(NotAllowedError)
+            expect(_error.message).toEqual('wrong credentials')
+        })
 
-                    const { sub } = JSON.parse(atob(token.split('.')[1]))
+        it('should fail to auth on wrong password', async () => {
+            let _error
+            try {
+                await login(email, `${password}-wrong`)
+            } catch (error) {
+                _error = error
+            }
+            expect(_error).toBeDefined()
+            expect(_error).toBeInstanceOf(NotAllowedError)
+            expect(_error.message).toEqual('wrong credentials')
+        })
 
-                    expect(sub).toBe(_id)
-                })
-        )
-
-        it('should fail on incorrect email', () =>
-            login(`wrong-${email}`, password)
-                .then(()=> {throw new Error ('you shoul not be at this point')})
-                .catch(error => expect(error.message).toBe('wrong credentials'))
-        )
-
-        it('should fail on incorrect password', () =>
-            login(email, `wrong-${password}`)
-                .then(()=> {throw new Error ('you shoul not be at this point')})
-                .catch(error => expect(error.message).toBe('wrong credentials'))
-        )
+        afterEach(() => User.deleteMany().then(() => {}))
     })
-
-    describe('trying to register on invalid data', () => {
-        it('should fail on a non valid email', async () => {
+  
+ 
+    describe('unhappy paths', () => {
+        it('should fail on a non string email', async () => {
             let _error
             email = 45438
-            
+
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`email ${email} is not a string`)
-            
+
             email = false
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`email ${email} is not a string`)
-            
+
+
             email = undefined
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`email ${email} is not a string`)
-            
+            } expect(_error.message).toBe(`email is empty`)
+
             email = []
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`email ${email} is not a string`)
         })
+
+        it('should fail on a non valid email address', async () => {
+            let _error
+            email = 'asjdvsdhjv'
+
+            try {
+                await login(email, password)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${email} is not an e-mail`)
+
+            email = '123@a'
+            try {
+                await login(email, password)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${email} is not an e-mail`)
+        })
+
 
         it('should fail on a non string password', async () => {
             let _error
             password = 45438
-
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`password ${password} is not a string`)
-            
             password = false
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`password ${password} is not a string`)
-            
             password = undefined
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`password ${password} is not a string`)
-            
+            } expect(_error.message).toBe(`password is empty`)
             password = []
             try {
-                await login( email, password)
+                await login(email, password)
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`password ${password} is not a string`)
         })
     })
 
-    // TODO more happies and unhappies
-
+    
     afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

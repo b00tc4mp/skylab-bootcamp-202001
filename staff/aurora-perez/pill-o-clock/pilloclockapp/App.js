@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert } from 'react-native'
 
 import { Register, Login } from './src/components'
-import { registerUser, login } from './src/logic'
+import { registerUser, login, retrieveUser } from './src/logic'
 
 export default function App () {
   const [view, setView] = useState('register')
   const [error, setError] = useState(null)
+  const [token, setToken] = useState()
+  const [user, setUser] = useState()
 
   function __handleError__(message) {
     setError(message)
@@ -32,8 +34,11 @@ export default function App () {
 
   async function handleLogin ({email, password}){
     try {
-      const response = await login(email, password)
-      Alert.alert('pupuuu')
+      const _token = await login(email, password)
+      setToken(_token)
+
+      const loggedUser = await retrieveUser(_token)
+      setUser(loggedUser)
 
     }catch({message}){
       __handleError__(message)
@@ -49,7 +54,7 @@ export default function App () {
   return(<View style={styles.container}>
     { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
     { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
-
+    {/* { view === 'landing ' && usere.type === 'patient' && <Patient> } */}
     </View>
 
   )
