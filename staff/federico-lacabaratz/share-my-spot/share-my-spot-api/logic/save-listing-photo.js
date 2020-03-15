@@ -30,9 +30,8 @@ module.exports = function (userId, listingId, file, filename) {
         if (!listing) throw new NotFoundError(`ad with id ${listingId} not found`)
 
         const dir = `./data/listings/${listingId}`
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true }, err => { })
-        }
+        if (!fs.existsSync(dir)) throw new NotFoundError(`folder in ${dir} hasn't been created yet`)
+
         let saveTo = path.join(__dirname, `../data/listings/${listingId}/${filename}.jpg`)
         return file.pipe(fs.createWriteStream(saveTo))
     })()
