@@ -19,11 +19,10 @@ describe('retrieveGameStatus', () => {
         username = `username-${random()}`
         password = `password-${random()}`
         name = `name-${random()}`
-        owner = username
     })
 
     describe('when user and game already exists', () => {
-        let gameId
+        let gameId, playerId
         
         beforeEach(async() => {
             let users = []
@@ -31,18 +30,21 @@ describe('retrieveGameStatus', () => {
 
             for (let i = 0; i < 10; i++)
                 await User.create({ username, password })
-                    .then(user => users.push(user.id))
+                    .then(user => {
+                        owner = user.id
+                        playerId = user.id
+                        users.push(user.id)
+                    })
 
                 return Game.create({ name, owner })
                 .then(game => {
                     game.players = users
                     game.players.shuffle()
                     gameId = game.id
-                    game.players.shuffle()
-                    game.combinationGame.push(combination)
+                    game.pushCombination.push(combination)
                     game.date = new Date()
-                    game.currentPlayer = game.players[0]//indice
-                    game.status = "preStarted"
+                    game.currentPlayer = game.players[0]
+                    game.status = "started"
                     game.timeRemaining = 40
                     return game.save()
                 })
@@ -50,7 +52,7 @@ describe('retrieveGameStatus', () => {
 
         it('should succeed on valid retrieved data', async () => {
 
-        const game = await retrieveGameStatus(gameId)
+        const game = await retrieveGameStatus(playerId, gameId)
         console.log(game)
             
         })

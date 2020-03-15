@@ -2,10 +2,10 @@ const { retrieveGameStatus } = require('../../logic')
 const { NotFoundError ,ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
-    const { params: { gameId }, payload: {sub: playerId} } = req
+    const { params: { gameId }, body: { combination } } = req
 
     try {
-        retrieveGameStatus(playerId, gameId)
+        retrieveGameStatus(gameId, combination)
             .then(status => 
                 res.status(200).json(status)
             )

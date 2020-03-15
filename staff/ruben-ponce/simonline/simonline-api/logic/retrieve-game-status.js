@@ -1,49 +1,52 @@
 const validate = require("simonline-utils/validate");
-const {
-  models: { User, Game }
-} = require("simonline-data");
-const { NotFoundError, NotAllowedError } = require("simonline-errors");
-var moment = require("moment");
+const { models: { User, Game } } = require("simonline-data");
+const { NotFoundError } = require("simonline-errors");
+// var moment = require("moment");
 
 module.exports = (playerId, gameId) => {
   validate.string(playerId, "playerId");
   validate.string(gameId, "gameId");
 
-  // TODO User.findById(playerId) => check the user exists
-
-  return Game.findById(gameId)
-    .then(game => {
-      if (!game) throw new NotFoundError(`game with id ${gameId} not found`);
-
-      // TODO check user is inside this game (that means checking this userId is inside game.players, otherwise throw error)
-
-      const { status } = game;
-
-      if (status === "started") {
-        const { turnStart, turnTimeout } = game;
-
-        const timeNow = new Date();
-
-        const elapsedTime = (timeNow - turnStart) / 1000;
-
-        /* 40sec countdown on turn */
-        if (elpasedTime > turnTimeout) {
-          game.watching.push(game.currentPlayer);
-          //var i = game.players.indexOf(game.currentPlayer)
-          //game.players.splice(i,1)
-
-          // TODO check if (game.watching === game.players.length - 1) then status = 'finished'
-          // TODO search next player in game.players and then set its id here
-          game.currentPlayer = game.players[0];
-          // REDO
-          game.turnStart = new Date();
-
-          /* Matching betwen combinationPlayer and combinationGame */
-          return game.save();
-        }
-      }
-
-      return game;
+  return User.findById(playerId)
+    .then(user => {
+        if(!user) throw new NotFoundError(`player with id ${playerId} not found`)
     })
-    .then(game => game);
+    .then(() => {
+        return Game.findById(gameId)
+          .then(game => {
+            if (!game) throw new NotFoundError(`game with id ${gameId} not found`);
+      
+            if(!game.players.includes(playerId)) throw new NotFoundError(`player ${playerId}, not joined on game`)
+      
+            const { status } = game;
+      
+            if (status === "started") {
+              const { turnStart, turnTimeout, currentPlayer, players, watching, status } = game;
+      
+              const timeNow = new Date();
+      
+              const elapsedTime = (timeNow - turnStart) / 1000;
+      
+              /* 40sec countdown on turn */
+              if (elapsedTime > turnTimeout) {
+                watching.push(currentPlayer);
+                var j = players.indexOf(currentPlayer)
+      
+                if(players.length === (watching.length -1)) return status = 'finished'
+
+                for (var i = j; i < players.length; i++) {
+                    if(!players[j+1]) i = 0;
+                    if(!watching.includes(players[i])) return currentPlayer = players[i]
+                }
+
+                turnStart = new Date();
+      
+                /* Matching betwen combinationPlayer and combinationGame */
+                return game.save();
+              }
+            }
+            return game;
+          })
+          .then(game => game);
+    })
 };

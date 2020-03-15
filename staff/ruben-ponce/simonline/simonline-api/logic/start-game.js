@@ -8,14 +8,12 @@ module.exports = (playerId, gameId) => {
     validate.string(playerId, 'playerId')
     validate.string(gameId, 'gameId')
 
-    // TODO User.findById(playerId)
-
     return Game.findById(gameId)
     .populate('players', 'username id')
         .then((game) => {
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            // TODO check playerId is game.owner (not any other player than this one)
+            if(!game.owner.includes(playerId)) throw new NotAllowedError(`only the owner ${playerId} can start game`)
 
             if (game.status === "started") throw new NotAllowedError(`game with id ${gameId} is started`)
             

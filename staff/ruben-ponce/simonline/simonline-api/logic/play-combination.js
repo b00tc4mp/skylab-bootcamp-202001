@@ -1,4 +1,16 @@
+const validate = require("simonline-utils/validate");
+const { models: { User, Game } } = require("simonline-data");
+const { NotFoundError } = require("simonline-errors");
+
 module.exports = (playerId, combination) => {
+    validate.string(playerId, 'playerId')
+    validate.type(combination, 'combination', Object)
+
+    return Game.find({players: ObjectId(playerId)})
+        .then(game => {
+            console.log(game)
+        })
+
     // TODO when user plays on time (before timeout) and matches the combination, then game changes to next player
     /*
     - search the next player id in game.players that is not in game.watching (!game.watching.includes(id))
