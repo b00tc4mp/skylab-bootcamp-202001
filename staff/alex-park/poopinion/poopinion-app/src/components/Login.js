@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Feedback from './Feedback'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, ScrollView, Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, ScrollView, KeyboardAvoidingView, Image } from 'react-native'
 
 function Login({ onSubmit, error, goToRegister, goToLanding }) {
     const [email, setEmail] = useState()
@@ -8,24 +8,27 @@ function Login({ onSubmit, error, goToRegister, goToLanding }) {
 
     return (<>
         <ScrollView>
-            <View style={styles.container}>
-                <Text style={styles.header}>Login</Text>
-                <TouchableOpacity>
-                    <TextInput style={styles.form} placeholder='youremail@mail.com' onChangeText={(text) => setEmail(text)} />
-                    <TextInput style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
-                </TouchableOpacity>
-                {error && <Feedback level='warn' message={error}/>}
-                <Text style={styles.button} onPress={() => onSubmit(email, password)}>💩 💩 💩 Log in! 💩 💩 💩</Text>
-                <View style={styles.navButtons}>
-                    <View style={styles.left}>
-                        <Button title='Sign Up' onPress={goToRegister} />
-                    </View>
+            <KeyboardAvoidingView behavior='position'>
+                <View style={styles.container}>
+                    <Image source={require('../../assets/icon.png')} style={styles.image}/>
+                    <Text style={styles.header}>Login</Text>
+                    <TouchableOpacity>
+                        <TextInput style={styles.form} placeholder='youremail@mail.com' onChangeText={(text) => setEmail(text)} />
+                        <TextInput style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
+                    </TouchableOpacity>
+                    {error && <Feedback level='warn' message={error} />}
+                    <Text style={styles.button} onPress={() => onSubmit(email, password)}>💩 💩 💩 Log in! 💩 💩 💩</Text>
+                    <View style={styles.navButtons}>
+                        <View style={styles.left}>
+                            <Button title='Sign Up' onPress={goToRegister} />
+                        </View>
 
-                    <View style={styles.right}>
-                        <Button title='Continue as Guest' onPress={goToLanding}/>
+                        <View style={styles.right}>
+                            <Button title='Continue as Guest' onPress={goToLanding} />
+                        </View>
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </ScrollView>
     </>)
 }
@@ -35,8 +38,12 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '90%',
         flexDirection: 'column',
-        marginTop: 100,
+        marginTop: 40,
         marginHorizontal: '5%'
+    },
+    image: {
+        flex: 1,
+        alignSelf: 'center'
     },
     header: {
         fontSize: 40

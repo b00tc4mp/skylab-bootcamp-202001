@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Feedback from './Feedback'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, ScrollView, Image } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, ScrollView, KeyboardAvoidingView } from 'react-native'
 
 function Register({ onSubmit, error, goToLogin, goToLanding }) {
     const [name, setName] = useState()
@@ -12,28 +12,30 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
 
     return (<>
         <ScrollView>
-            <View style={styles.container}>
-                <Text style={styles.header}>Register</Text>
-                <TouchableOpacity style={styles.formContainer}>
-                    <TextInput style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
-                    <TextInput style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
-                    <TextInput style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
-                    <TextInput style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
-                    <TextInput style={styles.form} placeholder='Gender' onChangeText={(text) => setGender(text)} />
-                    <TextInput style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
-                </TouchableOpacity>
-                {error && <Feedback level='warn' message={error}/>}
-                <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 💩 💩 Submit 💩 💩 💩</Text>
-                <View style={styles.navButtons}>
-                    <View style={styles.left}>
-                        <Button title='Go to login' onPress={goToLogin} />
-                    </View>
+            <KeyboardAvoidingView behavior='position'>
+                <View style={styles.container}>
+                    <Text style={styles.header}>Register</Text>
+                    <TouchableOpacity style={styles.formContainer}>
+                        <TextInput style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
+                        <TextInput style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
+                        <TextInput style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
+                        <TextInput style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
+                        <TextInput style={styles.form} placeholder='Gender' onChangeText={(text) => setGender(text)} />
+                        <TextInput style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
+                    </TouchableOpacity>
+                    {error && <Feedback level='warn' message={error} />}
+                    <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 💩 💩 Submit 💩 💩 💩</Text>
+                    <View style={styles.navButtons}>
+                        <View style={styles.left}>
+                            <Button title='Go to login' onPress={goToLogin} />
+                        </View>
 
-                    <View style={styles.right}>
-                        <Button title='Continue as Guest' onPress={goToLanding} />
+                        <View style={styles.right}>
+                            <Button title='Continue as Guest' onPress={goToLanding} />
+                        </View>
                     </View>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         </ScrollView>
     </>)
 }

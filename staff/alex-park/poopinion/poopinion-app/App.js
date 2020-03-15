@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground, ScrollView } from 'react-native';
 import {
   Register,
   Login,
-  Landing
+  Landing,
+  NavigationBarTop,
+  NavigationBarBottom
 } from './src/components'
 
 import {
@@ -20,6 +22,7 @@ export default function App() {
   const [error, setError] = useState(null)
   const [token, setToken] = useState()
   const [user, setUser] = useState()
+  const [goLanding, setGoLanding] = useState(false)
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -52,6 +55,7 @@ export default function App() {
       const retrievedUser = await retrieveUser(response)
       setUser(retrievedUser)
       setToken(response)
+      setGoLanding(true)
       setView('landing')
 
 
@@ -60,8 +64,23 @@ export default function App() {
     }
   }
 
+  async function handleQuerySearch(query) {
+    try {
+      if (!query || typeof query === 'undefined') {
+        await Alert.alert('You have not added any query 🚽...')
+
+      } else {
+        await Alert.alert(`this is a search for ${query}`)
+      }
+
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
+
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
+    setGoLanding(false)
     setError(null)
     setToken()
     setUser()
@@ -69,6 +88,7 @@ export default function App() {
   }
 
   function handleGoToRegister() {
+    setGoLanding(false)
     setError(null)
     setToken()
     setUser()
@@ -76,21 +96,50 @@ export default function App() {
   }
 
   function handleGoToLanding() {
+    setGoLanding(true)
     setError(null)
     setView('landing')
   }
 
+  function handleGoToFavorites() {
+    Alert.alert('This button will lead to Favorites! 💖🚽💖')
+  }
+
+  function handleGoToProfile () {
+    if(!user) {
+      Alert.alert('You are not logged in yet!')
+    } else {
+      Alert.alert(`This button will lead to ${user.name}'s profile`)
+    }
+  }
+
   // THE RENDER ITSELF
   return (<View style={styles.container}>
-    {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
-    {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
-    {view === 'landing' && <Landing user={user} goToLogin={handleGoToLogin} lat={latitude} lng={longitude} />}
+    <ImageBackground style={styles.image} source={require('./assets/background.png')}>
+      {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
+      <ScrollView style={styles.content}>
+        {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+        {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
+        {view === 'landing' && <Landing user={user} lat={latitude} lng={longitude} />}
+      </ScrollView>
+      {goLanding && <NavigationBarBottom style={styles.navbar} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile}/>}
+    </ImageBackground>
   </View>);
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignContent: 'center',
+    flexDirection: 'column'
+  },
+  image: {
+    width: '100%',
+    height: '100%'
+  },
+  content: {
+    flex: 1
+  },
+  navbar: {
+    flex: 1
   }
 });
