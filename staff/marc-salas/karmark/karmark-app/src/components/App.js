@@ -5,14 +5,16 @@ import Page from './Page'
 import {registerUser} from '../logic'
 import { Context } from './ContextProvider'
 
+
 function App() {
   const [state, setState] = useContext(Context)  
+  const {page , error} = state
   
   useEffect(() => {
     const {token} = sessionStorage
 
     token ? setState({ token, page: 'home' }) : setState({ page: 'register' })    
-    debugger
+    
   })
 
   async function handleRegister(name, surname, username, password){
@@ -25,8 +27,6 @@ function App() {
     }
   }
   
-const {page, error} = state
-debugger
   return <div className="app">
     <Page name={page}>
       {page === 'register' && <Register onSubmit={handleRegister} error={error}/>}
