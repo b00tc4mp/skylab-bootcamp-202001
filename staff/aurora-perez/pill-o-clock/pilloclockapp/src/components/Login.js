@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Button } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button } from 'react-native'
 
 
 function Login ({onSubmit, toRegister, error}) {
@@ -9,12 +9,9 @@ function Login ({onSubmit, toRegister, error}) {
 
     return (
         <ScrollView>
-        <Image
-            style={styles.logo}
-            source={require('../../images/logo.png')}
-            />
+        <Image style={styles.logo} source={require('../../images/logo.png')}/>
             <View style={styles.container}>
-            <TouchableOpacity>
+            
                 <Text style = {[styles.text, styles.title]}>Login</Text>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Password' secureTextEntry={true} onChangeText= {text => setPassword(text)}/>
@@ -22,7 +19,7 @@ function Login ({onSubmit, toRegister, error}) {
                 <Text style = {[styles.text, styles.toRegister]} onPress={()=>toRegister()}>Are you not registered yet? Go to Register!</Text>
            
                 {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
-            </TouchableOpacity>
+            
             </View>
         </ScrollView>
     )

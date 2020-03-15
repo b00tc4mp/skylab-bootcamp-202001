@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, Image, Button, Picker } from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, Picker } from 'react-native'
 
 
 function Register ({onSubmit, onToLogin, error}) {
@@ -16,14 +16,14 @@ function Register ({onSubmit, onToLogin, error}) {
     return (
         <ScrollView>
             <View style={styles.container}>
-            <TouchableOpacity>
+            
                 <Text style = {[styles.text, styles.title]}>Register</Text>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Name' onChangeText = {text => setName(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Surname' onChangeText = {text => setSurname(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Gender (F /M /Non-binary)' onChangeText = {text => setGender(text.toLowerCase())}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Age' onChangeText = {text => setAge(parseInt(text))}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Phone number' onChangeText = {text => setPhone(text)}/>
-                <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (patient / Pharmacist)' onChangeText = {text => setProfile(text)}/>
+                <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (Patient / Pharmacist)' onChangeText = {text => setProfile(text.toLowerCase())}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Password' secureTextEntry={true} onChangeText= {text => setPassword(text)}/>
                 
@@ -32,7 +32,7 @@ function Register ({onSubmit, onToLogin, error}) {
                 <Text style = {[styles.text, styles.toLogin]} onPress={()=>onToLogin()}>Are you already registered? Go to Login!</Text>
            
                 {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
-            </TouchableOpacity>
+            
             </View>
             
         </ScrollView>
