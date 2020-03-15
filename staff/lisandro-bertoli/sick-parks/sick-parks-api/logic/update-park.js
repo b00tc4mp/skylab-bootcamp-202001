@@ -1,5 +1,5 @@
 const { validate } = require('sick-parks-utils')
-const { models: { Park } } = require('sick-parks-data')
+const { models: { Park, Location, Feature } } = require('sick-parks-data')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 
@@ -16,9 +16,30 @@ module.exports = (userId, parkId, updates) => {
 
         for (key in updates) {
             if (!park[key]) throw new NotAllowedError(`field ${key} is not a valid`)
+            if (key === 'location') {
+                updates[key] = new Location({ coordinates: updates[key].coordinates })
+
+            }
+
+            if (key === 'features') {
+
+                updates[key].forEach(feature => {
+
+                    if (feature.location) feature.location = new Location({ coordinates: feature.location.coordinates })
+
+                    feature = new Feature(feature)
+
+
+                })
+
+
+            }
+
             park[key] = updates[key]
         }
 
         await park.save()
+
+        return
     })()
 }

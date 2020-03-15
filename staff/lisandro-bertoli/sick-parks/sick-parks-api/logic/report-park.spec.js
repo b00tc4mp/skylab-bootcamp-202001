@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
-const { mongoose, models: { User, Park } } = require('sick-parks-data')
+const { mongoose, models: { User, Park, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { random, floor } = Math
 const reportPark = require('./report-park')
@@ -31,33 +31,7 @@ describe('reportPark', () => {
         parkName = `parkName-${random()}`
         size = `l`
         level = `begginer`
-        location = {
-            "type": "Polygon",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ],
-                        [
-                            1.42547607421875,
-                            42.31997030030749
-                        ],
-                        [
-                            1.28265380859375,
-                            42.45791402988027
-                        ],
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ]
-                    ]
-                ]
-            }
-        }
+        location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
     })
 
     describe('when user and park ids are valid and exist', () => {

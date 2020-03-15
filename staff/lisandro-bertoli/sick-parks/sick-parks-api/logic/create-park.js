@@ -1,4 +1,4 @@
-const { models: { User, Park, Feature } } = require('sick-parks-data')
+const { models: { User, Park, Feature, Location } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
@@ -23,8 +23,16 @@ module.exports = (userId, { park, features }) => {
         const _park = await Park.findOne({ name: park.name })
         if (_park) throw new NotAllowedError(`park '${_park.name}' already exists`)
 
+        park.location = new Location({ coordinates: park.location.coordinates })
+
+
         const newPark = await Park.create(park)
-        const newFeatures = features.map(feature => new Feature(feature))
+        const newFeatures = features.map(feature => {
+
+            feature.location = new Location({ coordinates: feature.location.coordinates })
+
+            return new Feature(feature)
+        })
 
         newPark.features.push(...newFeatures)
         newPark.creator = user

@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { Park, User } } = require('sick-parks-data')
+const { mongoose, models: { Park, User, Location } } = require('sick-parks-data')
 const { random } = Math
 const createPark = require('./create-park')
 
@@ -20,6 +20,9 @@ describe('createPark', () => {
     beforeEach(() => {
         featureName = `rail`
         featureSize = `l`
+        featureLocation = {
+            coordinates: [random() * 15 + 1, random() * 15 + 1]
+        }
 
         userName = `name${random()}`
         surname = `surname${random()}`
@@ -32,41 +35,15 @@ describe('createPark', () => {
         park.level = `intermediate`
         park.resort = `resort${random()}`
         park.description = `description${random()}`
-        park.location = {
-            geometry: {
-                type: "Polygon",
-                coordinates: [
-                    [
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ],
-                        [
-                            1.42547607421875,
-                            42.31997030030749
-                        ],
-                        [
-                            1.28265380859375,
-                            42.45791402988027
-                        ],
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ]
-                    ]
-                ]
-            }
-        }
+        park.location = { coordinates: [random() * 15 + 1, random() * 15 + 1] }
     })
 
     describe('when user exists', () => {
-
-
         let userId
         beforeEach(async () => {
             const { id } = await User.create({ name: userName, surname, email, password })
             userId = id
-            features.push({ name: featureName, size: featureSize })
+            features.push({ name: featureName, size: featureSize, location: featureLocation })
         })
 
         it('should create a new park', async () => {
@@ -78,7 +55,8 @@ describe('createPark', () => {
             expect(_park.level).to.equal(park.level)
             expect(_park.flow).to.equal(park.flow)
             expect(_park.resort).to.equal(park.resort)
-            expect(_park.location).to.deep.equal(park.location)
+
+            expect(_park.location.coordinates).to.deep.equal(park.location.coordinates)
             expect(_park.description).to.deep.equal(park.description)
             expect(_park.creator.toString()).to.equal(userId)
         })
