@@ -15,9 +15,10 @@
     "node-fetch": "^2.6.0",
     "poopinion-data": "file:../poopinion-data",
     "poopinion-utils": "file:../poopinion-utils",
-    "react": "~16.9.0",
+    "react": "16.9.0",
     "react-dom": "~16.9.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native": "0.61.5",
+    "react-native-maps": "0.27.0",
     "react-native-web": "~0.11.7"
   },
   "devDependencies": {

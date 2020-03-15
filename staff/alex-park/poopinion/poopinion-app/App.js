@@ -82,8 +82,8 @@ export default function App() {
 
   // THE RENDER ITSELF
   return (<View style={styles.container}>
-    {view === 'login' && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
-    {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
+    {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+    {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
     {view === 'landing' && <Landing user={user} goToLogin={handleGoToLogin} lat={latitude} lng={longitude} />}
   </View>);
 }
