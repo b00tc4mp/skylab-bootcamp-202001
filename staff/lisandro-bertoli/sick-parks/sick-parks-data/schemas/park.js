@@ -24,6 +24,7 @@ module.exports = new Schema({
         required: true
     },
     image: String,
+    rating: Number,
     features: [Feature],
     description: String,
     creator: { type: ObjectId, ref: 'User' },
