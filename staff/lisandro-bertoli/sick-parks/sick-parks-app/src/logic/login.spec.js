@@ -30,7 +30,7 @@ describe('login', () => {
 
         it('should succeed on correct credentials', async () => {
 
-            const returnValue = await login(email, password)
+            const returnValue = await login({ email, password })
 
             expect(returnValue).toBeUndefined()
 

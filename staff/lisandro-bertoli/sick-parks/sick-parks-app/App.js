@@ -10,6 +10,7 @@ export default function App() {
 
 	const handleLogin = async (user) => {
 		try {
+			console.log(user.email)
 			await login(user)
 
 			setView('search')
@@ -21,10 +22,12 @@ export default function App() {
 	const handleRegister = async (newUser) => {
 
 		try {
+
 			await registerUser(newUser)
 
 			setView('login')
 		} catch ({ message }) {
+			console.log('wrong')
 			setError(message)
 		}
 	}
@@ -33,8 +36,9 @@ export default function App() {
 		<View style={styles.container}>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
 			<Image source={require('./assets/logo.png')} style={styles.logo}></Image>
-			{view === 'login' && <Login error={error} onsSubmit={handleLogin} />}
+			{view === 'login' && <Login error={error} onSubmit={handleLogin} />}
 			{view === 'register' && <Register error={error} onSubmit={handleRegister} />}
+			{view === 'search' && <Text>Logged In</Text>}
 		</View>
 	)
 }

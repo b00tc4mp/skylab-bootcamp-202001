@@ -13,7 +13,7 @@ export default function Login({ onSubmit, error }) {
             <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} />
 
             <Text style={styles.danger}>{error || ''}</Text>
-            <Button text='Login' type='main' onPress={() => onSubmit({ email, password })} />
+            <Button text='Login' type='main' onPress={() => { console.log('pressed'), onSubmit({ email, password }) }} />
         </View>
     )
 }
