@@ -11,7 +11,7 @@ module.exports = new Schema({
     publishedListings: {
         type: [{ type: [ObjectId], ref: 'Listing' }]
     },
-    subscribedToListing: {
+    bookedListing: {
         type:
             [{ type: [ObjectId], ref: 'Listing' }]
     }

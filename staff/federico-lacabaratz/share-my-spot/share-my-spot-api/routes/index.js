@@ -9,13 +9,12 @@ const {
     retrievePublishedListings,
     updateListing,
     deleteListing,
-    subscribeListing
+    saveListingPhoto,
+    retrieveListingPhoto
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
-
 const bodyParser = require('body-parser')
-
 const jsonBodyParser = bodyParser.json()
 
 const router = new Router()
@@ -38,7 +37,13 @@ router.patch('/users/updateListing/:id', [jwtVerifierMidWare, jsonBodyParser], u
 
 router.delete('/users/deleteListing', [jwtVerifierMidWare, jsonBodyParser], deleteListing)
 
-// router.patch('/users/subscribeListing', [jwtVerifierMidWare, jsonBodyParser], subscribeListing)
+router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], createListing)
+
+router.post('/upload/:listingId', jwtVerifierMidWare, saveListingPhoto)
+
+router.get('/load/:listingId', retrieveListingPhoto)
+
+// router.patch('/users/:id/', [jwtVerifierMidWare, jsonBodyParser], subscribeListing)
 
 // router.get('/users/subscribedListings', jwtVerifierMidWare, retrieveSubscribedListings)
 
