@@ -3,6 +3,8 @@ const { expect } = require('chai')
 const { random } = Math
 const { mongoose, models: { User, Listing } } = require('share-my-spot-data')
 const createListing = require('./create-listing')
+var chai = require('chai')
+chai.use(require('chai-fs'))
 
 const { env: { TEST_MONGODB_URL } } = process
 
@@ -91,6 +93,7 @@ describe('createListing', () => {
                     expect(listing.surveillance).to.equal(surveillance)
                     expect(listing.isCovered).to.equal(isCovered)
                     expect(listing.publisher.toString()).to.equal(_id)
+                    expect(`../data/listings/${listing.id}`).to.exist
                 })
         )
     })

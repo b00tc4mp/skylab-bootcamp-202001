@@ -43,8 +43,8 @@ module.exports = (publisher, title, description, addressLocation, addressStNumbe
             user.publishedListings.push(listing.id)
 
             return Promise.all([user.save(), listing.save()])
-                // .then(() => fs.mkdirSync(filesDir, listing.id, (err) => {
-                //     if (err) throw err
-                // }))
+                .then(() => fs.mkdirSync(path.join(filesDir, listing.id), (err) => {
+                    if (err) throw err
+                }))
         })
 }
