@@ -1,20 +1,21 @@
-const { registerCompany, retrieveCompany, retrieveAllCompanies } = require('../../logic')
+const { registerCompany, retrieveCompany, retrieveAllCompanies, confirmCompany } = require('../../logic')
 const { asyncHandler } = require("../../middleware")
 
 module.exports = {
   register: asyncHandler(async (req, res, next) => {
-    await registerCompany(req.body)
-    res.json({ message: 'Company and User registered successfully' })
+    res.json({ email: await registerCompany(req.body) })
   }),
 
   retrieve: asyncHandler(async ({ params, query }, res, next) => {
-    const company = await retrieveCompany(params.id, query)
-    res.json({ company })
+    res.json({ company: await retrieveCompany(params.id, query) })
   }),
 
   retrieveAll: asyncHandler(async (req, res, next) => {
-    const companies = await retrieveAllCompanies(req.query)
-    res.json({ companies })
+    res.json({ companies: await retrieveAllCompanies(req.query) })
+  }),
+
+  confirm: asyncHandler(async ({ params: { id } }, res, next) => {
+    res.json({ message: await confirmCompany(id) })
   })
 
   // TODO after Bootcamp

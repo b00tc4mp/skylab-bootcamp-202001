@@ -12,6 +12,8 @@ module.exports = router
 
   .post('/companies', company.register)
   .post('/users/auth', user.authenticate)
+  
+  .patch('/companies/email/:id', company.confirm)
 
   .use(jwtVerify)
 

@@ -182,7 +182,7 @@ export default () => {
                   subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
                   subheaderTypographyProps={{ align: 'center' }}
-                  // action={tier.title === 'Pro' ? <StarIcon /> : null}
+                  // action={tier.title === 'Básico' ? <StarIcon /> : null}
                   className={classes.cardHeader}
                 />
                 <CardContent>

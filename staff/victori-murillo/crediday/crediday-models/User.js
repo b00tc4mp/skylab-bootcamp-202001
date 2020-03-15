@@ -49,7 +49,10 @@ const schema = new Schema({
     validate: {
       validator: (v) => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v),
       message: () => `Please add a valid email`
-    }
+    },
+    required: [function () {
+      return this.role === "owner" ? true : false
+    }, `This role must have an email`]
   },
 
   registrationDate: {

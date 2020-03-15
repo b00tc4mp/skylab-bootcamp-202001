@@ -1,53 +1,59 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@material-ui/core'
 import BusinessCenterIcon from '@material-ui/icons/BusinessCenter'
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import { makeStyles } from '@material-ui/core/styles'
 import { Copyright } from '.'
 import { useHistory } from "react-router-dom"
 
 import { Alert } from '@material-ui/lab'
-import { registerUser } from '../logic'
-
+import { registerCompany } from '../logic'
+import { Loader } from './presentational'
 
 export default () => {
   const classes = useStyles()
   const history = useHistory()
 
-  const [feedback, setFeedback] = useState()
   const [error, setError] = useState()
+  const [view, setView] = useState()
+  const [email, setEmail] = useState()
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    if (feedback) setTimeout(() => history.push('login'), 2000)
-    
-  }, [feedback])
+  //   if (feedback) setTimeout(() => history.push('login'), 3000)
+
+  // }, [feedback])
 
   const handleSubmit = async (e) => {
     try {
+      
       e.preventDefault()
+      setView('loader')
+      setError(undefined)
+
       const json = {
         companyName: e.target.company.value,
         username: e.target.username.value,
+        email: e.target.email.value,
         password: e.target.password.value,
         passwordValidation: e.target.passwordValidation.value
       }
 
-      const message = await registerUser(json)
-
-      setFeedback(message)
+      const email = await registerCompany(json)
+      setEmail(email)
 
     } catch (error) {
       setError(error.message)
-      setFeedback(undefined)
+      setEmail(undefined)
+    }
   }
-}
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <BusinessCenterIcon />
+          <EmojiTransportationIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Registrar Compañia
@@ -78,6 +84,19 @@ export default () => {
                 autoComplete="off"
               />
             </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Correo electrónico"
+                name="email"
+                autoComplete="off"
+              />
+            </Grid>
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -105,14 +124,25 @@ export default () => {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Quiero recibir notificaciones de actualizaciones."
+                label="Quiero recibir actualizaciones a mi correo."
               // label="I want to receive inspiration, marketing promotions and updates via email."
               />
             </Grid>
           </Grid>
 
-          {feedback && <Alert severity="success">Compañia registrada!</Alert>}
-          {error && !feedback && <Alert severity="error">{error}</Alert>}
+          { view === "loader" && !email && !error && <Loader /> }
+
+          {
+            email &&
+            <Alert severity="success">
+              <Link href="https://www.gmail.com" target="_blank" variant="body2" onClick={() => history.push('login')}>
+              Confirmar correo: {email.toLowerCase()}
+              </Link>
+            </Alert>
+          }
+
+          { error && <Alert severity='error'>{error}</Alert>}
+          
 
           <Button
             type="submit"
@@ -121,7 +151,7 @@ export default () => {
             color="primary"
             className={classes.submit}
           >
-            Registro
+            Crear mi cuenta
           </Button>
 
           <Grid container justify="flex-end">
@@ -142,7 +172,7 @@ export default () => {
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(5),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

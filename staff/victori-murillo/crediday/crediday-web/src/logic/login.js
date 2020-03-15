@@ -1,13 +1,11 @@
-// import { validate } from 'events-utils'
-// import { NotAllowedError } from 'events-errors'
-
+import validate from 'crediday-utils'
+import { NotAllowedError } from 'crediday-errors'
 const API_URL = process.env.REACT_APP_API_URL
-
 
 export default async ({username, password}) => {
   
-  // validate.string(username, 'username')
-  // validate.string(password, 'password')
+  validate.string(username, 'username')
+  validate.string(password, 'password')
 
   const response = await fetch(`${API_URL}/users/auth`, {
     method: 'POST',
@@ -26,8 +24,7 @@ export default async ({username, password}) => {
     const { error } = await response.json()
 
     if (status === 401) {
-      // throw new NotAllowedError(error)
-      throw new Error(error)
+      throw new NotAllowedError(error)
     }
 
     throw new Error(error)

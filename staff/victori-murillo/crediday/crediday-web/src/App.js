@@ -58,6 +58,9 @@ export default () => {
         <Route exact path="/login">
           <Login />
         </Route>
+        
+        <Route exact path="/login/:companyId" component={Login} />
+
         <Route exact path="/register">
           <Register />
         </Route>

@@ -41,7 +41,7 @@ module.exports = {
 
         if (min < 0 || max < 0) throw new ContentLength('Only positive numbers')
 
-        if (target.length < min) throw new ContentLength(`${name} must have at least ${min} characters`)
-        if (target.length > max) throw new ContentLength(`${name} must have maximum ${max} characters`)
+        if (target.length < min) throw new ContentLength(`${name} debe tener al menos ${min} caracteres`)
+        if (target.length > max) throw new ContentLength(`${name} debe tener máximo ${max} caracteres`)
     }
 }

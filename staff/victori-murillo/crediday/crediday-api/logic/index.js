@@ -2,6 +2,7 @@ module.exports = {
   registerCompany: require('./company/register-company'),
   retrieveCompany: require('./company/retrieve-company'),
   retrieveAllCompanies: require('./company/retrieve-all-companies'),
+  confirmCompany: require('./company/confirm-company'),
   
   registerUser: require('./user/register-user'),
   authenticateUser: require('./user/authenticate-user'),

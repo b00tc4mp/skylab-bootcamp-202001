@@ -3,47 +3,61 @@ const { Company, User } = require('crediday-models')
 const validate = require('crediday-utils')
 const sendMail = require('crediday-utils/send-mail')
 const { hash } = require('bcryptjs')
-const { env: { PASSWORD, GMAIL, GMAIL_PASSWORD, FROM_MAIL } } = process
+const { env: { GMAIL, GMAIL_PASSWORD } } = process
+const template = require('./confirm-template')
 
-module.exports = async ({ companyName, username }) => {
-  debugger
+module.exports = async ({ companyName, username, email, password }) => {
   // TO DO --> Improve with destructuring
   // TO DO --> validate with destructuring and every single key
 
-  validate.string(companyName, 'companyName')
-  validate.length(companyName, 'companyName', 3, 20)
+  debugger
 
-  validate.string(username, 'username')
-  validate.length(username, 'username', 3, 30)
+  validate.string(companyName, 'Nombre de Compañia')
+  validate.length(companyName, 'Nombre de Compañia', 3, 20)
 
-  validate.string(PASSWORD, 'password')
-  validate.length(PASSWORD, 'password', 5, 30)
+  validate.string(username, 'Nombre de Usuario')
+  validate.length(username, 'Nombre de Usuario', 3, 30)
+
+  validate.string(password, 'password')
+  validate.length(password, 'password', 3, 30)
 
   const companyFound = await Company.findOne({ name: companyName.toLowerCase() })
-  if (companyFound) throw new Error('The company name is already taken')
+  if (companyFound) throw new Error('El nombre de Compañia ya existe')
 
   const userFound = await User.findOne({ username: username.toLowerCase() })
-  if (userFound) throw new Error('The username is already taken')
+  if (userFound) throw new Error('El nombre de Usuario ya existe')
 
   const newCompany = await Company.create({ name: companyName.toLowerCase() })
 
   const newUser = await User.create({
     username: username,
     firstName: username,
-    company: newCompany.id,
+    email,
+    password: await hash(password, 10),
     role: 'owner',
-    password: await hash(PASSWORD, 10)
+    company: newCompany.id,
   })
 
   const confirmUser = await User.findOne({ _id: newUser._id })
   if (!confirmUser) throw new Error('User was not created')
 
-  const response = await sendMail(
-    {
-      mail: 'victori.developer@gmail.com',
-      password: GMAIL_PASSWORD
-    }, 
-    newCompany.name, newUser.username, PASSWORD)
-    
+  // let html = `<div style="display:flex;">
+  // <p>Nombre de la compañia: ${newCompany.name}</p>
+  // <p>Nombre del usuario: ${newUser.username}</p>
+  // <a href="http://localhost:3000/login/${newCompany.id}" target="_blank" >
+  //   <button>Click para confirmar tu Compañia</button>
+  // </a>
+  // </div>`
+
+  const html = template({
+    company: newCompany.name,
+    username: newUser.username,
+    companyId: newCompany.id
+  })
+
+  const response = await sendMail({ mail: GMAIL, password: GMAIL_PASSWORD }, email, html)
+
   if (response instanceof Error) throw new Error(response.message)
+
+  return email
 }

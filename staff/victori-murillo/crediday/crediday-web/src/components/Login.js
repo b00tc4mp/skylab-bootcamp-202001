@@ -1,26 +1,55 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@material-ui/core'
-import {LockOutlined as LockOutlinedIcon} from '@material-ui/icons'
+import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Alert } from '@material-ui/lab'
+import { flexbox } from '@material-ui/system';
+import { Types } from 'mongoose'
 
 import { Copyright } from '.'
 import { useHistory } from "react-router-dom"
 import { Context } from './ContextProvider'
 
 import login from '../logic/login'
+import { confirmCompany } from '../logic'
+import { Loader } from './presentational'
 
-export default () => {
+export default (props) => {
   const classes = useStyles()
   const history = useHistory()
 
-  const [feedback, setFeedBack] = useState()
+  const [feedback, setFeedback] = useState()
+  const [error, setError] = useState()
   const { setToken } = useContext(Context)
+
+  useEffect(() => {
+    history.push('/login')
+
+    let _companyId
+    const { match } = props
+
+    if (match) _companyId = match.params.companyId
+
+    if (Types.ObjectId.isValid(_companyId)) {
+      try {
+        confirmCompany(_companyId)
+          .then(() => {
+            setFeedback('confirmation')
+          })
+          .catch(console.log)
+      } catch (error) {
+        console.log(error.mesage)
+      }
+    }
+
+  }, [])
 
 
   async function handleLogin(e) {
     e.preventDefault()
+    setFeedback('loader')
+    setError(undefined)
 
     const json = {
       username: e.target.username.value,
@@ -29,16 +58,19 @@ export default () => {
 
     try {
       const token = await login(json)
+      console.log(token)
       sessionStorage.session = token
       localStorage.lastSession = new Date()
 
       setToken(token)
-      history.push('/drawer')
+
+      setTimeout(() => {
+        history.push('/drawer')
+      }, 2000)
       
 
     } catch (error) {
-      console.log(error.message)
-      setFeedBack(true)
+      setError(error.message)
     }
 
   }
@@ -57,6 +89,8 @@ export default () => {
         <CssBaseline />
 
         <div className={classes.paper} >
+
+          {feedback === 'confirmation' && <Alert severity="success">Compañia registrada exitosamente!</Alert>}
 
           <Avatar className={classes.avatar} onClick={() => history.push('/home')}  >
             <LockOutlinedIcon />
@@ -93,8 +127,9 @@ export default () => {
               label="Recordarme"
             />
 
-            {feedback === false && <Alert severity="error">Credenciales incorrectas!</Alert>}
-            {feedback === true && <Alert severity="success">Inicio de sesión exitoso!</Alert>}
+            {error && <Alert severity="error">{error}</Alert>}
+            {feedback === 'loader' && !error && <Loader/>}
+
 
             <Button
               type="submit"
@@ -105,15 +140,15 @@ export default () => {
             >
               Inicia Sesión
           </Button>
-            <Grid container>
-              <Grid item xs>
+            <Grid container >
+              <Grid item xs={6}>
                 <Link style={{ cursor: 'pointer' }} onClick={() => history.push('/')} variant="body2">
                   Olvidaste tu contraseña?
-              </Link>
+                </Link>
               </Grid>
-              <Grid item xs>
-                <Link style={{ cursor: 'pointer' }} onClick={() => history.push('/home')} variant="body2">
-                  No tienes cuenta? Registrate
+              <Grid style={{textAlign: 'right'}} item xs={6}>
+                <Link style={{ cursor: 'pointer'}} ml={4}  onClick={() => history.push('/home')} variant="body2">
+                  No tienes cuenta?
               </Link>
               </Grid>
             </Grid>
@@ -121,7 +156,7 @@ export default () => {
         </div>
 
       </Container>
-      <Box mb={5}>
+      <Box my={5}>
         <Copyright path='/home' color="#3f51b5" />
       </Box>
     </div>

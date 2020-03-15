@@ -10,6 +10,11 @@ module.exports = model('Company', new Schema({
     maxlength: [20, 'The name must have maximum 20 characters']
   },
 
+  emailConfirmation: {
+    type: Boolean,
+    default: false
+  },
+
   registrationdDate: {
     type: Date,
     default: Date.now

@@ -1,7 +1,9 @@
-import registerUser from './register-user'
+import registerCompany from './register-company'
 import login from './login'
+import confirmCompany from './confirmCompany'
 
 export {
-  registerUser,
-  login
+  registerCompany,
+  login,
+  confirmCompany
 }

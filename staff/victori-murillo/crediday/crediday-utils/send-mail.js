@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-module.exports = async(authMail, companyName, username, password) => {
+module.exports = async(authMail, to, html) => {
 
   async function main() {
 
@@ -14,14 +14,8 @@ module.exports = async(authMail, companyName, username, password) => {
     const mailOptions = {
       from: authMail.mail, // sender address
       to, // list of receivers
-      subject: 'Compañia registrada en Crediday.com', // Subject line
-      html: `<div>
-      <p>Nombre de la compañia: ${companyName}</p>
-      <p>Nombre del usuario: ${username}</p>
-      <p>Tu contraseña: ${password}</p>
-      <p><em>cambiar contraseña al ingresar al sistema</em></p>
-      
-      </div>`
+      subject: 'Confirmación de registro en CrediDay App', // Subject line
+      html
     };
 
     let info = await transporter.sendMail(mailOptions)

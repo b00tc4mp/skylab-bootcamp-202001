@@ -9,43 +9,7 @@ import { MoveToInbox as InboxIcon, Mail as MailIcon, Menu as MenuIcon } from '@m
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 import { useLocation, useHistory } from 'react-router-dom'
-
 import { ListCustomers } from '../'
-
-const drawerWidth = 230
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-  },
-  drawer: {
-    [theme.breakpoints.up('lg')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    [theme.breakpoints.up('lg')]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      // height: '0px'
-    },
-  },
-  menuButton: { // burger 3 lines
-    marginRight: theme.spacing(0),
-    [theme.breakpoints.up('lg')]: {
-      display: 'none',
-    },
-  },
-  toolbar: theme.mixins.toolbar,
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(0, 0, 0, 0)
-  },
-}))
 
 function ResponsiveDrawer(props) {
   const { container } = props
@@ -55,11 +19,12 @@ function ResponsiveDrawer(props) {
 
   const history = useHistory()
 
-  // let location = useLocation()
-  // console.log(location)
-
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
-  
+
+  const logout = () => {
+    sessionStorage.clear()
+    history.push('/login')
+  }
 
   const drawer = (
     <div>
@@ -71,22 +36,24 @@ function ResponsiveDrawer(props) {
 
       <Divider />
       <List>
-        {['Clientes', 'Créditos', 'Configuración'].map((text, index) => (
-          <ListItem button key={text} onClick={() => history.push('/drawer/clientes')} >
+        {['Clientes', 'Créditos', 'Salir'].map((text, index) => (
+          <ListItem button key={text} onClick={
+            text === 'Salir' ? logout : undefined
+          } >
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
       <Divider />
-      <List>
+      {/* <List>
         {['Semanal', 'Mensual', 'Control de Caja'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
         ))}
-      </List>
+      </List> */}
     </div>
   )
 
@@ -152,6 +119,41 @@ function ResponsiveDrawer(props) {
   )
 }
 
+const drawerWidth = 230
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  drawer: {
+    [theme.breakpoints.up('lg')]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    [theme.breakpoints.up('lg')]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+      // height: '0px'
+    },
+  },
+  menuButton: { // burger 3 lines
+    marginRight: theme.spacing(0),
+    [theme.breakpoints.up('lg')]: {
+      display: 'none',
+    },
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(0, 0, 0, 0)
+  },
+}))
+
 ResponsiveDrawer.propTypes = {
   /**
    * Injected by the documentation to work in an iframe.
@@ -159,5 +161,7 @@ ResponsiveDrawer.propTypes = {
    */
   container: PropTypes.any,
 }
+
+
 
 export default ResponsiveDrawer

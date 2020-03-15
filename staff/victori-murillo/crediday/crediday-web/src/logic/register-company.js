@@ -2,26 +2,27 @@ import validate from 'crediday-utils'
 // import { NotAllowedError } from 'events-errors'
 const API_URL = process.env.REACT_APP_API_URL
 
-
-export default async ({companyName, username, password, passwordValidation}) => {
+export default async ({companyName, username, email, password, passwordValidation}) => {
   validate.string(companyName, 'Nombre de Compañia')
   validate.string(username, 'Nombre de Usuario')
+  validate.string(email, 'Correo electónico')
+  validate.email(email)
   validate.string(password, 'Contraseña')
   validate.string(passwordValidation, 'Confirmación de Contraseña ')
 
   if (password !== passwordValidation) throw new Error('Las constraseñas deben coincidir')
-  // try {
+
     const response = await fetch(`${API_URL}/companies`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ companyName, username })
+      body: JSON.stringify({ companyName, username, email, password })
     })
   
     const { status } = response
   
     if (status === 201) {
-      const { message } = await response.json()
-      return message
+      const { email } = await response.json()
+      return email
     }
   
     if (status >= 400 && status < 500) {
@@ -36,11 +37,5 @@ export default async ({companyName, username, password, passwordValidation}) => 
     }
   
     throw new Error('server error')
-    
-  // } catch (error) {
-
-  //   console.log(error)
-  // }
-
 
 }
