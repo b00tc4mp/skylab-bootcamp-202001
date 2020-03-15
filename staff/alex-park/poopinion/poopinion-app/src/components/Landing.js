@@ -23,11 +23,17 @@ function Landing({ user, lat, lng }) {
                     }} />
                 </MapView>
 
-                <Image source={require('../../assets/icon.png')}/>
-                <Image source={require('../../assets/icon.png')}/>
-                <Image source={require('../../assets/icon.png')}/>
-                <Image source={require('../../assets/icon.png')}/>
-                <Image source={require('../../assets/icon.png')}/>
+                <View style={styles.posts}>
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                </View>
             </View>
         </ScrollView>
     </>)
@@ -40,14 +46,23 @@ const styles = StyleSheet.create({
     },
     header: {
         marginTop: 0,
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold',
         textAlign: 'center'
+    },
+    posts: {
+        flex: 1,
+        flexWrap: 'wrap',
+        flexDirection: 'row'
+    },
+    post: {
+        width: '45%',
+        margin: 10
     },
     mapStyle: {
         width: '95%',
         height: 175,
-        marginVertical: 30
+        marginVertical: 25
     },
 })
 

@@ -14,14 +14,14 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
         <ScrollView>
             <KeyboardAvoidingView behavior='position'>
                 <View style={styles.container}>
-                    <Text style={styles.header}>Register</Text>
                     <TouchableOpacity style={styles.formContainer}>
-                        <TextInput style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
-                        <TextInput style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
-                        <TextInput style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
-                        <TextInput style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
-                        <TextInput style={styles.form} placeholder='Gender' onChangeText={(text) => setGender(text)} />
-                        <TextInput style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
+                        <Text style={styles.header}>Register</Text>
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Gender' onChangeText={(text) => setGender(text)} />
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                     </TouchableOpacity>
                     {error && <Feedback level='warn' message={error} />}
                     <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 💩 💩 Submit 💩 💩 💩</Text>
@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
         marginHorizontal: '5%'
     },
     header: {
-        fontSize: 40
+        fontSize: 40,
+        fontWeight: 'bold'
     },
     form: {
         fontSize: 20
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         borderWidth: 2,
         padding: 10,
-        borderColor: 'lightgrey',
+        borderColor: 'grey',
         borderRadius: 10
     },
     button: {

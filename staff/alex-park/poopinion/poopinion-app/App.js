@@ -17,7 +17,6 @@ import {
 export default function App() {
   const [latitude, setLatitude] = useState()
   const [longitude, setLongitude] = useState()
-  const [ready, setReady] = useState(false)
   const [view, setView] = useState('login')
   const [error, setError] = useState(null)
   const [token, setToken] = useState()
@@ -67,7 +66,7 @@ export default function App() {
   async function handleQuerySearch(query) {
     try {
       if (!query || typeof query === 'undefined') {
-        await Alert.alert('You have not added any query 🚽...')
+        await Alert.alert('You have not added any text 🚽...')
 
       } else {
         await Alert.alert(`this is a search for ${query}`)

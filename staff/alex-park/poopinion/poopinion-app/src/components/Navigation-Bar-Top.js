@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     top: {
         flex: 1,
         flexDirection: 'row',
-        alignItems: 'center',
+        alignItems: 'flex-end',
+        paddingBottom: 10,
         backgroundColor: 'white',
         shadowColor: "#000",
         shadowOffset: {
