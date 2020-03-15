@@ -15,7 +15,7 @@ module.exports = {
     },
 
     type(target, name, type) {
-        if (type === String || type === Number || type === Boolean) {
+        if (type === String || type === Number || type === Boolean || type === Object) {
             type = type.name.toLowerCase()
 
             if (typeof target !== type) throw new TypeError(`${name} ${target} is not a ${type}`)

@@ -1,4 +1,6 @@
 module.exports = {
     validate: require('./validate'),
-    shuffle: require('./shuffle')
+    shuffle: require('./shuffle'),
+    timeout: require('./timeout'),
+    wait: require('./wait')
 }
