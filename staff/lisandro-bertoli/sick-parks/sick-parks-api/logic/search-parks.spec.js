@@ -1,9 +1,10 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { Park } } = require('sick-parks-data')
+const { mongoose, models: { Park, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { random, sqrt, pow } = Math
+
 const searchParks = require('./search-parks')
 
 describe('searchParks', () => {
@@ -14,95 +15,23 @@ describe('searchParks', () => {
     let name, size, level, location, resort
     let name2, size2, level2, location2, resort2
     let first
-    let _location = [
-        1.142578125,
-        42.52879629320373
-    ]
+    let _location
+
     beforeEach(() => {
         name = `parkName-${random()}`
         size = `l`
         level = `begginer`
         resort = `Grindelwald`
-        location = {
-            "type": "Polygon",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            -0.32958984375,
-                            42.56926437219384
-                        ],
-                        [
-                            -0.2471923828125,
-                            42.45588764197166
-                        ],
-                        [
-                            -0.0714111328125,
-                            42.50450285299051
-                        ],
-                        [
-                            -0.32958984375,
-                            42.56926437219384
-                        ]
-                    ]
-                ]
-            }
-        }
+        location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+
+        _location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
 
         name2 = `parkName-${random()}`
         size2 = `l`
         level2 = `begginer`
         resort2 = `Laax`
-        location2 = {
-            "type": "Polygon",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ],
-                        [
-                            1.42547607421875,
-                            42.31997030030749
-                        ],
-                        [
-                            1.28265380859375,
-                            42.45791402988027
-                        ],
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ]
-                    ]
-                ]
-            }
-        }
+        location2 = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
 
-        function parkCenter(coordinates) {
-
-            let parkX1, parkY1, parkX2, parkY2
-            coordinates[0].forEach((point, index) => {
-                if (parkX1 === undefined || parkX1 > point[0]) parkX1 = point[0]
-                if (parkX2 === undefined || parkX2 < point[0]) parkX2 = point[0]
-
-                if (parkY2 === undefined || parkY2 < point[1]) parkY2 = point[1]
-                if (parkY1 === undefined || parkY1 > point[1]) parkY1 = point[1]
-            })
-
-            const centerX = parkX1 + ((parkX2 - parkX1) / 2)
-            const centerY = parkY1 + ((parkY2 - parkY1) / 2)
-
-            return [centerX, centerY]
-        }
-
-
-        const parkOne = parkCenter(location.geometry.coordinates)
-        const parkTwo = parkCenter(location2.geometry.coordinates)
 
         function distance(x1, x2, y1, y2) {
             const exponent = pow((x2 - x1), 2) + pow((y2 - y1), 2)
@@ -111,13 +40,13 @@ describe('searchParks', () => {
             return result
         }
 
-        const parkOneToPointDistance = distance(parkOne[0], _location[0], parkOne[1], _location[1])
-        const parkTwoToPointDistance = distance(parkTwo[0], _location[0], parkTwo[1], _location[1])
+        const parkOneToPointDistance = distance(location.coordinates[0], _location.coordinates[0], location.coordinates[1], _location.coordinates[1])
+        const parkTwoToPointDistance = distance(location2.coordinates[0], _location.coordinates[0], location2.coordinates[1], _location.coordinates[1])
 
         if (parkOneToPointDistance > parkTwoToPointDistance) {
-            first = resort
-        } else {
             first = resort2
+        } else {
+            first = resort
         }
         // })
 
@@ -125,18 +54,21 @@ describe('searchParks', () => {
     describe('when parks exists', () => {
         let park1, park2
         beforeEach(async () => {
+
             park1 = await Park.create({ name, size, level, resort, location })
             park2 = await Park.create({ name: name2, size: size2, level: level2, resort: resort2, location: location2 })
         })
 
-        // it('should order the results by distance', async () => {
-        //     let q = 'begg'
-        //    
-        //     let results = await searchParks({ q, _location })
+        it('should order the results by distance', async () => {
 
-        //     expect(results[0].resort).to.equal(first)
+            let q = 'begg'
 
-        // })
+            let results = await searchParks({ q, _location })
+
+            expect(results.length).to.be.greaterThan(0)
+            expect(results[0].resort).to.equal(first)
+
+        })
 
         it('should suceed on finding parks', async () => {
             let q = 'begg'

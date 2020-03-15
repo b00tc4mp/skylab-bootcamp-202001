@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { Park, User } } = require('sick-parks-data')
+const { mongoose, models: { Park, User, Location, Feature } } = require('sick-parks-data')
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random } = Math
@@ -16,8 +16,19 @@ describe('updatePark', () => {
 
     let parkName, size, level, location
     let name, surname, email, password
+    let feature
 
     beforeEach(() => {
+        feature = {
+
+            name: `rail`,
+            size: `l`,
+            location: {
+                coordinates: [random() * 15 + 1, random() * 15 + 1]
+            }
+        }
+
+
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}`
@@ -27,33 +38,8 @@ describe('updatePark', () => {
         parkName = `parkName-${random()}`
         size = `l`
         level = `begginer`
-        location = {
-            // "type": "Polygon",
-            // "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ],
-                        [
-                            1.42547607421875,
-                            42.31997030030749
-                        ],
-                        [
-                            1.28265380859375,
-                            42.45791402988027
-                        ],
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ]
-                    ]
-                ]
-            }
-        }
+        location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+
     })
 
     describe('when user and park exist', () => {
@@ -75,42 +61,24 @@ describe('updatePark', () => {
                 newName = 'newName'
                 newSize = 'xl'
                 newLevel = 'advanced'
-                newLocation = {
-                    "geometry": {
-                        "type": "Polygon",
-                        "coordinates": [
-                            [
-                                [
-                                    -5.5810546875,
-                                    42.771211138625894
-                                ],
-                                [
-                                    -5.482177734375,
-                                    42.50450285299051
-                                ],
-                                [
-                                    -5.328369140625,
-                                    42.74701217318067
-                                ],
-                                [
-                                    -5.5810546875,
-                                    42.771211138625894
-                                ]
-                            ]
-                        ]
-                    }
-                }
+                newLocation = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+                features = [feature]
             })
 
             it('should succeed on valid fields', async () => {
-                await updatePark(userId, parkId, { name: newName, location: newLocation, size: newSize, level: newLevel })
+                await updatePark(userId, parkId, { name: newName, location: newLocation, size: newSize, level: newLevel, features })
 
                 const park = await Park.findById(parkId).lean()
 
                 expect(park.name).to.equal(newName)
                 expect(park.size).to.equal(newSize)
                 expect(park.level).to.equal(newLevel)
-                expect(park.location).to.deep.equal(newLocation)
+                expect(park.location.coordinates).to.deep.equal(newLocation.coordinates)
+
+
+                expect(park.features[0].location.coordinates).to.deep.equal(feature.location.coordinates)
+                expect(park.features[0].name).to.equal(feature.name)
+                expect(park.features[0].size).to.equal(feature.size)
             })
 
             it('should fail on invalid field', async () => {

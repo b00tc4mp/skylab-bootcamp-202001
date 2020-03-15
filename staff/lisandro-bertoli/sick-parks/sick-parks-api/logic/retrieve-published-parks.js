@@ -18,7 +18,6 @@ module.exports = ({ id }) => {
 
             return { id, name, resort, size, verified }
         })
-        debugger
         return sanitizedResults
     })()
 

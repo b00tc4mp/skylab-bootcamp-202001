@@ -9,7 +9,7 @@ module.exports = ({ parkId }) => {
         const park = await Park.findById(parkId).lean()
 
         if (!park) throw new NotFoundError(`park ${parkId} does not exist`)
-        debugger
+
         park.id = park._id.toString()
 
 

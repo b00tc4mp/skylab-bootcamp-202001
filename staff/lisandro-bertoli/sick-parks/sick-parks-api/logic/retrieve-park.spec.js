@@ -1,9 +1,9 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { Park, User, Feature } } = require('sick-parks-data')
+const { mongoose, models: { Park, User, Feature, Location } } = require('sick-parks-data')
 
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random } = Math
 const retrievePark = require('./retrieve-park')
@@ -24,16 +24,7 @@ describe('retrievePark', () => {
         feature.name = "transition"
         feature.size = "xl"
         feature.level = "advanced"
-        feature.location = {
-            "type": "Point",
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    9.221359491348265,
-                    46.83083830264651
-                ]
-            }
-        }
+        feature.location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
 
 
         name = `name-${random()}`
@@ -47,33 +38,7 @@ describe('retrievePark', () => {
         description = `${random()}`
         resort = `${random()}`
         level = `begginer`
-        location = {
-            "type": "Polygon",
-            "properties": {},
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ],
-                        [
-                            1.42547607421875,
-                            42.31997030030749
-                        ],
-                        [
-                            1.28265380859375,
-                            42.45791402988027
-                        ],
-                        [
-                            1.06292724609375,
-                            42.413318349422475
-                        ]
-                    ]
-                ]
-            }
-        }
+        location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
     })
 
     describe('when park exists', () => {
