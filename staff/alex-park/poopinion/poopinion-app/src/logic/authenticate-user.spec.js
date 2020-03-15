@@ -92,7 +92,7 @@ describe('authenticateUser', () => {
                 _error = error
             }
             expect(_error).toBeDefined()
-            expect(_error).toBeInstanceOf(NotFoundError)
+            expect(_error).toBeInstanceOf(NotAllowedError)
             expect(_error.message).toEqual(`user with id ${_id} is deactivated`)
         })
     })

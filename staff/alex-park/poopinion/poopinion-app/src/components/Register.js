@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
+import Feedback from './Feedback'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Button, ScrollView, Image } from 'react-native'
 
-function Register({ onSubmit, error, goToLogin }) {
+function Register({ onSubmit, error, goToLogin, goToLanding }) {
     const [name, setName] = useState()
     const [surname, setSurame] = useState()
     const [email, setEmail] = useState()
@@ -13,17 +14,25 @@ function Register({ onSubmit, error, goToLogin }) {
         <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.header}>Register</Text>
-                <TouchableOpacity>
-                    <TextInput placeholder='Name' onChangeText={(text) => setName(text)} />
-                    <TextInput placeholder='Surname' onChangeText={(text) => setSurame(text)} />
-                    <TextInput placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
-                    <TextInput placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
-                    <TextInput placeholder='Gender' onChangeText={(text) => setGender(text)} />
-                    <TextInput placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
+                <TouchableOpacity style={styles.formContainer}>
+                    <TextInput style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
+                    <TextInput style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
+                    <TextInput style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
+                    <TextInput style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
+                    <TextInput style={styles.form} placeholder='Gender' onChangeText={(text) => setGender(text)} />
+                    <TextInput style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                 </TouchableOpacity>
-                {error && <Text style={styles.error}>{error}</Text>}
-                <Button title='Submit' onPress={() => onSubmit(name, surname, email, password, age, gender)} />
-                <Text onPress={goToLogin} style={styles.anchor}>Go back to login</Text>
+                {error && <Feedback level='warn' message={error}/>}
+                <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 💩 💩 Submit 💩 💩 💩</Text>
+                <View style={styles.navButtons}>
+                    <View style={styles.left}>
+                        <Button title='Go to login' onPress={goToLogin} />
+                    </View>
+
+                    <View style={styles.right}>
+                        <Button title='Continue as Guest' onPress={goToLanding} />
+                    </View>
+                </View>
             </View>
         </ScrollView>
     </>)
@@ -40,15 +49,41 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 40
     },
+    form: {
+        fontSize: 20
+    },
     error: {
         textAlign: 'center',
         fontSize: 30,
         color: 'red'
     },
-    anchor: {
-        color: 'blue',
+    navButtons: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    form: {
+        fontSize: 20,
+        marginVertical: 10,
+        borderWidth: 2,
+        padding: 10,
+        borderColor: 'lightgrey',
+        borderRadius: 10
+    },
+    button: {
+        color: 'white',
         fontWeight: 'bold',
-        marginVertical: 20
+        marginVertical: 20,
+        backgroundColor: 'brown',
+        padding: 20,
+        overflow: 'hidden',
+        borderRadius: 10,
+        textAlign: 'center',
+        fontSize: 20
+    },
+    left: {
+        flex: 1,
+        marginHorizontal: 10
     }
 })
 

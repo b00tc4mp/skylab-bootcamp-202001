@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground } from 'react-native';
 import {
   Register,
-  Login
+  Login,
+  Landing
 } from './src/components'
 
 import {
   registerUser,
-  authenticateUser
+  authenticateUser,
+  retrieveUser
 } from './src/logic'
 
 export default function App() {
   const [latitude, setLatitude] = useState()
   const [longitude, setLongitude] = useState()
   const [ready, setReady] = useState(false)
-  const [view, setView] = useState('register')
+  const [view, setView] = useState('login')
   const [error, setError] = useState(null)
   const [token, setToken] = useState()
+  const [user, setUser] = useState()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -45,8 +48,13 @@ export default function App() {
   async function handleLogin(email, password) {
     try {
       const response = await authenticateUser(email, password)
+
+      const retrievedUser = await retrieveUser(response)
+      setUser(retrievedUser)
       setToken(response)
       setView('landing')
+
+
     } catch ({ message }) {
       __handleError__(message)
     }
@@ -54,18 +62,29 @@ export default function App() {
 
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
+    setError(null)
+    setToken()
+    setUser()
     setView('login')
   }
 
   function handleGoToRegister() {
+    setError(null)
+    setToken()
+    setUser()
     setView('register')
+  }
+
+  function handleGoToLanding() {
+    setError(null)
+    setView('landing')
   }
 
   // THE RENDER ITSELF
   return (<View style={styles.container}>
-    {view === 'login' && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} />}
-    {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} />}
-    {view === 'landing' && <Text style={{ fontSize: 40, textAlign: 'center', marginTop: 100 }}>CONGRATULATIONS REACHING THIS POINT!</Text>}
+    {view === 'login' && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+    {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
+    {view === 'landing' && <Landing user={user} goToLogin={handleGoToLogin} lat={latitude} lng={longitude} />}
   </View>);
 }
 

@@ -11,11 +11,17 @@ module.exports = (req, res) => {
             )
             .catch(error => {
                 let status = 400
-                if (error instanceof NotAllowedError)
-                    status = 401
 
+                switch (true) {
+                    case error instanceof NotFoundError:
+                        status = 404 // not found
+                        break
+                    case error instanceof NotAllowedError:
+                        status = 403 // forbidden
+                }
+        
                 const { message } = error
-
+        
                 res
                     .status(status)
                     .json({
