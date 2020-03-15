@@ -9,6 +9,7 @@ module.exports = new Schema({
     },
     coordinates: {
         type: [Number],
+        indes: { type: '2dsphere', sparse: false },
         required: true
     }
 })
