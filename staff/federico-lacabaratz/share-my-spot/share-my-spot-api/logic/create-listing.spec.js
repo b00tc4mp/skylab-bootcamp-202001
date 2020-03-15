@@ -5,12 +5,13 @@ const { mongoose, models: { User, Listing } } = require('share-my-spot-data')
 const createListing = require('./create-listing')
 var chai = require('chai')
 chai.use(require('chai-fs'))
+const path = require('path')
 
 const { env: { TEST_MONGODB_URL } } = process
 
 describe('createListing', () => {
     let publisher, title, description, addressLocation, addressStNumber, addressOther, dateStarts, dateEnds, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, photos, price, acceptsBarker, surveillance, isCovered
-    
+
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Listing.deleteMany()]))
@@ -93,7 +94,7 @@ describe('createListing', () => {
                     expect(listing.surveillance).to.equal(surveillance)
                     expect(listing.isCovered).to.equal(isCovered)
                     expect(listing.publisher.toString()).to.equal(_id)
-                    expect(`../data/listings/${listing.id}`).to.exist
+                    expect(path.join(__dirname, `../data/listings/${listing.id}`)).to.be.a.directory()
                 })
         )
     })
