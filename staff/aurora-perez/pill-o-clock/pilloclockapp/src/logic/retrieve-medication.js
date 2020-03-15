@@ -2,12 +2,12 @@ import { NotAllowedError, NotFoundError } from '../errors'
 import fetch from 'node-fetch'
 const { validate } = require('../utils')
 
-retrieveUser = (token) => {
+retrieveMedication = (token)=> {
     validate.string(token, 'token')
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users`, {
+        const response = await fetch(`http://192.168.1.85:8085/api/users/medication`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -15,11 +15,11 @@ retrieveUser = (token) => {
         })
     
         const { status } = response
-
+        
         if (status === 200) {
-            const user = await response.json()
-
-            return user
+            const medication = await response.json()
+            
+            return medication
         }
 
         if (status >= 400 && status < 500) {
@@ -38,9 +38,8 @@ retrieveUser = (token) => {
         }
 
         throw new Error('server error')
-
     })()
     
 }
 
-export default retrieveUser
+export default retrieveMedication

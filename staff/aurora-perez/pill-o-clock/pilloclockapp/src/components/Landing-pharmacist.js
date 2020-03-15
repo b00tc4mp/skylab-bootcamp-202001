@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Button } from 'react-native'
 
 function LandingPharmacist ({user, toPatients}) {
-    console.log(user.name)
+    
 
     return ( 
         <ScrollView>

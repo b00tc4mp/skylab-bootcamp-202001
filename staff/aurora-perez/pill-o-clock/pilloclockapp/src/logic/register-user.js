@@ -2,7 +2,7 @@ const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
 import fetch from 'node-fetch'
 
-async function registerUser (name, surname, gender, age, phone, profile, email, password) {
+registerUser = (name, surname, gender, age, phone, profile, email, password) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.gender(gender)
@@ -13,27 +13,31 @@ async function registerUser (name, surname, gender, age, phone, profile, email, 
     validate.email(email)
     validate.string(password, 'password') 
     
-    const response = await fetch(`http://192.168.1.85:8085/api/users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, surname, gender, age, phone, profile, email, password })
-    })
+    return (async() => {
 
-    const { status } = response
+        const response = await fetch(`http://192.168.1.85:8085/api/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, surname, gender, age, phone, profile, email, password })
+        })
 
-    if (status === 201) return
+        const { status } = response
 
-    if (status >= 400 && status < 500) {
-        const { error } = await response.json()
+        if (status === 201) return
 
-        if (status === 409) {
-            throw new NotAllowedError(error)
+        if (status >= 400 && status < 500) {
+            const { error } = await response.json()
+
+            if (status === 409) {
+                throw new NotAllowedError(error)
+            }
+
+            throw new Error(error)
         }
 
-        throw new Error(error)
-    }
+        throw new Error('server error')
 
-    throw new Error('server error')
+    })()
    
 }
 
