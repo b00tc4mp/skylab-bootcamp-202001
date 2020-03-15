@@ -1,9 +1,10 @@
-const { validate } = require('../../share-my-spot-utils')
-const { models: { User, Listing, Booking } } = require('../../share-my-spot-data')
-const { NotFoundError, NotAllowedError } = require('../../share-my-spot-errors')
+const { validate } = require('share-my-spot-utils')
+const { models: { User, Listing, Booking } } = require('share-my-spot-data')
+const { NotAllowedError } = require('share-my-spot-errors')
 
-module.exports = (publisher, bookingId) => {
+module.exports = (publisher, listingId, bookingId) => {
     validate.string(publisher, 'publisher')
+    validate.string(listingId, 'listingId')
     validate.string(bookingId, 'bookingId')
     dateStarts.type(dateStarts, 'dateStarts', Date)
     dateEnds.type(dateEnds, 'dateEnds', Date)

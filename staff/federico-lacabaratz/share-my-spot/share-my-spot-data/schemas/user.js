@@ -11,8 +11,8 @@ module.exports = new Schema({
     publishedListings: {
         type: [{ type: [ObjectId], ref: 'Listing' }]
     },
-    bookedListing: {
+    booking: {
         type:
-            [{ type: [ObjectId], ref: 'Listing' }]
+            [{ type: [ObjectId], ref: 'Booking' }]
     }
 })
