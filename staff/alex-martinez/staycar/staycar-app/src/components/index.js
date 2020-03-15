@@ -6,6 +6,9 @@ import EntryCar from './EntryCar'
 import ExitCar from './ExitCar'
 import Report from './Report'
 import Login from './Login'
+import Atm from './Atm'
+import ValidateTicket from './ValidateTicket'
+import Feedback from './Feedback'
 
 export {
     App,
@@ -15,5 +18,8 @@ export {
     EntryCar,
     ExitCar,
     Report,
-    Login
+    Login,
+    Atm,
+    ValidateTicket,
+    Feedback
 }

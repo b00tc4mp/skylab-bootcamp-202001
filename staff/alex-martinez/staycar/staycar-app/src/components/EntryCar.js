@@ -2,7 +2,7 @@ import React from 'react'
 import './EntryCar.sass'
 
 
-export default () => {
+export default function() {
 
     return <section className="entry-plate">
     <h1 className="entry-plate__title">Entry: car plate number</h1>
