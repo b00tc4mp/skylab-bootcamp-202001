@@ -426,5 +426,99 @@
   color: white;
   cursor: pointer;
 }
+* .atm {
+  width: 60%;
+  margin: 20px auto;
+  text-align: center;
+  background-color: #10ac84;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+* .atm__title {
+  font-weight: 200;
+  margin-bottom: 20px;
+  color: white;
+}
+* .atm__form {
+  display: flex;
+  flex-direction: column;
+}
+* .atm__input {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 60%;
+  border: 0;
+  border-radius: 10rem;
+  font-size: 1.3em;
+  text-align: center;
+}
+* .atm__submit {
+  margin: 0 auto;
+  height: 50px;
+  width: 60%;
+  border: 0;
+  border-radius: 10rem;
+  background: #feca57;
+  font-size: 1.3em;
+  text-align: center;
+}
+* .atm__submit:hover {
+  background-color: #ff9f43;
+  color: white;
+  cursor: pointer;
+}
+* .validate {
+  width: 60%;
+  margin: 20px auto;
+  text-align: center;
+  background-color: #10ac84;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+* .validate__title {
+  font-weight: 200;
+  margin-bottom: 20px;
+  color: white;
+}
+* .validate__time {
+  font-size: 1.5em;
+  margin: 10px 0px 10px 0px;
+}
+* .validate__price {
+  font-size: 1.8em;
+  margin: 10px 0px 30px 0px;
+}
+* .validate__form {
+  display: flex;
+  flex-direction: column;
+}
+* .validate__input {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  height: 50px;
+  width: 60%;
+  border: 0;
+  border-radius: 10rem;
+  font-size: 1.3em;
+  text-align: center;
+}
+* .validate__submit {
+  margin: 0 auto;
+  height: 50px;
+  width: 60%;
+  border: 0;
+  border-radius: 10rem;
+  background: #feca57;
+  font-size: 1.3em;
+  text-align: center;
+}
+* .validate__submit:hover {
+  background-color: #ff9f43;
+  color: white;
+  cursor: pointer;
+}
 
 /*# sourceMappingURL=style.css.map */
