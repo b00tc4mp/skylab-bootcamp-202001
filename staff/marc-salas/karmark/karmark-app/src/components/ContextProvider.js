@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 const Context = React.createContext([{}, () => { }])
 
-function Provider({children}) {
+function Provider({ children }) {
     const [state, setState] = useState({})
 
     return (
@@ -11,3 +11,5 @@ function Provider({children}) {
         </Context.Provider>
     )
 }
+
+export { Context, Provider }
