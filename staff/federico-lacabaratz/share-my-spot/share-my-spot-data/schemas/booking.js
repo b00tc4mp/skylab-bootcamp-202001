@@ -1,6 +1,7 @@
 const { Schema, Types: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
+    bookingCreated: { type: Date, default: Date.now },
     listings: {
         type: [{ type: ObjectId, ref: 'Listing' }]
     },

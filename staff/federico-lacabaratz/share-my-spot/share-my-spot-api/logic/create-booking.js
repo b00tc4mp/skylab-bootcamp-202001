@@ -6,9 +6,9 @@ module.exports = (userToBook, publisher, listingId, dateStarts, dateEnds, status
     validate.string(userToBook, 'userToBook')
     validate.string(publisher, 'publisher')
     validate.string(listingId, 'listingId')
-    dateStarts.type(dateStarts, 'dateStarts'): { type: Date, required: true },
-    dateEnds: { type: Date, required: true },
-    status: {type: String, default: 'red'},
+    dateStarts.type(dateStarts, 'dateStarts', Date)
+    dateEnds.type(dateEnds, 'dateEnds', Date)
+    status.string(status, 'status')
 
     validate.string(number, 'number')
     return (async () => {
@@ -21,7 +21,13 @@ module.exports = (userToBook, publisher, listingId, dateStarts, dateEnds, status
         const listing = await Listing.findById(listingId)
         if (!listing) throw new NotFoundError(`ad with id ${listingId} not found`)
 
+        const booking = new Booking({ listings: listingId, publisher, userToBook: userId, dateStarts, dateEnds, status: 'yellow', bookingCreated: new Date})
 
+        user.bookedListing.push(listing.id)
+        listing.bookings.push(booking.id)
+
+        return Promise.all([user.save(), listing.save(), booking.save()])
+            .then(() => {})
         
     })()
-
+}
