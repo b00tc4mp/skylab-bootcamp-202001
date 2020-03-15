@@ -37,6 +37,6 @@ router.patch('/users/games/:gameId/start', [jwtVerifierMidWare, jsonBodyParser],
 
 router.patch('/users/games/:gameId/retrieve', [jwtVerifierMidWare, jsonBodyParser], retrieveGameStatus)
 
-router.patch('/users/games/:gameId/combination', [jwtVerifierMidWare, jsonBodyParser], playCombination)
+router.patch('/users/games/playcombination', [jwtVerifierMidWare, jsonBodyParser], playCombination)
 
 module.exports = router

@@ -4,6 +4,7 @@ const { env: { MONGODB_URL } } = process
 const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
+const wait = require('simonline-utils/wait')
 require('../../simonline-utils/shuffle')()
 const retrieveGameStatus = require('./retrieve-game-status')
 const { mongoose } = require('simonline-data')
@@ -36,29 +37,51 @@ describe('retrieveGameStatus', () => {
                         users.push(user.id)
                     })
 
-                return Game.create({ name, owner })
-                .then(game => {
-                    game.players = users
-                    game.players.shuffle()
-                    gameId = game.id
-                    game.pushCombination.push(combination)
-                    game.date = new Date()
-                    game.currentPlayer = game.players[0]
-                    game.status = "started"
-                    game.timeRemaining = 40
-                    return game.save()
+                await Game.create({ name, owner })
+                    .then(game => {
+                        game.players = users
+                        game.players.shuffle()
+                        gameId = game.id
+                        game.pushCombination.push(combination)
+                        game.date = new Date()
+                        game.currentPlayer = game.players[0]
+                        game.status = "started"
+                        game.timeRemaining = 1
+                        return game.save()
+                    })
+        })
+
+        it('should succeed on valid first retrieved data', async () => {
+
+            await retrieveGameStatus(playerId, gameId)
+                .then(game => { 
+                    expect(game).to.exist
+                    expect(game.name).to.equal(name)
+                    expect(game.name).to.be.a("string")
+                    expect(game.owner).to.be.an.instanceOf(Object)
+                    expect(game.status).to.equal("started")
+                    expect(game.players.length).to.equal(10)
+                    expect(game.players).to.be.an.instanceOf(Array)
+                    expect(game.date).to.exist
+                    expect(game.date).to.be.an.instanceOf(Date)
+                    expect(game.pushCombination.length).to.equal(1)
+                    expect(game.pushCombination).to.be.an.instanceOf(Array)
+                    expect(game.watching).to.be.empty
+                    expect(game.watching).to.be.an.instanceOf(Array)
+                    expect(game.combinationViewed).to.be.empty
+                    expect(game.combinationViewed).to.be.an.instanceOf(Array)
                 })
         })
 
-        it('should succeed on valid retrieved data', async () => {
-
-        const game = await retrieveGameStatus(playerId, gameId)
-        console.log(game)
-            
-        })
-
+        it('should current player change to watching when the player has passed his turn 1.5sec', async (done) => {
+            await wait(1500)
+            const game = await retrieveGameStatus(playerId, gameId)
+            expect(game.watching.length).to.equal(1)
+            done()
+        }).timeout(3000)
     })
+
+})
 
     //after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
 
-})

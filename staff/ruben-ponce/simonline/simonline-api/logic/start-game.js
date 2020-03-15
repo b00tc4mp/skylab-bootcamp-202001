@@ -13,7 +13,7 @@ module.exports = (playerId, gameId) => {
         .then((game) => {
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            if(!game.owner.includes(playerId)) throw new NotAllowedError(`only the owner ${playerId} can start game`)
+            if(!game.owner === playerId) throw new NotAllowedError(`only the owner ${playerId} can start game`)
 
             if (game.status === "started") throw new NotAllowedError(`game with id ${gameId} is started`)
             

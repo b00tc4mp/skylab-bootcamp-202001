@@ -1,12 +1,12 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User, Game } } = require('simonline-data')
+const { models: { User, Game }, mongoose } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
 const startGame = require('./start-game')
-const { mongoose } = require('simonline-data')
 require('../../simonline-utils/shuffle')()
+var ObjectId = require('mongodb').ObjectID;
 
 describe('startGame', () => {
     before(() =>
@@ -19,22 +19,26 @@ describe('startGame', () => {
         username = `username-${random()}`
         password = `password-${random()}`
         name = `name-${random()}`
-        owner = username
     })
 
     describe('when user and game already exists', () => {
-        let gameId
+        let gameId, playerId
         
         beforeEach(async() => {
             let users = []
 
             for (let i = 0; i < 10; i++)
                 await User.create({ username, password })
-                    .then(user => users.push(user.id))
+                    .then(user => {
+                        playerId = user.id
+                        owner = playerId
+                        users.push(user.id)
+                    })
 
                 return Game.create({ name, owner })
                 .then(game => {
                     game.players = users
+                    game.owner.id = owner
                     game.players.shuffle()
                     gameId = game.id
                     
@@ -44,25 +48,25 @@ describe('startGame', () => {
 
         it('should succeed on valid data', () => {
 
-            return startGame(gameId)
+            return startGame(playerId, gameId)
                 .then(() =>
                     Game.findOne({ name, owner })
                 )
                 .then(game => {
                     expect(game).to.exist
                     expect(game.name).to.equal(name)
-                    expect(game.owner).to.equal(owner)
-                    expect(game.status).to.equal("preStarted")
+                    // expect(game.owner).to.contain(ObjectId(owner))
+                    expect(game.status).to.equal("started")
                     expect(game.players.length).to.equal(10)
-                    expect(game.combinationGame.length).to.equal(1)
                     expect(game.date).to.exist
-                    expect(game.combinationPlayer).to.be.empty
+                    expect(game.pushCombination.length).to.equal(1)
                     expect(game.watching).to.be.empty
+                    expect(game.combinationViewed).to.be.empty
                 })
         })
 
     })
 
-    //after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
 
 })

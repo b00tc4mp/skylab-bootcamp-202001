@@ -18,7 +18,6 @@ describe('join-game', () => {
         username = `username-${random()}`
         password = `password-${random()}`
         name = `name-${random()}`
-        owner = username
     })
 
     describe('when user already exists', () => {
@@ -30,6 +29,7 @@ describe('join-game', () => {
             ])
             .then(([{ id: _id }, { id: _gameId }]) => {
                 id = _id
+                owner = id
                 gameId = _gameId
             })
         )
