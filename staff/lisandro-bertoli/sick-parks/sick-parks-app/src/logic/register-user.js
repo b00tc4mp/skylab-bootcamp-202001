@@ -2,7 +2,7 @@ const { validate } = require('../sick-parks-utils')
 
 const fetch = require('node-fetch')
 
-module.exports = function (name, surname, email, password) {
+module.exports = function ({ name, surname, email, password }) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(name, 'name')

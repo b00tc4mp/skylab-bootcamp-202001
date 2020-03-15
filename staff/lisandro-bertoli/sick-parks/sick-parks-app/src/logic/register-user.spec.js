@@ -23,7 +23,7 @@ describe('registerUser', () => {
     })
 
     it('should succeed on new user', async () => {
-        const response = await registerUser(name, surname, email, password)
+        const response = await registerUser({ name, surname, email, password })
 
         expect(response).toBeUndefined()
 
@@ -47,7 +47,7 @@ describe('registerUser', () => {
 
         it('should fail on already existing user', async () => {
             try {
-                await registerUser(name, surname, email, password)
+                await registerUser({ name, surname, email, password })
 
                 throw new Error('should not reach this point')
             } catch (error) {
