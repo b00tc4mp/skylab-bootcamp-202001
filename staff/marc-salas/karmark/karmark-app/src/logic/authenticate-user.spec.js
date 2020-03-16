@@ -32,7 +32,7 @@ describe('authenticateUser', () => {
                 .then(user => _id = user.id)
         })
 
-        it('should succeed on correct and valid and right credentials', () =>
+        it('should succeed on correct credentials', () =>
             authenticateUser(username, password)
                 .then(() => {
                     const { token } = context

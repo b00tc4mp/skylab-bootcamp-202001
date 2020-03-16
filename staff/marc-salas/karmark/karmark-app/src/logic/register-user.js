@@ -1,5 +1,5 @@
 import { validate } from 'karmark-utils'
-const { NotAllowedError } = require('karmark-errors')
+import { NotAllowedError } from 'karmark-errors'
 
 const API_URL = process.env.REACT_APP_API_URL
 

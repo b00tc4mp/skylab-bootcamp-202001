@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import './login.sass'
 import Feedback from './Feedback'
 
 export default function ({onSubmit, onGoToRegister, error, onMount}){
@@ -12,7 +13,7 @@ export default function ({onSubmit, onGoToRegister, error, onMount}){
         const {target :{
             username: {value: username},
             password: {value: password}
-        }}
+        }} = event
 
         onSubmit(username, password)
     }
