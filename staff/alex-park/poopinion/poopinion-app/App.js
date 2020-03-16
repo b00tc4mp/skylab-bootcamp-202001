@@ -6,7 +6,10 @@ import {
   Landing,
   NavigationBarTop,
   NavigationBarBottom,
-  QueryResults
+  QueryResults,
+  Profile,
+  Favorites,
+  NewToilet
 } from './src/components'
 
 import {
@@ -16,10 +19,12 @@ import {
 } from './src/logic'
 
 export default function App() {
-  const [latitude, setLatitude] = useState()
-  const [latDelta, setLatDelta] = useState(0.001922)
-  const [longitude, setLongitude] = useState()
-  const [lngDelta, setLngDelta] = useState(0.000821)
+  const [coordinates, setCoordinates] = useState({
+    latitude: undefined,
+    longitude: undefined,
+    latitudeDelta: 0.001922,
+    longitudeDelta: 0.000821
+  })
   const [view, setView] = useState('login')
   const [error, setError] = useState(null)
   const [token, setToken] = useState()
@@ -29,8 +34,12 @@ export default function App() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
-      setLatitude(pos.coords.latitude)
-      setLongitude(pos.coords.longitude)
+      setCoordinates({
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        latitudeDelta: 0.001922,
+        longitudeDelta: 0.000821
+      })
     })
   })
 
@@ -71,12 +80,25 @@ export default function App() {
     try {
       if (!_query || typeof _query === 'undefined') {
         await Alert.alert('You have not added any text 🚽...')
-        
+
       } else {
         await setQuery(_query)
         await setView('queryResults')
       }
 
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
+
+  async function handlePublishToilet(place) {
+    try {
+      if (!place || typeof place === 'undefined') {
+        await Alert.alert('You have not added any text 🚽...')
+
+      } else {
+        await Alert.alert(`New post located at ${place}`)
+      }
     } catch ({ message }) {
       __handleError__(message)
     }
@@ -107,22 +129,29 @@ export default function App() {
   }
 
   function handleGoToFavorites() {
-    Alert.alert('This button will lead to Favorites! 💖🚽💖')
+    if (!user) {
+      Alert.alert('You are not logged in yet!')
+      handleGoToLogin();
+    } else {
+      setView('favToilets')
+    }
   }
 
   function handleGoToProfile() {
     if (!user) {
       Alert.alert('You are not logged in yet!')
+      handleGoToLogin();
     } else {
-      Alert.alert(`This button will lead to ${user.name}'s profile`)
+      setView('profilePage')
     }
   }
 
-  function handlePublishToilet() {
+  function handleGoToPublishToilet() {
     if (!user) {
       Alert.alert('You are not logged in yet!')
+      handleGoToLogin();
     } else {
-      Alert.alert(`new toilet post at: \nLatitude: ${latitude}\nLongitude: ${longitude}`)
+      setView('newToilet')
     }
   }
 
@@ -135,11 +164,14 @@ export default function App() {
       <ScrollView style={styles.content}>
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
-        {view === 'landing' && <Landing user={user} lat={latitude} latDelta={latDelta} lng={longitude} lngDelta={lngDelta}/>}
-        {view === 'queryResults' && <QueryResults query={query}/>}
+        {view === 'landing' && <Landing user={user} coordinates={coordinates} />}
+        {view === 'queryResults' && <QueryResults query={query} />}
+        {view === 'profilePage' && <Profile user={user} />}
+        {view === 'favToilets' && <Favorites user={user} />}
+        {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
       </ScrollView>
 
-      {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handlePublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
+      {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
 
     </ImageBackground>
   </View>);

@@ -5,7 +5,9 @@ import Landing from './Landing'
 import NavigationBarTop from './Navigation-Bar-Top'
 import NavigationBarBottom from './Navigation-Bar-Bottom'
 import QueryResults from './Query-Results'
-import React from 'react'
+import Profile from './Profile'
+import Favorites from './Favorites'
+import NewToilet from './New-Toilet'
 
 export {
     Register,
@@ -14,5 +16,8 @@ export {
     Landing,
     NavigationBarTop,
     NavigationBarBottom,
-    QueryResults
+    QueryResults,
+    Profile,
+    Favorites,
+    NewToilet
 }

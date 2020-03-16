@@ -20,12 +20,6 @@ function NavigationBarTop({ goToLogin, onSubmit }) {
                 }}>
                     <Image source={require('../../../assets/search.png')} style={styles.search} />
                 </TouchableOpacity>
-
-                {/* <Text style={styles.logout} onPress={goToLogin}>Logout</Text>
-                <Text style={styles.search} onPress={() => {
-                    onSubmit(query)
-
-                }}>Search</Text> */}
             </View>
         </View>
     </>)

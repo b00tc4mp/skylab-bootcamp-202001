@@ -11,13 +11,13 @@ function NavigationBarBottom({ goToLanding, goToFavorites, goToProfile, goToNewT
                 <TouchableOpacity style={styles.homeContainer} onPress={goToLanding}>
                     <Image source={require('../../../assets/home.png')} style={styles.home}  />
                 </TouchableOpacity>
+                
+                <TouchableOpacity style={styles.profileContainer} onPress={goToProfile}>
+                    <Image source={require('../../../assets/profile.png')} style={styles.profile}  />
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.favToiletsContainer} onPress={goToFavorites}>
                     <Image source={require('../../../assets/favToilets.png')} style={styles.fav}  />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.profileContainer} onPress={goToProfile}>
-                    <Image source={require('../../../assets/profile.png')} style={styles.profile}  />
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.newToiletContainer} onPress={goToNewToilet}>

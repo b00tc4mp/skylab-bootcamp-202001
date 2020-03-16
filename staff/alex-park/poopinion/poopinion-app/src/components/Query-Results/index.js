@@ -8,6 +8,7 @@ function QueryResults({ query }) {
         <ScrollView>
             <View style={styles.container}>
                 <Text style={styles.header}>Results for: '{query}'</Text>
+                <Text>Still no toilets to display...</Text>
             </View>
         </ScrollView>
     </>)

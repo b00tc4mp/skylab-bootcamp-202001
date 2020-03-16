@@ -15,15 +15,17 @@ function Login({ onSubmit, error, goToRegister, goToLanding }) {
                     <View style={styles.formContainer}>
                         <TouchableOpacity>
                             <Text style={styles.header}>Login</Text>
-                            <TextInput placeholderTextColor='grey' style={styles.form} placeholder='youremail@mail.com' onChangeText={(text) => setEmail(text)} />
+                            <TextInput placeholderTextColor='grey' style={styles.form} placeholder='email@mail.com' onChangeText={(text) => setEmail(text)} />
                             <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                         </TouchableOpacity>
                         {error && <Feedback level='warn' message={error} />}
-                        <Text style={styles.button} onPress={() => onSubmit(email, password)}>💩 Log in! 💩</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.button} onPress={() => onSubmit(email, password)}>💩 Log in! 💩</Text>
+                        </TouchableOpacity>
                         <View style={styles.navButtons}>
-                            <View style={styles.left}>
+                            <TouchableOpacity style={styles.left}>
                                 <Button title='Sign Up' onPress={goToRegister} />
-                            </View>
+                            </TouchableOpacity>
 
                             <View style={styles.right}>
                                 <Button title='Continue as Guest' onPress={goToLanding} />

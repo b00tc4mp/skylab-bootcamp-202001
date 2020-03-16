@@ -3,7 +3,7 @@ import { View, ScrollView, Text, Image } from 'react-native'
 import MapView from 'react-native-maps'
 import styles from './styles'
 
-function Landing({ user, lat, latDelta, lng, lngDelta }) {
+function Landing({ user, coordinates }) {
     return (<>
         <ScrollView>
             <View style={styles.container}>
@@ -12,14 +12,14 @@ function Landing({ user, lat, latDelta, lng, lngDelta }) {
                 <Text>Your current position is: </Text>
                 <MapView style={styles.mapStyle}
                     region={{
-                        latitude: lat,
-                        longitude: lng,
-                        latitudeDelta: latDelta,
-                        longitudeDelta: lngDelta,
+                        latitude: coordinates.latitude,
+                        longitude: coordinates.longitude,
+                        latitudeDelta: coordinates.latitudeDelta,
+                        longitudeDelta: coordinates.longitudeDelta,
                     }}>
                     <MapView.Marker coordinate={{
-                        latitude: lat,
-                        longitude: lng
+                        latitude: coordinates.latitude,
+                        longitude: coordinates.longitude
                     }} />
                 </MapView>
 
