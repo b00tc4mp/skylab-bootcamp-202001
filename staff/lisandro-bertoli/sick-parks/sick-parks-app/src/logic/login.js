@@ -7,7 +7,7 @@ export default (function ({ email, password }) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')
-
+    // WHERE TO STORE TOKEN??
     return (async () => {
         const response = await fetch(`http://192.168.1.101:8085/api/users/auth`, {
             method: 'POST',

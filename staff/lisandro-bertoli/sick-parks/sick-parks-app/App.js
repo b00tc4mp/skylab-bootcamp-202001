@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, ScrollView, Image, StatusBar } from 'react-native'
 import { registerUser, login } from './src/logic'
-import { Login } from './src/components/'
-import { Register } from './src/components'
-// import Landing from './src/components/landing'
-export default function App() {
-	const [view, setView] = useState('register')
-	const [error, setError] = useState()
+import { Login, Register, Landing } from './src/components/'
 
+export default function App() {
+	const [view, setView] = useState('landing')
+	const [error, setError] = useState()
+	//TODOS => see how to make scrollView work, create landing, maybe se about facebook. create search compo. Add map
 	const handleLogin = async (user) => {
 		try {
 			console.log(user.email)
@@ -27,18 +26,30 @@ export default function App() {
 
 			setView('login')
 		} catch ({ message }) {
-			console.log('wrong')
+
 			setError(message)
 		}
+	}
+
+	const handleGoToLogin = () => {
+		setError(undefined)
+		setView('login')
+	}
+
+	const handleGoToRegister = () => {
+		setError(undefined)
+		setView('register')
 	}
 
 	return (
 		<View style={styles.container}>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
 			<Image source={require('./assets/logo.png')} style={styles.logo}></Image>
-			{view === 'login' && <Login error={error} onSubmit={handleLogin} />}
-			{view === 'register' && <Register error={error} onSubmit={handleRegister} />}
+			{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
+			{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
+			{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
 			{view === 'search' && <Text>Logged In</Text>}
+
 		</View>
 	)
 }
@@ -49,10 +60,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EDF4F9',
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingTop: 20
+		paddingVertical: 20
 	},
 	logo: {
 		width: 250,
-		height: 250
+		height: 250,
+		marginBottom: 10
 	}
 })

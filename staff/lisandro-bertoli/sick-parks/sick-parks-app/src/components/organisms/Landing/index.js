@@ -1,26 +1,17 @@
 import React from 'react'
-import { StyleSheet, View, Button } from 'react-native'
-import CustomButton from './presentational/button'
+import { View } from 'react-native'
+import Button from '../../atoms/Button'
+import styles from './styles'
 
-export default function Login() {
+export default function Login({ onToLogin, onToRegister }) {
+
     return (
-        <View style={styles.landing}>
-            <CustomButton text='Sign up with an e-email' />
-            <Button title='Already a member? Sing-in' />
+        <View style={styles.container}>
+            <Button text='Sign in with Facebook' textStyle='text' type='facebook' />
+
+            <Button text='Sign up with an e-email' textStyle='text' type='main' onPress={onToRegister} />
+            <Button text='Already a member? Sing-in' textStyle='anchor' onPress={onToLogin} />
         </View>
     )
 }
 
-
-const styles = StyleSheet.create({
-    landing: {
-        flex: 1,
-        justifyContent: 'space-evenly'
-    },
-    input: {
-        backgroundColor: '#82A4B3',
-        flex: 0.15,
-        color: '#EFEBDA',
-        borderRadius: 5
-    }
-})

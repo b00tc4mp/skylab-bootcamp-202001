@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     main: {
         backgroundColor: '#EFEBDA',
-        width: 200,
+        width: 250,
         flex: 0.1,
         borderRadius: 5,
         justifyContent: 'center'
@@ -22,10 +22,29 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center'
     },
+    facebook: {
+        backgroundColor: '#4267b2',
+        flex: 0.15,
+        color: 'white',
+        borderRadius: 5,
+        justifyContent: 'center',
+        width: 300,
+    },
+    anchor: {
+
+    },
     text: {
         textAlign: 'center',
         fontSize: 16,
         fontWeight: '600',
+        letterSpacing: 1,
+        color: '#82A4B3'
+
+    },
+    anchor: {
+        textAlign: 'center',
+        fontSize: 14,
+        fontWeight: '400',
         letterSpacing: 1,
         color: '#82A4B3'
 

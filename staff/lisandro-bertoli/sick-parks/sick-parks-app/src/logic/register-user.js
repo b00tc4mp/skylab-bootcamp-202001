@@ -21,7 +21,7 @@ module.exports = function ({ name, surname, email, password }) {
 
         if (response.status === 201) return
 
-        if (response.status !== 200) {
+        if (response.status >= 400 || response.status < 500) {
             return response.json()
                 .then(response => {
                     const { error } = response
@@ -29,6 +29,6 @@ module.exports = function ({ name, surname, email, password }) {
                     throw new Error(error)
 
                 })
-        }
+        } else throw new Error('Unknown error')
     })()
 }
