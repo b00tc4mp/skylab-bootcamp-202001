@@ -42,31 +42,31 @@ describe('registerUser', () => {
 
     })
 
-    it('should fain on empty parameter', async() =>{
+    it('should fail on empty parameter', () =>{
         try {
             let _name = ''
-            await registerUser(_name, surname, username, password)
+            registerUser(_name, surname, username, password)
         } catch (error) {
             expect(error).toBeInstanceOf(ContentError)
             expect(error.message).toBe('name is empty')
         }
         try {
             let _surname = ''
-            await registerUser(name, _surname, username, password)
+            registerUser(name, _surname, username, password)
         } catch (error) {
             expect(error).toBeInstanceOf(ContentError)
             expect(error.message).toBe('surname is empty')
         }
         try {
             let _username = ''
-            await registerUser(name, surname, _username, password)
+            registerUser(name, surname, _username, password)
         } catch (error) {
             expect(error).toBeInstanceOf(ContentError)
             expect(error.message).toBe('username is empty')
         }
         try {
             let _password = ''
-            await registerUser(name, surname, username, _password)
+            registerUser(name, surname, username, _password)
         } catch (error) {
             expect(error).toBeInstanceOf(ContentError)
             expect(error.message).toBe('password is empty')
@@ -74,10 +74,10 @@ describe('registerUser', () => {
 
     })
 
-    it('should fail on non string name', async () => {
+    it('should fail on non string name', () => {
         try {
             name = 4
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -85,7 +85,7 @@ describe('registerUser', () => {
         }
         try {
             name = true
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -93,7 +93,7 @@ describe('registerUser', () => {
         }
         try {
             name = []
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -101,7 +101,7 @@ describe('registerUser', () => {
         }
         try {
             name = {}
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -109,10 +109,10 @@ describe('registerUser', () => {
         }
     })
 
-    it('should fail on non string surname', async () => {
+    it('should fail on non string surname', () => {
         try {
             surname = 4
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -120,7 +120,7 @@ describe('registerUser', () => {
         }
         try {
             surname = true
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -128,7 +128,7 @@ describe('registerUser', () => {
         }
         try {
             surname = []
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -136,7 +136,7 @@ describe('registerUser', () => {
         }
         try {
             surname = {}
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -144,10 +144,10 @@ describe('registerUser', () => {
         }
     })
 
-    it('should fail on non string surname', async () => {
+    it('should fail on non string surname', () => {
         try {
             username = 4
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -155,7 +155,7 @@ describe('registerUser', () => {
         }
         try {
             username = true
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -163,7 +163,7 @@ describe('registerUser', () => {
         }
         try {
             username = []
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -171,7 +171,7 @@ describe('registerUser', () => {
         }
         try {
             username = {}
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -179,10 +179,10 @@ describe('registerUser', () => {
         }
     })
 
-    it('should fail on non string surname', async () => {
+    it('should fail on non string surname', () => {
         try {
             password = 4
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -190,7 +190,7 @@ describe('registerUser', () => {
         }
         try {
             password = true
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -198,7 +198,7 @@ describe('registerUser', () => {
         }
         try {
             password = []
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -206,7 +206,7 @@ describe('registerUser', () => {
         }
         try {
             password = {}
-            await registerUser(name, surname, username, password)
+            registerUser(name, surname, username, password)
 
         } catch (error) {
             expect(error).toBeInstanceOf(TypeError)
@@ -218,7 +218,6 @@ describe('registerUser', () => {
         await User.create({name, surname, username, password, created: new Date})
 
         try {
-            debugger
             await registerUser(name, surname, username, password)
 
         } catch (error) {

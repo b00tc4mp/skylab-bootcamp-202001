@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import './App.css';
 import Register from './Register'
 import Page from './Page'
 import {registerUser} from '../logic'
@@ -14,8 +13,8 @@ function App() {
     const {token} = sessionStorage
 
     token ? setState({ token, page: 'home' }) : setState({ page: 'register' })    
-    
-  })
+  
+  }, [])
 
   async function handleRegister(name, surname, username, password){
     try { 
