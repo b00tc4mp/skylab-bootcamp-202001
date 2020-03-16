@@ -1,6 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
-import './Home.sass'
+import './style/Home.sass'
 
 import { Header } from '.'
 
@@ -17,6 +17,10 @@ export default withRouter (function({history}) {
 
     const handleGoToEntrance = () => {
         history.push('/entrance')
+    }
+
+    const handleToConfig = () => {
+        history.push('/config')
     }
     
     return <>
@@ -56,7 +60,7 @@ export default withRouter (function({history}) {
                         <p className="actions__text">Report</p>
                     </div>
 
-                    <div className="actions__action">
+                    <div className="actions__action" onClick={handleToConfig}>
                         
                         <Config className="actions__image"/>
                         <p className="actions__text">Config</p>

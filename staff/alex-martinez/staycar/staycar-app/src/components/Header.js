@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { Context } from './ContextProvider'
 import { logout } from '../logic'
-import './Header.sass'
+import './style/Header.sass'
 
 import parking from './icons/pk-parking.png'
 
 
-export default function({user}) {
+export default withRouter (function({user, history}) {
 
     const [, setState] = useContext(Context)
 
@@ -16,7 +17,7 @@ export default function({user}) {
 
         setState({ page: 'home' })
 
-        //history.push('/home')
+        history.push('/home')
     }
 
 
@@ -30,4 +31,4 @@ export default function({user}) {
         {user === 'Logout' && <Link to="/login" className="logout__text">Login</Link> }
         </section>
     </header>
-}
+})

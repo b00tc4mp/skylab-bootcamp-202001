@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Map.sass'
+import './style/Map.sass'
 
 export default function() {
 

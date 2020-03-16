@@ -1,6 +1,6 @@
 import React from 'react'
 import { ValidateTicket } from '.'
-import './Atm.sass'
+import './style/Atm.sass'
 
 export default function() {
 

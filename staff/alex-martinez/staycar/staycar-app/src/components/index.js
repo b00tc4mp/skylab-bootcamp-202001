@@ -9,6 +9,8 @@ import Login from './Login'
 import Atm from './Atm'
 import ValidateTicket from './ValidateTicket'
 import Feedback from './Feedback'
+import Config from './Config'
+import CreateParking from './CrateParking'
 
 export {
     App,
@@ -21,5 +23,7 @@ export {
     Login,
     Atm,
     ValidateTicket,
-    Feedback
+    Feedback,
+    Config,
+    CreateParking
 }

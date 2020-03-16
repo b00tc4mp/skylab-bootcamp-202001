@@ -1,10 +1,11 @@
 import React from 'react'
-import './Login.sass'
+import { withRouter } from 'react-router-dom'
+import './style/Login.sass'
 import Feedback from './Feedback'
 import parking from './icons/pk-parking.png'
 
-export default function ({ onSubmit, error }) {
-
+export default withRouter (function ({ onSubmit, error, history }) {
+  
     function handleSubmit(event) {
         event.preventDefault()
         
@@ -16,9 +17,15 @@ export default function ({ onSubmit, error }) {
         onSubmit(username, password)
     }
 
+    const handleToHome = () => {
+        history.push('/home')
+    }
+
+    
+
     return <section className="login">
     <div className="login__head">
-        <img src={parking} className="login__icon" alt=""/>
+        <img src={parking} className="login__icon" alt="" onClick={handleToHome}/>
         <h1 className="login__title">StayCar Login:</h1>
     </div>
     <form className="login__form" onSubmit={handleSubmit}>
@@ -26,6 +33,7 @@ export default function ({ onSubmit, error }) {
         <input type="password" name="password" placeholder="password" className="login__input" />
         <button className="login__submit">Login</button>
     </form>
+    
     {error && <Feedback message={error} level="warn" />}
 </section>
-}
+})

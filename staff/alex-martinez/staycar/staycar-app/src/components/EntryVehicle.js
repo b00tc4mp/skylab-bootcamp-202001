@@ -1,5 +1,5 @@
 import React from 'react'
-import './EntryVehicle.sass'
+import './style/EntryVehicle.sass'
 import Feedback from './Feedback'
 
 export default function({onSubmit, error}) {

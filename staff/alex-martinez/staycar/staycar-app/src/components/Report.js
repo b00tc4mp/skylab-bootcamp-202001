@@ -1,5 +1,5 @@
 import React from 'react'
-import './Report.sass'
+import './style/Report.sass'
 
 
 export default function() {

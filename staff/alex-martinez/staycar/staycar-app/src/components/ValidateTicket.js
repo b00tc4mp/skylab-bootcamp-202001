@@ -1,5 +1,5 @@
 import React from 'react'
-import './ValidateTicket.sass'
+import './style/ValidateTicket.sass'
 
 export default function() {
 
