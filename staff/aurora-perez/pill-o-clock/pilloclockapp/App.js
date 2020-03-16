@@ -82,10 +82,10 @@ export default function App () {
     { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
     { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
     { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication}  /> }
-    { view === 'landingPharmacist' && <LandingPharmacist user={user} toPatients = {handleToPatients}/> }
+    { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
     { view === 'medication' && <Medication medication = {medication}/> }
     </View>
-  //toProgress={handleToProgress} toContacts={handleToContacts}
+  //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}
   )
 }
 

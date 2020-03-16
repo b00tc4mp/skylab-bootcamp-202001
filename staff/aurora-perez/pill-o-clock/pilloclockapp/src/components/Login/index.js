@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button } from 'react-native'
-
+import styles from './styles'
 
 function Login ({onSubmit, toRegister, error}) {
     const [email, setEmail] = useState('')
@@ -9,7 +9,7 @@ function Login ({onSubmit, toRegister, error}) {
 
     return (
         <ScrollView>
-        <Image style={styles.logo} source={require('../../images/logo.png')}/>
+        <Image style={styles.logo} source={require('../../../assets/images/logo.png')}/>
             <View style={styles.container}>
             
                 <Text style = {[styles.text, styles.title]}>Login</Text>
@@ -24,62 +24,5 @@ function Login ({onSubmit, toRegister, error}) {
         </ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-
-    text : {
-        fontFamily : 'Sensei-Medium'
-    },
-
-    container : {
-        flex : 1,
-        backgroundColor : '#fffdf9',
-        borderRadius : 30,
-        padding : 10
-    },
-    
-    input : {
-        marginTop : 30,
-        fontSize : 17,
-        alignSelf : 'center'
-    },
-
-    title : {
-        fontSize : 50,
-        color : '#297885',
-        alignSelf : 'center'
-    },
-    
-    button : {
-        marginTop : 35,
-        fontSize : 25,
-        color : '#fffdf9',
-        alignSelf : 'center',
-        backgroundColor : '#297885',
-        padding : 10,
-        borderRadius : 10,
-        overflow: 'hidden'
-    },
-
-    toRegister : {
-        marginTop : 20,
-        fontSize : 15,
-        alignSelf : 'center',
-        color : '#79BABF'
-    },
-
-    error : {
-        marginTop : 20,
-        padding : 10
-    },
-
-    logo : {
-        marginTop : 50,
-        width: 350,
-        height: 350,
-        alignSelf : 'center'
-        
-    }
-})
 
 export default Login
