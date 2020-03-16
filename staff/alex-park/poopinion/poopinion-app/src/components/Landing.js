@@ -23,17 +23,112 @@ function Landing({ user, lat, lng }) {
                     }} />
                 </MapView>
 
-                <View style={styles.posts}>
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
-                    <Image style={styles.post} source={require('../../assets/placeholder.jpg')} />
+                <View style={styles.topToilets}>
+                    <Text style={styles.bold}>Top Toilets</Text>
                 </View>
+
+                <View style={styles.posts}>
+                    <View style={styles.post}>
+                        <Image style={styles.postImage} source={require('../../assets/placeholder.jpg')} />
+                        <View style={styles.postContent}>
+                            <View style={styles.contentLeft}>
+                                <Text>Skylab Coders Academy</Text>
+                                <Text>💩💩💩💩💩 (666)</Text>
+                            </View>
+
+                            <View style={styles.contentRight}>
+                                <Text>💖</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.posts}>
+                    <View style={styles.post}>
+                        <Image style={styles.postImage} source={require('../../assets/placeholder.jpg')} />
+                        <View style={styles.postContent}>
+                            <View style={styles.contentLeft}>
+                                <Text>Skylab Coders Academy</Text>
+                                <Text>💩💩💩💩💩 (666)</Text>
+                            </View>
+
+                            <View style={styles.contentRight}>
+                                <Text>💖</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.posts}>
+                    <View style={styles.post}>
+                        <Image style={styles.postImage} source={require('../../assets/placeholder.jpg')} />
+                        <View style={styles.postContent}>
+                            <View style={styles.contentLeft}>
+                                <Text>Skylab Coders Academy</Text>
+                                <Text>💩💩💩💩💩 (666)</Text>
+                            </View>
+
+                            <View style={styles.contentRight}>
+                                <Text>💖</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.posts}>
+                    <View style={styles.post}>
+                        <Image style={styles.postImage} source={require('../../assets/placeholder.jpg')} />
+                        <View style={styles.postContent}>
+                            <View style={styles.contentLeft}>
+                                <Text>Skylab Coders Academy</Text>
+                                <Text>💩💩💩💩💩 (666)</Text>
+                            </View>
+
+                            <View style={styles.contentRight}>
+                                <Text>💖</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.posts}>
+                    <View style={styles.post}>
+                        <Image style={styles.postImage} source={require('../../assets/placeholder.jpg')} />
+                        <View style={styles.postContent}>
+                            <View style={styles.contentLeft}>
+                                <Text>Skylab Coders Academy</Text>
+                                <Text>💩💩💩💩💩 (666)</Text>
+                            </View>
+
+                            <View style={styles.contentRight}>
+                                <Text>💖</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.posts}>
+                    <View style={styles.post}>
+                        <Image style={styles.postImage} source={require('../../assets/placeholder.jpg')} />
+                        <View style={styles.postContent}>
+                            <View style={styles.contentLeft}>
+                                <Text>Skylab Coders Academy</Text>
+                                <Text>💩💩💩💩💩 (666)</Text>
+                            </View>
+
+                            <View style={styles.contentRight}>
+                                <Text>💖</Text>
+                            </View>
+
+                        </View>
+                    </View>
+                </View>
+
             </View>
         </ScrollView>
     </>)
@@ -44,9 +139,17 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
-    header: {
-        marginTop: 0,
+    topToilets: {
+        flex: 1,
+        alignSelf: 'baseline',
+        marginLeft: '2.5%'
+    },
+    bold: {
         fontSize: 25,
+        fontWeight: 'bold'
+    },
+    header: {
+        fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'center'
     },
@@ -56,13 +159,25 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     post: {
-        width: '45%',
-        margin: 10
+        width: '95%',
+        marginHorizontal: '2.5%',
+        marginVertical: '4%'
+    },
+    postImage: {
+        width: '100%'
+    },
+    postContent: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    contentRight: {
+        flex: 1,
+        alignItems: 'flex-end'
     },
     mapStyle: {
         width: '95%',
-        height: 175,
-        marginVertical: 25
+        height: 150,
+        marginVertical: 10
     },
 })
 
