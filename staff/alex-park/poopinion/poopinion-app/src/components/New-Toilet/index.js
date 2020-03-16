@@ -37,7 +37,7 @@ function NewToilet({ coordinates, onSubmit }) {
             </View>
 
             <TouchableOpacity >
-                <Text style={styles.submitButton}>💩 Submit! 💩</Text>
+                <Text style={styles.submitButton} onPress={() => onSubmit(place)}>💩 Submit! 💩</Text>
             </TouchableOpacity>
         </ScrollView>
     </>)

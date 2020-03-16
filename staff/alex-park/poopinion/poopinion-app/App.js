@@ -15,7 +15,8 @@ import {
 import {
   registerUser,
   authenticateUser,
-  retrieveUser
+  retrieveUser,
+  publishToilet
 } from './src/logic'
 
 export default function App() {
@@ -93,12 +94,10 @@ export default function App() {
 
   async function handlePublishToilet(place) {
     try {
-      if (!place || typeof place === 'undefined') {
-        await Alert.alert('You have not added any text 🚽...')
+      await publishToilet(token, place, coordinates)
+      Alert.alert('Toilet posted! Thank you! 🚽❤️')
+      setView('landing')
 
-      } else {
-        await Alert.alert(`New post located at ${place}`)
-      }
     } catch ({ message }) {
       __handleError__(message)
     }

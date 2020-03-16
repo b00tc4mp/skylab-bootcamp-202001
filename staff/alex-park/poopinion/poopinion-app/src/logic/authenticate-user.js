@@ -2,6 +2,17 @@ import { validate } from '../utils'
 import { NotAllowedError, NotFoundError } from '../errors'
 import fetch from 'node-fetch'
 
+/**
+ * Checks user credentials against the storage
+ * 
+ * @param {string} email user's unique e-mail
+ * @param {string} password user's password
+ * 
+ * @returns {string} user's unique token
+ * 
+ * @throws {NotAllowedError} on wrong credentials or deactivated user
+ * @throws {NotFoundError} on non-existent user
+ */
 function authenticateUser(email, password) {
     validate.string(email, 'email')
     validate.email(email)

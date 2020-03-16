@@ -1,7 +1,21 @@
 import { validate } from '../utils'
 import fetch from 'node-fetch'
 
-const API_URL = process.env.REACT_APP_API_URL
+
+/**
+ * Registers a new user to the poopinion database
+ * 
+ * @param {string} name user's name
+ * @param {string} surname user's surname
+ * @param {string} email user's unique e-mail
+ * @param {string} password user's password
+ * @param {number} age user's age
+ * @param {string} email user's gender
+ * 
+ * @returns {undefined} on a successful user registration
+ * 
+ * @throws {Error} if there is a server error or if the user already exists
+ */
 
 function registerUser(name, surname, email, password, age, gender) {
     validate.string(name, 'name')

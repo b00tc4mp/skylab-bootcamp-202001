@@ -48,6 +48,10 @@ describe('publishToilet', () => {
                     expect(toilet.place).to.equal(place)
                     expect(toilet.comments instanceof Array).to.equal(true)
                     expect(toilet.geolocation instanceof Object).to.equal(true)
+                    expect(toilet.geolocation.latitude).to.equal(latitude)
+                    expect(toilet.geolocation.longitude).to.equal(longitude)
+                    expect(toilet.geolocation.latitudeDelta).to.equal(latitudeDelta)
+                    expect(toilet.geolocation.longitudeDelta).to.equal(longitudeDelta)
 
                 })
                 .then(() => User.findById(_id).populate('publishedToilets'))
@@ -58,6 +62,10 @@ describe('publishToilet', () => {
                     expect(user.publishedToilets[0].place).to.equal(place)
                     expect(user.publishedToilets[0].comments instanceof Array).to.equal(true)
                     expect(user.publishedToilets[0].geolocation instanceof Object).to.equal(true)
+                    expect(user.publishedToilets[0].geolocation.latitude).to.equal(latitude)
+                    expect(user.publishedToilets[0].geolocation.longitude).to.equal(longitude)
+                    expect(user.publishedToilets[0].geolocation.latitudeDelta).to.equal(latitudeDelta)
+                    expect(user.publishedToilets[0].geolocation.longitudeDelta).to.equal(longitudeDelta)
                 })
                 .then(() => { })
         )
@@ -127,6 +135,21 @@ describe('publishToilet', () => {
 
             _id = []
             expect(() => publishToilet(_id)).to.throw(TypeError, `id ${_id} is not a string`)
+        })
+
+        it('should fail on a non-object coordinates', () => {
+            place = 'somewhere'
+            coordinates = 9328743289
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+
+            coordinates = false
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+
+            coordinates = undefined
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+
+            coordinates = 'asasa'
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
         })
     })
 

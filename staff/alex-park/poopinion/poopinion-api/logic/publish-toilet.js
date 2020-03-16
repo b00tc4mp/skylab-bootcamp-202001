@@ -17,6 +17,7 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 module.exports = (id, place, coordinates) => {
     validate.string(id, 'id')
     validate.string(place, 'place')
+    validate.type(coordinates, 'coordinates', Object)
 
     return User.findById(id)
         .then(user => {

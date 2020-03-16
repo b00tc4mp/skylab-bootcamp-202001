@@ -2,6 +2,17 @@ import { NotAllowedError, NotFoundError } from '../errors'
 import fetch from 'node-fetch'
 const { validate } = require('../utils')
 
+/**
+ * Retrieves an authorized user
+ * 
+ * @param {string} token user's unique token
+ * 
+ * @returns {Object} user's unique token
+ * 
+ * @throws {NotAllowedError} on wrong credentials or deactivated user
+ * @throws {NotFoundError} on non-existent user
+ */
+
 function retrieveUser(token) {
     validate.string(token, 'token')
 
