@@ -1,22 +1,26 @@
 import React from 'react'
 import logo from './logo.svg';
+import'./Landing.sass'
 // import Feedback from './Feedback'
 
-function Landing({onSubmit, goToRegister, error}) {
+function Landing() {
 
-    return <div className="App">
-    <header className="App-header">
-    <h1>Simonline</h1>
-    <img src={logo} className="App-logo" alt="logo" />
-    <a href="#">Login</a>
-    <a href="#">Register</a>
-    </header>
+    return <div className="p1 landing">
+    <p className="landing__title">Simonline</p>
+    <img src={logo} className="landing__img" alt="logo" />
+    <a href="#" className="landing__login">Login</a>
+    <a href="#" className="landing__register">Register</a>
     </div> 
 }
 
 export default Landing
 
-{/* */}
+{/*     <div class="p1 landing">
+        <p class="landing__title">Simonline</p>
+        <img class="landing__img" src="./logo.svg" alt="logo">
+        <a class="landing__login">Login</a>
+        <a class="landing__register">Register</a>
+    </div> */}
 
 {/* <div>
         <h1>Login</h1>
