@@ -8,10 +8,19 @@ function Medication ({medication}) {
     //{medication.length ? bablabla : <Text>You don't have medication yet! Do you want to add one?</Text>
 
     return (
+        <View style={{width : '100%'}}>
         <ScrollView>
             <View style={styles.container}>
-                <Text style={styles.title}>My medication</Text>
-                <Image style={styles.logo} source={require('../../images/pills.png')}/>
+
+                <View style ={styles.titleContainer}>
+                    <View style={styles.titleLeft}>
+                        <Text style={styles.title}>My medication</Text>
+                    </View>
+                    <View style={styles.titleRight}>
+                        <Image style={styles.logo} source={require('../../images/pills.png')}/>
+                    </View>
+                </View>
+                
                 {
                     medication.length > 0 ? 
                         medication.map((item) => (
@@ -24,16 +33,33 @@ function Medication ({medication}) {
                 <Image style={styles.plus} source={require('../../images/plus.png')}/>
             </View>
         </ScrollView>
+        </View>
         
     )
 }
 const styles = StyleSheet.create({
     container : {
-        //flex : 1,
+        flex : 1,
+        width : '80%',
+        marginHorizontal: '10%',
         marginTop : 100,
         backgroundColor : '#fffdf9',
         borderRadius : 30,
-        padding : 30
+        padding : 0
+    },
+
+    titleContainer : {
+        flex : 1,
+        flexDirection : 'row',
+    },
+
+    titleLeft : {
+        flex : 1,
+        justifyContent: 'center'
+    },
+
+    titleRight : {
+        flex : 0.4
     },
 
     drug : {
@@ -55,7 +81,7 @@ const styles = StyleSheet.create({
     },
 
     title : {
-        fontSize : 40,
+        fontSize : 30,
         color : '#297885',
         fontFamily : 'Sensei-Medium' ,
         alignSelf : 'center' 
@@ -63,16 +89,17 @@ const styles = StyleSheet.create({
 
     logo : {
         marginTop : 10,
-        width: 150,
-        height: 100,
+        width: 80,
+        height: 80,
+        resizeMode : 'contain',
         alignSelf : 'center' ,
         marginBottom : 20  
     },
 
     plus : {
-        marginTop : 30,
-        width: 100,
-        height: 100,
+        margin : 20,
+        width: 70,
+        height: 70,
         alignSelf : 'center' 
     }
 })
