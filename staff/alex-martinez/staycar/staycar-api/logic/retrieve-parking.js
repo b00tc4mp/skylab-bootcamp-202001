@@ -2,28 +2,31 @@ const { validate } = require('staycar-utils')
 const { models: { User, Parking } } = require('staycar-data')
 const { NotFoundError } = require('staycar-errors')
 
-module.exports = (id, parkingName) => {
+module.exports = (id) => {
     validate.string(id, 'id')
-    validate.string(parkingName, 'parkingName')
 
     return User.findById(id)
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
             //return user.save()
-            return Parking.findOne({parkingName})
+            return Parking.find()
                 .lean()
-                .then(parking => {
+                .then(parkings => {
+                    debugger
                 
-                    if (!parking) throw new NotFoundError(`parking with name ${parkingName} does not exist`)
+                    if (!parkings) throw new NotFoundError(`There are no parkings yet`)
                 
-                    //return parking[0]._id
-                    parking.id = parking._id.toString()
+                    parkings.forEach(pk => {
+                        
+                        pk.id = pk._id.toString()
 
-                    delete parking._id 
-
-                    //return parking.id
-                    return parking
+                        delete pk._id
+                        delete pk.__v
+                        
+                    })  
+                    return parkings
+                  
                 })  
         })
 }
