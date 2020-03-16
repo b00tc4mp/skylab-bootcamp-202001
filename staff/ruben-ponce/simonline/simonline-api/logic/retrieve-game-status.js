@@ -14,34 +14,34 @@ module.exports = (playerId, gameId) => {
         return Game.findById(gameId)
           .then(game => {
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
-      
-            if(!game.players.includes(playerId)) throw new NotFoundError(`player ${playerId}, not joined on game`)
-      
-            const { status } = game
+            
+            const { status, turnTimeout, players, watching } = game
+
+            if(!players.includes(playerId)) throw new NotFoundError(`player ${playerId}, not joined on game`)
       
             if (status === "started") {
-              const { turnStart, turnTimeout, currentPlayer, players, watching, status } = game
       
               const timeNow = new Date()
       
-              const elapsedTime = (timeNow - turnStart) / 1000
-      
+              const elapsedTime = (timeNow - game.turnStart) / 1000
+              debugger
               /* 40sec countdown on turn */
               if (elapsedTime > turnTimeout) {
-                watching.push(currentPlayer)
-                var j = players.indexOf(currentPlayer)
+                watching.push(game.currentPlayer)
+                const j = players.indexOf(game.currentPlayer)
       
                 if(players.length === (watching.length -1)) return status = 'finished'
 
-                for (var i = j; i < players.length; i++) {
+                for (let i = j; i < players.length; i++) {
                     if(!players[j+1]) i = 0
-                    if(!watching.includes(players[i])) return currentPlayer = players[i]
+                    if(!watching.includes(players[i])) game.currentPlayer = players[i]
                 }
-
-                turnStart = new Date()
+                debugger
+                game.turnStart = new Date()
       
                 /* Matching betwen combinationPlayer and combinationGame */
-                return game.save()
+                game.save()
+                return game
               }
             }
             return game

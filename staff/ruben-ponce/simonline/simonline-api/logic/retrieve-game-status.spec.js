@@ -43,10 +43,10 @@ describe('retrieveGameStatus', () => {
                         game.players.shuffle()
                         gameId = game.id
                         game.pushCombination.push(combination)
-                        game.date = new Date()
+                        game.turnStart = new Date()
                         game.currentPlayer = game.players[0]
                         game.status = "started"
-                        game.timeRemaining = 1
+                        game.turnTimeout = 1
                         return game.save()
                     })
         })
@@ -73,12 +73,17 @@ describe('retrieveGameStatus', () => {
                 })
         })
 
-        it('should current player change to watching when the player has passed his turn 1.5sec', async (done) => {
-            await wait(1500)
-            const game = await retrieveGameStatus(playerId, gameId)
-            expect(game.watching.length).to.equal(1)
-            done()
-        }).timeout(3000)
+        it('should current player change to watching when the player has passed his turn 1sec', function() {
+            this.timeout(3000);
+            return wait(2000)
+            .then(() => {
+                return retrieveGameStatus(playerId, gameId)
+                    .then(game => {
+                        expect(game.watching.length).to.equal(1)
+                        
+                    })
+            })
+        })
     })
 
 })

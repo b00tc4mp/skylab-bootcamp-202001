@@ -53,7 +53,6 @@ describe('createGame', () => {
                     Game.findOne({ name, owner })
                 )
                 .then(game => {
-                    debugger
                     expect(game).to.exist
                     expect(game.name).to.equal(name)
                     expect(game.owner).to.be.an.instanceOf(Object)
