@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0.15,
+        flex: 0.10,
         height: Dimensions.get('window').height,
         justifyContent: 'flex-start'
     },
@@ -21,18 +21,21 @@ const styles = StyleSheet.create({
         shadowRadius: 1.84,
         elevation: 10,
     },
+    logoutContainer: {
+        flex: 0.25,
+        padding: 10
+    },
+    searchContainer: {
+        flex: 0.25,
+        padding: 10
+    },
     logout: {
         flex: 1,
-        justifyContent: 'center',
-        textAlign: 'center',
-        backgroundColor: 'brown',
-        paddingVertical: 15,
-        marginHorizontal: 5,
-        color: 'white',
-        borderRadius: 15
+        resizeMode: 'contain',
+        alignSelf: 'center'
     },
     query: {
-        flex: 2,
+        flex: 0.5,
         borderWidth: 2,
         borderRadius: 15,
         borderColor: 'lightgray',
@@ -40,12 +43,8 @@ const styles = StyleSheet.create({
     },
     search: {
         flex: 1,
-        textAlign: 'center',
-        backgroundColor: 'green',
-        paddingVertical: 15,
-        marginHorizontal: 5,
-        color: 'white',
-        borderRadius: 15
+        resizeMode: 'contain',
+        alignSelf: 'center'
     }
 })
 

@@ -1,15 +1,28 @@
 import React from 'react'
 import styles from './styles'
-import { View, Text } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 
-function NavigationBarBottom({goToLanding, goToFavorites, goToProfile, goToNewToilet}) {
+function NavigationBarBottom({ goToLanding, goToFavorites, goToProfile, goToNewToilet }) {
     return (<>
         <View style={styles.container}>
             <View style={styles.bottom}>
-                <Text style={styles.home} onPress={goToLanding}>💩 Home 💩</Text>
-                <Text style={styles.fav} onPress={goToFavorites}>💖🚽💖</Text>
-                <Text style={styles.profile} onPress={goToProfile}>👤 Profile 👤</Text>
-                <Text style={styles.newPost} onPress={goToNewToilet}>NEW POST</Text>
+                {/* <Text style={styles.home} onPress={goToLanding}>💩 Home 💩</Text> */}
+                
+                <TouchableOpacity style={styles.homeContainer} onPress={goToLanding}>
+                    <Image source={require('../../../assets/home.png')} style={styles.home}  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.favToiletsContainer} onPress={goToFavorites}>
+                    <Image source={require('../../../assets/favToilets.png')} style={styles.fav}  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.profileContainer} onPress={goToProfile}>
+                    <Image source={require('../../../assets/profile.png')} style={styles.profile}  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.newToiletContainer} onPress={goToNewToilet}>
+                    <Image source={require('../../../assets/newToilet.png')} style={styles.newPost}  />
+                </TouchableOpacity>
             </View>
         </View>
     </>)

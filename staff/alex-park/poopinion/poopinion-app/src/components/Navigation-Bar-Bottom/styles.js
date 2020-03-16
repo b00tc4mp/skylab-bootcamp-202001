@@ -21,22 +21,41 @@ const styles = StyleSheet.create({
 
         elevation: 9,
     },
+    homeContainer: {
+        flex: 0.25,
+        padding: 10
+    },
+    favToiletsContainer: {
+        flex: 0.25,
+        padding: 10
+    },
+    profileContainer: {
+        flex: 0.25,
+        padding: 10
+    },
+    newToiletContainer: {
+        flex: 0.25,
+        padding: 10
+    },
     home: {
         flex: 1,
-        textAlign: 'center'
+        resizeMode: 'contain',
+        alignSelf: 'center'
     },
     fav: {
         flex: 1,
-        textAlign: 'center'
+        resizeMode: 'contain',
+        alignSelf: 'center'
     },
     newPost: {
         flex: 1,
-        textAlign: 'center',
-        fontWeight: 'bold'
+        resizeMode: 'contain',
+        alignSelf: 'center'
     },
     profile: {
         flex: 1,
-        textAlign: 'center'
+        resizeMode: 'contain',
+        alignSelf: 'center'
     }
 })
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './styles'
-import { View, Text, TextInput } from 'react-native'
+import { View, Image, TextInput, TouchableOpacity } from 'react-native'
 
 let query
 
@@ -8,12 +8,24 @@ function NavigationBarTop({ goToLogin, onSubmit }) {
     return (<>
         <View style={styles.container}>
             <View style={styles.top}>
-                <Text style={styles.logout} onPress={goToLogin}>Logout</Text>
+
+                <TouchableOpacity style={styles.logoutContainer} onPress={goToLogin}>
+                    <Image source={require('../../../assets/logout.png')} style={styles.logout} />
+                </TouchableOpacity>
+
                 <TextInput style={styles.query} placeholder='Search a toilet' onChangeText={(text) => query = text} />
-                <Text style={styles.search} onPress={() =>{
+
+                <TouchableOpacity style={styles.searchContainer} onPress={() => {
                     onSubmit(query)
-                    
-                }}>Search</Text>
+                }}>
+                    <Image source={require('../../../assets/search.png')} style={styles.search} />
+                </TouchableOpacity>
+
+                {/* <Text style={styles.logout} onPress={goToLogin}>Logout</Text>
+                <Text style={styles.search} onPress={() => {
+                    onSubmit(query)
+
+                }}>Search</Text> */}
             </View>
         </View>
     </>)
