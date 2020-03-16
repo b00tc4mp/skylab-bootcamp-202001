@@ -2,15 +2,14 @@ import { StyleSheet, Dimensions } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 0.10,
-        height: Dimensions.get('window').height,
-        justifyContent: 'flex-start'
+        flex: 0.08,
+        height: Dimensions.get('window').height
     },
     top: {
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-end',
-        paddingBottom: 10,
+        paddingBottom: 5,
         backgroundColor: 'white',
         shadowColor: "#000",
         shadowOffset: {
