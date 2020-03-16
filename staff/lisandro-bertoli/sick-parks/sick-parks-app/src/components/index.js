@@ -1,13 +1,15 @@
-import Login from './organisms/Login'
-import Landing from './organisms/Landing'
-import Register from './organisms/Register'
-import Button from './atoms/Button'
-import Search from './organisms/Search'
+import Login from './Login'
+import Landing from './Landing'
+import Register from './Register'
+import Search from './Search'
+import NavBar from './NavBar'
+import Button from './Button'
 
 export {
     Login,
     Register,
     Landing,
+    Search,
     Button,
-    Search
+    NavBar
 }

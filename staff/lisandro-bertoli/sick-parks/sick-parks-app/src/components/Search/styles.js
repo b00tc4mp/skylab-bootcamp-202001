@@ -3,13 +3,16 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%'
+        width: '100%',
+        margin: 0
     },
     input: {
-        borderRadius: 5,
-        flex: 0.18,
-        width: '80%',
-        alignContent: 'center',
+
+        borderTopRightRadius: 5,
+        borderBottomRightRadius: 5,
+        height: '16%',
+        flex: 0.9,
+        paddingLeft: 10,
         backgroundColor: 'white',
         shadowColor: 'white',
         shadowOpacity: 100
@@ -28,8 +31,23 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '49.5%',
-        height: '45%',
+        height: '48.5%',
         marginBottom: 4
+    },
+    queryIcon: {
+        width: 25,
+        height: 25,
+        tintColor: '#82A4B3'
+    },
+    queryButton: {
+        paddingLeft: 10,
+        backgroundColor: 'white',
+        height: '16%',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        justifyContent: 'center',
+        shadowColor: 'white',
+        shadowOpacity: 100
     }
 })
 

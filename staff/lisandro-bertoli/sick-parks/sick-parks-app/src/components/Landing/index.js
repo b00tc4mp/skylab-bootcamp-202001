@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import Button from '../../atoms/Button'
+import Button from '../Button'
 import styles from './styles'
 
 export default function Login({ onToLogin, onToRegister }) {

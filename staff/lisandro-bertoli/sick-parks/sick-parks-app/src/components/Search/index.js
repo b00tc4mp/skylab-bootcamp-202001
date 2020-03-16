@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { View, TextInput, ImageBackground } from 'react-native'
-import { Button } from '../../index'
+import { View, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native'
+import { Button } from '../index'
 import styles from './styles'
 
-const mainImg = require('../../../../assets/home.jpg')
-const filterImg = require('../../../../assets/filter.png')
+const mainImg = require('../../../assets/home.jpg')
+const filterImg = require('../../../assets/filter.png')
 
 
 export default function Search({ onSubmit }) {
@@ -19,7 +19,10 @@ export default function Search({ onSubmit }) {
 
             <ImageBackground source={mainImg}
                 style={{ alignItems: 'center', flex: 1, height: '100%', justifyContent: 'flex-end' }} >
-                <View style={{ flex: 1, width: '100%', alignItems: 'center', justifyContent: 'flex-end', paddingBottom: 10 }}>
+                <View style={{ flexDirection: 'row', flex: 1, width: '100%', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 10 }}>
+                    <TouchableOpacity style={styles.queryButton}>
+                        <Image style={styles.queryIcon} source={require('../../../assets/icon-search.png')} />
+                    </TouchableOpacity>
                     <TextInput style={styles.input} placeholder='Find a Park...' onChangeText={(text) => setQuery(text)} />
                 </View>
             </ImageBackground >

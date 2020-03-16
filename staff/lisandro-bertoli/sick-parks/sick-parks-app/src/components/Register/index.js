@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, TextInput, Text } from 'react-native'
-import Button from '../../atoms/Button'
+import { Button } from '../index'
 import styles from './styles'
 
 export default function Register({ onToLogin, onSubmit, error }) {
