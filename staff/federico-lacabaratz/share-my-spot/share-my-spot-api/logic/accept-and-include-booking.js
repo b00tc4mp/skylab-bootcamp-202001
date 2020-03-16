@@ -6,9 +6,6 @@ module.exports = (publisher, listingId, bookingId) => {
     validate.string(publisher, 'publisher')
     validate.string(listingId, 'listingId')
     validate.string(bookingId, 'bookingId')
-    dateStarts.type(dateStarts, 'dateStarts', Date)
-    dateEnds.type(dateEnds, 'dateEnds', Date)
-    status.string(status, 'status')
 
     date = new Date(date)
     validate.type(date, 'date', Date)
