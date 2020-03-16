@@ -49,7 +49,7 @@ export default withRouter(function ({ history }) {
   async function handleEntryVehicle(carPlate) {
     try {
       await entryVehicle(carPlate)
-      history.push('/home')
+      //history.push('/home')
 
     }catch(error) {
       return __handleError__(error)
