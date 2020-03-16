@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, ScrollView, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { registerUser, login } from './src/logic'
-import { Login, Register, Landing } from './src/components/'
+import { Login, Register, Landing, Search } from './src/components/'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 export default function App() {
-	const [view, setView] = useState('landing')
+	const [view, setView] = useState('search')
 	const [error, setError] = useState()
-	//TODOS => see how to make scrollView work, create landing, maybe se about facebook. create search compo. Add map
+
+
+
 	const handleLogin = async (user) => {
 		try {
 			console.log(user.email)
@@ -41,15 +44,19 @@ export default function App() {
 		setView('register')
 	}
 
+	const handleSearch = (query) => {
+		console.log(query)
+	}
+
 	return (
 		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 			<KeyboardAwareScrollView contentContainerStyle={styles.container} >
 				<StatusBar hidden={false} barStyle={'dark-content'} />
-				<Image source={require('./assets/logo.png')} style={styles.logo}></Image>
+				{view !== 'search' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
 				{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
 				{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
 				{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-				{view === 'search' && <Text>Logged In</Text>}
+				{view === 'search' && <Search onSubmit={handleSearch} />}
 			</KeyboardAwareScrollView>
 		</TouchableWithoutFeedback>
 	)
