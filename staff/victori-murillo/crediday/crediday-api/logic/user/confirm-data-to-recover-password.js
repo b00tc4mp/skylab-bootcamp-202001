@@ -5,32 +5,35 @@ const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const sendMail = require('crediday-utils/send-mail')
 const template = require('./confirm-data-to-recover-password-template')
 
-module.exports = async ({ company, email }) => {
+module.exports = ({ company, email }) => {
   validate.string(company, 'company')
-  validate.string(email, 'email')
+  validate.string(email, 'email');
 
-  let user = await User.findOne({ email }).populate({ path: 'company', select: 'name' })
+  return (async () => {
 
-  if (!user) throw new Error('Ningún usuario tiene ese correo electrónico')
-  if (user.company.name !== company) throw new Error('Nombre de compañia no coincide')
+    let user = await User.findOne({ email }).populate({ path: 'company', select: 'name' })
 
-  user.verificationCode = randomNumber(6)
-  user = await user.save()
+    if (!user) throw new Error('Ningún usuario tiene ese correo electrónico')
+    if (user.company.name !== company) throw new Error('Nombre de compañia no coincide')
 
-  const authMail = { mail: GMAIL, password: GMAIL_PASSWORD }
-  const to = email
-  const subject = 'Código de Verificación - Nueva Contraseña'
+    user.verificationCode = randomNumber(6)
+    user = await user.save()
 
-  const html = template({
-    company,
-    username: user.username,
-    code: user.verificationCode
-  })
+    const authMail = { mail: GMAIL, password: GMAIL_PASSWORD }
+    const to = email
+    const subject = 'Código de Verificación - Nueva Contraseña'
 
-  const response = await sendMail({ authMail, to, subject, html })
+    const html = template({
+      company,
+      username: user.username,
+      code: user.verificationCode
+    })
 
-  if (response instanceof Error) throw new Error(response.message)
+    const response = await sendMail({ authMail, to, subject, html })
+
+    if (response instanceof Error) throw new Error(response.message)
 
 
-  return 'Data confirmed'
+    return 'Data confirmed'
+  })()
 }

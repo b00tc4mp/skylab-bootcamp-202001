@@ -1,7 +1,7 @@
 const { User } = require('crediday-models')
 const validate = require('crediday-utils')
 
-module.exports = async (_id, companyId, body) => {
+module.exports = (_id, companyId, body) => {
   validate.string(_id, 'id')
   validate.string(companyId, 'companyId')
   validate.type(body, 'body', Object)
@@ -11,7 +11,7 @@ module.exports = async (_id, companyId, body) => {
   const allowedKeys = Object.keys(User.schema.obj)
 
   for (const property in body) {
-    if( !allowedKeys.some(key => key === property) ) {
+    if (!allowedKeys.some(key => key === property)) {
       throw new Error(`User has not '${property}' as property`)
     }
   }
@@ -19,7 +19,7 @@ module.exports = async (_id, companyId, body) => {
   const forbiddenKeys = ['registrationDate', 'credits', 'authenticatedDates', 'company']
 
   forbiddenKeys.forEach(_key => {
-    
+
     for (const key in body) {
       if (key === _key) throw new Error(`The property '${key}' is forbidden to modify it`)
 
@@ -36,13 +36,16 @@ module.exports = async (_id, companyId, body) => {
     }
   })
 
-  user = await User.findOne({_id})
+  return (async () => {
+    user = await User.findOne({ _id })
 
-  if (user.company.toString() !== companyId) throw new Error('You can only update users from your company')
+    if (user.company.toString() !== companyId) throw new Error('You can only update users from your company')
 
-  for (const key in body) {
-    user[key] = body[key]
-  }
-  
-  return await user.save()
+    for (const key in body) {
+      user[key] = body[key]
+    }
+
+    return await user.save()
+  })
+
 }

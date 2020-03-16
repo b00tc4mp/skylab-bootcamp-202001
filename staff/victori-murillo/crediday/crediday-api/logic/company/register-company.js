@@ -6,7 +6,7 @@ const { hash } = require('bcryptjs')
 const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-template')
 
-module.exports = async ({ companyName, username, email, password }) => {
+module.exports = ({ companyName, username, email, password }) => {
   // TO DO --> Improve with destructuring
   // TO DO --> validate with destructuring and every single key
 
@@ -19,39 +19,44 @@ module.exports = async ({ companyName, username, email, password }) => {
   validate.length(username, 'Nombre de Usuario', 3, 30)
 
   validate.string(password, 'password')
-  validate.length(password, 'password', 3, 30)
+  validate.length(password, 'password', 3, 30);
 
-  const companyFound = await Company.findOne({ name: companyName.toLowerCase() })
-  if (companyFound) throw new Error('El nombre de Compañia ya existe')
+  return(async() => {
 
-  const userFound = await User.findOne({ username: username.toLowerCase() })
-  if (userFound) throw new Error('El nombre de Usuario ya existe')
+    const companyFound = await Company.findOne({ name: companyName.toLowerCase() })
+    if (companyFound) throw new Error('El nombre de Compañia ya existe')
+  
+    const userFound = await User.findOne({ username: username.toLowerCase() })
+    if (userFound) throw new Error('El nombre de Usuario ya existe')
+  
+    const newCompany = await Company.create({ name: companyName.toLowerCase() })
+  
+    const newUser = await User.create({
+      username: username,
+      firstName: username,
+      email,
+      password: await hash(password, 10),
+      role: 'owner',
+      company: newCompany.id,
+    })
+  
+    const confirmUser = await User.findOne({ _id: newUser._id })
+    if (!confirmUser) throw new Error('User was not created')
+  
+    const html = template({
+      company: newCompany.name,
+      username: newUser.username,
+      companyId: newCompany.id
+    })
+  
+    const subject = 'Confirmación de registro en CrediDay App'
+  
+    const response = await sendMail({ mail: GMAIL, password: GMAIL_PASSWORD }, email, html, subject)
+  
+    if (response instanceof Error) throw new Error(response.message)
+  
+    return email
+    
+  })()
 
-  const newCompany = await Company.create({ name: companyName.toLowerCase() })
-
-  const newUser = await User.create({
-    username: username,
-    firstName: username,
-    email,
-    password: await hash(password, 10),
-    role: 'owner',
-    company: newCompany.id,
-  })
-
-  const confirmUser = await User.findOne({ _id: newUser._id })
-  if (!confirmUser) throw new Error('User was not created')
-
-  const html = template({
-    company: newCompany.name,
-    username: newUser.username,
-    companyId: newCompany.id
-  })
-
-  const subject = 'Confirmación de registro en CrediDay App'
-
-  const response = await sendMail({ mail: GMAIL, password: GMAIL_PASSWORD }, email, html, subject)
-
-  if (response instanceof Error) throw new Error(response.message)
-
-  return email
 }
