@@ -1,17 +1,4 @@
-import React from 'react'
-import { View, Text, StyleSheet, Dimensions } from 'react-native'
-
-function NavigationBarBottom({goToLanding, goToFavorites, goToProfile}) {
-    return (<>
-        <View style={styles.container}>
-            <View style={styles.bottom}>
-                <Text style={styles.home} onPress={goToLanding}>💩 Home 💩</Text>
-                <Text style={styles.fav} onPress={goToFavorites}>💖🚽💖</Text>
-                <Text style={styles.profile} onPress={goToProfile}>👤 Profile 👤</Text>
-            </View>
-        </View>
-    </>)
-}
+import { StyleSheet, Dimensions } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
@@ -42,10 +29,15 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center'
     },
+    newPost: {
+        flex: 1,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
     profile: {
         flex: 1,
         textAlign: 'center'
     }
 })
 
-export default NavigationBarBottom
+export default styles

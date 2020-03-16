@@ -1,25 +1,4 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, Dimensions, TextInput } from 'react-native'
-
-let query
-
-function NavigationBarTop({ goToLogin, onSubmit }) {
-    return (<>
-        <View style={styles.container}>
-            <View style={styles.top}>
-                <Text style={styles.logout} onPress={goToLogin}>Logout</Text>
-                <TextInput style={styles.query} placeholder='Search a toilet' onChangeText={(text) => query = text} />
-                <Text style={styles.search} onPress={() =>{
-                    onSubmit(query)
-                    
-                }}>Search</Text>
-            </View>
-            {/* <View style={styles.bottom}>
-
-            </View> */}
-        </View>
-    </>)
-}
+import { StyleSheet, Dimensions } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
@@ -70,4 +49,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default NavigationBarTop
+export default styles

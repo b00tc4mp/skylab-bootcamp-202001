@@ -16,7 +16,9 @@ import {
 
 export default function App() {
   const [latitude, setLatitude] = useState()
+  const [latDelta, setLatDelta] = useState(0.001922)
   const [longitude, setLongitude] = useState()
+  const [lngDelta, setLngDelta] = useState(0.000821)
   const [view, setView] = useState('login')
   const [error, setError] = useState(null)
   const [token, setToken] = useState()
@@ -104,24 +106,36 @@ export default function App() {
     Alert.alert('This button will lead to Favorites! 💖🚽💖')
   }
 
-  function handleGoToProfile () {
-    if(!user) {
+  function handleGoToProfile() {
+    if (!user) {
       Alert.alert('You are not logged in yet!')
     } else {
       Alert.alert(`This button will lead to ${user.name}'s profile`)
     }
   }
 
+  function handlePublishToilet() {
+    if (!user) {
+      Alert.alert('You are not logged in yet!')
+    } else {
+      Alert.alert(`new toilet post at: \nLatitude: ${latitude}\nLongitude: ${longitude}`)
+    }
+  }
+
   // THE RENDER ITSELF
   return (<View style={styles.container}>
     <ImageBackground style={styles.image} source={require('./assets/background.png')}>
+
       {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
+
       <ScrollView style={styles.content}>
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
-        {view === 'landing' && <Landing user={user} lat={latitude} lng={longitude} />}
+        {view === 'landing' && <Landing user={user} lat={latitude} latDelta={latDelta} lng={longitude} lngDelta={lngDelta}/>}
       </ScrollView>
-      {goLanding && <NavigationBarBottom style={styles.navbar} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile}/>}
+
+      {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handlePublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
+
     </ImageBackground>
   </View>);
 }
