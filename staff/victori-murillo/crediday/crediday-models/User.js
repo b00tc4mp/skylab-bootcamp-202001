@@ -42,6 +42,11 @@ const schema = new Schema({
     }, `This role must have a password`]
   },
 
+  verificationCode: {
+    type: 'String',
+    trim: true
+  },
+
   email: {
     type: String,
     trim: true,

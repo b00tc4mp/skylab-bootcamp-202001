@@ -142,7 +142,7 @@ export default (props) => {
           </Button>
             <Grid container >
               <Grid item xs={6}>
-                <Link style={{ cursor: 'pointer' }} onClick={() => history.push('/')} variant="body2">
+                <Link style={{ cursor: 'pointer' }} onClick={() => history.push('/password')} variant="body2">
                   Olvidaste tu contraseña?
                 </Link>
               </Grid>

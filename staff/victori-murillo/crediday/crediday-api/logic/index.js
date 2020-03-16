@@ -10,6 +10,9 @@ module.exports = {
   retrieveAllUsers: require('./user/retrieve-all-users'),
   updateUser: require('./user/update-user'),
   deleteUser: require('./user/delete-user'),
+  confirmDataToRecoverPassword: require('./user/confirm-data-to-recover-password'),
+  confirmVerificationCode: require('./user/confirm-verification-code'),
+  updatePasswordCode: require('./user/update-password-code'),
 
   registerCredit: require('./credit/register-credit'),
   retrieveCredit: require('./credit/retrieve-credit'),

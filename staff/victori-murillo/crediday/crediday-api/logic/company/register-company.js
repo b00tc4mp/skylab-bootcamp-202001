@@ -41,21 +41,15 @@ module.exports = async ({ companyName, username, email, password }) => {
   const confirmUser = await User.findOne({ _id: newUser._id })
   if (!confirmUser) throw new Error('User was not created')
 
-  // let html = `<div style="display:flex;">
-  // <p>Nombre de la compañia: ${newCompany.name}</p>
-  // <p>Nombre del usuario: ${newUser.username}</p>
-  // <a href="http://localhost:3000/login/${newCompany.id}" target="_blank" >
-  //   <button>Click para confirmar tu Compañia</button>
-  // </a>
-  // </div>`
-
   const html = template({
     company: newCompany.name,
     username: newUser.username,
     companyId: newCompany.id
   })
 
-  const response = await sendMail({ mail: GMAIL, password: GMAIL_PASSWORD }, email, html)
+  const subject = 'Confirmación de registro en CrediDay App'
+
+  const response = await sendMail({ mail: GMAIL, password: GMAIL_PASSWORD }, email, html, subject)
 
   if (response instanceof Error) throw new Error(response.message)
 

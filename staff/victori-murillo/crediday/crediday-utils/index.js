@@ -1,4 +1,6 @@
 module.exports = {
-  validate: require('./validate'),
-  randomInt: require('./randomInt')
+  randomInt: require('./randomInt'),
+  randomNumber: require('./randomNumber'),
+  validate: require('./validate')
+  
 }

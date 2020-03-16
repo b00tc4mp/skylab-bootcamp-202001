@@ -4,6 +4,8 @@ import { Drawer } from './components/presentational'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { Context } from './components/ContextProvider'
 
+import RecoverPassword from './components/recover-password/RecoverPassword'
+
 import jwt from 'jsonwebtoken'
 
 // const { env: { REACT_APP_JWT_SECRET: JWT_SECRET } } = process
@@ -58,7 +60,9 @@ export default () => {
         <Route exact path="/login">
           <Login />
         </Route>
-        
+
+        <Route exact path="/password" component={RecoverPassword} />
+
         <Route exact path="/login/:companyId" component={Login} />
 
         <Route exact path="/register">
