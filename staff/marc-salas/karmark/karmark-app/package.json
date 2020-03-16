@@ -10,6 +10,7 @@
     "karmark-utils": "file:../karmark-utils",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0"
   },
   "scripts": {
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "karmark-data": "file:../karmark-data",
     "node-sass": "^4.13.1"
   }

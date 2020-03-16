@@ -26,7 +26,7 @@ export default function (name, surname, username, password) {
             switch (status) {
                 case 409:
                     throw new NotAllowedError(error)
-                    break
+                    
 
             }
             throw new Error(error)
