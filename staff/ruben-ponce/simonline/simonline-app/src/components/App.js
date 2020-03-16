@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import { Landing } from './'
-import './App.css';
+import './App.sass'
 
 
 function App() {

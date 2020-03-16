@@ -15,13 +15,6 @@ function Landing() {
 
 export default Landing
 
-{/*     <div class="p1 landing">
-        <p class="landing__title">Simonline</p>
-        <img class="landing__img" src="./logo.svg" alt="logo">
-        <a class="landing__login">Login</a>
-        <a class="landing__register">Register</a>
-    </div> */}
-
 {/* <div>
         <h1>Login</h1>
         <form onSubmit={event => {
