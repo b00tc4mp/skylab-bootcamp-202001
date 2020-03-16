@@ -4,7 +4,8 @@ import { Button } from '../index'
 import styles from './styles'
 
 const mainImg = require('../../../assets/home.jpg')
-const filterImg = require('../../../assets/filter.png')
+const leftImage = require('../../../assets/left-side.png')
+const rightImage = require('../../../assets/right-side.png')
 
 
 export default function Search({ onSubmit }) {
@@ -28,19 +29,19 @@ export default function Search({ onSubmit }) {
             </ImageBackground >
 
             <View style={styles.optionsContainer}>
-                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={filterImg}>
+                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={rightImage}>
                     <Button textStyle='bold' text='VERIFIED PARKS' type='filter' onPress={() => { handleOnPress('verified') }} />
                 </ImageBackground>
 
-                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={filterImg}>
+                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={rightImage}>
                     <Button textStyle='bold' text='XL PARKS' type='filter' onPress={() => { handleOnPress('xl') }} />
                 </ImageBackground>
 
-                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={filterImg}>
+                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={leftImage}>
                     <Button textStyle='bold' text='BEGGINER PARKS' type='filter' onPress={() => { handleOnPress('begginer') }} />
                 </ImageBackground>
 
-                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={filterImg}>
+                <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={leftImage}>
                     <Button textStyle='bold' text='LATEST PARKS' type='filter' onPress={() => { handleOnPress('latest') }} />
                 </ImageBackground>
             </View>
