@@ -5,52 +5,59 @@ module.exports = (playerId, combination) => {
     validate.string(playerId, 'playerId')
     validate.type(combination, 'combination', Object)
 
-    return Game.find({players: playerId})
-        .then(game => {
-            game.pushCombination = combination
-            return game.save()
-        })
-        .then(game => {
-            const { turnStart, turnTimeout, currentPlayer, players, watching, status, pushCombination, combinationViewed } = game
-      
-            const timeNow = new Date()
+    return Game.findOne({players: playerId})
+    .then(game => {
+        const { turnTimeout, players, watching, status, pushCombination} = game
     
-            const elapsedTime = (timeNow - turnStart) / 1000
-            /** when player before timeout matches the combination */
-            if (elapsedTime < turnTimeout && pushCombination === combination) {
-                var j = players.indexOf(currentPlayer)
-      
-                for (var i = j; i < players.length; i++) {
-                    if(!players[j+1]) i = 0
-                    if(!watching.includes(players[i])) return currentPlayer = players[i]
+        const timeNow = new Date()
+
+        const elapsedTime = (timeNow - game.turnStart) / 1000
+        debugger
+        /** when player before timeout matches the combination */
+        if (elapsedTime < turnTimeout && pushCombination === combination) {
+            const j = players.indexOf(currentPlayer)
+    
+            for (var i = j; i < players.length; i++) {
+
+                if(!players[j+1]) i = 0
+
+                if(!watching.includes(players[i])) {
+
+                    const combination = Math.floor(random() * 4)
+                    pushCombination.push(combination)
+                    game.combinationViewed = []
+                    turnTimeout = ((pushCombination.length) * 4)
+                    game.turnStart = new Date()
+                    game.currentPlayer = players[i]
+                    game.save()
+                    return game
                 }
-
-                const combination = Math.floor(random() * 4)
-                pushCombination.push(combination)
-
-                combinationViewed = []
-                
-                turnTimeout = ((pushCombination.length) * 4)
-                
-                turnStart = new Date()
-                /** when the player before timeout no match combination */
-            } else if (elapsedTime < turnTimeout && pushCombination !== combination) {
-                watching.push(currentPlayer)
-
-                if(players.length === (watching.length -1)) return status = 'finished'
-
-                var j = players.indexOf(currentPlayer)
-      
-                for (var i = j; i < players.length; i++) {
-                    if(!players[j+1]) i = 0;
-                    if(!watching.includes(players[i])) return currentPlayer = players[i]
-                }
-
-                combinationViewed = []
-                
-                turnStart = new Date()
-            } else {
-                return
             }
-        })
+            /** when the player before timeout no match combination */
+        } else if (elapsedTime < turnTimeout && pushCombination !== combination) {
+            watching.push(game.currentPlayer)
+
+            if(players.length === (watching.length -1)) return status = 'finished'
+
+            var j = players.indexOf(game.currentPlayer)
+    
+            for (var i = j; i < players.length; i++) {
+
+                if(!players[j+1]) i = 0
+
+                if(!watching.includes(players[i])) {
+
+                    game.currentPlayer = players[i]
+                    game.combinationViewed = []
+                    game.turnStart = new Date()
+                    game.save()
+                    return game
+                }
+            }
+        } else {
+            game.save()
+            return game
+        }
+    })
+    .then(game => game)
 }

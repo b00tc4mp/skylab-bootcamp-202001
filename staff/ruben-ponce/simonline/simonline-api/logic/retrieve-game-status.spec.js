@@ -23,7 +23,7 @@ describe('retrieveGameStatus', () => {
     })
 
     describe('when user and game already exists', () => {
-        let gameId, playerId
+        let gameId, playerId, player1
         
         beforeEach(async() => {
             let users = []
@@ -47,6 +47,7 @@ describe('retrieveGameStatus', () => {
                         game.currentPlayer = game.players[0]
                         game.status = "started"
                         game.turnTimeout = 1
+                        player1 = game.currentPlayer
                         return game.save()
                     })
         })
@@ -79,11 +80,26 @@ describe('retrieveGameStatus', () => {
             .then(() => {
                 return retrieveGameStatus(playerId, gameId)
                     .then(game => {
+                        debugger
+                        expect(game.currentPlayer).to.not.equal(player1)
                         expect(game.watching.length).to.equal(1)
-                        
                     })
             })
+            
         })
+
+
+        // it('should current player change to watching when the player has passed his turn 1sec', function() {
+        //     this.timeout(3000);
+        //     return wait(2000)
+        //     .then(() => {
+        //         return retrieveGameStatus(playerId, gameId)
+        //             .then(game => {
+        //                 debugger
+        //                 expect(game.watching.length).to.equal(2)
+        //             })
+        //     })
+        // })
     })
 
 })

@@ -15,33 +15,33 @@ module.exports = (playerId, gameId) => {
           .then(game => {
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
             
-            const { status, turnTimeout, players, watching } = game
+            const { status, turnTimeout } = game
 
-            if(!players.includes(playerId)) throw new NotFoundError(`player ${playerId}, not joined on game`)
+            if(!game.players.includes(playerId)) throw new NotFoundError(`player ${playerId}, not joined on game`)
       
             if (status === "started") {
       
               const timeNow = new Date()
       
               const elapsedTime = (timeNow - game.turnStart) / 1000
-              debugger
+              
               /* 40sec countdown on turn */
               if (elapsedTime > turnTimeout) {
-                watching.push(game.currentPlayer)
-                const j = players.indexOf(game.currentPlayer)
+                game.watching.push(game.currentPlayer)
+                const j = game.players.indexOf(game.currentPlayer)
       
-                if(players.length === (watching.length -1)) return status = 'finished'
+                if(game.players.length === (game.watching.length -1)) return status = 'finished'
 
-                for (let i = j; i < players.length; i++) {
-                    if(!players[j+1]) i = 0
-                    if(!watching.includes(players[i])) game.currentPlayer = players[i]
+                for (let i = j; i < game.players.length; i++) {
+                    if(!game.players[j+1]) i = 0
+                    if(!game.watching.includes(game.players[i])) {
+                      game.currentPlayer = game.players[i]
+                      game.turnStart = new Date()
+                      game.save()
+                      return game
+                    }
                 }
-                debugger
-                game.turnStart = new Date()
-      
                 /* Matching betwen combinationPlayer and combinationGame */
-                game.save()
-                return game
               }
             }
             return game
