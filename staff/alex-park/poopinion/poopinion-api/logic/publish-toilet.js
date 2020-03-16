@@ -7,13 +7,14 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
  * 
  * @param {string} id user's unique id
  * @param {string} place location of the toilet
+ * @param {object} coordinates google maps location of the place
  * 
  * @returns {Promise<string>} returns an empty Promise
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
  * @throws {NotFoundError} if the user does not exist
  */
-module.exports = (id, place) => {
+module.exports = (id, place, coordinates) => {
     validate.string(id, 'id')
     validate.string(place, 'place')
 
@@ -22,7 +23,7 @@ module.exports = (id, place) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
-            const toilet = new Toilet({ place, created: new Date, publisher: id, geolocation: [50, 50] })
+            const toilet = new Toilet({ place, created: new Date, publisher: id, geolocation: coordinates })
 
             user.publishedToilets.push(toilet)
             return Promise.all([user.save(), toilet.save()])

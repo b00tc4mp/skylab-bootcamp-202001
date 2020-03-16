@@ -2,10 +2,10 @@ const { publishToilet } = require('../../logic')
 const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    const { body: { place }, payload: { sub: id } } = req
+    const { body: { place, coordinates }, payload: { sub: id } } = req
 
     try {
-        publishToilet(id, place)
+        publishToilet(id, place, coordinates)
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400

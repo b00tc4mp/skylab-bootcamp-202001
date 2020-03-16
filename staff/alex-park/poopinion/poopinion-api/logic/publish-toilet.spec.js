@@ -13,7 +13,7 @@ describe('publishToilet', () => {
             .then(() => { })
     )
 
-    let name, surname, email, password, age, gender, _id, place
+    let name, surname, email, password, age, gender, _id, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates
     const GENDERS = ['male', 'female', 'non-binary']
 
     beforeEach(() => {
@@ -24,6 +24,11 @@ describe('publishToilet', () => {
         age = floor(random() * 120)
         gender = GENDERS[floor(random() * GENDERS.length)]
         place = `house of ${name}`
+        latitude = random()
+        latitudeDelta = random()
+        longitude = random()
+        longitudeDelta = random()
+        coordinates = { latitude, longitude, latitudeDelta, longitudeDelta }
     })
 
     describe('when user already exists', () => {
@@ -35,14 +40,14 @@ describe('publishToilet', () => {
         )
 
         it('should successfully publish a toilet post', () =>
-            publishToilet(_id, place)
+            publishToilet(_id, place, coordinates)
                 .then(() => Toilet.findOne({ publisher: _id }))
                 .then(toilet => {
-                    
+                    debugger
                     expect(toilet.publisher.toString()).to.equal(_id)
                     expect(toilet.place).to.equal(place)
                     expect(toilet.comments instanceof Array).to.equal(true)
-                    expect(toilet.geolocation instanceof Array).to.equal(true)
+                    expect(toilet.geolocation instanceof Object).to.equal(true)
 
                 })
                 .then(() => User.findById(_id).populate('publishedToilets'))
@@ -52,7 +57,7 @@ describe('publishToilet', () => {
                     expect(user.publishedToilets[0].publisher.toString()).to.equal(_id)
                     expect(user.publishedToilets[0].place).to.equal(place)
                     expect(user.publishedToilets[0].comments instanceof Array).to.equal(true)
-                    expect(user.publishedToilets[0].geolocation instanceof Array).to.equal(true)
+                    expect(user.publishedToilets[0].geolocation instanceof Object).to.equal(true)
                 })
                 .then(() => { })
         )
@@ -62,7 +67,7 @@ describe('publishToilet', () => {
         beforeEach(() => User.deleteMany().then(() => { }))
 
         it('should fail to post a toilet if the user does not exist', () =>
-            publishToilet(_id, place)
+            publishToilet(_id, place, coordinates)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
@@ -80,7 +85,7 @@ describe('publishToilet', () => {
                 .then(() => { })
         )
         it('should fail to post a toilet if the user is deactivated', () =>
-            publishToilet(_id, place)
+            publishToilet(_id, place, coordinates)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
@@ -98,16 +103,16 @@ describe('publishToilet', () => {
 
         it('should fail on a non-string place', () => {
             place = 9328743289
-            expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
 
             place = false
-            expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
 
             place = undefined
-            expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
 
             place = []
-            expect(() => publishToilet(_id, place)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
         })
 
         it('should fail on a non-string id', () => {
@@ -124,7 +129,7 @@ describe('publishToilet', () => {
             expect(() => publishToilet(_id)).to.throw(TypeError, `id ${_id} is not a string`)
         })
     })
-    
+
     after(() =>
         Promise.all([User.deleteMany(), Toilet.deleteMany()])
             .then(() => mongoose.disconnect())
