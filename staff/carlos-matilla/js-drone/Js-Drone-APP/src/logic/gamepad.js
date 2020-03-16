@@ -1,6 +1,17 @@
 import socket from "../socket"
+const throttle = require('lodash/throttle');
 
 
+
+export let channelA 
+export let channelB 
+export let channelC 
+export let channelD 
+export let takeOff 
+export let land
+
+land = false
+takeOff = false
 
 const buttonPressed = key => {
   if (typeof key === "object") {
@@ -15,15 +26,20 @@ const invert = (x) => {
 }
 
 const parse = (x => {
-  if(x > 0.5)return 50  
-  if(x < -0.5) return -50      
+  if(x > 0.6)return 60  
+  if(x < -0.6) return -60      
   return Math.round(x * 100)
 })
 
 
 let start
+// let counter = 0
+var fps = 15
 
-
+// setInterval(() => {
+//   console.log(counter)
+//   counter = 0
+// }, 1000);
 
 export const gameLoop = () => {
   var gamepads = navigator.getGamepads
@@ -113,19 +129,25 @@ export const gameLoop = () => {
   if (buttonPressed(gp.buttons[16])) {
     console.log('home')
     socket.emit('gamepad', `takeoff`)
+   
+    land = false
+    takeOff = true
   }
   // 17 is select
   if (buttonPressed(gp.buttons[17])) {
     console.log('select')
     socket.emit('gamepad', `land`)
+    takeOff = false
+    land = true
   }
 
 
   if (gp.axes) {
-    let channelA = parse(gp.axes[0])
-    let channelB = invert(parse(gp.axes[1]))
-    let channelC = parse(gp.axes[3])
-    let channelD = parse(gp.axes[2])
+    channelA = parse(gp.axes[0])
+    channelB = invert(parse(gp.axes[1]))
+    channelC = parse(gp.axes[3])
+    channelD = parse(gp.axes[2])
+    
 
     // console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
 
@@ -133,12 +155,35 @@ export const gameLoop = () => {
 
   }
 
-  start = requestAnimationFrame(gameLoop)
+    
+    
+    
+
+    
+      
+      
+   
+
+
+      
+      
+          setTimeout(function() {
+            start = requestAnimationFrame(gameLoop)
+              // Drawing code goes here
+          }, 1000 / fps);
+      
+    
+
 }
 
 export const gamepadConnect = evt => {
+  
+  
+  
+      
+    start = requestAnimationFrame(gameLoop)
  
-  start = requestAnimationFrame(gameLoop)
+  
    
 }
 

@@ -1,24 +1,46 @@
 import React, { useState, useEffect, useContext } from 'react'
-
 import './Home.sass';
-import { gamepadConnect, gamepadDisconnect } from "../logic/gamepad";
+import { gamepadConnect, gamepadDisconnect, channelA, channelB, channelC, channelD, takeOff, land } from "../logic/gamepad";
 import {keyDown, keyUp} from '../logic/keyboard'
 import JMuxer from 'jmuxer';
-import {logout, isLoggedIn, retrieveUser} from './../logic'
+import {logout, isLoggedIn, retrieveUser, saveData, parseData} from './../logic'
 import {Telemetry, Charts, NavbarLeft, NavbarRight} from './';
-
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
+import socket from '../socket';
+
+let droneState
+socket.on('dronestate', data => {
+  return droneState = data
+})
+
+function clearAndSend(){
+  clearInterval(send)
+  return parseData()
+}
 
 
+const send = setInterval(() => {
+  
+  if(droneState && takeOff) {
+    console.log('enviando datos')
+    let { templ, temph, tof, bat, baro } = droneState
+    saveData(channelA, channelB, channelC, channelD, temph, templ, bat, baro, tof)
+  }
 
+  if(droneState && land){
+    clearAndSend()
+  }
+  
+}, 1000);
 
 export default withRouter(function ({ history }) {
 
     const [, setState] = useContext(Context)
     const [name, setName] = useState()
-    
-
+   
+  
+   
     useEffect(() => {
       if (isLoggedIn())
             (async () => {
@@ -26,7 +48,7 @@ export default withRouter(function ({ history }) {
                     const { name, sessions } = await retrieveUser()
 
                     setName(name)
-                    console.log(sessions)
+                    
                     setState({ page: 'home' })
                 } catch ({ message }) {
                     setState({ error: message, page: 'login' })
@@ -63,13 +85,10 @@ export default withRouter(function ({ history }) {
       }, []);
     
 
-      function onFly(){
-
-      }
+     
       
      
       function handleLogout() {
-        console.log('apagao')
         logout()
 
         setState({ page: 'login' })
@@ -115,18 +134,14 @@ export default withRouter(function ({ history }) {
             
         </header>
         
-        {/* <section className="video-container">
-            
-            
-
-        </section> */}
+       
         <div className="aspect-ratio--16x9">
             <div className="aspect-ratio__inner-wrapper">
-                <video className="video" id='player' playsInline autoPlay muted/>
+                <video className="video" id='player' autoPlay muted/>
             </div>
         </div>
         
-        <Charts />
+        {/* <Charts /> */}
             
        
         </div>

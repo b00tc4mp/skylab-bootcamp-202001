@@ -41,14 +41,14 @@ export default function( {handleLogout}){
       <li className="rnav_item">
         <a href="#" className="rnav_link">
           
-          <span className="rnav_linktext">Shuttle</span>
+          <span className="rnav_linktext"></span>
         </a>
       </li>
 
       <li className="rnav_item">
         <a href="#" className="rnav_link">
           
-          <span className="rnav_linktext">Themify</span>
+          <span className="rnav_linktext"></span>
         </a>
       </li>
     </ul>
