@@ -8,10 +8,9 @@ module.exports = {
     retrieveLastListings: require('./retrieve-last-listings'),
     updateListing: require('./update-listing'),
     deleteListing: require('./delete-listing'),
-    createListing: require('./create-listing'),
     saveListingPhoto: require('./save-listing-photo'),
-    retrieveListingPhoto: require('./retrieve-listing-photo')
-    // subscribeListing: require('./subscribe-listing'),
-    // retrieveSubscribedListings: require('./retrieve-subscribed-listings'),
-    // deleteListing: require('./delete-booking')
+    retrieveListingPhoto: require('./retrieve-listing-photo'),
+    createBooking: require('./create-booking'),
+    // acceptAndIncludeBooking: require('./accept-and-include-booking'),
+    declineAndRemoveBooking: require('./decline-and-remove-booking')
 }

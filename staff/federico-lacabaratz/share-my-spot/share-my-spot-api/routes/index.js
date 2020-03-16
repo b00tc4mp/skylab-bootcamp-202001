@@ -10,7 +10,10 @@ const {
     updateListing,
     deleteListing,
     saveListingPhoto,
-    retrieveListingPhoto
+    retrieveListingPhoto,
+    createBooking,
+    acceptAndIncludeBooking,
+    declineAndRemoveBooking
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -43,11 +46,13 @@ router.post('/upload/:listingId', jwtVerifierMidWare, saveListingPhoto)
 
 router.get('/load/:listingId', retrieveListingPhoto)
 
-// router.patch('/users/:id/', [jwtVerifierMidWare, jsonBodyParser], subscribeListing)
+router.post('/users/:id/listings/:id/bookings', [jwtVerifierMidWare, jsonBodyParser], createBooking)
+
+// router.patch('/users/:id/listings/:id', [jwtVerifierMidWare, jsonBodyParser], acceptAndIncludeBooking)
 
 // router.get('/users/subscribedListings', jwtVerifierMidWare, retrieveSubscribedListings)
 
-// router.delete('/users/deleteBooking', [jwtVerifierMidWare, jsonBodyParser], deleteBooking)
+router.delete('/users/declineAndRemoveBooking', [jwtVerifierMidWare, jsonBodyParser], declineAndRemoveBooking)
 
 module.exports = router
 

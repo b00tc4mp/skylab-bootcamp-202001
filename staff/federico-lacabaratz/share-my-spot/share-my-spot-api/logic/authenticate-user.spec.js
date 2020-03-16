@@ -5,6 +5,7 @@ const { mongoose, models: { User } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const { random } = Math
 const authenticateUser = require('./authenticate-user')
+const { ContentError } = require('share-my-spot-errors')
 const bcrypt = require('bcryptjs')
 
 describe('authenticateUser', () => {
@@ -82,6 +83,63 @@ describe('authenticateUser', () => {
                 expect(error).to.exist
                 expect(error.message).to.equal(`wrong credentials`)
             }
+        })
+
+        describe('unhappy paths', () => {
+
+            it('should fail on a non-string and non-valid email', () => {
+                email = 1
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `email ${email} is not a string`)
+    
+                email = false
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `email ${email} is not a string`)
+    
+                email = undefined
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `email ${email} is not a string`)
+    
+                email = []
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `email ${email} is not a string`)
+    
+                email = 'kfjsnfksdn'
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(ContentError, `${email} is not an e-mail`)
+    
+                email = 'kfjsnfksdn@123'
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(ContentError, `${email} is not an e-mail`)
+            })
+    
+            it('should fail on a non-string password', () => {
+                password = 1
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `password ${password} is not a string`)
+    
+                password = false
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `password ${password} is not a string`)
+    
+                password = undefined
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `password ${password} is not a string`)
+    
+                password = []
+                expect(() => 
+                    authenticateUser(email, password)
+                    ).to.throw(TypeError, `password ${password} is not a string`)
+            })
         })
 
     after(async () => {

@@ -2,10 +2,10 @@ const { createBooking } = require('../../logic')
 const { ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { params: { id }, body: { publisher, listingId, dateStarts, dateEnds, status } } = req
+    const { params: { userToBook, publisher, listingId }, body: { dateStarts, dateEnds, status } } = req
     
     try {
-        createBooking(id, publisher, listingId, dateStarts, dateEnds, status)
+        createBooking(userToBook, publisher, listingId, dateStarts, dateEnds, status)
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400

@@ -16,22 +16,24 @@ const { compare } = require('bcryptjs')
  * @throws {NotAllowedError} on wrong credentials
  */
 
-module.exports = async (email, password) => {
+module.exports = (email, password) => {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
 
-    const user = await User.findOne({ email })
-
-    if (!user) throw new NotAllowedError('wrong credentials')
-
-    const validPassword = await compare(password, user.password)
-
-    if (!validPassword) throw new NotAllowedError('wrong credentials')
-
-    user.authenticated = await new Date
-
-    const { id } = await user.save()
-
-    return id
+    return (async() => {
+        const user = await User.findOne({ email })
+    
+        if (!user) throw new NotAllowedError('wrong credentials')
+    
+        const validPassword = await compare(password, user.password)
+    
+        if (!validPassword) throw new NotAllowedError('wrong credentials')
+    
+        user.authenticated = await new Date
+    
+        const { id } = await user.save()
+    
+        return id
+    })()
 }
