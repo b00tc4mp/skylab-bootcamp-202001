@@ -4,6 +4,7 @@ import Feedback from './Feedback'
 import Landing from './Landing'
 import NavigationBarTop from './Navigation-Bar-Top'
 import NavigationBarBottom from './Navigation-Bar-Bottom'
+import QueryResults from './Query-Results'
 import React from 'react'
 
 export {
@@ -12,5 +13,6 @@ export {
     Feedback,
     Landing,
     NavigationBarTop,
-    NavigationBarBottom
+    NavigationBarBottom,
+    QueryResults
 }

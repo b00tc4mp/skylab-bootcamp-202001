@@ -5,7 +5,8 @@ import {
   Login,
   Landing,
   NavigationBarTop,
-  NavigationBarBottom
+  NavigationBarBottom,
+  QueryResults
 } from './src/components'
 
 import {
@@ -24,6 +25,7 @@ export default function App() {
   const [token, setToken] = useState()
   const [user, setUser] = useState()
   const [goLanding, setGoLanding] = useState(false)
+  const [query, setQuery] = useState()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -65,13 +67,14 @@ export default function App() {
     }
   }
 
-  async function handleQuerySearch(query) {
+  async function handleQuerySearch(_query) {
     try {
-      if (!query || typeof query === 'undefined') {
+      if (!_query || typeof _query === 'undefined') {
         await Alert.alert('You have not added any text 🚽...')
-
+        
       } else {
-        await Alert.alert(`this is a search for ${query}`)
+        await setQuery(_query)
+        await setView('queryResults')
       }
 
     } catch ({ message }) {
@@ -97,6 +100,7 @@ export default function App() {
   }
 
   function handleGoToLanding() {
+    setQuery()
     setGoLanding(true)
     setError(null)
     setView('landing')
@@ -132,6 +136,7 @@ export default function App() {
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} lat={latitude} latDelta={latDelta} lng={longitude} lngDelta={lngDelta}/>}
+        {view === 'queryResults' && <QueryResults query={query}/>}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handlePublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
