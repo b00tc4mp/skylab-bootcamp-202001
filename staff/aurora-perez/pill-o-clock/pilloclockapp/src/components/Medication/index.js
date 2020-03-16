@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, FlatList} from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, FlatList, TouchableOpacity} from 'react-native'
 import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
-function Medication ({medication}) {
+function Medication ({medication, toAdd}) {
     //console.log(medication[0].drug.drugName)
     //{`${item.drug.drugName}`}
     //{medication.length ? bablabla : <Text>You don't have medication yet! Do you want to add one?</Text>
@@ -31,7 +31,9 @@ function Medication ({medication}) {
                     <Text style={styles.text}>You don't have medication yet! Do you want to add one?</Text>
                 
                 }
+                <TouchableOpacity onPress={()=>toAdd()}>
                 <Image style={styles.plus} source={require('../../../assets/images/plus.png')}/>
+                </TouchableOpacity>
             </View>
         </ScrollView>
         </View>

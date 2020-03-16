@@ -2,7 +2,7 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { User, Drug, Guideline } } = require('pill-o-clock-data')
 const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 
-module.exports = async (id, drugName, time) => { 
+module.exports = async (id, drugName, time) => {  debugger
     validate.string(id, 'id')
     validate.string(drugName, 'drugName')
     validate.type(time, 'time', Number)

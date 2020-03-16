@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert } from 'react-native'
 
-import { Register, Login, LandingPatient, LandingPharmacist, Medication } from './src/components'
-import { registerUser, login, retrieveUser, retrieveMedication } from './src/logic'
+import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication } from './src/components'
+import { registerUser, login, retrieveUser, retrieveMedication, addMedication } from './src/logic'
 //import Header from '../Header
 
 export default function App () {
@@ -17,7 +17,7 @@ export default function App () {
     setError(message)
     setTimeout(() => {
       setError(null)
-    }, 3000)
+    }, 5000)
   }
 
   async function handleRegister ({name, surname, gender, age, phone, profile, email, password}) {
@@ -77,13 +77,35 @@ export default function App () {
     }
   }
 
+  function handleToAdd () {
+    setView('addMedication')
+  }
+
+  async function handleAddMedication ({drug, hour, min}) {
+    
+    try{
+      
+      if(isNaN(hour) || isNaN(min) || hour>24 || min>59) throw new Error('Please, introduce a correct hour')
+      
+      const time = parseInt(`${hour}${min}`)
+
+      await addMedication(token, drug, time)
+      
+      handleToMedication()
+
+    }catch({message}){
+      __handleError__(message)
+    }
+  }
+
 
   return(<View style={styles.container}>
     { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
     { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
     { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication}  /> }
     { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
-    { view === 'medication' && <Medication medication = {medication}/> }
+    { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd}/> }
+    { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
     </View>
   //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}
   )
