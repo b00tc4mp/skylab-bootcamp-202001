@@ -1,20 +1,20 @@
-import React, { /*useState, Fragment*/ } from 'react'
-import logo from './logo.svg';
-// import { Login } from './'
+import React, { useState, Fragment } from 'react'
+import { Landing } from './'
 import './App.css';
 
 
 function App() {
+  const [view, setView] = useState('landing')
+
+
   return (
-    <div className="App">
-        <header className="App-header">
-        <h1>Simonline</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-        <a href="#">Login</a>
-        <a href="#">Register</a>
-      </header>
-    </div>
-  );
+    <Fragment>
+
+      {view === 'landing' && <Landing/>}
+
+    </Fragment>
+
+  )
 }
 
 export default App;
