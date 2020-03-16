@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, ScrollView, Image, StatusBar } from 'react-native'
+import { StyleSheet, View, ScrollView, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { registerUser, login } from './src/logic'
 import { Login, Register, Landing } from './src/components/'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default function App() {
 	const [view, setView] = useState('landing')
 	const [error, setError] = useState()
@@ -42,15 +42,16 @@ export default function App() {
 	}
 
 	return (
-		<View style={styles.container}>
-			<StatusBar hidden={false} barStyle={'dark-content'} />
-			<Image source={require('./assets/logo.png')} style={styles.logo}></Image>
-			{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
-			{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
-			{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-			{view === 'search' && <Text>Logged In</Text>}
-
-		</View>
+		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+			<KeyboardAwareScrollView contentContainerStyle={styles.container} >
+				<StatusBar hidden={false} barStyle={'dark-content'} />
+				<Image source={require('./assets/logo.png')} style={styles.logo}></Image>
+				{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
+				{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
+				{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
+				{view === 'search' && <Text>Logged In</Text>}
+			</KeyboardAwareScrollView>
+		</TouchableWithoutFeedback>
 	)
 }
 

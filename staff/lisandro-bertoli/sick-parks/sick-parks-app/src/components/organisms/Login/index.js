@@ -8,7 +8,6 @@ export default function Login({ onSubmit, error, onToRegister }) {
     const [password, setPassword] = useState()
 
     return (
-
         <View style={styles.container}>
             <TextInput style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} />
             <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} />

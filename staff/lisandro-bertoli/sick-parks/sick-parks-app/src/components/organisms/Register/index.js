@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, ScrollView, Text, Keyboard } from 'react-native'
+import { View, TextInput, Text } from 'react-native'
 import Button from '../../atoms/Button'
 import styles from './styles'
 
@@ -10,10 +10,7 @@ export default function Register({ onToLogin, onSubmit, error }) {
     const [password, setPassword] = useState()
 
     return (
-
-        // <ScrollView >
         <View style={styles.container}>
-
             <TextInput style={styles.input} placeholder='Your name here' onChangeText={(text) => setName(text)} />
             <TextInput style={styles.input} placeholder='Your surname here' onChangeText={(text) => setSurname(text)} />
             <TextInput style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} />
@@ -22,7 +19,5 @@ export default function Register({ onToLogin, onSubmit, error }) {
             {error && <Text style={styles.danger}>{error}</Text>}
             <Button type='anchor' textStyle='anchor' text='Already a member? Sign in' onPress={onToLogin} />
         </View>
-        // </ScrollView>
-
     )
 }

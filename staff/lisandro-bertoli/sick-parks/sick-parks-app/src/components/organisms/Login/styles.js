@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     input: {
         backgroundColor: '#82A4B3',
-        flex: 0.15,
+        flex: 0.12,
         width: 250,
         color: '#EFEBDA',
         borderRadius: 5,
