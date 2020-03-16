@@ -23,7 +23,7 @@ module.exports = (userToBook, publisher, listingId, dateStarts, dateEnds, status
 
         const booking = new Booking({ listings: listingId, publisher, userToBook: userId, dateStarts, dateEnds, status: 'yellow', bookingCreated: new Date})
 
-        user.bookedListing.push(listing.id)
+        user.booking.push(booking.id)
         listing.bookings.push(booking.id)
 
         return Promise.all([user.save(), listing.save(), booking.save()])
