@@ -20,10 +20,14 @@ export default withRouter (function({user, history}) {
         history.push('/home')
     }
 
+    function handleToHome() {
+        history.push('/home')
+    }
+
 
     return <header>
         <section className="logo">
-            <img src={parking} className="logo__icon" alt=""/>
+            <img src={parking} className="logo__icon" alt="" onClick={handleToHome}/>
             <p className="logo__text"><a href="#">StayCar</a></p>
         </section>
         <section className="logout">

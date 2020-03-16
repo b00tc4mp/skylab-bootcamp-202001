@@ -3,6 +3,14 @@ export default {
         sessionStorage.token = token
     },
 
+    set parking(parking) {
+        sessionStorage.parking = parking
+    },
+
+    get parking() {
+        return sessionStorage.parking
+    },
+
     get token() {
         return sessionStorage.token
     },
@@ -10,6 +18,11 @@ export default {
     clear() {
         delete this.token
 
+        sessionStorage.clear()
+    },
+
+    clearParking() {
+        delete this.parking
         sessionStorage.clear()
     }
 }

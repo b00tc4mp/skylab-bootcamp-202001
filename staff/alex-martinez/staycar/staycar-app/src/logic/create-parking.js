@@ -7,8 +7,11 @@ const API_URL = process.env.REACT_APP_API_URL
 export default (function (parkingName, rate, totalLots) {
     
     validate.string(parkingName, 'parking name')
+    if(!rate) throw new Error('rate is empty')
     validate.type(rate, "rate", Number)
-    validate.type(totalLots, 'totalLots', Number)
+    if(!totalLots) throw new Error('total lots is empty')
+    validate.type(totalLots, 'total lots', Number)
+
 
     return( async () => {
         
@@ -19,8 +22,12 @@ export default (function (parkingName, rate, totalLots) {
         })
        
         const { status } = response
-        debugger
-        if(status === 201) return 
+        
+        if(status === 201) {
+
+            this.parking = parkingName
+            return
+        }
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
