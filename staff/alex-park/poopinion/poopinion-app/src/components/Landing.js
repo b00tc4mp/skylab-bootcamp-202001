@@ -172,7 +172,8 @@ const styles = StyleSheet.create({
     },
     contentRight: {
         flex: 1,
-        alignItems: 'flex-end'
+        alignItems: 'flex-end',
+        justifyContent: 'center'
     },
     mapStyle: {
         width: '95%',
