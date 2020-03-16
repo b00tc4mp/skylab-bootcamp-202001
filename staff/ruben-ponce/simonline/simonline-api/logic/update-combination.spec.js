@@ -1,28 +1,28 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { models: { User, Game }, mongoose } = require('simonline-data')
+const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
-const startGame = require('./start-game')
+const updateCombination = require('./update-combination')
+const { mongoose } = require('simonline-data')
 require('../../simonline-utils/shuffle')()
 
-describe('startGame', () => {
+describe('createGame', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
-    let name, owner, username, password
+    let username, password, name, owner, gameId, playerId
 
     beforeEach(() => {
+        name = `name-${random()}`
         username = `username-${random()}`
         password = `password-${random()}`
-        name = `name-${random()}`
     })
 
-    describe('when user and game already exists', () => {
-        let gameId, playerId
-        
+    describe('when user already exists', () => {
+
         beforeEach(async() => {
             let users = []
 
@@ -34,8 +34,9 @@ describe('startGame', () => {
                         users.push(user.id)
                     })
 
-                return Game.create({ name, owner })
+                await Game.create({ name, owner })
                 .then(game => {
+                    debugger
                     game.players = users
                     game.owner.id = owner
                     game.players.shuffle()
@@ -47,24 +48,24 @@ describe('startGame', () => {
 
         it('should succeed on valid data', () => {
 
-            return startGame(playerId, gameId)
+            return updateCombination(gameId)
                 .then(() =>
                     Game.findOne({ name, owner })
                 )
                 .then(game => {
+                    debugger
                     expect(game).to.exist
                     expect(game.name).to.equal(name)
-                    expect(game.status).to.equal("started")
-                    expect(game.players.length).to.equal(10)
-                    expect(game.date).to.exist
-                    expect(game.pushCombination.length).to.equal(1)
-                    expect(game.watching).to.be.empty
-                    expect(game.combinationViewed).to.be.empty
+                    expect(game.owner).to.be.an.instanceOf(Object)
                 })
+        })
+
+        afterEach(() => {
+            Game.deleteOne({ name })
+            User.deleteOne({ playerId })
         })
 
     })
 
-    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
-
+    after(() => mongoose.disconnect())
 })

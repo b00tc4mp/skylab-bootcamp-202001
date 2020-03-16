@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User, Game } } = require('simonline-data')
+const { mongoose, models: { User, Game }, ObjectId } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
 const joinGame = require('./join-game')
@@ -22,17 +22,17 @@ describe('join-game', () => {
 
     describe('when user already exists', () => {
 
-        beforeEach(() =>
-            Promise.all([
-                User.create({ username, password }),
-                Game.create({ name, owner })
-            ])
-            .then(([{ id: _id }, { id: _gameId }]) => {
-                id = _id
-                owner = id
-                gameId = _gameId
-            })
-        )
+        beforeEach(() => {
+            return User.create({username, password})
+                .then(user => {
+                    id = user.id
+                    owner = user.id
+                })
+                .then(() => {
+                    return Game.create({name, owner})
+                        .then(game => gameId = game.id)
+                })
+        })
         
         it('should succeed on correct and valid and right data', () =>
             joinGame(id, gameId)
@@ -46,8 +46,8 @@ describe('join-game', () => {
                     expect(user).to.exist
                     expect(game).to.exist
                     expect(game.name).to.equal(name)
-                    expect(game.owner).to.equal(owner)
                     expect(game.players).to.contain(id)
+                    expect(game.owner).to.be.an.instanceOf(Object)
                 })
         )
     })

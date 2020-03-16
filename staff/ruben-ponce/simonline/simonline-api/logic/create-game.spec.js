@@ -16,8 +16,7 @@ describe('createGame', () => {
 
     beforeEach(() => {
         name = `name-${random()}`
-        owner = `owner-${random()}`
-        username = owner
+        username = `username-${random()}`
         password = `password-${random()}`
     })
 
@@ -25,8 +24,11 @@ describe('createGame', () => {
         let id
 
         beforeEach(() =>
-            User.create(new User({ username, password }))
-                .then((user) => id = user.id)
+            User.create({ username, password })
+                .then((user) => {
+                    id = user.id
+                    owner = id
+                })
         )
 
         it('should succeed on valid data', () => {
@@ -38,7 +40,7 @@ describe('createGame', () => {
                 .then(game => {
                     expect(game).to.exist
                     expect(game.name).to.equal(name)
-                    expect(game.owner).to.equal(owner)
+                    expect(game.owner).to.be.an.instanceOf(Object)
                 })
         })
 

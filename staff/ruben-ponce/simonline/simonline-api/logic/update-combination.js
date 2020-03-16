@@ -6,14 +6,14 @@ const { random } = Math
 module.exports = (gameId) => {
     validate.string(gameId, 'gameId')
 
-    let combination = Math.floor(random() * 4)
+    const combination = Math.floor(random() * 4)
     
     return Game.findById(gameId)
         .then((game) => {
 
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            game.combinationGame.push(combination)
+            game.pushCombination.push(combination)
 
             return game.save()
         })
