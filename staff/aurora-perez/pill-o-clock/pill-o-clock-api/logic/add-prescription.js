@@ -5,7 +5,7 @@ const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 module.exports = async (id, drugName, time) => {  debugger
     validate.string(id, 'id')
     validate.string(drugName, 'drugName')
-    validate.type(time, 'time', Number)
+    validate.type(time, 'time', Array)
    
     let _drugName = drugName
 
@@ -25,7 +25,7 @@ module.exports = async (id, drugName, time) => {  debugger
               
     } 
 
-    const guideline = new Guideline({created: new Date, prescribed: user._id.toString(), drug: drug._id.toString(), times: [time]})
+    const guideline = new Guideline({created: new Date, prescribed: user._id.toString(), drug: drug._id.toString(), times: time})
 
     const updateUser= await User.findByIdAndUpdate(user._id, { $push: { prescription: guideline } })
     const updateGuideline = await guideline.save()

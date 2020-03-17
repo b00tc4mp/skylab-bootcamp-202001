@@ -5,8 +5,14 @@ import styles from './styles'
 
 function AddMedication ({onSubmit, error}) {
     const [ drug, setDrug ] =useState()
-    const [ hour, setHour ] = useState()
-    const [ min, setMin ] = useState()
+    const [ hour1, setHour1 ] = useState()
+    const [ min1, setMin1 ] = useState()
+    const [ secondTime, setSecondTime ] =useState(false)
+    const [ hour2, setHour2 ] = useState()
+    const [ min2, setMin2 ] = useState()
+    const [ thirdTime, setThirdTime ] =useState(false)
+    const [ hour3, setHour3 ] = useState()
+    const [ min3, setMin3 ] = useState()
     
     return (
         <ScrollView>
@@ -25,15 +31,47 @@ function AddMedication ({onSubmit, error}) {
                 <View style={styles.hourContainer}>                
                     <Text style = {styles.text}>Select hour: </Text> 
                     <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
-                        onChangeText={(hour) => setHour(hour)}/>
+                        onChangeText={(hour1) => setHour1(hour1)}/>
 
                     <TextInput style = {styles.hour} maxLength={2} placeholder='minutes'
-                        onChangeText={(min) => setMin(min)}/>
+                        onChangeText={(min1) => setMin1(min1)}/>
+
+                    <Text style = {styles.text} onPress={() => setSecondTime(!secondTime)}>+/-</Text>
                 </View>
+
                 
+
+                {secondTime && 
+                <View style={styles.hourContainer}>                
+                    <Text style = {styles.text}>Select hour: </Text> 
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
+                        onChangeText={(hour2) => setHour2(hour2)}/>
+
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='minutes'
+                        onChangeText={(min2) => setMin2(min2)}/>
+                    <Text style = {styles.text} onPress={() => setThirdTime(!thirdTime)}>+/-</Text>
+                </View>}
+
+                {thirdTime && 
+                <View style={styles.hourContainer}>                
+                    <Text style = {styles.text}>Select hour: </Text> 
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
+                        onChangeText={(hour3) => setHour3(hour3)}/>
+
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='minutes'
+                        onChangeText={(min3) => setMin3(min3)}/>
+                    
+                </View>}
+
+
                 {error && <Text style={ styles.error}>{error}</Text>}
                 
-                <Text style = {[styles.text, styles.button]} onPress={()=> onSubmit({drug, hour, min})}>Add pill!</Text>
+                <Text style = {[styles.text, styles.button]} onPress={()=> {
+                    !secondTime && onSubmit({drug, hour1, min1}) || 
+                    secondTime && !thirdTime && onSubmit({drug, hour1, hour2, min1, min2}) || 
+                    thirdTime && onSubmit({drug, hour1, hour2, hour3, min1, min2, min3})
+                    
+                }}>Add pill!</Text>
                        
             </View>
         </ScrollView>

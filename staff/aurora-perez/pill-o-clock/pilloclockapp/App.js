@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert } from 'react-native'
 
 import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication } from './src/components'
-import { registerUser, login, retrieveUser, retrieveMedication, addMedication } from './src/logic'
+import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug } from './src/logic'
 //import Header from '../Header
 
 export default function App () {
@@ -81,17 +81,39 @@ export default function App () {
     setView('addMedication')
   }
 
-  async function handleAddMedication ({drug, hour, min}) {
+  async function handleAddMedication (info) {
     
     try{
-      
-      if(isNaN(hour) || isNaN(min) || hour>24 || min>59) throw new Error('Please, introduce a correct hour')
-      
-      const time = parseInt(`${hour}${min}`)
+      const {drug} = info
+      let keys = Object.keys(info)
+      keys.slice(0,1)
 
-      await addMedication(token, drug, time)
+      for (const key in info){
+        if (key !=='drug') {
+          if (key.includes('hour') && !isNaN(info[key]) && info[key]>24) throw new Error('Please, introduce a correct hour')
+          if (key.includes('min') && !isNaN(info[key]) && info[key]>59) throw new Error('Please, introduce a correct hour')
+        }
+      }
+
+      const times = []
+
+      for (let i = 1; i < keys.length/2; i++) {
+          times.push(parseInt(`${info[`hour${i}`]}${info[`min${i}`]}`))
+      }
+
+      await addMedication(token, drug, times)
       
       handleToMedication()
+
+    }catch({message}){
+      __handleError__(message)
+    }
+  }
+
+  async function handleToDrug ({drugName, times}){
+    try {
+      const __drug=await retrieveDrug(drugName)
+      console.log(__drug)
 
     }catch({message}){
       __handleError__(message)
@@ -104,7 +126,7 @@ export default function App () {
     { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
     { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication}  /> }
     { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
-    { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd}/> }
+    { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
     { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
     </View>
   //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}

@@ -2,25 +2,24 @@ import { NotAllowedError, NotFoundError } from '../errors'
 import fetch from 'node-fetch'
 const { validate } = require('../utils')
 
-addMedication = (token, drugName, time)=> {
-    validate.string(token, 'token')
+retrieveDrug = (drugName)=> {
     validate.string(drugName, 'drugName')
-    validate.type(time, 'time', Array)
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users/add-prescription`, {
-            method: 'POST',
+        const response = await fetch(`http://192.168.1.85:8085/api/drug/${drugName}`, {
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,  
-            },
-            body: JSON.stringify({ drugName, time })
+                'Content-Type': 'application/json'
+            }
         })
     
         const { status } = response
         
-        if (status === 201) return
+        if (status === 200) {
+            const drug = await response.json()
+            
+            return drug
+        }
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
@@ -42,4 +41,4 @@ addMedication = (token, drugName, time)=> {
     
 }
 
-export default addMedication
+export default retrieveDrug

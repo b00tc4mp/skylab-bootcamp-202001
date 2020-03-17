@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, FlatList, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, FlatList, TouchableOpacity, Alert} from 'react-native'
 import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
-function Medication ({medication, toAdd}) {
+function Medication ({medication, toAdd, onDrug}) {
     //console.log(medication[0].drug.drugName)
     //{`${item.drug.drugName}`}
     //{medication.length ? bablabla : <Text>You don't have medication yet! Do you want to add one?</Text>
@@ -28,6 +28,11 @@ function Medication ({medication, toAdd}) {
                         data = {medication}
                         renderItem={({item})=>(
                             <ListItem 
+                                onPress ={()=> {
+                                    const {drug: {drugName}} = item
+                                    const { times } = item
+                                    onDrug({drugName, times})
+                                }}
                                 title ={item.drug.drugName.toString()}
                                 titleStyle = {{
                                     marginTop : 20,
@@ -42,7 +47,7 @@ function Medication ({medication, toAdd}) {
                                 }}
                             />
                         )}
-                        keyExtractor={item => item.prescribed}
+                        keyExtractor={item => item.drug}
                     />
                 :
                     <Text style={styles.text}>You don't have medication yet! Do you want to add one?</Text>
