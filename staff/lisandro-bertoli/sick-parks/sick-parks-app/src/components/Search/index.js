@@ -16,7 +16,7 @@ export default function ({ onSubmit }) {
     }, [query])
 
 
-    return (
+    return (<>
         <ImageBackground source={mainImg}
             style={{ alignItems: 'center', flex: 1, height: '100%', justifyContent: 'flex-end' }} >
             <View style={{ flexDirection: 'row', flex: 1, width: '100%', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 10 }}>
@@ -44,5 +44,6 @@ export default function ({ onSubmit }) {
                 <Button textStyle='bold' text='LATEST PARKS' type='filter' onPress={() => { setQuery('latest') }} />
             </ImageBackground>
         </View>
+    </>
     )
 }
