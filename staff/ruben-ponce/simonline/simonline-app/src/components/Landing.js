@@ -3,13 +3,17 @@ import logo from './logo.svg';
 import'./Landing.sass'
 // import Feedback from './Feedback'
 
-function Landing() {
+function Landing({goToRegister, goToLogin}) {
 
     return <div className="p1 landing">
     <p className="landing__title">Simonline</p>
     <img src={logo} className="landing__img" alt="logo" />
-    <a href="#" className="landing__login">Login</a>
-    <a href="#" className="landing__register">Register</a>
+    <a className="landing__login" onClick={event => {
+            event.preventDefault()
+            goToLogin()}}>Login</a>
+    <a href="#" className="landing__register" onClick={event => {
+            event.preventDefault()
+            goToRegister()}}>Register</a>
     </div> 
 }
 

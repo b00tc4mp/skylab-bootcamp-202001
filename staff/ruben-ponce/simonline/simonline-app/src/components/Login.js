@@ -3,22 +3,29 @@ import React from 'react'
 
 function Login({onSubmit, goToRegister, error}) {
 
-    return <div>
-        <h1>Login</h1>
-        <form onSubmit={event => {
+    return <div className="p1 login">
+        <p className="login__title">Login</p>
+        <form className="login__form" onSubmit={event => {
             event.preventDefault()
-            onSubmit(event.target.email.value, event.target.password.value)
+            onSubmit(event.target.username.value, event.target.password.value)
         }}>
-            <input type="text" placeholder="email" name="email"/>
-            <input type="password" placeholder="password" name="password"/>
-            <button>Ok</button>
+            <input className="login__form__username" type="text" placeholder="username" name="username"/>
+            <input className="login__form__password" type="password" placeholder="password" name="password"/>
+            <button>Login</button>
         </form>
-        <span onClick={event => {
+        <a onClick={event => {
             event.preventDefault()
             goToRegister()
-        }} >Register</span>
+        }}>Register</a>
         {/* {error && <Feedback error={error}/>} */}
     </div>
 }
 
 export default Login
+
+{/* <div className="p1 landing">
+    <p className="landing__title">Simonline</p>
+    <img src={logo} className="landing__img" alt="logo" />
+    <a href="#" className="landing__login">Login</a>
+    <a href="#" className="landing__register">Register</a>
+    </div>  */}
