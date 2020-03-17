@@ -27,8 +27,11 @@ const styles = StyleSheet.create({
         flex : 0.4
         
     },
+    list : {
+        flex : 1
+    },
 
-    drug : {
+    titleStyle : {
         marginTop : 20,
         fontSize : 25,
         color : '#fffdf9',

@@ -21,16 +21,34 @@ function Medication ({medication, toAdd}) {
                         <Image style={styles.logo} source={require('../../../assets/images/pills.png')}/>
                     </View>
                 </View>
-                
-                {
+                    {
                     medication.length > 0 ? 
-                        medication.map((item) => (
-                            <Text style={styles.drug}>{item.drug.drugName.toString()}</Text>
-                        ))
-                    :
+                    <FlatList 
+                        style={styles.list}
+                        data = {medication}
+                        renderItem={({item})=>(
+                            <ListItem 
+                                title ={item.drug.drugName.toString()}
+                                titleStyle = {{
+                                    marginTop : 20,
+                                    fontSize : 25,
+                                    color : '#fffdf9',
+                                    alignSelf : 'center',
+                                    backgroundColor : '#297885',
+                                    padding : 15,
+                                    borderRadius : 10,
+                                    overflow: 'hidden',
+                                    fontFamily : 'Sensei-Medium'
+                                }}
+                            />
+                        )}
+                        keyExtractor={item => item.prescribed}
+                    />
+                :
                     <Text style={styles.text}>You don't have medication yet! Do you want to add one?</Text>
                 
                 }
+
                 <TouchableOpacity onPress={()=>toAdd()}>
                 <Image style={styles.plus} source={require('../../../assets/images/plus.png')}/>
                 </TouchableOpacity>
