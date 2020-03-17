@@ -8,6 +8,7 @@ import ResultsItem from './ResultsItem'
 import Results from './Results'
 import Search from './Search'
 import TopSearch from './TopSearch'
+import MapViewContainer from './MapViewContainer'
 
 export {
     Login,
@@ -19,5 +20,6 @@ export {
     ResultsItem,
     Results,
     Search,
-    TopSearch
+    TopSearch,
+    MapViewContainer
 }

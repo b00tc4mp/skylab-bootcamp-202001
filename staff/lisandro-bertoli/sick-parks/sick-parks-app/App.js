@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { registerUser, login, isLoggedIn } from './src/logic'
-import { Login, Register, Landing, Home } from './src/components/'
+import { Login, Register, Landing, Home, MapViewContainer } from './src/components/'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import * as Permissions from 'expo-permissions'
 
 export default function App() {
 	const [view, setView] = useState()
@@ -28,6 +29,9 @@ export default function App() {
 			}
 
 		})()
+
+
+
 	}, [])
 
 
@@ -69,16 +73,19 @@ export default function App() {
 
 	return (
 		<>
-			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+
+			<MapViewContainer />
+
+			{/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 				<KeyboardAwareScrollView contentContainerStyle={styles.container} >
 					<StatusBar hidden={false} barStyle={'dark-content'} />
 					{view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
 					{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
 					{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
 					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-					{view === 'home' && <Home /* this here => user={user}*/ />}
-				</KeyboardAwareScrollView>
-			</TouchableWithoutFeedback>
+					{view === 'home' && <Home /* this here => user={user} />}
+				{/* </KeyboardAwareScrollView>
+			</TouchableWithoutFeedback> */}
 
 		</>
 	)
