@@ -16,7 +16,6 @@ export{
     atmosPressure
 }
 
-
 export function saveData (channelA, channelB, channelC, channelD, temph, templ, bat, baro, tof){
     time++
     // Speed
@@ -37,7 +36,5 @@ export function saveData (channelA, channelB, channelC, channelD, temph, templ, 
 
     // height
     height.push(tof)
-
-
 
 }

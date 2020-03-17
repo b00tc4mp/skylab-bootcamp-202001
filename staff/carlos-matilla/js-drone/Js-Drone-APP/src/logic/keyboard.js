@@ -1,9 +1,6 @@
 import socket from "../socket"
 
 
-
-
-
 export function keyUp(e){
     console.log(e.code)
     if(e.code === "KeyW"){
@@ -41,10 +38,11 @@ export function keyUp(e){
    }
 }
 
+
 export  function keyDown(e) {
 
-    const v = 70
-    const negV = -70
+    const v = 60
+    const negV = -60
     
     if(e.code === "Enter"){
         console.log('Take Off')

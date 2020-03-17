@@ -3,7 +3,6 @@ require('dotenv').config()
 const { env: { PORT = 6767, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT] } = process
 
 
-
 const dgram = require('dgram')
 const app = require('express')()
 const http = require('http').Server(app)
@@ -18,6 +17,7 @@ const path = require('path')
 const router = require('./routes')
 const { cors } = require('./mid-wares')
 const throttle = require('lodash/throttle');
+
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -41,31 +41,17 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
     const websocket = new ws.Server({ port: 8080 });
 
-
-    const PORT = 8889;
     const HOST = '192.168.10.1';
     const drone = dgram.createSocket('udp4')
     const video = dgram.createSocket('udp4')
-    drone.bind(PORT)
-    video.bind(11111)
-
-    function parseState(state) {
-      return state
-        .split(';')
-        .map(x => x.split(':'))
-        .reduce((data, [key, value]) => {
-          data[key] = value;
-          return data;
-        }, {});
-    }
-
     const telemetria = dgram.createSocket('udp4')
+    drone.bind(8889)
+    video.bind(11111)
     telemetria.bind(8890)
 
 
-
     drone.on('message', message => {
-      console.log(`RER DICE: ${message}`)
+      console.log(`Tello DICE: ${message}`)
     })
 
     function handleError(err) {
@@ -75,12 +61,12 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
       }
     }
 
-    drone.send('command', 0, 'command'.length, PORT, HOST, handleError);
-    drone.send('streamon', 0, 8, PORT, HOST, (err) => console.log(err));
-    drone.send('battery?', 0, 8, PORT, HOST, (err) => console.log(err));
+    drone.send('command', 0, 'command'.length, 8889, HOST, handleError);
+    // drone.send('streamon', 0, 8, 8889, HOST, handleError);
+    // drone.send('battery?', 0, 8, 8889, HOST, handleError);
 
     websocket.on('connection', function connection(websocket) {
-      console.log('web socket is connected!');
+      
       websocket.on('error', (err) => {
         console.log('websocket error', err);
       });
@@ -132,12 +118,27 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
       }
     });
 
+    telemetria.on('error', (err) => {
+      console.log('drone telemetria error', err);
+      telemetria.close();
+    });
+
     telemetria.on('message', throttle(state => {
       const formattedState = parseState(state.toString());
       io.sockets.emit('dronestate', formattedState);
       
-    }, 300))
+    }, 100))
 
+
+    function parseState(state) {
+      return state
+        .split(';')
+        .map(x => x.split(':'))
+        .reduce((data, [key, value]) => {
+          data[key] = value;
+          return data;
+        }, {});
+    }
     
 
     // shit connections
@@ -152,7 +153,6 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
     process.on('SIGINT', () => {
         logger.info('server abruptly stopped')
-
         process.exit(0)
     })
 

@@ -4,7 +4,7 @@ import socket from '../socket';
 import './Telemetry.sass';
 
 
-export default function (){
+export default function(){
 
     const DroneState = () =>{
         const [droneState, setDroneState] = useState('No Data');

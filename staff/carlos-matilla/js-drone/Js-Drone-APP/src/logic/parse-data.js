@@ -1,8 +1,7 @@
 import { time, lowTemp, hightTemp, battery, height, speed, atmosPressure } from './save-data'
 import saveSession from './save-session'
 
-const chart = 10
-
+const chart = 2
 
 export default function(){
     console.log('starting')
@@ -27,14 +26,7 @@ export default function(){
        }
    }
 
-dataParsed.unshift(time)
 
-
-saveSession(time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)
-
-
- 
- 
-
+    saveSession(time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)
 
 }

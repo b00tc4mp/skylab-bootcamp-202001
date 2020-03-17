@@ -6,9 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGamepad, faKeyboard, faChartLine, faCog } from '@fortawesome/free-solid-svg-icons'
  
 
-
-
-
 function DroneStatus() {
     const [status, setStatus] = useState('DISCONNECTED');
     socket.on('status', () => {
