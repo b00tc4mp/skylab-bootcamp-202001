@@ -27,13 +27,13 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
                     {error && <Feedback level='warn' message={error} />}
                     <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 Submit! 💩</Text>
                     <View style={styles.navButtons}>
-                        <View style={styles.left}>
-                            <Button title='Go to login' onPress={goToLogin} />
-                        </View>
+                        <TouchableOpacity style={styles.left}>
+                            <Text style={styles.leftButton} onPress={goToLogin}>Go to Login</Text>
+                        </TouchableOpacity>
 
-                        <View style={styles.right}>
-                            <Button title='Continue as Guest' onPress={goToLanding} />
-                        </View>
+                        <TouchableOpacity style={styles.right}>
+                            <Text style={styles.rightButton} onPress={goToLanding} >Continue as Guest</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </KeyboardAvoidingView>

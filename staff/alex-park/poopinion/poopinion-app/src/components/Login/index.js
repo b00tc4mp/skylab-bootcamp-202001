@@ -24,12 +24,12 @@ function Login({ onSubmit, error, goToRegister, goToLanding }) {
                         </TouchableOpacity>
                         <View style={styles.navButtons}>
                             <TouchableOpacity style={styles.left}>
-                                <Button title='Sign Up' onPress={goToRegister} />
+                                <Text style={styles.leftButton} onPress={goToRegister}>Sign Up</Text>
                             </TouchableOpacity>
 
-                            <View style={styles.right}>
-                                <Button title='Continue as Guest' onPress={goToLanding} />
-                            </View>
+                            <TouchableOpacity style={styles.right}>
+                                <Text style={styles.rightButton} onPress={goToLanding} >Continue as Guest</Text>
+                            </TouchableOpacity>
                         </View>
 
                     </View>

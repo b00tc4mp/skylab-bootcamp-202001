@@ -16,7 +16,8 @@ import {
   registerUser,
   authenticateUser,
   retrieveUser,
-  publishToilet
+  publishToilet,
+  searchToilets
 } from './src/logic'
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
   const [user, setUser] = useState()
   const [goLanding, setGoLanding] = useState(false)
   const [query, setQuery] = useState()
+  const [toilets, setToilets] = useState()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -67,7 +69,6 @@ export default function App() {
       const response = await authenticateUser(email, password)
 
       const retrievedUser = await retrieveUser(response)
-      console.log(retrievedUser)
       setUser(retrievedUser)
       setToken(response)
       setGoLanding(true)
@@ -86,6 +87,8 @@ export default function App() {
 
       } else {
         await setQuery(_query)
+        const toilets = await searchToilets(_query)
+        await setToilets(toilets)
         await setView('queryResults')
       }
 
@@ -170,7 +173,7 @@ export default function App() {
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} coordinates={coordinates} />}
-        {view === 'queryResults' && <QueryResults query={query} />}
+        {view === 'queryResults' && <QueryResults query={query} toilets={toilets}/>}
         {view === 'profilePage' && <Profile user={user} />}
         {view === 'favToilets' && <Favorites user={user} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}

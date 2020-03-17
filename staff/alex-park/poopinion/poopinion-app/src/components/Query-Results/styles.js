@@ -4,12 +4,46 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
+        width: '95%',
+        marginHorizontal: '2.5%'
+    },
+    resultsContainer: {
+        flex: 1,
+    },
+    infoContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },  
+    toiletContainer: {
+        marginBottom: 30
+    },
+    rating: {
+        fontSize: 20
     },
     header: {
-        textAlign: 'center',
-        fontSize: 25
+        fontSize: 25,
+        marginVertical: 20
+    },
+    postHeader: {
+        fontSize: 22.5,
+        fontWeight: 'bold'
+    },
+    postedAt: {
+        fontStyle: 'italic'
+    },
+    image: {
+        width: '100%'
+    },
+    result: {
+        flex: 4
+    },
+    favContainer: {
+        flex: 1,
+    },
+    favButton: {
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%'
     }
 })
 

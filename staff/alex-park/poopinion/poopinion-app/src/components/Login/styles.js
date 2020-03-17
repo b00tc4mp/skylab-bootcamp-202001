@@ -53,7 +53,29 @@ const styles = StyleSheet.create({
     },
     left: {
         flex: 1,
-        marginHorizontal: 10
+        marginRight: 5
+    },
+    right: {
+        flex: 1.5,
+        marginLeft: 5
+    },
+    leftButton: {
+        backgroundColor: '#df7861',
+        textAlign: 'center',
+        padding: 15,
+        borderRadius: 10,
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: 'white'
+    },
+    rightButton: {
+        backgroundColor: '#df7861',
+        textAlign: 'center',
+        padding: 15,
+        borderRadius: 10,
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'white'
     }
 })
 
