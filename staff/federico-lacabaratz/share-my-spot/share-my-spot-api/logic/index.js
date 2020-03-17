@@ -3,15 +3,14 @@ module.exports = {
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     updateUser: require('./update-user'),
-    createListing: require('./create-listing'),
-    retrievePublishedListings: require('./retrieve-published-listings'),
-    retrieveLastListings: require('./retrieve-last-listings'),
-    updateListing: require('./update-listing'),
-    deleteListing: require('./delete-listing'),
-    createListing: require('./create-listing'),
-    saveListingPhoto: require('./save-listing-photo'),
-    retrieveListingPhoto: require('./retrieve-listing-photo')
-    // subscribeListing: require('./subscribe-listing'),
-    // retrieveSubscribedListings: require('./retrieve-subscribed-listings'),
-    // deleteListing: require('./delete-booking')
+    createSpot: require('./create-spot'),
+    retrievePublishedSpots: require('./retrieve-published-spots'),
+    retrieveLastSpots: require('./retrieve-last-spots'),
+    updateSpot: require('./update-spot'),
+    deleteSpot: require('./delete-spot'),
+    saveSpotPhoto: require('./save-spot-photo'),
+    retrieveSpotPhoto: require('./retrieve-spot-photo'),
+    bookSpot: require('./book-spot'),
+    acceptBooking: require('./accept-abooking'),
+    declineBooking: require('./decline-booking')
 }

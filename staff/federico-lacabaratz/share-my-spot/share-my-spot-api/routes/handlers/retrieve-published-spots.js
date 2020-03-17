@@ -1,13 +1,13 @@
-const { deleteListing } = require('../../logic')
-const { NotFoundError } = require('share-my-spot-errors')
+const { retrievePublishedSpots } = require('../../logic')
+const {  NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body: {listingId} } = req
+    const { payload: { sub: id } } = req
 
     try {
-        deleteListing(userId, listingId)
-            .then(() =>
-                res.status(200).json({ message: "You've successfully deleted this listing from the database" })
+        retrievePublishedSpots(id)
+            .then(spot =>
+                res.status(200).json(spot)
             )
             .catch(({ message }) =>
                 res
@@ -25,11 +25,11 @@ module.exports = (req, res) => {
                 break
         }
 
-        const { message } = error
+        const {message} = error
 
         res
             .status(status)
-            .json({
+            .json({ 
                 error: message
             })
     }

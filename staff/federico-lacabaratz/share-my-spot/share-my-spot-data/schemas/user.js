@@ -8,11 +8,6 @@ module.exports = new Schema({
     phone: { type: Number },
     created: { type: Date, required: true, default: Date.now },
     authenticated: { type: Date },
-    publishedListings: {
-        type: [{ type: [ObjectId], ref: 'Listing' }]
-    },
-    booking: {
-        type:
-            [{ type: [ObjectId], ref: 'Booking' }]
-    }
+    publishedSpots: [{ type: ObjectId, ref: 'Spot' }],
+    bookingsRequested: [{ type: ObjectId, ref: 'Spot' }]
 })

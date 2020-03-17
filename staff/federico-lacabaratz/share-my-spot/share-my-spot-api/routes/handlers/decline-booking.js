@@ -1,13 +1,13 @@
-const { retrievePublishedListings } = require('../../logic')
-const {  NotFoundError } = require('share-my-spot-errors')
+const { declineBooking } = require('../../logic')
+const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
+    const { payload: { sub: publisherId }, params: {candidateId, spotId} } = req
 
     try {
-        retrievePublishedListings(id)
-            .then(listing =>
-                res.status(200).json(listing)
+        deleteBooking(publisherId, candidateId, spotId)
+            .then(() =>
+                res.status(200).json({ message: "You've successfully deleted this booking from the database" })
             )
             .catch(({ message }) =>
                 res
@@ -25,11 +25,11 @@ module.exports = (req, res) => {
                 break
         }
 
-        const {message} = error
+        const { message } = error
 
         res
             .status(status)
-            .json({ 
+            .json({
                 error: message
             })
     }

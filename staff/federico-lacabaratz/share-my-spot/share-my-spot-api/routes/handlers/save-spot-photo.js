@@ -1,17 +1,17 @@
 const express = require('express')
 const fs = require('fs')
-const { saveListingPhoto } = require('../../logic')
+const { saveSpotPhoto } = require('../../logic')
 const Busboy = require('busboy')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, params: { listingId } } = req
+    const { payload: { sub: userId }, params: { spotId } } = req
   
     const busboy = new Busboy({ headers: req.headers })
 
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
         filename = 'garage01'
 
-        await saveListingPhoto(userId, listingId, file, filename)
+        await saveSpotPhoto(userId, spotId, file, filename)
         
     })
 
