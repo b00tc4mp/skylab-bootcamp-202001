@@ -1,5 +1,5 @@
 const { findAvailableSpots } = require('../../logic')
-const {  ContentError } = require('share-my-s-errors')
+const {  ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
 

@@ -9,7 +9,7 @@ module.exports = id => {
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
             
-            return Spot.find({ publisher: id, created: { $lte: new Date } })
+            return Spot.find({ publisherId: id, created: { $lte: new Date } })
                 .lean()
                 .then(spots => {
                     spots.forEach(spot => {
@@ -17,7 +17,7 @@ module.exports = id => {
 
                         delete spot._id
 
-                        spot.publisher = spot.publisher.toString()
+                        spot.publisherId = spot.publisherId.toString()
                     })
 
                     return spots

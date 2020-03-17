@@ -2,7 +2,7 @@ const { Schema, Types: { ObjectId } } = require('mongoose')
 
 module.exports = new Schema({
     created: { type: Date, default: Date.now },
-    publisher: { type: ObjectId, required: true, ref: 'User' },
+    publisherId: { type: ObjectId, required: true, ref: 'User' },
     title: { type: String, required: true },
     addressLocation: { type: String, required: true },
     addressStNumber: {type: String, required: true},
@@ -16,7 +16,7 @@ module.exports = new Schema({
     acceptsBarker: {type: Boolean, required: true, default: false},
     surveillance: {type: Boolean, required: true, default: false},
     isCovered: {type: Boolean, required: true, default: false},
-    hourStart: { type: Number, required: true },
+    hourStarts: { type: Number, required: true },
     hourEnds: { type: Number, required: true },
     mon: {type: Boolean, required: true, default: false},
     tue: {type: Boolean, required: true, default: false},
@@ -26,7 +26,6 @@ module.exports = new Schema({
     sat: {type: Boolean, required: true, default: false},
     sun: {type: Boolean, required: true, default: false},
     status: {type: String, enum: ['available', 'unavailable'], default: 'available'},
-    BookingCandidates: [{ type: ObjectId, ref: 'User' }],
+    bookingCandidates: [{ type: ObjectId, ref: 'User' }],
     bookedTo: { type: ObjectId, ref: 'User' }
 })
-

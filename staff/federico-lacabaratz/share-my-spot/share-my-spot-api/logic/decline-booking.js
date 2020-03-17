@@ -14,16 +14,19 @@ module.exports = (publisherId, candidateId, spotId) => {
         const candidate = await User.findById(candidateId)
         if (!candidate) throw new NotFoundError(`user with id ${candidateId} not found`)
 
-        const spot = await Spot.findById(spotId)
+        const spot = await Spot.findById(spotId) //remove lean later
         if (!spot) throw new NotFoundError(`spot with id ${spotId} not found`)
 
-        const index = spot.bookingCandidates.findIndex(id => id.toString() === candidateId)
+        const candidateAlreadyExists = spot.bookingCandidates.some(id => id.toString() === candidateId)
 
-        if (index < 0) throw new NotFoundError(`candidate with ${candidateId} ID doesn't exist`)
+        if (!candidateAlreadyExists) throw new NotFoundError(`candidate with ${candidateId} ID doesn't exist`)
+   
+        const index = spot.bookingCandidates.indexOf(candidateId)
+       
+        spot.bookingCandidates.splice(index, 1)
 
-        spot.bookingCandidates.findByIdAndRemove(candidateId)
 
         return spot.save()
-            .then(() => { })
+        .then(() => { })
     })()
 }

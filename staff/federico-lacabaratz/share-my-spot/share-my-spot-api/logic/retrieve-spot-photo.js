@@ -1,14 +1,13 @@
 require('dotenv').config()
 const { validate } = require('share-my-spot-utils')
 const { NotFoundError } = require('share-my-spot-errors')
-const { ObjectId, models: { User, Spot } } = require('share-my-spot-data')
+const { ObjectId, models: { Spot } } = require('share-my-spot-data')
 const fs = require('fs')
 const path = require('path')
 
 /**
 * 
 * 
-* @param {ObjectId} userId of the user
 * @param {ObjectId} spotId id of the spot
 * @returns {Promise} - data of image  
 */
