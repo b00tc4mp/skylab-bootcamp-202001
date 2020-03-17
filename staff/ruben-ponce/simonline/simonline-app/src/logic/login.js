@@ -1,4 +1,4 @@
-// const {validate} = require('simonline-utils')
+ // const {validate} = require('simonline-utils')
 
 export default async function (username, password) {
     // validate.string(username, 'username')

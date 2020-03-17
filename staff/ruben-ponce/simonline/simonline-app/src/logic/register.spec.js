@@ -1,6 +1,6 @@
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 const { mongoose, models: { User } } = require('simonline-data')
-const { registerUser } = require('./')
+const { register } = require('.')
 
 describe('registerUser', () => {
 
@@ -17,7 +17,7 @@ describe('registerUser', () => {
     })
 
     it('should succeed on new user', async () => {
-        const result = await registerUser(username, password)
+        const result = await register(username, password)
 
         expect(result).toBeUndefined()
 
@@ -30,7 +30,7 @@ describe('registerUser', () => {
 
     it('should fail on already existing user', async () => {
         try{
-            await registerUser(username, password)
+            await register(username, password)
         }catch(error){
             expect(error).toBe(Error(`user with username "${username}" already exists`))
         }        

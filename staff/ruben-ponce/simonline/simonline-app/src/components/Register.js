@@ -1,7 +1,7 @@
 import React from 'react'
-// import Feedback from './Feedback'
+import Feedback from './Feedback'
 
-function Register({goToLogin, onSubmit, error}) {
+function Register({goToLogin, goToLanding, onSubmit, error}) {
     
     return <div className="p1 register">
     <form className="form" onSubmit={event => {
@@ -12,7 +12,11 @@ function Register({goToLogin, onSubmit, error}) {
 
         onSubmit(username, password)
     }}>
-        <h1>Register</h1>
+        <h1 onClick={event => {
+            event.preventDefault()
+            goToLanding()
+        }}>Simonline</h1>
+        <h2>Register</h2>
         <input type="text" name="username" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
         <button>Register</button>
@@ -21,7 +25,7 @@ function Register({goToLogin, onSubmit, error}) {
             goToLogin()
         }}>Login</span>
 
-        {/* {error && <Feedback error={error}/>} */}
+        {error && <Feedback error={error}/>}
     </form>
     </div>
 }

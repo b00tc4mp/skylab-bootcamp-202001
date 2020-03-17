@@ -1,20 +1,18 @@
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
-const { mongoose, models: { User } } = require('events-data')
-const { authenticate, retrieveUser } = require('./')
+const { mongoose, models: { User } } = require('simonline-data')
+const { login, retrieveUser } = require('.')
 
-describe('authenticate-user', () => {
+describe('login', () => {
 
     beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await User.deleteMany()
     })
 
-    let name, surname, email, password, id
+    let username, password, id
 
     beforeEach(() => {
-        name = 'name-' + Math.random()
-        surname = 'surname-' + Math.random()
-        email = Math.random() + '@mail.com'
+        username = 'username-' + Math.random()
         password = 'password-' + Math.random()
     })
 
@@ -24,14 +22,14 @@ describe('authenticate-user', () => {
 
         beforeEach(async () => {
 
-            user = await User.create({ name, surname, email, password })
+            user = await User.create({ username, password })
 
             return _id = user.id
         })
         
         it('should succeed on correct credentials', async () => {
 
-            let id = await authenticate(email, password)
+            let id = await login(username, password)
 
             let token = await id
 
@@ -40,15 +38,13 @@ describe('authenticate-user', () => {
 
             let _user = await retrieveUser(token)
             
-            expect(_user.email).toBe(user.email)
-            expect(_user.name).toBe(user.name)
-            expect(_user.surname).toBe(user.surname)
+            expect(_user.username).toBe(user.username)
         })
 
         it('should fail on incorrect password', async () => {
 
             try {
-                await authenticate(email, `${password}-wrong`)
+                await login(username, `${password}-wrong`)
             } catch(error) {
                 expect(error.message).toBe(`wrong credentials`)
             }
@@ -57,61 +53,61 @@ describe('authenticate-user', () => {
         it('should fail when user does not exist', async () => {
 
             try {
-                await authenticate(`wrong-${email}`, password)
+                await login(`wrong-${username}`, password)
             } catch(error) {
                 expect(error.message).toEqual(`wrong credentials`)
             }
         })
 
-        it('should fail on non-string email', async () => {
+        it('should fail on non-string username', async () => {
             
             try{
-                email = 1
-                await authenticate(email, password)
+                username = 1
+                await login(username, password)
             }catch(error){
-                expect(error).toEqual(TypeError(`email ${email} is not a string`))
+                expect(error).toEqual(TypeError(`username ${username} is not a string`))
             }
 
             try{
-                email = true
-                await authenticate(email, password)
+                username = true
+                await login(username, password)
             }catch(error){
-                expect(error).toEqual(TypeError(`email ${email} is not a string`))
+                expect(error).toEqual(TypeError(`username ${username} is not a string`))
             }
 
             try{
-                email = undefined
-                await authenticate(email, password)
+                username = undefined
+                await login(username, password)
             }catch(error){
-                expect(error).toEqual(TypeError(`email ${email} is not a string`))
+                expect(error).toEqual(TypeError(`username ${username} is not a string`))
             }
         })
 
         it('should fail on non-string password', async () => {
 
             try {
-                email = '-' + Math.random() + '@mail.com'
+                username = '-' + Math.random()
                 password = 1
 
-                await authenticate(email, password)
+                await login(username, password)
             } catch (error) {
                 expect(error).toEqual(TypeError(`password ${password} is not a string`))
             }
 
             try {
-                email = '-' + Math.random() + '@mail.com'
+                username = '-' + Math.random()
                 password = true
 
-                await authenticate(email, password)
+                await login(username, password)
             } catch (error) {
                 expect(error).toEqual(TypeError(`password ${password} is not a string`))
             }
 
             try {
-                email = '-' + Math.random() + '@mail.com'
+                username = '-' + Math.random()
                 password = undefined
 
-                await authenticate(email, password)
+                await login(username, password)
             } catch (error) {
                 expect(error).toEqual(TypeError(`password ${password} is not a string`))
             }

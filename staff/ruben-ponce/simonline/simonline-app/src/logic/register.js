@@ -1,5 +1,7 @@
 // const { validate } = require('simonline-utils')
 
+// const API_URL = process.env.REACT_APP_API_URL
+
 module.exports = async function (username, password) {
     // validate.string(username, 'username')
     // validate.string(password, 'password')

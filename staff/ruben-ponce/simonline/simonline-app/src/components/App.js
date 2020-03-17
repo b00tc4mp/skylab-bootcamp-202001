@@ -1,10 +1,17 @@
-import React, { useState, Fragment } from 'react'
-import { Landing, Login, Register } from './'
-import './App.sass'
-import { authenticate, registerUser, retrieveUser, retrieveUserId } from '../logic'
+import React, { useState, Fragment, useEffect, useContext  } from 'react'
 
+import { Landing, Login, Register, Home, Page } from './'
+import './App.sass'
+import { login, register, retrieveUser, retrieveUserId, isLoggedIn, logout } from '../logic'
+import { Context } from './ContextProvider'
 
 function App() {
+
+    const [state, setState] = useContext(Context)
+
+  useEffect(() => {
+    isLoggedIn() ? setState({ page: 'home' }) : setState({ page: 'login' })
+  }, [])
 
   const [view, setView] = useState('landing')
   const [token, setToken] = useState()
@@ -12,10 +19,9 @@ function App() {
   const [userId, setUserId] = useState()
   const [error, setError] = useState(undefined)
 
-
   async function handleLogin(username, password) {
     try {
-      const auth = await authenticate(username, password)
+      const auth = await login(username, password)
 
       const token = await auth
 
@@ -41,11 +47,11 @@ function App() {
 
   async function handleRegister(username, password) {
     try {
-      const register = await registerUser(username, password)
+      const registerUser = await register(username, password)
 
       setView('login')
 
-      return register
+      return registerUser
     }
     catch (error) {
       setError(error.message)
@@ -61,15 +67,21 @@ function App() {
     setView('login')
   }
 
+  function handleGoToLanding() {
+    setView('landing')
+  }
+
 
   return (
     <Fragment>
 
       {view === 'landing' && <Landing goToLogin={handleGoToLogin} goToRegister={handleGoToRegister}/>}
 
-      {view === 'login' && <Login onSubmit={handleLogin} goToRegister={handleGoToRegister} />}
+      {view === 'login' && <Login onSubmit={handleLogin} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} error={error} />}
 
-      {view === 'register' && <Register onSubmit={handleRegister} goToLogin={handleGoToLogin} />}
+      {view === 'register' && <Register onSubmit={handleRegister} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} error={error} />}
+
+      {view === 'home' && <Home />}
 
     </Fragment>
 
