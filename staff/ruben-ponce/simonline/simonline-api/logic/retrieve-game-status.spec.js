@@ -80,7 +80,6 @@ describe('retrieveGameStatus', () => {
             .then(() => {
                 return retrieveGameStatus(playerId, gameId)
                     .then(game => {
-                        debugger
                         expect(game.currentPlayer).to.not.equal(player1)
                         expect(game.watching.length).to.equal(1)
                     })

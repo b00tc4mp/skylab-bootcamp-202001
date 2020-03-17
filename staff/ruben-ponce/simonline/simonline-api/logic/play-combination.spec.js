@@ -4,7 +4,6 @@ const { env: { TEST_MONGODB_URL } } = process
 const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
-const wait = require('simonline-utils/wait')
 require('../../simonline-utils/shuffle')()
 const playCombination = require('./play-combination')
 const { mongoose } = require('simonline-data')
