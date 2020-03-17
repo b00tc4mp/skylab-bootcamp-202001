@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { registerUser, login } from './src/logic'
-import { Login, Register, Landing, Home, NavBar } from './src/components/'
+import { Login, Register, Landing, Home, NavBar, ResultsItem } from './src/components/'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function App() {
-	const [view, setView] = useState('home')
-	const [nav, setNav] = useState(true)
+	const [view, setView] = useState('item')
+	const [nav, setNav] = useState(false)
 	const [error, setError] = useState()
 
 
@@ -60,7 +60,7 @@ export default function App() {
 					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
 					{view === 'home' && <Home onSubmit={handleSearch} />}
 					{nav && <NavBar />}
-
+					{view === 'item' && <ResultsItem />}
 				</KeyboardAwareScrollView>
 			</TouchableWithoutFeedback>
 

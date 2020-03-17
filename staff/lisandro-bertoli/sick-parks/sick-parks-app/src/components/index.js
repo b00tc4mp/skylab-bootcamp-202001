@@ -4,6 +4,7 @@ import Register from './Register'
 import Home from './Home'
 import NavBar from './NavBar'
 import Button from './Button'
+import ResultsItem from './ResultsItem'
 
 export {
     Login,
@@ -11,5 +12,6 @@ export {
     Landing,
     Home,
     Button,
-    NavBar
+    NavBar,
+    ResultsItem
 }
