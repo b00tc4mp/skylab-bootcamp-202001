@@ -8,7 +8,7 @@ const leftImage = require('../../../assets/left-side.png')
 const rightImage = require('../../../assets/right-side.png')
 
 
-export default function Search({ onSubmit }) {
+export default function Home({ onSubmit }) {
     const [query, setQuery] = useState()
 
     const handleOnPress = (q) => {

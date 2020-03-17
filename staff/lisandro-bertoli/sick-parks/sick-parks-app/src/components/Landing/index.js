@@ -5,6 +5,8 @@ import styles from './styles'
 
 export default function Login({ onToLogin, onToRegister }) {
 
+
+
     return (
         <View style={styles.container}>
             <Button text='Sign in with Facebook' textStyle='text' type='facebook' />

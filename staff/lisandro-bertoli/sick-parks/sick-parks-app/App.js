@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { registerUser, login } from './src/logic'
-import { Login, Register, Landing, Search, NavBar } from './src/components/'
+import { Login, Register, Landing, Home, NavBar } from './src/components/'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function App() {
-	const [view, setView] = useState('search')
+	const [view, setView] = useState('home')
 	const [nav, setNav] = useState(true)
 	const [error, setError] = useState()
 
@@ -16,7 +16,7 @@ export default function App() {
 			console.log(user.email)
 			await login(user)
 
-			setView('search')
+			setView('home')
 		} catch ({ message }) {
 			setError(message)
 		}
@@ -54,11 +54,11 @@ export default function App() {
 			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 				<KeyboardAwareScrollView contentContainerStyle={styles.container} >
 					<StatusBar hidden={false} barStyle={'dark-content'} />
-					{view !== 'search' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
+					{view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
 					{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
 					{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
 					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-					{view === 'search' && <Search onSubmit={handleSearch} />}
+					{view === 'home' && <Home onSubmit={handleSearch} />}
 					{nav && <NavBar />}
 
 				</KeyboardAwareScrollView>
