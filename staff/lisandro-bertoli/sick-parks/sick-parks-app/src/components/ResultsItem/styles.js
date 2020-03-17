@@ -2,21 +2,29 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
-        width: '80%',
-        height: '17%',
+        width: 350,
+        marginVertical: 10,
+        height: 125
+
     },
     item: {
         flex: 1,
+        padding: 15,
         flexDirection: 'row',
-        justifyContent: 'space-between',
         borderStyle: 'solid',
         borderColor: '#82A4B3',
-        borderWidth: 3,
+        borderWidth: 4,
         borderRadius: 5,
         backgroundColor: '#EDF4F9',
     },
     text: {
         color: '#82A4B3',
+    },
+    textBold: {
+        color: '#82A4B3',
+        fontSize: 16,
+        fontWeight: '600',
+        letterSpacing: 1
     },
 
     image: {
@@ -27,13 +35,12 @@ const styles = StyleSheet.create({
     colOne: {
         flex: 1,
         paddingLeft: 20,
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
 
     },
     colTwo: {
-        marginRight: 5,
         justifyContent: "space-between",
-        marginVertical: 8
+
     },
     true: {
         backgroundColor: 'lightgreen',

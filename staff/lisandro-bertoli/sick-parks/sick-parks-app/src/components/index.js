@@ -5,6 +5,7 @@ import Home from './Home'
 import NavBar from './NavBar'
 import Button from './Button'
 import ResultsItem from './ResultsItem'
+import Results from './Results'
 
 export {
     Login,
@@ -13,5 +14,6 @@ export {
     Home,
     Button,
     NavBar,
-    ResultsItem
+    ResultsItem,
+    Results
 }
