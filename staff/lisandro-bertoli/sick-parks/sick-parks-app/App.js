@@ -10,6 +10,14 @@ export default function App() {
 	const [error, setError] = useState()
 
 
+	// useEffect(() => {
+	// 	(async () => {
+	// 		const logged = await isLoggedIn()
+	// 		if (logged) setView('home')
+	// 		return
+	// 	})()
+	// }, [])
+
 
 	const handleLogin = async (user) => {
 		try {
@@ -46,10 +54,6 @@ export default function App() {
 		setView('register')
 	}
 
-	const handleSearch = (query) => {
-		console.log(query)
-	}
-
 	return (
 		<>
 			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -60,8 +64,6 @@ export default function App() {
 					{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
 					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
 					{view === 'home' && <Home onSubmit={handleSearch} />}
-					{nav && <NavBar />}
-
 				</KeyboardAwareScrollView>
 			</TouchableWithoutFeedback>
 
