@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { withRouter } from 'react-router-dom'
 import './style/Login.sass'
 import Feedback from './Feedback'

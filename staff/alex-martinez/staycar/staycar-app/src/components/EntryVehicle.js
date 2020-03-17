@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { Context } from './ContextProvider'
 import './style/EntryVehicle.sass'
 import Feedback from './Feedback'
 import { useQrEncode, useQrDecode } from 'react-qr-hooks'
 
 export default function({onSubmit, error}) {
+
+    const [state, setState] = useContext(Context)
 
     const [plate, setPlate] = useState('')
 
@@ -15,6 +18,8 @@ export default function({onSubmit, error}) {
         } } = event
 
         setPlate(plateNumber)
+
+        const { parking } = state
 
         onSubmit(plateNumber)
     }
@@ -32,8 +37,6 @@ export default function({onSubmit, error}) {
     </>
     }
     {error && <Feedback message={error} level="warn" />}
-
-    {/* {plate ? <img src={encoded} className="qr" alt="qr-code"/> : ''} */}
 
 </section>
 }

@@ -3,10 +3,9 @@ const { NotAllowedError } = require('staycar-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
-    const pkName = req.params.name
 
     try {
-        retrieveParking(id, pkName)
+        retrieveParking(id)
             .then(pk =>
                 res.status(200).json(pk)
             )

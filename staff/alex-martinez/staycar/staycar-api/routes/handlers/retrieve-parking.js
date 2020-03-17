@@ -2,10 +2,9 @@ const { retrieveParking } = require('../../logic')
 const { NotAllowedError } = require('staycar-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id } } = req
 
     try {
-        retrieveParking(id)
+        retrieveParking()
             .then(pk =>
                 res.status(200).json(pk)
             )

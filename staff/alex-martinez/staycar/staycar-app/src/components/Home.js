@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useContext} from 'react'
 import { withRouter } from 'react-router-dom'
 import './style/Home.sass'
 
@@ -10,10 +10,11 @@ import { ReactComponent as Atm } from './icons/atm.svg'
 import { ReactComponent as Plates } from './icons/plates.svg'
 import { ReactComponent as Report } from './icons/report.svg'
 import { ReactComponent as Config } from './icons/config.svg'
-import { isLoggedIn } from '../logic'
+import { isLoggedIn, retrieveParking } from '../logic'
 
 
 export default withRouter (function({history}) {
+
 
     const handleGoToEntrance = () => {
         history.push('/entrance')
@@ -22,10 +23,11 @@ export default withRouter (function({history}) {
     const handleToConfig = () => {
         history.push('/config')
     }
-    
+
     return <>
     <Header user={isLoggedIn() ? 'Login' : 'Logout'}/>
     <main>
+        
         <section className="actions actions--first">
             <div className="actions__action" onClick={handleGoToEntrance}>
                 <Access className="actions__image" />
@@ -52,21 +54,19 @@ export default withRouter (function({history}) {
                 <Plates className="actions__image"/>
                 <p className="actions__text">Map</p>
             </div>
-            {isLoggedIn() ?
-                <>
-                    <div className="actions__action">
-                        
-                        <Report className="actions__image"/>
-                        <p className="actions__text">Report</p>
-                    </div>
+               
+            <div className="actions__action">
+                
+                <Report className="actions__image"/>
+                <p className="actions__text">Report</p>
+            </div>
 
-                    <div className="actions__action" onClick={handleToConfig}>
-                        
-                        <Config className="actions__image"/>
-                        <p className="actions__text">Config</p>
-                    </div>
-                </>
-            : '' } 
+            <div className="actions__action" onClick={handleToConfig}>
+                
+                <Config className="actions__image"/>
+                <p className="actions__text">Config</p>
+            </div>
+                
         </section>
     </main>
     </>
