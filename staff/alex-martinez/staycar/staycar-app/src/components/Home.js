@@ -1,4 +1,4 @@
-import React, {useEffect, useContext} from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
 import './style/Home.sass'
 
@@ -10,11 +10,10 @@ import { ReactComponent as Atm } from './icons/atm.svg'
 import { ReactComponent as Plates } from './icons/plates.svg'
 import { ReactComponent as Report } from './icons/report.svg'
 import { ReactComponent as Config } from './icons/config.svg'
-import { isLoggedIn, retrieveParking } from '../logic'
+import { isLoggedIn } from '../logic'
 
 
 export default withRouter (function({history}) {
-
 
     const handleGoToEntrance = () => {
         history.push('/entrance')
@@ -24,8 +23,12 @@ export default withRouter (function({history}) {
         history.push('/config')
     }
 
+    const handleToMap = () => {
+        history.push('/map')
+    }
+
     return <>
-    <Header user={isLoggedIn() ? 'Login' : 'Logout'}/>
+    <Header user={isLoggedIn() ? 'Login' : ''}/>
     <main>
         
         <section className="actions actions--first">
@@ -49,7 +52,8 @@ export default withRouter (function({history}) {
         </section>
 
         <section className="actions actions--second">
-            <div className="actions__action">
+            
+            <div className="actions__action" onClick={handleToMap}>
                 
                 <Plates className="actions__image"/>
                 <p className="actions__text">Map</p>

@@ -16,7 +16,7 @@ export default (function () {
 
         if (status === 200) {
             const _parking = await response.json()
-            debugger
+        
             return this.parking = _parking[0].parkingName
         }
 

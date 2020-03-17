@@ -3,7 +3,7 @@ import { login, entryVehicle, createParking } from '../logic'
 import { Context } from './ContextProvider'
 import { isLoggedIn } from '../logic'
 
-import { Home, Login, EntryVehicle, Config, CreateParking } from '.'
+import { Home, Login, EntryVehicle, Config, CreateParking, Map } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -36,9 +36,12 @@ export default withRouter(function ({ history }) {
       await login(username, password)
 
       history.push('/home')
-    } catch (error) {
       
-      return __handleError__(error)
+    } catch (error) {
+
+      setState({...state, stateLogin: false})
+      
+       __handleError__(error)
     }
   }
 
@@ -76,6 +79,8 @@ export default withRouter(function ({ history }) {
     <Route path="/entrance" render={() => isLoggedIn() ? <> <Home /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
+    <Route path="/map" render={() => isLoggedIn() ? <><Home /> <Map /> </> : <Redirect to="/login" />}/>
+
   </>
 
 })

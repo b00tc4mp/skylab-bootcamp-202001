@@ -1,13 +1,11 @@
-import React, {useContext} from 'react'
+import React from 'react'
 import './style/CreateParking.sass'
-import { Context } from './ContextProvider'
 
 import {Feedback} from '.'
 
 
 export default ({onSubmit, error}) => {
 
-    const [, setState] = useContext(Context)
 
     const handleSubmit = (event) => {
 
@@ -19,7 +17,6 @@ export default ({onSubmit, error}) => {
         } } = event
 
         onSubmit(parkingName, parseFloat(rate), parseFloat(totalLots))
-        setState({parking: parkingName})
     }
    
     return <section className="create-parking">
@@ -34,5 +31,5 @@ export default ({onSubmit, error}) => {
     </form>
     
     {error && <Feedback message={error} level="warn" />}
-</section>
+    </section>
 }
