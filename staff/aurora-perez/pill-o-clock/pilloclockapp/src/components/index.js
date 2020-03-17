@@ -4,6 +4,7 @@ import LandingPatient from './Landing-patient'
 import LandingPharmacist from './Landing-pharmacist'
 import Medication from './Medication'
 import AddMedication from './Add-medication'
+import DrugDetail from './Drug-detail'
 
 export { 
     Register,
@@ -11,5 +12,6 @@ export {
     LandingPatient,
     LandingPharmacist,
     Medication,
-    AddMedication
+    AddMedication,
+    DrugDetail
 }

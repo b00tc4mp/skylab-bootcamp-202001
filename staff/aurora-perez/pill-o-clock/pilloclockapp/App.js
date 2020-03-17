@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert } from 'react-native'
 
-import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication } from './src/components'
+import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail } from './src/components'
 import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug } from './src/logic'
 //import Header from '../Header
 
@@ -10,7 +10,9 @@ export default function App () {
   const [error, setError] = useState(null) 
   const [user, setUser] = useState()
   const [ token, setToken ] = useState()
-  const [medication, setMedication] = useState()
+  const [ medication, setMedication] = useState()
+  const [ drugDetail, setDrugDetail ] =useState()
+  const [ times, setTimes ] = useState()
 
 
   function __handleError__(message) {
@@ -112,8 +114,13 @@ export default function App () {
 
   async function handleToDrug ({drugName, times}){
     try {
-      const __drug=await retrieveDrug(drugName)
-      console.log(__drug)
+      const _drugDetail = await retrieveDrug(drugName)
+
+      setTimes(times)
+
+      setDrugDetail(_drugDetail)
+
+      setView('drugDetail')
 
     }catch({message}){
       __handleError__(message)
@@ -128,6 +135,7 @@ export default function App () {
     { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
     { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
     { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
+    { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times}/>}
     </View>
   //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}
   )
