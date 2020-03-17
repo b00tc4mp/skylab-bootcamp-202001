@@ -40,8 +40,6 @@ module.exports = (publisherId, title, addressLocation, addressStNumber, addressO
             user.publishedSpots.push(spot.id)
 
             return Promise.all([user.save(), spot.save()])
-                .then(() => fs.mkdirSync(path.join(filesDir, spot.id), (err) => {
-                    if (err) throw err
-                }))
+                .then(() => fs.mkdirSync(path.join(filesDir, spot.id)))
         })
 }

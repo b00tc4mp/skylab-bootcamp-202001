@@ -30,25 +30,25 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
 
-router.post('/users/:id/spots', [jwtVerifierMidWare, jsonBodyParser], createSpot)
+router.post('/spots', [jwtVerifierMidWare, jsonBodyParser], createSpot)
 
 router.get('/spots', jwtVerifierMidWare, retrievePublishedSpots)
 
-router.get('/findAvailableSpots', findAvailableSpots)
+router.get('/find-available-spots', findAvailableSpots)
 
-router.patch('/users/updateSpot/:id', [jwtVerifierMidWare, jsonBodyParser], updateSpot)
+router.patch('/update-spot/:spotId', [jwtVerifierMidWare, jsonBodyParser], updateSpot)
 
-router.delete('/users/deleteSpot', [jwtVerifierMidWare, jsonBodyParser], deleteSpot)
+router.delete('/delete-spot/:spotId', [jwtVerifierMidWare, jsonBodyParser], deleteSpot)
 
 router.post('/upload/:spotId', jwtVerifierMidWare, saveSpotPhoto)
 
 router.get('/load/:spotId', retrieveSpotPhoto)
 
-router.post('/users/:id/spots/:id/book', [jwtVerifierMidWare, jsonBodyParser], bookSpot)
+router.post('/:spotId/spots/:candidateId/book', [jwtVerifierMidWare, jsonBodyParser], bookSpot)
 
-router.post('/users/:id/spots/:id/accepted', [jwtVerifierMidWare, jsonBodyParser], acceptBooking)
+router.patch('/spots/:spotId/candidate/:candidateId/accept', [jwtVerifierMidWare, jsonBodyParser], acceptBooking)
 
-router.post('/users/:id/spots/:id/declined', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
+router.patch('/spots/:spotId/candidate/:candidateId/decline', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
 
 module.exports = router
 

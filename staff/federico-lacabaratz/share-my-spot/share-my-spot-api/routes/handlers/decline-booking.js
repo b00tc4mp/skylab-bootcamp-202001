@@ -5,9 +5,9 @@ module.exports = (req, res) => {
     const { payload: { sub: publisherId }, params: {candidateId, spotId} } = req
 
     try {
-        deleteBooking(publisherId, candidateId, spotId)
+        declineBooking(publisherId, candidateId, spotId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully deleted this booking from the database" })
+                res.status(200).json({ message: "You've successfully deleted this booking request from database" })
             )
             .catch(({ message }) =>
                 res

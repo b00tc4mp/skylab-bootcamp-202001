@@ -18,11 +18,11 @@ module.exports = (publisherId, candidateId, spotId) => {
         const spot = await Spot.findById(spotId)
         if (!spot) throw new NotFoundError(`spot with id ${spotId} not found`)
 
-        const index = spot.bookingCandidates.findIndex(id => id.toString() === candidateId)
+        const candidateAlreadyExists = spot.bookingCandidates.some(id => id.toString() === candidateId)
 
-        if (index < 0) throw new NotFoundError(`candidate with ${candidateId} ID doesn't exist`)
+        if (!candidateAlreadyExists) throw new NotFoundError(`candidate with ${candidateId} ID doesn't exist`)
 
-        spot.status = 'unavailable'
+        spot.status = 'unavailable' 
         spot.bookedTo = candidateId
         spot.bookingCandidates = []
 

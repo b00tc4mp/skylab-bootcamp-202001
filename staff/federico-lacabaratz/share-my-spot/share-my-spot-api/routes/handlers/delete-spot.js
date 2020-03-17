@@ -2,7 +2,7 @@ const { deleteSpot } = require('../../logic')
 const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body: {spotId} } = req
+    const { payload: { sub: userId }, params: { spotId } } = req
 
     try {
         deleteSpot(userId, spotId)

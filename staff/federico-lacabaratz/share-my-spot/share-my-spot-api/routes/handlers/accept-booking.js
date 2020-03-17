@@ -2,7 +2,7 @@ const { acceptBooking } = require('../../logic')
 const { ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { params: { publisherId, candidateId, spotId } } = req
+    const { payload: { sub: publisherId }, params: { candidateId, spotId } } = req
     
     try {
         acceptBooking(publisherId, candidateId, spotId)

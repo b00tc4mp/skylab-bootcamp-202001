@@ -26,7 +26,6 @@ module.exports = new Schema({
     sat: {type: Boolean, required: true, default: false},
     sun: {type: Boolean, required: true, default: false},
     status: {type: String, enum: ['available', 'unavailable'], default: 'available'},
-    BookingCandidates: [{ type: ObjectId, ref: 'User' }],
+    bookingCandidates: [{ type: ObjectId, ref: 'User' }],
     bookedTo: { type: ObjectId, ref: 'User' }
 })
-

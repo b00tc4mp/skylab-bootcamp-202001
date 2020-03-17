@@ -2,7 +2,7 @@ const { updateSpot } = require('../../logic')
 const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body, params: {id: spotId} } = req
+    const { payload: { sub: userId }, body, params: { spotId } } = req
 
     try {
         updateSpot(userId, body, spotId)

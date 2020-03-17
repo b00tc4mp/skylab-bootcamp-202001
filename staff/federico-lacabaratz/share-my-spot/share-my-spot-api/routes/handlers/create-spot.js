@@ -2,7 +2,7 @@ const { createSpot } = require('../../logic')
 const { ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { params: { publisherId }, body: { title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun } } = req
+    const { payload: { sub: publisherId }, body: { title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun } } = req
     
     try {
         createSpot(publisherId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun)

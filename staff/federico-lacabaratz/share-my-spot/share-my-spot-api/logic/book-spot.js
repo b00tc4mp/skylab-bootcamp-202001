@@ -15,11 +15,11 @@ module.exports = (candidateId, spotId) => {
 
         if(spot.status !== 'available') throw new ConflictError('spot has already been taken')
 
-        const index = spot.bookingCandidates.findIndex(id => id.toString() === candidateId)
+        const candidateAlreadyExists = spot.bookingCandidates.some(id => id.toString() === candidateId)
 
-        if (index > 0) throw new ConflictError(`candidate with ${candidateId} ID is already within our booking candidates`)
-        
-        spot.bookCandidates.push(candidateId)
+        if (candidateAlreadyExists) throw new ConflictError(`candidate with ${candidateId} ID is already within our booking candidates`)
+         
+        spot.bookingCandidates.push(candidateId)
 
         return spot.save()
             .then(() => { })
