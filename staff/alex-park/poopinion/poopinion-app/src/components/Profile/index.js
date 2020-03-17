@@ -23,7 +23,7 @@ function Profile({ user }) {
                 <Text style={styles.bigText}>{user.publishedToilets.length} Post(s):</Text>
                 {user.publishedToilets.length > 0 &&
                     user.publishedToilets.map(toilet => (
-                        <TouchableOpacity onPress={() => Alert.alert(toilet._id)} style={styles.postsContainer} >
+                        <TouchableOpacity onPress={() => Alert.alert(toilet._id.toString())} style={styles.postsContainer} >
                             <Text style={styles.postTitle}>{toilet.place}</Text>
                             <Text style={styles.postDate}>Posted at: {toilet.created.toString().slice(0, 10)}</Text>
                         </TouchableOpacity>
