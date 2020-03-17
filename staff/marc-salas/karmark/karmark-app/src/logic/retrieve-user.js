@@ -1,8 +1,6 @@
 import { NotFoundError } from 'karmark-errors'
 import context from './context'
 
-//const { env: { REACT_APP_API_URL: API_URL } } = process
-
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function () {
@@ -17,8 +15,7 @@ export default (function () {
         const { status } = response
 
         if (status === 200) {
-            debugger
-            console.dir(response)
+            
             const user = await response.json()
 
             return user

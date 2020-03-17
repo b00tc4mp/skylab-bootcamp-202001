@@ -1,42 +1,64 @@
 const { random } = Math
+const { retrieveUser } = require('.')
 const { mongoose, models: { User } } = require('karmark-data')
-const { retrieveUser } = require('./index')
 const jwt = require('jsonwebtoken')
-const { ContentError, NotAllowedError } = require('karmark-errors')
-const bcrypt = require('bcryptjs')
 import context from './context'
 
-const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
+const { env: {
+    REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL,
+    REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET
+} } = process
 
 describe('retrieveUser', () => {
-    let name, surname, username, password, _id
+    beforeAll(() =>
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => User.deleteMany())
+    )
 
-    beforeAll(async () => {
-        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    let name, surname, username, password, users
 
-        await User.deleteMany()
-    })
-
-    beforeEach(async () => {  
+    beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        username = `username-${random()}`
+        username = `username-${random()}@mail.com`
         password = `password-${random()}`
     })
 
-    beforeEach(async () => {
-        const _password = await bcrypt.hash(password, 10)
+    describe('when user already exists', () => {
+        beforeEach(() =>
+            User.create({ name, surname, username, password })
+                .then(({ id }) => context.token = jwt.sign({ sub: id }, TEST_JWT_SECRET))
+        )
 
-        await User.create({ name, surname, username, password: _password })
-            .then(user => _id = user.id)
+        it('should succeed on correct and valid and right data', async () =>{
+            const user = await retrieveUser()
+
+                expect(user).toBeDefined()
+                expect(user.name).toBe(name)
+                expect(user.surname).toBe(surname)
+                expect(user.username).toBe(username)
+                expect(user.password).toBeUndefined()
+
+        })
     })
 
-    it('it should succeed on correct credentials', async () => {
-        const user = await retrieveUser()
-        expect(user).toBeDefined()
-        expect(user.name).toBe(name)
+    describe('when user doesent exist', () => {
+        
+        it('it should fail with no token', async () =>{
+            try {
+                await retrieveUser()
+    
+            } catch (error) {
+    
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(NotFoundError)
+                expect(error.message).toBe('jwt malformed')
+                
+            }
+        })
     })
+
+    // TODO more happies and unhappies
 
     afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
-
 })
