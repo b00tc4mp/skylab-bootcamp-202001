@@ -6,8 +6,8 @@ const { NotFoundError } = require('share-my-spot-errors')
 
 const filesDir = path.join(__dirname, `../data/spots`)
 
-module.exports = (publisherId, title, description, addressLocation, addressStNumber, addressOther, dateStarts, dateEnds, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, photos, price, acceptsBarker, surveillance, isCovered, status) => {
-    validate.string(publisherId, 'publisherId')
+module.exports = (publisherId, title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered, status) => {
+    //validate.string(publisherId, 'publisherId')
     validate.string(title, 'title')
     validate.string(description, 'description')
     validate.string(addressLocation, 'addressLocation')
@@ -37,7 +37,7 @@ module.exports = (publisherId, title, description, addressLocation, addressStNum
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${publisherId} does not exist`)
 
-            const spot = new Spot({ publisherId, title, description, addressLocation, addressStNumber, addressOther, dateStarts, dateEnds, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, photos, price, acceptsBarker, surveillance, isCovered, status, created: new Date })
+            const spot = new Spot({ publisherId, title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered, status, created: new Date })
 
             user.publishedSpots.push(spot.id)
 

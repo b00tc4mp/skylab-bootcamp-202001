@@ -16,7 +16,7 @@ module.exports = new Schema({
     acceptsBarker: {type: Boolean, required: true, default: false},
     surveillance: {type: Boolean, required: true, default: false},
     isCovered: {type: Boolean, required: true, default: false},
-    hourStart: { type: Number, required: true },
+    hourStarts: { type: Number, required: true },
     hourEnds: { type: Number, required: true },
     mon: {type: Boolean, required: true, default: false},
     tue: {type: Boolean, required: true, default: false},
