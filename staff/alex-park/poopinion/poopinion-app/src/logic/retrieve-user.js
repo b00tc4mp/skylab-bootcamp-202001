@@ -28,7 +28,6 @@ function retrieveUser(token) {
 
         if (status === 200) {
             const user = await response.json()
-
             return user
         }
 

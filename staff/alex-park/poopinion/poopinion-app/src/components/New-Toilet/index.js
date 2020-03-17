@@ -13,6 +13,7 @@ function NewToilet({ coordinates, onSubmit }) {
 
             <View style={styles.locationContainer}>
                 <Text style={styles.locationHeader}>Location:</Text>
+                {coordinates.latitude && coordinates.longitude &&
                 <MapView style={styles.mapStyle}
                     region={{
                         latitude: coordinates.latitude,
@@ -24,7 +25,7 @@ function NewToilet({ coordinates, onSubmit }) {
                         latitude: coordinates.latitude,
                         longitude: coordinates.longitude
                     }} />
-                </MapView>
+                </MapView>}
             </View>
 
             <View style={styles.uploadInfo}>

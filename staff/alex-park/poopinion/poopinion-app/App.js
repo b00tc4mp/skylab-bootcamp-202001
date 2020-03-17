@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground, ScrollView, AsyncStorage } from 'react-native';
 import {
   Register,
   Login,
@@ -42,7 +42,7 @@ export default function App() {
         longitudeDelta: 0.000821
       })
     })
-  })
+  }, [])
 
   function __handleError__(message) {
     setError(message)
@@ -50,6 +50,7 @@ export default function App() {
       setError(null)
     }, 3000)
   }
+
   // BASIC FUNCTIONS
   async function handleRegister(name, surname, email, password, age, gender) {
     try {
@@ -66,6 +67,7 @@ export default function App() {
       const response = await authenticateUser(email, password)
 
       const retrievedUser = await retrieveUser(response)
+      console.log(retrievedUser)
       setUser(retrievedUser)
       setToken(response)
       setGoLanding(true)
@@ -141,7 +143,11 @@ export default function App() {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
     } else {
-      setView('profilePage')
+      (async () => {
+        const _user = await retrieveUser(token)
+        setUser(_user)
+        setView('profilePage')
+      })();
     }
   }
 

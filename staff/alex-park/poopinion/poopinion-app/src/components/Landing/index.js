@@ -10,6 +10,7 @@ function Landing({ user, coordinates }) {
                 {user && <Text style={styles.header}>Welcome, {user.name} {user.surname}!! Enjoy your pooping 🚽</Text>}
                 {!user && <Text style={styles.header}>🚽 Welcome, stranger!! Enjoy your pooping 🚽</Text>}
                 <Text>Your current position is: </Text>
+                {coordinates.latitude && coordinates.longitude && 
                 <MapView style={styles.mapStyle}
                     region={{
                         latitude: coordinates.latitude,
@@ -21,7 +22,7 @@ function Landing({ user, coordinates }) {
                         latitude: coordinates.latitude,
                         longitude: coordinates.longitude
                     }} />
-                </MapView>
+                </MapView>}
 
                 <View style={styles.topToilets}>
                     <Text style={styles.bold}>Top Toilets</Text>

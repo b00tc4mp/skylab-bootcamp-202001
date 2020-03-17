@@ -15,7 +15,7 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 module.exports = id => {
     validate.string(id, 'id')
 
-    return User.findById(id)
+    return User.findById(id).populate('publishedToilets').populate('comments')
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotFoundError(`user with id ${id} is deactivated`)
@@ -26,5 +26,5 @@ module.exports = id => {
 
             return user.save()
         })
-        .then(({ name, surname, email, age, gender }) => ({ name, surname, email, age, gender }))
+        .then(({ name, surname, email, age, gender, publishedToilets, comments }) => ({ name, surname, email, age, gender, publishedToilets, comments }))
 }

@@ -20,7 +20,7 @@ function Profile({ user }) {
             </View>
             
             <View style={styles.posts}>
-                <Text style={styles.bigText}>0 Posts:</Text>
+                <Text style={styles.bigText}>{user.publishedToilets.length} Post(s):</Text>
             </View>
 
             <View style={styles.comments}>
