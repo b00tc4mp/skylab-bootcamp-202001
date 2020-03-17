@@ -1,114 +1,128 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User, Product } } = require('share-my-spot-data')
+const { mongoose, models: { User, Spot } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const { random } = Math
 const deleteSpot = require('./delete-spot')
 
 describe('deleteSpot', () => {
+
+    let publisherId, title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered
+
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
     )
 
-    let name, surname, email, password, category, subcategory, title, description, price, image, quantity, discount
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        role = 'superadmin'
 
-        category = `bicicleta-${random()}`
-        subcategory = `montaña`
-        title = `orbea`
-        description = `abcdefghijk`
-        price = `10*${random()}`
-        image = `orbea.es`
-        quantity = `20*${random()}`
-        discount = 20    
+        title = `title-${random()}`
+        addressLocation = `addressLocation-${random()}`
+        addressStNumber = `addressStNumber-${random()}`
+        addressOther = `addressOther-${random()}`
+        length = 4.5
+        width = 2.22
+        height = 2.4
+        area = 10
+        description = `description-${random()}`
+        price = 2
+        acceptsBarker = true
+        surveillance = false
+        isCovered = true
+        hourStarts = 9
+        hourEnds = 18
+        mon = true
+        tue = true
+        wed = true
+        thu = true
+        fri = true
+        sat = false
+        sun = false
     })
 
     describe('when user already exists', () => {
 
         beforeEach(() => 
-            Promise.all([User.create({ name, surname, email, password,role }), Spot.create({category, subcategory, title, description, price, image, quantity, discount}) ])
-                .then(([user, product]) => {
+            Promise.all([User.create({ name, surname, email, password }), Spot.create({_id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun }) ])
+                .then(([user, spot]) => {
                     _id = user.id
-                    _idproduct = product.id
+                    _spotId = spot.id
                     user.save()
-                    return product.save()
+                    return spot.save()
                 })
                 .then(() => {})
                 )
-                
-        
-        it('should fail if the product does not exist', () => {
-            _idproduct = `${_idproduct}-wrong`
-            deleteProduct(_id, _idproduct)
-                .then(()=> {throw new Error ('should not reach this point')})
-                .catch(({message })=> {
-                    expect(message).to.exist
-                    
-                    expect(message).to.equal(`product with name ${_idproduct} not found`)
-                    
-                })
-        })
 
         it('should succeed on correct and valid and right data', () =>
-            User.findById(_id).lean()
+            User.findById(_id)
                 .then((user) => {
-                    expect(user._id).to.exist
+                    expect(user.id).to.exist
                 })
 
-            .then( () => deleteProduct(_id, _idproduct)
-                .then(() => User.findById(_id).lean() )
-                .then((user) => {
-                    expect(user).to.exist
-                    expect(user._idproduct).to.be.undefined
-                })
-            )
+                .then(() => deleteSpot(_id, _spotId)
+                    .then(() => User.findById(_id).lean())
+                    .then((user) => {
+                        expect(user).to.exist
+                        expect(user.publishedSpots).to.be.undefined
+                    })
+                )
         )
 
+        it('should fail if the Spot does not exist', () => {
+            _spotId = `${_spotId}-wrong`
+            deleteSpot(_id, _spotId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).to.exist
+
+                    expect(message).to.equal(`Spot with name ${_spotId} not found`)
+
+                })
+        })
 
     })
 
     describe('unhappy path', () => {
-  
+
         it('should fail on a non-string id', () => {
-            let id
-            
-            id = 12345
-            expect(() => deleteProduct(id, _idproduct)).to.throw(TypeError, `id ${id} is not a string`)
-            
-            id = false
-            expect(() => deleteProduct(id, _idproduct)).to.throw(TypeError, `id ${id} is not a string`)
-            
-            id = undefined
-            expect(() => deleteProduct(id, _idproduct)).to.throw(TypeError, `id ${id} is not a string`)
-            
-            id = []
-            expect(() => deleteProduct(id, _idproduct)).to.throw(TypeError, `id ${id} is not a string`)
+            let userId
+
+            userId = 12345
+            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+
+            userId = false
+            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+
+            userId = undefined
+            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+
+            userId = []
+            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
 
         })
 
-        it('should fail on a non-string idproduct', () => {
-            _idproduct = 12345
-            expect(() => deleteProduct(_id, _idproduct)).to.throw(TypeError, `productId ${_idproduct} is not a string`)
-            
-            _idproduct = false
-            expect(() => deleteProduct(_id, _idproduct)).to.throw(TypeError, `productId ${_idproduct} is not a string`)
-            
-            _idproduct = undefined
-            expect(() => deleteProduct(_id, _idproduct)).to.throw(TypeError, `productId ${_idproduct} is not a string`)
-            
-            _idproduct = []
-            expect(() => deleteProduct(_id, _idproduct)).to.throw(TypeError, `productId ${_idproduct} is not a string`)
+        it('should fail on a non-string spotId', () => {
+
+            userId = 'fede'
+            spotId = 12345
+            expect(() => deleteSpot(userId, spotId)).to.throw(TypeError, `spotId ${spotId} is not a string`)
+
+            spotId = false
+            expect(() => deleteSpot(userId, spotId)).to.throw(TypeError, `spotId ${spotId} is not a string`)
+
+            spotId = undefined
+            expect(() => deleteSpot(userId, spotId)).to.throw(TypeError, `spotId ${spotId} is not a string`)
+
+            spotId = []
+            expect(() => deleteSpot(userId, spotId)).to.throw(TypeError, `spotId ${spotId} is not a string`)
         })
     })
 
-
-    after(() => Promise.all([User.deleteMany(), Product.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Spot.deleteMany()]).then(() => mongoose.disconnect()))
 })

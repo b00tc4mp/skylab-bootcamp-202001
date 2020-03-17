@@ -24,6 +24,7 @@ describe('createSpot', () => {
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
+        
         title = `title-${random()}`
         addressLocation = `addressLocation-${random()}`
         addressStNumber = `addressStNumber-${random()}`
@@ -97,99 +98,47 @@ describe('createSpot', () => {
     })
 
     it('should fail on incorrect fields within the spot type and content', () => {
-    
-        let id = 'ffsd4455539fefe94'
 
-        expect(() => createSpot(id, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createSpot(id, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createSpot(id, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createSpot(id, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createSpot(id, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createSpot(id, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createSpot(title, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createSpot(title, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createSpot(title, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createSpot(title, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createSpot(title, undefined)).to.throw(TypeError, 'undefined is not a string')
+        
+        expect(() => createSpot(title, '')).to.throw(ContentError, 'title is empty')
+        expect(() => createSpot(title, ' \t\r')).to.throw(ContentError, 'title is empty')
 
-        expect(() => createSpot(id, '')).to.throw(ContentError, 'title is empty')
-        expect(() => createSpot(id, ' \t\r')).to.throw(ContentError, 'title is empty')
+        expect(() => createSpot(title, addressLocation, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createSpot(title, addressLocation, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createSpot(title, addressLocation, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createSpot(title, addressLocation, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createSpot(title, addressLocation, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createSpot(title, addressLocation, null)).to.throw(TypeError, 'null is not a string')
         
-        expect(() => createSpot(id, title, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createSpot(id, title, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createSpot(id, title, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createSpot(id, title, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createSpot(id, title, undefined)).to.throw(TypeError, 'undefined is not a string')
-        
-        expect(() => createSpot(id, title, '')).to.throw(ContentError, 'addressLocation is empty')
-        expect(() => createSpot(id, title, ' \t\r')).to.throw(ContentError, 'addressLocation is empty')
+        expect(() => createSpot(title, addressLocation, '')).to.throw(ContentError, 'addressLocation is empty')
+        expect(() => createSpot(title, addressLocation, ' \t\r')).to.throw(ContentError, 'addressLocation is empty')
 
-        expect(() => createSpot(id, title, addressLocation, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createSpot(id, title, addressLocation, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createSpot(id, title, addressLocation, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createSpot(id, title, addressLocation, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createSpot(id, title, addressLocation, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createSpot(id, title, addressLocation, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, null)).to.throw(TypeError, 'null is not a string')
         
-        expect(() => createSpot(id, title, addressLocation, '')).to.throw(ContentError, 'addressStNumber is empty')
-        expect(() => createSpot(id, title, addressLocation, ' \t\r')).to.throw(ContentError, 'addressStNumber is empty')
+        expect(() => createSpot(title, addressLocation, addressStNumber, '')).to.throw(ContentError, 'addressStNumber is empty')
+        expect(() => createSpot(title, addressLocation, addressStNumber, ' \t\r')).to.throw(ContentError, 'addressStNumber is empty')
 
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, [])).to.throw(TypeError, ' is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, null)).to.throw(TypeError, 'null is not a string')
         
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, '')).to.throw(ContentError, 'addressOther is empty')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, ' \t\r')).to.throw(ContentError, 'addressOther is empty')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, '')).to.throw(ContentError, 'addressOther is empty')
+        expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, ' \t\r')).to.throw(ContentError, 'addressOther is empty')
 
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, 'uno')).to.throw(TypeError, 'uno is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, [])).to.throw(TypeError, ' is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, null)).to.throw(TypeError, 'null is not a number')
-        
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, 'uno')).to.throw(TypeError, 'uno is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, [])).to.throw(TypeError, ' is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, null)).to.throw(TypeError, 'null is not a number')
-        
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, 'uno')).to.throw(TypeError, 'uno is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, [])).to.throw(TypeError, ' is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, null)).to.throw(TypeError, 'null is not a number')
-        
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, 'uno')).to.throw(TypeError, 'uno is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, [])).to.throw(TypeError, ' is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, null)).to.throw(TypeError, 'null is not a number')
-        
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, 'uno')).to.throw(TypeError, 'uno is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, [])).to.throw(TypeError, ' is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, null)).to.throw(TypeError, 'null is not a number')
-        
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, 1)).to.throw(TypeError, 'uno is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, [])).to.throw(TypeError, ' is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, null)).to.throw(TypeError, 'null is not a string')
-        
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, 'uno')).to.throw(TypeError, 'uno is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, [])).to.throw(TypeError, ' is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => createSpot(id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, null)).to.throw(TypeError, 'null is not a number')
-        
     })
-    // TODO more happies and unhappies
 
     after(() => Promise.all([User.deleteMany(), Spot.deleteMany()]).then(() => mongoose.disconnect()))
 })
