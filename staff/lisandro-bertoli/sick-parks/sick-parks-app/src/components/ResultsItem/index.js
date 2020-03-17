@@ -1,21 +1,25 @@
 import React from 'react'
 import { Text, TouchableOpacity, StyleSheet, View, Image } from 'react-native'
+import styles from './styles'
 
 
-export default function ResultsItem({ name, size, resort, verified, rating }) {
+export default function ResultsItem(props) {
+    const { name, size, resort, verified, rating } = props//park or item
+    const { onToPark } = props
+    const isVerified = true // will remove later
     return (<>
 
-        <TouchableOpacity style={styles.container} >
+        <TouchableOpacity style={styles.container} onPress={onToPark}>
             <View style={styles.item}>
-                <Image style={{ height: 50, width: 50 }} source={require('../../../assets/logo.png')} />
-                <View style={{ flex: 1 }}>
-                    <Text>Name</Text>
-                    <Text>size</Text>
-                    <Text>Resort</Text>
+                <Image style={styles.image} source={require('../../../assets/logo.png')} />
+                <View style={styles.colOne}>
+                    <Text style={styles.text}>Name</Text>
+                    <Text style={styles.text}>size</Text>
+                    <Text style={styles.text}>Resort</Text>
                 </View>
-                <View style={{ flex: 1, justifyContent: "space-between" }}>
-                    <Text>Verified</Text>
-                    <Text>Rating: 5</Text>
+                <View style={styles.colTwo}>
+                    <Text style={styles[isVerified]}>Verified</Text>
+                    <Text style={styles.text}>Rating: 5</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -23,21 +27,5 @@ export default function ResultsItem({ name, size, resort, verified, rating }) {
     )
 }
 
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: '80%'
-    },
-    item: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        borderStyle: 'solid',
-        borderColor: '#82A4B3',
-        borderWidth: 3,
-        backgroundColor: '#EDF4F9',
-    }
-})
 
 
