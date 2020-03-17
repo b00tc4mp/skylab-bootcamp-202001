@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     picture: {
         flex: 1,
         padding: 0,
-        marginHorizontal: 15,
+        marginRight: 15,
         backgroundColor: 'brown',
         borderRadius: 50
     },
@@ -24,13 +24,30 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
     },
     bold: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize: 20
     },
     font: {
         fontSize: 15
     },
     posts: {
         marginVertical: 30
+    },
+    postsContainer: {
+        backgroundColor: 'white',
+        padding: 20,
+        marginVertical: 10,
+        opacity: 0.7,
+        borderWidth: 2,
+        borderRadius: 15,
+        borderColor: 'grey'
+    },
+    postTitle: {
+        fontWeight: 'bold',
+        fontSize: 20
+    },
+    postDate: {
+        fontStyle: 'italic'
     },
     comments: {
         marginVertical: 30

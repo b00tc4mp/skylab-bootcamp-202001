@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles'
-import { Text, ScrollView, TouchableOpacity, View, Image } from 'react-native'
+import { Text, ScrollView, TouchableOpacity, View, Image, Alert } from 'react-native'
 
 function Profile({ user }) {
     return (<>
@@ -18,9 +18,17 @@ function Profile({ user }) {
                     </View>
                 </View>
             </View>
-            
+
             <View style={styles.posts}>
                 <Text style={styles.bigText}>{user.publishedToilets.length} Post(s):</Text>
+                {user.publishedToilets.length > 0 &&
+                    user.publishedToilets.map(toilet => (
+                        <TouchableOpacity onPress={() => Alert.alert(toilet._id)} style={styles.postsContainer} >
+                            <Text style={styles.postTitle}>{toilet.place}</Text>
+                            <Text style={styles.postDate}>Posted at: {toilet.created.toString().slice(0, 10)}</Text>
+                        </TouchableOpacity>
+                    ))
+                }
             </View>
 
             <View style={styles.comments}>
