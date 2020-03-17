@@ -48,13 +48,13 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onMount, onGoT
                 <button className="controlheader__menu"><i className="fas fa-bars"></i></button>
             </div>
             <div className="controlbody">
-                <button className="controlbody__arrowup" onMouseDown={handleOnUp} onMouseUp={handleOnStop}><i className="fas fa-arrow-alt-circle-up"/></button>
-                <button className="controlbody__arrowleft" onMouseDown={handleOnLeft} onMouseUp={handleOnStop}><i className="fas fa-arrow-alt-circle-left"/></button>
-                <button className="controlbody__arrowright" onMouseDown={handleOnRight} onMouseUp={handleOnStop}><i className="fas fa-arrow-alt-circle-right"/></button>
-                <button className="controlbody__arrowdown" onMouseDown={handleOnDown} onMouseUp={handleOnStop}><i className="fas fa-arrow-alt-circle-down"/></button>
+                <button className="controlbody__arrowup" onTouchStart={handleOnUp} onTouchEnd={handleOnStop}><i className="fas fa-arrow-alt-circle-up"/></button>
+                <button className="controlbody__arrowleft" onTouchStart={handleOnLeft} onTouchEnd={handleOnStop}><i className="fas fa-arrow-alt-circle-left"/></button>
+                <button className="controlbody__arrowright" onTouchStart={handleOnRight} onTouchEnd={handleOnStop}><i className="fas fa-arrow-alt-circle-right"/></button>
+                <button className="controlbody__arrowdown" onTouchStart={handleOnDown} onTouchEnd={handleOnStop}><i className="fas fa-arrow-alt-circle-down"/></button>
             </div>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"/>
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>
         </div>
     </>
 }

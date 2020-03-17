@@ -4,12 +4,14 @@ import Register from './Register'
 import Login from './Login'
 import Home from './Home'
 import Control from './Control'
+import Programe from './Programe'
 import { registerUser, isLoggedIn, authenticateUser, up, down, right, left, stop } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
+  let code
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -89,6 +91,31 @@ export default withRouter(function ({ history }) {
     }
   }
 
+  function handleSaveUp(){
+    code.push('up')   
+    setState({ code: code})
+    console.log(state.code)
+
+  }
+
+  function handleSaveDown(){
+    code.push('up')     
+    setState({ code: code})
+    console.log(state.code)
+  }
+
+  function handleSaveRight(){
+    code.push('up')     
+    setState({ code: code})
+    console.log(state.code)
+  }
+
+  function handleSaveLeft(){
+    code.push('up')     
+    setState({ code: code})
+    console.log(state.code)
+  }
+  
   function handleGoToLogin() {
     history.push('/login')
   }
@@ -113,14 +140,19 @@ export default withRouter(function ({ history }) {
     setState({ page: 'control' })
   }
 
-  const { page, error } = state
+  function handleMountPrograme() {
+    setState({ page: 'programe' })
+  }
+
+  const { page, error} = state
 
   return <div className="app">
     <Page name={page}>
       <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/register" />} />
       <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
       <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" />: <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin}/>} />
-      <Route path="/Control" render={() => isLoggedIn() ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} />: <Redirect to="/login" />}/>
+      <Route path="/control" render={() => isLoggedIn() ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} />: <Redirect to="/login" />}/>
+      <Route path="/programe" render={() => isLoggedIn() ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onStop={handleStop} onMount={handleMountPrograme} onGoToHome={handleGoToHome} />: <Redirect to="/login" />}/>
       <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />} />
     </Page>
   </div>

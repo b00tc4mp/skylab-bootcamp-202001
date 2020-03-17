@@ -38,6 +38,12 @@ export default withRouter(function ({ history }) {
 
         history.push('/control')
     }
+    
+    function handleOnToPrograme(){
+        setState({ page: 'programe' })
+
+        history.push('/programe')
+    }
 
     return <>
         <div className="home">
@@ -46,11 +52,11 @@ export default withRouter(function ({ history }) {
                 <button className="homeheader__button" onClick={handleLogeOut}><i className="fas fa-lock"></i></button>
             </header>
             <main className="homemenu">
-                <button className="homemenu__programe" >PROGRAME</button>
+                <button className="homemenu__programe" onClick={handleOnToPrograme}>PROGRAME</button>
                 <button className="homemenu__control" onClick={handleOnToControl}>CONTROL</button>
             </main>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"/>
+    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>
         </div>
     </>
 })
