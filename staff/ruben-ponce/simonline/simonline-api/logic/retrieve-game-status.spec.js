@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { env: { MONGODB_URL } } = process
+const { env: { TEST_MONGODB_URL } } = process
 const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
@@ -11,7 +11,7 @@ const { mongoose } = require('simonline-data')
 
 describe('retrieveGameStatus', () => {
     before(() =>
-        mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     )
 
     let name, owner, username, password
@@ -84,25 +84,10 @@ describe('retrieveGameStatus', () => {
                         expect(game.currentPlayer).to.not.equal(player1)
                         expect(game.watching.length).to.equal(1)
                     })
-            })
-            
+            })  
         })
-
-
-        // it('should current player change to watching when the player has passed his turn 1sec', function() {
-        //     this.timeout(3000);
-        //     return wait(2000)
-        //     .then(() => {
-        //         return retrieveGameStatus(playerId, gameId)
-        //             .then(game => {
-        //                 debugger
-        //                 expect(game.watching.length).to.equal(2)
-        //             })
-        //     })
-        // })
     })
-
 })
 
-    //after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
 

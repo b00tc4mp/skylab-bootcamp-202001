@@ -5,57 +5,69 @@ module.exports = (playerId, combination) => {
     validate.string(playerId, 'playerId')
     validate.type(combination, 'combination', Object)
 
-    return Game.findOne({players: playerId})
+    return Game.findOne({players: playerId}).lean()
     .then(game => {
-        const { turnTimeout, players, watching, status, pushCombination} = game
+        const { status, pushCombination } = game
+
+        const playersStr = []
+        game.players.forEach(player => playersStr.push(player.toString()))
+
+        const watchingStr = []
+        game.watching.forEach(watcher => watching.push(watcher.toString()))
+
+        const currentPlayerStr = game.currentPlayer.toString()
     
         const timeNow = new Date()
 
         const elapsedTime = (timeNow - game.turnStart) / 1000
-        debugger
+
+        let matched = true
+
+        for (var i = 0; i < pushCombination.length; i++) {
+            if(pushCombination[i] !== combination[i]) matched = false
+        }
+        
         /** when player before timeout matches the combination */
-        if (elapsedTime < turnTimeout && pushCombination === combination) {
-            const j = players.indexOf(currentPlayer)
+        if (elapsedTime < game.turnTimeout && matched) {
+            const j = playersStr.indexOf(currentPlayerStr)
     
-            for (var i = j; i < players.length; i++) {
+            for (var i = j; i < playersStr.length; i++) {
 
-                if(!players[j+1]) i = 0
+                if(!playersStr[j+1]) i = 0
 
-                if(!watching.includes(players[i])) {
+                if(!watchingStr.includes(playersStr[i])) {
 
-                    const combination = Math.floor(random() * 4)
+                    const combination = Math.floor(Math.random() * 4)
                     pushCombination.push(combination)
                     game.combinationViewed = []
-                    turnTimeout = ((pushCombination.length) * 4)
+                    game.turnTimeout = ((pushCombination.length) * 4)
                     game.turnStart = new Date()
-                    game.currentPlayer = players[i]
-                    game.save()
+                    game.currentPlayer = game.players[i]
                     return game
                 }
             }
             /** when the player before timeout no match combination */
-        } else if (elapsedTime < turnTimeout && pushCombination !== combination) {
-            watching.push(game.currentPlayer)
+        } else if (elapsedTime < game.turnTimeout && !matched ) {
+            game.watching.push(game.currentPlayer)
+            watchingStr.push(currentPlayerStr)
 
-            if(players.length === (watching.length -1)) return status = 'finished'
+            if(game.players.length === (game.watching.length -1)) return status = 'finished'
 
-            var j = players.indexOf(game.currentPlayer)
+            var j = playersStr.indexOf(currentPlayerStr)
     
-            for (var i = j; i < players.length; i++) {
+            for (var i = j; i < playersStr.length; i++) {
 
-                if(!players[j+1]) i = 0
+                if(!playersStr[j+1]) i = 0
 
-                if(!watching.includes(players[i])) {
+                if(!watchingStr.includes(playersStr[i])) {
 
-                    game.currentPlayer = players[i]
+                    game.currentPlayer = game.players[i]
                     game.combinationViewed = []
                     game.turnStart = new Date()
-                    game.save()
                     return game
                 }
             }
         } else {
-            game.save()
             return game
         }
     })
