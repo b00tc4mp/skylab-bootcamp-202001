@@ -3,7 +3,8 @@ const API_URL = process.env.REACT_APP_API_URL
 const fetch = require('node-fetch')
 const { validate } = require('../sick-parks-utils')
 
-export default (function ({ email, password }) {
+
+export default function ({ email, password }) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')
@@ -20,9 +21,9 @@ export default (function ({ email, password }) {
 
         if (error) throw new Error(error)
 
-        this.token = token
+        await AsyncStorage.setItem('token', token)
 
         return
     })()
 
-}).bind(context)
+}

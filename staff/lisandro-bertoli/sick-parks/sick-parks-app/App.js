@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import { registerUser, login } from './src/logic'
+import { StyleSheet, View, Image, StatusBar, TouchableWithoutFeedback, Keyboard, AsyncStorage } from 'react-native'
+import { registerUser, login, context } from './src/logic'
 import { Login, Register, Landing, Home, NavBar } from './src/components/'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function App() {
-	const [view, setView] = useState('home')
+	const [view, setView] = useState('register')
 	const [nav, setNav] = useState(true)
 	const [error, setError] = useState()
 
@@ -15,7 +15,8 @@ export default function App() {
 		try {
 			console.log(user.email)
 			await login(user)
-
+			const token = await AsyncStorage.getItem('token')
+			console.log(token)
 			setView('home')
 		} catch ({ message }) {
 			setError(message)
