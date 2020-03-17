@@ -16,10 +16,10 @@ module.exports = (userId, body) => {
         if (key === 'password' && !body.oldPassword) throw new ContentError('Old password is needed to change password')
     }
 
-    return (async() =>{
+    return (async() => {
         
         const user = await User.findById(userId)
-        if (!_user) throw new NotFoundError(`user ${id} does not exist`)
+        if (!user) throw new NotFoundError(`user ${id} does not exist`)
     
         if (body.password) {
             const result = await bcrypt.compare(body.oldPassword, user.password)

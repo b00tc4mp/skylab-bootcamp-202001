@@ -4,9 +4,9 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Spot } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveLastSpots = require('./retrieve-last-spots')
+const findAvailableSpots = require('./find-available-spots')
 
-describe('retrieveLastSpots', () => {
+describe('findAvailableSpots', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
@@ -51,7 +51,7 @@ describe('retrieveLastSpots', () => {
         )
 
         it('should succeed on correct and valid and right data', () =>
-            retrieveLastSpots()
+            findAvailableSpots()
                 .then(spots => {
                     expect(spots).to.exist
                     expect(spots).to.have.lengthOf(10)
