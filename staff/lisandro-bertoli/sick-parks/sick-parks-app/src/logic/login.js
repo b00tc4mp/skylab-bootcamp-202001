@@ -1,14 +1,13 @@
 import context from './context'
-const API_URL = process.env.REACT_APP_API_URL
 const fetch = require('node-fetch')
 const { validate } = require('../sick-parks-utils')
 
 
-export default function ({ email, password }) {
+export default (function ({ email, password }) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')
-    // WHERE TO STORE TOKEN??
+
     return (async () => {
         const response = await fetch(`http://192.168.1.101:8085/api/users/auth`, {
             method: 'POST',
@@ -21,9 +20,9 @@ export default function ({ email, password }) {
 
         if (error) throw new Error(error)
 
-        await AsyncStorage.setItem('token', token)
+        this.setToken(token)
 
         return
     })()
 
-}
+}).bind(context)

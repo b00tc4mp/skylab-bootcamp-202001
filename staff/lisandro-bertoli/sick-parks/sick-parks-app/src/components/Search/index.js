@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native'
 import { Button } from '../index'
 import styles from './styles'
@@ -11,19 +11,22 @@ const rightImage = require('../../../assets/right-side.png')
 export default function ({ onSubmit }) {
     const [query, setQuery] = useState()
 
-    useEffect(() => {
+
+    const handleSubmit = (e) => {
         onSubmit(query)
-    }, [query])
+        console.log(query)
+
+    }
 
 
     return (<>
         <ImageBackground source={mainImg}
-            style={{ alignItems: 'center', flex: 1, height: '100%', justifyContent: 'flex-end' }} >
-            <View style={{ flexDirection: 'row', flex: 1, width: '100%', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 10 }}>
-                <TouchableOpacity style={styles.queryButton} onPress>
+            style={{ alignItems: 'center', flex: 1, height: '100%', width: '100%', justifyContent: 'flex-end' }} >
+            <View style={{ flexDirection: 'row', flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 10 }}>
+                <View style={styles.queryButton} >
                     <Image style={styles.queryIcon} source={require('../../../assets/icon-search.png')} />
-                </TouchableOpacity>
-                <TextInput style={styles.input} placeholder='Find a Park...' onChangeText={(text) => setQuery(text)} />
+                </View>
+                <TextInput style={styles.input} placeholder='Find a Park...' onChangeText={(text) => setQuery(text)} onSubmitEditing={handleSubmit} returnKeyType="search" />
             </View>
         </ImageBackground >
 

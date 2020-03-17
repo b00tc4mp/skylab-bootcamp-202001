@@ -1,26 +1,15 @@
 import { AsyncStorage } from 'react-native'
 
 export default {
-    set token(token) {
-        return (async () => {
-            await AsyncStorage.setItem('token', token)
-
-        })()
+    setToken: async function (token) {
+        await AsyncStorage.setItem('token', token)
     },
 
-    get token() {
-        return (async () => {
-            return await AsyncStorage.getItem('token')
-
-        })()
+    getToken: async function () {
+        return await AsyncStorage.getItem('token')
     },
 
-    clear() {
-        return (async () => {
-            delete this.token
-
-            await AsyncStorage.removeItem('token')
-        })()
-
+    clear: async function () {
+        await AsyncStorage.removeItem('token')
     }
 }

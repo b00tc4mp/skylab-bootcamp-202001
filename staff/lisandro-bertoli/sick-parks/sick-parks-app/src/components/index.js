@@ -7,6 +7,7 @@ import Button from './Button'
 import ResultsItem from './ResultsItem'
 import Results from './Results'
 import Search from './Search'
+import TopSearch from './TopSearch'
 
 export {
     Login,
@@ -17,5 +18,6 @@ export {
     NavBar,
     ResultsItem,
     Results,
-    Search
+    Search,
+    TopSearch
 }
