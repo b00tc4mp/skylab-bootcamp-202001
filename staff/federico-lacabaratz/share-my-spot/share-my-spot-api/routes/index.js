@@ -46,9 +46,9 @@ router.get('/load/:spotId', retrieveSpotPhoto)
 
 router.post('/users/:id/spots/:id/book', [jwtVerifierMidWare, jsonBodyParser], bookSpot)
 
-router.post('/users/:id/spots/:id', [jwtVerifierMidWare, jsonBodyParser], acceptBooking)
+router.post('/users/:id/spots/:id/accepted', [jwtVerifierMidWare, jsonBodyParser], acceptBooking)
 
-router.post('/users/:id/spots/:id', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
+router.post('/users/:id/spots/:id/declined', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
 
 module.exports = router
 
