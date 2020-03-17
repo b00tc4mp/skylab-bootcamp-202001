@@ -16,9 +16,7 @@ module.exports = new Schema({
     acceptsBarker: {type: Boolean, required: true, default: false},
     surveillance: {type: Boolean, required: true, default: false},
     isCovered: {type: Boolean, required: true, default: false},
-    dateStarts: { type: Date, required: true },
-    dateEnds: { type: Date, required: true },
-    hourStarts: { type: Number, required: true },
+    hourStart: { type: Number, required: true },
     hourEnds: { type: Number, required: true },
     mon: {type: Boolean, required: true, default: false},
     tue: {type: Boolean, required: true, default: false},
@@ -27,7 +25,8 @@ module.exports = new Schema({
     fri: {type: Boolean, required: true, default: false},
     sat: {type: Boolean, required: true, default: false},
     sun: {type: Boolean, required: true, default: false},
-    bookings: {
-        type: [{ type: ObjectId, ref: 'Booking' }]
-    }
+    status: {type: String, enum: ['available', 'unavailable'], default: 'available'},
+    BookingCandidates: [{ type: ObjectId, ref: 'User' }],
+    bookedTo: { type: ObjectId, ref: 'User' }
 })
+

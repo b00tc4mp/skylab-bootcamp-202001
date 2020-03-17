@@ -4,16 +4,16 @@ const {
     authenticateUser,
     retrieveUser,
     updateUser,
-    createListing,
-    retrieveLastListings,
-    retrievePublishedListings,
-    updateListing,
-    deleteListing,
-    saveListingPhoto,
-    retrieveListingPhoto,
-    createBooking,
-    acceptAndIncludeBooking,
-    declineAndRemoveBooking
+    createSpot,
+    retrieveLastSpots,
+    retrievePublishedSpots,
+    updateSpot,
+    deleteSpot,
+    saveSpotPhoto,
+    retrieveSpotPhoto,
+    bookSpot,
+    acceptBooking,
+    declineBooking
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -30,29 +30,25 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
 
-router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], createListing)
+router.post('/users/:id/spots', [jwtVerifierMidWare, jsonBodyParser], createSpot)
 
-router.get('/listings', jwtVerifierMidWare, retrievePublishedListings)
+router.get('/spots', jwtVerifierMidWare, retrievePublishedSpots)
 
-router.get('/lastlistings', retrieveLastListings)
+router.get('/lastSpots', retrieveLastSpots)
 
-router.patch('/users/updateListing/:id', [jwtVerifierMidWare, jsonBodyParser], updateListing)
+router.patch('/users/updateSpot/:id', [jwtVerifierMidWare, jsonBodyParser], updateSpot)
 
-router.delete('/users/deleteListing', [jwtVerifierMidWare, jsonBodyParser], deleteListing)
+router.delete('/users/deleteSpot', [jwtVerifierMidWare, jsonBodyParser], deleteSpot)
 
-router.post('/users/:id/listings', [jwtVerifierMidWare, jsonBodyParser], createListing)
+router.post('/upload/:spotId', jwtVerifierMidWare, saveSpotPhoto)
 
-router.post('/upload/:listingId', jwtVerifierMidWare, saveListingPhoto)
+router.get('/load/:spotId', retrieveSpotPhoto)
 
-router.get('/load/:listingId', retrieveListingPhoto)
+router.post('/users/:id/spots/:id/book', [jwtVerifierMidWare, jsonBodyParser], bookSpot)
 
-router.post('/users/:id/listings/:id/bookings', [jwtVerifierMidWare, jsonBodyParser], createBooking)
+router.post('/users/:id/spots/:id', [jwtVerifierMidWare, jsonBodyParser], acceptBooking)
 
-// router.patch('/users/:id/listings/:id', [jwtVerifierMidWare, jsonBodyParser], acceptAndIncludeBooking)
-
-// router.get('/users/subscribedListings', jwtVerifierMidWare, retrieveSubscribedListings)
-
-router.delete('/users/declineAndRemoveBooking', [jwtVerifierMidWare, jsonBodyParser], declineAndRemoveBooking)
+router.post('/users/:id/spots/:id', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
 
 module.exports = router
 

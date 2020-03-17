@@ -1,13 +1,13 @@
-const { updateListing } = require('../../logic')
+const { deleteSpot } = require('../../logic')
 const { NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: userId }, body, params: {id: listingId} } = req
+    const { payload: { sub: userId }, body: {spotId} } = req
 
     try {
-        updateListing(userId, body, listingId)
+        deleteSpot(userId, spotId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully updated this listing" })
+                res.status(200).json({ message: "You've successfully deleted this spot from the database" })
             )
             .catch(({ message }) =>
                 res

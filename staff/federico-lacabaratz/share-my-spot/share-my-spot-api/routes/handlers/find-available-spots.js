@@ -1,12 +1,12 @@
-const { retrieveLastListings } = require('../../logic')
-const {  ContentError } = require('share-my-spot-errors')
+const { findAvailableSpots } = require('../../logic')
+const {  ContentError } = require('share-my-s-errors')
 
 module.exports = (req, res) => {
 
     try {
-        retrieveLastListings()
-            .then(listing =>
-                res.status(200).json(listing)
+        findAvailableSpots()
+            .then(spots =>
+                res.status(200).json(spots)
             )
             .catch(({ message }) =>
                 res

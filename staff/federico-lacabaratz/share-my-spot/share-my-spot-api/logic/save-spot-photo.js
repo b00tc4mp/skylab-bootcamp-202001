@@ -1,15 +1,15 @@
 require('dotenv').config()
 const { validate } = require('share-my-spot-utils')
 const { NotFoundError } = require('share-my-spot-errors')
-const { models: { User, Listing } } = require('share-my-spot-data')
+const { models: { User, Spot } } = require('share-my-spot-data')
 const fs = require('fs')
 const path = require('path')
 
 /**
-* Saves listing image
+* Saves spot image
 * 
 * @param {ObjectId} userId of user
-* @param {ObjectuserI} listingId id of listing
+* @param {ObjectuserI} spotId id of spot
 * @param {Stream} file data of the image
 * @param {Sting} filename name of the image
 *
@@ -17,22 +17,22 @@ const path = require('path')
 */
 
 
-module.exports = function (userId, listingId, file, filename) {
+module.exports = function (userId, spotId, file, filename) {
     validate.string(userId, 'userId')
-    validate.string(listingId, 'listingId')
+    validate.string(spotId, 'spotId')
     validate.string(filename, 'filename')
 
     return (async () => {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError(`user with id ${userId} not found`)
 
-        const listing = await Listing.findById(listingId)
-        if (!listing) throw new NotFoundError(`ad with id ${listingId} not found`)
+        const spot = await Spot.findById(spotId)
+        if (!spot) throw new NotFoundError(`ad with id ${spotId} not found`)
 
-        const dir = `./data/listings/${listingId}`
+        const dir = `./data/spots/${spotId}`
         if (!fs.existsSync(dir)) throw new NotFoundError(`folder in ${dir} hasn't been created yet`)
 
-        let saveTo = path.join(__dirname, `../data/listings/${listingId}/${filename}.jpg`)
+        let saveTo = path.join(__dirname, `../data/spots/${spotId}/${filename}.jpg`)
         return file.pipe(fs.createWriteStream(saveTo))
     })()
 }

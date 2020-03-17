@@ -1,11 +1,11 @@
 const express = require('express')
 const fs = require('fs')
-const { retrieveListingPhoto } = require('../../logic')
+const { retrieveSpotPhoto } = require('../../logic')
 
 module.exports = async (req, res) => {
-    const { params: { listingId } } = req
+    const { params: { spotId } } = req
   
-    const stream = await retrieveListingPhoto(listingId) 
+    const stream = await retrieveSpotPhoto(spotId) 
 
     res.setHeader('Content-Type', 'image/jpeg')
 

@@ -1,10 +1,12 @@
 const { validate } = require('share-my-spot-utils')
 const { models: { User } } = require('share-my-spot-data')
-const { ContentError, NotAllowedError } = require('share-my-spot-errors')
+const { ContentError, NotAllowedError, NotFoundError } = require('share-my-spot-errors')
 const bcrypt = require('bcryptjs')
 
 module.exports = (userId, body) => {
     validate.string(userId, 'userId')
+
+    const { name, surname, email, password, oldPassword, phone } = body
 
     const validFields = ['email', 'password', 'oldPassword', 'phone']
 
@@ -15,7 +17,9 @@ module.exports = (userId, body) => {
     }
 
     return (async() =>{
+        
         const user = await User.findById(userId)
+        if (!_user) throw new NotFoundError(`user ${id} does not exist`)
     
         if (body.password) {
             const result = await bcrypt.compare(body.oldPassword, user.password)
