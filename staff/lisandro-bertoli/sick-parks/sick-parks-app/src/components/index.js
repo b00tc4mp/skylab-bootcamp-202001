@@ -6,6 +6,7 @@ import NavBar from './NavBar'
 import Button from './Button'
 import ResultsItem from './ResultsItem'
 import Results from './Results'
+import Search from './Search'
 
 export {
     Login,
@@ -15,5 +16,6 @@ export {
     Button,
     NavBar,
     ResultsItem,
-    Results
+    Results,
+    Search
 }
