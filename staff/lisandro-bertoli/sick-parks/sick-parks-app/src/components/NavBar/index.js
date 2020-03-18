@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Image } from 'react-native'
-
+import { View, TouchableOpacity, Image } from 'react-native'
+import styles from './styles'
 
 export default function ({ onToProfile, onToMapView, onToSearch, onToCreatePark }) {
     return (
@@ -25,27 +25,3 @@ export default function ({ onToProfile, onToMapView, onToSearch, onToCreatePark 
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        height: '8%',
-        backgroundColor: '#82A4B3',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        width: '100%',
-        margin: 0,
-        padding: 0
-    },
-    iconContainer: {
-
-        width: 30,
-        height: 30,
-
-    },
-    icon: {
-
-        width: 30,
-        height: 30,
-        tintColor: '#EFEBDA'
-    }
-})

@@ -1,50 +1,63 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, StatusBar, Image } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+// import * as Location from 'expo-location'
+
 import { registerUser, login, isLoggedIn } from './src/logic'
-import { Login, Register, Landing, Home, MapViewContainer } from './src/components/'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as Permissions from 'expo-permissions'
+import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
+import context from './src/logic/context'
+
+const homeImage = require('./assets/icon-search.png')
+const mapImage = require('./assets/icon-location.png')
+const buildImage = require('./assets/icon-pick-and-shovel.png')
+const profileImage = require('./assets/icon-profile.png')
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator()
 
 export default function App() {
-	const [view, setView] = useState()
+
 	const [error, setError] = useState()
-	//this here => const [user, setUser] = useState()
+	const [user, setUser] = useState()
 
 	useEffect(() => {
 		(async () => {//
+
 			try {
+
 				const logged = await isLoggedIn()
 
 				if (logged) {
 					//this here => retrieveUser(await context.getToken())
 					//this here => setUser for profile
-					setView('home')
+					setUser(true)
 				} else {
-					//probably will go to home anywat
-					setView('landing')
+					setUser(false)
 				}
 			} catch ({ message }) {
-				setError(message)
-				console.log('refresh use effect error', message)
+				setError({ message })
 			}
 
 		})()
 
-
-
 	}, [])
 
+	_getNotificationsPermissionsAsync = async () => {
+		await Permissions.askAsync(Permissions.NOTIFICATIONS)
+		return
+	}
 
 	const handleLogin = async (user) => {
 		try {
 			await login(user)
 			setError(null)
-
+			_getNotificationsPermissionsAsync()
 			setView('home')
 		} catch ({ message }) {
-			setError(message)
-			console.log('login, error', message)
-
+			setError({ message })
+			console.log(message)
 		}
 	}
 
@@ -54,39 +67,60 @@ export default function App() {
 			setError(null)
 			setView('login')
 		} catch ({ message }) {
-
-			setError(message)
-			console.log('register error', message)
-
+			setError({ message })
+			console.log(message)
 		}
 	}
 
-	const handleGoToLogin = () => {
-		setError(null)
-		setView('login')
-	}
-
-	const handleGoToRegister = () => {
-		setError(null)
-		setView('register')
-	}
 
 	return (
 		<>
+			<StatusBar hidden={false} barStyle={'dark-content'} />
+			<NavigationContainer>
+				{!user && (
+					<Stack.Navigator initialRouteName='Landing' >
+						<>
+							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
+							<Stack.Screen name="Register">
+								{props => <Register {...props} extraData={{ handleRegister, error }} />}
+							</Stack.Screen>
+							<Stack.Screen name="Login">
+								{props => <Login {...props} extraData={{ handleLogin, error }} />}
+							</Stack.Screen>
+						</>
+					</Stack.Navigator>
+				)}
 
-			<MapViewContainer />
+				{user && <>
+					<Tab.Navigator
+						screenOptions={({ route }) => ({
+							tabBarIcon: ({ focused, color, size }) => {
+								let iconName;
 
-			{/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-				<KeyboardAwareScrollView contentContainerStyle={styles.container} >
-					<StatusBar hidden={false} barStyle={'dark-content'} />
-					{view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
-					{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
-					{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
-					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-					{view === 'home' && <Home /* this here => user={user} />}
-				{/* </KeyboardAwareScrollView>
-			</TouchableWithoutFeedback> */}
+								if (route.name === 'Home') iconName = homeImage
+								else if (route.name === 'Map') iconName = mapImage
+								else if (route.name === 'Build') iconName = buildImage
+								else if (route.name === 'Profile') iconName = profileImage
 
+								// You can return any component that you like here!
+								return <Image source={iconName} style={styles.icon} />
+							},
+						})}
+						tabBarOptions={{
+							activeTintColor: '#EFEBDA',
+							inactiveTintColor: 'lightgrey',
+							style: {
+								backgroundColor: '#82A4B3'
+							}
+						}}
+					>
+						<Tab.Screen name="Home" component={Home} />
+						<Tab.Screen name="Map" component={MapViewContainer} />
+						<Tab.Screen name="Build" component={ParkBuilder} />
+						<Tab.Screen name="Profile" component={Profile} />
+					</Tab.Navigator>
+				</>}
+			</NavigationContainer>
 		</>
 	)
 }
@@ -98,9 +132,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
-	logo: {
-		width: 250,
-		height: 250,
-		marginBottom: 10
+	icon: {
+
+		width: 25,
+		height: 25,
+		tintColor: '#EFEBDA'
 	}
 })

@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-evenly',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#EDF4F9',
     },
     input: {
         backgroundColor: '#82A4B3',
@@ -17,6 +18,11 @@ const styles = StyleSheet.create({
     },
     danger: {
         color: 'red'
+    },
+    logo: {
+        width: 200,
+        height: 200,
+        marginBottom: 10
     }
 })
 

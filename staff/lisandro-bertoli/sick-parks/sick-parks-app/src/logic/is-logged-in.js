@@ -1,5 +1,7 @@
 import context from './context'
 
-export default (function () {
-    return !!this.getToken()
+export default (async function () {
+    const result = await this.getToken()
+
+    return !!result
 }).bind(context)
