@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
+import {Context} from './ContextProvider'
 // import Feedback from './Feedback'
 
-function Login({onSubmit, goToRegister, goToLanding, error}) {
+export default ({onSubmit, onGoToRegister, onGoToLanding, error}) => {
 
     return <div className="p1 login">
         <h1 onClick={event => {
             event.preventDefault()
-            goToLanding()
+            onGoToLanding()
         }}>Simonline</h1>
         <h2 className="login__title">Login</h2>
         <form className="login__form" onSubmit={event => {
@@ -19,10 +20,8 @@ function Login({onSubmit, goToRegister, goToLanding, error}) {
         </form>
         <p onClick={event => {
             event.preventDefault()
-            goToRegister()
+            onGoToRegister()
         }}>Register</p>
         {/* {error && <Feedback error={error}/>} */}
     </div>
 }
-
-export default Login
