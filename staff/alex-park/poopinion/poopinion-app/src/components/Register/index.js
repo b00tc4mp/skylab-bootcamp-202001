@@ -19,7 +19,7 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
                         <Text style={styles.header}>Register</Text>
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
-                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
+                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text.toLowerCase().trim())} />
                         <TextInput placeholderTextColor='grey' keyboardType={'numeric'} style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
                         <View style={styles.form}>
                             <Picker
