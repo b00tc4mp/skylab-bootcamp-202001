@@ -2,13 +2,18 @@ import React, {useState} from 'react'
 import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, TouchableOpacity} from 'react-native'
 import styles from './styles'
 
-function DrugDetail ({drugDetail, times }){
+function DrugDetail ({drugDetail, times, toDelete }){
     const {drugName} = drugDetail
     const {description} = drugDetail
     
     return (
         <View style = {styles.container}>
-            <Text style ={styles.title}>{drugName}</Text>
+            <View style={styles.headerContainer}>
+                <Text style ={styles.title}>{drugName}</Text>
+                    <TouchableOpacity onPress={()=>toDelete()}>
+                        <Image style={styles.bin} source={require('../../../assets/images/bin.png')}/>
+                    </TouchableOpacity>
+            </View>
             <Text style ={styles.header}>Description: </Text> 
                 <Text style ={styles.text}>{description}</Text>
                 
@@ -24,9 +29,7 @@ function DrugDetail ({drugDetail, times }){
                             return (<Text style ={styles.text} >{time}</Text>)
                         })
                     }
-                <Image style={styles.logo} source={require('../../../assets/images/pill-and-clock.png')}/>
- 
-              
+            <Image style={styles.logo} source={require('../../../assets/images/pill-and-clock.png')}/>  
         </View>
    )
 }

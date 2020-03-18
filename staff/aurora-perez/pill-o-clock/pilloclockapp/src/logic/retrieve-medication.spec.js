@@ -2,7 +2,7 @@ const { random, floor } = Math
 
 import retrieveMedication from './retrieve-medication'
 
-const { mongoose, models: { User } } = require('../data')
+const { mongoose, models: { User, Drug, Guideline } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
 
 const jwt = require('jsonwebtoken')
@@ -11,7 +11,7 @@ const atob = require('atob')
 
 describe('retrieveMedication', () => {
     
-    let name, surname, gender, age, phone, profile, email, password, token
+    let name, surname, gender, age, phone, profile, email, password, token, drugName, description, time
     
     const GENDERS = ['male', 'female','non-binary']
     
@@ -31,25 +31,28 @@ describe('retrieveMedication', () => {
         profile = 'pharmacist'
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
+        drugName = `drugName-${random()}`
+        description = `description-${random()}`
+        time = random()
     })
 
 
     describe('when user already exists', () => {
-        let _id
+        let _id, _drug
 
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
-            const result = await User.create({name, surname, gender, age, phone, profile, email, password: _password})
-                .then(user => {
-                    _id = user.id
-                    return user.id
-                })
-                .then(id => {
-                    token = jwt.sign({ sub: id }, 'my cat is a demon', { expiresIn: '1d' })
-                    
-                    return token
-                })
-                .then(() => { })
+            const user = await User.create({name, surname, gender, age, phone, profile, email, password: _password})
+               
+            _id = user.id
+   
+            token = jwt.sign({ sub: user.id }, 'my cat is a demon', { expiresIn: '1d' })
+                
+            const _drug = await Drug.create({drugName, description})
+
+            const guideline = await Guideline.create({times: time, prescribed: _id, drug: _drug})
+
+            user.prescription = guideline.id
         })
 
         it('should succeed on correct and valid and right data', async () => {
@@ -57,6 +60,10 @@ describe('retrieveMedication', () => {
             const medication = await retrieveMedication(token)
 
             expect(medication).toBeInstanceOf(Array)
+            expect(medication[0].drug.drugName).toBe(drugName)
+            expect(medication[0].drug.description).toBe(description)
+            expect(medication[0].prescribed).toBe(_id)
+            expect(medication[0].times[0]).toBe(time)
             
         })
 

@@ -14,7 +14,9 @@ module.exports = (id, drugId) => {
 
             for (let i = 0; i < user.prescription.length; i++) {
 
-                if (user.prescription[i].drug.toString() === drug._id.toString()) return User.findByIdAndUpdate(id, {$pull: {prescription: {_id: user.prescription[i]._id.toString()}}})
+                if (user.prescription[i].drug.toString() === drug._id.toString()) {
+                    return Promise.all([User.findByIdAndUpdate(id, {$pull: {prescription: {_id: user.prescription[i]._id.toString()}}}), Guideline.findOneAndRemove({prescribed: id}) ])
+                }
             }
             throw new NotFoundError(`${drug.drugName} is not in the user prescription`)
         })
