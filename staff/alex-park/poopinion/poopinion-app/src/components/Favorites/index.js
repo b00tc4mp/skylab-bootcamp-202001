@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './styles'
-import { Text, ScrollView, View, TouchableOpacity } from 'react-native'
+import { Text, ScrollView, View, TouchableOpacity, Image } from 'react-native'
 
-function Favorites({ user }) {
+function Favorites({ user, favToilets, onFav }) {
     return (<>
         <ScrollView style={styles.container}>
             <TouchableOpacity>
@@ -11,7 +11,33 @@ function Favorites({ user }) {
                 </View>
 
                 <View style={styles.favsContainer}>
-                    <Text>No toilets favorited yet...</Text>
+                    {
+                        favToilets.length > 0 &&
+
+                        <View style={styles.resultsContainer}>
+                            {favToilets.map(toilet => (<>
+                                <View style={styles.toiletContainer}>
+                                    <TouchableOpacity onPress={() => Alert.alert(toilet._id)}>
+                                        <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
+                                    </TouchableOpacity>
+                                    <View style={styles.infoContainer}>
+                                        <TouchableOpacity style={styles.result}>
+                                            <Text style={styles.postHeader}>{toilet.place}</Text>
+                                            <Text style={styles.rating}>💩💩💩💩💩</Text>
+                                            <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet._id) }}>
+                                            {user.favToilets.find(favToilet => favToilet.toString() === toilet._id) === toilet._id &&
+                                                (<Image style={styles.favButton} source={require('../../../assets/faved.png')} />)
+                                            }
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </>))}
+                        </View>
+                    }
+
+                    {!favToilets.length && <Text>No favorite toilets to display...</Text>}
                 </View>
             </TouchableOpacity>
         </ScrollView>

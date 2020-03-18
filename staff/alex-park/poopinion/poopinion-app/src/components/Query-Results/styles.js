@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         flex: 4
     },
     favContainer: {
-        flex: 1,
+        flex: 0.5,
     },
     favButton: {
         resizeMode: 'contain',

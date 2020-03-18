@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground, ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Alert, ImageBackground, ScrollView, AsyncStorage } from 'react-native';
 import {
   Register,
   Login,
@@ -17,7 +17,9 @@ import {
   authenticateUser,
   retrieveUser,
   publishToilet,
-  searchToilets
+  searchToilets,
+  toggleFavToilet,
+  retrieveFavToilets
 } from './src/logic'
 
 export default function App() {
@@ -34,6 +36,7 @@ export default function App() {
   const [goLanding, setGoLanding] = useState(false)
   const [query, setQuery] = useState()
   const [toilets, setToilets] = useState()
+  const [favToilets, setFavToilets] = useState()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -44,6 +47,8 @@ export default function App() {
         longitudeDelta: 0.000821
       })
     })
+
+    __handleUser__()
   }, [])
 
   function __handleError__(message) {
@@ -51,6 +56,15 @@ export default function App() {
     setTimeout(() => {
       setError(null)
     }, 3000)
+  }
+
+  function __handleUser__() {
+    if (token) {
+      (async () => {
+        const _user = await retrieveUser(token)
+        setUser(_user)
+      })()
+    }
   }
 
   // BASIC FUNCTIONS
@@ -108,6 +122,24 @@ export default function App() {
     }
   }
 
+  async function handleToggleFav(toiletId) {
+    if (!user) {
+      Alert.alert('You are not logged in yet!')
+      handleGoToLogin();
+    } else {
+      try {
+        await toggleFavToilet(token, toiletId)
+        __handleUser__()
+        if (favToilets) {
+          const _favToilets = await retrieveFavToilets(token)
+          setFavToilets(_favToilets)
+        }
+      } catch ({ message }) {
+        __handleError__(message)
+      }
+    }
+  }
+
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
     setGoLanding(false)
@@ -137,7 +169,17 @@ export default function App() {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
     } else {
-      setView('favToilets')
+      try {
+        (async () => {
+          const _favToilets = await retrieveFavToilets(token)
+          setFavToilets(_favToilets)
+          __handleUser__()
+          setView('favToilets')
+        })()
+
+      } catch ({ message }) {
+        __handleError__(message)
+      }
     }
   }
 
@@ -146,11 +188,8 @@ export default function App() {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
     } else {
-      (async () => {
-        const _user = await retrieveUser(token)
-        setUser(_user)
-        setView('profilePage')
-      })();
+      __handleUser__()
+      setView('profilePage')
     }
   }
 
@@ -173,9 +212,9 @@ export default function App() {
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} coordinates={coordinates} />}
-        {view === 'queryResults' && <QueryResults query={query} toilets={toilets}/>}
+        {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} />}
         {view === 'profilePage' && <Profile user={user} />}
-        {view === 'favToilets' && <Favorites user={user} />}
+        {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
       </ScrollView>
 

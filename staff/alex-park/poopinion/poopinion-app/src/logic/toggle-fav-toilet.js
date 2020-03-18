@@ -1,23 +1,26 @@
-import { NotAllowedError, NotFoundError } from '../errors'
+import { validate } from '../utils'
 import fetch from 'node-fetch'
-const { validate } = require('../utils')
+import { NotAllowedError, NotFoundError } from '../errors'
 
 /**
- * Retrieves an authorized user
+ * Toggles or untoggles the selected toilet to favorites
  * 
  * @param {string} token user's unique token
+ * @param {string} toiletId toilet's unique ID
  * 
- * @returns {Object} user's unique token
+ * @returns {undefined} returns undefined if the toggle or untoggle was successful
  * 
- * @throws {NotAllowedError} on wrong credentials or deactivated user
- * @throws {NotFoundError} on non-existent user
+ * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
+ * @throws {NotFoundError} if the user or the toilet do not exis
  */
 
-function retrieveUser(token) {
+function toggleFavToilet(token, toiletId) {
     validate.string(token, 'token')
+    validate.string(toiletId, 'toiletId')
 
     return (async () => {
-        const response = await fetch(`http://192.168.1.253:8085/api/users`, {
+        const response = await fetch(`http://192.168.1.253:8085/api/users/toilet/${toiletId}/favorite`, {
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -26,11 +29,8 @@ function retrieveUser(token) {
 
         const { status } = response
 
-        if (status === 200) {
-            const user = await response.json()
-            return user
-        }
-
+        if (status === 200) return
+        
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
@@ -49,4 +49,4 @@ function retrieveUser(token) {
     })()
 }
 
-export default retrieveUser
+export default toggleFavToilet
