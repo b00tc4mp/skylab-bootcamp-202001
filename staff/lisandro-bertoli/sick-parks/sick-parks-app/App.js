@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, StatusBar, Image } from 'react-native'
-import { registerUser, login, isLoggedIn } from './src/logic'
-import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
-// import * as Location from 'expo-location'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import context from './src/logic/context'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+// import * as Location from 'expo-location'
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator()
+import { registerUser, login, isLoggedIn } from './src/logic'
+import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
+import context from './src/logic/context'
+
 const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
 const buildImage = require('./assets/icon-pick-and-shovel.png')
 const profileImage = require('./assets/icon-profile.png')
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator()
 
 export default function App() {
 
@@ -132,8 +134,8 @@ const styles = StyleSheet.create({
 	},
 	icon: {
 
-		width: 30,
-		height: 30,
+		width: 25,
+		height: 25,
 		tintColor: '#EFEBDA'
 	}
 })

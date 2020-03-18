@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
-import { Search, TopSearch, Results, MapViewContainer } from '../index'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
+
+import { Search, TopSearch, Results, ParkDetails } from '../index'
 // later move styles and this goes here => import styles from './styles'
-import NavBar from '../NavBar'
+
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
-import { NavigationContainer } from '@react-navigation/native';
+
+const Stack = createStackNavigator()
 
 
-export default function Home({ user }) {
+export default function Home({ navigation }) {
     const [results, setResults] = useState(false)
     const [location, setLocation] = useState()
     const [error, setError] = useState()
@@ -34,62 +38,57 @@ export default function Home({ user }) {
         if (status === 'granted') {
             const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
             setLocation({ location })
-
-            console.log(location)
         }
     }
 
-
-    const handleSearch = async (query) => {
-        const result = [{
-            name: 'Name',
-            size: 'XL',
-            resort: 'Bla',
-            rating: 5,
-            verified: false
-        }]
-        //this here => const result =  await searchParks(query)
-        setResults(result)
-
-
-    }
-
-    const markers = [
+    const parks = [
         {
-            coordinate: {
-                latitude: 42.50551526821832,
-                longitude: 1.593017578125
-
-            },
-            title: 'new marker',
-            description: 'blablablba'
-
+            name: 'Test1',
+            size: 'xl',
+            resort: 'Testing',
+            verified: true,
+            rating: 4.5
+        },
+        {
+            name: 'Test2',
+            size: 'xl',
+            resort: 'Testing2',
+            verified: false,
+            rating: 4.5
         }
     ]
 
-    const myPlace = {
-        type: 'FeatureCollection',
-        features: [
-            {
-                type: 'Feature',
-                properties: { name: 'TeST NAME' },
-                geometry: {
-                    type: 'Point',
-                    coordinates: [64.165329, 48.844287],
-                }
-            }
-        ]
+
+    const handleSearch = async (query) => {
+
+        //this here => const result =  await searchParks(query)
+        setResults(parks)
+        navigation.navigate('Results')
+
     }
 
+    <View style={styles.container}>
+        {!results && <Search onSubmit={handleSearch} />}
+        {results && <TopSearch onSubmit={handleSearch} />}
+        {results && <Results results={results} />}
+    </View >
+
+
+
     return (
-        <View style={styles.container}>
 
+        <Stack.Navigator initialRouteName='Search' >
+            <Stack.Screen name="Search" options={{ headerShown: false }}>
+                {props => <Search {...props} extraData={{ onSubmit: handleSearch }} />}
+            </Stack.Screen>
+            <Stack.Screen name="Results" >
+                {props => <Results {...props} extraData={{ results }} />}
+            </Stack.Screen>
+            <Stack.Screen name="ParkDetails" >
+                {props => <ParkDetails {...props} extraData={{ results }} />}
+            </Stack.Screen>
+        </Stack.Navigator>
 
-
-            {!results && <Search onSubmit={handleSearch} />}
-            {results && <TopSearch onSubmit={handleSearch} />}
-            {results && <Results results={results} />}
-        </View >
     )
 }
 
@@ -101,7 +100,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#EDF4F9',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        // justifyContent: 'center',
         width: '100%'
     }
 })

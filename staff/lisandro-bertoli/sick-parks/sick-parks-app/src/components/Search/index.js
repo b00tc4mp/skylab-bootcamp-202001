@@ -8,16 +8,9 @@ const leftImage = require('../../../assets/left-side.png')
 const rightImage = require('../../../assets/right-side.png')
 
 
-export default function ({ onSubmit }) {
+export default function ({ extraData }) {
     const [query, setQuery] = useState()
-
-
-    const handleSubmit = (e) => {
-        onSubmit(query)
-        console.log(query)
-
-    }
-
+    const { onSubmit } = extraData
 
     return (<>
         <ImageBackground source={mainImg}
@@ -26,25 +19,25 @@ export default function ({ onSubmit }) {
                 <View style={styles.queryButton} >
                     <Image style={styles.queryIcon} source={require('../../../assets/icon-search.png')} />
                 </View>
-                <TextInput style={styles.input} placeholder='Find a Park...' onChangeText={(text) => setQuery(text)} onSubmitEditing={handleSubmit} returnKeyType="search" />
+                <TextInput style={styles.input} placeholder='Find a Park...' onChangeText={(text) => setQuery(text)} onSubmitEditing={() => onSubmit(query)} returnKeyType="search" />
             </View>
         </ImageBackground >
 
         <View style={styles.optionsContainer}>
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={rightImage}>
-                <Button textStyle='bold' text='VERIFIED PARKS' type='filter' onPress={() => { setQuery('verified') }} />
+                <Button textStyle='bold' text='VERIFIED PARKS' type='filter' onPress={() => { onSubmit('verified') }} />
             </ImageBackground>
 
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={rightImage}>
-                <Button textStyle='bold' text='XL PARKS' type='filter' onPress={() => { setQuery('xl') }} />
+                <Button textStyle='bold' text='XL PARKS' type='filter' onPress={() => { onSubmit('xl') }} />
             </ImageBackground>
 
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={leftImage}>
-                <Button textStyle='bold' text='BEGGINER PARKS' type='filter' onPress={() => { setQuery('begginer') }} />
+                <Button textStyle='bold' text='BEGGINER PARKS' type='filter' onPress={() => { onSubmit('begginer') }} />
             </ImageBackground>
 
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={leftImage}>
-                <Button textStyle='bold' text='LATEST PARKS' type='filter' onPress={() => { setQuery('latest') }} />
+                <Button textStyle='bold' text='LATEST PARKS' type='filter' onPress={() => { onSubmit('latest') }} />
             </ImageBackground>
         </View>
     </>

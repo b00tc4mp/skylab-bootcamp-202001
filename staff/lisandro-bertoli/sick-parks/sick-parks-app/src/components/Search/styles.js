@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
         margin: 0
     },
     input: {
-
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
         height: '16%',
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         width: '49.5%',
         height: '48.5%',
-        marginBottom: 4
+        marginBottom: 5
     },
     queryIcon: {
         width: 25,
