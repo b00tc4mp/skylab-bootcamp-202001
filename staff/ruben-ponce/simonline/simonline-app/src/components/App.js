@@ -1,16 +1,17 @@
 import React, { useState, Fragment, useEffect, useContext  } from 'react'
-
 import { Landing, Login, Register, Home, Multiplayer, Create, Join, Page } from './'
 import './App.sass'
 import { login, register, retrieveUser, retrieveUserId, isLoggedIn, logout } from '../logic'
 import { Context } from './ContextProvider'
+import { Route, withRouter, Redirect } from 'react-router-dom'
+
 
 function App() {
 
   const [state, setState] = useContext(Context)
 
   useEffect(() => {
-    isLoggedIn() ? setView('home') : setView('join')
+    isLoggedIn() ? setView('landing') : setView('login')
   }, [])
 
   const [view, setView] = useState('landing')

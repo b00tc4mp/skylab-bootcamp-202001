@@ -1,4 +1,5 @@
 // const { validate } = require('simonline-utils')
+import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -21,4 +22,4 @@ export default (function (token) {
 
     })()
 
-})
+}).bind(context)
