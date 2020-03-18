@@ -4,6 +4,8 @@ const {
     authenticateUser,
     retrieveUser,
     updateUser,
+    saveToiletPhoto,
+    retrieveToiletPhoto,
     publishToilet,
     updateToilet,
     deleteToilet,
@@ -30,6 +32,10 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
 router.patch('/users', [jwtVerifierMidWare, jsonBodyParser], updateUser)
+
+router.post('/upload/:toiletId', jwtVerifierMidWare, saveToiletPhoto)
+
+router.get('/load/:toiletId', retrieveToiletPhoto)
 
 router.post('/users/toilet', [jwtVerifierMidWare, jsonBodyParser], publishToilet)
 

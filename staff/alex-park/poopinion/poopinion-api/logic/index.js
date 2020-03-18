@@ -3,6 +3,8 @@ module.exports = {
     registerUser: require('./register-user'),
     retrieveUser: require('./retrieve-user'),
     updateUser: require('./update-user'),
+    saveToiletPhoto: require('./save-toilet-photo'),
+    retrieveToiletPhoto: require('./retrieve-toilet-photo'),
     publishToilet: require('./publish-toilet'),
     updateToilet: require('./update-toilet'),
     deleteToilet: require('./delete-toilet'),
