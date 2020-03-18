@@ -21,8 +21,8 @@ export default function (name, surname, username, password) {
         if (status === 201) return
 
         if (status >= 400 && status < 500) {
-            const { error } = await response.json
-
+            const { error } = await response.json()
+            
             switch (status) {
                 case 409:
                     throw new NotAllowedError(error)

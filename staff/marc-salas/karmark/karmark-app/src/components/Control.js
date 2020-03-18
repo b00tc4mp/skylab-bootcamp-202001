@@ -1,43 +1,44 @@
 import React, { useEffect } from 'react'
 import './control.sass'
+import Feedback from './Feedback'
 
-export default function ({ onUp, onDown, onRight, onLeft, onStop, onMount, onGoToHome }) {
+export default function ({ onUp, onDown, onRight, onLeft, onStop, onMount, onGoToHome, error }) {
     useEffect(() =>{
         onMount()
     }, [])
 
     function handleOnUp(event){
-        event.preventDefault()
+        //event.preventDefault()
 
         onUp()
     }
 
     function handleOnDown(event){
-        event.preventDefault()
+        //event.preventDefault()
 
         onDown()
     }
 
     function handleOnRight(event){
-        event.preventDefault()
+        //event.preventDefault()
 
         onRight()
     }
 
     function handleOnLeft(event){
-        event.preventDefault()
+        //event.preventDefault()
 
         onLeft()
     }
 
     function handleOnStop(event){
-        event.preventDefault()
+        //event.preventDefault()
 
         onStop()
     }
 
     function handleGoToHome(event){
-        event.preventDefault()
+        //event.preventDefault()
         
         onGoToHome()
     }
@@ -53,6 +54,7 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onMount, onGoT
                 <button className="controlbody__arrowright" onTouchStart={handleOnRight} onTouchEnd={handleOnStop}><i className="fas fa-arrow-alt-circle-right"/></button>
                 <button className="controlbody__arrowdown" onTouchStart={handleOnDown} onTouchEnd={handleOnStop}><i className="fas fa-arrow-alt-circle-down"/></button>
             </div>
+            {error && <Feedback message={error} level="warn" />}
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>
         </div>

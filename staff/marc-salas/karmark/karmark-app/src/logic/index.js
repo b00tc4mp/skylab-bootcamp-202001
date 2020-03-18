@@ -8,6 +8,7 @@ import down from './down'
 import right from './right'
 import left from './left'
 import stop from './stop'
+import play from './play'
 
 export {
     registerUser,
@@ -19,5 +20,6 @@ export {
     down,
     right,
     left,
-    stop
+    stop,
+    play,
 }

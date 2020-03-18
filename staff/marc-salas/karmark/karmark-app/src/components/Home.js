@@ -18,12 +18,20 @@ export default withRouter(function ({ history }) {
 
                     setState({ page: 'home' })
                 } catch ({ message }) {
-                    setState({ error: message, page: 'login' })
+                    logeOut()
+
+                    setState({ page: 'login' })
+
+                    history.push('/login')
 
                 }
             })()
-        else setState({ page: 'login' })
-    })
+        else{
+            setState({ page: 'login' }) 
+
+            history.push('/login')
+        } 
+    }, [])
 
     function handleLogeOut() {
         logeOut()

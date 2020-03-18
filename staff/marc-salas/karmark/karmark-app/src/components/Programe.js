@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import './programe.sass'
+import Feedback from './Feedback'
 
-export default function ({ onUp, onDown, onRight, onLeft, onStop, onGo, onMount, onGoToHome }) {
+export default function ({ onUp, onDown, onRight, onLeft, onStop, onPlay, onMount, onGoToHome, error }) {
     useEffect(() => {
+        
         onMount()
     }, [])
 
@@ -30,10 +32,10 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onGo, onMount,
         onLeft()
     }
 
-    function handleOnGo(event) {
+    function handleOnPlay(event) {
         event.preventDefault()
 
-        onGo()
+        onPlay()
     }
 
     function handleOnStop(event) {
@@ -56,10 +58,11 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onGo, onMount,
             <div className="programebody">
                 <button className="programebody__arrowup" onClick={handleOnUp}><i className="fas fa-arrow-alt-circle-up"></i></button>
                 <button className="programebody__arrowleft" onClick={handleOnLeft}><i className="fas fa-arrow-alt-circle-left"></i></button>
-                <button className="programebody__go" onClick={handleOnGo}><i className="fas fa-play-circle"></i></button>
+                <button className="programebody__go" onClick={handleOnPlay}><i className="fas fa-play-circle"></i></button>
                 <button className="programebody__arrowright" onClick={handleOnRight}><i className="fas fa-arrow-alt-circle-right"></i></button>
                 <button className="programebody__arrowdown" onClick={handleOnDown}><i className="fas fa-arrow-alt-circle-down"></i></button>
             </div>
+            {error && <Feedback message={error} level="warn" />}
             <div className="programefooter">
                 <button className="programefooter__save"><i className="fas fa-save"></i></button>
                 <button className="programefooter__stop" ><i className="fas fa-stop"></i></button>
