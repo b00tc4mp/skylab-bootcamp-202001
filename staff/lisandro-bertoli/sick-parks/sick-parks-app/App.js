@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { registerUser, login, isLoggedIn } from './src/logic'
-import { Login, Register, Landing, Home, MapViewContainer } from './src/components/'
+import { Login, Register, Landing, Home } from './src/components/'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
+
+Location.setApiKey('AIzaSyBmVjvrZtw017ShLOsIfVJTCRN6dzCEd_Y')
 
 export default function App() {
 	const [view, setView] = useState()
 	const [error, setError] = useState()
 	//this here => const [user, setUser] = useState()
-
 	useEffect(() => {
 		(async () => {//
 			try {
@@ -20,12 +21,11 @@ export default function App() {
 					//this here => setUser for profile
 					setView('home')
 				} else {
-					//probably will go to home anywat
+					//probably will go to home anyway
 					setView('landing')
 				}
 			} catch ({ message }) {
-				setError(message)
-				console.log('refresh use effect error', message)
+				setError({ message })
 			}
 
 		})()
@@ -34,17 +34,20 @@ export default function App() {
 
 	}, [])
 
+	_getNotificationsPermissionsAsync = async () => {
+		await Permissions.askAsync(Permissions.NOTIFICATIONS)
+		return
+	}
 
 	const handleLogin = async (user) => {
 		try {
 			await login(user)
 			setError(null)
-
+			_getNotificationsPermissionsAsync()
 			setView('home')
 		} catch ({ message }) {
-			setError(message)
-			console.log('login, error', message)
-
+			setError({ message })
+			console.log(message)
 		}
 	}
 
@@ -54,10 +57,8 @@ export default function App() {
 			setError(null)
 			setView('login')
 		} catch ({ message }) {
-
-			setError(message)
-			console.log('register error', message)
-
+			setError({ message })
+			console.log(message)
 		}
 	}
 
@@ -74,18 +75,16 @@ export default function App() {
 	return (
 		<>
 
-			<MapViewContainer />
-
-			{/* <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
 				<KeyboardAwareScrollView contentContainerStyle={styles.container} >
 					<StatusBar hidden={false} barStyle={'dark-content'} />
 					{view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
 					{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
 					{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
 					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-					{view === 'home' && <Home /* this here => user={user} />}
-				{/* </KeyboardAwareScrollView>
-			</TouchableWithoutFeedback> */}
+					{view === 'home' && <Home /* this here => user={user}*/ />}
+				</KeyboardAwareScrollView>
+			</TouchableWithoutFeedback>
 
 		</>
 	)

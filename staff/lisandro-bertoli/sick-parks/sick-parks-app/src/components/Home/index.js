@@ -1,13 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
-import { Search, TopSearch, Results } from '../index'
+import { Search, TopSearch, Results, MapViewContainer } from '../index'
 // later move styles and this goes here => import styles from './styles'
 import NavBar from '../NavBar'
+import * as Permissions from 'expo-permissions'
+import * as Location from 'expo-location'
 
 
 
 export default function Home({ user }) {
     const [results, setResults] = useState(false)
+    const [location, setLocation] = useState()
+    const [error, setError] = useState()
+
+
+
+    useEffect(() => {
+        try {
+            _getLocationAsync()
+        } catch ({ message }) {
+            setError({ message })
+            console.log(message)
+
+        }
+
+
+    }, [])
+
+
+    _getLocationAsync = async () => {
+        const { status } = await Permissions.askAsync(Permissions.LOCATION)
+
+        if (status === 'granted') {
+            const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
+            setLocation({ location })
+
+            console.log(location)
+        }
+    }
+
 
     const handleSearch = async (query) => {
         const result = [{
@@ -23,11 +54,41 @@ export default function Home({ user }) {
 
     }
 
+    const markers = [
+        {
+            coordinate: {
+                latitude: 42.50551526821832,
+                longitude: 1.593017578125
+
+            },
+            title: 'new marker',
+            description: 'blablablba'
+
+        }
+    ]
+
+    const myPlace = {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                properties: { name: 'TeST NAME' },
+                geometry: {
+                    type: 'Point',
+                    coordinates: [64.165329, 48.844287],
+                }
+            }
+        ]
+    }
+
     return (
         <View style={styles.container}>
-            {!results && <Search onSubmit={handleSearch} />}
+
+            <MapViewContainer markers={markers} myPlace={myPlace} initialRegion={location} />
+
+            {/* {!results && <Search onSubmit={handleSearch} />}
             {results && <TopSearch onSubmit={handleSearch} />}
-            {results && <Results results={results} />}
+            {results && <Results results={results} />} */}
             <NavBar />
         </View >
     )
