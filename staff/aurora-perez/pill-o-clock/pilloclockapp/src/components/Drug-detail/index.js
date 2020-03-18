@@ -3,15 +3,14 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, Touchable
 import styles from './styles'
 
 function DrugDetail ({drugDetail, times, toDelete }){
-    const {drugName} = drugDetail
-    const {description} = drugDetail
+    const {drugName, _id, description} = drugDetail
     
     return (
         <View style = {styles.container}>
             <View style={styles.headerContainer}>
                 <Text style ={styles.title}>{drugName}</Text>
-                    <TouchableOpacity onPress={()=>toDelete()}>
-                        <Image style={styles.bin} source={require('../../../assets/images/bin.png')}/>
+                    <TouchableOpacity style={styles.bin} onPress={()=>toDelete({_id})}>
+                        <Image style={styles.logoBin} source={require('../../../assets/images/bin.png')}/>
                     </TouchableOpacity>
             </View>
             <Text style ={styles.header}>Description: </Text> 

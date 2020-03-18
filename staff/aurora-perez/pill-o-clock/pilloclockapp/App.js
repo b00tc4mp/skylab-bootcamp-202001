@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert } from 'react-native'
 
 import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail } from './src/components'
-import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug } from './src/logic'
+import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication } from './src/logic'
 //import Header from '../Header
 
 export default function App () {
@@ -127,6 +127,17 @@ export default function App () {
     }
   }
 
+  async function handleToDeleteMedication ({_id}) {
+    try {
+      await deleteMedication(token, _id)
+      handleToMedication()
+
+    }catch({message}){
+
+    }
+  }
+
+
 
   return(<View style={styles.container}>
     { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
@@ -135,7 +146,7 @@ export default function App () {
     { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
     { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
     { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
-    { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times}/>}
+    { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
     </View>
   //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}
   )
