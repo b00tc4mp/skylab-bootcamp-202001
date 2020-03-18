@@ -1,17 +1,14 @@
 import React from 'react'
-import { Text, StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, FlatList } from 'react-native'
 import ResultsItem from '../ResultsItem'
-
+import styles from './styles'
 
 export default function Results({ navigation, extraData }) {
-
     const { results } = extraData
-    console.log(results)
+
     return (<>
         <View style={styles.container}>
-
             <FlatList
-
                 data={results}
                 renderItem={({ item }) => {
 
@@ -22,13 +19,4 @@ export default function Results({ navigation, extraData }) {
         </View>
     </>
     )
-
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center'
-    }
-})

@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: '100%',
+        backgroundColor: '#EDF4F9',
         justifyContent: 'space-between'
     },
     image: {

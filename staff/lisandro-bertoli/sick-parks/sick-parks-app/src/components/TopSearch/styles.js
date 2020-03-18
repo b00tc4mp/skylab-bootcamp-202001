@@ -4,33 +4,32 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         flexDirection: 'row',
-        flex: 0.13,
+        flex: 1,
+        flexGrow: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        paddingTop: 25,
         backgroundColor: '#82A4B3',
     },
     input: {
-        borderTopRightRadius: 10,
-        borderBottomRightRadius: 10,
+        borderTopRightRadius: 20,
+        borderBottomRightRadius: 20,
         height: '40%',
-        flex: 0.7,
+        flex: 1,
+        flexGrow: 1,
         paddingLeft: 10,
-        backgroundColor: 'white',
-
-
+        backgroundColor: '#EDF4F9',
     },
     queryIcon: {
-        width: 25,
-        height: 25,
+        width: 15,
+        height: 15,
         tintColor: '#82A4B3'
     },
     iconContainer: {
         paddingLeft: 10,
         backgroundColor: 'white',
-        height: '40.5%',
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
+        height: '40%',
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
         justifyContent: 'center',
 
     }

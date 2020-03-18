@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TextInput, ImageBackground, TouchableOpacity, Image } from 'react-native'
+import { View, TextInput, ImageBackground, Image } from 'react-native'
 import { Button } from '../index'
 import styles from './styles'
 
