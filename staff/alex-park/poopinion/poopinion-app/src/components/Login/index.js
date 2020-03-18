@@ -15,7 +15,7 @@ function Login({ onSubmit, error, goToRegister, goToLanding }) {
                     <View style={styles.formContainer}>
                         <TouchableOpacity>
                             <Text style={styles.header}>Login</Text>
-                            <TextInput placeholderTextColor='grey' style={styles.form} placeholder='email@mail.com' onChangeText={(text) => setEmail(text.toLowerCase().trim())} />
+                            <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@mail.com' onChangeText={(text) => setEmail(text.toLowerCase().trim())} />
                             <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                         </TouchableOpacity>
                         {error && <Feedback level='warn' message={error} />}
