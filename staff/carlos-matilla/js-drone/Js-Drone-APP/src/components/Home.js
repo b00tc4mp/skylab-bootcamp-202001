@@ -4,7 +4,7 @@ import { gamepadConnect, gamepadDisconnect, channelA, channelB, channelC, channe
 import { keyDown, keyUp } from '../logic/keyboard'
 import JMuxer from 'jmuxer';
 import { logout, isLoggedIn, retrieveUser, saveData, parseData } from './../logic'
-import { Telemetry, Charts, NavbarLeft, NavbarRight } from './';
+import { Telemetry, onLiveCharts, NavbarLeft, NavbarRight, Charts } from './';
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
 import socket from '../socket';
@@ -14,6 +14,8 @@ export default withRouter(function ({ history }) {
   const [, setState] = useContext(Context)
   const [name, setName] = useState()
   const [mySessions, setMySessions] = useState([])
+  
+  
 
   useEffect(() => {
     window.addEventListener("gamepadconnected", gamepadConnect);
@@ -35,17 +37,17 @@ export default withRouter(function ({ history }) {
       }
 
       if (droneState && land && semaforo) {
-        (async()=>{
+        (async () => {
 
-          
-           await parseData()
-           const { sessions } = await retrieveUser()
-           setMySessions(sessions)
-           saveData()
+
+          await parseData()
+          const { sessions } = await retrieveUser()
+          setMySessions(sessions)
+          saveData()
 
         })()
         semaforo = false
-  
+
       }
 
     }, 1000)
@@ -95,16 +97,26 @@ export default withRouter(function ({ history }) {
         }
       })()
 
+
     return () => clearInterval(interval)
   }, []);
 
 
-  function handleLogout() {
+  function handleLogout(e) {
+    console.log('ssss')
     logout()
     setState({ page: 'login' })
     history.push('/login')
   }
 
+  const [mySession, setMySession] = useState()
+  function handleSession(session) {
+    
+    setMySession(session)
+    
+  }
+ 
+  
   //  async function toggleKeyboard(){
   //       await gamepadDisconnect()
   //      handleKeyboard()
@@ -132,12 +144,8 @@ export default withRouter(function ({ history }) {
       <header className="Home-header">
         <Telemetry />
       </header>
-
-      {mySessions.map(session => <>
-        <p>{session.date}</p>
-        <p>{session.time}</p>
-        <br /><br />
-      </>)}
+      {mySession &&   <Charts mySession={mySession}/> }
+      
 
       <div className="aspect-ratio--16x9">
         <div className="aspect-ratio__inner-wrapper">
@@ -145,9 +153,9 @@ export default withRouter(function ({ history }) {
         </div>
       </div>
 
-      {/* <Charts /> */}
+     
 
     </div>
-    <NavbarRight handleLogout={handleLogout} />
+    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} />
   </>
 })
