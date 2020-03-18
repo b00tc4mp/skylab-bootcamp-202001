@@ -1,36 +1,39 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Image, StatusBar, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import React, { useState, useEffect, createContext } from 'react'
+import { StyleSheet, StatusBar, Image } from 'react-native'
 import { registerUser, login, isLoggedIn } from './src/logic'
 import { Login, Register, Landing, Home } from './src/components/'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import * as Location from 'expo-location'
+// import * as Location from 'expo-location'
+import { createStackNavigator } from '@react-navigation/stack'
+import { NavigationContainer } from '@react-navigation/native'
+import context from './src/logic/context'
+const Stack = createStackNavigator()
 
-Location.setApiKey('AIzaSyBmVjvrZtw017ShLOsIfVJTCRN6dzCEd_Y')
+const AuthContext = React.createContext();
 
 export default function App() {
-	const [view, setView] = useState()
+
 	const [error, setError] = useState()
-	//this here => const [user, setUser] = useState()
+	const [user, setUser] = useState()
+
 	useEffect(() => {
 		(async () => {//
+
 			try {
+
 				const logged = await isLoggedIn()
 
 				if (logged) {
 					//this here => retrieveUser(await context.getToken())
 					//this here => setUser for profile
-					setView('home')
+					setUser(true)
 				} else {
-					//probably will go to home anyway
-					setView('landing')
+					setUser(false)
 				}
 			} catch ({ message }) {
 				setError({ message })
 			}
 
 		})()
-
-
 
 	}, [])
 
@@ -62,29 +65,34 @@ export default function App() {
 		}
 	}
 
-	const handleGoToLogin = () => {
-		setError(null)
-		setView('login')
-	}
-
-	const handleGoToRegister = () => {
-		setError(null)
-		setView('register')
-	}
 
 	return (
 		<>
+			<StatusBar hidden={false} barStyle={'dark-content'} />
 
-			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-				<KeyboardAwareScrollView contentContainerStyle={styles.container} >
-					<StatusBar hidden={false} barStyle={'dark-content'} />
-					{view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image>}
-					{view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} />}
-					{view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
-					{view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-					{view === 'home' && <Home /* this here => user={user}*/ />}
-				</KeyboardAwareScrollView>
-			</TouchableWithoutFeedback>
+			<NavigationContainer>
+				<Stack.Navigator initialRouteName='Landing' >
+
+					{!user ? (
+						<>
+							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
+							<Stack.Screen name="Register">
+								{props => <Register {...props} extraData={{ handleRegister, error }} />}
+							</Stack.Screen>
+							<Stack.Screen name="Login">
+								{props => <Login {...props} extraData={{ handleLogin, error }} />}
+							</Stack.Screen>
+
+						</>
+					) : (
+							<>
+								<Stack.Screen name="Home" component={Home} />
+							</>
+						)}
+
+				</Stack.Navigator>
+
+			</NavigationContainer>
 
 		</>
 	)
@@ -96,10 +104,12 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EDF4F9',
 		alignItems: 'center',
 		justifyContent: 'center'
-	},
-	logo: {
-		width: 250,
-		height: 250,
-		marginBottom: 10
 	}
 })
+
+
+// { view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image> }
+// { view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} /> }
+// { view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} /> }
+// { view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} /> }
+// { view === 'home' && <Home /* this here => user={user}*/ /> }
