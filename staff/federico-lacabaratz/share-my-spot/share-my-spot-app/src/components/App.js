@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import Register from './Register'
 import Login from './Login'
-// import Search from './search'
+import Home from './Home'
 import { registerUser, authenticateUser, retrieveUser } from '../logic'
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
       const data = await retrieveUser(token)
       setData(data)
 
-      return await setView('search')
+      return await setView('home')
 
     } catch (error) {
       return __handleError__(error)
@@ -54,9 +54,9 @@ function App() {
 
 
   return <Fragment>
-    {view === 'register' && <Register onSubmit={handleRegister} onToLogin={handleGoToLogin} />}
-    {view === 'login' && <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} />}
-    {/* {view === 'search' && <Home userData={data} />} */}
+    {view === 'register' && <Register onSubmit={handleRegister} setView={setView} onToLogin={handleGoToLogin} />}
+    {view === 'login' && <Login onSubmit={handleLogin} setView={setView} onToRegister={handleGoToRegister} />}
+    {view === 'home' && <Home userData={data} />}
   </Fragment>
 
 }

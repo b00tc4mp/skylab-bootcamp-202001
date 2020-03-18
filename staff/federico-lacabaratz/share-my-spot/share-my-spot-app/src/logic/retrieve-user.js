@@ -17,7 +17,7 @@ module.exports = token => {
         })
 
         const { status } = await response
-        debugger
+    
         if (status === 200) {
             const user = await response.json()
 

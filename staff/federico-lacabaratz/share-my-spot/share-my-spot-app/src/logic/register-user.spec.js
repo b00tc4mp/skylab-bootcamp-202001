@@ -44,7 +44,7 @@ describe('registerUser', () => {
 
         beforeEach(async () => {
             try {
-                return await fetch('http://localhost:8089/users', {
+                return await fetch(`${TEST_MONGODB_URL}/users`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, surname, email, password })

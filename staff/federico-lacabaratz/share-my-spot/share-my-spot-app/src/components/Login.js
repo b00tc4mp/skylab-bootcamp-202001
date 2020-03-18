@@ -1,9 +1,10 @@
 import React from 'react'
+import logo from '../images/logo.png'
 import './Login.sass'
 import Feedback from './Feedback'
 
-export default function ({ onSubmit, onGoToRegister, error }) {
-    function handleSubmit(event) {
+export default function ({ onSubmit, error, setView }) {
+    function handleOnSubmit(event) {
         event.preventDefault()
 
         const { target: {
@@ -16,20 +17,19 @@ export default function ({ onSubmit, onGoToRegister, error }) {
 
     function handleGoToRegister(event) {
         event.preventDefault()
-
-        onGoToRegister()
+        
+        setView('register')
     }
 
     return <>
-        <form class="login" onSubmit={handleSubmit}>
-            <img class="login__logo" src="../images/logo.png" alt="ShareMySpotLogo" />
-            <h2 class="login__title">Sign-In</h2>
-            <input class="login__input" type="text" placeholder="email" />
-            <input class="login__input" type="password" placeholder="password" />
-            <button class="login__submit">Login</button>
-            <a class="login__register" href="">Not registered yet?{"\n"}Go To Register</a>
+        <form className="login" onSubmit={handleOnSubmit}>
+            <img className="login__logo" src={logo} alt="ShareMySpotLogo" />
+            <h2 className="login__title">Sign-In</h2>
+            <input className="login__input" type="text" name="email" placeholder="email" />
+            <input className="login__input" type="password" name="password" placeholder="password" />
+            <button className="login__submit">Login</button>
+            <a className="login__register" href="" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
             {error && <Feedback message={error} level="warn" />}
-            <p>Go to <a href="" onClick={handleGoToRegister}>register</a></p>
         </form>
     </>
 }
