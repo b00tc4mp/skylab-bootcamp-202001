@@ -3,7 +3,9 @@ import { login, entryVehicle, createParking } from '../logic'
 import { Context } from './ContextProvider'
 import { isLoggedIn } from '../logic'
 
-import { Home, Login, EntryVehicle, Config, CreateParking, Map } from '.'
+import './style/App.sass'
+
+import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -69,19 +71,26 @@ export default withRouter(function ({ history }) {
     }
   }
 
+  /*function handleRetrieveLots() {
+    return (async ()=>{
+      const lots = await retrieveLots()
+      return lots
+    })()
+  }*/
+
   
   const { error } = state
 
-  return <>
+  return <div className="app">
     <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Redirect to="/login"/>}/>
     <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Login onSubmit={handleLogin} error={error} /> }/>
     <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />}/>
     <Route path="/entrance" render={() => isLoggedIn() ? <> <Home /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
-    <Route path="/map" render={() => isLoggedIn() ? <><Home /> <Map /> </> : <Redirect to="/login" />}/>
-
-  </>
+    <Route path="/atm" render={() => isLoggedIn() ? <> <Home /> <Atm /> </> : <Redirect to="/login"/>} />
+    {<Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map/> </> : <Redirect to="/login" />}/>}
+    </div>
 
 })
 

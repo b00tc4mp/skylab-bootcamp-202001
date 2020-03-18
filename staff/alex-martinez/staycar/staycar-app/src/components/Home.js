@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import './style/Home.sass'
 
 import { Header } from '.'
@@ -15,6 +15,7 @@ import { isLoggedIn } from '../logic'
 
 export default withRouter (function({history}) {
 
+
     const handleGoToEntrance = () => {
         history.push('/entrance')
     }
@@ -22,6 +23,7 @@ export default withRouter (function({history}) {
     const handleToConfig = () => {
         history.push('/config')
     }
+
 
     const handleToMap = () => {
         history.push('/map')
@@ -33,6 +35,7 @@ export default withRouter (function({history}) {
         
         <section className="actions actions--first">
             <div className="actions__action" onClick={handleGoToEntrance}>
+
                 <Access className="actions__image" />
                 <p className="actions__text">Access</p>
             </div>
@@ -72,6 +75,7 @@ export default withRouter (function({history}) {
             </div>
                 
         </section>
+
     </main>
     </>
 })

@@ -11,6 +11,7 @@ import ValidateTicket from './ValidateTicket'
 import Feedback from './Feedback'
 import Config from './Config'
 import CreateParking from './CrateParking'
+import MapItem from './MapItem'
 
 export {
     App,
@@ -25,5 +26,6 @@ export {
     ValidateTicket,
     Feedback,
     Config,
-    CreateParking
+    CreateParking,
+    MapItem
 }

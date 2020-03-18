@@ -4,6 +4,7 @@ import logout from './logout'
 import entryVehicle from './entry-vehicle'
 import createParking from './create-parking'
 import retrieveParking from './retrieve-parking'
+import retrieveLots from './retrieve-lots'
 
 export {
     login,
@@ -11,5 +12,6 @@ export {
     logout,
     entryVehicle,
     createParking,
-    retrieveParking
+    retrieveParking,
+    retrieveLots
 }
