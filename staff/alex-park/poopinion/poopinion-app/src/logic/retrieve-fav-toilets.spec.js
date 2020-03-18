@@ -47,9 +47,9 @@ describe('retrieveFavToilets', () => {
             expect(favToilets).toBeDefined()
             expect(favToilets).toBeInstanceOf(Array)
             expect(favToilets[0]).toBeInstanceOf(Object)
-            expect(favToilets[0].publisher.toString()).toMatch(_id)
+            expect(favToilets[0].publisher.id.toString()).toMatch(_id)
             expect(favToilets[0].isFavedBy[0].toString()).toMatch(_id)
-            expect(favToilets[0]._id.toString()).toMatch(_toiletId)
+            expect(favToilets[0].id.toString()).toMatch(_toiletId)
 
             user = await User.findById(_id).lean()
 

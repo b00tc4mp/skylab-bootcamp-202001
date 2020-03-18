@@ -50,8 +50,8 @@ describe('retrieveFavToilets', () => {
                 .then(toilets => {
                     expect(toilets.length).to.equal(1)
                     expect(toilets).to.be.instanceOf(Array)
-                    expect(toilets[0]._id.toString()).to.equal(_toiletId)
-                    expect(toilets[0].publisher.toString()).to.equal(_id)
+                    expect(toilets[0].id.toString()).to.equal(_toiletId)
+                    expect(toilets[0].publisher.id.toString()).to.equal(_id)
                     expect(toilets[0].place).to.equal(place)
                     return expect(toilets[0].isFavedBy[0].toString()).to.equal(_id)
                 })

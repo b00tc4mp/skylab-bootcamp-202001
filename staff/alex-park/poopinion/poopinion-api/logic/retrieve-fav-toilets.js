@@ -21,5 +21,23 @@ module.exports = id => {
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
             return Toilet.find({ isFavedBy: id }).populate('comments').populate('publisher', 'name surname').lean()
+            .then(toilets => {
+                toilets.forEach(toilet => {
+                    toilet.id = toilet._id.toString()
+                    delete toilet._id
+                    delete toilet.__v
+
+                    toilet.comments.forEach(comment => {
+                        comment.id = comment._id.toString()
+                        delete comment._id
+                        delete comment.__v
+                    })
+
+                    toilet.publisher.id = toilet.publisher._id
+                    delete toilet.publisher._id
+                })
+
+                return toilets
+            })
         })
 }

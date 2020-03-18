@@ -3,7 +3,6 @@ import styles from './styles'
 import { Text, ScrollView, View, TouchableOpacity, Image, Alert } from 'react-native'
 
 function Favorites({ user, favToilets, onFav }) {
-    console.log(favToilets)
     return (<>
         <ScrollView style={styles.container}>
             <TouchableOpacity>
@@ -18,7 +17,7 @@ function Favorites({ user, favToilets, onFav }) {
                         <View style={styles.resultsContainer}>
                             {favToilets.map(toilet => (<>
                                 <View style={styles.toiletContainer}>
-                                    <TouchableOpacity onPress={() => Alert.alert(toilet._id)}>
+                                    <TouchableOpacity onPress={() => Alert.alert(toilet.id)}>
                                         <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
                                     </TouchableOpacity>
                                     <View style={styles.infoContainer}>
@@ -27,8 +26,8 @@ function Favorites({ user, favToilets, onFav }) {
                                             <Text style={styles.rating}>💩💩💩💩💩</Text>
                                             <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet._id) }}>
-                                            {user.favToilets.find(favToilet => favToilet.toString() === toilet._id) === toilet._id &&
+                                        <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet.id) }}>
+                                            {user.favToilets.find(favToilet => favToilet.toString() === toilet.id) === toilet.id &&
                                                 (<Image style={styles.favButton} source={require('../../../assets/faved.png')} />)
                                             }
                                         </TouchableOpacity>

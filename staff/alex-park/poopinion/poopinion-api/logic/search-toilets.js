@@ -14,5 +14,15 @@ const { models: { Toilet } } = require('poopinion-data')
 module.exports = query => {
     validate.string(query, 'query')
 
-    return Toilet.find({"place": { $regex: `.*${query}.*` }}).populate('publisher', 'name surname').lean()
+    return Toilet.find({ "place": { $regex: `.*${query}.*` } }).populate('publisher', 'name surname').lean()
+        .then(toilets => {
+            toilets.forEach(toilet => {
+                toilet.id = toilet._id.toString()
+                delete toilet._id
+                delete toilet.__v
+            })
+
+            return toilets
+        })
+        
 }

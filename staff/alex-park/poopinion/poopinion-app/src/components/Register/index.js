@@ -8,7 +8,7 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
     const [surname, setSurame] = useState()
     const [email, setEmail] = useState()
     const [age, setAge] = useState()
-    const [gender, setGender] = useState()
+    const [gender, setGender] = useState('male')
     const [password, setPassword] = useState()
 
     return (<>

@@ -13,7 +13,7 @@ function QueryResults({ query, toilets, user, onFav }) {
                     <View style={styles.resultsContainer}>
                         {toilets.map(toilet => (<>
                             <View style={styles.toiletContainer}>
-                                <TouchableOpacity onPress={() => Alert.alert(toilet._id)}>
+                                <TouchableOpacity onPress={() => Alert.alert(toilet.id)}>
                                     <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
                                 </TouchableOpacity>
                                 <View style={styles.infoContainer}>
@@ -22,8 +22,8 @@ function QueryResults({ query, toilets, user, onFav }) {
                                         <Text style={styles.rating}>💩💩💩💩💩</Text>
                                         <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet._id) }}>
-                                        {user && user.favToilets.find(favToilet => favToilet.toString() === toilet._id) === toilet._id ?
+                                    <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet.id) }}>
+                                        {user && user.favToilets.find(favToilet => favToilet.toString() === toilet.id) === toilet.id ?
                                             (<Image style={styles.favButton} source={require('../../../assets/faved.png')} />)
                                             :
                                             (<Image style={styles.favButton} source={require('../../../assets/fav.png')} />)
