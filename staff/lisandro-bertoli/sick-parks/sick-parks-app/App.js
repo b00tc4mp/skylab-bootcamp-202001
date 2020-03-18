@@ -1,14 +1,19 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, StatusBar, Image } from 'react-native'
 import { registerUser, login, isLoggedIn } from './src/logic'
-import { Login, Register, Landing, Home } from './src/components/'
+import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
 // import * as Location from 'expo-location'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import context from './src/logic/context'
-const Stack = createStackNavigator()
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-const AuthContext = React.createContext();
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator()
+const homeImage = require('./assets/icon-search.png')
+const mapImage = require('./assets/icon-location.png')
+const buildImage = require('./assets/icon-pick-and-shovel.png')
+const profileImage = require('./assets/icon-profile.png')
 
 export default function App() {
 
@@ -69,11 +74,9 @@ export default function App() {
 	return (
 		<>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
-
 			<NavigationContainer>
-				<Stack.Navigator initialRouteName='Landing' >
-
-					{!user ? (
+				{!user && (
+					<Stack.Navigator initialRouteName='Landing' >
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
 							<Stack.Screen name="Register">
@@ -82,18 +85,40 @@ export default function App() {
 							<Stack.Screen name="Login">
 								{props => <Login {...props} extraData={{ handleLogin, error }} />}
 							</Stack.Screen>
-
 						</>
-					) : (
-							<>
-								<Stack.Screen name="Home" component={Home} />
-							</>
-						)}
+					</Stack.Navigator>
+				)}
 
-				</Stack.Navigator>
+				{user && <>
+					<Tab.Navigator
+						screenOptions={({ route }) => ({
+							tabBarIcon: ({ focused, color, size }) => {
+								let iconName;
 
+								if (route.name === 'Home') iconName = homeImage
+								else if (route.name === 'Map') iconName = mapImage
+								else if (route.name === 'Build') iconName = buildImage
+								else if (route.name === 'Profile') iconName = profileImage
+
+								// You can return any component that you like here!
+								return <Image source={iconName} style={styles.icon} />
+							},
+						})}
+						tabBarOptions={{
+							activeTintColor: '#EFEBDA',
+							inactiveTintColor: 'lightgrey',
+							style: {
+								backgroundColor: '#82A4B3'
+							}
+						}}
+					>
+						<Tab.Screen name="Home" component={Home} />
+						<Tab.Screen name="Map" component={MapViewContainer} />
+						<Tab.Screen name="Build" component={ParkBuilder} />
+						<Tab.Screen name="Profile" component={Profile} />
+					</Tab.Navigator>
+				</>}
 			</NavigationContainer>
-
 		</>
 	)
 }
@@ -104,12 +129,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EDF4F9',
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	icon: {
+
+		width: 30,
+		height: 30,
+		tintColor: '#EFEBDA'
 	}
 })
-
-
-// { view !== 'home' && < Image source={require('./assets/logo.png')} style={styles.logo}></Image> }
-// { view === 'landing' && <Landing onToLogin={handleGoToLogin} onToRegister={handleGoToRegister} /> }
-// { view === 'login' && <Login error={error} onSubmit={handleLogin} onToRegister={handleGoToRegister} /> }
-// { view === 'register' && <Register error={error} onSubmit={handleRegister} onToLogin={handleGoToLogin} /> }
-// { view === 'home' && <Home /* this here => user={user}*/ /> }

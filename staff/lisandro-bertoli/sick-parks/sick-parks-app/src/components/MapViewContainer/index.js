@@ -23,13 +23,13 @@ export default function MapViewContainer({ myPlace, userLocation, markers }) {
     return (
         <View style={styles.container}>
             <MapView showsUserLocation={true} initialRegion={location} style={styles.mapStyle} >
-                {markers.map(marker => {
+                {/* {markers.map(marker => {
                     return <Marker
                         coordinate={marker.coordinate}
                         title={marker.title}
                         description={marker.description}
                     />
-                })}
+                })} */}
             </MapView>
         </View>
     )

@@ -5,7 +5,7 @@ import { Search, TopSearch, Results, MapViewContainer } from '../index'
 import NavBar from '../NavBar'
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
-
+import { NavigationContainer } from '@react-navigation/native';
 
 
 export default function Home({ user }) {
@@ -84,12 +84,11 @@ export default function Home({ user }) {
     return (
         <View style={styles.container}>
 
-            <MapViewContainer markers={markers} myPlace={myPlace} initialRegion={location} />
 
-            {/* {!results && <Search onSubmit={handleSearch} />}
+
+            {!results && <Search onSubmit={handleSearch} />}
             {results && <TopSearch onSubmit={handleSearch} />}
-            {results && <Results results={results} />} */}
-            <NavBar />
+            {results && <Results results={results} />}
         </View >
     )
 }

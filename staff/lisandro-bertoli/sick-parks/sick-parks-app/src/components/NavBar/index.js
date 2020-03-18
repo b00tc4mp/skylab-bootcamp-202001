@@ -42,10 +42,5 @@ const styles = StyleSheet.create({
         height: 30,
 
     },
-    icon: {
 
-        width: 30,
-        height: 30,
-        tintColor: '#EFEBDA'
-    }
 })
