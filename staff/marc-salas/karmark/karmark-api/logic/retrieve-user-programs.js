@@ -9,7 +9,15 @@ module.exports = (id)  => {
         .then(user =>{
 
             if (!user) throw new NotFoundError(`user not found`)
-            console.log(user.programs)
+           
+            user.id = user._id.toString()
+
+            delete user._id
+
+            user.programs.forEach(program => {
+                program = program.toString()
+            })
+
             return user.programs
         })
 
