@@ -16,11 +16,6 @@ export default function() {
         handleRetrieveLots() 
     }, [])
 
-    /* return <section className="map">
-        <h1 class="map__title">PLATES MAP</h1>
-        {lots.map(lot=><div>{lot.number}</div>)}
-    </section> */
-
     return <section className="map">
         <h1 className="map__title">Plates Map:</h1>
         <section className="plates">
