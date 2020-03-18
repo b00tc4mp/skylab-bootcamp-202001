@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     image: {
-        width: '100%'
+        width: '100%',
+        height: 200
     },
     result: {
         flex: 4

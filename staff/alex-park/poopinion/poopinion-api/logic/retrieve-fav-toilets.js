@@ -20,6 +20,6 @@ module.exports = id => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
-            return Toilet.find({ isFavedBy: id }).populate('comments').lean()
+            return Toilet.find({ isFavedBy: id }).populate('comments').populate('publisher', 'name surname').lean()
         })
 }

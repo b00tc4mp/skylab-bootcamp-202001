@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './styles'
-import { Text, ScrollView, View, TouchableOpacity, Image } from 'react-native'
+import { Text, ScrollView, View, TouchableOpacity, Image, Alert } from 'react-native'
 
 function Favorites({ user, favToilets, onFav }) {
+    console.log(favToilets)
     return (<>
         <ScrollView style={styles.container}>
             <TouchableOpacity>
