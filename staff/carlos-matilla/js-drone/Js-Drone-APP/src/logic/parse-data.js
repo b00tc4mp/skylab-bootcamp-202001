@@ -3,8 +3,9 @@ import saveSession from './save-session'
 
 const chart = 2
 
-export default function(){
+export default async function(){
     console.log('starting')
+    if(chart > 40) await saveSession(time, lowTemp, hightTemp, battery, height, speed, atmosPressure)
     
     const data = [ lowTemp, hightTemp, battery, height, speed, atmosPressure]
 
@@ -27,6 +28,6 @@ export default function(){
    }
 
 
-    saveSession(time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)
+   await saveSession(time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)
 
 }

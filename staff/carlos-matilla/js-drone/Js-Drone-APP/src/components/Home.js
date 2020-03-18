@@ -35,8 +35,15 @@ export default withRouter(function ({ history }) {
       }
 
       if (droneState && land && semaforo) {
+        (async()=>{
 
-        parseData()
+          
+           await parseData()
+           const { sessions } = await retrieveUser()
+           setMySessions(sessions)
+           saveData()
+
+        })()
         semaforo = false
   
       }

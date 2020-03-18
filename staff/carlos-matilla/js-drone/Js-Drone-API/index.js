@@ -62,8 +62,8 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
     }
 
     drone.send('command', 0, 'command'.length, 8889, HOST, handleError);
-    // drone.send('streamon', 0, 8, 8889, HOST, handleError);
-    // drone.send('battery?', 0, 8, 8889, HOST, handleError);
+    drone.send('streamon', 0, 8, 8889, HOST, handleError);
+    drone.send('battery?', 0, 8, 8889, HOST, handleError);
 
     websocket.on('connection', function connection(websocket) {
       

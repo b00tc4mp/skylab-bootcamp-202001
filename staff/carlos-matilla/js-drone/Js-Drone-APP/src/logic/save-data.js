@@ -17,24 +17,54 @@ export{
 }
 
 export function saveData (channelA, channelB, channelC, channelD, temph, templ, bat, baro, tof){
-    time++
+
+    if(tof === undefined){
+        time = 0
+    }else{
+        time++
+    }
+
     // Speed
-    let maxSpeed = Math.max(channelA, channelB, channelC, channelD)
-    if(!isNaN(maxSpeed)) speed.push(maxSpeed)
+    if(channelA === undefined){
+        speed = []
+    }else{
+        let maxSpeed = Math.max(channelA, channelB, channelC, channelD)
+        if(!isNaN(maxSpeed)) speed.push(maxSpeed)
+    }
 
     // hightTemp
-     hightTemp.push(temph)
+    if(temph === undefined){
+        hightTemp = []
+    }else{
+        hightTemp.push(temph)
+    }
 
     // lowTemp
-    lowTemp.push(templ)
+    if(temph === undefined){
+        lowTemp = []
+    }else{
+        lowTemp.push(templ)
+    }
 
     // battery
-    battery.push(bat)
+    if(bat === undefined){
+        battery = []
+    }else{
+        battery.push(bat)
+    }
 
     // atmosPressure
-    atmosPressure.push(baro)
+    if(baro === undefined){
+        atmosPressure = []
+    }else{
+        atmosPressure.push(baro)
+    }
 
     // height
-    height.push(tof)
+    if(tof === undefined){
+        height = []
+    }else{
+        height.push(tof)
+    }
 
 }
