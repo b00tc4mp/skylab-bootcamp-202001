@@ -1,6 +1,6 @@
 import React, { useState, Fragment, useEffect, useContext  } from 'react'
 
-import { Landing, Login, Register, Home, Page } from './'
+import { Landing, Login, Register, Home, Multiplayer, Create, Join, Page } from './'
 import './App.sass'
 import { login, register, retrieveUser, retrieveUserId, isLoggedIn, logout } from '../logic'
 import { Context } from './ContextProvider'
@@ -10,7 +10,7 @@ function App() {
   const [state, setState] = useContext(Context)
 
   useEffect(() => {
-    isLoggedIn() ? setView('home') : setView('landing')
+    isLoggedIn() ? setView('home') : setView('join')
   }, [])
 
   const [view, setView] = useState('landing')
@@ -82,6 +82,12 @@ function App() {
       {view === 'register' && <Register onSubmit={handleRegister} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} error={error} />}
 
       {view === 'home' && <Home />}
+
+      {view === 'multiplayer' && <Multiplayer />}
+
+      {view === 'create' && <Create />}
+
+      {view === 'join' && <Join />}
 
     </Fragment>
 
