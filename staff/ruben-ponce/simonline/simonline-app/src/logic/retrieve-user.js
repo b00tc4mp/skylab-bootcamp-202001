@@ -1,18 +1,24 @@
 // const { validate } = require('simonline-utils')
 
-export default async function (token) {
+const API_URL = process.env.REACT_APP_API_URL
+
+export default (function (token) {
     // validate.string(token, 'token')
 
-    const retrieve = await fetch(`http://localhost:8085/api/users`, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${token}` }
-    })
+    return (async () => {
 
-    const res = await retrieve.text()
-    const user = await res
+        const retrieve = await fetch(`${API_URL}/users`, {
+            method: 'GET',
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
 
-    if(user.error) return new Error(user.error)
+        const res = await retrieve.text()
+        const user = await res
 
-    else return JSON.parse(user)
+        if(user.error) return new Error(user.error)
 
-}
+        else return JSON.parse(user)
+
+    })()
+
+})

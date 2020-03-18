@@ -7,6 +7,6 @@ export default function (token) {
     if (!header || !payload || !signature) throw new Error('invalid token')
 
     const { sub } = JSON.parse(atob(payload))
-
+    
     return sub
 }

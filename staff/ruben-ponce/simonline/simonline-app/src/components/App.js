@@ -7,10 +7,10 @@ import { Context } from './ContextProvider'
 
 function App() {
 
-    const [state, setState] = useContext(Context)
+  const [state, setState] = useContext(Context)
 
   useEffect(() => {
-    isLoggedIn() ? setState({ page: 'home' }) : setState({ page: 'login' })
+    isLoggedIn() ? setView('home') : setView('landing')
   }, [])
 
   const [view, setView] = useState('landing')
