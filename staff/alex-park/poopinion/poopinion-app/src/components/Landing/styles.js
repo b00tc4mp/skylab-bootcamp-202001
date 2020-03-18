@@ -22,24 +22,25 @@ const styles = StyleSheet.create({
     },
     posts: {
         flex: 1,
-        flexWrap: 'wrap',
-        flexDirection: 'row'
+        flexDirection: 'column',
+        width: '100%',
     },
     post: {
         width: '95%',
         marginHorizontal: '2.5%',
-        marginVertical: '4%'
+        marginVertical: '4%',
     },
     postImage: {
-        width: '100%'
+        flex:1,
+        width: '100%',
+        height: 200
     },
     postContent: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     contentLeft: {
         flex: 1,
-        
     },
     left: {
         fontSize: 18,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     contentRight: {
         flex: 0.25,
         alignItems: 'flex-end',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     right: {
         fontSize: 30

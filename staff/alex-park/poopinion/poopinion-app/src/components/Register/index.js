@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
-import { View, Text, TextInput, TouchableOpacity, Button, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView } from 'react-native'
 
 function Register({ onSubmit, error, goToLogin, goToLanding }) {
     const [name, setName] = useState()
@@ -20,8 +20,19 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@gmail.com' onChangeText={(text) => setEmail(text)} />
-                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
-                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Gender' onChangeText={(text) => setGender(text)} />
+                        <TextInput placeholderTextColor='grey' keyboardType={'numeric'} style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
+                        <View style={styles.form}>
+                            <Picker
+                                selectedValue={gender}
+                                onValueChange={(itemValue) =>
+                                    setGender(itemValue)
+                                }>
+                                <Picker.Item style={styles.form} label="Male" value="male" />
+                                <Picker.Item style={styles.form} label="Female" value="female" />
+                                <Picker.Item style={styles.form} label="Non-binary" value="non-binary" />
+                            </Picker>
+
+                        </View>
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                     </TouchableOpacity>
                     {error && <Feedback level='warn' message={error} />}

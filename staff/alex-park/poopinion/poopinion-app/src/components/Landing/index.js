@@ -36,7 +36,6 @@ function Landing({ user, coordinates }) {
                                 <Text style={styles.left}>Skylab Coders Academy</Text>
                                 <Text style={styles.left}>💩💩💩💩💩 (666)</Text>
                             </View>
-
                             <View style={styles.contentRight}>
                                 <Text style={styles.right}>💖</Text>
                             </View>

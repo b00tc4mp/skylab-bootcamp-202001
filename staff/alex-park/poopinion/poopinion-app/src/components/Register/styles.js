@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 10
     },
+    genderPicker: {
+        fontSize: 20
+    },
     button: {
         color: 'white',
         fontWeight: 'bold',
