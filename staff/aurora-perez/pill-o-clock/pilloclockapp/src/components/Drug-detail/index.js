@@ -3,13 +3,13 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Image, Button, Touchable
 import styles from './styles'
 
 function DrugDetail ({drugDetail, times, toDelete }){
-    const {drugName, _id, description} = drugDetail
+    const {drugName, id, description} = drugDetail
     
     return (
         <View style = {styles.container}>
             <View style={styles.headerContainer}>
                 <Text style ={styles.title}>{drugName}</Text>
-                    <TouchableOpacity style={styles.bin} onPress={()=>toDelete({_id})}>
+                    <TouchableOpacity style={styles.bin} onPress={()=>toDelete({id})}>
                         <Image style={styles.logoBin} source={require('../../../assets/images/bin.png')}/>
                     </TouchableOpacity>
             </View>

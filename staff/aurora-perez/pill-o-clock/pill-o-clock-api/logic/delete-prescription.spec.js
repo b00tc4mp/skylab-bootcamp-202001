@@ -77,6 +77,6 @@ describe('deletePrescritpion', ()=> {
         })
 
     })
-    after(() => Promise.all([User.deleteMany(), Drug.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
 
 })

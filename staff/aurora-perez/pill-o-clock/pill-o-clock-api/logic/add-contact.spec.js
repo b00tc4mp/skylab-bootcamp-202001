@@ -12,7 +12,7 @@ describe('addContact', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, gender, age, phone, profile, email, password, description, idUser, idUserToAdd
+    let name, surname, gender, age, phone, profile, email, password, name2, surname2, gender2, age2, phone2, profile2, email2, password2, idUser, idUserToAdd
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -23,14 +23,22 @@ describe('addContact', () => {
         profile = `profile-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        description = `description-${random()}`
+
+        name2 = `name-${random()}`
+        surname2 = `surname-${random()}`
+        gender2 = `gender-${random()}`
+        age2 = random()
+        phone2 = `00000-${random()}`
+        profile2 = `profile-${random()}`
+        email2 = `email--${random()}@mail.com`
+        password2 = `password-${random()}`
     })
 
     describe('when user already exists', () => {
 
         beforeEach(() => 
             Promise.all([User.create({ name, surname, gender, age, phone, profile, email, password }),
-                User.create({ name, surname, gender, age, phone, profile, email, password })])
+                User.create({ name: name2, surname: surname2, gender: gender2, age: age2, phone: phone2, profile: profile2, email: email2, password: password2 })])
                 
                 .then(([user, userToAdd]) => {
                     idUser = user.id
@@ -66,19 +74,6 @@ describe('addContact', () => {
     })
 
     describe('unhappy path syncronous', () => {
-        let email2  = `email-${random()}@mail.com`
-        let email3  = `email-${random()}@mail.com`
-
-        beforeEach(() => 
-            Promise.all([User.create({ name, surname, gender, age, phone, profile, email: email2, password }),
-                User.create({ name, surname, gender, age, phone, profile, email: email3, password })])
-                
-                .then(([user, userToAdd]) => {
-                    idUser = user.id
-                    idUserToAdd = userToAdd.id
-
-                })
-        )
         
         it('should fail on a non-string idUser', () => {
             let idWrong

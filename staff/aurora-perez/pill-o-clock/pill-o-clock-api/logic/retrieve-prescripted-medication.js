@@ -10,7 +10,16 @@ module.exports = id => {
             
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-            return Guideline.find({prescribed: id}).populate('drug')
+            return Guideline.find({prescribed: id}).populate('drug').lean()
+            .then(guideline => {
+                guideline.forEach(element => {
+                    element.id = element._id
+                    delete element._id
+                    delete element.__v
+                })
+
+                return guideline
+            })
         })
 
 }

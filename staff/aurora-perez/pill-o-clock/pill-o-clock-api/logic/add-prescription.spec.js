@@ -25,7 +25,7 @@ describe('addPrescription', () => {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = random()
+        time = [random()]
 
     })
 
@@ -46,7 +46,7 @@ describe('addPrescription', () => {
                 .then((user) => {
                     expect(user).to.exist 
                     expect(user.prescription[0]).to.exist
-                    expect(user.prescription[0].times[0]).to.equal(time)
+                    expect(user.prescription[0].times[0]).to.equal(time[0])
                 })
         )
 

@@ -9,7 +9,9 @@ module.exports = id => {
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-            if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
+            user.id = user._id
+
+            delete user._id
 
             user.retrieved = new Date
 

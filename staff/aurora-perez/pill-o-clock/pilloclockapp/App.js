@@ -127,9 +127,9 @@ export default function App () {
     }
   }
 
-  async function handleToDeleteMedication ({_id}) {
+  async function handleToDeleteMedication ({id}) {
     try {
-      await deleteMedication(token, _id)
+      await deleteMedication(token, id)
       handleToMedication()
 
     }catch({message}){

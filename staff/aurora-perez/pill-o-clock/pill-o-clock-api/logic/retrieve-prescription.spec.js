@@ -68,4 +68,6 @@ describe('retrievePrescription', ()=> {
         _id = []
         expect(() => retrievePrescription(_id)).to.throw(TypeError, `id ${_id} is not a string`)
     })
+    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
+
 })
