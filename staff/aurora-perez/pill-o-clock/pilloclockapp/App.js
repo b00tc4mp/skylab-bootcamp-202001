@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
-import { Text, View, StyleSheet, Alert } from 'react-native'
+import { Text, View, StyleSheet, Alert, ScrollView } from 'react-native'
 
-import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail } from './src/components'
+import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts } from './src/components'
 import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication } from './src/logic'
-//import Header from '../Header
+
 
 export default function App () {
   const [view, setView] = useState('login')
@@ -13,6 +13,7 @@ export default function App () {
   const [ medication, setMedication] = useState()
   const [ drugDetail, setDrugDetail ] =useState()
   const [ times, setTimes ] = useState()
+  const [goLanding, setGoLanding] = useState(false)
 
 
   function __handleError__(message) {
@@ -33,7 +34,9 @@ export default function App () {
   }
 
   function handleToLogin (){
+    setToken()
     setError(null)
+    setGoLanding(false)
     setView('login')
   }
 
@@ -47,12 +50,15 @@ export default function App () {
 
         setUser(loggedUser)
 
+        setGoLanding(true)
+
         setView('landingPharmacist')
 
       }else if (loggedUser.profile === 'patient'){
         setToken (_token)
 
         setUser(loggedUser)
+        setGoLanding(true)
         setView('landingPatient')
       } else{
         //TODO
@@ -85,7 +91,7 @@ export default function App () {
 
   async function handleAddMedication (info) {
     
-    try{
+    try{ //TODO utils
       const {drug} = info
       let keys = Object.keys(info)
       keys.slice(0,1)
@@ -137,31 +143,54 @@ export default function App () {
     }
   }
 
+  function handleToProgress () {
+    setView('progress')
+  }
+
+  function handleToContacts () {
+    setView('contacts')
+  }
+
 
 
   return(<View style={styles.container}>
-    { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
-    { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
-    { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication}  /> }
-    { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
-    { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
-    { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
-    { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
+
+    {goLanding && <NavigationBarTop style={styles.navbar} toLogin={handleToLogin} toMedication={handleToMedication} toContacts={handleToContacts} toProgress={handleToProgress}/>}
+    
+    <ScrollView style={styles.content}>
+      { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
+      { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
+      { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication} toProgress={handleToProgress} toContacts={handleToContacts} /> }
+      { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
+      { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
+      { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
+      { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
+      { view === 'contacts' && <Contacts/> }
+      { view === 'progress' && <Progress/>}
+    </ScrollView>
+
     </View>
   //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}
   )
 }
 
+
 const styles = StyleSheet.create({
     container : {
-        flex : 1,
-        justifyContent : 'center',
-        alignItems : 'center',
-        backgroundColor : '#beebe9'
+      flex : 1,
+      justifyContent : 'center',
+      alignItems : 'center',
+      backgroundColor : '#beebe9'
     },
 
     title : {
-        fontSize : 40,
+      fontSize : 40,
+    },
+    content: {
+      flex: 1
+    },
+    navbar: {
+      flex: 1
     }
 })
 

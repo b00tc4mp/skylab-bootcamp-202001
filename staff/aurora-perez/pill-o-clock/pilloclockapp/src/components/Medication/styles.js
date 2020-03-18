@@ -46,14 +46,16 @@ const styles = StyleSheet.create({
     text : {
         fontFamily : 'Sensei-Medium',
         color : '#297885',
-        padding: 10
+        padding: 10,
+        fontSize: 20
     },
 
     title : {
         fontSize : 30,
         color : '#297885',
         fontFamily : 'Sensei-Medium' ,
-        alignSelf : 'center' 
+        alignSelf : 'center',
+        textDecorationLine: 'underline',
     },
 
     logo : {

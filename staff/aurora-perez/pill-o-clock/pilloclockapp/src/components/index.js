@@ -5,6 +5,9 @@ import LandingPharmacist from './Landing-pharmacist'
 import Medication from './Medication'
 import AddMedication from './Add-medication'
 import DrugDetail from './Drug-detail'
+import NavigationBarTop from './Navigation-bar-top'
+import Progress from './Progress'
+import Contacts from './Contacts'
 
 export { 
     Register,
@@ -13,5 +16,8 @@ export {
     LandingPharmacist,
     Medication,
     AddMedication,
-    DrugDetail
+    DrugDetail,
+    NavigationBarTop,
+    Progress,
+    Contacts
 }
