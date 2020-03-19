@@ -2,11 +2,9 @@ import React, { useState, useContext } from 'react'
 import { Context } from './ContextProvider'
 import './style/EntryVehicle.sass'
 import Feedback from './Feedback'
-import { useQrEncode, useQrDecode } from 'react-qr-hooks'
+import { useQrEncode } from 'react-qr-hooks'
 
 export default function({onSubmit, error}) {
-
-    const [state, setState] = useContext(Context)
 
     const [plate, setPlate] = useState('')
 
@@ -19,8 +17,6 @@ export default function({onSubmit, error}) {
 
         setPlate(plateNumber)
 
-        const { parking } = state
-
         onSubmit(plateNumber)
     }
 
@@ -28,7 +24,7 @@ export default function({onSubmit, error}) {
 
 
     return <section className="entry-plate">
-    {plate ? <img src={encoded} className="qr" alt="qr-code"/> : <>
+    {plate && !error ? <img src={encoded} className="qr" alt="qr-code"/> : <>
     <h1 className="entry-plate__title">Entry: vehicle plate number</h1>
     <form className="entry-plate__form" onSubmit={handleVehicle}>
         <input type="text" name="plateNumber" placeholder="entry car plate number" className="entry-plate__input" />

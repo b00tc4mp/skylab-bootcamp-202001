@@ -6,7 +6,7 @@ import { Header } from '.'
 
 import { ReactComponent as Access } from './icons/access.svg'
 import { ReactComponent as Exit } from './icons/exit.svg'
-import { ReactComponent as Atm } from './icons/atm.svg'
+import { ReactComponent as AtmIcon } from './icons/atm.svg'
 import { ReactComponent as Plates } from './icons/plates.svg'
 import { ReactComponent as Report } from './icons/report.svg'
 import { ReactComponent as Config } from './icons/config.svg'
@@ -29,6 +29,10 @@ export default withRouter (function({history}) {
         history.push('/map')
     }
 
+    const handleToATM = () => {
+        history.push('/atm')
+    }
+
     return <>
     <Header user={isLoggedIn() ? 'Login' : ''}/>
     <main>
@@ -46,9 +50,9 @@ export default withRouter (function({history}) {
                 <p className="actions__text">Exit</p>
             </div>
 
-            <div className="actions__action">
+            <div className="actions__action" onClick={handleToATM}>
                 
-                <Atm className="actions__image"/>
+                <AtmIcon className="actions__image"/>
                 <p className="actions__text">ATM</p>
             </div>
 
