@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     input : {
         marginTop : 30,
         fontSize : 17,
-        alignSelf : 'center'
+        alignSelf : 'center',
+        color:'#4CBBC2'
     },
 
     title : {

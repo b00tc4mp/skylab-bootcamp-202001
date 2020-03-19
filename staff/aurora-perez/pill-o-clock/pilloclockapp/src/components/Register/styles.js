@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     
     input : {
         marginTop : 30,
-        fontSize : 17
+        fontSize : 17,
+        color:'#4CBBC2'
     },
 
     title : {
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     },
 
     button : {
-        marginTop : 35,
+        //marginTop : 35,
         fontSize : 25,
         color : '#fffdf9',
         alignSelf : 'center',

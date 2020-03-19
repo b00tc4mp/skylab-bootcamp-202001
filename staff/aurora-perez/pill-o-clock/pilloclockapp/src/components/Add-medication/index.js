@@ -20,7 +20,7 @@ function AddMedication ({onSubmit, error}) {
                 <Text style = {styles.title}>Add medication</Text>
                 <Text style = {styles.text}>Select name: </Text>
             
-                <Picker selectedValue = {drug} onValueChange = {setDrug}>
+                <Picker itemStyle={{color:'#4CBBC2', fontFamily:'Sensei-Medium'}} selectedValue = {drug} onValueChange = {setDrug}>
                 <Picker.Item label = "Furosemide" value = "Furosemide" />
                 <Picker.Item label = "Adiro" value = "Adiro" />
                 <Picker.Item label = "Atorvastatine" value = "Atorvastatine" />
@@ -33,7 +33,7 @@ function AddMedication ({onSubmit, error}) {
                     <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
                         onChangeText={(hour1) => setHour1(hour1)}/>
 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='minutes'
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min1) => setMin1(min1)}/>
 
                     <Text style = {styles.text} onPress={() => setSecondTime(!secondTime)}>+/-</Text>

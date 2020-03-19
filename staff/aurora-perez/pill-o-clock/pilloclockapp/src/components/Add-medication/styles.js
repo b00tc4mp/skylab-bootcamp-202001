@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
         fontFamily : 'Sensei-Medium',
         color : '#297885',
         fontSize : 20,
-        marginLeft : 20
+        marginLeft : 20,
+        color: '#4CBBC2'
     },
 
     container : {
@@ -26,8 +27,8 @@ const styles = StyleSheet.create({
 
     hour : {
         fontFamily : 'Sensei-Medium',
-        paddingHorizontal : 20
-
+        paddingHorizontal : 20,
+        fontSize: 20
     },
     
     input : {
