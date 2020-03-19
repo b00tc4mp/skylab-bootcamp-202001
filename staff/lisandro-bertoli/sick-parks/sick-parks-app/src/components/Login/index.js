@@ -19,7 +19,7 @@ export default function Login({ navigation, extraData }) {
                 <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} />
 
                 <Button text='Login' type='main' textStyle='text' onPress={() => handleLogin({ email, password })} />
-                {error && <Text style={styles.danger}>{error}</Text>}
+                {error && <Text style={styles.danger}>{error.message}</Text>}
                 <Button text='Not a member yet? Sign up' textStyle='anchor' onPress={() => navigation.navigate('Register')} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>

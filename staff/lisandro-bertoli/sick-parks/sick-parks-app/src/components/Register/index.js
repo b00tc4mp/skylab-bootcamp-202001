@@ -20,8 +20,13 @@ export default function Register({ navigation, extraData }) {
                 <TextInput style={styles.input} placeholder='Your surname here' onChangeText={(text) => setSurname(text)} />
                 <TextInput style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} />
                 <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} />
-                <Button text='Register' type='main' textStyle='text' onPress={() => handleRegister({ name, surname, email, password })} />
-                {error && <Text style={styles.danger}>{error}</Text>}
+                <Button text='Register' type='main' textStyle='text' onPress={() => {
+
+                    handleRegister({ name, surname, email, password })
+
+                    navigation.navigate('Login')
+                }} />
+                {error && <Text style={styles.danger}>{error.message}</Text>}
                 <Button type='anchor' textStyle='anchor' text='Already a member? Sign in' onPress={() => navigation.navigate('Login')} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>

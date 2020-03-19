@@ -52,9 +52,9 @@ export default function App() {
 	const handleLogin = async (user) => {
 		try {
 			await login(user)
+			setUser(user)
 			setError(null)
 			_getNotificationsPermissionsAsync()
-			setView('home')
 		} catch ({ message }) {
 			setError({ message })
 			console.log(message)
@@ -65,7 +65,7 @@ export default function App() {
 		try {
 			await registerUser(newUser)
 			setError(null)
-			setView('login')
+
 		} catch ({ message }) {
 			setError({ message })
 			console.log(message)

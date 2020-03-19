@@ -20,15 +20,15 @@ export default function Home({ navigation }) {
 
 
 
-    useEffect(() => {
-        try {
-            _getLocationAsync()
-        } catch ({ message }) {
-            setError({ message })
-            console.log(message)
+    // useEffect(() => {
+    //     try {
+    //         _getLocationAsync()
+    //     } catch ({ message }) {
+    //         setError({ message })
+    //         console.log(message)
 
-        }
-    }, [])
+    //     }
+    // }, [])
 
 
     _getLocationAsync = async () => {

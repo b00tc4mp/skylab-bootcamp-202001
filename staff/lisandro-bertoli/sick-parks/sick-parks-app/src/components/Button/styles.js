@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         color: '#82A4B3'
 
+    },
+    positionCenter: {
+        alignSelf: 'center'
     }
 })
 
