@@ -1,10 +1,13 @@
 import { validate } from 'share-my-spot-utils'
-const { NotAllowedError } = require('share-my-spot-errors')
+import { NotAllowedError } from 'share-my-spot-errors'
+import context from './context'
 require('dotenv').config()
+
+//const { env: { REACT_APP_API_URL: API_URL } } = process
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function (email, password) {
+export default (function (email, password) {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
@@ -20,8 +23,10 @@ export default function (email, password) {
 
         if (status === 200) {
             const { token } = await response.json()
+            
+            this.token = token
 
-            return token
+            return
         }
 
         if (status >= 400 && status < 500) {
@@ -36,4 +41,4 @@ export default function (email, password) {
 
         throw new Error('server error')
     })()
-}
+}).bind(context)

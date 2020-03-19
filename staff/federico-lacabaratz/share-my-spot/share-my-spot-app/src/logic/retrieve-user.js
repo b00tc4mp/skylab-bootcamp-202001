@@ -1,39 +1,38 @@
-const { validate } = require('share-my-spot-utils')
+import { validate } from 'share-my-spot-utils'
+import context from './context'
 const { NotAllowedError } = require('share-my-spot-errors')
+require('dotenv').config()
 
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = token => {
-    validate.string(token, 'token')
-    validate.token(token)
-
+export default (function () {
+    
     return (async () => {
-        const response = await fetch(`${API_URL}/users`, {
+        const res = await fetch(`${API_URL}/users`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.token },
         })
 
-        const { status } = await response
-    
-        if (status === 200) {
-            const user = await response.json()
+        const { status } = res
+
+        if (status === 200){
+            const user = await res.json()
 
             return user
         }
 
         if (status >= 400 && status < 500) {
-            const { error } = await response.json()
+
+            const { error } = await res.json()
 
             if (status === 401) {
                 throw new NotAllowedError(error)
             }
 
             throw new Error(error)
-        }
 
+        }
         throw new Error('server error')
+
     })()
-}
+}).bind(context)

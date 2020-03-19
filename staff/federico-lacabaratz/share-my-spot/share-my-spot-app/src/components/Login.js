@@ -3,26 +3,24 @@ import logo from '../images/logo.png'
 import './Login.sass'
 import Feedback from './Feedback'
 
-export default function ({ onSubmit, error, setView }) {
-    function handleOnSubmit(event) {
+export default function ({ onLogin, onGoToRegister, error }) {
+    function handleOnLogin(event) {
         event.preventDefault()
 
-        const { target: {
-            email: { value: email },
-            password: { value: password }
-        } } = event
+        const email = event.target.email.value
+        const password = event.target.password.value
 
-        onSubmit(email, password)
+        onLogin(email, password)
     }
 
     function handleGoToRegister(event) {
         event.preventDefault()
-        
-        setView('register')
+
+        onGoToRegister()
     }
 
     return <>
-        <form className="login" onSubmit={handleOnSubmit}>
+        <form className="login" onSubmit={handleOnLogin}>
             <img className="login__logo" src={logo} alt="ShareMySpotLogo" />
             <h2 className="login__title">Sign-In</h2>
             <input className="login__input" type="text" name="email" placeholder="email" />

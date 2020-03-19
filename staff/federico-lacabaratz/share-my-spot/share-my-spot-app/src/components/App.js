@@ -1,64 +1,83 @@
-import React, { useState, Fragment } from 'react'
-import Register from './Register'
-import Login from './Login'
-import Home from './Home'
-import { registerUser, authenticateUser, retrieveUser } from '../logic'
+import React, { useState, useEffect, useContext } from 'react'
+import { Register, Login, Home, Header } from '../components'
+import { registerUser, login, isLoggedIn, retrieveUser } from '../logic'
+import { Context } from './ContextProvider'
+import { Route, withRouter, Redirect } from 'react-router-dom'
 
-function App() {
+export default withRouter(function ({ history }) {
 
-  const [view, setView] = useState('login')
-  const [noError, setError] = useState(undefined)
-  const [data, setData] = useState(undefined)
+  const [state, setState] = useContext(Context)
+  const [user, setUser] = useState([])
 
-  const __handleError__ = (error) => {
-    if (error) setError({ error: error.message })
-    else setError({ error: "Not answer" })
-    setTimeout(() => {
-      setError({ error: noError })
-    }, 3000)
-  }
+  useEffect(() => {
+    if (isLoggedIn()) {
+      (async() => {
 
-  const handleRegister = async (name, surname, email, password) => {
-    try {
-      await registerUser(name, surname, email, password)
-      return await setView('login')
-      
-    } catch (error) {
-      return __handleError__(error)
+        const user = await retrieveUser()
+        setUser(user)
+
+        history.push('/home')
+      })()
+    } else {
+      history.push('/login')
     }
+  }, [])
+
+  const handleRegister = (name, surname, email, password) => {
+    (async () => {
+
+      try {
+        await registerUser(name, surname, email, password)
+        history.push('/login')
+
+      } catch ({ message }) {
+        setState({ error: message })
+
+        setTimeout(() => {
+          setState({ error: undefined })
+        }, 3000)
+      }
+
+    })()
   }
 
-  const handleLogin = async (email, password) => {
-    try {
-      const token = await authenticateUser(email, password)
-      sessionStorage.token = token
+  const handleLogin = (email, password) => {
+    (async () => {
+      try {
+        await login(email, password)
 
-      const data = await retrieveUser(token)
-      setData(data)
+        const user = await retrieveUser()
 
-      return await setView('home')
+        setUser(user)
 
-    } catch (error) {
-      return __handleError__(error)
+        history.push('/home')
 
-    }
+      } catch ({ message }) {
+        setState({ ...state, error: message })
+
+        setTimeout(() => {
+          setState({ error: undefined })
+        }, 3000)
+      }
+    })()
   }
 
-  const handleGoToRegister = async () => {
-    await setView('register')
+  const handleGoToLogin = () => {
+    history.push('/login')
   }
 
-  const handleGoToLogin = async () => {
-    await setView('login')
+  const handleGoToRegister = () => {
+    history.push('/register')
   }
 
 
-  return <Fragment>
-    {view === 'register' && <Register onSubmit={handleRegister} setView={setView} onToLogin={handleGoToLogin} />}
-    {view === 'login' && <Login onSubmit={handleLogin} setView={setView} onToRegister={handleGoToRegister} />}
-    {view === 'home' && <Home userData={data} />}
-  </Fragment>
+  const { error } = state
 
-}
+  return <div className="App">
+    <Route exact path='/' render={() => isLoggedIn() ? <Redirect to='/home' /> : <Redirect to='/login' />} />
+    <Route path='/register' render={() => isLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} error={error} />} />
+    <Route path='/login' render={() => isLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} error={error} />} />
+    <Route path='/home' render={() => isLoggedIn() ? <><Header /><Home /></> : <Redirect to='/login' />} />
 
-export default App
+  </div>
+})

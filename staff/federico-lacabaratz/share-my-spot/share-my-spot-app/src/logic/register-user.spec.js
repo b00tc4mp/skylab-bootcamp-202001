@@ -50,7 +50,6 @@ describe('registerUser', () => {
                     body: JSON.stringify({ name, surname, email, password })
                 })
 
-
             } catch (error) {
                 throw new Error(error)
 

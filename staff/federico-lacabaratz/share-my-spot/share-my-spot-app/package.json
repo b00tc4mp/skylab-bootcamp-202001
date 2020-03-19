@@ -9,6 +9,7 @@
     "dotenv": "^8.2.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "share-my-spot-errors": "file:../share-my-spot-errors",
     "share-my-spot-utils": "file:../share-my-spot-utils"
