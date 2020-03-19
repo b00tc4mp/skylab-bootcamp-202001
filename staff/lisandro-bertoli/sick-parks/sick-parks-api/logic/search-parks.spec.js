@@ -24,7 +24,7 @@ describe('searchParks', () => {
         resort = `Grindelwald`
         location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
 
-        _location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+        _location = [random() * 15 + 1, random() * 15 + 1]
 
         name2 = `parkName-${random()}`
         size2 = `l`
@@ -40,8 +40,8 @@ describe('searchParks', () => {
             return result
         }
 
-        const parkOneToPointDistance = distance(location.coordinates[0], _location.coordinates[0], location.coordinates[1], _location.coordinates[1])
-        const parkTwoToPointDistance = distance(location2.coordinates[0], _location.coordinates[0], location2.coordinates[1], _location.coordinates[1])
+        const parkOneToPointDistance = distance(location.coordinates[0], _location[0], location.coordinates[1], _location[1])
+        const parkTwoToPointDistance = distance(location2.coordinates[0], _location[0], location2.coordinates[1], _location[1])
 
         if (parkOneToPointDistance > parkTwoToPointDistance) {
             first = resort2
