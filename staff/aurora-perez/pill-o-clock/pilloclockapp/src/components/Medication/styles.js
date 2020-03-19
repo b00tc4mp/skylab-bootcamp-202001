@@ -13,20 +13,15 @@ const styles = StyleSheet.create({
 
     titleContainer : {
         flex : 1,
-        width : '80%',
+        width : '100%',
         flexDirection : 'row',
         marginHorizontal: '10%'
     },
 
     titleLeft : {
-        flex : 0.8,
         justifyContent: 'center'
     },
 
-    titleRight : {
-        flex : 0.4
-        
-    },
     list : {
         flex : 1
     },

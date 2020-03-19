@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert, ScrollView } from 'react-native'
 
-import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients } from './src/components'
-import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication } from './src/logic'
+import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient } from './src/components'
+import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
 
 
 export default function App () {
@@ -14,6 +14,7 @@ export default function App () {
   const [ drugDetail, setDrugDetail ] =useState()
   const [ times, setTimes ] = useState()
   const [goLanding, setGoLanding] = useState(false)
+  const [ contacts, setContacts ] = useState()
 
 
   function __handleError__(message) {
@@ -99,7 +100,7 @@ export default function App () {
       for (const key in info){
         if (key !=='drug') {
           if (key.includes('hour') && !isNaN(info[key]) && info[key]>24) throw new Error('Please, introduce a correct hour')
-          if (key.includes('min') && !isNaN(info[key]) && info[key]>59) throw new Error('Please, introduce a correct hour')
+          if (key.includes('min') && !isNaN(info[key]) && info[key]>59) throw new Error('Please, introduce a correct minutes')
         }
       }
 
@@ -148,7 +149,16 @@ export default function App () {
   }
 
   function handleToContacts () {
-    setView('contacts')
+    try{
+      const _contacts = await retrieveContacts(token)
+      setContacts(_contacts)
+      setView('contacts')
+
+    }catch({message}){
+      __handleError__(message)
+    }
+    retrieveContacts
+    
   }
 
   function handleToAddContacts (){
@@ -160,7 +170,7 @@ export default function App () {
   }
 
   function handleToAddPatients (){
-    
+    setView('addPatients')
   }
 
   return(<View style={styles.container}>
@@ -175,14 +185,14 @@ export default function App () {
       { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
       { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
       { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
-      { view === 'contacts' && <Contacts toAdd={handleToAddContacts}/> }
+      { view === 'contacts' && <Contacts contacts ={contacts} toAdd={handleToAddContacts}/> }
       { view === 'progress' && <Progress/>}
       { view === 'addContacts' && <AddContacts/>}
-      { view === 'patients' && <Patients toAdd={handleToAddPatients}/> }
+      { view === 'patients' && <Patients contacts ={patients } toAdd={handleToAddPatients}/> }
+      { view === 'addPatients' && <AddPatient user={user}/> }
     </ScrollView>
 
     </View>
-  //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma 
   )
 }
 

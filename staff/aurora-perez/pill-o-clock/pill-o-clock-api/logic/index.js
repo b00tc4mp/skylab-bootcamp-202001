@@ -11,5 +11,6 @@ module.exports = {
     addProgress: require('./add-progress'),
     retrieveProgress: require('./retrieve-progress'),
     addContact: require('./add-contact'),
-    retrieveDrug: require('./retrieve-drug')
+    retrieveDrug: require('./retrieve-drug'),
+    retrieveContacts: require('./retrieve-contacts')
 }

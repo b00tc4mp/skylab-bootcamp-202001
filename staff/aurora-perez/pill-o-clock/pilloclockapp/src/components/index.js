@@ -10,6 +10,7 @@ import Progress from './Progress'
 import Contacts from './Contacts'
 import AddContacts from './Add-contacts'
 import Patients from './Patients'
+import AddPatient from './Add-patient'
 
 export { 
     Register,
@@ -23,5 +24,6 @@ export {
     Progress,
     Contacts,
     AddContacts,
-    Patients
+    Patients,
+    AddPatient
 }

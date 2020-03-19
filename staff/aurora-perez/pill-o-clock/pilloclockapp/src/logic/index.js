@@ -5,6 +5,7 @@ import retrieveMedication from './retrieve-medication'
 import addMedication from './add-medication'
 import retrieveDrug from './retrieve-drug'
 import deleteMedication from './delete-medication'
+import retrieveContacts from './retrieve-contacts'
 
 export { 
     registerUser,
@@ -13,5 +14,6 @@ export {
     retrieveMedication,
     addMedication,
     retrieveDrug,
-    deleteMedication
+    deleteMedication,
+    retrieveContacts
 }
