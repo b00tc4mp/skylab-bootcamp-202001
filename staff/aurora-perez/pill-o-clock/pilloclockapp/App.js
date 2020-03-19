@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert, ScrollView } from 'react-native'
 
-import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts } from './src/components'
+import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients } from './src/components'
 import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication } from './src/logic'
 
 
@@ -151,26 +151,38 @@ export default function App () {
     setView('contacts')
   }
 
+  function handleToAddContacts (){
+    setView('addContacts')
+  }
 
+  function handleToPatients (){
+    setView('patients')
+  }
+
+  function handleToAddPatients (){
+    
+  }
 
   return(<View style={styles.container}>
 
-    {goLanding && <NavigationBarTop style={styles.navbar} toLogin={handleToLogin} toMedication={handleToMedication} toContacts={handleToContacts} toProgress={handleToProgress}/>}
+    {goLanding && <NavigationBarTop style={styles.navbar} toLogin={handleToLogin} toMedication={handleToMedication} toContacts={handleToContacts} toProgress={handleToProgress} toPatients = {handleToPatients} user={user}/>}
     
     <ScrollView style={styles.content}>
       { view === 'register' && <Register onSubmit = {handleRegister} onToLogin = {handleToLogin} error= {error}/> }
       { view === 'login' && <Login onSubmit = {handleLogin} toRegister = {handleToRegister} error= {error}/> }
       { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication} toProgress={handleToProgress} toContacts={handleToContacts} /> }
-      { view === 'landingPharmacist' && <LandingPharmacist user={user} /> }
+      { view === 'landingPharmacist' && <LandingPharmacist user={user} toPatients = {handleToPatients}/> }
       { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
       { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
       { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
-      { view === 'contacts' && <Contacts/> }
+      { view === 'contacts' && <Contacts toAdd={handleToAddContacts}/> }
       { view === 'progress' && <Progress/>}
+      { view === 'addContacts' && <AddContacts/>}
+      { view === 'patients' && <Patients toAdd={handleToAddPatients}/> }
     </ScrollView>
 
     </View>
-  //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma toPatients = {handleToPatients}
+  //toProgress={handleToProgress} toContacts={handleToContacts} y en pharma 
   )
 }
 

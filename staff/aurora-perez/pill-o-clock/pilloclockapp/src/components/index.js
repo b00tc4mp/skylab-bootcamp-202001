@@ -8,6 +8,8 @@ import DrugDetail from './Drug-detail'
 import NavigationBarTop from './Navigation-bar-top'
 import Progress from './Progress'
 import Contacts from './Contacts'
+import AddContacts from './Add-contacts'
+import Patients from './Patients'
 
 export { 
     Register,
@@ -19,5 +21,7 @@ export {
     DrugDetail,
     NavigationBarTop,
     Progress,
-    Contacts
+    Contacts,
+    AddContacts,
+    Patients
 }

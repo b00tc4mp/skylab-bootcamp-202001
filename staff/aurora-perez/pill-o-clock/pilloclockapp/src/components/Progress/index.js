@@ -14,7 +14,7 @@ function Progress () {
                         <Text style={styles.titleText}>My Progress</Text>
                     </View>
                     <View style={styles.titleRight}>
-                        <Image style={styles.logo} source={require('../../../assets/images/calendar.jpg')}/>
+                        <Image style={styles.logo} source={require('../../../assets/images/calendar.png')}/>
                     </View>
                 </View>
                     <Calendar

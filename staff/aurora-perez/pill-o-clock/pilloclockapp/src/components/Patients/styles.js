@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     color: '#297885',
     fontFamily: 'Sensei-Medium',
     alignSelf: 'center',
-    padding: 50,
+    padding: 30,
     textDecorationLine: 'underline',
   },
   
@@ -26,18 +26,22 @@ const styles = StyleSheet.create({
   },
 
   logo : {
-    width: 40,
-    height: 40
+    width: 90,
+    height: 90,
+    marginLeft : 0,
+   // marginRight: 100
+    paddingTop: 10
   },
 
   titleContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignContent : 'flex-start'
   },
 
   titleRight: {
     alignSelf: 'center',
-    marginRight: 60
+    marginRight: 100
   }
 })
 
