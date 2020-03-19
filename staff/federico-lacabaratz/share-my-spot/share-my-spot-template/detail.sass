@@ -1,0 +1,127 @@
+@import config
+@import base-components
+
+body
+    display: flex
+    background-color: $genbg-color
+    height: auto
+    margin-bottom: 1.5em
+
+.item
+    @extend %flexColumnCenter
+    background-color: $color-white
+    align-items: center
+    border: 1px solid black
+    margin: 1.5em
+
+    .item__photo
+        @extend %flexRowCenter
+        background-color: $genbg-inputColor
+        width: 100%
+
+    .item__h4
+        text-align: center
+        margin: 0.25em
+        color: $color-gray
+
+    p
+        margin: 0.25em
+        text-align: center
+        font-size: 1em
+        color: $color-gray
+
+    .item__h2
+        text-align: center
+        margin: 0.25em
+        font-weight: bold
+
+    .item__h3
+        text-align: center
+        margin: 0.25em
+        font-weight: bold
+    
+    span
+        text-align: center
+        margin: 0.25em
+        font-size: 1em
+
+    .item__ul
+        margin: 0.25em
+        text-align: left
+        font-size: 1em
+        color: $color-gray
+
+    .item__detail
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        background-color: $genbg-inputColor
+        border: 1px solid black
+        height: 1.75em
+        width: 75%
+        font-size: 1.2em
+        border-radius: 0.5em
+
+footer
+
+    .detail__footer
+        @extend %flexRowCenter
+        align-items: center
+        height: 3em
+        width: 100%
+
+        &__call
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 100%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-left: 1.25em
+
+        &__envelope
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 100%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-left: 0.5em
+            margin-right: 0.5em
+
+        &__heart
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 100%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-right: 1.25em
+            
+    .detail__mAbook
+        display: flex
+        flex-direction: row
+        justify-content: center
+        align-items: center
+        background-color: $genbg-inputColor
+        border: 1px solid black
+        height: 1.75em
+        width: 75%
+        font-size: 1.2em
+        border-radius: 0.5em
+        margin-left: 12.5%
+
+
