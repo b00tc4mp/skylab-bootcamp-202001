@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './style.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 import { Provider } from './components/ContextProvider'
 import { HashRouter as Router } from 'react-router-dom'
+import './index.sass'
 
 ReactDOM.render(<Provider><Router><App name={'ShareMySpot'}/></Router></Provider>, document.getElementById('root'))
 

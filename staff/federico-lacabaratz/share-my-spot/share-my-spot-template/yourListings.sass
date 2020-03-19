@@ -1,10 +1,11 @@
 @import config
+@import base-components
 
 body
     display: flex
     background-color: $genbg-color
     height: auto
-    margin-bottom: 1.5em
+    margin-bottom: 3.5em
 
 .header
     @extend %flexRowCenter
@@ -86,46 +87,12 @@ body
             display: block
             text-align: right
 
-.yListings
+.item
     @extend %flexColumnCenter
     background-color: $color-white
     align-items: center
     border: 1px solid black
-    padding-top: 1.5em
-    padding-bottom: 1.5em
     margin: 1.5em
-
-    .yListings__form
-        display: flex
-        flex-direction: row
-        justify-content: center
-        align-items: center
-        background-color: $genbg-inputColor
-        border: 1px solid black
-        height: 2em
-        font-size: 1.2em
-        border-radius: 0.5em
-        margin: 0.5em
-
-    .yListing__infoToComplete
-        background-color: $genbg-inputColor
-        text-align: center
-        height: 2.25em
-        width: 55%
-        margin: 0.5em
-
-        &__upButton
-            display: flex
-            flex-direction: row
-            justify-content: center
-            align-items: center
-            background-color: $genbg-inputColor
-            border: 1px solid black
-            height: 2em
-            width: 45%
-            border-radius: 0.5em
-            margin: 0.5em
-
 
     .item__photo
         @extend %flexRowCenter
@@ -133,59 +100,88 @@ body
         width: 100%
 
     .item__h4
-        text-align: center
-        margin: 0.25em
         color: $color-gray
 
-    p
-        margin: 0.25em
-        text-align: center
-        font-size: 1em
-        color: $color-gray
-
-    .item__h2
-        text-align: center
-        margin: 0.25em
-        font-weight: bold
-
-    .item__h3
-        text-align: center
-        margin: 0.5em
+    h2
         font-weight: bold
     
     span
-        text-align: center
-        margin: 0.25em
         font-size: 1em
 
-    .item__ul
-        margin: 0.25em
-        text-align: left
-        font-size: 1em
-        color: $color-gray
+    .item__footer
+        @extend %flexRowCenter
+        align-items: center
+        height: 3em
+        width: 100%
 
-    .item__detail
+        &__call
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 100%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-left: 0.5em
+
+        &__envelope
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 100%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-left: 0.5em
+            margin-right: 0.5em
+
+        &__heart
+            display: flex
+            flex-direction: row
+            justify-content: center
+            align-items: center
+            background-color: $genbg-inputColor
+            border: 1px solid black
+            height: 1.75em
+            width: 100%
+            font-size: 1.2em
+            border-radius: 0.5em
+            margin-right: 0.5em
+
+.footer
+    @extend %flexRowCenter
+    position: fixed 
+    bottom: 0
+    left: 0
+    right: 0
+    height: 3.5em
+    background-color: $genbg-inputColor
+    width: 100%
+    
+    &__toSortBy
         display: flex
         flex-direction: row
         justify-content: center
         align-items: center
         background-color: $genbg-inputColor
-        border: 1px solid black
         height: 1.75em
-        width: 65%
+        width: 100%
         font-size: 1.2em
-        border-radius: 0.5em
+        margin-left: 0.5em
 
-footer
-        
-    .addListing__submit
+    &__toFilter
         display: flex
         flex-direction: row
         justify-content: center
         align-items: center
         background-color: $genbg-inputColor
-        border: 1px solid black
         height: 1.75em
-        width: 75%
+        width: 100%
         font-size: 1.2em
-        border-radius: 0.5em
+        margin-right: 0.5em

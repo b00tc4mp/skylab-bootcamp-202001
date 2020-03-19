@@ -8,11 +8,12 @@ export default () => {
 
     const handleOpenNav = (event) => {
         event.preventDefault()
+        
         setMenu('opened')
     }
 
     return <header className="header">
-        <div id={`mySidepanel--${menu}`} className='sidepanel'>
+        <div className='sidepanel'>
             <a href="javascript:void(0)" className="closebtn" onclick="closeNav()">X</a>
             <a href="#">New Search</a>
             <a href="#">Add a Listing</a>
