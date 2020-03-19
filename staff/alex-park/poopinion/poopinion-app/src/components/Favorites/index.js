@@ -17,7 +17,9 @@ function Favorites({ user, favToilets, onFav }) {
                         {favToilets.map(toilet => (<>
                             <View style={styles.toiletContainer}>
                                 <TouchableOpacity onPress={() => Alert.alert(toilet.id)}>
-                                    <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
+                                    {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
+                                        :
+                                        (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
                                 </TouchableOpacity>
                                 <View style={styles.infoContainer}>
                                     <TouchableOpacity style={styles.result}>

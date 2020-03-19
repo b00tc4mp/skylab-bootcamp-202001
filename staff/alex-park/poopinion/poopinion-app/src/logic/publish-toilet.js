@@ -15,7 +15,7 @@ import * as FileSystem from 'expo-file-system'
  * @throws {NotFoundError} on non-existent user
  */
 
-function publishToilet(token, place, image, coordinates) {
+function publishToilet(token, place='(No place defined)', image, coordinates) {
     validate.string(token, 'token')
     validate.string(place, 'place')
     validate.type(coordinates, 'coordinates', Object)
@@ -37,38 +37,51 @@ function publishToilet(token, place, image, coordinates) {
             const user = await userResponse.json()
 
             const toilet = user.publishedToilets.find(toilet => toilet.place === place)
-            const fs = await FileSystem.readAsStringAsync(image, { encoding: FileSystem.EncodingType.Base64 })
 
-            let form = new FormData()
-            form.append('image', {
-                uri: image,
-                type: 'image/jpeg',
-                name: 'toilet01',
-            })
+            if (image !== null) {
+                let form = new FormData()
+                form.append('image', {
+                    uri: image,
+                    type: 'image/jpeg',
+                    name: 'toilet01',
+                })
 
-            const imageResponse = await fetch(`http://192.168.1.253:8085/api/upload/${toilet.id}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` },
-                body: form
-            })
+                const imageResponse = await fetch(`http://192.168.1.253:8085/api/upload/${toilet.id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` },
+                    body: form
+                })
 
-            const { status } = imageResponse
+                const { status } = imageResponse
 
-            if (status === 200) return
+                if (status === 200) {
+                    const image = { image: `http://192.168.1.253:8085/api/load/${toilet.id}` }
 
-            if (status >= 400 && status < 500) {
-                const { error } = await imageResponse.json()
+                    const updateImage = await fetch(`http://192.168.1.253:8085/api/users/toilet/${toilet.id}`, {
+                        method: 'PATCH',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                        body: JSON.stringify(image)
+                    })
 
-                if (status === 409) {
-                    throw new NotAllowedError(error)
+                    const { status } = updateImage
+
+                    if (status === 200) return
                 }
 
-                if (status === 404) {
-                    throw new NotFoundError(error)
-                }
+                if (status >= 400 && status < 500) {
+                    const { error } = await imageResponse.json()
 
-                throw new Error(error)
-            }
+                    if (status === 409) {
+                        throw new NotAllowedError(error)
+                    }
+
+                    if (status === 404) {
+                        throw new NotFoundError(error)
+                    }
+
+                    throw new Error(error)
+                }
+            } else return
         }
 
         if (status >= 400 && status < 500) {

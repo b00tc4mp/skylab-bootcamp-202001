@@ -16,7 +16,7 @@ module.exports = function (toiletId) {
     validate.string(toiletId, 'toiletId')
 
     return (async () => {
-        const toilet = Toilet.findById(toiletId)
+        const toilet = await Toilet.findById(toiletId)
         if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
 
         let goTo = path.join(__dirname, `../data/toilets/${toiletId}/toilet01.jpg`)
@@ -25,7 +25,7 @@ module.exports = function (toiletId) {
             return fs.createReadStream(goTo)
         } else {
             const defaultImage = path.join(__dirname, `../data/defaultimage/avatar00.jpg`)
-            fs.createReadStream(defaultImage)
+            return fs.createReadStream(defaultImage)
         }
     })()
 }

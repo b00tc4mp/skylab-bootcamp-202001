@@ -43,7 +43,7 @@ export default class NewToilet extends React.Component {
                 <View style={styles.uploadInfo}>
                     <View style={styles.place}>
                         <Text style={styles.placeName}>Place: </Text>
-                        <TextInput style={styles.placeInput} placeholder='insert the place here' onChangeText={(text) => this.setState({ place: text })} />
+                        <TextInput style={styles.placeInput} placeholder='insert the place here' onChangeText={(text) => this.setState({ place: text.trim() })} />
                     </View>
                     <View style={styles.options}>
                         <Button title='Upload image' onPress={this._pickImage} />

@@ -15,7 +15,6 @@ module.exports = (req, res) => {
         })
 
         busboy.on('finish', () => {
-            console.log('uploaded!')
             res.send('uploaded');
         })
 
