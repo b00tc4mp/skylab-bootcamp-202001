@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import './programe.sass'
 import Feedback from './Feedback'
+import SaveWindows from './SaveWindows'
 
-export default function ({ onUp, onDown, onRight, onLeft, onStop, onPlay, onMount, onGoToHome, error }) {
+export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onCancel, save, saveProgram }) {
+    
     useEffect(() => {
-        
         onMount()
     }, [])
 
@@ -38,16 +39,32 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onPlay, onMoun
         onPlay()
     }
 
-    function handleOnStop(event) {
+    function handleOnDelete(event) {
         event.preventDefault()
 
-        onStop()
+        onDelete()
     }
 
     function handleGoToHome(event) {
         event.preventDefault()
 
         onGoToHome()
+    }
+
+    function handleOnSave(event) {
+        event.preventDefault()
+        
+        onSave()
+    }
+
+    function handleAccept(name){
+
+        saveProgram(name)
+    }
+
+    function handleOnCancel(){
+
+        onCancel()
     }
     return <>
         <div className="programe">
@@ -62,10 +79,11 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onPlay, onMoun
                 <button className="programebody__arrowright" onClick={handleOnRight}><i className="fas fa-arrow-alt-circle-right"></i></button>
                 <button className="programebody__arrowdown" onClick={handleOnDown}><i className="fas fa-arrow-alt-circle-down"></i></button>
             </div>
+            {save && <SaveWindows accept={handleAccept} cancel={handleOnCancel} />}
             {error && <Feedback message={error} level="warn" />}
             <div className="programefooter">
-                <button className="programefooter__save"><i className="fas fa-save"></i></button>
-                <button className="programefooter__stop" ><i className="fas fa-stop"></i></button>
+                <button className="programefooter__save" onClick={handleOnSave}><i className="fas fa-save"></i></button>
+                <button className="programefooter__stop" onClick={handleOnDelete}><i className="fas fa-stop"></i></button>
             </div>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>

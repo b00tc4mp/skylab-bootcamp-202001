@@ -9,7 +9,7 @@ const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
-describe.only('retrieveUser', () => {
+describe('retrieveUser', () => {
     let name, surname, username, password, _id
 
     before(() =>
@@ -28,7 +28,6 @@ describe.only('retrieveUser', () => {
     })
     it('should return userData with correct id', async () =>{
         const userData = await retrieveUser(_id)
-        console.log(userData)
         expect(userData).to.exist
         expect(userData.name).to.equal(name)
         expect(userData.surname).to.equal(surname)

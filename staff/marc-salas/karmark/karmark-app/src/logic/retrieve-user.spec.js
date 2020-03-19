@@ -20,7 +20,7 @@ describe('retrieveUser', () => {
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        username = `username-${random()}@mail.com`
+        username = `username-${random()}`
         password = `password-${random()}`
     })
 
@@ -42,7 +42,7 @@ describe('retrieveUser', () => {
         })
     })
 
-    describe('when user doesent exist', () => {
+    describe('when user does not exist', () => {
         
         it('it should fail with no token', async () =>{
             try {
@@ -57,8 +57,6 @@ describe('retrieveUser', () => {
             }
         })
     })
-
-    // TODO more happies and unhappies
 
     afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

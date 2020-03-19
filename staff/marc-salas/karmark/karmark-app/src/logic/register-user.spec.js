@@ -222,7 +222,7 @@ describe('registerUser', () => {
 
         } catch (error) {
             expect(error).toBeInstanceOf(NotAllowedError)
-            expect(error.message).toBe('')
+            expect(error.message).toBe(`user with username ${username} already exists`)
         }
     })
 

@@ -19,9 +19,8 @@ module.exports = (id) =>{
             })
 
             user.retrieved = new Date
-             console.log(user)
 
-             return user.save()
+             return user
              
         })
         .then(({name, surname, username, programs}) => {

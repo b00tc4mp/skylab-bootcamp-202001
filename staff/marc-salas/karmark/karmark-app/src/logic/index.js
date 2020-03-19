@@ -9,6 +9,9 @@ import right from './right'
 import left from './left'
 import stop from './stop'
 import play from './play'
+import createProgram from './create-program'
+import isTokenValid from './is-token-valid'
+import retrievePrograms from './retrieve-programs'
 
 export {
     registerUser,
@@ -22,4 +25,7 @@ export {
     left,
     stop,
     play,
+    createProgram,
+    isTokenValid,
+    retrievePrograms
 }

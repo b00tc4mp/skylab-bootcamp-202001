@@ -5,19 +5,19 @@ import Login from './Login'
 import Home from './Home'
 import Control from './Control'
 import Programe from './Programe'
-import { registerUser, isLoggedIn, authenticateUser, up, down, right, left, stop, play, logeOut, retrieveUser } from '../logic'
+import { registerUser, isLoggedIn, authenticateUser, up, down, right, left, stop, play, logeOut, retrieveUser, isTokenValid, createProgram } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
+let code = []
 
 export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
-  let code = []
 
   useEffect(() => {
     if (isLoggedIn()) {
-        setState({ page: 'login' })
+        setState({ page: 'home' })
 
-        history.push('/login')
+        history.push('/home')
 
     } else {
       setState({ page: 'login' })
@@ -117,24 +117,25 @@ export default withRouter(function ({ history }) {
   }
 
   function handleSaveUp(){
-    code.push('up', 'stop')   
+    code.push('up', 'stop')
+
 
   }
 
   function handleSaveDown(){
     code.push('down', 'stop')
-    console.log(code)
-
   }
 
   function handleSaveRight(){
     code.push('right', 'stop')     
-
   }
 
   function handleSaveLeft(){
-    code.push('left', 'stop')     
-
+    code.push('left', 'stop')      
+  }
+  
+  function handleDelete(){
+    code = []
   }
   
   function handleGoToLogin() {
@@ -165,16 +166,30 @@ export default withRouter(function ({ history }) {
     setState({ page: 'programe' })
   }
 
-  const { page, error} = state
-  debugger
+  function handleOnSave() {
+    setState({page: 'programe', save: true})
+
+  }
+
+  function handleOnCancel() {
+    setState({page: 'programe', save: false})
+  }
+
+  function handleSaveProgram(name) {
+    debugger
+    createProgram(name, code)
+
+    setState({page: 'programe', save: false})    
+  }
+  const { page, error, save, codeSaved = [] } = state
   return <div className="app">
     <Page name={page}>
-      <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/register" />} />
-      <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
-      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" />: <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin}/>} />
-      <Route path="/control" render={() => isLoggedIn() ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} />: <Redirect to="/login" />}/>
-      <Route path="/programe" render={() => isLoggedIn() ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onStop={handleStop} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} />: <Redirect to="/login" />}/>
-      <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />} />
+      <Route exact path="/" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Redirect to="/login" />} />
+      <Route path="/register" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
+      <Route path="/login" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" />: <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin}/>} />
+      <Route path="/control" render={() => (isTokenValid() && isLoggedIn()) ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} />: <Redirect to="/login" />}/>
+      <Route path="/programe" render={() => (  isTokenValid() && isLoggedIn()) ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onStop={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save}/>: <Redirect to="/login" />}/>
+      <Route path="/home" render={() => (isLoggedIn() && isTokenValid()) ? <Home /> : <Redirect to="/login" />} />
     </Page>
   </div>
 })

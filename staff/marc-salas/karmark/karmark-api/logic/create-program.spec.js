@@ -29,7 +29,7 @@ describe('createProgram', () => {
             .then((password) => User.create({ name, surname, username, password, created: new Date }))
             .then((user) => _id = user.id)
     })
-    it('should succed on correct arguments', async () => {
+    it('should succeed on correct arguments', async () => {
         const result = await createProgram({ name: programName, created: new Date, author: _id, code })
         expect(result).to.exist
 

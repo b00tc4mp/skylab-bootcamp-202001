@@ -23,7 +23,7 @@ export default function ({onSubmit, onGoToRegister, error, onMount}){
 
         onGoToRegister()
     }
-    debugger
+    
     return <>
             <form className="login" onSubmit={handleOnSubmit}>
             <h1 className="login__tittle">karmark</h1>
