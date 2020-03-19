@@ -111,7 +111,7 @@ export default function App() {
     }
   }
 
-  async function handlePublishToilet(place) {
+  async function handlePublishToilet(place, image) {
     try {
       await publishToilet(token, place, coordinates)
       Alert.alert('Toilet posted! Thank you! 🚽❤️')
@@ -122,7 +122,7 @@ export default function App() {
     }
   }
 
-  async function handleToggleFav(toiletId) {
+  async function handleToggleFav(toiletId) { //WILL NEED TO UPLOAD WHEN DETAILS ARE DISPLAYED
     if (!user) {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
@@ -133,6 +133,11 @@ export default function App() {
         if (favToilets) {
           const _favToilets = await retrieveFavToilets(token)
           setFavToilets(_favToilets)
+        }
+
+        if (query) {
+          const toilets = await searchToilets(query)
+          await setToilets(toilets)
         }
       } catch ({ message }) {
         __handleError__(message)

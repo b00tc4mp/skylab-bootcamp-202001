@@ -1,96 +1,78 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styles from './styles'
-import { View, ScrollView, TouchableOpacity, Text, TextInput, Image } from 'react-native'
+import { View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button } from 'react-native'
 import MapView from 'react-native-maps'
-// import * as ImagePicker from 'expo-image-picker'
-// import * as FileSystem from 'expo-file-system'
-// import CameraRoll from "@react-native-community/cameraroll"
-import ImagePicker from 'react-native-image-picker'
+import * as ImagePicker from 'expo-image-picker'
+import * as FileSystem from 'expo-file-system'
 
+export default class NewToilet extends React.Component {
+    constructor(props) {
+        super(props);
 
-let place
-
-function NewToilet({ coordinates, onSubmit }) {
-    const [image, setImage] = useState()
-
-    async function _pickImage() {
-        const options = {
-            title: 'Select Avatar',
-            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-            storageOptions: {
-                skipBackup: true,
-                path: 'images',
-            },
-        };
-
-        await ImagePicker.showImagePicker(options, (response) => {
-            const base64Value = response.data
-
-            setImage(base64Value)
-        })
+        this.state = {
+            image: null,
+            place: undefined
+        }
     }
 
+    render() {
+        let { image } = this.state
+        
+        return (<>
+            <ScrollView style={styles.container}>
 
+                <Text style={styles.header}>New Toilet Post</Text>
 
-    // async function _pickImage() {
-    //     let result = await ImagePicker.launchImageLibraryAsync(
-    //         {
-    //             mediaTypes: ImagePicker.MediaTypeOptions.All,
-    //             allowsEditing: true,
-    //             aspect: [4, 3],
-    //             quality: 1
-    //         }
-    //     )
-    //     console.log(result)
-
-    //     const fs = await FileSystem.readAsStringAsync(result.uri, { encoding: FileSystem.EncodingType.Base64 })
-    //     // console.log(fs)
-
-    //     if (!result.cancelled) {
-    //         const _uri = await CameraRoll.saveToCameraRoll(fs)
-    //         // console.log(_uri)
-    //         await setImage(result.uri)
-    //         // await forceUpdate()
-    //     }
-    // }
-
-    return (<>
-        <ScrollView style={styles.container}>
-
-            <Text style={styles.header}>New Toilet Post</Text>
-
-            <View style={styles.locationContainer}>
-                <Text style={styles.locationHeader}>Location:</Text>
-                {coordinates.latitude && coordinates.longitude &&
-                    <MapView style={styles.mapStyle}
-                        region={{
-                            latitude: coordinates.latitude,
-                            longitude: coordinates.longitude,
-                            latitudeDelta: coordinates.latitudeDelta,
-                            longitudeDelta: coordinates.longitudeDelta,
-                        }}>
-                        <MapView.Marker coordinate={{
-                            latitude: coordinates.latitude,
-                            longitude: coordinates.longitude
-                        }} />
-                    </MapView>}
-            </View>
-
-            <View style={styles.uploadInfo}>
-                <View style={styles.place}>
-                    <Text style={styles.placeName}>Place: </Text>
-                    <TextInput style={styles.placeInput} placeholder='insert the place here' onChangeText={(text) => place = text} />
+                <View style={styles.locationContainer}>
+                    <Text style={styles.locationHeader}>Location:</Text>
+                    {this.props.coordinates.latitude && this.props.coordinates.longitude &&
+                        <MapView style={styles.mapStyle}
+                            region={{
+                                latitude: this.props.coordinates.latitude,
+                                longitude: this.props.coordinates.longitude,
+                                latitudeDelta: this.props.coordinates.latitudeDelta,
+                                longitudeDelta: this.props.coordinates.longitudeDelta,
+                            }}>
+                            <MapView.Marker coordinate={{
+                                latitude: this.props.coordinates.latitude,
+                                longitude: this.props.coordinates.longitude
+                            }} />
+                        </MapView>}
                 </View>
 
-                <Text style={styles.options} onPress={() => _pickImage()}>Upload image</Text>
-                {image && <Image source={{ uri: image }} />}
-            </View>
+                <View style={styles.uploadInfo}>
+                    <View style={styles.place}>
+                        <Text style={styles.placeName}>Place: </Text>
+                        <TextInput style={styles.placeInput} placeholder='insert the place here' onChangeText={(text) => this.setState({ place: text })} />
+                    </View>
+                    <View style={styles.options}>
+                        <Button title='Upload image' onPress={this._pickImage} />
+                    </View>
 
-            <TouchableOpacity >
-                <Text style={styles.submitButton} onPress={() => onSubmit(place)}>💩 Submit! 💩</Text>
-            </TouchableOpacity>
-        </ScrollView>
-    </>)
+                    {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200 }} />}
+                </View>
+
+                <TouchableOpacity >
+                    <Text style={styles.submitButton} onPress={this._onSubmit}>💩 Submit! 💩</Text>
+                </TouchableOpacity>
+            </ScrollView>
+        </>)
+    }
+
+    _pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
+    };
+
+    _onSubmit = () => {
+        this.props.onSubmit(this.state.place, this.state.image)
+    };
 }
-
-export default NewToilet

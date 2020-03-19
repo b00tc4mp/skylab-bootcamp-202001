@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
 import { View, ScrollView, TouchableOpacity, Text, Image, Alert } from 'react-native'
-
+//user && user.favToilets.find(favToilet => favToilet.id === toilet.id) === toilet.id ?
 function QueryResults({ query, toilets, user, onFav }) {
-
     return (<>
         <ScrollView>
             <View style={styles.container}>
@@ -23,13 +22,13 @@ function QueryResults({ query, toilets, user, onFav }) {
                                         <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet.id) }}>
-                                        {user && user.favToilets.find(favToilet => favToilet.toString() === toilet.id) === toilet.id ?
+                                        {user && toilet.isFavedBy.includes(user.id) ?
                                             (<Image style={styles.favButton} source={require('../../../assets/faved.png')} />)
                                             :
                                             (<Image style={styles.favButton} source={require('../../../assets/fav.png')} />)
                                         }
 
-                                        
+
                                     </TouchableOpacity>
                                 </View>
 

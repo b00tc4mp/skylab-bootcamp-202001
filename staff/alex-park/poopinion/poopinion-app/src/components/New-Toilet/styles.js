@@ -32,8 +32,11 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 10
     },
+    uploadImage: {
+        width: 200,
+        resizeMode: 'contain'
+    },
     options: {
-        fontSize: 20,
         marginVertical: 15
     },
     submitButton: {

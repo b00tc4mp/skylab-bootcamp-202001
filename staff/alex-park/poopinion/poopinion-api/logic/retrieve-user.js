@@ -15,7 +15,7 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 module.exports = id => {
     validate.string(id, 'id')
 
-    return User.findById(id).populate('publishedToilets').populate('comments')
+    return User.findById(id).populate('publishedToilets').populate('comments').populate('favToilets').lean()
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotFoundError(`user with id ${id} is deactivated`)
@@ -23,8 +23,27 @@ module.exports = id => {
             user.retrieved = new Date
             user.id = user._id.toString()
             delete user._id
+            delete user.password
+            delete user.__v
 
-            return user.save()
+            user.publishedToilets.forEach(toilet => {
+                toilet.id = toilet._id.toString()
+                delete toilet._id
+                delete toilet.__v
+            })
+
+            user.comments.forEach(comment => {
+                comment.id = comment._id.toString()
+                delete comment._id
+                delete comment.__v
+            })
+
+            user.favToilets.forEach(toilet => {
+                toilet.id = toilet._id.toString()
+                delete toilet._id
+                delete toilet.__v
+            })
+
+            return user
         })
-        .then(({ name, surname, email, age, gender, publishedToilets, comments, favToilets }) => ({ name, surname, email, age, gender, publishedToilets, comments, favToilets }))
 }
