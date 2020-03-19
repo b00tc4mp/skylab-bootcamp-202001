@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { Context } from './components/ContextProvider'
 
 import RecoverPassword from './components/recover-password/RecoverPassword'
+import Calendar from './components/calendar/Calendar'
 
 import jwt from 'jsonwebtoken'
 
@@ -64,6 +65,8 @@ export default () => {
         <Route exact path="/password" component={RecoverPassword} />
 
         <Route exact path="/login/:companyId" component={Login} />
+
+        <Route exact path="/calendar" component={Calendar} />
 
         <Route exact path="/register">
           <Register />
