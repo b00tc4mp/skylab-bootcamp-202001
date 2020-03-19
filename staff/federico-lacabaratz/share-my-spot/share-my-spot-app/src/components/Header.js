@@ -2,10 +2,17 @@ import React, { useState } from 'react'
 import './Header.sass'
 import logo from '../images/logo.png'
 
-export default ({ openNav, closeNav }) => {
+export default () => {
+
+    const [menu, setMenu] = useState('closed')
+
+    const handleOpenNav = (event) => {
+        event.preventDefault()
+        setMenu('opened')
+    }
 
     return <header className="header">
-        <div id="mySidepanel" className="sidepanel">
+        <div id={`mySidepanel--${menu}`} className='sidepanel'>
             <a href="javascript:void(0)" className="closebtn" onclick="closeNav()">X</a>
             <a href="#">New Search</a>
             <a href="#">Add a Listing</a>
@@ -14,8 +21,8 @@ export default ({ openNav, closeNav }) => {
             <a href="#">Your Bookings</a>
             <a href="#">Your Favourites</a>
         </div>
-        <i onclick="openNav()" className="openbtn fas fa-bars"></i>
-        <script>
+        <i onclick={handleOpenNav} className="openbtn fas fa-bars"></i>
+        {/* <script>
             {function openNav() {
                 document.getElementById("mySidepanel").style.width = "250px"
             },
@@ -23,7 +30,7 @@ export default ({ openNav, closeNav }) => {
             function closeNav() {
                 document.getElementById("mySidepanel").style.width = "0"
             }}
-            </script>
+            </script> */}
         <div className="header__logo">
             <img className="header__logo__img" src={logo} alt="ShareMySpotLogo" />
         </div>

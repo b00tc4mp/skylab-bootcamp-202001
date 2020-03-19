@@ -14,7 +14,7 @@ export default withRouter(({ history }) => {
             (async () => {
                 try {
 
-                    history.push('/home')
+                    history.push('/search')
 
                 } catch (error) {
                     setState({ error: error.message })

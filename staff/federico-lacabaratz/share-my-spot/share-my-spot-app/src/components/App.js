@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Register, Login, Home, Header } from '../components'
+import { Register, Login, Search, Header } from '../components'
 import { registerUser, login, isLoggedIn, retrieveUser } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
@@ -11,13 +11,9 @@ export default withRouter(function ({ history }) {
 
   useEffect(() => {
     if (isLoggedIn()) {
-      (async() => {
-
-        const user = await retrieveUser()
-        setUser(user)
-
-        history.push('/home')
-      })()
+      
+        history.push('/search')
+      
     } else {
       history.push('/login')
     }
@@ -25,9 +21,9 @@ export default withRouter(function ({ history }) {
 
   const handleRegister = (name, surname, email, password) => {
     (async () => {
-
       try {
         await registerUser(name, surname, email, password)
+        
         history.push('/login')
 
       } catch ({ message }) {
@@ -50,7 +46,7 @@ export default withRouter(function ({ history }) {
 
         setUser(user)
 
-        history.push('/home')
+        history.push('/search')
 
       } catch ({ message }) {
         setState({ ...state, error: message })
@@ -62,22 +58,13 @@ export default withRouter(function ({ history }) {
     })()
   }
 
-  const handleGoToLogin = () => {
-    history.push('/login')
-  }
-
-  const handleGoToRegister = () => {
-    history.push('/register')
-  }
-
-
   const { error } = state
 
   return <div className="App">
-    <Route exact path='/' render={() => isLoggedIn() ? <Redirect to='/home' /> : <Redirect to='/login' />} />
-    <Route path='/register' render={() => isLoggedIn() ? <Redirect to='/home' /> : <Register onRegister={handleRegister} onGoToLogin={handleGoToLogin} error={error} />} />
-    <Route path='/login' render={() => isLoggedIn() ? <Redirect to='/home' /> : <Login onLogin={handleLogin} onGoToRegister={handleGoToRegister} error={error} />} />
-    <Route path='/home' render={() => isLoggedIn() ? <><Header /><Home /></> : <Redirect to='/login' />} />
+    <Route exact path='/' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Redirect to='/login' />} />
+    <Route path='/register' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Register onRegister={handleRegister} error={error} /> } />
+    <Route path='/login' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Login onLogin={handleLogin} error={error} />} />
+    <Route path='/search' render={() => isLoggedIn() ? <><Header /><Search /></> : <Redirect to='/login' />} />
 
   </div>
 })

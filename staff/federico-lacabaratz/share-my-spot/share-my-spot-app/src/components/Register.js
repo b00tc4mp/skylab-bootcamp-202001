@@ -2,8 +2,9 @@ import React from 'react'
 import logo from '../images/logo.png'
 import './Register.sass'
 import Feedback from './Feedback'
+import { withRouter } from 'react-router-dom'
 
-export default function ({ onRegister, onGoToLogin, error }) {
+export default withRouter (function ({ onRegister, history, error }) {
     function handleOnRegister(event) {
         event.preventDefault()
 
@@ -15,10 +16,10 @@ export default function ({ onRegister, onGoToLogin, error }) {
         onRegister(name, surname, email, password)
     }
 
-    function handleGoToLogin(event) {
+    const handleGoToLogin = (event) => {
         event.preventDefault()
 
-        onGoToLogin()
+        history.push('/login')
     }
 
     return <>
@@ -34,4 +35,4 @@ export default function ({ onRegister, onGoToLogin, error }) {
             {error && <Feedback message={error} level="warn" />}
         </form>
     </>
-}
+})
