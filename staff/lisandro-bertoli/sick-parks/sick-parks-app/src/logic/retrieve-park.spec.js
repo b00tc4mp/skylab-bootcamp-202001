@@ -1,0 +1,110 @@
+require('dotenv').config()
+import retrievePark from './retrieve-park'
+
+const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
+const { mongoose, models: { Park, User, Feature, Location } } = require('../sick-parks-data')
+
+const { NotFoundError } = require('../sick-parks-errors')
+
+const { random } = Math
+
+
+describe('retrievePark', () => {
+    beforeAll(async () => {
+        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        return await [Park.deleteMany(), User.deleteMany()]
+    })
+
+    let parkName, size, level, location
+    let name, surname, email, password
+    let feature = {}
+
+    beforeEach(() => {
+
+        feature.name = "transition"
+        feature.size = "xl"
+        feature.level = "advanced"
+        feature.location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+
+
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}`
+        password = `password-${random()}`
+
+
+        parkName = `parkName-${random()}`
+        size = `l`
+        description = `${random()}`
+        resort = `${random()}`
+        level = `begginer`
+        location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+    })
+
+    describe('when park exists', () => {
+        let userId, parkId
+
+        beforeEach(async () => {
+            const feat = new Feature(feature)
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+            const park = await Park.create({ name: parkName, size, level, resort, description, location, creator: id, features: [feat] })
+            parkId = park.id
+        })
+
+        it('should succeed on retrieving the park', async () => {
+            const result = await retrievePark(parkId)
+
+            expect(result.name).toBe(parkName)
+            expect(result.id).toBe(parkId)
+            expect(result.resort).toBe(resort)
+            expect(result.description).toBe(description)
+
+            expect(result.features[0].name).toBe(feature.name)
+            expect(result.features[0].size).toBe(feature.size)
+
+            expect(result.creator.name).toBe(name)
+            expect(result.creator.id).toBe(userId)
+
+        })
+    })
+    describe('when park does not exist', () => {
+        let parkId
+        beforeEach(async () => {
+
+            const park = await Park.create({ name: parkName, size, level, resort, description, location })
+            parkId = park._id.toString()
+            await Park.deleteOne({ _id: parkId })
+            return
+        })
+
+        it('should fail on wrong id', async () => {
+            try {
+                await retrievePark(parkId)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).toBeInstanceOf(NotFoundError)
+                expect(error.message).toBe(`the park you are looking for does not exist or has been deleted`)
+            }
+        })
+
+        it('should fail on non string id', () => {
+            let parkId = 1
+            expect(() => {
+                retrievePark(parkId)
+            }).toThrow(TypeError, `parkId ${parkId} is not a string`)
+
+            parkId = undefined
+            expect(() => {
+                retrievePark(parkId)
+            }).toThrow(TypeError, `parkId ${parkId} is not a string`)
+
+            parkId = true
+            expect(() => {
+                retrievePark(parkId)
+            }).toThrow(TypeError, `parkId ${parkId} is not a string`)
+        })
+    })
+
+    afterAll(() => Promise.all([Park.deleteMany(), User.deleteMany()]).then(() => mongoose.disconnect()))
+})

@@ -8,7 +8,11 @@ export default searchParks = ({ query, location }) => {
     validate.string(query, 'query')
 
     return (async () => {
-        const response = await fetch(`${API_URL}/parks?q=${query}&_location=${location}`)
+        let response
+        if (location) {
+            response = await fetch(`${API_URL}/parks?q=${query}&_location=${location}`)
+        } else response = await fetch(`${API_URL}/parks?q=${query}`)
+
 
         const data = await response.json()
 
