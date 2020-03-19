@@ -25,7 +25,7 @@ export default ({onGoToLogin, onGoToLanding, onSubmit, error}) => {
             onGoToLogin()
         }}>Login</span>
 
-        {error && <Feedback error={error}/>}
+        {/* {error && <Feedback error={error}/>} */}
     </form>
     </div>
 }

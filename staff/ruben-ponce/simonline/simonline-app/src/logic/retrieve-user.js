@@ -1,25 +1,35 @@
-// const { validate } = require('simonline-utils')
+// import { NotAllowedError } from 'simonline-errors'
 import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function (token) {
-    // validate.string(token, 'token')
-
+export default (function () {
     return (async () => {
-
-        const retrieve = await fetch(`${API_URL}/users`, {
-            method: 'GET',
-            headers: { 'Authorization': `Bearer ${token}` }
+        const response = await fetch(`${API_URL}/users`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${this.token}`
+            }
         })
 
-        const res = await retrieve.text()
-        const user = await res
+        const { status } = response
 
-        if(user.error) return new Error(user.error)
+        if (status === 200) {
+            const user = await response.json()
 
-        else return JSON.parse(user)
+            return user
+        }
 
+        if (status >= 400 && status < 500) {
+            const { error } = await response.json()
+
+            if (status === 401) {
+                // throw new NotAllowedError(error)
+            }
+
+            throw new Error(error)
+        }
+
+        throw new Error('server error')
     })()
-
 }).bind(context)

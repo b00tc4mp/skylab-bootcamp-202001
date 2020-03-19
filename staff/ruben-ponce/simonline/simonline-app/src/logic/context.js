@@ -11,5 +11,5 @@ export default {
         delete this.token
 
         sessionStorage.clear()
-    }
+    },
 }
