@@ -55,5 +55,9 @@ export default withRouter(function ({ history }) {
       <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} error={error} onGoToLogin={handleGoToLogin} onGoToLanding={handleGoToLanding}/>} />
       <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} error={error} onGoToRegister={handleGoToRegister} onGoToLanding={handleGoToLanding}/>} />
       <Route path="/home/" render={() => isLoggedIn() ? <Home /> : <Redirect to="/landing" />} />
+      <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer /> : <Redirect to="/landing" />} />
+      <Route path="/create" render={() => isLoggedIn() ? <Create /> : <Redirect to="/landing" />} />
+      <Route path="/join" render={() => isLoggedIn() ? <Join /> : <Redirect to="/landing" />} />
+
   </div>
 })

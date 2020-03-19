@@ -1,8 +1,9 @@
 import React from 'react'
 import'./Create.sass'
+import { createGame } from '../logic'
 // import Feedback from './Feedback'
 
-function Create() {
+export default() => {
 
     return <div class="p1 create-group">
     <div class="create-group__top-menu">
@@ -14,5 +15,3 @@ function Create() {
     <button class="create-group__button">Create</button>
     </div>
 }
-
-export default Create

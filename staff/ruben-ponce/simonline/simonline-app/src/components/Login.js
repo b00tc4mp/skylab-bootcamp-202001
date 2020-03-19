@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react'
-import {Context} from './ContextProvider'
 // import Feedback from './Feedback'
 
 export default ({onSubmit, onGoToRegister, onGoToLanding, error}) => {

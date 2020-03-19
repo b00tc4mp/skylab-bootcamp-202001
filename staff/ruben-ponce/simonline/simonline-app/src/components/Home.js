@@ -28,10 +28,14 @@ export default withRouter(function ({ history }) {
         history.push('/landing')
     }
 
+    function handleGoToMultiplayer() {
+        history.push('/multiplayer')
+    }
+
     return <div className="p1 home">
         <p className="home__user">Welcome, {username}</p>
         <p className="home__logout" onClick={handleLogout}>Logout</p>
-        <p className="home__multi-player">Multiplayer</p>
+        <p className="home__multi-player" onClick={handleGoToMultiplayer}>Multiplayer</p>
         <p className="home__options">Options</p>
     </div> 
 })
