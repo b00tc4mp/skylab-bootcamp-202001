@@ -13,5 +13,6 @@ module.exports = new Schema({
             latitudeDelta: { type: Number },
             longitudeDelta: { type: Number }
         }
-    }
+    },
+    image: { type: String }
 })

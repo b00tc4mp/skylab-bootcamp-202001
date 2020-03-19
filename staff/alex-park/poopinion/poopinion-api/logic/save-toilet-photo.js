@@ -26,14 +26,14 @@ module.exports = function (userId, toiletId, file, filename) {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError(`user with id ${userId} does not exist`)
         if (user.deactivated) throw new NotFoundError(`user with id ${id} is deactivated`)
-        
+
         const toilet = await Toilet.findById(toiletId)
-        if (!toilet) throw new NotFoundError(`ad with id ${toiletId} does not exist`)
+        if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
 
         const dir = `./data/toilets/${toiletId}`
-        if (!fs.existsSync(dir)) throw new NotFoundError(`folder in ${dir} hasn't been created yet`)
-
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir)
+        
         let saveTo = path.join(__dirname, `../data/toilets/${toiletId}/${filename}.jpg`)
-        return file.pipe(fs.createWriteStream(saveTo))
+        file.pipe(fs.createWriteStream(saveTo))
     })()
 }

@@ -4,19 +4,38 @@ const Busboy = require('busboy')
 
 module.exports = (req, res) => {
     const { payload: { sub: userId }, params: { toiletId } } = req
-  
+
     const busboy = new Busboy({ headers: req.headers })
 
-    busboy.on('file', async (file, filename) => {
-        filename = 'toilet01'
+    try {
+        busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
 
-        await saveToiletPhoto(userId, toiletId, file, filename)
-        
-    })
+            filename = 'toilet01'
+            saveToiletPhoto(userId, toiletId, file, filename)
+        })
 
-    busboy.on('finish', () => {
-        res.end()
-    })
+        busboy.on('finish', () => {
+            console.log('uploaded!')
+            res.send('uploaded');
+        })
 
-    return req.pipe(busboy)
+        req.pipe(busboy)
+    } catch (error) {
+        let status = 400
+
+        if (error instanceof NotFoundError)
+            status = 404
+
+        if (error instanceof TypeError)
+            status = 406 // not acceptable
+
+        const { message } = error
+
+        res
+            .status(status)
+            .json({
+                error: message
+            })
+    }
+
 }

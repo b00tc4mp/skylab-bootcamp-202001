@@ -113,7 +113,7 @@ export default function App() {
 
   async function handlePublishToilet(place, image) {
     try {
-      await publishToilet(token, place, coordinates)
+      await publishToilet(token, place, image, coordinates)
       Alert.alert('Toilet posted! Thank you! 🚽❤️')
       setView('landing')
 

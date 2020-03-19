@@ -25,7 +25,7 @@ module.exports = function (toiletId) {
             return fs.createReadStream(goTo)
         } else {
             const defaultImage = path.join(__dirname, `../data/defaultimage/avatar00.jpg`)
-            return fs.createReadStream(defaultImage)
+            fs.createReadStream(defaultImage)
         }
     })()
 }
