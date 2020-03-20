@@ -24,7 +24,7 @@ export default (function (parkingName, rate, totalLots) {
         const { status } = response
         
         if(status === 201) {
-            debugger
+            
             this.parking = parkingName
             return
         }
