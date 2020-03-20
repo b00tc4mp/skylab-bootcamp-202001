@@ -1,0 +1,128 @@
+
+.crypto
+    background-color: #fafaf6
+    padding: 30px
+    margin: 15px
+    width: auto
+    height: auto
+    border-radius: 10px
+    // modificador para  usarlo en el compo de cryptoInfo 
+    &--full
+        // background-color: red
+        display: block
+        margin-left: auto
+        margin-right: auto
+        width: 15%
+
+    img 
+        display: block
+        margin-left: auto
+        margin-right: auto
+        width: 50%
+
+    h1 
+        font-size: 20px
+        display: block
+        margin-left: auto
+        margin-right: auto
+        color: #363333
+        font-family: 'Open Sans' 
+
+    &__state
+        // background-color: red
+        font-size: 17px
+        display: block
+        margin-left: auto
+        margin-right: auto
+        width: auto
+        color: #363333
+        font-family: 'Open Sans' 
+
+    &__price 
+        display: block
+        margin-left: auto
+        margin-right: auto
+        color: #53C36A
+        font-family: sans-serif
+        font-weight: bolder
+        // font-family: verdana
+        // width: 50%
+
+    &__buttons
+        display: flex
+        flex-direction: column
+        height: auto
+
+    &__buttons__button1
+        border-radius: 4px
+        background-color: #eb6036
+        color: #FFFFFF
+        border: none
+        text-align: center
+        padding: 8px
+        margin-bottom: 10px
+        width: 150px
+        font-size: 15px
+        transition: all 0.5s
+        cursor: pointer
+        outline: none
+
+    &__buttons__button1 span 
+        cursor: pointer
+        display: inline-block
+        position: relative
+        transition: 0.5s
+
+    &__buttons__button1 span:after 
+        content: '\00bb'
+        position: absolute
+        opacity: 0
+        top: 0
+        right: -20px
+        transition: 0.5s
+    
+    &__buttons__button1:hover span 
+        padding-right: 25px
+    
+    &__buttons__button1:hover span:after 
+        opacity: 1
+        right: 0
+    
+    &__buttons__button2
+        border-radius: 4px
+        background-color: #5eaed3
+        color: #FFFFFF
+        border: none
+        text-align: center
+        padding: 8px
+        margin-bottom: 10px
+        width: 150px
+        font-size: 15px
+        transition: all 0.5s
+        cursor: pointer
+        outline: none
+
+    &__buttons__button2 span 
+        cursor: pointer
+        display: inline-block
+        position: relative
+        transition: 0.5s
+
+    &__buttons__button2 span:after 
+        content: '\00bb'
+        position: absolute
+        opacity: 0
+        top: 0
+        right: -20px
+        transition: 0.5s
+    
+    &__buttons__button2:hover span 
+        padding-right: 25px
+    
+    &__buttons__button2:hover span:after 
+        opacity: 1
+        right: 0
+
+    
+
+// ---------button comprar 
