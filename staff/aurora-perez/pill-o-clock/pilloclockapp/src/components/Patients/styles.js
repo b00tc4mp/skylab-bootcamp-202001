@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   
+  text : {
+    fontFamily : 'Sensei-Medium',
+    color : '#297885',
+    padding: 10,
+    fontSize: 20
+  },
+  
   plus : {
     margin : 20,
     width: 70,

@@ -1,11 +1,11 @@
-const { addContacts } = require('../../logic')
+const { addContact } = require('../../logic')
 const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id }, body: {id2}} = req //por body??
 
     try {
-        addContacts(id, id2) 
+        addContact(id, id2) 
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400

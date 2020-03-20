@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react'
-import { Text, View, StyleSheet, Alert, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, Alert, ScrollView, AsyncStorage } from 'react-native'
 
 import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient, ContactDetail } from './src/components'
-import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
+import logic, { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
 
+logic.__context__.storage =AsyncStorage 
 
 export default function App () {
   const [view, setView] = useState('login')
@@ -16,10 +17,6 @@ export default function App () {
   const [goLanding, setGoLanding] = useState(false)
   const [ contacts, setContacts ] = useState()
   const [ contactData, setContactData ] =useState()
-
-  // useEffect (()=>{
-
-  // }, [contactData])
 
   function __handleError__(message) {
     setError(message)
@@ -161,7 +158,6 @@ export default function App () {
     }catch({message}){
       __handleError__(message)
     }
-    retrieveContacts
     
   }
 
@@ -169,8 +165,16 @@ export default function App () {
     setView('addContacts')
   }
 
-  function handleToPatients (){
-    setView('patients')
+  async function handleToPatients (){
+    try{
+      const _contacts = await retrieveContacts(token)
+      console.log(_contacts)
+      setContacts(_contacts)
+      setView('patients')
+
+    }catch({message}){
+      __handleError__(message)
+    }
   }
 
   function handleToAddPatients (){
@@ -196,7 +200,7 @@ export default function App () {
       { view === 'contacts' && <Contacts contacts ={contacts} toAdd={handleToAddContacts} onContact={handleToContactDetail}/> }
       { view === 'progress' && <Progress/>}
       { view === 'addContacts' && <AddContacts/>}
-      { view === 'patients' && <Patients contacts ={patients } toAdd={handleToAddPatients}/> }
+      { view === 'patients' && <Patients contacts ={ contacts } toAdd={handleToAddPatients}/> }
       { view === 'addPatients' && <AddPatient user={user}/> }
       { view === 'contactDetail' && <ContactDetail contactData={contactData}/>}
     </ScrollView>

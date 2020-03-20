@@ -2,7 +2,7 @@ const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
 import fetch from 'node-fetch'
 
-registerUser = (name, surname, gender, age, phone, profile, email, password) => {
+module.exports = function (name, surname, gender, age, phone, profile, email, password){
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.gender(gender)
@@ -40,5 +40,3 @@ registerUser = (name, surname, gender, age, phone, profile, email, password) => 
     })()
    
 }
-
-export default registerUser

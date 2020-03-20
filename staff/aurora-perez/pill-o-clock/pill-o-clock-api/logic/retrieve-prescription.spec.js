@@ -48,7 +48,7 @@ describe('retrievePrescription', ()=> {
         it('should succeed on correct data', ()=>
             retrievePrescription(_id) 
                 .then(prescription => { 
-                    debugger
+                    
                     expect(prescription instanceof Array).to.equal(true)
                     expect(prescription[0].drug.toString()).to.equal(_drugId)
                     expect(prescription[0].times[0]).to.equal(time)

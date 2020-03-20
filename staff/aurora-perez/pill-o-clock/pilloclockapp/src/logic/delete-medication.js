@@ -1,8 +1,9 @@
-import { NotAllowedError, NotFoundError } from '../errors'
-import fetch from 'node-fetch'
+const { NotAllowedError, NotFoundError } = require( '../errors')
 const { validate } = require('../utils')
+const fetch = require('node-fetch') 
+const context= require('./context')
 
-deleteMedication = (token, idDrug)=> {
+module.exports = function (token, idDrug) {
     validate.string(token, 'token')
     validate.string(idDrug, 'idDrug')
 
@@ -38,6 +39,4 @@ deleteMedication = (token, idDrug)=> {
         throw new Error('server error')
     })()
     
-}
-
-export default deleteMedication
+}.bind(context)

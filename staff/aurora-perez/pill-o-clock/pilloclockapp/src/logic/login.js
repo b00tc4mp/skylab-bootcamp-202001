@@ -1,10 +1,9 @@
 const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
-import fetch from 'node-fetch'
+const fetch = require ('node-fetch')
+const context = require('./context')
 
-const API_URL = process.env.REACT_APP_API_URL
-
-login = (email, password) =>{
+module.exports = function(email, password) {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
@@ -38,6 +37,4 @@ login = (email, password) =>{
 
     })()
   
-}
-
-export default login
+}.bind(context)
