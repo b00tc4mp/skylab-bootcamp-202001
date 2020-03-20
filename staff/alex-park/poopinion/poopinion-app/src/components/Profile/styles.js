@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     },
     postsContainer: {
         backgroundColor: 'white',
-        padding: 20,
+        padding: 10,
         marginVertical: 10,
         opacity: 0.7,
         borderWidth: 2,
@@ -55,6 +55,20 @@ const styles = StyleSheet.create({
     bigText: {
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    innerPost: {
+        flexDirection: 'row',
+    },
+    postsLeft: {
+        flex: 1
+    },
+    postsRight: {
+        flex: 1
+    },
+    image: {
+        width: '100%',
+        height: 100,
+        resizeMode: 'contain'
     }
 })
 

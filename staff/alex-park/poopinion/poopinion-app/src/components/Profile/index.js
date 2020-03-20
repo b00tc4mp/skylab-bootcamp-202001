@@ -23,9 +23,18 @@ function Profile({ user, onDetails }) {
                 <Text style={styles.bigText}>{user.publishedToilets.length} Post(s):</Text>
                 {user.publishedToilets.length > 0 &&
                     user.publishedToilets.map(toilet => (
-                        <TouchableOpacity onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer} >
-                            <Text style={styles.postTitle}>{toilet.place}</Text>
-                            <Text style={styles.postDate}>Posted at: {toilet.created.toString().slice(0, 10)}</Text>
+                        <TouchableOpacity onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer}>
+                            <View  style={styles.innerPost}>
+                                <View style={styles.postsLeft}>
+                                    <Text style={styles.postTitle}>{toilet.place}</Text>
+                                    <Text style={styles.postDate}>Posted at: {toilet.created.toString().slice(0, 10)}</Text>
+                                </View>
+                                <View style={styles.postsRight}>
+                                    {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
+                                        :
+                                        (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
+                                </View>
+                            </View>
                         </TouchableOpacity>
                     ))
                 }

@@ -13,7 +13,7 @@ const { NotFoundError } = require('poopinion-errors')
 module.exports = toiletId => {
     validate.string(toiletId, 'toilet ID')
 
-    return Toilet.findById(toiletId).populate('publisher', 'name surname email age gender').populate('comments').lean()
+    return Toilet.findById(toiletId).populate('publisher', 'name surname email age gender').populate('comments').populate({path:'comments', populate: {path:'publisher'}}).lean()
         .then(toilet => {
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
             toilet.id = toilet._id.toString()

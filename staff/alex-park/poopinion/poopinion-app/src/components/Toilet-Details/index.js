@@ -130,32 +130,21 @@ function ToiletDetails({ toilet, globalRating, user, onFav }) {
                     </View>
 
                     <View style={styles.commentsContainer}>
-                        <Text style={styles.comments}>Comments:</Text>
+                        <Text style={styles.comments}>Comments ({toilet.comments.length}):</Text>
+                        {toilet.comments.length ?
+                            (toilet.comments.map(comment => (<>
+                                <View>
+                                    <Text>Commented by: {comment.publisher.name} {comment.publisher.surname}</Text>
+                                </View>
+                            </>)))
+                            :
+                            (<Text>No comments to display...</Text>)}
                     </View>
 
-                </View>
             </View>
-        </ScrollView>
+            </View>
+    </ScrollView>
     </>)
 }
 
 export default ToiletDetails
-
-// useEffect(() => {
-//     let meanRating= {cleannessMean: 0, looksMean: 0, paymentMean: 0, multipleMean: 0, scoreMean: 0, paperMean: 0}
-
-//     toilet.comments.forEach(comment => {
-//         meanRating.cleannessMean += comment.rating.cleanness
-//         meanRating.looksMean += comment.rating.looks
-//         meanRating.paymentMean += comment.rating.paymentRequired
-//         meanRating.multipleMean += comment.rating.multipleToilets
-//         meanRating.paperMean += comment.rating.paperDeployment
-//         meanRating.scoreMean += comment.rating.overallRating
-//     })
-
-//     for (const key in meanRating) {
-//         meanRating[key] = meanRating[key]/toilet.comments.length
-//     }
-//     console.log(meanRating)
-//     setGlobalRating(meanRating)
-// })
