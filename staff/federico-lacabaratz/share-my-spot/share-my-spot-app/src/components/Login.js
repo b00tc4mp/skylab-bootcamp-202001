@@ -1,10 +1,10 @@
 import React from 'react'
 import logo from '../images/logo.png'
-
+import './Login.sass'
 import Feedback from './Feedback'
-import { withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-export default withRouter (function ({ onLogin, history, error }) {
+export default withRouter(function ({ onLogin, history, error }) {
     function handleOnLogin(event) {
         event.preventDefault()
 
@@ -16,7 +16,7 @@ export default withRouter (function ({ onLogin, history, error }) {
 
     const handleGoToRegister = (event) => {
         event.preventDefault()
-        
+
         history.push('/register')
     }
 
@@ -27,14 +27,16 @@ export default withRouter (function ({ onLogin, history, error }) {
     } */
 
     return <>
-        <form className="login" onSubmit={handleOnLogin}>
-            <img className="login__logo" src={logo} alt="ShareMySpotLogo" />
-            <h2 className="login__title">Sign-In</h2>
-            <input className="login__input" type="text" name="email" placeholder="email" />
-            <input className="login__input" type="password" name="password" placeholder="password" />
-            <button className="login__submit">Login</button>
-            <a className="login__register" href="" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
-            {error && <Feedback message={error} level="warn" />}
-        </form>
+        <div className="login" >
+            <form className="login__container" onSubmit={handleOnLogin}>
+                <img className="login__container-logo" src={logo} alt="ShareMySpotLogo" />
+                <h2 className="login__h2">Sign-In</h2>
+                <input className="login__input" type="text" name="email" placeholder="email" />
+                <input className="login__input" type="password" name="password" placeholder="password" />
+                <button className="login__login">Login</button><br></br>
+                <a className="login__toRegister" href="" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
+                {error && <Feedback message={error} level="warn" />}
+            </form>
+        </div>
     </>
 })

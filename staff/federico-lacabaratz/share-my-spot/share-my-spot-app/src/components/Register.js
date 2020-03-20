@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../images/logo.png'
-
+import './Register.sass'
 import Feedback from './Feedback'
 import { withRouter } from 'react-router-dom'
 
@@ -23,16 +23,18 @@ export default withRouter (function ({ onRegister, history, error }) {
     }
 
     return <>
-        <form className="register" onSubmit={handleOnRegister}>
-            <img className="register__logo" src={logo} alt="ShareMySpotLogo" />
-            <h2 className="register__title">Sign-Up</h2>
-            <input className="register__input" type="text" name="name" placeholder="name" />
-            <input className="register__input" type="text" name="surname" placeholder="surname" />
-            <input className="register__input" type="text" name="email" placeholder="email" />
-            <input className="register__input" type="password" name="password" placeholder="password" />
-            <button className="register__submit">Register</button>
-            <a className="register__login" href="" onClick={handleGoToLogin}>Already registered? - Go To Login</a>
+        <div className="register">
+        <form className="register__container" onSubmit={handleOnRegister}>
+            <img className="register__container-logo" src={logo} alt="ShareMySpotLogo" />
+            <h2 className="register__h2">Sign-Up</h2>
+            <input className="register__input" type="text" placeholder="name" />
+            <input className="register__input" type="text" placeholder="surname" />
+            <input className="register__input" type="text" placeholder="email" />
+            <input className="register__input" type="password" placeholder="password" />
+            <button className="register__register">Register</button><br></br>
+            <a className="register__toLogin" href="" onClick={handleGoToLogin}>Already registered? - Go To Login</a>
             {error && <Feedback message={error} level="warn" />}
         </form>
+    </div> 
     </>
 })

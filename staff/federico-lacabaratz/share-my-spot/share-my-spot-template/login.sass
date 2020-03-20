@@ -1,32 +1,29 @@
 @import config
 @import base-components
 
-body
-    @extend %flexColumnCenter
-    background-color: $genbg-color
-
 .login
-    display: flex
-    justify-content: center
+    @extend %flexColumnCenter
     align-items: center
-    flex-direction: column
-    border-radius: 0.5em
-    margin: 0.5em
-    padding: 0.5em
+    text-align: center
+    background-color: $genbg-color
+    height: auto
+    width: 100%
+    margin: 1.5em
 
-    img
+    &__container
+        border-radius: 0.5em
+        margin: 0.5em
+        padding: 0.5em
+
+    &__container-logo
         width: 85%
-    
-    &--hide
-        display: none
 
-    h2
+    &__h2
         @extend %text-H2
         background-color: $genbg-color
         padding: 0.5em
     
-    input
-        display: block
+    &__input
         text-align: center
         background-color: $genbg-inputColor
         border: 1px solid black
@@ -36,19 +33,18 @@ body
         padding: 0.5em
         margin: 0.5em
 
-    button
-        display: block
+    &__login
         text-align: center
         background-color: $genbg-inputColor
         border: 1px solid black
         font-size: 1.2em
+        width: 50%
         border-radius: 0.5em
         padding: 0.5em
         margin: 0.5em
     
-    a
+    &__toRegister
         @extend %text-linkDescription
-        display: block
         text-align: center
         font-size: 1em
         padding: 0.5em
