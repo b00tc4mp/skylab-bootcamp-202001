@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../images/logo.png'
-import './Register.sass'
+
 import Feedback from './Feedback'
 import { withRouter } from 'react-router-dom'
 

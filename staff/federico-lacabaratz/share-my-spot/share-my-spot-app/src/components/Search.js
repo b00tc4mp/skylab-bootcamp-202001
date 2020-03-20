@@ -34,7 +34,7 @@ export default withRouter(({ history }) => {
 
     const { error } = set
     return <div>
-        {error && <Feedback message={error} level="error" />}
+        <Header />
         <h1>HELLO</h1>
         <button onClick={event => {
             event.preventDefault()

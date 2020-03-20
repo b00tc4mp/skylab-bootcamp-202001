@@ -64,7 +64,7 @@ export default withRouter(function ({ history }) {
     <Route exact path='/' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Redirect to='/login' />} />
     <Route path='/register' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Register onRegister={handleRegister} error={error} /> } />
     <Route path='/login' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Login onLogin={handleLogin} error={error} />} />
-    <Route path='/search' render={() => isLoggedIn() ? <><Header /><Search /></> : <Redirect to='/login' />} />
+    <Route path='/search' render={() => isLoggedIn() ? <><Search /></> : <Redirect to='/login' />} />
 
   </div>
 })
