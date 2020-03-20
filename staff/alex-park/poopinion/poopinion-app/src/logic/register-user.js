@@ -1,6 +1,5 @@
-import { validate } from '../utils'
-import fetch from 'node-fetch'
-
+const { validate } = require ('../utils')
+const fetch = require('node-fetch')
 
 /**
  * Registers a new user to the poopinion database
@@ -17,7 +16,7 @@ import fetch from 'node-fetch'
  * @throws {Error} if there is a server error or if the user already exists
  */
 
-function registerUser(name, surname, email, password, age, gender) {
+module.exports = (name, surname, email, password, age, gender) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
@@ -49,5 +48,3 @@ function registerUser(name, surname, email, password, age, gender) {
         throw new Error('server error')
     })()
 }
-
-export default registerUser

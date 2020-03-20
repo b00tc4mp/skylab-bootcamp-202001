@@ -1,6 +1,7 @@
-import { NotAllowedError, NotFoundError } from '../errors'
-import fetch from 'node-fetch'
+const { NotAllowedError, NotFoundError } = require('../errors')
+const fetch = require('node-fetch')
 const { validate } = require('../utils')
+const context = require('./context')
 
 /**
  * Retrieves an authorized user
@@ -13,7 +14,7 @@ const { validate } = require('../utils')
  * @throws {NotFoundError} on non-existent user
  */
 
-function retrieveUser(token) {
+module.exports = function (token) {
     validate.string(token, 'token')
 
     return (async () => {
@@ -47,6 +48,4 @@ function retrieveUser(token) {
 
         throw new Error('server error')
     })()
-}
-
-export default retrieveUser
+}.bind(context)

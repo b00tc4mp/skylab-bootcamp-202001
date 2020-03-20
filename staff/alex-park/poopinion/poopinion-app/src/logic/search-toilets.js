@@ -1,5 +1,6 @@
-import { validate } from '../utils'
-import fetch from 'node-fetch'
+const { validate } = require('../utils')
+const fetch = require('node-fetch')
+const context = require('./context')
 
 /**
  * Retrieves toilets that meet a certain query criteria
@@ -10,22 +11,20 @@ import fetch from 'node-fetch'
  * 
  */
 
-function searchToilets(query) {
+module.exports = function (query) {
     validate.string(query, 'query')
 
     return (async () => {
         const response = await fetch(`http://192.168.1.253:8085/api/toilets?q=${query}`)
-        
+
         const { status } = response
 
         if (status === 200) {
             const toilets = await response.json()
-            
+
             return toilets
         }
 
         throw new Error('server error')
     })()
-}
-
-export default searchToilets
+}.bind(context)

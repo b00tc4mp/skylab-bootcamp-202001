@@ -1,7 +1,7 @@
-import { validate } from '../utils'
-import fetch from 'node-fetch'
-import { NotAllowedError, NotFoundError } from '../errors'
-import * as FileSystem from 'expo-file-system'
+const { validate } = require('../utils')
+const fetch = require('node-fetch')
+const { NotAllowedError, NotFoundError } = require('../errors')
+const context = require('./context')
 
 /**
  * Publishes a new toilet post
@@ -15,7 +15,7 @@ import * as FileSystem from 'expo-file-system'
  * @throws {NotFoundError} on non-existent user
  */
 
-function publishToilet(token, place='(No place defined)', image, coordinates) {
+module.exports = function (token, place='(No place defined)', image, coordinates) {
     validate.string(token, 'token')
     validate.string(place, 'place')
     validate.type(coordinates, 'coordinates', Object)
@@ -100,6 +100,4 @@ function publishToilet(token, place='(No place defined)', image, coordinates) {
 
         throw new Error('server error')
     })()
-}
-
-export default publishToilet
+}.bind(context)

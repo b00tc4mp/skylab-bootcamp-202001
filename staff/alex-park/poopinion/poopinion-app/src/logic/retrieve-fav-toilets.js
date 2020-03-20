@@ -1,6 +1,7 @@
-import { validate } from '../utils'
-import fetch from 'node-fetch'
-import { NotAllowedError, NotFoundError } from '../errors'
+const { validate } = require('../utils')
+const fetch = require('node-fetch')
+const { NotAllowedError, NotFoundError } = require('../errors')
+const context = require('./context')
 
 /**
  * Toggles or untoggles the selected toilet to favorites
@@ -13,7 +14,7 @@ import { NotAllowedError, NotFoundError } from '../errors'
  * @throws {NotFoundError} if the user or the toilet do not exis
  */
 
-function retrieveFavToilets(token) {
+module.exports = function (token) {
     validate.string(token, 'token')
 
     return (async () => {
@@ -31,7 +32,7 @@ function retrieveFavToilets(token) {
             const toilets = await response.json()
             return toilets
         }
-        
+
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
@@ -48,6 +49,4 @@ function retrieveFavToilets(token) {
 
         throw new Error('server error')
     })()
-}
-
-export default retrieveFavToilets
+}.bind(context)

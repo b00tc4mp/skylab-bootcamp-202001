@@ -9,10 +9,11 @@ import {
   QueryResults,
   Profile,
   Favorites,
-  NewToilet
+  NewToilet,
+  ToiletDetails
 } from './src/components'
 
-import {
+import logic, {
   registerUser,
   authenticateUser,
   retrieveUser,
@@ -21,8 +22,9 @@ import {
   toggleFavToilet,
   retrieveFavToilets,
   retrieveToilet
-} from './src/logic'
-import ToiletDetails from './src/components/Toilet-Details';
+}  from './src/logic'
+
+logic.__context__.storage = AsyncStorage
 
 export default function App() {
   const [coordinates, setCoordinates] = useState({

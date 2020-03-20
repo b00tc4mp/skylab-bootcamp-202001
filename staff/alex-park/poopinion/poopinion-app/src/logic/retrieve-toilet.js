@@ -1,6 +1,7 @@
-import { validate } from '../utils'
-import fetch from 'node-fetch'
-import { NotFoundError } from '../errors'
+const { validate } = require('../utils')
+const fetch = require('node-fetch')
+const { NotFoundError } = require('../errors')
+const context = require('./context')
 
 /**
  * Retrieves the detailed info about an specific toilet
@@ -12,7 +13,7 @@ import { NotFoundError } from '../errors'
  * @throws {NotFoundError} if the toilet do not exist
  */
 
-function retrieveToilet(toiletId) {
+module.exports = function (toiletId) {
     validate.string(toiletId, 'toiletId')
 
     return (async () => {
@@ -24,7 +25,7 @@ function retrieveToilet(toiletId) {
             const toilet = await response.json()
             return toilet
         }
-        
+
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
@@ -37,6 +38,4 @@ function retrieveToilet(toiletId) {
 
         throw new Error('server error')
     })()
-}
-
-export default retrieveToilet
+}.bind(context)

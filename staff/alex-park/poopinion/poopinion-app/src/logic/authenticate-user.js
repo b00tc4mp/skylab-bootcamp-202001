@@ -1,6 +1,7 @@
-import { validate } from '../utils'
-import { NotAllowedError, NotFoundError } from '../errors'
-import fetch from 'node-fetch'
+const { validate } = require('../utils')
+const { NotAllowedError, NotFoundError } = require('../errors')
+const fetch = require('node-fetch')
+const context = require('./context')
 
 /**
  * Checks user credentials against the storage
@@ -13,7 +14,8 @@ import fetch from 'node-fetch'
  * @throws {NotAllowedError} on wrong credentials or deactivated user
  * @throws {NotFoundError} on non-existent user
  */
-function authenticateUser(email, password) {
+
+module.exports = function (email, password) {
     validate.string(email, 'email')
     validate.email(email)
     validate.string(password, 'password')
@@ -50,6 +52,4 @@ function authenticateUser(email, password) {
 
         throw new Error('server error')
     })()
-}
-
-export default authenticateUser
+}.bind(context)
