@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './App.sass'
 import { Landing, Login, Register, Home, Multiplayer, Create, Join } from './'
-import { register, login, isLoggedIn, logout } from '../logic'
+import { register, login, isLoggedIn, logout, createGame } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -35,6 +35,16 @@ export default withRouter(function ({ history }) {
     }
   }
 
+  async function handleCreateGame(name, owner) {
+    try {
+      debugger
+      await createGame(name, owner)
+        history.push('/multiplayer')
+    } catch ({ message }) {
+        setState({ ...state, error: message })
+    }
+  }
+
   function handleGoToLogin() {
     history.push('/login')
   }
@@ -56,7 +66,7 @@ export default withRouter(function ({ history }) {
       <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} error={error} onGoToRegister={handleGoToRegister} onGoToLanding={handleGoToLanding}/>} />
       <Route path="/home/" render={() => isLoggedIn() ? <Home /> : <Redirect to="/landing" />} />
       <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer /> : <Redirect to="/landing" />} />
-      <Route path="/create" render={() => isLoggedIn() ? <Create /> : <Redirect to="/landing" />} />
+      <Route path="/create" render={() => isLoggedIn() ? <Create handleCreateGame={handleCreateGame} /> : <Redirect to="/landing" />} />
       <Route path="/join" render={() => isLoggedIn() ? <Join /> : <Redirect to="/landing" />} />
 
   </div>

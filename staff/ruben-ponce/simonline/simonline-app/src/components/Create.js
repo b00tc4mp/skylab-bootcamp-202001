@@ -1,17 +1,51 @@
-import React from 'react'
 import'./Create.sass'
-import { createGame } from '../logic'
+import React, { useEffect } from 'react'
+import { isLoggedIn, retrieveUserId, logout } from '../logic'
+import { useHistory } from 'react-router-dom'
+
 // import Feedback from './Feedback'
 
-export default() => {
+export default ({ handleCreateGame }) => {
+    const history = useHistory()
+    let owner
 
-    return <div class="p1 create-group">
-    <div class="create-group__top-menu">
-        <a class="create-group__top-menu__back">Back</a>
-        <p class="create-group__top-menu__title">Create Game</p>
-        <a class="create-group__top-menu__logout">Logout</a>
+    useEffect(() => {
+        if (isLoggedIn())
+            (async () => {
+                try {
+                    owner = await retrieveUserId(sessionStorage.token)
+                    // setState({ page: 'home' })
+                } catch ({ message }) {
+                    // setState({ error: message, page: 'login' })
+                }
+            })()
+        else history.push('/landing')
+    }, [])
+
+    function handleLogout() {
+        logout()
+        history.push('/landing')
+    }
+
+    function handleGoBack() {
+        history.push('/multiplayer')
+    }
+
+    return <div className="p1 create-group">
+    <div className="create-group__top-menu">
+        <a className="create-group__top-menu__back" onClick={handleGoBack}>Back</a>
+        <p className="create-group__top-menu__title">Create Game</p>
+        <a className="create-group__top-menu__logout" onClick={handleLogout}>Logout</a>
     </div>
-    <input class="create-group__label" type="text" placeholder="name of game"/>
-    <button class="create-group__button">Create</button>
+    <form className="create-group__form" onSubmit={event => {
+            event.preventDefault()
+    
+            const name = event.target.name.value
+            debugger
+            handleCreateGame(name, owner)
+        }}>
+        <input className="create-group__label" name="name" type="text" placeholder="name of game"/>
+        <button className="create-group__button">Create</button>
+    </form>
     </div>
 }

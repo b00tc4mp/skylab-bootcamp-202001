@@ -1,15 +1,26 @@
 import React from 'react'
 import logo from './logo.svg';
 import'./Join.sass'
+import { logout } from '../logic'
+import { withRouter } from 'react-router-dom'
 // import Feedback from './Feedback'
 
-function Join() {
+export default withRouter(function ({ history }) {
+
+    function handleLogout() {
+        logout()
+        history.push('/landing')
+    }
+
+    function handleGoBack() {
+        history.push('/multiplayer')
+    }
 
     return  <div class="p1 join-group">
     <div class="join-group__top-menu">
-        <a class="join-group__top-menu__back">Back</a>
+        <a class="join-group__top-menu__back" onClick={handleGoBack}>Back</a>
         <p class="join-group__top-menu__title">Join Group</p>
-        <a class="join-group__top-menu__logout">Logout</a>
+        <a class="join-group__top-menu__logout" onClick={handleLogout}>Logout</a>
     </div>
     <div class="join-group__groups">
         <a>Group 1</a>
@@ -18,6 +29,4 @@ function Join() {
         <a>Group 4</a>
     </div>
 </div>
-}
-
-export default Join
+})

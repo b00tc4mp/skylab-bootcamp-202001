@@ -3,8 +3,9 @@ const { models: { User, Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 
 module.exports = (name, owner ) => {
+    debugger
     validate.string(name, 'name')
-    validate.string(owner, 'owner') // id
+    validate.string(owner, 'owner') //id
 
     return User.findById(owner)
         .then(user => {
