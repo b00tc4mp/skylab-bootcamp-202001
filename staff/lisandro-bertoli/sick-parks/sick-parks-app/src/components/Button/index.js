@@ -4,7 +4,7 @@ import styles from './styles'
 
 export default function Button(props) {
     return (
-        <TouchableOpacity style={styles[props.type]} onPress={props.onPress}>
+        <TouchableOpacity style={props.style} onPress={props.onPress}>
             <Text style={styles[props.textStyle]}>{props.text}</Text>
         </TouchableOpacity>
     )

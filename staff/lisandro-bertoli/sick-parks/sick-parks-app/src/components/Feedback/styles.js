@@ -5,16 +5,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
-    msg: {
-        fontSize: 25,
-        padding: 10,
-        color: 'white',
-        borderRadius: 10,
-        textAlign: 'center',
-        fontWeight: 'bold'
-    },
     warning: {
-        backgroundColor: 'orange'
+        color: 'orange'
     },
     error: {
         backgroundColor: 'red'
