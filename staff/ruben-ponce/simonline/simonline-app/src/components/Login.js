@@ -1,7 +1,8 @@
+import'./Login.sass'
 import React, { useEffect, useContext } from 'react'
 // import Feedback from './Feedback'
 
-export default ({onSubmit, onGoToRegister, onGoToLanding, error}) => {
+export default ({onSubmit, onGoToLanding, error}) => {
 
     return <div className="p1 login">
         <h1 onClick={event => {
@@ -17,10 +18,6 @@ export default ({onSubmit, onGoToRegister, onGoToLanding, error}) => {
             <input className="login__form__password" type="password" placeholder="password" name="password"/>
             <button>Login</button>
         </form>
-        <p onClick={event => {
-            event.preventDefault()
-            onGoToRegister()
-        }}>Register</p>
         {/* {error && <Feedback error={error}/>} */}
     </div>
 }

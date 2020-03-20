@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { Context } from './ContextProvider'
 import './App.sass'
+import React, { useState, useEffect, useContext } from 'react'
 import { Landing, Login, Register, Home, Multiplayer, Create, Join } from './'
 import { register, login, isLoggedIn, logout, createGame } from '../logic'
-import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
@@ -20,7 +20,7 @@ export default withRouter(function ({ history }) {
   async function handleRegister(username, password) {
     try {
       await register(username, password)
-        history.push('./login')
+        history.push('./landing')
     } catch ({ message }) {
         setState({ error: message })
     }
@@ -37,7 +37,6 @@ export default withRouter(function ({ history }) {
 
   async function handleCreateGame(name, owner) {
     try {
-      debugger
       await createGame(name, owner)
         history.push('/multiplayer')
     } catch ({ message }) {
@@ -68,6 +67,5 @@ export default withRouter(function ({ history }) {
       <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer /> : <Redirect to="/landing" />} />
       <Route path="/create" render={() => isLoggedIn() ? <Create handleCreateGame={handleCreateGame} /> : <Redirect to="/landing" />} />
       <Route path="/join" render={() => isLoggedIn() ? <Join /> : <Redirect to="/landing" />} />
-
   </div>
 })

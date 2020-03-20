@@ -5,7 +5,7 @@ const API_URL = process.env.REACT_APP_API_URL
 
 export default (function () {
     return (async () => {
-        const response = await fetch(`${API_URL}/users`, {
+        const response = await fetch(`${API_URL}/games`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${this.token}`
@@ -15,9 +15,9 @@ export default (function () {
         const { status } = response
 
         if (status === 200) {
-            const user = await response.json()
+            const games = await response.json()
 
-            return user
+            return games
         }
 
         if (status >= 400 && status < 500) {

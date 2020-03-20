@@ -1,11 +1,29 @@
-import React from 'react'
-import logo from './logo.svg';
 import'./Join.sass'
-import { logout } from '../logic'
-import { withRouter } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { logout, isLoggedIn, retrieveGames } from '../logic'
+import { useHistory } from 'react-router-dom'
+
 // import Feedback from './Feedback'
 
-export default withRouter(function ({ history }) {
+export default ({ handleJoin }) => {
+    const [games, setGames] = useState()
+    const history = useHistory()
+
+    useEffect(() => {
+        if (isLoggedIn())
+            (async () => {
+                try {
+                    const games = await retrieveGames()
+                    setGames(games)
+                    // setUsername(username)
+                    
+                    // setState({ page: 'home' })
+                } catch ({ message }) {
+                    // setState({ error: message, page: 'login' })
+                }
+            })()
+        else history.push('/landing')
+    }, [])
 
     function handleLogout() {
         logout()
@@ -23,10 +41,9 @@ export default withRouter(function ({ history }) {
         <a class="join-group__top-menu__logout" onClick={handleLogout}>Logout</a>
     </div>
     <div class="join-group__groups">
-        <a>Group 1</a>
-        <a>Group 2</a>
-        <a>Group 3</a>
-        <a>Group 4</a>
+
+    {games && games.map(game => <a>{game.name}</a>)}
+        
     </div>
 </div>
-})
+}

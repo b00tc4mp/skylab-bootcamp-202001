@@ -1,7 +1,8 @@
+import'./Register.sass'
 import React from 'react'
 import Feedback from './Feedback'
 
-export default ({onGoToLogin, onGoToLanding, onSubmit, error}) => {
+export default ({onGoToLanding, onSubmit, error}) => {
     
     return <div className="p1 register">
         <h1 onClick={event => {
@@ -20,10 +21,6 @@ export default ({onGoToLogin, onGoToLanding, onSubmit, error}) => {
         <input type="text" name="username" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
         <button>Register</button>
-        <span onClick={event => {
-            event.preventDefault()
-            onGoToLogin()
-        }}>Login</span>
 
         {/* {error && <Feedback error={error}/>} */}
     </form>

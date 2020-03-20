@@ -41,7 +41,7 @@ export default ({ handleCreateGame }) => {
             event.preventDefault()
     
             const name = event.target.name.value
-            debugger
+            
             handleCreateGame(name, owner)
         }}>
         <input className="create-group__label" name="name" type="text" placeholder="name of game"/>
