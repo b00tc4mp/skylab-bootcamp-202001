@@ -92,10 +92,9 @@ export default withRouter(function ({ history }) {
     <Route path="/entrance" render={() => isLoggedIn() ? <> <Home /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
-    <Route path="/atm" render={() => isLoggedIn() ? <> <Home /> <Atm onSubmit={handleAtm} infoTicket={dataTicket} /> </> : <Redirect to="/login"/>} />
+    <Route path="/atm" render={() => isLoggedIn() ? <> <Home /> <Atm onSubmit={handleAtm} infoTicket={dataTicket} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map/> </> : <Redirect to="/login" />}/>
     </div>
 
 })
-
 
