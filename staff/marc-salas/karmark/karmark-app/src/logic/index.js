@@ -12,6 +12,7 @@ import play from './play'
 import createProgram from './create-program'
 import isTokenValid from './is-token-valid'
 import retrievePrograms from './retrieve-programs'
+import deleteProgram from './delete-program'
 
 export {
     registerUser,
@@ -27,5 +28,6 @@ export {
     play,
     createProgram,
     isTokenValid,
-    retrievePrograms
+    retrievePrograms,
+    deleteProgram
 }
