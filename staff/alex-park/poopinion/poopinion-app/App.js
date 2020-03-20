@@ -19,8 +19,10 @@ import {
   publishToilet,
   searchToilets,
   toggleFavToilet,
-  retrieveFavToilets
+  retrieveFavToilets,
+  retrieveToilet
 } from './src/logic'
+import ToiletDetails from './src/components/Toilet-Details';
 
 export default function App() {
   const [coordinates, setCoordinates] = useState({
@@ -37,6 +39,8 @@ export default function App() {
   const [query, setQuery] = useState()
   const [toilets, setToilets] = useState()
   const [favToilets, setFavToilets] = useState()
+  const [detailedToilet, setDetailedToilet] = useState()
+  const [globalRating, setGlobalRating] = useState({ cleannessMean: 0, looksMean: 0, paymentMean: 0, multipleMean: 0, scoreMean: 0, paperMean: 0 })
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -48,8 +52,9 @@ export default function App() {
       })
     })
 
-    __handleUser__()
-  }, [])
+    // __handleUser__()
+    __handleToiletScore__()
+  }, [user, detailedToilet])
 
   function __handleError__(message) {
     setError(message)
@@ -64,6 +69,32 @@ export default function App() {
         const _user = await retrieveUser(token)
         setUser(_user)
       })()
+    }
+  }
+
+  function __handleToiletScore__() {
+    if (detailedToilet) {
+      try {
+        let meanRating = { cleannessMean: 0, looksMean: 0, paymentMean: 0, multipleMean: 0, scoreMean: 0, paperMean: 0 }
+        if (detailedToilet.comments.length) {
+          detailedToilet.comments.forEach(comment => {
+            meanRating.cleannessMean += comment.rating.cleanness
+            meanRating.looksMean += comment.rating.looks
+            meanRating.paymentMean += comment.rating.paymentRequired
+            meanRating.multipleMean += comment.rating.multipleToilets
+            meanRating.paperMean += comment.rating.paperDeployment
+            meanRating.scoreMean += comment.rating.overallRating
+          })
+
+          for (const key in meanRating) {
+            meanRating[key] = parseFloat((meanRating[key] / detailedToilet.comments.length).toFixed(2))
+          }
+        }
+        setGlobalRating(meanRating)
+        
+      } catch ({ message }) {
+        __handleError__(message)
+      }
     }
   }
 
@@ -122,6 +153,22 @@ export default function App() {
     }
   }
 
+  function handleRetrieveToilet(toiletId) {
+    try {
+      (async () => {
+        const toilet = await retrieveToilet(toiletId)
+        
+        setDetailedToilet(toilet)
+        __handleToiletScore__()
+
+        setView('details')
+      })()
+
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
+
   async function handleToggleFav(toiletId) { //WILL NEED TO UPLOAD WHEN DETAILS ARE DISPLAYED
     if (!user) {
       Alert.alert('You are not logged in yet!')
@@ -138,6 +185,11 @@ export default function App() {
         if (query) {
           const toilets = await searchToilets(query)
           await setToilets(toilets)
+        }
+
+        if (detailedToilet) {
+          const toilet = await retrieveToilet(detailedToilet.id.toString())
+          setDetailedToilet(toilet)
         }
       } catch ({ message }) {
         __handleError__(message)
@@ -217,10 +269,11 @@ export default function App() {
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} coordinates={coordinates} />}
-        {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} />}
-        {view === 'profilePage' && <Profile user={user} />}
-        {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} />}
+        {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
+        {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
+        {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
+        {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onFav={handleToggleFav} />}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

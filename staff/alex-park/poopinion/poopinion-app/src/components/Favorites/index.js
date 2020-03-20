@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles'
 import { Text, ScrollView, View, TouchableOpacity, Image, Alert } from 'react-native'
 
-function Favorites({ user, favToilets, onFav }) {
+function Favorites({ user, favToilets, onFav, onDetails }) {
     return (<>
         <ScrollView style={styles.container}>
             <View style={styles.headerContainer}>
@@ -16,7 +16,7 @@ function Favorites({ user, favToilets, onFav }) {
                     <View style={styles.resultsContainer}>
                         {favToilets.map(toilet => (<>
                             <View style={styles.toiletContainer}>
-                                <TouchableOpacity onPress={() => Alert.alert(toilet.id)}>
+                                <TouchableOpacity onPress={() => onDetails(toilet.id.toString())}>
                                     {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
                                         :
                                         (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}

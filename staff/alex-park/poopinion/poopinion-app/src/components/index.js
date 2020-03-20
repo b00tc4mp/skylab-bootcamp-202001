@@ -8,6 +8,7 @@ import QueryResults from './Query-Results'
 import Profile from './Profile'
 import Favorites from './Favorites'
 import NewToilet from './New-Toilet'
+import ToiletDetails from './Toilet-Details'
 
 export {
     Register,
@@ -19,5 +20,6 @@ export {
     QueryResults,
     Profile,
     Favorites,
-    NewToilet
+    NewToilet,
+    ToiletDetails
 }

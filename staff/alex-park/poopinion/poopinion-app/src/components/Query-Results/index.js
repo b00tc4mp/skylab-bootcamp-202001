@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './styles'
 import { View, ScrollView, TouchableOpacity, Text, Image, Alert } from 'react-native'
 //user && user.favToilets.find(favToilet => favToilet.id === toilet.id) === toilet.id ?
-function QueryResults({ query, toilets, user, onFav }) {
+function QueryResults({ query, toilets, user, onFav, onDetails }) {
     return (<>
         <ScrollView>
             <View style={styles.container}>
@@ -12,7 +12,7 @@ function QueryResults({ query, toilets, user, onFav }) {
                     <View style={styles.resultsContainer}>
                         {toilets.map(toilet => (<>
                             <View style={styles.toiletContainer}>
-                                <TouchableOpacity onPress={() => Alert.alert(toilet.id)}>
+                                <TouchableOpacity onPress={() => onDetails(toilet.id.toString())}>
                                     {toilet.image ? (<Image style={styles.image} source={{uri: toilet.image}} />)
                                     :
                                     (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}

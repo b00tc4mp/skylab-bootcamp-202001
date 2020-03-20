@@ -5,6 +5,7 @@ import publishToilet from './publish-toilet'
 import searchToilets from './search-toilets'
 import toggleFavToilet from './toggle-fav-toilet'
 import retrieveFavToilets from './retrieve-fav-toilets'
+import retrieveToilet from './retrieve-toilet'
 
 export {
     registerUser,
@@ -13,5 +14,6 @@ export {
     publishToilet,
     searchToilets,
     toggleFavToilet,
-    retrieveFavToilets
+    retrieveFavToilets,
+    retrieveToilet
 }
