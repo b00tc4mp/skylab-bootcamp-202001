@@ -13,8 +13,9 @@ export default (function(carPlate) {
 
         const retrievePk = await retrieveParking()
         if(!retrievePk) throw new Error('not found parking')
+        const pkName = retrievePk[0].parkingName
         
-        const response = await fetch(`${API_URL}/${retrievePk}/ticket`, {
+        const response = await fetch(`${API_URL}/${pkName}/ticket`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({carPlate})

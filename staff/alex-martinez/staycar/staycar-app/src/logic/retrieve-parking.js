@@ -17,7 +17,8 @@ export default (function () {
         if (status === 200) {
             const _parking = await response.json()
         
-            return this.parking = _parking[0].parkingName
+            //return this.parking = _parking[0].parkingName
+            return _parking
         }
 
         if (status >= 400 && status < 500) {

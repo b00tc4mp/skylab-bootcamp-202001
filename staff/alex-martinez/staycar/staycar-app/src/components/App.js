@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket } from '../logic'
+import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, retrieveParking } from '../logic'
 import { Context } from './ContextProvider'
 
 import './style/App.sass'
@@ -26,13 +26,24 @@ export default withRouter(function ({ history }) {
 
   useEffect(() => {
     if (isLoggedIn()) {
-      
-      history.push('/home')
+
+      (async () => {
+        try {
+            await retrieveParking()
+            history.push('/config')
+
+        } catch ({ message }) {
+            setState({ error: message })
+        }
+    })()
+  
     } else {
     
       history.push('/login')
     }
   }, [])
+
+
 
   async function handleLogin(username, password) {
     try {
@@ -89,7 +100,7 @@ export default withRouter(function ({ history }) {
     <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Redirect to="/login"/>}/>
     <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Login onSubmit={handleLogin} error={error} /> }/>
     <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />}/>
-    <Route path="/entrance" render={() => isLoggedIn() ? <> <Home /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
+    <Route path="/entrance" render={() => isLoggedIn() ? <> <Home error={error} /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/atm" render={() => isLoggedIn() ? <> <Home /> <Atm onSubmit={handleAtm} infoTicket={dataTicket} error={error}/> </> : <Redirect to="/login"/>} />

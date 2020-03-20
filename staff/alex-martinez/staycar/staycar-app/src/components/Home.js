@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { withRouter} from 'react-router-dom'
 import './style/Home.sass'
-
-import { Header } from '.'
+import { Header, Feedback } from '.'
 
 import { ReactComponent as Access } from './icons/access.svg'
 import { ReactComponent as Exit } from './icons/exit.svg'
@@ -13,9 +12,8 @@ import { ReactComponent as Config } from './icons/config.svg'
 import { isLoggedIn } from '../logic'
 
 
-export default withRouter (function({history}) {
-
-
+export default withRouter (function({history, error}) {
+    
     const handleGoToEntrance = () => {
         history.push('/entrance')
     }
