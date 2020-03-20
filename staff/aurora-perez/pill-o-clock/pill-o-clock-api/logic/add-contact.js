@@ -2,17 +2,21 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { User } } = require('pill-o-clock-data')
 const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 
-module.exports = (idUser, idUserToAdd)=> { 
+module.exports = (idUser, idSecondUser)=> { 
     validate.string(idUser, 'idUser')
-    validate.string(idUserToAdd, 'idUserToAdd')    
+    validate.string(idSecondUser, 'idSecondUser')    
 
-    return User.findById(idUser)
-        .then(user => {
+    return Promise.all([User.findById(idUser), User.findById(idSecondUser)])
+        .then(([user, secondUser]) => {
             if (!user) throw new NotFoundError(`user with id ${idUser} not found`)
-            
-            user.contacts.push(idUserToAdd)
 
-            return user.save()
+            if (!secondUser) throw new NotFoundError(`user with id ${secondUser} not found`)
+            
+            user.contacts.push(idSecondUser)
+
+            secondUser.contacts.push(idUser)
+
+            return Promise.all([user.save(), secondUser.save()])
         })
         .then(() => { })
 }

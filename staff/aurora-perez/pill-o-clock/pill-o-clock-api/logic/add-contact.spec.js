@@ -50,10 +50,11 @@ describe('addContact', () => {
         it('should succeed on correct and valid and right data', () => {
             
             addContact(idUser, idUserToAdd)
-                .then(() => User.findById(idUser).lean() )
-                .then((user) => {
+                .then(Promise.all([User.findById(idUser).lean(), User.findById(idSecondUser).lean()]) )
+                .then(([user, user2]) => {
                     expect(user).to.exist
                     expect(user.contact).to.include(idUserToAdd)
+                    expect(user2.contacts).to.include(idUser)
                 })
         })
 
