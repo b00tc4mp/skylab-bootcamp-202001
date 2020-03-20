@@ -3,7 +3,8 @@ import { StyleSheet, StatusBar, Image, AsyncStorage } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-// import * as Location from 'expo-location'
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
 
 import logic, { registerUser, retrieveUser, loginUser, logoutUser, isUserLoggedIn } from 'sick-parks-logic'
 import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
@@ -23,37 +24,61 @@ export default function App() {
 	const [user, setUser] = useState()
 	const [state, setState] = useState()
 
-	// useEffect(() => {
-	// 	(async () => {
-	// 		await logic.__context__.storage.clear()
-	// 		try {
-	// 			if (await isUserLoggedIn()) {
-	// 				const user = await retrieveUser()
-	// 				setUser(user)
-	// 			}
-	// 		} catch ({ message }) {
-	// 			setError(message)
-	// 		}
-	// 	})()
-	// }, [])
+	useEffect(() => {
+		(async () => {
+			await logic.__context__.storage.clear()
+			try {
+				if (await isUserLoggedIn()) {
+					const user = await retrieveUser()
+					setUser(user)
+					console.log(user)
+				}
+			} catch ({ message }) {
+				setError(message)
+			}
+		})()
+	}, [])
 
 
 	_getNotificationsPermissionsAsync = async () => {
-		await Permissions.askAsync(Permissions.NOTIFICATIONS)
-		return
+		const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+		if (status === 'granted') return true
+	}
+
+	_getLocationAsync = async () => {
+		try {
+			const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+			if (status === 'granted') {
+				return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+			}
+			throw new Error('Location permission not granted');
+
+		} catch (error) {
+			return false
+		}
+
 	}
 
 	const handleLogin = async (credentials) => {
 		try {
 			await loginUser(credentials)
 			const user = await retrieveUser()
-			setUser(user)
 
-			//_getNotificationsPermissionsAsync()
+			if (_getNotificationsPermissionsAsync())
+				user.notifications = true
+
+			const location = _getLocationAsync()
+			if (location) {
+				user.allowLocation = true
+				user.location = location
+				setUser(user)
+			} else {
+				setUser(user)
+			}
 
 			setError(null)
 		} catch (errpr) {
-			console.log(error)
+
 			setError(message)
 		}
 	}
@@ -65,7 +90,6 @@ export default function App() {
 			setState('registered')
 		} catch ({ message }) {
 			setError(message)
-			console.log(message)
 		}
 	}
 
