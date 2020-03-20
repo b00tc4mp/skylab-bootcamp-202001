@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
         width: '100%',
         marginVertical: 15
     },
+    commentsContainer: {
+        marginTop: 15,
+        marginBottom: 40
+    },
     image: {
         width: '100%',
         height: 200
@@ -135,7 +139,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'center',
     },
-
     commentTopRightText: {
         fontSize: 20,
         textAlign: 'center',
@@ -149,6 +152,32 @@ const styles = StyleSheet.create({
     },
     theComment: {
         fontStyle: 'italic'
+    },
+    thumbs: {
+        flexDirection: 'row',
+        margin: 10
+    },
+    thumbUp: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+        marginRight: 10
+    },
+    thumbDown: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+        marginHorizontal: 10
+    },
+    thumbUpContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        alignItems: 'center'
+    },
+    thumbDownContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        alignItems: 'center'
     }
 })
 

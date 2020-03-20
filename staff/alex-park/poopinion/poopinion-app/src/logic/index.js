@@ -9,5 +9,7 @@ module.exports = {
     searchToilets: require('./search-toilets'),
     toggleFavToilet: require('./toggle-fav-toilet'),
     retrieveFavToilets: require('./retrieve-fav-toilets'),
-    retrieveToilet: require('./retrieve-toilet')
+    retrieveToilet: require('./retrieve-toilet'),
+    toggleThumbUp: require('./toggle-thumb-up'),
+    toggleThumbDown: require('./toggle-thumb-down')
 }

@@ -21,8 +21,10 @@ import logic, {
   searchToilets,
   toggleFavToilet,
   retrieveFavToilets,
-  retrieveToilet
-}  from './src/logic'
+  retrieveToilet,
+  toggleThumbUp,
+  toggleThumbDown
+} from './src/logic'
 
 logic.__context__.storage = AsyncStorage
 
@@ -54,9 +56,9 @@ export default function App() {
       })
     })
 
-    // __handleUser__()
+    __handleUser__()
     __handleToiletScore__()
-  }, [user, detailedToilet])
+  }, [detailedToilet])
 
   function __handleError__(message) {
     setError(message)
@@ -93,7 +95,7 @@ export default function App() {
           }
         }
         setGlobalRating(meanRating)
-        
+
       } catch ({ message }) {
         __handleError__(message)
       }
@@ -159,7 +161,7 @@ export default function App() {
     try {
       (async () => {
         const toilet = await retrieveToilet(toiletId)
-        
+
         setDetailedToilet(toilet)
         __handleToiletScore__()
 
@@ -196,6 +198,30 @@ export default function App() {
       } catch ({ message }) {
         __handleError__(message)
       }
+    }
+  }
+
+  async function handleToggleThumbUp(commentId) {
+    try {
+      await toggleThumbUp(token, commentId)
+      __handleUser__()
+      if (detailedToilet) {
+        __handleToiletScore__()
+      }
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
+
+  async function handleToggleThumbDown(commentId) {
+    try {
+      await toggleThumbDown(token, commentId)
+      __handleUser__()
+      if (detailedToilet) {
+        __handleToiletScore__()
+      }
+    } catch ({ message }) {
+      __handleError__(message)
     }
   }
 
@@ -275,7 +301,7 @@ export default function App() {
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
-        {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onFav={handleToggleFav} />}
+        {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

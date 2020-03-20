@@ -3,7 +3,9 @@ import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-na
 import MapView from 'react-native-maps'
 import styles from './styles'
 
-function ToiletDetails({ toilet, globalRating, user, onFav }) {
+function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown }) {
+    const [comments, setComments] = useState(toilet.comments.slice(0, 5))
+
     return (<>
         <ScrollView >
             <View style={styles.container}>
@@ -132,7 +134,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav }) {
                     <View style={styles.commentsContainer}>
                         <Text style={styles.comments}>Comments ({toilet.comments.length}):</Text>
                         {toilet.comments.length ?
-                            (toilet.comments.map(comment => (<>
+                            (comments.map(comment => (<>
                                 <View style={styles.commentContainer}>
                                     <View style={styles.commentTop}>
                                         <View style={styles.commentTopLeft}>
@@ -140,11 +142,42 @@ function ToiletDetails({ toilet, globalRating, user, onFav }) {
                                             <Text style={styles.commentCreated}>Posted at: {comment.created.toString().slice(0, 10)}</Text>
                                         </View>
                                         <View style={styles.commentTopRight}>
-                                            <Text style={styles.commentTopRightText}>Rating: <Text style={{color: '#df7861'}}>{comment.rating.overallRating}</Text><Text style={{color: 'brown'}}>/5</Text></Text>
+                                            <Text style={styles.commentTopRightText}>Rating: <Text style={{ color: '#df7861' }}>{comment.rating.overallRating}</Text><Text style={{ color: 'brown' }}>/5</Text></Text>
                                         </View>
                                     </View>
                                     <View style={styles.commentItself}>
                                         <Text style={styles.theComment}>"{comment.rating.textArea}"</Text>
+                                        <View style={styles.thumbs}>
+                                            <View style={styles.thumbUpContainer}>
+                                                <TouchableOpacity onPress={() => onThumbUp(comment.id.toString())}>
+                                                    {user.thumbsUp.includes(comment.id.toString()) ? (
+                                                        <Image style={styles.thumbUp} source={require('../../../assets/thumb-up.png')} />
+                                                    )
+                                                        :
+                                                        (
+                                                            <Image style={styles.thumbUp} source={require('../../../assets/thumb-up-unchecked.png')} />
+                                                        )
+                                                    }
+                                                </TouchableOpacity>
+
+                                                <Text>{comment.thumbsUp.length}</Text>
+                                            </View>
+
+                                            <View style={styles.thumbDownContainer}>
+                                                <TouchableOpacity onPress={() => onThumbDown(comment.id.toString())}>
+                                                {user.thumbsDown.includes(comment.id.toString()) ? (
+                                                        <Image style={styles.thumbDown} source={require('../../../assets/thumb-down.png')} />
+                                                    )
+                                                        :
+                                                        (
+                                                            <Image style={styles.thumbDown} source={require('../../../assets/thumb-down-unchecked.png')} />
+                                                        )
+                                                    }
+                                                </TouchableOpacity>
+
+                                                <Text>{comment.thumbsDown.length}</Text>
+                                            </View>
+                                        </View>
                                     </View>
                                 </View>
                             </>)))

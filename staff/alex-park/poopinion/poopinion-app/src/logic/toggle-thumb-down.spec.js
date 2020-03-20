@@ -4,28 +4,25 @@ const { NotAllowedError, NotFoundError } = require('../errors')
 const context = require('./context')
 
 /**
- * Toggles or untoggles the selected toilet to favorites
+ * Toggles or untoggles the selected comment on thumb up
  * 
  * @param {string} token user's unique token
- * @param {string} toiletId toilet's unique ID
+ * @param {string} commentId comment's unique ID
  * 
  * @returns {undefined} returns undefined if the toggle or untoggle was successful
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
- * @throws {NotFoundError} if the user or the toilet do not exist
+ * @throws {NotFoundError} if the user or the comment do not exist
  */
 
-module.exports = function (token, toiletId) {
+module.exports = function (token, commentId) {
     validate.string(token, 'token')
-    validate.string(toiletId, 'toiletId')
+    validate.string(commentId, 'commentId')
 
     return (async () => {
-        const response = await fetch(`http://192.168.1.253:8085/api/users/toilet/${toiletId}/favorite`, {
+        const response = await fetch(`http://192.168.1.253:8085/api/users/comment/${commentId}/thumb-up`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })
 
         const { status } = response
