@@ -1,5 +1,10 @@
 const nodemailer = require("nodemailer");
-module.exports = async(authMail, to, html) => {
+const path = require('path')
+const pdf = require('./pdf-creator')
+
+module.exports = async ({ authMail, to, subject, html }) => {
+
+  await pdf().then(res => console.log(res))
 
   async function main() {
 
@@ -14,8 +19,16 @@ module.exports = async(authMail, to, html) => {
     const mailOptions = {
       from: authMail.mail, // sender address
       to, // list of receivers
-      subject: 'Confirmación de registro en CrediDay App', // Subject line
-      html
+      // bcc: to,
+      subject, // Subject line
+      html,
+      // attachments: [
+      //   {   // utf-8 string as an attachment
+      //     filename: 'file2.pdf',
+      //     path: path.join(__dirname, 'output1.pdf'),
+      //     contentType: 'application/pdf'
+      //   }
+      // ]
     };
 
     let info = await transporter.sendMail(mailOptions)

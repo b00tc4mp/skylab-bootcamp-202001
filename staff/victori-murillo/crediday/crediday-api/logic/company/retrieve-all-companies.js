@@ -1,18 +1,21 @@
 const { Company } = require('crediday-models')
 
-module.exports = async (query = {}) => {
+module.exports = (query = {}) => {
 
   const fields = Object.keys(Company.schema.obj)
-  const filter = Object.keys(query).filter(key => fields.some(field => field === key))
+  const filter = Object.keys(query).filter(key => fields.some(field => field === key));
 
-  const companies = await Company.find().select(filter).lean()
+  return (async () => {
 
-  if (!companies.length) throw new Error('Not Found')
+    const companies = await Company.find().select(filter).lean()
 
-  companies.forEach(company => {
-    company.id = company._id.toString()
-    delete company._id
-  })
+    if (!companies.length) throw new Error('Not Found')
 
-  return companies
+    companies.forEach(company => {
+      company.id = company._id.toString()
+      delete company._id
+    })
+
+    return companies
+  })()
 }

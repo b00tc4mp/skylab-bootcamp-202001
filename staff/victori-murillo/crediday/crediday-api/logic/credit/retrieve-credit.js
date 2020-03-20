@@ -1,15 +1,19 @@
 const { Credit } = require('crediday-models')
 const validate = require('crediday-utils')
 
-module.exports = async (creditId) => {
-  validate.string(creditId, 'creditId')
+module.exports = creditId => {
+  validate.string(creditId, 'creditId');
 
-  let credit = await Credit.findOne({ _id: creditId }).lean()
 
-  if (!credit) throw new Error('Credit not Found')
+  (async () => {
 
-  credit.id = credit_id.toString()
-  delete credit._id
+    let credit = await Credit.findOne({ _id: creditId }).lean()
 
-  return credit
+    if (!credit) throw new Error('Credit not Found')
+
+    credit.id = credit_id.toString()
+    delete credit._id
+
+    return credit
+  })()
 }

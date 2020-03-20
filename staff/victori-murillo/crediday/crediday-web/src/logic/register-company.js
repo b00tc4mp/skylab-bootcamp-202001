@@ -1,6 +1,7 @@
 import validate from 'crediday-utils'
 // import { NotAllowedError } from 'events-errors'
 const API_URL = process.env.REACT_APP_API_URL
+console.log(API_URL)
 
 export default async ({ companyName, username, email, password, passwordValidation }) => {
   validate.string(companyName, 'Nombre de Compañia')

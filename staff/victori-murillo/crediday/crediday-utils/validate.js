@@ -12,7 +12,7 @@ module.exports = {
     },
 
     email(target) {
-        if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} is not an e-mail`) // TODO custom error?
+        if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} no es un email válido`) // TODO custom error?
     },
 
     type(target, name, type) {
@@ -35,11 +35,16 @@ module.exports = {
         if (!header.trim().length || !payload.trim().length || !signature.trim().length) throw new ContentError('invalid token')
     },
 
-    length(target, name, min, max) {
+    length(target, name, min, max, msg = false) {
         if (typeof min !== 'number') throw new ContentLength('Add a number in the first argument')
         if (typeof max !== 'number') throw new ContentLength('Add a number in the second argument')
 
         if (min < 0 || max < 0) throw new ContentLength('Only positive numbers')
+
+        if (msg) {
+            if (target.length < min) throw new ContentLength(name)
+            if (target.length > max) throw new ContentLength(name)
+        }
 
         if (target.length < min) throw new ContentLength(`${name} debe tener al menos ${min} caracteres`)
         if (target.length > max) throw new ContentLength(`${name} debe tener máximo ${max} caracteres`)

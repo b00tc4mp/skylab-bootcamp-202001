@@ -14,6 +14,10 @@ module.exports = router
   .post('/users/auth', user.authenticate)
   
   .patch('/companies/email/:id', company.confirm)
+  
+  .patch('/users/confirm-data', user.confirmData)
+  .patch('/users/confirm-verification-code', user.confirmCode)
+  .patch('/users/update-password', user.updatePassword)
 
   .use(jwtVerify)
 
@@ -21,10 +25,12 @@ module.exports = router
   .get('/companies', validateRole, company.retrieveAll)
 
   .post('/users', user.register)
+  
   .get('/users/:id', user.retrieve)
   .get('/users-companies', user.retrieveAll)
   .patch('/users/:id?', user.update)
   .delete('/users/:id', user.delete)
+  
 
   .post('/credits/users/:id', credit.register)
   .get('/credits/users/:id', credit.retrieve)
