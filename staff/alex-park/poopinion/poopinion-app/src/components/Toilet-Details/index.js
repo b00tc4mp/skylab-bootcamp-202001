@@ -14,7 +14,72 @@ function ToiletDetails({ toilet, globalRating, user, onFav }) {
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
                             <Text style={styles.place}>{toilet.place}</Text>
-                            <Text style={styles.rating}>💩💩💩💩💩 ({toilet.comments.length})</Text>
+                            {globalRating.scoreMean >= 4.5 && (<>
+                                <View style={styles.poopRating}>
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Text style={styles.rating}>({toilet.comments.length})</Text>
+                                </View>
+                            </>)}
+
+                            {globalRating.scoreMean >= 3.5 && globalRating.scoreMean < 4.5 && (<>
+                                <View style={styles.poopRating}>
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Text style={styles.rating}>({toilet.comments.length})</Text>
+                                </View>
+                            </>)}
+
+                            {globalRating.scoreMean >= 2.5 && globalRating.scoreMean < 3.5 && (<>
+                                <View style={styles.poopRating}>
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Text style={styles.rating}>({toilet.comments.length})</Text>
+                                </View>
+                            </>)}
+
+                            {globalRating.scoreMean >= 1.5 && globalRating.scoreMean < 2.5 && (<>
+                                <View style={styles.poopRating}>
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Text style={styles.rating}>({toilet.comments.length})</Text>
+                                </View>
+                            </>)}
+
+                            {globalRating.scoreMean >= 0.5 && globalRating.scoreMean < 1.5 && (<>
+                                <View style={styles.poopRating}>
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Text style={styles.rating}>({toilet.comments.length})</Text>
+                                </View>
+                            </>)}
+
+                            {globalRating.scoreMean < 0.5 && (<>
+                                <View style={styles.poopRating}>
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
+                                    <Text style={styles.rating}>({toilet.comments.length})</Text>
+                                </View>
+                            </>)}
+
                             <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                         </View>
                         <TouchableOpacity style={styles.headerRight} onPress={() => { onFav(toilet.id) }}>

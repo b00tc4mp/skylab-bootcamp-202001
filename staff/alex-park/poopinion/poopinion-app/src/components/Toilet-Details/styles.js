@@ -98,7 +98,19 @@ const styles = StyleSheet.create({
         margin: 15,
         justifyContent: 'space-around'
     },
-
+    poopRating: {
+        flex: 1,
+        width: '70%',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    smallPoop: {
+        flex: 1,
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%',
+        alignSelf: 'flex-start'
+    },
 })
 
 export default styles
