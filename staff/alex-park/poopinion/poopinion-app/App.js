@@ -59,7 +59,7 @@ export default function App() {
     __handleUser__()
     __handleToiletScore__()
   }, [detailedToilet])
-
+  
   function __handleError__(message) {
     setError(message)
     setTimeout(() => {
@@ -201,25 +201,33 @@ export default function App() {
     }
   }
 
-  async function handleToggleThumbUp(commentId) {
+  function handleToggleThumbUp(commentId) {
     try {
-      await toggleThumbUp(token, commentId)
-      __handleUser__()
-      if (detailedToilet) {
-        __handleToiletScore__()
-      }
+      (async () => {
+        await toggleThumbUp(token, commentId)
+        __handleUser__()
+        if (detailedToilet) {
+          const toilet = await retrieveToilet(detailedToilet.id.toString())
+          setDetailedToilet(toilet)
+          __handleToiletScore__()
+        }
+      })()
     } catch ({ message }) {
       __handleError__(message)
     }
   }
 
-  async function handleToggleThumbDown(commentId) {
+  function handleToggleThumbDown(commentId) {
     try {
-      await toggleThumbDown(token, commentId)
-      __handleUser__()
-      if (detailedToilet) {
-        __handleToiletScore__()
-      }
+      (async () => {
+        await toggleThumbDown(token, commentId)
+        __handleUser__()
+        if (detailedToilet) {
+          const toilet = await retrieveToilet(detailedToilet.id.toString())
+          setDetailedToilet(toilet)
+          __handleToiletScore__()
+        }
+      })()
     } catch ({ message }) {
       __handleError__(message)
     }

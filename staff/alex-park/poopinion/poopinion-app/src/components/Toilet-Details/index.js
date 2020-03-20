@@ -6,6 +6,10 @@ import styles from './styles'
 function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
 
+    useEffect(() => {
+        setComments(toilet.comments.slice(0, 5))
+    }, [toilet.comments])
+
     return (<>
         <ScrollView >
             <View style={styles.container}>
@@ -165,7 +169,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
 
                                             <View style={styles.thumbDownContainer}>
                                                 <TouchableOpacity onPress={() => onThumbDown(comment.id.toString())}>
-                                                {user.thumbsDown.includes(comment.id.toString()) ? (
+                                                    {user.thumbsDown.includes(comment.id.toString()) ? (
                                                         <Image style={styles.thumbDown} source={require('../../../assets/thumb-down.png')} />
                                                     )
                                                         :
