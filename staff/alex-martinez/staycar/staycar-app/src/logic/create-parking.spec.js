@@ -91,7 +91,7 @@ describe('createParking', () => {
 
 
     afterAll(async () => {
-        await Promise.resolve([User.deleteMany(), Parking.deleteMany()])
+        await Promise.all([Parking.deleteMany()])
         return await mongoose.disconnect()
     })
 })

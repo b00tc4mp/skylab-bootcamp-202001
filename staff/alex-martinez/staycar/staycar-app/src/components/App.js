@@ -27,15 +27,7 @@ export default withRouter(function ({ history }) {
   useEffect(() => {
     if (isLoggedIn()) {
 
-      (async () => {
-        try {
-            await retrieveParking()
-            history.push('/config')
-
-        } catch ({ message }) {
-            setState({ error: message })
-        }
-    })()
+        history.push('/home')
   
     } else {
     

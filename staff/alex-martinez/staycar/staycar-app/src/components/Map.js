@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './style/Map.sass'
 import {retrieveLots} from '../logic'
-import { MapItem } from '.'
+import { MapItem, Feedback } from '.'
 
 export default function() {
     const [lots, setLots] = useState([])
+    const [error, setError] = useState()
 
     async function handleRetrieveLots() {
-        const lots = await retrieveLots()
-        setLots(lots)
+        try{
+            const lots = await retrieveLots()
+            setLots(lots)
+        }catch(error){
+            setError(error.message)
+        }
     }
 
     useEffect(() => {
@@ -21,6 +26,8 @@ export default function() {
         <section className="plates">
 
             {lots.map(lot => <MapItem key={lot.id} lot={lot} />)}
+
+            {error && <Feedback message={error} level="warn" />}
             
         </section>
     </section>

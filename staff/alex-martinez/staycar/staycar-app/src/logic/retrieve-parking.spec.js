@@ -4,7 +4,7 @@ const { random } = Math
 import retrieveParking from './retrieve-parking'
 
 
-fdescribe('retrieveParking', () => {
+describe('retrieveParking', () => {
     
     beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -32,7 +32,7 @@ fdescribe('retrieveParking', () => {
 
             const parking = await retrieveParking()
            
-            expect(parking).toBe(parkingName)
+            expect(parking[0].parkingName).toBe(parkingName)
         })
 
     })

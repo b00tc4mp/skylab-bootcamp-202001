@@ -1,11 +1,15 @@
 import { NotAllowedError } from 'staycar-errors'
 import context from './context'
+import retrieveParking from './retrieve-parking'
 
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function () {
     
     return (async () => {
+        const pk = await retrieveParking()
+        if(pk.length === 0) throw new Error('there are no parkings')
+        
         const response = await fetch(`${API_URL}/parking`, {
             headers: {
                 'Content-Type': 'application/json'

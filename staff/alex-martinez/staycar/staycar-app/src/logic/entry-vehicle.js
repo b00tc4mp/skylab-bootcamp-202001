@@ -12,7 +12,8 @@ export default (function(carPlate) {
     return(async () => {
 
         const retrievePk = await retrieveParking()
-        if(!retrievePk) throw new Error('not found parking')
+        if(retrievePk.length === 0) throw new Error('not found parking')
+        
         const pkName = retrievePk[0].parkingName
         
         const response = await fetch(`${API_URL}/${pkName}/ticket`, {
@@ -21,16 +22,14 @@ export default (function(carPlate) {
             body: JSON.stringify({carPlate})
         }) 
 
-        const { status } = response
-
-        if(status === 201){
-            return
+        if(response.status === 201){
+            return 
         }
 
-        if (status >= 400 && status < 500) {
+        if (response.status >= 400 && response.status < 500) {
             const { error } = await response.json()
 
-            if (status === 401) {
+            if (response.status === 401) {
                 throw new NotAllowedError(error)
             }
 

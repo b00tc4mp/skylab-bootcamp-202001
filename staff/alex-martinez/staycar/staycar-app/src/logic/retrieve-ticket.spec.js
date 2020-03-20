@@ -1,17 +1,17 @@
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 const { mongoose, models: { Parking, Ticket, User } } = require('staycar-data')
 const { random } = Math
-import entryVehicle from './entry-vehicle'
+import retrieveTicket from './retrieve-ticket'
 
 
-describe('entryVehicle', () => {
+describe('retrieveTicket', () => {
     
     beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        return await Promise.resolve([Ticket.deleteMany(), Parking.deleteMany()])
+        return await Promise.resolve([User.deleteMany(), Ticket.deleteMany(), Parking.deleteMany()])
     })
 
-    let parkingName, rate, totalLots, carPlate, lots
+    let parkingName, rate, totalLots, carPlate, lots, entryHour
 
     beforeEach(() => {
         
@@ -20,6 +20,7 @@ describe('entryVehicle', () => {
         totalLots = 10
         carPlate = '1234KKK'
         lots = []
+        entryHour = new Date()
 
         for (let i = 1; i <= totalLots; i++) {
             let lot = {}
@@ -28,33 +29,25 @@ describe('entryVehicle', () => {
       
             lots.push(lot)
           }
-
     })
 
-    describe('when user and parking already exists', () => {
+    describe('when parking already exists', () => {
         
-        beforeEach(async () => {
-            
-            await Parking.create({parkingName, rate, totalLots, lots})
-        
+        beforeEach(async() => {
+            await Parking.create({parkingName, rate, totalLots})
+            await Ticket.create({carPlate, parkingName, entryHour})
+          
         })
 
         it('should succeed on right data', async () => {
             
-            await entryVehicle(carPlate)
-
-            const ticket = await Ticket.findOne({ carPlate })
-
-            expect(ticket).toBeDefined()
-            
+            const ticket = await retrieveTicket(carPlate)
+           
+            expect(ticket.carPlate).toBe(carPlate)
         })
 
     })
 
-    it('should fail on non string carPlate', () => {
-        let carPlate = 1234
-        expect(() => entryVehicle(carPlate)).toThrow(TypeError, `carPlate ${carPlate} is not a string`)
-    })
 
     afterAll(async () => {
         await Promise.all([User.deleteMany(), Ticket.deleteMany(), Parking.deleteMany()])
