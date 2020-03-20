@@ -1,5 +1,4 @@
 const context = require('./context')
-const API_URL = process.env.API_URL
 const fetch = require('node-fetch')
 const atob = require('atob')
 
@@ -10,7 +9,7 @@ module.exports = function retrieveUser() {
         const [, payload] = token.split('.')
         const { sub } = atob(payload)
 
-        const response = await fetch(`${API_URL}/users/${sub}`, {
+        const response = await fetch(`http://192.168.1.101:8085/api/users/${sub}`, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}` }
         })

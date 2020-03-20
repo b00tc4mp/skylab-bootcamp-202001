@@ -1,8 +1,6 @@
-require('dotenv').config()
 const { NotFoundError } = require('../sick-parks-errors')
 const { validate } = require('../sick-parks-utils')
 const fetch = require('node-fetch')
-const API_URL = process.env.API_URL
 
 module.exports = ({ query, location }) => {
     validate.string(query, 'query')
@@ -10,8 +8,8 @@ module.exports = ({ query, location }) => {
     return (async () => {
         let response
         if (location) {
-            response = await fetch(`${API_URL}/parks?q=${query}&_location=${location}`)
-        } else response = await fetch(`${API_URL}/parks?q=${query}`)
+            response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&_location=${location}`)
+        } else response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}`)
 
 
         const data = await response.json()

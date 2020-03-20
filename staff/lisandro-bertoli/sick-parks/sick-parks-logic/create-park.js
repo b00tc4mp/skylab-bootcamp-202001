@@ -1,7 +1,5 @@
-require('dotenv').config()
 const { validate } = require('../sick-parks-utils')
 const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-errors')
-const API_URL = process.env.API_URL
 const context = require('./context')
 const atob = require('atob')
 
@@ -30,7 +28,7 @@ module.exports = function (data) {
         const [, payload] = token.split('.')
         const { sub } = atob(payload)
 
-        const response = await fetch(`${API_URL}/users/${sub}/parks`, {
+        const response = await fetch(`http://192.168.1.101:8085/api/users/${sub}/parks`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ park, features })
