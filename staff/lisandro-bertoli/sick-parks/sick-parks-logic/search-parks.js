@@ -2,9 +2,9 @@ require('dotenv').config()
 const { NotFoundError } = require('../sick-parks-errors')
 const { validate } = require('../sick-parks-utils')
 const fetch = require('node-fetch')
-const API_URL = process.env.REACT_APP_API_URL
+const API_URL = process.env.API_URL
 
-export default searchParks = ({ query, location }) => {
+module.exports = ({ query, location }) => {
     validate.string(query, 'query')
 
     return (async () => {
@@ -17,8 +17,9 @@ export default searchParks = ({ query, location }) => {
         const data = await response.json()
 
         const { error, results } = data
-
+        debugger
         if (error) throw new Error(error)
+
         return results
 
     })()

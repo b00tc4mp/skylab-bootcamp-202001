@@ -1,11 +1,13 @@
 require('dotenv').config()
 const { validate } = require('../sick-parks-utils')
-const { NotFoundError, NotAllowedError, ContentError } = require('../sick-parks-errors')
-const API_URL = process.env.REACT_APP_API_URL
+const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-errors')
+const API_URL = process.env.API_URL
+const context = require('./context')
+const atob = require('atob')
 
 const fetch = require('node-fetch')
 
-export default function CreatePark(token, data) {
+module.exports = function (data) {
     const { features, park } = data
 
     for (key in park) {
@@ -22,11 +24,13 @@ export default function CreatePark(token, data) {
         })
     }
 
-    const [, payload] = token.split('.')
-
-
     return (async () => {
-        const response = await fetch(`${API_URL}/users/${payload}/parks`, {
+        const token = await this.storage.getItem('token')
+
+        const [, payload] = token.split('.')
+        const { sub } = atob(payload)
+
+        const response = await fetch(`${API_URL}/users/${sub}/parks`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ park, features })
@@ -46,4 +50,4 @@ export default function CreatePark(token, data) {
                 })
         } else throw new Error('Server error')
     })()
-}
+}.bind(context)

@@ -1,14 +1,19 @@
 require('dotenv').config()
-import createPark from './create-park'
 
-const TEST_MONGODB_URL = process.env.REAC_APP_TEST_MONGODB_URL
-const TEST_JWT_SECRET = process.env.REACT_APP_JWT_SECRET
-const { mongoose, models: { Park, User } } = require('../sick-parks-data')
+const logic = require('.')
+const { createPark } = logic
+const AsyncStorage = require('not-async-storage')
+const { expect } = require('chai')
+
+const TEST_JWT_SECRET = process.env.JWT_SECRET
+const { mongoose, models: { Park, User } } = require('sick-parks-data')
 const { random } = Math
 const jwt = require('jsonwebtoken')
 
+logic.__context__.storage = AsyncStorage
+
 describe('createPark', () => {
-    beforeAll(async () => {
+    before(async () => {
         await mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
         return Promise.all([User.deleteMany(), Park.deleteMany()])
     })
@@ -46,33 +51,33 @@ describe('createPark', () => {
             userId = id
             features.push({ name: featureName, size: featureSize, location: featureLocation })
 
-            token = jwt.sign({ sub: id }, TEST_JWT_SECRET)
-
+            const _token = jwt.sign({ sub: id }, TEST_JWT_SECRET)
+            await logic.__context__.storage.setItem('token', _token)
         })
 
         it('should create a new park', async () => {
-            await createPark(token, { park, features })
+            await createPark({ park, features })
             const _park = await Park.findOne({ name: park.name }).lean()
 
-            expect(_park.name).toBe(park.name)
-            expect(_park.size).toBe(park.size)
-            expect(_park.level).toBe(park.level)
-            expect(_park.flow).toBe(park.flow)
-            expect(_park.resort).toBe(park.resort)
+            expect(_park.name).to.equal(park.name)
+            expect(_park.size).to.equal(park.size)
+            expect(_park.level).to.equal(park.level)
+            expect(_park.flow).to.equal(park.flow)
+            expect(_park.resort).to.equal(park.resort)
 
-            expect(_park.location.coordinates).toEqual(expect.arrayContaining(park.location.coordinates))
-            expect(_park.description).toBe(park.description)
-            expect(_park.creator.toString()).toBe(userId)
+            expect(_park.location.coordinates).to.deep.equal(park.location.coordinates)
+            expect(_park.description).to.equal(park.description)
+            expect(_park.creator.toString()).to.equal(userId)
         })
 
         it('should add the park to the user', async () => {
-            await createPark(token, { park, features })
+            await createPark({ park, features })
             const user = await User.findById(userId)
             const _park = await Park.findOne({ name: park.name }).lean()
 
-            expect(user.parks).toContainEqual(_park._id)
+            expect(user.parks).to.include(_park._id)
         })
     })
 
-    afterAll(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
 })

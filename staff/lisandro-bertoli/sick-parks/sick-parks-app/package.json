@@ -42,7 +42,8 @@
     "react-native-reanimated": "~1.4.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "sick-parks-logic": "file:../sick-parks-logic"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

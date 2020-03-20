@@ -1,5 +1,4 @@
-const { validate } = require('../sick-parks-utils')
-
+const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
 module.exports = function ({ name, surname, email, password }) {
@@ -11,8 +10,6 @@ module.exports = function ({ name, surname, email, password }) {
 
 
     return (async () => {
-
-
         const response = await fetch(`http://192.168.1.101:8085/api/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -30,5 +27,7 @@ module.exports = function ({ name, surname, email, password }) {
 
                 })
         } else throw new Error('Unknown error')
+
+
     })()
 }

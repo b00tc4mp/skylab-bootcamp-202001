@@ -1,14 +1,18 @@
-import context from './context'
-import { ContentError } from '../sick-parks-errors'
-const API_URL = process.env.REACT_APP_API_URL
+const fetch = require('node-fetch')
+const { ContentError } = require('sick-parks-errors')
+const API_URL = process.env.API_URL
+const context = require('./context')
+const atob = require('atob')
 
-export default (function () {
-
-    const token = this.getToken()
-    const [, payload] = token.split('.')
-    const { sub } = payload
+module.exports = function () {
 
     return (async () => {
+        const token = await this.storage.getItem('token')
+
+        const [, payload] = token.split('.')
+        const { sub } = atob(payload)
+
+
         const response = await fetch(`${API_URL}/users/${sub}/parks`, {
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })
@@ -27,4 +31,4 @@ export default (function () {
         return results
     })()
 
-}).bind(context)
+}.bind(context)

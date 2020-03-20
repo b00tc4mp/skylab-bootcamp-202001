@@ -1,16 +1,19 @@
 require('dotenv').config()
-import retrievePark from './retrieve-park'
 
-const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
-const { mongoose, models: { Park, User, Feature, Location } } = require('../sick-parks-data')
-
-const { NotFoundError } = require('../sick-parks-errors')
+const logic = require('.')
+const { retrievePark } = logic
+const AsyncStorage = require('not-async-storage')
+const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
+const { mongoose, models: { Park, User, Feature, Location } } = require('sick-parks-data')
+const { expect } = require('chai')
+const { NotFoundError } = require('sick-parks-errors')
 
 const { random } = Math
 
+logic.__context__.storage = AsyncStorage
 
 describe('retrievePark', () => {
-    beforeAll(async () => {
+    before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [Park.deleteMany(), User.deleteMany()]
     })
@@ -55,16 +58,16 @@ describe('retrievePark', () => {
         it('should succeed on retrieving the park', async () => {
             const result = await retrievePark(parkId)
 
-            expect(result.name).toBe(parkName)
-            expect(result.id).toBe(parkId)
-            expect(result.resort).toBe(resort)
-            expect(result.description).toBe(description)
+            expect(result.name).to.equal(parkName)
+            expect(result.id).to.equal(parkId)
+            expect(result.resort).to.equal(resort)
+            expect(result.description).to.equal(description)
 
-            expect(result.features[0].name).toBe(feature.name)
-            expect(result.features[0].size).toBe(feature.size)
+            expect(result.features[0].name).to.equal(feature.name)
+            expect(result.features[0].size).to.equal(feature.size)
 
-            expect(result.creator.name).toBe(name)
-            expect(result.creator.id).toBe(userId)
+            expect(result.creator.name).to.equal(name)
+            expect(result.creator.id).to.equal(userId)
 
         })
     })
@@ -83,8 +86,8 @@ describe('retrievePark', () => {
                 await retrievePark(parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
-                expect(error).toBeInstanceOf(NotFoundError)
-                expect(error.message).toBe(`the park you are looking for does not exist or has been deleted`)
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`the park you are looking for does not exist or has been deleted`)
             }
         })
 
@@ -92,19 +95,19 @@ describe('retrievePark', () => {
             let parkId = 1
             expect(() => {
                 retrievePark(parkId)
-            }).toThrow(TypeError, `parkId ${parkId} is not a string`)
+            }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
 
             parkId = undefined
             expect(() => {
                 retrievePark(parkId)
-            }).toThrow(TypeError, `parkId ${parkId} is not a string`)
+            }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
 
             parkId = true
             expect(() => {
                 retrievePark(parkId)
-            }).toThrow(TypeError, `parkId ${parkId} is not a string`)
+            }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
         })
     })
 
-    afterAll(() => Promise.all([Park.deleteMany(), User.deleteMany()]).then(() => mongoose.disconnect()))
+    after(() => Promise.all([Park.deleteMany(), User.deleteMany()]).then(() => mongoose.disconnect()))
 })

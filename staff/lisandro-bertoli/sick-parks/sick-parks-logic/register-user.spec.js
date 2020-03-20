@@ -1,12 +1,12 @@
-const registerUser = require('./register-user')
-const { mongoose, models: { User } } = require('../sick-parks-data')
-// const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
+const { registerUser } = require('.')
+const { mongoose, models: { User } } = require('sick-parks-data')
 const { random } = Math
+const { expect } = require('chai')
 const bcrypt = require('bcryptjs')
 
 
 describe('registerUser', () => {
-    beforeAll(async () => {
+    before(async () => {
         await mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
 
         return await Promise.resolve(User.deleteMany())
@@ -25,19 +25,19 @@ describe('registerUser', () => {
     it('should succeed on new user', async () => {
         const response = await registerUser({ name, surname, email, password })
 
-        expect(response).toBeUndefined()
+        expect(response).to.be.undefined
 
         const user = await User.findOne({ email })
-        debugger
-        expect(user).toBeDefined()
-        expect(typeof user.id).toBe('string')
-        expect(user.name).toBe(name)
-        expect(user.surname).toBe(surname)
-        expect(user.email).toBe(email)
-        expect(user.created).toBeInstanceOf(Date)
+
+        expect(user).to.exist
+        expect(typeof user.id).to.equal('string')
+        expect(user.name).to.equal(name)
+        expect(user.surname).to.equal(surname)
+        expect(user.email).to.equal(email)
+        expect(user.created).to.be.an.instanceOf(Date)
 
         const validPassowrd = bcrypt.compare(password, user.password)
-        expect(validPassowrd).toBeTruthy() // TODO encrypt this field!
+        expect(validPassowrd).to.be.ok // TODO encrypt this field!
     })
 
     describe('when user already exists', () => {
@@ -47,19 +47,20 @@ describe('registerUser', () => {
 
         it('should fail on already existing user', async () => {
             try {
+
                 await registerUser({ name, surname, email, password })
 
                 throw new Error('should not reach this point')
             } catch (error) {
 
-                expect(error).toBeDefined()
-                expect(error.message).toBe(`user ${email} already exists`)
+                expect(error).to.exist
+                expect(error.message).to.equal(`user ${email} already exists`)
             }
 
         })
     })
 
-    afterAll(async () => {
+    after(async () => {
         await Promise.resolve(User.deleteMany())
         return await mongoose.disconnect()
     })

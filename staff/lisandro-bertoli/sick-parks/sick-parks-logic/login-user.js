@@ -1,9 +1,9 @@
-import context from './context'
+const context = require('./context')
+const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
-const { validate } = require('../sick-parks-utils')
 
 
-export default (function ({ email, password }) {
+module.exports = function ({ email, password }) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')
@@ -20,9 +20,8 @@ export default (function ({ email, password }) {
 
         if (error) throw new Error(error)
 
-        this.setToken(token)
-
+        await this.storage.setItem('token', token)
         return
-    })()
 
-}).bind(context)
+    })()
+}.bind(context)

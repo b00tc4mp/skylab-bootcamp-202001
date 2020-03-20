@@ -1,14 +1,16 @@
 require('dotenv').config()
-import searchParks from './search-parks'
 
-const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
+const logic = require('.')
+const { searchParks } = logic
 
-const { mongoose, models: { Park, Location } } = require('../sick-parks-data')
+const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
 
+const { mongoose, models: { Park, Location } } = require('sick-parks-data')
+const { expect } = require('chai')
 const { random, sqrt, pow } = Math
 
-fdescribe('searchParks', () => {
-    beforeAll(async () => {
+describe('searchParks', () => {
+    before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Park.deleteMany()
     })
@@ -49,7 +51,7 @@ fdescribe('searchParks', () => {
         } else {
             first = resort
         }
-        // })
+
 
     })
     describe('when parks exists', () => {
@@ -66,8 +68,8 @@ fdescribe('searchParks', () => {
 
             let results = await searchParks({ query, location: _location })
 
-            expect(results.length).toBeGreaterThan(0)
-            expect(results[0].resort).toBe(first)
+            expect(results.length).to.be.greaterThan(0)
+            expect(results[0].resort).to.equal(first)
 
         })
 
@@ -75,12 +77,13 @@ fdescribe('searchParks', () => {
             let query = 'begg'
             let results = await searchParks({ query, location: _location })
 
-            results.forEach(result => {
-                expect([park1.name, park2.name]).toContain(result.name)
-                expect([park1.resort, park2.resort]).toContain(result.resort)
-                expect([park1.size, park2.size]).toContain(result.size)
-                expect([park1.verified, park2.verified]).toContain(result.verified)
-                expect([park1.id, park2.id]).toContain(result.id)
+            results.forEach((result, index) => {
+
+                expect([park1.name, park2.name]).to.include(result.name)
+                expect([park1.resort, park2.resort]).to.include(result.resort)
+                expect([park1.size, park2.size]).to.include(result.size)
+                expect([park1.verified, park2.verified]).to.include(result.verified)
+                expect([park1.id, park2.id]).to.include(result.id)
 
 
             })
@@ -90,11 +93,11 @@ fdescribe('searchParks', () => {
             results = await searchParks({ query, location: _location })
 
             results.forEach(result => {
-                expect(result.name).toBe(park1.name)
-                expect(result.resort).toBe(park1.resort)
-                expect(result.size).toBe(park1.size)
-                expect(result.verified).toBe(park1.verified)
-                expect(result.id).toBe(park1.id.toString())
+                expect(result.name).to.equal(park1.name)
+                expect(result.resort).to.equal(park1.resort)
+                expect(result.size).to.equal(park1.size)
+                expect(result.verified).to.equal(park1.verified)
+                expect(result.id).to.equal(park1.id.toString())
 
             })
 
@@ -102,11 +105,11 @@ fdescribe('searchParks', () => {
 
             results = await searchParks({ query, location: _location })
 
-            expect(results[0].name).toBe(park1.name)
-            expect(results[0].resort).toBe(park1.resort)
-            expect(results[0].size).toBe(park1.size)
-            expect(results[0].verified).toBe(park1.verified)
-            expect(results[0].id).toBe(park1.id.toString())
+            expect(results[0].name).to.equal(park1.name)
+            expect(results[0].resort).to.equal(park1.resort)
+            expect(results[0].size).to.equal(park1.size)
+            expect(results[0].verified).to.equal(park1.verified)
+            expect(results[0].id).to.equal(park1.id.toString())
 
 
         })
@@ -122,14 +125,14 @@ fdescribe('searchParks', () => {
         let query = 'Random'
 
         const result = await searchParks({ query, location: _location })
-        expect(result).toBeInstanceOf(Array)
-        expect(result.length).toBe(0)
+        expect(result).to.be.an.instanceOf(Array)
+        expect(result.length).to.equal(0)
     })
 
 
 
 
 
-    afterAll(() => Park.deleteMany().then(() => mongoose.disconnect()))
+    after(() => Park.deleteMany().then(() => mongoose.disconnect()))
 
 })

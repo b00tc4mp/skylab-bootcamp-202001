@@ -1,10 +1,11 @@
 require('dotenv').config()
-const { NotFoundError, ContentError } = require('../sick-parks-errors')
-const { validate } = require('../sick-parks-utils')
-const fetch = require('node-fetch')
-const API_URL = process.env.REACT_APP_API_URL
 
-export default retrieveParks = (parkId) => {
+const { NotFoundError, ContentError } = require('sick-parks-errors')
+const { validate } = require('sick-parks-utils')
+const fetch = require('node-fetch')
+const API_URL = process.env.API_URL
+
+module.exports = (parkId) => {
     validate.string(parkId, 'parkId')
 
     return (async () => {
