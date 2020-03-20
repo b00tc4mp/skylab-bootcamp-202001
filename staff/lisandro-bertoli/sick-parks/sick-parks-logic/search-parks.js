@@ -1,5 +1,5 @@
-const { NotFoundError } = require('../sick-parks-errors')
-const { validate } = require('../sick-parks-utils')
+const { NotFoundError } = require('sick-parks-errors')
+const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
 module.exports = ({ query, location }) => {
