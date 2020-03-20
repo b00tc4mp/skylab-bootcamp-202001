@@ -133,17 +133,28 @@ function ToiletDetails({ toilet, globalRating, user, onFav }) {
                         <Text style={styles.comments}>Comments ({toilet.comments.length}):</Text>
                         {toilet.comments.length ?
                             (toilet.comments.map(comment => (<>
-                                <View>
-                                    <Text>Commented by: {comment.publisher.name} {comment.publisher.surname}</Text>
+                                <View style={styles.commentContainer}>
+                                    <View style={styles.commentTop}>
+                                        <View style={styles.commentTopLeft}>
+                                            <Text>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>
+                                            <Text style={styles.commentCreated}>Posted at: {comment.created.toString().slice(0, 10)}</Text>
+                                        </View>
+                                        <View style={styles.commentTopRight}>
+                                            <Text style={styles.commentTopRightText}>Rating: <Text style={{color: '#df7861'}}>{comment.rating.overallRating}</Text><Text style={{color: 'brown'}}>/5</Text></Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.commentItself}>
+                                        <Text style={styles.theComment}>"{comment.rating.textArea}"</Text>
+                                    </View>
                                 </View>
                             </>)))
                             :
                             (<Text>No comments to display...</Text>)}
                     </View>
 
+                </View>
             </View>
-            </View>
-    </ScrollView>
+        </ScrollView>
     </>)
 }
 

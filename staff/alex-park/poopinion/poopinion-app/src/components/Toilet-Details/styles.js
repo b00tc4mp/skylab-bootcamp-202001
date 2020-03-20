@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 1,
-    flexDirection: 'row'        
-    },  
+        flexDirection: 'row'
+    },
     headerLeft: {
         flex: 1,
         flexDirection: 'column'
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         margin: 15
     },
     scoreLeftUp: {
-        alignSelf:'center',
+        alignSelf: 'center',
         borderWidth: 5,
         borderColor: '#df7861',
         paddingHorizontal: 20,
@@ -111,6 +111,45 @@ const styles = StyleSheet.create({
         height: '100%',
         alignSelf: 'flex-start'
     },
+    commentContainer: {
+        marginVertical: 15,
+        borderWidth: 2,
+        borderColor: 'grey',
+        borderRadius: 15,
+        padding: 15,
+        backgroundColor: 'rgba(255, 255, 255, 0.7)'
+    },
+    commentPublisher: {
+        fontWeight: 'bold'
+    },
+    commentCreated: {
+        fontStyle: 'italic'
+    },
+    commentTop: {
+        flexDirection: 'row'
+    },
+    commentTopLeft: {
+        flex: 1
+    },
+    commentTopRight: {
+        flex: 1,
+        alignSelf: 'center',
+    },
+
+    commentTopRightText: {
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: 'bold',
+        borderWidth: 1,
+        borderColor: 'lightgrey',
+        borderRadius: 10
+    },
+    commentItself: {
+        marginTop: 25
+    },
+    theComment: {
+        fontStyle: 'italic'
+    }
 })
 
 export default styles
