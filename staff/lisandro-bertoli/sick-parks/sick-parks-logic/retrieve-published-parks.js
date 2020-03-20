@@ -1,7 +1,8 @@
 const fetch = require('node-fetch')
 const { ContentError } = require('sick-parks-errors')
 const context = require('./context')
-const atob = require('atob')
+var Base64 = require('js-base64').Base64
+
 
 module.exports = function () {
 
@@ -9,7 +10,7 @@ module.exports = function () {
         const token = await this.storage.getItem('token')
 
         const [, payload] = token.split('.')
-        const { sub } = atob(payload)
+        const { sub } = Base64.decode(payload)
 
 
         const response = await fetch(`http://192.168.1.101:8085/api/users/${sub}/parks`, {
