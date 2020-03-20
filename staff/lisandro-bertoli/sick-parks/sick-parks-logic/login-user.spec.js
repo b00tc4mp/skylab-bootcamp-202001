@@ -1,13 +1,16 @@
-
-import login from './login'
-const { mongoose, models: { User } } = require('../sick-parks-data')
-//const { env: { REACT_APP_TEST_MONGODB_URL: MONGODB_URL } } = require('process')
+const logic = require('.')
+const { loginUser } = logic
 const { random } = Math
-const bcrypt = require('bcryptjs')
-import context from './context'
+const { expect } = require('chai')
+const AsyncStorage = require('not-async-storage')
 
-describe('login', () => {
-    beforeAll(async () => {
+const { mongoose, models: { User } } = require('sick-parks-data')
+const bcrypt = require('bcryptjs')
+
+logic.__context__.storage = AsyncStorage
+
+describe('loginUser', () => {
+    before(async () => {
         await mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
         return await Promise.resolve(User.deleteMany())
     })
@@ -30,41 +33,44 @@ describe('login', () => {
 
         it('should succeed on correct credentials', async () => {
 
-            const returnValue = await login({ email, password })
+            const returnValue = await loginUser({ email, password })
 
-            expect(returnValue).toBeUndefined()
+            expect(returnValue).to.be.undefined
 
+            const token = await logic.__context__.storage.getItem('token')
 
-            const [header, payload, signature] = context.token.split('.')
-            expect(header.length).toBeGreaterThan(0)
-            expect(payload.length).toBeGreaterThan(0)
-            expect(signature.length).toBeGreaterThan(0)
+            const [header, payload, signature] = token.split('.')
+            expect(header.length).to.be.greaterThan(0)
+            expect(payload.length).to.be.greaterThan(0)
+            expect(signature.length).to.be.greaterThan(0)
 
         })
 
         it('should fail on incorrect password', async () => {
+            password = `${password}-wrong`
             try {
-                await login(email, `${password}-wrong`)
+                await loginUser({ email, password })
                 throw new Error('should not reach this point')
             } catch (error) {
-                expect(error).toBeInstanceOf(Error)
-                expect(error.message).toBe('wrong credentials')
+                expect(error).to.be.instanceOf(Error)
+                expect(error.message).to.equal('wrong credentials')
             }
         })
     })
 
     it('should fail on incorrect email', async () => {
+        email = `wrong-${email}`
         try {
-            await login(`$wrong-${email}`, password)
+            await loginUser({ email, password })
             throw new Error('should not reach this point')
 
         } catch (error) {
-            expect(error).toBeInstanceOf(Error)
-            expect(error.message).toBe('wrong credentials')
+            expect(error).to.be.instanceOf(Error)
+            expect(error.message).to.equal('wrong credentials')
         }
 
     })
-    afterAll(async () => {
+    after(async () => {
         await Promise.resolve(User.deleteMany())
         return await mongoose.disconnect()
     })
