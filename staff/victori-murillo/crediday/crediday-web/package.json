@@ -10,7 +10,9 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
     "crediday-errors": "file:../crediday-errors",
+    "crediday-models": "file:../crediday-models",
     "crediday-utils": "file:../crediday-utils",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.4",
@@ -23,6 +25,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -55,11 +55,6 @@ const schema = new Schema({
     }, `This role must have an email`]
   },
 
-  registrationDate: {
-    type: Date,
-    default: Date.now
-  },
-
   authenticatedDates: [{ type: Date }],
 
   crId: String,
@@ -84,6 +79,11 @@ const schema = new Schema({
   },
 
   collectorsDontSee: [String],
+
+  created: {
+    type: Date,
+    default: Date.now
+  },
 
   company: {
     type: ObjectId,

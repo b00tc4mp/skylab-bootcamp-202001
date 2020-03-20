@@ -20,9 +20,10 @@ module.exports = async ({ username, password }) => {
   user.authenticatedDates.push(new Date)
 
   const { id, company } = await user.save()
+  console.log(company._id)
 
   return {
     sub: id,
-    com: company
+    com: company._id.toString()
   }
 }
