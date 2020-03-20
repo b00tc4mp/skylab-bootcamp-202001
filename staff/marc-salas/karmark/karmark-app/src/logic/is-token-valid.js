@@ -11,7 +11,7 @@ export default ( async function (){
 
             return false
         } catch (error) {
-            debugger
+            
             logeOut()
             return false
         }

@@ -16,11 +16,13 @@ export default withRouter(function ({ history }) {
 
   useEffect(() => {
     if (isLoggedIn()) {
+        code = []
         setState({ page: 'home' })
 
         history.push('/home')
 
     } else {
+      code = []
       setState({ page: 'login' })
 
       history.push('/login')
@@ -140,18 +142,22 @@ export default withRouter(function ({ history }) {
   }
   
   function handleGoToLogin() {
+    
     history.push('/login')
   }
 
   function handleGoToRegister() {
+
     history.push('/register')
   }
 
   function handleGoToPrograms(){
+    code = []
     history.push('/programs')
   }
 
   function handleGoToHome() {
+    code = []
     history.push('/home')
   }
 

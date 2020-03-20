@@ -2,7 +2,7 @@ const {deleteUserProgram} = require('../logic')
 const {ContentError} = require('karmark-errors')
 
 module.exports = (req, res) => {
-    const {params: {id: programId}, payload: { sub: id}} = req
+    const {body: {id: programId}, payload: { sub: id}} = req
 
     try {
         deleteUserProgram(id, programId)

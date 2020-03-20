@@ -29,7 +29,7 @@ export default (function (username, password) {
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
-            debugger
+            
             if (status === 401) {
                 throw new NotAllowedError(error)
             }

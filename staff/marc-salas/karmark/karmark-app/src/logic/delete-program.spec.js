@@ -2,6 +2,7 @@ const { random } = Math
 const { mongoose, models: { User, Program } } = require('karmark-data')
 const { deleteProgram } = require('./index')
 const jwt = require('jsonwebtoken')
+import {ContentError} from 'karmark-errors'
 import context from './context'
 
 const { env: {
@@ -24,7 +25,7 @@ describe('deleteProgram', () => {
         surname = `surname-${random()}`
         username = `username-${random()}`
         password = `password-${random()}`
-        programName = `programeName-${random()}`
+        programName = `HOLA-${random()}`
         code = ['up', 'down', 'right', 'left']
     })
 
@@ -47,10 +48,50 @@ describe('deleteProgram', () => {
         it('should delete the program on correct credentials', async () =>{
             const response = await deleteProgram(programId)
 
-            console.log(response)
             expect(response).toBeUndefined()
         })
+        
+        it('should fail on non string id', async () =>{
+            programId = 4
+            try {
+                await deleteProgram(programId)
+            } catch (error) {
+                expect(error).toBeInstanceOf(TypeError)
+                expect(error.message).toBe(`id ${programId} is not a string`)
+            }
+            programId = true
+            try {
+                await deleteProgram(programId)
+            } catch (error) {
+                expect(error).toBeInstanceOf(TypeError)
+                expect(error.message).toBe(`id ${programId} is not a string`)
+            }
+            programId = []
+            try {
+                await deleteProgram(programId)
+            } catch (error) {
+                expect(error).toBeInstanceOf(TypeError)
+                expect(error.message).toBe(`id ${programId} is not a string`)
+            }
+            programId = {}
+            try {
+                await deleteProgram(programId)
+            } catch (error) {
+                expect(error).toBeInstanceOf(TypeError)
+                expect(error.message).toBe(`id ${programId} is not a string`)
+            }
+        })
 
+        it('should fail on empty id', async () => {
+            programId = ''
+            try {
+                await deleteProgram(programId)
+            } catch (error) {
+                expect(error).toBeInstanceOf(ContentError)
+                expect(error.message).toBe(`id is empty`)
+            }
+        })
 
     })
+    afterAll(() => Promise.all([User.deleteMany(), Program.deleteMany()]).then(() => mongoose.disconnect()))
 })

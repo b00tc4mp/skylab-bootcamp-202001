@@ -1,17 +1,22 @@
+import { validate } from 'karmark-utils'
 import { ContentError } from 'karmark-errors'
 import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (id) {
+    validate.string(id, 'id')
+
     return (async () => {
-        const response = await fetch(`${API_URL}/delete/${id}`, {
+        const response = await fetch(`${API_URL}/delete`, {
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${this.token}`
-            }
+            },
+            body: JSON.stringify({id})
         })
-        console.log(response)
+        
         const { status } = response
         if (status === 201) {
 

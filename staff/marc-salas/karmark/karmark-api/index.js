@@ -57,7 +57,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
         app.get('/programs', jwtVerifierMidWare, retrieveUserPrograms)
 
-        app.delete('/delete/:id', jwtVerifierMidWare, deleteProgram)
+        app.delete('/delete', jsonBodyParser, jwtVerifierMidWare, deleteProgram)
 
         app.listen(port, () => logger.info(`server ${name} ${version} up and running on port ${port}`))
               

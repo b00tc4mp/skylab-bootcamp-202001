@@ -7,6 +7,6 @@ module.exports = (author, id) => {
 
     return User.findByIdAndUpdate( author, {$pull: { programs: id }})
         .then(() => Program.deleteOne({_id: id}))
-        .then(() => {console.log('KSHDNFLKSHFLKend')})
+        .then(() => {})
 
 }
