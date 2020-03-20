@@ -70,7 +70,8 @@ describe('retrieveToilet', () => {
                     
                     expect(toilet.comments).to.be.instanceOf(Array)
                     expect(toilet.comments[0]).to.be.instanceOf(Object)
-                    expect(toilet.comments[0].publisher.toString()).to.equal(_id)
+                    expect(toilet.comments[0].publisher.name.toString()).to.equal(name)
+                    expect(toilet.comments[0].publisher.surname.toString()).to.equal(surname)
                     expect(toilet.comments[0].commentedAt.toString()).to.equal(_toiletId)
                     expect(toilet.comments[0].rating.cleanness).to.equal(rating.cleanness)
                     expect(toilet.comments[0].rating.looks).to.equal(rating.looks)

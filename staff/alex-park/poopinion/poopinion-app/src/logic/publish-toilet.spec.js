@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 import { NotAllowedError, NotFoundError } from '../errors'
 
 describe('publishToilet', () => {
-    let name, surname, email, password, age, gender, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates
+    let name, surname, email, password, age, gender, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates, image
     const GENDERS = ['male', 'female', 'non-binary']
 
     beforeAll(async () => {
@@ -29,6 +29,7 @@ describe('publishToilet', () => {
         latitude = random()
         longitude = random()
         coordinates = { latitude, longitude, latitudeDelta, longitudeDelta }
+        image = `image-${random()}`
     })
 
     describe('happy paths', () => {
@@ -42,7 +43,7 @@ describe('publishToilet', () => {
         })
 
         it('should succeed on a correct publish', async () => {
-            const result = await publishToilet(_token, place, coordinates)
+            const result = await publishToilet(_token, place, null, coordinates)
             expect(result).toBeUndefined()
 
             const toilet = await Toilet.findOne({ publisher: _id })
@@ -59,7 +60,7 @@ describe('publishToilet', () => {
         it('should fail to retrieve the user on an invalid token', async () => {
             let _error
             try {
-                await publishToilet(`${_token}-wrong`, place, coordinates)
+                await publishToilet(`${_token}-wrong`, place, image, coordinates)
             } catch (error) {
                 _error = error
             }
@@ -74,7 +75,7 @@ describe('publishToilet', () => {
             let _error
 
             try {
-                await publishToilet(_token, place, coordinates)
+                await publishToilet(_token, place, image, coordinates)
             } catch (error) {
                 _error = error
             }
@@ -88,7 +89,7 @@ describe('publishToilet', () => {
             await User.deleteMany()
             let _error
             try {
-                await publishToilet(_token, place, coordinates)
+                await publishToilet(_token, place, image, coordinates)
             } catch (error) {
                 _error = error
             }
@@ -102,52 +103,35 @@ describe('publishToilet', () => {
     describe('unhappy paths', () => {
         it('should fail on a non string token', () => {
             _token = 45438
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`token ${_token} is not a string`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`token ${_token} is not a string`)
            
             _token = {}
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`token ${_token} is not a string`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`token ${_token} is not a string`)
             
             _token = false
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`token ${_token} is not a string`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`token ${_token} is not a string`)
             
             _token = [1,2,3]
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`token ${_token} is not a string`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`token ${_token} is not a string`)
       
             _token = undefined
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`token is empty`)
-        })
-
-        it('should fail on a non string place', () => {
-            _token = 'sometoken'
-            place = 45438
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`place ${place} is not a string`)
-           
-            place = {}
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`place ${place} is not a string`)
-            
-            place = false
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`place ${place} is not a string`)
-            
-            place = [1,2,3]
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`place ${place} is not a string`)
-      
-            place = undefined
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`place is empty`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`token is empty`)
         })
 
         it('should fail on a non object coordinates', () => {
+            _token = 'sometoken'
             place = 'someplace'
             coordinates = 45438
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
            
             coordinates = 'sasasas'
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
             
             coordinates = false
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
             
             coordinates = undefined
-            expect(() => publishToilet(_token, place, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_token, place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
         })
     })
 
