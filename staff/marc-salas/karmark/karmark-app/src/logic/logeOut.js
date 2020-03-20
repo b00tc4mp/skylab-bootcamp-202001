@@ -1,5 +1,5 @@
 import context from './context'
 
 export default (function () {
-    this.clear()
+    delete sessionStorage.token
 }).bind(context)

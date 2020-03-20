@@ -3,7 +3,7 @@ import './programe.sass'
 import Feedback from './Feedback'
 import SaveWindows from './SaveWindows'
 
-export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onCancel, save, saveProgram }) {
+export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onCancel, save, saveProgram, onPrograms }) {
     
     useEffect(() => {
         onMount()
@@ -66,11 +66,16 @@ export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMo
 
         onCancel()
     }
+    function handleToPrograms(event){
+        event.preventDefault()
+
+        onPrograms()
+    }
     return <>
         <div className="programe">
             <div className="programeheader">
                 <button className="programeheader__home" onClick={handleGoToHome}><i className="fas fa-home"></i></button>
-                <button className="programeheader__menu"><i className="fas fa-bars"></i></button>
+                <button className="programeheader__menu" onClick={handleToPrograms}><i className="fas fa-bars"></i></button>
             </div>
             <div className="programebody">
                 <button className="programebody__arrowup" onClick={handleOnUp}><i className="fas fa-arrow-alt-circle-up"></i></button>
@@ -83,7 +88,7 @@ export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMo
             {error && <Feedback message={error} level="warn" />}
             <div className="programefooter">
                 <button className="programefooter__save" onClick={handleOnSave}><i className="fas fa-save"></i></button>
-                <button className="programefooter__stop" onClick={handleOnDelete}><i className="fas fa-stop"></i></button>
+                <button className="programefooter__stop" onClick={handleOnDelete}><i className="fas fa-undo-alt"></i></button>
             </div>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>
