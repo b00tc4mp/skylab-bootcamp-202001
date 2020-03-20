@@ -106,8 +106,8 @@ const temperature = {
     datasets: [
       {
         label: "Altura",
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgb(97,218,251)",
+        backgroundColor: "rgba(97,218,251, 0.5)",
         lineTension: 0.4,
         
         
@@ -220,7 +220,11 @@ export default function(){
                 
                 
                 refresh: 300
-              }
+              },
+              time: {
+                unit: 'second'
+            }
+    
             }
           ]
         }
@@ -228,7 +232,7 @@ export default function(){
   
       
       return<>
-      <Line data={height} options={heightOpt} height={75}/> 
+      <Line data={height} options={heightOpt} height={60} /> 
       {/* <Line data={temperature} options={temperatureOpt}  />
       <Line data={speed} options={speedOpt} />
       <Line data={aceleration} options={acelerationOpt}/> */}

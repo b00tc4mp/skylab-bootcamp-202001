@@ -1,8 +1,8 @@
 
 .navbar-right
   position: fixed
-  
-  background-color:#e4e4e4
+  // border-left: 1px solid #5A5A5A
+  background-color:#fff
   transition: width 600ms ease
   z-index: 4
  
@@ -23,9 +23,10 @@
   
 
 .rnav_button
-  padding: 0.5rem 1rem
+  padding:  1rem
   border: 1px solid #61DAFB
-  border-radius: 2rem
+  font-size: 1.25rem
+  border-radius: 50%
   
 
 
@@ -56,9 +57,10 @@
     color: #000000
 
 .rnav_linktext
-  display: none
+  // display: none
+  display: inline
   margin-right: 1rem
-  margin-left: auto
+  margin-left: 2rem
 
 
 .fa-primary
@@ -106,11 +108,11 @@
   .navbar-right
     top: 0
     right: 0
-    width: 6rem
+    width: 20rem
     height: 100vh
 
     &:hover
-      width: 18rem
+      // width: 20rem
 
       .rnav_linktext
         display: inline
@@ -123,4 +125,21 @@
         right: 4rem
 
 
+.little
+  width: 5rem 
 
+.rnav_svg
+  min-width: 3rem !important
+  min-height: 3rem
+  font-size: 2rem
+  padding: 0.6rem
+  border-radius: 50%
+  background-color: #5A5A5A
+  color: #fff
+  margin-left: 0.5rem
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  em 
+    font-size: 1rem

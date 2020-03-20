@@ -16,7 +16,7 @@ export{
     atmosPressure
 }
 
-export function saveData (channelA, channelB, channelC, channelD, temph, templ, bat, baro, tof){
+export function saveData (channelA, channelB, channelC, channelD, v, negV, temph, templ, bat, baro, tof){
 
     if(tof === undefined){
         time = 0
@@ -25,12 +25,38 @@ export function saveData (channelA, channelB, channelC, channelD, temph, templ, 
     }
 
     // Speed
-    if(channelA === undefined){
-        speed = []
-    }else{
-        let maxSpeed = Math.max(channelA, channelB, channelC, channelD)
-        if(!isNaN(maxSpeed)) speed.push(maxSpeed)
+    if(channelA !== null){
+
+        if(channelA === undefined){
+            speed = []
+        }else{
+            let maxSpeed = Math.max(channelA, channelB, channelC, channelD)
+            if(!isNaN(maxSpeed)) speed.push(maxSpeed)
+        }
+
+    } 
+
+    if(v && negV !== null){
+
+        if(v && negV === undefined){
+            speed = []
+        }else{
+            switch (!isNaN(v) || !isNaN(negV)) {
+                case !isNaN(v):
+                    speed.push(v)
+                    break;
+
+                case !isNaN(negV):
+                    speed.push(negV)
+                    break;
+            
+                default:
+                    break;
+            }
+        }
     }
+
+
 
     // hightTemp
     if(temph === undefined){

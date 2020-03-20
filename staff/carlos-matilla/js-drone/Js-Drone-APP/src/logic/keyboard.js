@@ -1,5 +1,13 @@
 import socket from "../socket"
 
+export let takeOffK
+export let landK
+export const v = 60
+export const negV = -60
+
+landK = false
+takeOffK = false
+
 
 export function keyUp(e){
     console.log(e.code)
@@ -41,17 +49,20 @@ export function keyUp(e){
 
 export  function keyDown(e) {
 
-    const v = 60
-    const negV = -60
+
     
     if(e.code === "Enter"){
         console.log('Take Off')
         socket.emit('keyboard', `takeoff`)
+        landK = false
+        takeOffK = true
     }
 
     if(e.code === "Escape"){
        console.log('Land')
        socket.emit('keyboard', `land`)
+       takeOffK = false
+       landK = true
    }
      if(e.code === "KeyW"){
          console.log('Forward')

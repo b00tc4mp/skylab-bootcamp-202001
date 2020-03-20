@@ -3,7 +3,7 @@ import './Navbar-left.sass';
 import logo from './logo.svg';
 import socket from '../socket';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGamepad, faKeyboard, faChartLine, faCog } from '@fortawesome/free-solid-svg-icons'
+import { faGamepad, faKeyboard, faChartLine, faCog, faChartBar } from '@fortawesome/free-solid-svg-icons'
  
 
 function DroneStatus() {
@@ -18,11 +18,17 @@ function DroneStatus() {
 }
   
 
-export default function({toggleKeyboard, toggleGamepad}){
+export default function({toggleKeyboard, toggleGamepad, toggleCharts, toggleEstadistics, toggleHomeView}){
 
     const status = DroneStatus();
+    const [chosen1, setChosen1] = useState('g');
+    const [chosen2, setChosen2] = useState();
 
-    return <nav className="navbar-left">
+    return <nav className="navbar-left" onClick={event => {
+      event.preventDefault()
+      toggleHomeView()
+      
+    }}>
     <ul className="lnav">
       <li className="lnav_logo">
         <a href="#" className="lnav-logo_link">
@@ -32,22 +38,39 @@ export default function({toggleKeyboard, toggleGamepad}){
       </li>
 
       <li className="lnav_item">
-        <a href="#" className="lnav_link" onClick={toggleGamepad}>
-        <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="3x"/>
+        <a href="#" className={chosen1 === 'g' ? "lnav_link active" : "lnav_link"}  onClick={event => {
+           
+           event.preventDefault()
+           setChosen1('g')
+           toggleGamepad()
+         }}>
+        <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>
           <span className="lnav_linktext">Gamepad</span>
         </a>
       </li>
 
       <li className="lnav_item">
-        <a href="#" className="lnav_link" onClick={toggleKeyboard}>
-        <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="3x"/>
+        <a href="#" className={chosen1 === 'k' ? "lnav_link active" : "lnav_link"} onClick={event => {
+           
+           event.preventDefault()
+           setChosen1('k')
+           toggleKeyboard()
+         }}>
+        <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x"/>
           <span className="lnav_linktext">Keyboard</span>
         </a>
       </li>
 
+      <hr style={{width:65}} />
+
       <li className="lnav_item">
-        <a href="#" className="lnav_link">
-        <FontAwesomeIcon className="lnav_svg" icon={faChartLine} size="3x"/>
+        <a href="#" className={chosen2 === 'c' ? "lnav_link active" : "lnav_link"} onClick={event => {
+           
+           event.preventDefault()
+           setChosen2('c')
+           toggleCharts()
+         }}>
+        <FontAwesomeIcon className="lnav_svg" icon={faChartLine} size="2x"/>
           <span className="lnav_linktext">Charts</span>
         </a>
       </li>
@@ -55,9 +78,14 @@ export default function({toggleKeyboard, toggleGamepad}){
      
 
       <li className="lnav_item">
-        <a href="#" className="lnav_link">
-        <FontAwesomeIcon className="lnav_svg" icon={faCog} size="3x"/>
-          <span className="lnav_linktext">Settings</span>
+        <a href="#" className={chosen2 === 'e' ? "lnav_link active" : "lnav_link"} onClick={event => {
+           
+           event.preventDefault()
+           setChosen2('e')
+           toggleEstadistics()
+         }}>
+        <FontAwesomeIcon className="lnav_svg" icon={faChartBar} size="2x"/>
+          <span className="lnav_linktext">Estadistics</span>
         </a>
       </li>
     </ul>

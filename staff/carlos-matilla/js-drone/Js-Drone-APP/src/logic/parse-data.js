@@ -1,7 +1,7 @@
 import { time, lowTemp, hightTemp, battery, height, speed, atmosPressure } from './save-data'
 import saveSession from './save-session'
 
-const chart = 40
+const chart = 20
 
 export default async function(){
     console.log('starting')

@@ -1,55 +1,64 @@
 import React, { useState, useEffect, useContext } from 'react'
 import './Home.sass';
-import { gamepadConnect, gamepadDisconnect, channelA, channelB, channelC, channelD, takeOff, land } from "../logic/gamepad";
-import { keyDown, keyUp } from '../logic/keyboard'
-import JMuxer from 'jmuxer';
+import { gamepadConnect, gamepadDisconnect, channelA, channelB, channelC, channelD, takeOffG, landG, start } from "../logic/gamepad";
+import { keyDown, keyUp, takeOffK, landK, v, negV } from '../logic/keyboard'
+
 import { logout, isLoggedIn, retrieveUser, saveData, parseData } from './../logic'
-import { Telemetry, onLiveCharts, NavbarLeft, NavbarRight, Charts } from './';
+import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video } from './';
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
 import socket from '../socket';
+
+
 
 export default withRouter(function ({ history }) {
 
   const [, setState] = useContext(Context)
   const [name, setName] = useState()
   const [mySessions, setMySessions] = useState([])
-  
-  
+  const [mySession, setMySession] = useState()
+  const [gpad, setGpad] = useState(true)
+  const [keyboard, setKeyboard] = useState(false)
+  const [charts, setCharts]=useState(false)
+  const [estadistics, setEstadistics] = useState(false)
+  const [liveChart, setLiveChart] = useState(true)
+  const [menu, setMenu] = useState(true)
+
+  let semaforo2 = false
 
   useEffect(() => {
+
     window.addEventListener("gamepadconnected", gamepadConnect);
     window.addEventListener("gamepaddisconnected", gamepadDisconnect);
-
+    
     let droneState
     let semaforo = false
-
+    
     socket.on('dronestate', data => {
       return droneState = data
     })
 
     const interval = setInterval(() => {
-      if (droneState && takeOff) {
-        console.log('enviando datos')
+      if (droneState && takeOffG || takeOffK) {
+      
         let { templ, temph, tof, bat, baro } = droneState
-        saveData(channelA, channelB, channelC, channelD, temph, templ, bat, baro, tof)
+        if(takeOffG) saveData(channelA, channelB, channelC, channelD, null, null, temph, templ, bat, baro, tof)
+        if(takeOffK) saveData(null, null, null, null, v, negV, temph, templ, bat, baro, tof)
         semaforo = true
+
       }
 
-      if (droneState && land && semaforo) {
+      if (droneState && semaforo  && landG || landK) {
         (async () => {
-
-
+          semaforo = false
           await parseData()
           const { sessions } = await retrieveUser()
           setMySessions(sessions)
+        
           saveData()
 
         })()
-        semaforo = false
-
       }
-
     }, 1000)
 
     if (isLoggedIn())
@@ -65,37 +74,15 @@ export default withRouter(function ({ history }) {
     else setState({ page: 'login' })
 
 
-    window.onload = function () {
-      var socketURL = 'ws://localhost:8080';
-      var jmuxer = new JMuxer({
-        node: 'player',
-        mode: 'video',
-        flushingTime: 1,
-        fps: 30
-      })
+    ; (async () => {
+      try {
+        const { sessions } = await retrieveUser()
 
-      var ws = new WebSocket(socketURL);
-      ws.binaryType = 'arraybuffer'
-      ws.addEventListener('message', function (event) {
-        jmuxer.feed({
-          video: new Uint8Array(event.data)
-        })
-      })
-
-      ws.addEventListener('error', function (e) {
-        console.log('Socket Error');
-      })
-    }
-
-      ; (async () => {
-        try {
-          const { sessions } = await retrieveUser()
-
-          setMySessions(sessions)
-        } catch (error) {
-          // TODO do something with this error (feedback?)
-        }
-      })()
+        setMySessions(sessions)
+      } catch (error) {
+        // TODO do something with this error (feedback?)
+      }
+    })()
 
 
     return () => clearInterval(interval)
@@ -109,53 +96,67 @@ export default withRouter(function ({ history }) {
     history.push('/login')
   }
 
-  const [mySession, setMySession] = useState()
   function handleSession(session) {
-    
     setMySession(session)
-    
+    setKeyboard(false)
+    setGpad(false)
+    setCharts(true)
+    setMenu(false)
   }
- 
+
+  function toggleKeyboard() {
+    gamepadDisconnect()
+    setGpad(false)
+    document.addEventListener('keydown', keyDown);
+    document.addEventListener('keyup', keyUp);
+    setKeyboard(true)
+    setMenu(true)
+  }
+
+  function toggleGamepad() {
+    setKeyboard(false)
+    setGpad(true)
+    document.removeEventListener('keydown', keyDown);
+    document.removeEventListener('keyup', keyUp);
+    gamepadConnect()
+  }
+
+  function toggleCharts(){
+    setEstadistics(false)
+    setLiveChart(true)
+
+
+  }
   
-  //  async function toggleKeyboard(){
-  //       await gamepadDisconnect()
-  //      handleKeyboard()
-  //  }
+  function toggleEstadistics(){
+   
+    setLiveChart(false)
+    setEstadistics(true)
 
-  //  function toggleGamepad(){
-  //       document.removeEventListener('keydown', keyDown);
-  //       document.removeEventListener('keyup', keyUp);
-  //       gamepadConnect()
-  //  }
-
-
-  // function handleKeyboard(){
-
-  //         document.addEventListener('keydown', keyDown);
-  //         document.addEventListener('keyup', keyUp);
-
-  // }
+  }
+  
+  function toggleHomeView(){
+    setCharts(false)
+    setGpad(true)
+  }
 
   return <>
-    <NavbarLeft />
-    {/* toggleGamepad={toggleGamepad} */}
-    {/* toggleKeyboard={toggleKeyboard} */}
-    <div className="home">
-      <header className="Home-header">
-        <Telemetry />
-      </header>
-      {mySession &&   <Charts mySession={mySession}/> }
-      
+    <NavbarLeft toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} toggleCharts={toggleCharts} toggleEstadistics={toggleEstadistics} toggleHomeView={toggleHomeView}/>
 
-      <div className="aspect-ratio--16x9">
-        <div className="aspect-ratio__inner-wrapper">
-          <video className="video" id='player' autoPlay muted />
-        </div>
+    <div className={gpad ? "home rightpadding" : "home"}>
+    
+      {!charts && <Video />}
+
+      {mySession && charts && <Charts mySession={mySession} />}
+
+      <div className="on-live">
+      {(gpad || keyboard) && estadistics && <Telemetry />}
+      {liveChart && <OnLiveCharts />}
+        
       </div>
 
-     
-
-    </div>
-    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} />
+      </div>
+    
+    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} showMenu={menu}/>
   </>
 })

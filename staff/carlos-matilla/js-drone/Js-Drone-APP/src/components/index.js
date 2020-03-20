@@ -8,6 +8,7 @@ import OnLiveCharts from './On-live-charts'
 import Charts from './Charts'
 import NavbarLeft from './Navbar-left'
 import NavbarRight from './Navbar-right'
+import Video from './Video'
 
 
 export {
@@ -20,6 +21,7 @@ export {
     OnLiveCharts, 
     NavbarLeft,
     NavbarRight,
-    Charts
+    Charts, 
+    Video
 
 }
