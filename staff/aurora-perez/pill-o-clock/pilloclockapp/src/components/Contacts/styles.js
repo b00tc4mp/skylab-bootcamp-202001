@@ -14,8 +14,15 @@ const styles = StyleSheet.create({
     color: '#297885',
     fontFamily: 'Sensei-Medium',
     alignSelf: 'center',
-    padding: 50,
+    padding: 40,
     textDecorationLine: 'underline',
+  },
+
+  text : {
+    fontFamily : 'Sensei-Medium',
+    color : '#297885',
+    padding: 10,
+    fontSize: 20
   },
   
   plus : {

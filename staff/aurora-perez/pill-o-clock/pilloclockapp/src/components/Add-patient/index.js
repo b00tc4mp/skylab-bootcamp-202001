@@ -1,6 +1,7 @@
 
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { View, Text } from 'react-native'
+import styles from './styles'
 
 import QR from 'react-native-qrcode-svg'
 import QRCode from 'react-native-qrcode-svg'
@@ -18,20 +19,5 @@ const AddPatient: () => React$Node = ({user}) => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop : 100,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  text : {
-      fontFamily : 'Sensei-Medium',
-      color : '#297885',
-      padding: 10,
-      fontSize: 20
-  },
-})
 
 export default AddPatient

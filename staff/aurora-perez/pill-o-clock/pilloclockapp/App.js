@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert, ScrollView } from 'react-native'
 
-import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient } from './src/components'
+import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient, ContactDetail } from './src/components'
 import { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
 
 
@@ -15,7 +15,11 @@ export default function App () {
   const [ times, setTimes ] = useState()
   const [goLanding, setGoLanding] = useState(false)
   const [ contacts, setContacts ] = useState()
+  const [ contactData, setContactData ] =useState()
 
+  // useEffect (()=>{
+
+  // }, [contactData])
 
   function __handleError__(message) {
     setError(message)
@@ -148,7 +152,7 @@ export default function App () {
     setView('progress')
   }
 
-  function handleToContacts () {
+  async function handleToContacts () {
     try{
       const _contacts = await retrieveContacts(token)
       setContacts(_contacts)
@@ -172,6 +176,10 @@ export default function App () {
   function handleToAddPatients (){
     setView('addPatients')
   }
+  function handleToContactDetail ({name, surname, phone}){
+    setContactData({name, surname, phone})
+    setView('contactDetail')
+  }
 
   return(<View style={styles.container}>
 
@@ -185,11 +193,12 @@ export default function App () {
       { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
       { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
       { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
-      { view === 'contacts' && <Contacts contacts ={contacts} toAdd={handleToAddContacts}/> }
+      { view === 'contacts' && <Contacts contacts ={contacts} toAdd={handleToAddContacts} onContact={handleToContactDetail}/> }
       { view === 'progress' && <Progress/>}
       { view === 'addContacts' && <AddContacts/>}
       { view === 'patients' && <Patients contacts ={patients } toAdd={handleToAddPatients}/> }
       { view === 'addPatients' && <AddPatient user={user}/> }
+      { view === 'contactDetail' && <ContactDetail contactData={contactData}/>}
     </ScrollView>
 
     </View>

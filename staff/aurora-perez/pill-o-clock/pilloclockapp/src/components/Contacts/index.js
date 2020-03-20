@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
-import { View, Text, ScrollView, Image, Button, TouchableOpacity} from 'react-native'
+import { View, Text, ScrollView, Image, Button, TouchableOpacity, FlatList} from 'react-native'
+import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
-function Contacts ({toAdd, contacts}) {
+function Contacts ({toAdd, onContact, contacts}) {
 
     return (<>
         
@@ -23,8 +24,12 @@ function Contacts ({toAdd, contacts}) {
                         data = {contacts}
                         renderItem={({item})=>(
                             <ListItem 
-                                onPress ={()=> {}}
-                                title ={}
+                                onPress ={()=> {
+                                    const {name, surname, phone} = item
+                                    
+                                    onContact({name, surname, phone})
+                                }}
+                                title ={item.name.toString() }
                                 titleStyle = {{
                                     marginTop : 20,
                                     fontSize : 25,
@@ -38,7 +43,7 @@ function Contacts ({toAdd, contacts}) {
                                 }}
                             />
                         )}
-                        keyExtractor={item => item}
+                        keyExtractor={item => item.name}
                     />
                 :
                     <Text style={styles.text}>You don't have contacts yet! Do you want to add one?</Text>

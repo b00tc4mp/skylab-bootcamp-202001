@@ -11,6 +11,7 @@ import Contacts from './Contacts'
 import AddContacts from './Add-contacts'
 import Patients from './Patients'
 import AddPatient from './Add-patient'
+import ContactDetail from './Contact-detail'
 
 export { 
     Register,
@@ -25,5 +26,6 @@ export {
     Contacts,
     AddContacts,
     Patients,
-    AddPatient
+    AddPatient,
+    ContactDetail
 }

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
     container : {
         flex : 1,
-        marginTop : 100,
+        marginTop : 50,
         backgroundColor : '#fffdf9',
         borderRadius : 30,
         padding : 30
