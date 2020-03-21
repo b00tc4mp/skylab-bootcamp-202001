@@ -2,12 +2,12 @@ import'./Login.sass'
 import React from 'react'
 import Feedback from './Feedback'
 
-export default ({onSubmit, goLanding, error}) => {
+export default ({onSubmit, goTo, error}) => {
 
     return <div className="p1 login">
         <h1 onClick={event => {
             event.preventDefault()
-            goLanding()
+            goTo('landing')
         }}>Simonline</h1>
         <h2 className="login__title">Login</h2>
         <form className="login__form" onSubmit={event => {

@@ -10,6 +10,7 @@ export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
 
   const [games, setGames] = useState()
+  const [gameId, setGameId] = useState()
   const [userId, setUserId] = useState()
   const [players, setPlayers] = useState()
   const [error, setError] = useState(undefined)
@@ -45,7 +46,7 @@ export default withRouter(function ({ history }) {
   async function handleCreateGame(name, owner) {
     try {
       await createGame(name, owner)
-        history.push('/multiplayer')
+        history.push('/waiting')
     } catch ({ message }) {
         setState({ ...state, error: message })
     }
@@ -53,9 +54,7 @@ export default withRouter(function ({ history }) {
 
   async function handleJoin(gameId) {
     try {
-      debugger
-        const game = await retrieveGames()
-
+      setGameId(gameId)
         const userId = await retrieveUserId(sessionStorage.token)
         
         const _players = await join(userId, gameId)
@@ -67,50 +66,24 @@ export default withRouter(function ({ history }) {
     }
   }
 
-  function goLogin() {
-    history.push('/login')
-  }
-
-  function goRegister() {
-    history.push('/register')
-  }
-
-  function goLanding() {
-    history.push('/landing')
-  }
-
-  function goHome() {
-    history.push('/home')
-  }
-
-  function goMultiplayer() {
-    history.push('/multiplayer')
-  }
-
-  function goJoin() {
-    history.push('/join')
-  }
-
-  function goCreate() {
-    history.push('/create')
-  }
-
-  function handleLogout() {
-    logout()
-    history.push('/landing')
+  function goTo(props) {
+    if (props === 'logout') {
+      logout()
+      history.push('/landing')
+    } else history.push(`/${props}`)
   }
 
   // const { error } = state
 
   return <div className="app">
       <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/landing" />} />
-      <Route path="/landing" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Landing goLogin={goLogin} goRegister={goRegister} />} />
-      <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} error={error} goLogin={goLogin} goLanding={goLanding}/>} />
-      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} error={error} goRegister={goRegister} goLanding={goLanding}/>} />
-      <Route path="/home/" render={() => isLoggedIn() ? <Home handleLogout={handleLogout} goMultiplayer={goMultiplayer} /> : <Redirect to="/landing" />} />
-      <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer handleLogout={handleLogout} goHome={goHome} goJoin={goJoin} goCreate={goCreate}/> : <Redirect to="/landing" />} />
-      <Route path="/create" render={() => isLoggedIn() ? <Create handleCreateGame={handleCreateGame} /> : <Redirect to="/landing" />} />
-      <Route path="/join" render={() => isLoggedIn() ? <Join handleLogout={handleLogout} goMultiplayer={goMultiplayer} handleJoin={handleJoin}/> : <Redirect to="/landing" />} />
-      <Route path="/waiting" render={() => isLoggedIn() ? <WaitingRoom players={players} goMultiplayer={goMultiplayer} handleLogout={handleLogout}/> : <Redirect to="/landing" />} />
+      <Route path="/landing" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Landing goTo={goTo} />} />
+      <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} goTo={goTo} error={error} />} />
+      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} goTo={goTo} error={error} />} />
+      <Route path="/home/" render={() => isLoggedIn() ? <Home goTo={goTo} /> : <Redirect to="/landing" />} />
+      <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer goTo={goTo} /> : <Redirect to="/landing" />} />
+      <Route path="/create" render={() => isLoggedIn() ? <Create handleCreateGame={handleCreateGame} goTo={goTo}/> : <Redirect to="/landing" />} />
+      <Route path="/join" render={() => isLoggedIn() ? <Join handleJoin={handleJoin} goTo={goTo} /> : <Redirect to="/landing" />} />
+      <Route path="/waiting" render={() => isLoggedIn() ? <WaitingRoom players={players} gameId={gameId} goTo={goTo}/> : <Redirect to="/landing" />} />
   </div>
 })

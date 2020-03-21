@@ -1,25 +1,23 @@
 import React, { useEffect } from 'react'
 import'./Multiplayer.sass'
-import { logout, isLoggedIn } from '../logic'
-import { useHistory } from 'react-router-dom'
+import { isLoggedIn } from '../logic'
 
 // import Feedback from './Feedback'
 
-export default ({ handleLogout, goHome, goJoin, goCreate }) => {
-    const history = useHistory()
+export default ({ goTo }) => {
 
     useEffect(() => {
         if (isLoggedIn()) return
-        else history.push('/landing')
+        else goTo('/landing')
     },[])
 
     return <div className="p1 multiplayer">
     <div className="multiplayer__top-menu">
-        <p className="multiplayer__top-menu__back" onClick={goHome}>Back</p>
+        <p className="multiplayer__top-menu__back" onClick={()=>goTo('home')}>Back</p>
         <p className="multiplayer__top-menu__title">Multiplayer</p>
-        <p className="multiplayer__top-menu__logout" onClick={handleLogout}>Logout</p>
+        <p className="multiplayer__top-menu__logout" onClick={()=>goTo('logout')}>Logout</p>
     </div>
-    <p className="multiplayer__create-game" onClick={goCreate}>Create game</p>
-    <p className="multiplayer__join-game" onClick={goJoin}>Join game</p>
+    <p className="multiplayer__create-game" onClick={()=>goTo('create')}>Create game</p>
+    <p className="multiplayer__join-game" onClick={()=>goTo('join')}>Join game</p>
 </div>
 }

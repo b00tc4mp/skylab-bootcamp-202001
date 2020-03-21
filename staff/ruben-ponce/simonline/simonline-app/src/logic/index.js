@@ -5,6 +5,7 @@ import retrieveUserId from './retrieve-user-id'
 import createGame from './create-game'
 import retrieveGames from './retrieve-games'
 import join from './join'
+import retrieveGameStatus from './retrieve-game-status'
 import isLoggedIn from './is-logged-in'
 import logout from './logout'
 
@@ -16,6 +17,7 @@ export {
     createGame,
     retrieveGames,
     join,
+    retrieveGameStatus,
     isLoggedIn,
     logout
 }

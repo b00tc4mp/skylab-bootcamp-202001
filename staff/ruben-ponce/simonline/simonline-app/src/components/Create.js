@@ -1,12 +1,10 @@
 import'./Create.sass'
 import React, { useEffect } from 'react'
-import { isLoggedIn, retrieveUserId, logout } from '../logic'
-import { useHistory } from 'react-router-dom'
+import { isLoggedIn, retrieveUserId } from '../logic'
 
 // import Feedback from './Feedback'
 
-export default ({ handleCreateGame }) => {
-    const history = useHistory()
+export default ({ handleCreateGame, goTo }) => {
     let owner
 
     useEffect(() => {
@@ -19,23 +17,14 @@ export default ({ handleCreateGame }) => {
                     // setState({ error: message, page: 'login' })
                 }
             })()
-        else history.push('/landing')
+        else goTo('/landing')
     },[])
-
-    function handleLogout() {
-        logout()
-        history.push('/landing')
-    }
-
-    function handleGoBack() {
-        history.push('/multiplayer')
-    }
 
     return <div className="p1 create-group">
     <div className="create-group__top-menu">
-        <p className="create-group__top-menu__back" onClick={handleGoBack}>Back</p>
+        <p className="create-group__top-menu__back" onClick={()=>goTo('multiplayer')}>Back</p>
         <p className="create-group__top-menu__title">Create Game</p>
-        <p className="create-group__top-menu__logout" onClick={handleLogout}>Logout</p>
+        <p className="create-group__top-menu__logout" onClick={()=>goTo('logout')}>Logout</p>
     </div>
     <form className="create-group__form" onSubmit={event => {
         event.preventDefault()
