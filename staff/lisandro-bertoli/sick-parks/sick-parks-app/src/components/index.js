@@ -12,6 +12,7 @@ import ParkBuilder from './ParkBuilder'
 import Profile from './Profile'
 import ParkDetails from './ParkDetails'
 import Feedback from './Feedback'
+import RadioButton from './RadiouButton'
 
 export {
     Login,
@@ -27,5 +28,6 @@ export {
     ParkBuilder,
     Profile,
     ParkDetails,
-    Feedback
+    Feedback,
+    RadioButton
 }

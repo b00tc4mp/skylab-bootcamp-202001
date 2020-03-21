@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput, Picker, Keyboard, View, Text } from 'react-native'
 import { Button, Feedback } from '../index'
 
-export default function StepOne({ navigation, extraData }) {
+export default function StepOne({ navigation }) {
     const [name, setName] = useState()
     const [resort, setResort] = useState()
     const [flow, setFlow] = useState()
@@ -15,20 +15,17 @@ export default function StepOne({ navigation, extraData }) {
     const [pipes, setPipes] = useState()
     const [error, setError] = useState(undefined)
 
-    const { getParkInfo } = extraData
 
     const handleNextStep = () => {
         switch (true) {
             case name === undefined || name.trim() === '':
-                console.log('pressed')
                 setError('Name is empty')
                 break
             case resort === undefined || resort.trim() === '':
                 setError('Resort is empty')
                 break
             default:
-                getParkInfo({ park: { name, resort, flow, size, level }, features: { rails, kickers, boxes, others, pipes } })
-            //  navigation.navigate('StepTwo')
+                navigation.navigate('Featues info', { features: { rails, boxes, kickers, pipes, others }, park: { name, resort, flow, size, level } })
         }
     }
 
@@ -36,8 +33,8 @@ export default function StepOne({ navigation, extraData }) {
 
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 10, paddingBottom: '65%' }} scrollEnabled={true}>
-                    <KeyboardAvoidingView contentContainerStyle={{ flex: 1, justifyContent: 'space-between', marginTop: 10 }}>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 10, paddingBottom: '60%' }} scrollEnabled={true}>
+                    <KeyboardAvoidingView behavior='position' contentContainerStyle={{ flex: 1, justifyContent: 'space-between', marginTop: 10 }}>
                         <Text style={{ alignSelf: 'center' }}>Park Details</Text>
                         <View style={{ justifyContent: 'space-around', height: '25%' }}>
                             <Text>Size</Text>
@@ -89,25 +86,25 @@ export default function StepOne({ navigation, extraData }) {
 
                             <View style={styles.numbersContainer}>
                                 <Text>Rails:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='2' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setRails(text)} />
+                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setRails(Number(text))} />
                             </View>
 
                             <View style={styles.numbersContainer}>
                                 <Text>Boxes:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='2' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setBoxes(text)} />
+                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setBoxes(Number(text))} />
                             </View >
 
                             <View style={styles.numbersContainer}>
                                 <Text>Kickers:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='2' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setKickers(text)} />
+                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setKickers(Number(text))} />
                             </View >
                             <View style={styles.numbersContainer}>
                                 <Text>Pipes:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='2' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setPipes(text)} />
+                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setPipes(Number(text))} />
                             </View >
                             <View style={styles.numbersContainer}>
                                 <Text>Other:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='2' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setOthers(text)} />
+                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setOthers(Number(text))} />
                             </View >
 
 

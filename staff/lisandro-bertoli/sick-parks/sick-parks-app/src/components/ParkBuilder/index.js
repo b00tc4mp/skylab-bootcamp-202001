@@ -13,22 +13,22 @@ export default function ParkBuilder() {
     const [park, setPark] = useState()
     const [features, setFeatures] = useState()
 
-    const getParkInfo = (info) => {
-        setPark(info.park)
-        setFeatures(info.features)
+
+    const getParkInfo = (data) => {
+        setPark(data)
+        // console.log(park)
+    }
+
+    const getFeaturesInfo = (info) => {
 
     }
 
     return (
         <Stack.Navigator initialRouteName='StepOne' >
 
-            <Stack.Screen name="Add a Park">
-                {props => <StepOne {...props} extraData={{ getParkInfo }} />}
-            </Stack.Screen>
-            {/* <Stack.Screen name="StepTwo">
-                    {props => <StepTwo {...props} extraData={{ handleRegister, error }} />}
-                </Stack.Screen>
-                <Stack.Screen name="StepThree">
+            <Stack.Screen name="Park info" component={StepOne} />
+            <Stack.Screen initialParams={{ getFeaturesInfo }} name="Featues info" component={StepTwo} />
+            {/* <Stack.Screen name="StepThree">
                     {props => <StepThree {...props} extraData={{ handleLogin, error }} />}
                 </Stack.Screen> */}
 
