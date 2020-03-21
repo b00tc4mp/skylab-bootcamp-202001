@@ -3,7 +3,6 @@ const { NotFoundError ,ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
     const { params: { gameId }, payload: {sub: playerId} } = req
-
     try {
         retrieveGameStatus(playerId, gameId)
             .then(status => 

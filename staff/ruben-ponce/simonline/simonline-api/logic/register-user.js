@@ -8,7 +8,6 @@ module.exports = (username, password) => {
     validate.string(password, 'password')
     return User.findOne({ username })
         .then(user => {
-            debugger
             if (user) throw new NotAllowedError(`user with username ${username} already exists`)
 
             return bcrypt.hash(password, 10)

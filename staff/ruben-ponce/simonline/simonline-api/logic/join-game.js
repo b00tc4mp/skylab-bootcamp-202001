@@ -14,11 +14,13 @@ module.exports = (id, gameId) => {
 
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            if (game.players.includes(user.id)) throw new NotAllowedError(`user with id ${id} already subscribed to this game`)
+            // if (game.players.includes(user.id) && user.id !== game.owner) throw new NotAllowedError(`user with id ${id} already subscribed to this game`)
 
             if (game.status === "started") throw new NotAllowedError(`game of ${game.name} already start`)
 
-            game.players.push(user.id)
+            if (user.id !== game.owner && !(game.players.includes(user.id))) {
+                game.players.push(user.id)
+            }
 
             return Promise.all([game.save()])
         })
@@ -27,7 +29,7 @@ module.exports = (id, gameId) => {
             .populate('players', 'username id')
                 .then(({players}) => {
                     players.forEach(player => {
-                        playersName.push([player.username, player.id])
+                        playersName.push({username:player.username, id:player.id})
                     })
                     return playersName
                 })
