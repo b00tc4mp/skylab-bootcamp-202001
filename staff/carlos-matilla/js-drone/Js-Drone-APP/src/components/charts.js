@@ -4,7 +4,24 @@ import './Charts.sass';
 import CountUp from 'react-countup';
 
 export default function ({ mySession }) {
+
+
+
+
     console.log(mySession)
+
+
+
+
+    function dateParser(date) {
+        const fullDate = date.split("T")[0]
+        const day = fullDate.split("-")[2]
+        const month = fullDate.split("-")[1]
+        const year2 = fullDate.split("-")[0]
+        const hour = (date.split("T")[1]).split(".")[0]
+
+        return `${hour}  ${day}-${month}-${year2}`
+    }
     const {
         lowTempP,
         hightTempP,
@@ -157,6 +174,8 @@ export default function ({ mySession }) {
         ]
     }
     const opt = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             xAxes: [{
                 ticks: {
@@ -169,40 +188,43 @@ export default function ({ mySession }) {
 
 
     return <section className="charts">
+
         <div className="chart-title">
-            <h1>{date}</h1>
+            <h1>{dateParser(date)}</h1>
         </div>
+
         <div className="chart-estadistics">
             <div>
                 <p>Baterry consumed</p>
                 <br />
-                <p><CountUp delay={1} end={consumedBat}/>%</p>
+                <p className="est-num"><CountUp delay={1} end={consumedBat} />%</p>
             </div>
             <div>
                 <p>Time</p>
                 <br />
-                <p><CountUp delay={1} end={time}/></p>
+                <p className="est-num"><CountUp delay={1} end={time} /></p>
             </div>
             <div>
                 <p>Speed Average</p>
                 <br />
-                <p><CountUp delay={1} end={100}/>m/s</p>
+                <p className="est-num"><CountUp delay={1} end={speedP[7]} />m/s</p>
             </div>
 
         </div>
-        <section className="charts-wrapper">
-            <div className="chart-wrapper">
-                <Line data={heightData} options={opt} />
-            </div>
-            <div className="chart-wrapper">
-                <Line data={temperatureData} options={opt} />
-            </div>
-            <div className="chart-wrapper">
-                <Line data={atmosData} options={opt} />
-            </div>
-            <div className="chart-wrapper">
-                <Line data={speedData} options={opt} />
-            </div>
-        </section>
+
+        <div className="charts-wrapper">
+                <div className="chart-wrapper">
+                    <Line data={heightData} options={opt} />
+                </div>
+                <div className="chart-wrapper">
+                    <Line data={temperatureData} options={opt} />
+                </div>
+                <div className="chart-wrapper">
+                    <Line data={atmosData} options={opt} />
+                </div>
+                <div className="chart-wrapper">
+                    <Line data={speedData} options={opt} />
+                </div>
+        </div>
     </section>
 }

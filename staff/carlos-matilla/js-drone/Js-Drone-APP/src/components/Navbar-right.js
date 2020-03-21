@@ -3,7 +3,7 @@ import './Navbar-right.sass';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGamepad, faKeyboard, faChartLine, faCog, faChartBar } from '@fortawesome/free-solid-svg-icons'
 
-export default function ({ mySessions, handleLogout, handleSession, showMenu }) {
+export default function ({ mySessions, handleLogout, handleSession, leftMenuView }) {
   function dateParser(date) {
     const fullDate = date.split("T")[0]
     const day = fullDate.split("-")[2]
@@ -28,7 +28,7 @@ export default function ({ mySessions, handleLogout, handleSession, showMenu }) 
   }
 
 
-  return <nav className={showMenu ? "navbar-right" : "navbar-right little"}>
+  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"}>
     <li className="rnav_logo">
       <a href="#" className="rnav-logo_link">
         {/* <span className="rnav_linktext rnav_logo-text">{name}</span> */}
@@ -46,12 +46,12 @@ export default function ({ mySessions, handleLogout, handleSession, showMenu }) 
             <div className="rnav_svg">
               <spam>{dayParser(session.date)}</spam>
               <em>{monthParser(session.date)}</em>
-
             </div>
 
             <span className="rnav_linktext">{dateParser(session.date)}</span>
           </a>
         </li>
+        
       </>))}
     </ul>
   </nav>

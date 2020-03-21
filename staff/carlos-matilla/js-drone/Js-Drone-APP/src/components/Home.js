@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import './Home.sass';
 import { gamepadConnect, gamepadDisconnect, channelA, channelB, channelC, channelD, takeOffG, landG, start } from "../logic/gamepad";
 import { keyDown, keyUp, takeOffK, landK, v, negV } from '../logic/keyboard'
 
 import { logout, isLoggedIn, retrieveUser, saveData, parseData } from './../logic'
-import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video } from './';
+import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video, Joystick } from './';
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
 import socket from '../socket';
@@ -14,23 +14,30 @@ import socket from '../socket';
 export default withRouter(function ({ history }) {
 
   const [, setState] = useContext(Context)
-  const [name, setName] = useState()
   const [mySessions, setMySessions] = useState([])
+  const [name, setName] = useState()
   const [mySession, setMySession] = useState()
   const [gpad, setGpad] = useState(true)
   const [keyboard, setKeyboard] = useState(false)
-  const [charts, setCharts]=useState(false)
-  const [estadistics, setEstadistics] = useState(false)
-  const [liveChart, setLiveChart] = useState(true)
-  const [menu, setMenu] = useState(true)
+  const [joy, setJoy] = useState([])
 
-  let semaforo2 = false
+  // Views
+  const [chartsView, setChartsView]=useState()
+  const [estadisticsView, setEstadisticsView] = useState()
+  const [liveChartView, setLiveChartView] = useState()
+  const [leftMenuView, setLeftMenuView] = useState()
+  const [controlsView, setControlsView] = useState(false)
+  const [videoView, setVideoView] = useState()
+  const [homePadding, setHomePadding] =useState()
+
 
   useEffect(() => {
 
     window.addEventListener("gamepadconnected", gamepadConnect);
     window.addEventListener("gamepaddisconnected", gamepadDisconnect);
-    
+    setControlsView(true)
+    setVideoView(true)
+    setGpad(true)
     let droneState
     let semaforo = false
     
@@ -89,74 +96,149 @@ export default withRouter(function ({ history }) {
   }, []);
 
 
-  function handleLogout(e) {
-    console.log('ssss')
+
+  function handleLogout() {
     logout()
     setState({ page: 'login' })
     history.push('/login')
   }
 
   function handleSession(session) {
+    setHomePadding(false)
     setMySession(session)
     setKeyboard(false)
     setGpad(false)
-    setCharts(true)
-    setMenu(false)
+    setChartsView(true)
+    setLiveChartView(false)
+    setEstadisticsView(false)
+    setLeftMenuView(false)
+    setVideoView(false)
+    setControlsView(false)
   }
 
-  function toggleKeyboard() {
-    gamepadDisconnect()
-    setGpad(false)
-    document.addEventListener('keydown', keyDown);
-    document.addEventListener('keyup', keyUp);
-    setKeyboard(true)
-    setMenu(true)
-  }
+  // function toggleKeyboard() {
+  //   gamepadDisconnect()
+  //   setGpad(false)
+  //   document.addEventListener('keydown', keyDown);
+  //   document.addEventListener('keyup', keyUp);
+  //   setKeyboard(true)
+   
+  // }
 
-  function toggleGamepad() {
-    setKeyboard(false)
-    setGpad(true)
-    document.removeEventListener('keydown', keyDown);
-    document.removeEventListener('keyup', keyUp);
-    gamepadConnect()
-  }
+  // function toggleGamepad() {
+  //   setKeyboard(false)
+  //   setGpad(true)
+  //   document.removeEventListener('keydown', keyDown);
+  //   document.removeEventListener('keyup', keyUp);
+  //   gamepadConnect()
+    
+  // }
 
-  function toggleCharts(){
-    setEstadistics(false)
-    setLiveChart(true)
-
+  function toggleLiveChart(){
+    setHomePadding(true)
+    setChartsView(false)
+    setControlsView(false)
+    setVideoView(true)
+    setEstadisticsView(false)
+    setLeftMenuView(true)
+    setLiveChartView(true)
 
   }
   
   function toggleEstadistics(){
-   
-    setLiveChart(false)
-    setEstadistics(true)
+    setChartsView(false)
+    setHomePadding(true)
+    setControlsView(false)
+    setVideoView(true)
+    setLiveChartView(false)
+    setLeftMenuView(true)
+    setEstadisticsView(true)
 
+  }
+
+  function toggleControls(){
+    setHomePadding(false)
+    setChartsView(false)
+    setEstadisticsView(false)
+    setLiveChartView(false)
+    setLeftMenuView(false)
+    setVideoView(true)
+    setControlsView(true)
   }
   
   function toggleHomeView(){
-    setCharts(false)
-    setGpad(true)
+    setHomePadding(false)
+    setChartsView(false)
+    setEstadisticsView(false)
+    setLiveChartView(false)
+    setLeftMenuView(false)
+    setVideoView(true)
+    setControlsView(true)
   }
 
+
+
+  function useInterval(callback, delay) {
+    const savedCallback = useRef();
+  
+    // Remember the latest callback.
+    useEffect(() => {
+      savedCallback.current = callback;
+    }, [callback]);
+  
+    // Set up the interval.
+    useEffect(() => {
+      function tick() {
+        savedCallback.current();
+      }
+      if (delay !== null) {
+        let id = setInterval(tick, delay);
+        return () => clearInterval(id);
+      }
+    }, [delay]);
+  }
+
+
+ 
+
+
+ useInterval(() => {
+  const a = (channelA * 0.25)+ 20
+  const b = ((channelB * -0.25) +20)
+  const c = ((channelC * 0.25) +20)
+  const d = ((channelD * 0.25) +20)
+  setJoy([{left: a, top: b}, {left: d, top: c}])
+}, 50);
+
+
+
+ 
   return <>
-    <NavbarLeft toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} toggleCharts={toggleCharts} toggleEstadistics={toggleEstadistics} toggleHomeView={toggleHomeView}/>
-
-    <div className={gpad ? "home rightpadding" : "home"}>
+    <NavbarLeft toggleLiveChart={toggleLiveChart} toggleEstadistics={toggleEstadistics} toggleControls={toggleControls} toggleHomeView={toggleHomeView}/>
+    {/* toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard}    */}
+    <div className={homePadding ? "home right-padding" : "home"}>
     
-      {!charts && <Video />}
+        {videoView && <Video />}
 
-      {mySession && charts && <Charts mySession={mySession} />}
+        {mySession && chartsView && <Charts mySession={mySession} />}
 
-      <div className="on-live">
-      {(gpad || keyboard) && estadistics && <Telemetry />}
-      {liveChart && <OnLiveCharts />}
+
+        {controlsView && 
+        <div className="joycons-wrapper">
+           <Joystick joy={joy} />
+        </div>}
+
+        {!controlsView && 
+        <div className="on-live">
+          {estadisticsView && <Telemetry />}
+          {liveChartView && <OnLiveCharts />}
+        </div>}
+
+       
+      
         
-      </div>
-
-      </div>
+    </div>
     
-    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} showMenu={menu}/>
+    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView}/>
   </>
 })

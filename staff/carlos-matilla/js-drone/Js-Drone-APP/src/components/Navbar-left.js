@@ -18,20 +18,20 @@ function DroneStatus() {
 }
   
 
-export default function({toggleKeyboard, toggleGamepad, toggleCharts, toggleEstadistics, toggleHomeView}){
+export default function({toggleKeyboard, toggleGamepad, toggleLiveChart, toggleEstadistics, toggleHomeView, toggleControls}){
 
     const status = DroneStatus();
     const [chosen1, setChosen1] = useState('g');
-    const [chosen2, setChosen2] = useState();
+    const [chosen2, setChosen2] = useState('g');
 
-    return <nav className="navbar-left" onClick={event => {
+    return <nav className="navbar-left">
+    <ul className="lnav">
+      <li className="lnav_logo">
+        <a href="#" className="lnav-logo_link" onClick={event => {
       event.preventDefault()
       toggleHomeView()
       
     }}>
-    <ul className="lnav">
-      <li className="lnav_logo">
-        <a href="#" className="lnav-logo_link">
           <span className="lnav_linktext lnav_logo-text">{status}</span>
           <img src={logo} className="react-logo" alt="logo" />
         </a>
@@ -42,7 +42,7 @@ export default function({toggleKeyboard, toggleGamepad, toggleCharts, toggleEsta
            
            event.preventDefault()
            setChosen1('g')
-           toggleGamepad()
+          //  toggleGamepad()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>
           <span className="lnav_linktext">Gamepad</span>
@@ -54,7 +54,7 @@ export default function({toggleKeyboard, toggleGamepad, toggleCharts, toggleEsta
            
            event.preventDefault()
            setChosen1('k')
-           toggleKeyboard()
+          //  toggleKeyboard()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x"/>
           <span className="lnav_linktext">Keyboard</span>
@@ -68,7 +68,7 @@ export default function({toggleKeyboard, toggleGamepad, toggleCharts, toggleEsta
            
            event.preventDefault()
            setChosen2('c')
-           toggleCharts()
+           toggleLiveChart()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faChartLine} size="2x"/>
           <span className="lnav_linktext">Charts</span>
@@ -85,6 +85,19 @@ export default function({toggleKeyboard, toggleGamepad, toggleCharts, toggleEsta
            toggleEstadistics()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faChartBar} size="2x"/>
+          <span className="lnav_linktext">Estadistics</span>
+        </a>
+      </li>
+
+
+      <li className="lnav_item">
+        <a href="#" className={chosen2 === 'g' ? "lnav_link active" : "lnav_link"} onClick={event => {
+           
+          event.preventDefault()
+          setChosen2('g')
+          toggleControls()
+         }}>
+        <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>
           <span className="lnav_linktext">Estadistics</span>
         </a>
       </li>

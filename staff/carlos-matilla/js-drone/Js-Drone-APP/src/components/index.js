@@ -9,6 +9,7 @@ import Charts from './Charts'
 import NavbarLeft from './Navbar-left'
 import NavbarRight from './Navbar-right'
 import Video from './Video'
+import Joystick from './Joystick'
 
 
 export {
@@ -22,6 +23,7 @@ export {
     NavbarLeft,
     NavbarRight,
     Charts, 
-    Video
+    Video, 
+    Joystick
 
 }
