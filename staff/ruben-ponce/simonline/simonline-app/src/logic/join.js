@@ -13,14 +13,20 @@ export default (function (id, gameId) {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` },
         })
-
+        debugger
         //const res = await create.json()
-        const res = await join
+        const { status } = await join
 
-        if (res.status === 201)
+        if (status === 200) {
+            const players = await join.json()
+            debugger
+            return players
+        }
+
+        if (status === 201)
             return
 
-        if(res.status === 404)
-            return res.statusText
+        if(status === 404)
+            return status.statusText
     })()
 }).bind(context)

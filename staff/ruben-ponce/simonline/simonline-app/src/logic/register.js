@@ -13,7 +13,7 @@ export default function (username, password) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         })
-
+        
         const status = await register.status
 
         if (status === 409 || status === 406 || status === 403) {

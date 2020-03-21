@@ -2,12 +2,12 @@ import'./Register.sass'
 import React from 'react'
 import Feedback from './Feedback'
 
-export default ({onGoToLanding, onSubmit, error}) => {
+export default ({goLanding, onSubmit, error}) => {
     
     return <div className="p1 register">
         <h1 onClick={event => {
             event.preventDefault()
-            onGoToLanding()
+            goLanding()
         }}>Simonline</h1>
         <h2>Register</h2>
         <form className="form" onSubmit={event => {

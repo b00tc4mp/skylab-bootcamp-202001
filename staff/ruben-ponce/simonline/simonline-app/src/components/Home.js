@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import'./Home.sass'
-import { logout, isLoggedIn, retrieveUser } from '../logic'
-import { withRouter } from 'react-router-dom'
+import { isLoggedIn, retrieveUser } from '../logic'
+import { useHistory } from 'react-router-dom'
 
 // import Feedback from './Feedback'
 
-export default withRouter(function ({ history }) {
+export default ({handleLogout, goMultiplayer}) => {
     const [username, setUsername] = useState()
+    const history = useHistory()
 
     useEffect(() => {
         if (isLoggedIn())
@@ -23,19 +24,10 @@ export default withRouter(function ({ history }) {
         else history.push('/landing')
     }, [])
 
-    function handleLogout() {
-        logout()
-        history.push('/landing')
-    }
-
-    function handleGoToMultiplayer() {
-        history.push('/multiplayer')
-    }
-
     return <div className="p1 home">
         <p className="home__user">Welcome, {username}</p>
         <p className="home__logout" onClick={handleLogout}>Logout</p>
-        <p className="home__multi-player" onClick={handleGoToMultiplayer}>Multiplayer</p>
+        <p className="home__multi-player" onClick={goMultiplayer}>Multiplayer</p>
         <p className="home__options">Options</p>
     </div> 
-})
+}

@@ -7,6 +7,7 @@ import Page from './Page'
 import Multiplayer from './Multiplayer'
 import Create from './Create'
 import Join from './Join'
+import WaitingRoom from './WaitingRoom'
 
 export {
     Landing,
@@ -16,6 +17,7 @@ export {
     Multiplayer,
     Create,
     Join,
+    WaitingRoom,
     Feedback,
     Page
 }
