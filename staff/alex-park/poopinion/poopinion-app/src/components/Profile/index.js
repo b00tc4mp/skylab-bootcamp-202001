@@ -24,7 +24,7 @@ function Profile({ user, onDetails }) {
                 {user.publishedToilets.length > 0 &&
                     user.publishedToilets.map(toilet => (
                         <TouchableOpacity onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer}>
-                            <View  style={styles.innerPost}>
+                            <View style={styles.innerPost}>
                                 <View style={styles.postsLeft}>
                                     <Text style={styles.postTitle}>{toilet.place}</Text>
                                     <Text style={styles.postDate}>Posted at: {toilet.created.toString().slice(0, 10)}</Text>
@@ -41,7 +41,41 @@ function Profile({ user, onDetails }) {
             </View>
 
             <View style={styles.comments}>
-                <Text style={styles.bigText}>0 Comments:</Text>
+                <Text style={styles.bigText}>{user.comments.length} Comment(s):</Text>
+                {user.comments.length > 0 &&
+                    user.comments.map(comment => (
+                        <TouchableOpacity onPress={() => onDetails(comment.commentedAt.toString())} style={styles.postsContainer}>
+                            <View style={styles.innerPost}>
+                                <View style={styles.postsLeftComment}>
+                                    <Text style={styles.commentText}>"{comment.rating.textArea}"</Text>
+                                    <Text style={styles.postDate}>Posted at: {comment.created.toString().slice(0, 10)}</Text>
+                                    <View style={styles.innerPost}>
+                                        <View style={styles.innerPost}>
+                                            <Image source={require('../../../assets/thumb-up.png')} style={styles.thumb} /><Text></Text>
+                                            <Text style={styles.thumbCount}>: {comment.thumbsUp.length}</Text>
+                                        </View>
+
+                                        <View style={styles.innerPost}>
+                                            <Image source={require('../../../assets/thumb-down.png')} style={styles.thumb} /><Text></Text>
+                                            <Text style={styles.thumbCount}>: {comment.thumbsDown.length}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+
+                                <View style={styles.postsRight}>
+                                    <Text style={styles.postTitle}>Toilet's score: {comment.rating.overallRating}</Text>
+                                    <Text>Cleanness: {comment.rating.cleanness}</Text>
+                                    <Text>Aesthetics: {comment.rating.looks}</Text>
+                                    <Text>Payment required: {comment.rating.paymentRequired > 0 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
+                                    <Text>Multiple toilets: {comment.rating.multipleToilets > 0 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
+                                    <Text>Paper provision: {comment.rating.paperDeployment > 0 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
+                                </View>
+
+                            </View>
+                        </TouchableOpacity>
+
+                    ))
+                }
             </View>
         </ScrollView>
     </>)

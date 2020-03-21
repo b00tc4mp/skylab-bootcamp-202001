@@ -5,11 +5,11 @@ import styles from './styles'
 function NewComment({ toilet, onSubmit }) {
     const [cleanness, setCleanness] = useState(0)
     const [looks, setLooks] = useState(0)
-    const [payment, setPayment] = useState(0)
-    const [multiple, setMultiple] = useState(0)
-    const [paper, setPaper] = useState(0)
-    const [score, setScore] = useState(0)
-    const [text, setText] = useState()
+    const [paymentRequired, setPaymentRequired] = useState(0)
+    const [multipleToilets, setMultipleToilets] = useState(0)
+    const [paperDeployment, setPaperDeployment] = useState(0)
+    const [overallRating, setOverallRating] = useState(0)
+    const [textArea, setTextArea] = useState()
 
     return (<>
         <ScrollView>
@@ -49,9 +49,9 @@ function NewComment({ toilet, onSubmit }) {
                     <Text style={styles.question}>Need to pay to use the toilet?:</Text>
                     <View style={styles.picker}>
                         <Picker
-                            selectedValue={payment}
+                            selectedValue={paymentRequired}
                             onValueChange={(itemValue) =>
-                                setPayment(itemValue)
+                                setPaymentRequired(itemValue)
                             }>
                             <Picker.Item style={styles.form} label="Yes" value={1} />
                             <Picker.Item style={styles.form} label="No" value={0} />
@@ -63,9 +63,9 @@ function NewComment({ toilet, onSubmit }) {
                     <Text style={styles.question}>Does it have multiple toilets?:</Text>
                     <View style={styles.picker}>
                         <Picker
-                            selectedValue={multiple}
+                            selectedValue={multipleToilets}
                             onValueChange={(itemValue) =>
-                                setMultiple(itemValue)
+                                setMultipleToilets(itemValue)
                             }>
                             <Picker.Item style={styles.form} label="Yes" value={1} />
                             <Picker.Item style={styles.form} label="No" value={0} />
@@ -77,9 +77,9 @@ function NewComment({ toilet, onSubmit }) {
                     <Text style={styles.question}>Is the toilet paper provision good?:</Text>
                     <View style={styles.picker}>
                         <Picker
-                            selectedValue={paper}
+                            selectedValue={paperDeployment}
                             onValueChange={(itemValue) =>
-                                setPaper(itemValue)
+                                setPaperDeployment(itemValue)
                             }>
                             <Picker.Item style={styles.form} label="Yes" value={1} />
                             <Picker.Item style={styles.form} label="No" value={0} />
@@ -88,14 +88,14 @@ function NewComment({ toilet, onSubmit }) {
                 </View>
 
                 <View style={styles.questionContainer}>
-                    <Text style={[styles.question, styles.value]}>OVERALL RATING: <Text style={styles.value}>{score}</Text></Text>
+                    <Text style={[styles.question, styles.value]}>OVERALL RATING: <Text style={styles.value}>{overallRating}</Text></Text>
                     <View style={styles.sliderContainer}>
                         <Text>0</Text>
                         <Slider
                             style={styles.slider}
                             minimumValue={0}
                             maximumValue={5}
-                            onValueChange={(value) => setScore(parseInt(value))}
+                            onValueChange={(value) => setOverallRating(parseInt(value))}
                         />
                         <Text>5</Text>
                     </View>
@@ -105,13 +105,23 @@ function NewComment({ toilet, onSubmit }) {
                     <KeyboardAvoidingView behavior='position'>
                         <Text style={styles.question}>(Optional) Add a comment here:</Text>
                         <View style={styles.sliderContainer}>
-                            <TextInput style={styles.input} placeholder='Start writing here' onChangeText={(text) => setText(text)} />
+                            <TextInput style={styles.input} placeholder='Start writing here' onChangeText={(text) => setTextArea(text)} />
                         </View>
                     </KeyboardAvoidingView>
                 </View>
             </View>
 
-            <TouchableOpacity onPress={() => onSubmit({ cleanness, looks, payment, multiple, paper, score, text })} >
+            <TouchableOpacity onPress={() => onSubmit({
+                rating: {
+                    cleanness,
+                    looks,
+                    paymentRequired,
+                    multipleToilets,
+                    paperDeployment,
+                    overallRating,
+                    textArea
+                }
+            })} >
                 <Text style={styles.submit} >💩 SUBMIT 💩</Text>
             </TouchableOpacity>
         </ScrollView>

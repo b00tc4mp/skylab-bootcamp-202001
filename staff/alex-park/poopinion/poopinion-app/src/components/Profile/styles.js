@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
     postsLeft: {
         flex: 1
     },
+    postsLeftComment: {
+        flex: 1,
+        justifyContent: 'center'
+    },
     postsRight: {
         flex: 1
     },
@@ -69,6 +73,20 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 100,
         resizeMode: 'contain'
+    },
+    commentText: {
+        fontStyle: 'italic',
+        fontSize: 18
+    },
+    thumb: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+        marginRight: 5
+    },
+    thumbCount: {
+        alignSelf: 'center',
+        marginRight: 15
     }
 })
 

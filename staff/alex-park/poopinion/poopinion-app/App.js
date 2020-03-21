@@ -24,7 +24,8 @@ import logic, {
   retrieveFavToilets,
   retrieveToilet,
   toggleThumbUp,
-  toggleThumbDown
+  toggleThumbDown,
+  publishComment
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage
@@ -234,10 +235,16 @@ export default function App() {
     }
   }
 
-  function handlePublishComment({cleanness, looks, paper, multiple, payment, score, text}) {
-    console.log(cleanness, looks, paper, multiple, payment, score, text)
+  function handlePublishComment(data) {
+    console.log(data)
     try {
-      setView('landing')
+      (async() => {
+        await publishComment(token, detailedToilet.id.toString(), data)
+        __handleUser__()
+        __handleToiletScore__()
+        Alert.alert('Thank you for your rating! 🚽❤️')
+        setView('landing')
+      })()
     } catch ({message}) {
       __handleError__(message)
     }

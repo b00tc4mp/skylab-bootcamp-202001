@@ -11,5 +11,6 @@ module.exports = {
     retrieveFavToilets: require('./retrieve-fav-toilets'),
     retrieveToilet: require('./retrieve-toilet'),
     toggleThumbUp: require('./toggle-thumb-up'),
-    toggleThumbDown: require('./toggle-thumb-down')
+    toggleThumbDown: require('./toggle-thumb-down'),
+    publishComment: require('./publish-comment')
 }
