@@ -9,6 +9,7 @@ module.exports = (req, res) => {
         validateTicket(idParking)
             .then(() =>
                 res.status(200).json({"message": "your ticket was validated"})
+                
             )
             .catch(error => {
                 let status = 400
