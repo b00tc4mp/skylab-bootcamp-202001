@@ -1,230 +1,218 @@
-require('dotenv').config()
-
-const { env: { TEST_MONGODB_URL } } = process
-const { expect } = require('chai')
-const { random, floor } = Math
-const toggleThumbDown = require('./toggle-thumb-down')
+import toggleThumbDown from './toggle-thumb-down'
 const { mongoose, models: { User, Toilet, Comment } } = require('poopinion-data')
+const { random, floor } = Math
+const jwt = require('jsonwebtoken')
+const atob = require('atob')
+const { NotFoundError, NotAllowedError } = require('../errors')
 
 describe('toggleThumbDown', () => {
-    before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()]))
-            .then(() => { })
-    )
-
-    let name, surname, email, password, age, gender, _id, _toiletId, place, rating = {}
+    let name, surname, email, password, age, gender, place, latitude, rating, longitude, latitudeDelta, longitudeDelta, coordinates, _id, _toiletId, token, _commentId
     const GENDERS = ['male', 'female', 'non-binary']
-    const YESORNO = [true, false]
+
+    beforeAll(async () => {
+        await mongoose.connect('mongodb://localhost:27017/test-poopinion', { useNewUrlParser: true, useUnifiedTopology: true })
+
+        await User.deleteMany()
+        await Toilet.deleteMany()
+        await Comment.deleteMany()
+    })
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        age = floor(random() * 120)
+        age = floor(random() * 100)
         gender = GENDERS[floor(random() * GENDERS.length)]
-        place = `house of ${name}`
-        rating.cleanness = floor(random() * 5)
-        rating.looks = floor(random() * 5)
-        rating.multipleToilets = YESORNO[floor(random() * YESORNO.length)]
-        rating.paymentRequired = YESORNO[floor(random() * YESORNO.length)]
-        rating.paperDeployment = YESORNO[floor(random() * YESORNO.length)]
-        rating.overallRating = floor(random() * 5)
-        rating.textArea = `opinion-${random()}`
+        place = `place-${random()}`
+        latitudeDelta = random()
+        longitudeDelta = random()
+        latitude = random()
+        longitude = random()
+        coordinates = { latitude, longitude, latitudeDelta, longitudeDelta }
+        rating = {
+            cleanness: floor(random() * 5),
+            looks: floor(random() * 5),
+            multipleToilets: floor(random() * 2),
+            paperDeployment: floor(random() * 2),
+            paymentRequired: floor(random() * 2),
+            overallRating: floor(random() * 5),
+            textArea: `opinion-${random()}`
+        }
     })
 
-    describe('when user, comment and the toilet post exist', () => {
-        beforeEach(() =>
-            Promise.resolve(User.create({ name, surname, email, password, age, gender }))
-                .then(({ id }) => _id = id)
-                .then(() => Promise.resolve(Toilet.create({ publisher: _id, place })))
-                .then(({ id }) => _toiletId = id)
-                .then(() => Promise.all([User.findById(_id), Toilet.findById(_toiletId)]))
-                .then(([user, toilet]) => {
-                    const comment = new Comment({ place, publisher: _id, commentedAt: _toiletId, rating })
-                    user.comments.push(comment)
-                    toilet.comments.push(comment)
-                    return Promise.all([user.save(), toilet.save(), comment.save()])
-                })
-                .then(() => Comment.findOne({ publisher: _id }))
-                .then(({ id }) => _commentId = id)
-                .then(() => { })
-        )
+    describe('happy paths', () => {
 
-        it('should successfully add or remove the thumb-up feature to the target comment', () => {
-            return toggleThumbDown(_id, _commentId)
-                .then(() => Promise.all([User.findById(_id).lean(), Comment.findById(_commentId).lean()]))
-                .then(([user, comment]) => {
-                    expect(user.thumbsDown.length).to.equal(1)
-                    expect(comment.thumbsDown.length).to.equal(1)
-                    expect(comment.thumbsDown[0].toString()).to.equal(_id)
-                    return expect(user.thumbsDown[0].toString()).to.equal(_commentId)
-                })
-                .then(() => User.findById(_id).populate('thumbsDown').lean())
-                .then(user => {
-                    const { thumbsDown } = user
-                    expect(thumbsDown).to.be.instanceOf(Array)
-                    expect(thumbsDown[0].publisher.toString()).to.equal(_id)
-                    expect(thumbsDown[0].commentedAt.toString()).to.equal(_toiletId)
-                    expect(thumbsDown[0].thumbsDown[0].toString()).to.equal(_id)
+        it('should successfully toggle/untoggle a thumb down on a comment made in a toilet post', async () => {
+            let user = await User.create({ name, surname, email, password, age, gender });
+            _id = user.id
+            token = jwt.sign({ sub: _id }, '👌', { expiresIn: '1d' })
+            let toilet = await Toilet.create({ publisher: _id, place, coordinates })
+            _toiletId = toilet.id
+            let comment = await Comment.create({ place, publisher: _id, commentedAt: _toiletId, rating })
+            _commentId = comment.id
+            await User.findByIdAndUpdate(_id, { $push: { comments: _commentId } })
+            await Toilet.findByIdAndUpdate(_toiletId, { $push: { comments: _commentId } })
 
-                    expect(thumbsDown[0].rating.cleanness).to.equal(rating.cleanness)
-                    expect(thumbsDown[0].rating.looks).to.equal(rating.looks)
-                    expect(thumbsDown[0].rating.multipleToilets).to.equal(rating.multipleToilets)
-                    expect(thumbsDown[0].rating.paymentRequired).to.equal(rating.paymentRequired)
-                    expect(thumbsDown[0].rating.paperDeployment).to.equal(rating.paperDeployment)
-                    expect(thumbsDown[0].rating.overallRating).to.equal(rating.overallRating)
-                    expect(thumbsDown[0].rating.textArea).to.equal(rating.textArea)
-                })
-                .then(() => toggleThumbDown(_id, _commentId))
-                .then(() => Promise.all([User.findById(_id).lean(), Comment.findById(_commentId).lean()]))
-                .then(([user, comment]) => {
-                    expect(user.thumbsDown.length).to.equal(0)
-                    expect(user.thumbsDown).to.be.instanceOf(Array)
-                    expect(comment.thumbsDown.length).to.equal(0)
-                    return expect(comment.thumbsDown).to.be.instanceOf(Array)
-                })
-                .then(() => toggleThumbDown(_id, _commentId))
-                .then(() => Promise.all([User.findById(_id).lean(), Comment.findById(_commentId).lean()]))
-                .then(([user, comment]) => {
-                    expect(user.thumbsDown.length).to.equal(1)
-                    expect(comment.thumbsDown.length).to.equal(1)
-                    expect(comment.thumbsDown[0].toString()).to.equal(_id)
-                    return expect(user.thumbsDown[0].toString()).to.equal(_commentId)
-                })
-                .then(() => User.findById(_id).populate('thumbsDown').lean())
-                .then(user => {
-                    const { thumbsDown } = user
-                    expect(thumbsDown).to.be.instanceOf(Array)
-                    expect(thumbsDown[0].publisher.toString()).to.equal(_id)
-                    expect(thumbsDown[0].commentedAt.toString()).to.equal(_toiletId)
-                    expect(thumbsDown[0].thumbsDown[0].toString()).to.equal(_id)
+            const toggle = await toggleThumbDown(token, _commentId)
+            expect(toggle).toBeUndefined()
 
-                    expect(thumbsDown[0].rating.cleanness).to.equal(rating.cleanness)
-                    expect(thumbsDown[0].rating.looks).to.equal(rating.looks)
-                    expect(thumbsDown[0].rating.multipleToilets).to.equal(rating.multipleToilets)
-                    expect(thumbsDown[0].rating.paymentRequired).to.equal(rating.paymentRequired)
-                    expect(thumbsDown[0].rating.paperDeployment).to.equal(rating.paperDeployment)
-                    expect(thumbsDown[0].rating.overallRating).to.equal(rating.overallRating)
-                    expect(thumbsDown[0].rating.textArea).to.equal(rating.textArea)
-                })
-                .then(() => toggleThumbDown(_id, _commentId))
-                .then(() => Promise.all([User.findById(_id).lean(), Comment.findById(_commentId).lean()]))
-                .then(([user, comment]) => {
-                    expect(user.thumbsDown.length).to.equal(0)
-                    expect(user.thumbsDown).to.be.instanceOf(Array)
-                    expect(comment.thumbsDown.length).to.equal(0)
-                    return expect(comment.thumbsDown).to.be.instanceOf(Array)
-                })
-                .then(() => { })
+            toilet = await Toilet.findById(_toiletId).populate('comments')
+            user = await User.findById(_id).lean()
+
+            expect(toilet.comments).toBeInstanceOf(Array)
+            expect(toilet.comments.length).toBe(1)
+            expect(toilet.comments[0].publisher.toString()).toMatch(_id)
+            expect(toilet.comments[0].thumbsDown).toBeInstanceOf(Array)
+            expect(toilet.comments[0].thumbsDown.length).toBe(1)
+            expect(toilet.comments[0].thumbsDown[0].toString()).toMatch(_id)
+
+            expect(user.comments).toBeInstanceOf(Array)
+            expect(user.comments.length).toBe(1)
+            expect(user.thumbsDown).toBeInstanceOf(Array)
+            expect(user.thumbsDown.length).toBe(1)
+            expect(user.thumbsDown[0].toString()).toMatch(_commentId)
+
+            comment = await Comment.findById(_commentId).lean()
+
+            expect(comment.thumbsDown).toBeInstanceOf(Array)
+            expect(comment.thumbsDown.length).toBe(1)
+            expect(comment.thumbsDown[0].toString()).toMatch(_id)
+            expect(comment.commentedAt.toString()).toMatch(_toiletId)
+
         })
 
-    })
+        it('should successfully untoggle the thumb down as well', async () => {
+            await toggleThumbDown(token, _commentId)
+            let user = await User.findById(_id).lean()
+            let toilet = await Toilet.findById(_toiletId).populate('comments').lean()
+            let comment = await Comment.findById(_commentId).lean()
 
-    describe('when the user does not exist', () => {
-        beforeEach(() => User.deleteMany().then(() => { }))
+            expect(user.comments).toBeInstanceOf(Array)
+            expect(user.comments.length).toBe(1)
+            expect(user.thumbsDown).toBeInstanceOf(Array)
+            expect(user.thumbsDown.length).toBe(0)
+            expect(user.thumbsDown[0]).toBeUndefined()
 
-        it('should fail to post a comment if the user does not exist', () =>
-            toggleThumbDown(_id, _commentId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(({ message }) => {
-                    expect(message).not.to.be.undefined
-                    expect(message).to.equal(`user with id ${_id} does not exist`)
-                })
-                .then(() => { })
-        )
-    })
+            expect(toilet.comments).toBeInstanceOf(Array)
+            expect(toilet.comments.length).toBe(1)
+            expect(toilet.comments[0].publisher.toString()).toMatch(_id)
+            expect(toilet.comments[0].thumbsDown).toBeInstanceOf(Array)
+            expect(toilet.comments[0].thumbsDown.length).toBe(0)
+            expect(toilet.comments[0].thumbsDown[0]).toBeUndefined()
 
-    describe('when the user is deactivated', () => {
-        beforeEach(() =>
-            User.create({ name, surname, email, password, age, gender })
-                .then(({ id }) => _id = id)
-                .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
-                .then(() => { })
-        )
-        it('should fail to post a comment if the user is deactivated', () =>
-            toggleThumbDown(_id, _commentId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(({ message }) => {
-                    expect(message).not.to.be.undefined
-                    expect(message).to.equal(`user with id ${_id} is deactivated`)
-                })
-        )
-    })
+            expect(comment.thumbsDown).toBeInstanceOf(Array)
+            expect(comment.thumbsDown.length).toBe(0)
+            expect(comment.thumbsDown[0]).toBeUndefined()
+            expect(comment.commentedAt.toString()).toMatch(_toiletId)
+        })
 
-    describe('when the comment does not exist', () => {
-        beforeEach(() =>
-            Comment.deleteMany()
-                .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: false } }))
-                .then(() => { })
-        )
 
-        it('should fail to post a comment if the toilet post does not exist', () =>
-            toggleThumbDown(_id, _commentId)
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(({ message }) => {
-                    expect(message).not.to.be.undefined
-                    expect(message).to.equal(`comment with id ${_commentId} does not exist`)
-                })
-                .then(() => { })
-        )
+
+        it('should fail to toggle/untoggle if the user is deactivated', async () => {
+            await User.findByIdAndUpdate(_id, { $set: { deactivated: true } })
+
+            let _error
+
+            try {
+                await toggleThumbDown(token, _commentId)
+            } catch (error) {
+                _error = error
+            }
+            expect(_error).toBeDefined()
+            expect(_error).toBeInstanceOf(Error)
+            const userId = JSON.parse(atob(token.split('.')[1])).sub
+            expect(_error.message).toEqual(`user with id ${userId} is deactivated`)
+        })
+
+        it('should fail to toggle thumb down on an invalid token', async () => {
+            let _error
+            try {
+                await toggleThumbDown(`${token}-wrong`, _commentId)
+            } catch (error) {
+                _error = error
+            }
+
+            expect(_error).toBeDefined()
+            expect(_error).toBeInstanceOf(NotAllowedError)
+            expect(_error.message).toBe('invalid signature')
+        })
+
+        it('should fail to toggle thumb down if the user does not exist', async () => {
+            await User.deleteMany()
+
+            let _error
+            try {
+                await toggleThumbDown(token, _commentId)
+            } catch (error) {
+                _error = error
+            }
+            expect(_error).toBeDefined()
+            expect(_error).toBeInstanceOf(NotFoundError)
+            const userId = JSON.parse(atob(token.split('.')[1])).sub
+            expect(_error.message).toBe(`user with id ${userId} does not exist`)
+        })
+
+        it('should fail to toggle thumb down if the comment does not exist', async () => {
+            let user = await User.create({ name, surname, email, password, age, gender });
+            _id = user.id
+            token = jwt.sign({ sub: _id }, '👌', { expiresIn: '1d' })
+            await Comment.deleteMany()
+
+            let _error
+            try {
+                await toggleThumbDown(token, _commentId)
+            } catch (error) {
+                _error = error
+            }
+            expect(_error).toBeDefined()
+            expect(_error).toBeInstanceOf(NotFoundError)
+            expect(_error.message).toBe(`comment with id ${_commentId} does not exist`)
+        })
+
     })
 
     describe('unhappy paths', () => {
-        let __id
-        beforeEach(() =>
-            Promise.resolve(User.create({ name, surname, email, password, age, gender }))
-                .then(({ id }) => {
-                    _id = id
-                    __id = id
-                })
-                .then(() => Promise.resolve(Toilet.create({ publisher: _id, place })))
-                .then(({ id }) => _toiletId = id)
-                .then(() => Promise.all([User.findById(_id), Toilet.findById(_toiletId)]))
-                .then(([user, toilet]) => {
-                    const comment = new Comment({ place, publisher: _id, commentedAt: _toiletId, rating })
-                    user.comments.push(comment)
-                    toilet.comments.push(comment)
-                    return Promise.all([user.save(), toilet.save(), comment.save()])
-                })
-                .then(() => Comment.findOne({ publisher: _id }))
-                .then(({ id }) => _commentId = id)
-                .then(() => { })
-        )
+        it('should fail on a non string token', () => {
+            token = 45438
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`token ${token} is not a string`)
 
-        it('should fail on a non-string user id', () => {
-            _id = 9328743289
-            expect(() => toggleThumbDown(_id, _commentId)).to.throw(TypeError, `id ${_id} is not a string`)
+            token = {}
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`token ${token} is not a string`)
 
-            _id = false
-            expect(() => toggleThumbDown(_id, _commentId)).to.throw(TypeError, `id ${_id} is not a string`)
+            token = false
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`token ${token} is not a string`)
 
-            _id = undefined
-            expect(() => toggleThumbDown(_id, _commentId)).to.throw(TypeError, `id ${_id} is not a string`)
+            token = [1, 2, 3]
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`token ${token} is not a string`)
 
-            _id = []
-            expect(() => toggleThumbDown(_id, _commentId)).to.throw(TypeError, `id ${_id} is not a string`)
+            token = undefined
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`token is empty`)
         })
 
-        it('should fail on a non-string id', () => {
-            debugger
-            _commentId = 9328743289
-            expect(() => toggleThumbDown(__id, _commentId)).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+        it('should fail on a non-string toilet ID', () => {
+            token = 'some token'
+            _commentId = 45438
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`commentId ${_commentId} is not a string`)
+
+            _commentId = {}
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`commentId ${_commentId} is not a string`)
 
             _commentId = false
-            expect(() => toggleThumbDown(__id, _commentId)).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`commentId ${_commentId} is not a string`)
+
+            _commentId = [1, 2, 3]
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`commentId ${_commentId} is not a string`)
 
             _commentId = undefined
-            expect(() => toggleThumbDown(__id, _commentId)).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
-
-            _commentId = []
-            expect(() => toggleThumbDown(__id, _commentId)).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+            expect(() => toggleThumbDown(token, _commentId)).toThrow(`commentId is empty`)
         })
     })
 
-    after(() =>
-        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
-            .then(() => mongoose.disconnect())
-    )
+    afterAll(async () => {
+        await User.deleteMany()
+        await Toilet.deleteMany()
+        await Comment.deleteMany()
+        await mongoose.disconnect()
+    })
 })

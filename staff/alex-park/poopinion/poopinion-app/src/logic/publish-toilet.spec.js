@@ -14,6 +14,7 @@ describe('publishToilet', () => {
         await mongoose.connect('mongodb://localhost:27017/test-poopinion', { useNewUrlParser: true, useUnifiedTopology: true })
 
         await User.deleteMany()
+        await Toilet.deleteMany()
     })
 
     beforeEach(() => {
