@@ -25,7 +25,8 @@ import logic, {
   retrieveToilet,
   toggleThumbUp,
   toggleThumbDown,
-  publishComment
+  publishComment,
+  retrieveTopToilets
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage
@@ -47,6 +48,7 @@ export default function App() {
   const [favToilets, setFavToilets] = useState()
   const [detailedToilet, setDetailedToilet] = useState()
   const [globalRating, setGlobalRating] = useState({ cleannessMean: 0, looksMean: 0, paymentMean: 0, multipleMean: 0, scoreMean: 0, paperMean: 0 })
+  const [topToilets, setTopToilets] = useState()
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -60,8 +62,9 @@ export default function App() {
 
     __handleUser__()
     __handleToiletScore__()
-  }, [detailedToilet])
-  
+    __handleTopToilets__()
+  }, [topToilets])
+
   function __handleError__(message) {
     setError(message)
     setTimeout(() => {
@@ -104,6 +107,13 @@ export default function App() {
     }
   }
 
+  function __handleTopToilets__() {
+    (async () => {
+      const top = await retrieveTopToilets()
+      setTopToilets(top)
+    })()
+  }
+
   // BASIC FUNCTIONS
   async function handleRegister(name, surname, email, password, age, gender) {
     try {
@@ -120,11 +130,12 @@ export default function App() {
       const response = await authenticateUser(email, password)
 
       const retrievedUser = await retrieveUser(response)
+      const top = await retrieveTopToilets()
+      setTopToilets(top)
       setUser(retrievedUser)
       setToken(response)
       setGoLanding(true)
       setView('landing')
-
 
     } catch ({ message }) {
       __handleError__(message)
@@ -238,14 +249,14 @@ export default function App() {
   function handlePublishComment(data) {
     console.log(data)
     try {
-      (async() => {
+      (async () => {
         await publishComment(token, detailedToilet.id.toString(), data)
         __handleUser__()
         __handleToiletScore__()
         Alert.alert('Thank you for your rating! 🚽❤️')
         setView('landing')
       })()
-    } catch ({message}) {
+    } catch ({ message }) {
       __handleError__(message)
     }
   }
@@ -330,13 +341,13 @@ export default function App() {
       <ScrollView style={styles.content}>
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
-        {view === 'landing' && <Landing user={user} coordinates={coordinates} />}
+        {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav}/>}
         {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
         {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
-        {view === 'newComment' && <NewComment toilet={detailedToilet} onSubmit={handlePublishComment}/>}
+        {view === 'newComment' && <NewComment toilet={detailedToilet} onSubmit={handlePublishComment} />}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

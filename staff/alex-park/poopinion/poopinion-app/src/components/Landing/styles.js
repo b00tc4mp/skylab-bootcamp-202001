@@ -15,10 +15,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     header: {
-        marginVertical: 10,
-        fontSize: 15,
-        fontWeight: 'bold',
-        textAlign: 'center'
+        flex: 1,
+        flexDirection: 'row'
+    },
+    place: {
+        fontSize: 25,
+        fontWeight: 'bold'
     },
     posts: {
         flex: 1,
@@ -30,8 +32,7 @@ const styles = StyleSheet.create({
         marginHorizontal: '2.5%',
         marginVertical: '4%',
     },
-    postImage: {
-        flex:1,
+    image: {
         width: '100%',
         height: 200
     },
@@ -41,6 +42,10 @@ const styles = StyleSheet.create({
     },
     contentLeft: {
         flex: 1,
+    },
+    headerLeft: {
+        flex: 1,
+        flexDirection: 'column'
     },
     left: {
         fontSize: 18,
@@ -58,6 +63,33 @@ const styles = StyleSheet.create({
         height: 150,
         marginVertical: 10
     },
+    poopRating: {
+        flex: 1,
+        width: '70%',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    headerRight: {
+        flex: 0.25,
+
+    },
+    postedAt: {
+        fontStyle: 'italic'
+    },
+    favButton: {
+        resizeMode: 'contain',
+        width: '60%',
+        height: '60%',
+        alignSelf: 'center'
+    },
+    smallPoop: {
+        flex: 1,
+        resizeMode: 'contain',
+        width: '100%',
+        height: '100%',
+        alignSelf: 'flex-start'
+    },
+
 })
 
 export default styles

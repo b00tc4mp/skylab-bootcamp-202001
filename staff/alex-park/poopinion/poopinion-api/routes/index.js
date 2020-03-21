@@ -17,7 +17,8 @@ const {
     updateComment,
     deleteComment,
     toggleThumbUp,
-    toggleThumbDown
+    toggleThumbDown,
+    retrieveTopToilets
 } = require('./handlers')
 const bodyParser = require('body-parser')
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -44,6 +45,8 @@ router.patch('/users/toilet/:toiletId', [jwtVerifierMidWare, jsonBodyParser], up
 router.delete('/users/toilet/:toiletId/delete', jwtVerifierMidWare, deleteToilet)
 
 router.get('/toilets', searchToilets)
+
+router.get('/top-toilets', retrieveTopToilets)
 
 router.get('/toilets/:toiletId', retrieveToilet)
 
