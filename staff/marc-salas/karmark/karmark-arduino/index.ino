@@ -8,10 +8,8 @@
 // #define Servo4Pin 2 //D4
 // const int LED = 16; //GPI16 - D0
 
-// const char* ssid ="Salasphone";     //YOUR SSID
-// const char* password = "3baefd18e028";        //YOUR WIFI PASSWORD
-
-// int sc[]={180, 90, 0};
+// const char* ssid ="Salasphone";     
+// const char* password = "3baefd18e028";        
 
 // Servo servo1;
 // Servo servo2;
@@ -30,7 +28,7 @@
 //   servo2.write(180);
 //   servo3.write(180);
 //   servo4.write(180);
-//   server.send(200, "text/plane","trying UP");
+//   server.send(200, "text/plane","trying RIGHT");
 // }
 
 // void left(){
@@ -43,7 +41,8 @@
 //   servo2.write(0);
 //   servo3.write(0);
 //   servo4.write(0);
-//   server.send(200, "text/plane","trying DOWN");
+//   delay(100);
+//   server.send(200, "text/plane","trying LEFT");
 // }
 // void up(){
 //   digitalWrite(LED,HIGH);
@@ -55,7 +54,8 @@
 //   servo2.write(0);
 //   servo3.write(180);
 //   servo4.write(180);
-//   server.send(200, "text/plane","trying LEFT");
+//   delay(100);
+//   server.send(200, "text/plane","trying UP");
 // }
 // void down(){
 //   digitalWrite(LED,HIGH);
@@ -67,22 +67,17 @@
 //   servo2.write(180);
 //   servo3.write(0);
 //   servo4.write(0);
-//   server.send(200, "text/plane","trying RIGHT ");
+//   delay(100);
+//   server.send(200, "text/plane","trying DOWN ");
 // }
 // void alto(){
 //   digitalWrite(LED,HIGH);
-//   servo1.attach(Servo1Pin);
-//   servo2.attach(Servo2Pin);
-//   servo3.attach(Servo3Pin);
-//   servo4.attach(Servo4Pin);
-//   servo1.write(95);
-//   servo2.write(95);
-//   servo3.write(95);
-//   servo4.write(95);
-//   server.send(200, "text/plane","trying servoUp");
-// }
-// void info() {
-//  server.send(200, "text/plain", "Hola mundo!");
+//   servo1.detach();
+//   servo2.detach();
+//   servo3.detach();
+//   servo4.detach();
+//   delay(100);
+//   server.send(200, "text/plane","trying servoStop");
 // }
 
 // void no_encontrado() {
@@ -90,22 +85,27 @@
 // }
 
 // void setup() {
-//   //inicializa el puerto serie
-//   Serial.begin(115200);
+//   Serial.begin(250000);
 //   delay(10);
+  
 //   pinMode(LED,OUTPUT);
 //   digitalWrite(LED,LOW);
+  
 //   //inicializa el led
 //   servo1.attach(Servo1Pin);
+//   servo2.attach(Servo2Pin);
+//   servo3.attach(Servo3Pin);
+//   servo4.attach(Servo4Pin);
+  
 //   //Inicializa el módulo wifi
-//   WiFi.mode(WIFI_STA); //Establece el módulo como cliente wifi
-//   WiFi.disconnect(); //Se desconecta de cualquier WiFi conectado previamente
+//   WiFi.mode(WIFI_STA); 
+//   WiFi.disconnect(); 
 //   Serial.println();  
-//   //conecta con la red wifi
+  
 //   Serial.print("Connecting to ");
 //   Serial.println(ssid);
 //   WiFi.begin(ssid, password);
-//   while (WiFi.status() != WL_CONNECTED) {   // Espera por una conexión WiFi
+//   while (WiFi.status() != WL_CONNECTED) {   
 //     delay(500);
 //     Serial.print(".");
 //   }
@@ -114,15 +114,15 @@
 //   Serial.print("IP address: ");
 //   Serial.println(WiFi.localIP());
 //   digitalWrite(LED,HIGH);
-//   //definimos los paths
-//   server.on("/up",up);    //al recivir /srv1 a traves de GET ejecuta handleServo
-//   server.on("/down",down);    //al recivir /srv1 a traves de GET ejecuta handleServo
-//   server.on("/left",left);    //al recivir /srv1 a traves de GET ejecuta handleServo
-//   server.on("/right",right);    //al recivir /srv1 a traves de GET ejecuta handleServo
-//    server.on("/stop",alto);    //al recivir /srv1 a traves de GET ejecuta handleServo
+
+//   server.on("/up",up);    
+//   server.on("/down",down);    
+//   server.on("/left",left);    
+//   server.on("/right",right);    
+//   server.on("/stop",alto);    
   
 //   server.onNotFound(no_encontrado);
-//   //inicializa el servidor web
+
 //   server.begin();
 //   Serial.println("Servidor HTTP activo");
 // }

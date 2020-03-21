@@ -120,21 +120,21 @@ export default withRouter(function ({ history }) {
   }
 
   function handleSaveUp(){
-    code.push('up', 'stop')
+    code.push('up')
 
   }
 
   function handleSaveDown(){
-    code.push('down', 'stop')
+    code.push('down')
     console.log(code)
   }
 
   function handleSaveRight(){
-    code.push('right', 'stop')     
+    code.push('right')     
   }
 
   function handleSaveLeft(){
-    code.push('left', 'stop')      
+    code.push('left')      
   }
   
   function handleDelete(){
