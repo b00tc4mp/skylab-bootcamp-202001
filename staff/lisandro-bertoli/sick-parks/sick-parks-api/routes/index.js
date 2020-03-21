@@ -23,7 +23,7 @@ router.post('/users/:id/parks/:id/comment', [jwtValidationMidWare, jsonBodyParse
 
 router.get('/users/:id/parks', [jwtValidationMidWare], user.retrieveParks)
 
-router.post('/users/:id/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
+router.post('/users/:id?/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
 
 router.patch('/users/:id/parks/:id/approve', jwtValidationMidWare, park.approve)
 
