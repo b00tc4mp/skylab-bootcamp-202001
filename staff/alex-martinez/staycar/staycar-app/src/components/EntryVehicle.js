@@ -25,9 +25,9 @@ export default function({onSubmit, error}) {
 
     return <section className="entry-plate">
     {plate && !error ? <img src={encoded} className="qr" alt="qr-code"/> : <>
-    <h1 className="entry-plate__title">Entry: vehicle plate number</h1>
+    <h1 className="entry-plate__title">Entrance</h1>
     <form className="entry-plate__form" onSubmit={handleVehicle}>
-        <input type="text" name="plateNumber" placeholder="entry car plate number" className="entry-plate__input" />
+        <input type="text" name="plateNumber" placeholder="car plate number" className="entry-plate__input" />
         <button className="entry-plate__submit">Add</button>
     </form>
     </>

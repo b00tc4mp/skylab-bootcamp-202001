@@ -21,7 +21,6 @@ export default withRouter(function ({ history }) {
       setTimeout(() => {
         setState({ error: undefined })
       }, 3000)
-  
   }
 
   useEffect(() => {
@@ -45,9 +44,9 @@ export default withRouter(function ({ history }) {
       
     } catch (error) {
 
-      //setState({...state, stateLogin: false})
       
        __handleError__(error)
+       history.push('/login')
     }
   }
 

@@ -39,14 +39,10 @@ export default function({onSubmit, infoTicket, error}) {
         delay={300}
         onError={handleError}
         onScan={handleScan}
-        style={{ width: '35%' }}
       />
       </> 
       : <ValidateTicket infoTicket={infoTicket}/>
     } 
     
     {error && <Feedback message={error} level="warn"/>}
-
-    {/* {infoTicket && <ValidateTicket infoTicket={infoTicket}/> } */}
-
   </section>}

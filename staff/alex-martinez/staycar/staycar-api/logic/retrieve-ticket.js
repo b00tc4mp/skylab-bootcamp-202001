@@ -8,7 +8,7 @@ module.exports = (carPlate, parkingName) => {
 
 
    return (async () => {
-        const ticket = await Ticket.findOne({carPlate})
+        const ticket = await Ticket.findOne({carPlate}).lean()
         if(!ticket) throw new NotFoundError('this plate is not inside the parking')
         if(ticket.validated) throw new NotFoundError('this ticket is not valid')
         const parking = await Parking.findOne({parkingName})
@@ -24,6 +24,10 @@ module.exports = (carPlate, parkingName) => {
         const rate = parking.rate
         const totalPrice = parseFloat(minutes * rate)
         ticket.amount = totalPrice
+
+        ticket.id = ticket._id.toString()
+        delete ticket._id
+        delete ticket.__v
 
         return ticket
    })()
