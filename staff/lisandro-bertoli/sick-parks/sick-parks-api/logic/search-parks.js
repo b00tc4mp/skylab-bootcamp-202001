@@ -6,7 +6,7 @@ module.exports = ({ q, _location }) => {
     validate.string(q, 'query')
 
     //REMEMBER TO ADD THE INDEX TO location.coordinates FROM SHELL
-    _location = [_location[0], _location[0]]
+    if (_location) _location = [_location[0], _location[0]]
     return (async () => {
         let results
         if (q === 'verified') {
@@ -14,7 +14,7 @@ module.exports = ({ q, _location }) => {
 
         } else if (q === 'latest') {
             results = await Park.find({ date: { $gte: new Date } }).sort({ date: -1 }).lean()
-        } else {
+        } else if (_location) {
 
             results = await Park.find({
                 $and: [
@@ -38,6 +38,13 @@ module.exports = ({ q, _location }) => {
                 ]
             }).lean()
 
+        } else {
+            results = await Park.find({
+                $or: [
+                    { name: { $regex: q } },
+                    { resort: { $regex: q } },
+                    { level: { $regex: q } }]
+            })
         }
 
         if (!results.length) return results

@@ -17,13 +17,13 @@ router.post('/users/auth', jsonBodyParser, user.authenticate)
 
 router.patch('/users/:id', [jwtValidationMidWare, jsonBodyParser], user.update)
 
-router.get('/users/:id', [jwtValidationMidWare], user.retrieve)
+router.get('/users/:id?', [jwtValidationMidWare], user.retrieve)
 
 router.post('/users/:id/parks/:id/comment', [jwtValidationMidWare, jsonBodyParser], user.comment)
 
 router.get('/users/:id/parks', [jwtValidationMidWare], user.retrieveParks)
 
-router.post('/users/:id/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
+router.post('/users/:id?/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
 
 router.patch('/users/:id/parks/:id/approve', jwtValidationMidWare, park.approve)
 

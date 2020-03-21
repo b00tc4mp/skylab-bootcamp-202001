@@ -15,7 +15,7 @@ module.exports = ({ query, location }) => {
         const data = await response.json()
 
         const { error, results } = data
-        debugger
+
         if (error) throw new Error(error)
 
         return results
