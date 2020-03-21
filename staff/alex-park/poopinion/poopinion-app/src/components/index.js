@@ -9,6 +9,7 @@ import Profile from './Profile'
 import Favorites from './Favorites'
 import NewToilet from './New-Toilet'
 import ToiletDetails from './Toilet-Details'
+import NewComment from './New-Comment'
 
 export {
     Register,
@@ -21,5 +22,6 @@ export {
     Profile,
     Favorites,
     NewToilet,
-    ToiletDetails
+    ToiletDetails,
+    NewComment
 }

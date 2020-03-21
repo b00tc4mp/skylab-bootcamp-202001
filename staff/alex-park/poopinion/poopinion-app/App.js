@@ -10,7 +10,8 @@ import {
   Profile,
   Favorites,
   NewToilet,
-  ToiletDetails
+  ToiletDetails,
+  NewComment
 } from './src/components'
 
 import logic, {
@@ -233,6 +234,15 @@ export default function App() {
     }
   }
 
+  function handlePublishComment({cleanness, looks, paper, multiple, payment, score, text}) {
+    console.log(cleanness, looks, paper, multiple, payment, score, text)
+    try {
+      setView('landing')
+    } catch ({message}) {
+      __handleError__(message)
+    }
+  }
+
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
     setGoLanding(false)
@@ -295,6 +305,15 @@ export default function App() {
     }
   }
 
+  function handleGoToPublishComment() {
+    if (!user) {
+      Alert.alert('You are not logged in yet!')
+      handleGoToLogin();
+    } else {
+      setView('newComment')
+    }
+  }
+
   // THE RENDER ITSELF
   return (<View style={styles.container}>
     <ImageBackground style={styles.image} source={require('./assets/background.png')}>
@@ -309,7 +328,8 @@ export default function App() {
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
-        {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
+        {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
+        {view === 'newComment' && <NewComment toilet={detailedToilet} onSubmit={handlePublishComment}/>}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

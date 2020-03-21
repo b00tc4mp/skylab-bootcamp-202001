@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-na
 import MapView from 'react-native-maps'
 import styles from './styles'
 
-function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown }) {
+function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
 
     useEffect(() => {
@@ -104,7 +104,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 <Text style={styles.scoreLeftUp}>
                                     <Text style={styles.scoreMean}>{globalRating.scoreMean}</Text>
                                 </Text>
-                                <TouchableOpacity style={styles.scoreLeftDown} onPress={() => Alert.alert(`rating to ${toilet.id}`)}>
+                                <TouchableOpacity style={styles.scoreLeftDown} onPress={() => onComment(toilet.id)}>
                                     <Text style={styles.addRating}>+ Add a rating</Text>
                                 </TouchableOpacity>
                             </View>
