@@ -2,12 +2,14 @@ import { Context } from './ContextProvider'
 import './App.sass'
 import React, { useState, useEffect, useContext } from 'react'
 import { Landing, Login, Register, Home, Multiplayer, Create, Join } from './'
-import { register, login, isLoggedIn, logout, createGame } from '../logic'
+import { register, login, isLoggedIn, createGame } from '../logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
 
   const [state, setState] = useContext(Context)
+
+  const [error, setError] = useState(undefined)
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -21,8 +23,9 @@ export default withRouter(function ({ history }) {
     try {
       await register(username, password)
         history.push('./landing')
-    } catch ({ message }) {
-        setState({ error: message })
+    } catch (error) {
+      setError(error.message)
+      setTimeout(()=> setError(undefined), 3000)
     }
   }
 
@@ -30,8 +33,9 @@ export default withRouter(function ({ history }) {
     try {
       await login(username, password)
         history.push('/home')
-    } catch ({ message }) {
-        setState({ ...state, error: message })
+    } catch (error) {
+      setError(error.message)
+      setTimeout(()=> setError(undefined), 3000)
     }
   }
 
@@ -56,7 +60,7 @@ export default withRouter(function ({ history }) {
     history.push('/landing')
   }
 
-  const { error } = state
+  // const { error } = state
 
   return <div className="app">
       <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/landing" />} />

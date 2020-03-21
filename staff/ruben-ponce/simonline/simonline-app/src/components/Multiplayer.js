@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import'./Multiplayer.sass'
-import { logout, isLoggedIn, retrieveUser } from '../logic'
+import { logout, isLoggedIn } from '../logic'
 import { withRouter } from 'react-router-dom'
 
 // import Feedback from './Feedback'
 
 export default withRouter(function ({ history }) {
+
+    useEffect(() => {
+        if (isLoggedIn()) return
+        else history.push('/landing')
+    },[])
 
     function handleLogout() {
         logout()
@@ -25,11 +30,11 @@ export default withRouter(function ({ history }) {
 
     return <div className="p1 multiplayer">
     <div className="multiplayer__top-menu">
-        <a className="multiplayer__top-menu__back" onClick={handleGoBack}>Back</a>
+        <p className="multiplayer__top-menu__back" onClick={handleGoBack}>Back</p>
         <p className="multiplayer__top-menu__title">Multiplayer</p>
-        <a className="multiplayer__top-menu__logout" onClick={handleLogout}>Logout</a>
+        <p className="multiplayer__top-menu__logout" onClick={handleLogout}>Logout</p>
     </div>
-    <a className="multiplayer__create-group" onClick={handleGoCreate}>Create group</a>
-    <a className="multiplayer__join-group" onClick={handleGoJoin}>Join group</a>
+    <p className="multiplayer__create-group" onClick={handleGoCreate}>Create group</p>
+    <p className="multiplayer__join-group" onClick={handleGoJoin}>Join group</p>
 </div>
 })

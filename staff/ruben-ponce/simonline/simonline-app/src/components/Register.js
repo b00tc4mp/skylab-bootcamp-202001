@@ -21,8 +21,7 @@ export default ({onGoToLanding, onSubmit, error}) => {
         <input type="text" name="username" placeholder="username" />
         <input type="password" name="password" placeholder="password" />
         <button>Register</button>
-
-        {/* {error && <Feedback error={error}/>} */}
+        {error && <Feedback error={error}/>}
     </form>
     </div>
 }

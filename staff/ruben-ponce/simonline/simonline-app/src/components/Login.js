@@ -1,6 +1,6 @@
 import'./Login.sass'
-import React, { useEffect, useContext } from 'react'
-// import Feedback from './Feedback'
+import React from 'react'
+import Feedback from './Feedback'
 
 export default ({onSubmit, onGoToLanding, error}) => {
 
@@ -17,7 +17,7 @@ export default ({onSubmit, onGoToLanding, error}) => {
             <input className="login__form__username" type="text" placeholder="username" name="username"/>
             <input className="login__form__password" type="password" placeholder="password" name="password"/>
             <button>Login</button>
+        {error && <Feedback error={error}/>}
         </form>
-        {/* {error && <Feedback error={error}/>} */}
     </div>
 }

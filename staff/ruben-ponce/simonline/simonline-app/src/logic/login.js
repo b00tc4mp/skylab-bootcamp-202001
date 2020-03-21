@@ -1,14 +1,12 @@
-// import { validate } from 'events-utils'
-// import { NotAllowedError } from 'events-errors'
+import { validate } from 'simonline-utils'
+import { NotAllowedError } from 'simonline-errors'
 import context from './context'
-
-//const { env: { REACT_APP_API_URL: API_URL } } = process
 
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (username, password) {
-    // validate.string(username, 'username')
-    // validate.string(password, 'password')
+    validate.string(username, 'username')
+    validate.string(password, 'password')
 
     return (async () => {
         const response = await fetch(`${API_URL}/users/auth`, {
@@ -31,7 +29,7 @@ export default (function (username, password) {
             const { error } = await response.json()
 
             if (status === 401) {
-                // throw new NotAllowedError(error)
+                throw new NotAllowedError(error)
             }
 
             throw new Error(error)

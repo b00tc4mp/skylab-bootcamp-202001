@@ -20,7 +20,7 @@ export default ({ handleCreateGame }) => {
                 }
             })()
         else history.push('/landing')
-    }, [])
+    },[])
 
     function handleLogout() {
         logout()
@@ -33,17 +33,17 @@ export default ({ handleCreateGame }) => {
 
     return <div className="p1 create-group">
     <div className="create-group__top-menu">
-        <a className="create-group__top-menu__back" onClick={handleGoBack}>Back</a>
+        <p className="create-group__top-menu__back" onClick={handleGoBack}>Back</p>
         <p className="create-group__top-menu__title">Create Game</p>
-        <a className="create-group__top-menu__logout" onClick={handleLogout}>Logout</a>
+        <p className="create-group__top-menu__logout" onClick={handleLogout}>Logout</p>
     </div>
     <form className="create-group__form" onSubmit={event => {
-            event.preventDefault()
-    
-            const name = event.target.name.value
-            
-            handleCreateGame(name, owner)
-        }}>
+        event.preventDefault()
+
+        const name = event.target.name.value
+        
+        handleCreateGame(name, owner)
+    }}>
         <input className="create-group__label" name="name" type="text" placeholder="name of game"/>
         <button className="create-group__button">Create</button>
     </form>

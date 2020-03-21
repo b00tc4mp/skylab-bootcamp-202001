@@ -1,5 +1,5 @@
 import context from './context'
-// import { NotAllowedError } from 'simonline-errors'
+import { NotAllowedError } from 'simonline-errors'
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -24,7 +24,7 @@ export default (function () {
             const { error } = await response.json()
 
             if (status === 401) {
-                // throw new NotAllowedError(error)
+                throw new NotAllowedError(error)
             }
 
             throw new Error(error)
