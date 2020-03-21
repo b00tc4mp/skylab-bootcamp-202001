@@ -63,7 +63,7 @@ export default function App() {
     __handleUser__()
     __handleToiletScore__()
     __handleTopToilets__()
-  }, [topToilets])
+  }, [])
 
   function __handleError__(message) {
     setError(message)
@@ -194,6 +194,7 @@ export default function App() {
       try {
         await toggleFavToilet(token, toiletId)
         __handleUser__()
+        __handleTopToilets__()
         if (favToilets) {
           const _favToilets = await retrieveFavToilets(token)
           setFavToilets(_favToilets)
