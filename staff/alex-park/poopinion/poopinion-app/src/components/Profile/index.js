@@ -47,7 +47,7 @@ function Profile({ user, onDetails }) {
                         <TouchableOpacity onPress={() => onDetails(comment.commentedAt.toString())} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeftComment}>
-                                    <Text style={styles.commentText}>"{comment.rating.textArea}"</Text>
+                                    <Text>"{comment.rating.textArea.length > 0 ? (<Text style={styles.commentText}>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
                                     <Text style={styles.postDate}>Posted at: {comment.created.toString().slice(0, 10)}</Text>
                                     <View style={styles.innerPost}>
                                         <View style={styles.innerPost}>

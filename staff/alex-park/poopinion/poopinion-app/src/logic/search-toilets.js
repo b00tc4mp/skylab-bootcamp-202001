@@ -11,7 +11,7 @@ const context = require('./context')
  * 
  */
 
-module.exports = function (query) {
+module.exports = function (query='') {
     validate.string(query, 'query')
 
     return (async () => {

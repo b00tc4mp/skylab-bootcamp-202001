@@ -110,11 +110,11 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                             </View>
 
                             <View style={styles.scoreRight}>
-                                <Text>Cleanness: <Text>{globalRating.cleannessMean}</Text></Text>
-                                <Text>Aesthetics: {globalRating.looksMean}</Text>
-                                <Text>Payment required: {globalRating.paymentMean >= 0.5 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
-                                <Text>Multiple toilets: {globalRating.multipleMean >= 0.5 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
-                                <Text>Paper provision: {globalRating.paperMean >= 0.5 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
+                                <Text>Cleanness: <Text style={styles.smallScore}>{globalRating.cleannessMean}</Text></Text>
+                                <Text>Aesthetics: <Text style={styles.smallScore}>{globalRating.looksMean}</Text></Text>
+                                <Text>Payment required: {globalRating.paymentMean >= 0.5 ? (<Text style={styles.smallScore}>Yes</Text>) : (<Text style={styles.smallScore}>No</Text>)}</Text>
+                                <Text>Multiple toilets: {globalRating.multipleMean >= 0.5 ? (<Text style={styles.smallScore}>Yes</Text>) : (<Text style={styles.smallScore}>No</Text>)}</Text>
+                                <Text>Paper provision: {globalRating.paperMean >= 0.5 ? (<Text style={styles.smallScore}>Yes</Text>) : (<Text style={styles.smallScore}>No</Text>)}</Text>
                             </View>
                         </View>
                     </View>
@@ -136,7 +136,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                     </View>
 
                     <View style={styles.commentsContainer}>
-                        <Text style={styles.comments}>Comments ({toilet.comments.length}):</Text>
+                        <Text style={styles.comments}>Last ratings/comments ({toilet.comments.length}):</Text>
                         {toilet.comments.length ?
                             (comments.map(comment => (<>
                                 <View style={styles.commentContainer}>
@@ -149,8 +149,9 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                             <Text style={styles.commentTopRightText}>Rating: <Text style={{ color: '#df7861' }}>{comment.rating.overallRating}</Text><Text style={{ color: 'brown' }}>/5</Text></Text>
                                         </View>
                                     </View>
+
                                     <View style={styles.commentItself}>
-                                        <Text style={styles.theComment}>"{comment.rating.textArea}"</Text>
+                                        <Text style={styles.theComment}>"{comment.rating.textArea.length > 0 ? (<Text>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
                                         <View style={styles.thumbs}>
                                             <View style={styles.thumbUpContainer}>
                                                 <TouchableOpacity onPress={() => onThumbUp(comment.id.toString())}>
@@ -183,6 +184,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                             </View>
                                         </View>
                                     </View>
+
                                 </View>
                             </>)))
                             :

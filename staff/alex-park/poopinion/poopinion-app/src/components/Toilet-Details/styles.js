@@ -102,6 +102,10 @@ const styles = StyleSheet.create({
         margin: 15,
         justifyContent: 'space-around'
     },
+    smallScore: {
+        fontWeight: 'bold',
+        fontSize: 18
+    },
     poopRating: {
         flex: 1,
         width: '70%',
