@@ -13,6 +13,17 @@ let code = []
 
 export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
+  
+  function handleError (page, message){
+
+    setState({ page: page, error: message })
+
+    setTimeout(() => {
+
+      setState({ page: page, error: undefined})
+
+    }, 3000);
+  }
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -38,7 +49,9 @@ export default withRouter(function ({ history }) {
     } catch ({ message }) {
       history.push('/register')
       
-      setState({ page: 'register', error: message })
+      //setState({ page: 'register', error: message })
+
+      handleError('register', message)
     }
   }
 
@@ -50,7 +63,9 @@ export default withRouter(function ({ history }) {
     } catch ({message}) {
       history.push('/login')
       
-      setState({ page: 'login', error: message })
+      //setState({ page: 'login', error: message })
+
+      handleError('login', message)
     }
   }
 
@@ -61,7 +76,9 @@ export default withRouter(function ({ history }) {
     } catch ({message}) {
       history.push('/control')
       
-      setState({ page: 'control', error: message })
+      //setState({ page: 'control', error: message })
+
+      handleError('control', message)
     }
   }
 
@@ -72,7 +89,9 @@ export default withRouter(function ({ history }) {
     } catch ({message}) {
       history.push('/control')
       
-      setState({ page: 'control', error: message })
+      //setState({ page: 'control', error: message })
+
+      handleError('control', message)
     }
   }
 
@@ -83,7 +102,9 @@ export default withRouter(function ({ history }) {
     } catch ({message}) {
       history.push('/control')
       
-      setState({ page: 'control', error: message })
+      //setState({ page: 'control', error: message })
+
+      handleError('control', message)
     }
   }
 
@@ -94,7 +115,9 @@ export default withRouter(function ({ history }) {
     } catch ({message}) {
       history.push('/control')
       
-      setState({ page: 'control', error: message })
+      //setState({ page: 'control', error: message })
+
+      handleError('control', message)
     }
   }
 
@@ -105,7 +128,9 @@ export default withRouter(function ({ history }) {
     } catch ({message}) {
       history.push('/control')
       
-      setState({ page: 'control', error: message })
+      //setState({ page: 'control', error: message })
+
+      handleError('control', message)
     }
   }
 
@@ -115,7 +140,9 @@ export default withRouter(function ({ history }) {
 
     } catch ({message}) {
       history.push('/programe')
-      setState({ page: 'programe', error: message })
+      //setState({ page: 'programe', error: message })
+
+      handleError('programe', message)
     }
   }
 
