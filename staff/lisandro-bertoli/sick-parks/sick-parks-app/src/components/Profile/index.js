@@ -1,11 +1,14 @@
 import React from 'react'
 
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, ScrollView, Button, View, Text } from 'react-native'
 
-export default function Profile() {
+export default function Profile({ navigation, route }) {
+    const { handleLogout } = route.params
+
     return (
-        <View>
+        <ScrollView>
             <Text>Profile Page</Text>
-        </View>
+            <Button onPress={handleLogout} title='Logout' />
+        </ScrollView>
     )
 }

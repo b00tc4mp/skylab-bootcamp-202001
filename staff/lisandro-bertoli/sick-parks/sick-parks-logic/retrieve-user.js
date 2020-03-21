@@ -5,7 +5,7 @@ module.exports = function retrieveUser() {
 
     return (async () => {
 
-
+        const token = await this.storage.getItem('token')
         const response = await fetch(`http://192.168.1.101:8085/api/users`, {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${token}` }

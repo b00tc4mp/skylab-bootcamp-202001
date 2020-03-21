@@ -26,18 +26,26 @@ export default function App() {
 
 	useEffect(() => {
 		(async () => {
-			await logic.__context__.storage.clear()
+
 			try {
 				if (await isUserLoggedIn()) {
 					const user = await retrieveUser()
 					setUser(user)
-					console.log(user)
 				}
 			} catch ({ message }) {
 				setError(message)
 			}
 		})()
 	}, [])
+
+
+	const __handleErrors__ = (error) => {
+		setError(error)
+
+		setTimeout(() => {
+			setError(null)
+		}, 3000)
+	}
 
 
 	_getNotificationsPermissionsAsync = async () => {
@@ -53,7 +61,8 @@ export default function App() {
 			}
 			throw new Error('Location permission not granted');
 
-		} catch (error) {
+		} catch ({ message }) {
+			__handleErrors__(message)
 			return false
 		}
 
@@ -77,9 +86,8 @@ export default function App() {
 			}
 
 			setError(null)
-		} catch (errpr) {
-
-			setError(message)
+		} catch ({ message }) {
+			__handleErrors__(message)
 		}
 	}
 
@@ -89,8 +97,16 @@ export default function App() {
 			setError(null)
 			setState('registered')
 		} catch ({ message }) {
-			setError(message)
+			__handleErrors__(message)
 		}
+	}
+
+	const handleLogout = async () => {
+		setUser(null)
+		setState(null)
+		setError(null)
+		await logoutUser()
+
 	}
 
 
@@ -123,7 +139,7 @@ export default function App() {
 								else if (route.name === 'Build') iconName = buildImage
 								else if (route.name === 'Profile') iconName = profileImage
 
-								// You can return any component that you like here!
+
 								return <Image source={iconName} style={styles.icon} />
 							},
 						})}
@@ -138,7 +154,7 @@ export default function App() {
 						<Tab.Screen name="Home" component={Home} />
 						<Tab.Screen name="Map" component={MapViewContainer} />
 						<Tab.Screen name="Build" component={ParkBuilder} />
-						<Tab.Screen name="Profile" component={Profile} />
+						<Tab.Screen name="Profile" initialParams={{ user, handleLogout }} component={Profile} />
 					</Tab.Navigator>
 				</>}
 			</NavigationContainer>
