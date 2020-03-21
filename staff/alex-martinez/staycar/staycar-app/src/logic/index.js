@@ -6,6 +6,7 @@ import createParking from './create-parking'
 import retrieveParking from './retrieve-parking'
 import retrieveLots from './retrieve-lots'
 import retrieveTicket from './retrieve-ticket'
+import registerUser from './register-user'
 
 export {
     login,
@@ -15,5 +16,6 @@ export {
     createParking,
     retrieveParking,
     retrieveLots,
-    retrieveTicket
+    retrieveTicket,
+    registerUser
 }

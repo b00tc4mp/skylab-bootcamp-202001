@@ -34,6 +34,6 @@ export default withRouter (function ({ onSubmit, error, history }) {
         <button className="login__submit">Login</button>
     </form>
     
-    {error && <Feedback message={error} level="warn" />}
+    {error && <Feedback message={error} level="error" />}
 </section>
 })

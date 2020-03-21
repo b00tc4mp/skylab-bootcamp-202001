@@ -9,7 +9,11 @@ import { ReactComponent as User } from './icons/user.svg'
 export default withRouter (function({history}) {
     
     const handleToCreateParking = () => {
-        history.push('/create')
+        history.push('/create-parking')
+    }
+
+    const handleToCreateUser = () => {
+        history.push('/create-user')
     }
 
     return <> 
@@ -19,7 +23,7 @@ export default withRouter (function({history}) {
                 <Add className="config__image"/>
                 <p class="config__text">Create parking</p>
             </div>
-            <div class="config__action">
+            <div class="config__action" onClick={handleToCreateUser}>
                 <User className="config__image"/>
                 <p class="config__text">Create User</p>
             </div>

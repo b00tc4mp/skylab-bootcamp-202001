@@ -27,7 +27,7 @@ export default function() {
 
             {lots.map(lot => <MapItem key={lot.id} lot={lot} />)}
 
-            {error && <Feedback message={error} level="warn" />}
+            {error && <Feedback message={error} level="info" />}
             
         </section>
     </section>
