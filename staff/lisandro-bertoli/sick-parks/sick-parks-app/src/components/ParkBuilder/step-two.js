@@ -1,98 +1,131 @@
 import React, { useState } from 'react'
-import { StyleSheet, ScrollView, KeyboardAvoidingView, TouchableWithoutFeedback, Dimensions, TextInput, Picker, Keyboard, View, Text } from 'react-native'
-import { Button, Feedback, RadioButton } from '../index'
-import { RotationGestureHandler } from 'react-native-gesture-handler'
+import { StyleSheet, ScrollView, TouchableHighlight, KeyboardAvoidingView, Modal, Dimensions, TextInput, Picker, TouchableOpacity, View, Text } from 'react-native'
+import { Button, Feedback, RadioButton, MapViewContainer } from '../index'
+
 
 let screenHeight = Dimensions.get('window').height
 
 export default function StepOne({ navigation, route }) {
     const [error, setError] = useState()
+    const [showModal, setShowModal] = useState(false)
+    const [featuresDetails, setFeaturesDetails] = useState()
+    const [currentRail, setCurrentRail] = useState()
     const { park, features: { rails, boxes, kickers, pipes, others } } = route.params
 
     const featuresNeeded = rails || boxes || kickers || pipes || others
     if (!featuresNeeded) navigation.navigate('StepThree')
 
-    const railsNeeded = rails && new Array(rails).fill(0)
-    const boxesNeeded = boxes && Array(boxes).fill(0)
-    const kickersNeeded = kickers && new Array(kickers).fill(0)
-    const pipesNeeded = pipes && new Array(pipes).fill(0)
-    const othersNeeded = others && new Array(others).fill(0)
+    let railsNeeded = rails && new Array(rails).fill({})
+    let boxesNeeded = boxes && Array(boxes).fill({})
+    let kickersNeeded = kickers && new Array(kickers).fill({})
+    let pipesNeeded = pipes && new Array(pipes).fill({})
+    let othersNeeded = others && new Array(others).fill({})
 
-    const railsDetails = {
+
+    let _rails = []
+    let _boxes = []
+    let _kickers = []
+    let _pipes = []
+    let _others = []
+
+    const handleNewMarker = (coordinates) => {
+        console.log(_rails[currentRail])
+        // console.log(coordinates)
+        _rails[currentRail] = { ..._rails[currentRail] }
+        _rails[currentRail].location = coordinates
+        console.log(_rails)
+    }
+
+    const handleSizeChange = (target, index, value) => {
 
     }
 
     return (
         <View style={styles.container}>
-
+            <Modal
+                animationType="slide"
+                transparent={false}
+                visible={showModal}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                }}>
+                <MapViewContainer getMarkers={handleNewMarker} />
+                <TouchableHighlight
+                    onPress={() => {
+                        setShowModal(false);
+                    }}>
+                    <Text>Hide Modal</Text>
+                </TouchableHighlight>
+            </Modal>
             <ScrollView>
                 {railsNeeded && railsNeeded.map((rail, index) => {
                     return (
                         <View style={{ height: 220, justifyContent: 'space-around' }}>
                             <Text style={{ alignSelf: 'center' }}>Rail {index + 1}:</Text>
                             {error && <Feedback level='warn' message={error} />}
-                            <Text >Level:</Text>
-                            <View style={{ width: '100%', height: '20%', flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                            </View>
+                            <Text >Size: </Text>
+
+                            <Picker
+
+                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
+                                itemStyle={{ height: 40 }}
+                                onValueChange={value => {
+                                    _rails[index] = { ...rails[index] }
+                                    _rails[index].size = value
+                                    console.log(_rails)
+
+                                }
+                                }>
+                                <Picker.Item label="Small" value="s" />
+                                <Picker.Item label="Medium" value="m" />
+                                <Picker.Item label="Large" value="l" />
+                                <Picker.Item label="XL" value="xl" />
+                            </Picker>
+
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
                                 <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Gnarly kinked rail' style={styles.textInput} onChangeText={(text) => railsDetails.rail1.description = text} />
+                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Gnarly kinked rail' style={styles.textInput} onChangeText={(text) => { _rails[index] = { ..._rails[index] }; _rails[index].description = text; console.log(_rails) }} />
                             </View>
-                            <Button text='Set Location' style={{
+                            <Button text='Set Location' textStyle='text' style={{
                                 backgroundColor: '#EFEBDA',
                                 flex: 0.3,
                                 alignSelf: 'flex-start',
                                 borderRadius: 5,
                                 justifyContent: 'center'
-                            }} />
+                            }} onPress={() => { setCurrentRail(index); setShowModal(true) }} />
                         </View>
                     )
                 })}
                 {boxesNeeded && boxesNeeded.map((box, index) => {
                     return (
-                        <View style={{ height: 220, justifyContent: 'space-between' }}>
-                            <Text>Rail {index + 1}:</Text>
+                        <View style={{ height: 220, justifyContent: 'space-around' }}>
+                            <Text style={{ alignSelf: 'center' }}>Rail {index + 1}:</Text>
                             {error && <Feedback level='warn' message={error} />}
-                            <Text style={{ alignSelf: 'center' }}>Level</Text>
-                            <View style={{ width: '100%', height: '20%', flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                            </View>
+                            <Text >Size: </Text>
+
+                            <Picker
+
+                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
+                                itemStyle={{ height: 40 }}
+                                onValueChange={value => {
+                                    _rails[index] = {}
+                                    _rails[index].size = value
+                                    console.log(_rails)
+                                }
+                                }>
+                                <Picker.Item label="Small" value="s" />
+                                <Picker.Item label="Medium" value="m" />
+                                <Picker.Item label="Large" value="l" />
+                                <Picker.Item label="XL" value="xl" />
+                            </Picker>
+
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
                                 <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Gnarly kinked rail' style={styles.textInput} onChangeText={(text) => railsDetails.index.description = text} />
                             </View>
-                            <Button text='Set Location' style={{
+                            <Button text='Set Location' textStyle='text' style={{
                                 backgroundColor: '#EFEBDA',
                                 flex: 0.3,
                                 alignSelf: 'flex-start',
@@ -104,33 +137,31 @@ export default function StepOne({ navigation, route }) {
                 })}
                 {kickersNeeded && kickersNeeded.map((kicker, index) => {
                     return (
-                        <View style={{ height: 220, justifyContent: 'space-between' }}>
-                            <Text>Rail {index + 1}:</Text>
+                        <View style={{ height: 220, justifyContent: 'space-around' }}>
+                            <Text style={{ alignSelf: 'center' }}>Rail {index + 1}:</Text>
                             {error && <Feedback level='warn' message={error} />}
-                            <Text style={{ alignSelf: 'center' }}>Level</Text>
-                            <View style={{ width: '100%', height: '20%', flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                            </View>
+                            <Text >Size: </Text>
+
+                            <Picker
+
+                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
+                                itemStyle={{ height: 40 }}
+                                onValueChange={value => {
+
+                                }
+                                }>
+                                <Picker.Item label="Small" value="s" />
+                                <Picker.Item label="Medium" value="m" />
+                                <Picker.Item label="Large" value="l" />
+                                <Picker.Item label="XL" value="xl" />
+                            </Picker>
+
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
                                 <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Gnarly kinked rail' style={styles.textInput} onChangeText={(text) => railsDetails.index.description = text} />
                             </View>
-                            <Button text='Set Location' style={{
+                            <Button text='Set Location' textStyle='text' style={{
                                 backgroundColor: '#EFEBDA',
                                 flex: 0.3,
                                 alignSelf: 'flex-start',
@@ -142,33 +173,31 @@ export default function StepOne({ navigation, route }) {
                 })}
                 {pipesNeeded && pipesNeeded.map((pipes, index) => {
                     return (
-                        <View style={{ height: 220, justifyContent: 'space-between' }}>
-                            <Text>Rail {index + 1}:</Text>
+                        <View style={{ height: 220, justifyContent: 'space-around' }}>
+                            <Text style={{ alignSelf: 'center' }}>Rail {index + 1}:</Text>
                             {error && <Feedback level='warn' message={error} />}
-                            <Text style={{ alignSelf: 'center' }}>Level</Text>
-                            <View style={{ width: '100%', height: '20%', flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                            </View>
+                            <Text >Size: </Text>
+
+                            <Picker
+
+                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
+                                itemStyle={{ height: 40 }}
+                                onValueChange={value => {
+
+                                }
+                                }>
+                                <Picker.Item label="Small" value="s" />
+                                <Picker.Item label="Medium" value="m" />
+                                <Picker.Item label="Large" value="l" />
+                                <Picker.Item label="XL" value="xl" />
+                            </Picker>
+
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
                                 <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Gnarly kinked rail' style={styles.textInput} onChangeText={(text) => railsDetails.index.description = text} />
                             </View>
-                            <Button text='Set Location' style={{
+                            <Button text='Set Location' textStyle='text' style={{
                                 backgroundColor: '#EFEBDA',
                                 flex: 0.3,
                                 alignSelf: 'flex-start',
@@ -180,33 +209,31 @@ export default function StepOne({ navigation, route }) {
                 })}
                 {othersNeeded && othersNeeded.map((other, index) => {
                     return (
-                        <View style={{ height: 220, justifyContent: 'space-between' }}>
-                            <Text>Rail {index + 1}:</Text>
+                        <View style={{ height: 220, justifyContent: 'space-around' }}>
+                            <Text style={{ alignSelf: 'center' }}>Rail {index + 1}:</Text>
                             {error && <Feedback level='warn' message={error} />}
-                            <Text style={{ alignSelf: 'center' }}>Level</Text>
-                            <View style={{ width: '100%', height: '20%', flexDirection: 'row', justifyContent: 'space-around' }}>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                                <View style={{ height: '100%', justifyContent: "space-between" }} >
-                                    <Text>Begginer</Text>
-                                    <RadioButton style={{ alignSelf: 'center' }} />
-                                </View>
-                            </View>
+                            <Text >Size: </Text>
+
+                            <Picker
+
+                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
+                                itemStyle={{ height: 40 }}
+                                onValueChange={value => {
+
+                                }
+                                }>
+                                <Picker.Item label="Small" value="s" />
+                                <Picker.Item label="Medium" value="m" />
+                                <Picker.Item label="Large" value="l" />
+                                <Picker.Item label="XL" value="xl" />
+                            </Picker>
+
+
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
                                 <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Gnarly kinked rail' style={styles.textInput} onChangeText={(text) => railsDetails.index.description = text} />
                             </View>
-                            <Button text='Set Location' style={{
+                            <Button text='Set Location' textStyle='text' style={{
                                 backgroundColor: '#EFEBDA',
                                 flex: 0.3,
                                 alignSelf: 'flex-start',
@@ -240,10 +267,12 @@ const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: '#82A4B3',
-        width: '60%',
-        alignSelf: 'flex-end',
+        alignSelf: 'center',
         borderRadius: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        flex: 0.8,
+        height: 30
+
 
     },
 
