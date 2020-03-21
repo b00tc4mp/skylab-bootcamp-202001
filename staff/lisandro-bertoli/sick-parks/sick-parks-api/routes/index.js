@@ -15,9 +15,9 @@ router.post('/users', jsonBodyParser, user.register)
 
 router.post('/users/auth', jsonBodyParser, user.authenticate)
 
-router.patch('/users/:id', [jwtValidationMidWare, jsonBodyParser], user.update)
+router.patch('/users/:id?', [jwtValidationMidWare, jsonBodyParser], user.update)
 
-router.get('/users/:id', [jwtValidationMidWare], user.retrieve)
+router.get('/users/:id?', [jwtValidationMidWare], user.retrieve)
 
 router.post('/users/:id/parks/:id/comment', [jwtValidationMidWare, jsonBodyParser], user.comment)
 
@@ -33,7 +33,7 @@ router.patch('/users/:id/parks/:pid/update', [jwtValidationMidWare, jsonBodyPars
 
 router.delete('/users/:id/parks/:pid/', jwtValidationMidWare, park.delete)
 
-router.delete('/users/:id', [jwtValidationMidWare, jsonBodyParser], user.delete)
+router.delete('/users/:id?', [jwtValidationMidWare, jsonBodyParser], user.delete)
 
 router.get('/parks/:id', park.retrieve)
 
