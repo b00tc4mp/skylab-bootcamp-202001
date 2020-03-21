@@ -5,22 +5,22 @@ const { expect } = require('chai')
 const { random } = Math
 const retrieveParking = require('./retrieve-parking')
 const bcrypt = require('bcryptjs')
-const { mongoose, models: { User, Parking } } = require('staycar-data')
+const { mongoose, models: { User, Parking, Ticket } } = require('staycar-data')
 
 describe('retrieveParking', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany())
+        .then(() => Promise.all([Ticket.deleteMany(), Parking.deleteMany(), User.deleteMany()]))
     )
 
-    let name, surname, username, password, pkName, rate, totalLots
+    let name, surname, username, password, parkingName, rate, totalLots
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         username = `username-${random()}`
         password = `password-${random()}`
-        pkName = `pkname-${random()}`
+        parkingName = `pkname-${random()}`
         rate = random()
         totalLots = 20
     })
@@ -37,27 +37,18 @@ describe('retrieveParking', () => {
                 .then(user => _id = user.id)  
                 .then(() => 
                     
-                    Parking.create({parkingName: pkName, rate, totalLots})
+                    Parking.create({parkingName, rate, totalLots})
                 )
         )
 
         it('should succeed on valid parking name', () =>
-            retrieveParking(_id, pkName)
+            retrieveParking(parkingName)
                 .then(pk => {
-                    expect(pk.parkingName).to.be.equal(pkName)
+                    expect(pk[0].parkingName).to.be.equal(parkingName)
                 })
         )
     })
-    it('should fail on non string id', () => {
-        let id = 123
-        expect(() => retrieveParking(id, 'parkingName')).to.throw(TypeError, `id ${id} is not a string`)
-    })
-    it('should fail on non string parking name', () => {
-        let parkingName = 5664
-        expect(() => retrieveParking('123', parkingName)).to.throw(TypeError, `parkingName ${parkingName} is not a string`)
-    })
+    
 
-    // TODO more happies and unhappies
-
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Parking.deleteMany()], Ticket.deleteMany()).then(() => mongoose.disconnect()))
 })
