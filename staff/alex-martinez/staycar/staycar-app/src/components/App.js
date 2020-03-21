@@ -20,6 +20,7 @@ export default withRouter(function ({ history }) {
 
       setTimeout(() => {
         setState({ error: undefined })
+        history.push('/home')
       }, 3000)
   }
 
@@ -71,6 +72,7 @@ export default withRouter(function ({ history }) {
     
     }catch(error) {
       return __handleError__(error)
+
     }
   }
 
@@ -104,7 +106,7 @@ export default withRouter(function ({ history }) {
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create-parking" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/atm" render={() => isLoggedIn() ? <> <Home /> <Atm onSubmit={handleAtm} infoTicket={dataTicket} error={error}/> </> : <Redirect to="/login"/>} />
-    <Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map/> </> : <Redirect to="/login" />}/>
+    <Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map error={error}/> </> : <Redirect to="/login" />}/>
     <Route path="/create-user" render={() => isLoggedIn() ? <> <Config /> <CreateUser onSubmit={handleCreateUser} error={error} /> </> : <Redirect to="/login" />}/>
     </div>
 

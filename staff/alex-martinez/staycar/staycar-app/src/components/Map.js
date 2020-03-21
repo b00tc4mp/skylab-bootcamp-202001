@@ -5,14 +5,19 @@ import { MapItem, Feedback } from '.'
 
 export default function() {
     const [lots, setLots] = useState([])
-    const [error, setError] = useState()
+    const [err, setErr] = useState()
 
+    function __handleError__(error) {
+      
+        setErr(error.message)
+    }
+    
     async function handleRetrieveLots() {
         try{
             const lots = await retrieveLots()
             setLots(lots)
         }catch(error){
-            setError(error.message)
+            __handleError__(error)
         }
     }
 
@@ -27,7 +32,7 @@ export default function() {
 
             {lots.map(lot => <MapItem key={lot.id} lot={lot} />)}
 
-            {error && <Feedback message={error} level="info" />}
+            {err && <Feedback message={err} level="info" />}
             
         </section>
     </section>
