@@ -20,7 +20,7 @@ function AddMedication ({onSubmit, error}) {
                 <Text style = {styles.title}>Add medication</Text>
                 <Text style = {styles.text}>Select name: </Text>
             
-                <Picker itemStyle={{color:'#4CBBC2', fontFamily:'Sensei-Medium'}} selectedValue = {drug} onValueChange = {setDrug}>
+                <Picker style={{ height: 100}}itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium'}} selectedValue = {drug} onValueChange = {setDrug}>
                 <Picker.Item label = "Furosemide" value = "Furosemide" />
                 <Picker.Item label = "Adiro" value = "Adiro" />
                 <Picker.Item label = "Atorvastatine" value = "Atorvastatine" />
