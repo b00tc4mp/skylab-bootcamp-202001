@@ -73,10 +73,10 @@ export default function App() {
 			await loginUser(credentials)
 			const user = await retrieveUser()
 
-			if (_getNotificationsPermissionsAsync())
+			if (await _getNotificationsPermissionsAsync())
 				user.notifications = true
 
-			const location = _getLocationAsync()
+			const location = await _getLocationAsync()
 			if (location) {
 				user.allowLocation = true
 				user.location = location
