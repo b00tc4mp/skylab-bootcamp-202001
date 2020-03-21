@@ -13,7 +13,9 @@ function NewComment({ toilet, onSubmit }) {
 
     return (<>
         <ScrollView>
-            <Image style={styles.image} source={{ uri: toilet.image }} />
+            {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
+                :
+                (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
             <View style={styles.container}>
                 <Text style={styles.header}>New rating/comment for: <Text style={styles.italic}>{toilet.place}</Text> </Text>
 

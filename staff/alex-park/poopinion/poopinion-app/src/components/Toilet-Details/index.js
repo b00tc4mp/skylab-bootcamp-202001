@@ -101,9 +101,9 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                         <Text style={styles.score}>Score:</Text>
                         <View style={styles.allScoreInfo}>
                             <View style={styles.scoreLeft}>
-                                <Text style={styles.scoreLeftUp}>
+                                <View style={styles.scoreLeftUp}>
                                     <Text style={styles.scoreMean}>{globalRating.scoreMean}</Text>
-                                </Text>
+                                </View>
                                 <TouchableOpacity style={styles.scoreLeftDown} onPress={() => onComment(toilet.id)}>
                                     <Text style={styles.addRating}>+ Add a rating</Text>
                                 </TouchableOpacity>

@@ -63,7 +63,7 @@ export default function App() {
     __handleUser__()
     __handleToiletScore__()
     __handleTopToilets__()
-  }, [])
+  }, [detailedToilet])
 
   function __handleError__(message) {
     setError(message)

@@ -13,8 +13,8 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     return (<>
         <ScrollView>
             <View style={styles.container}>
-                {user && <Text style={styles.header}>Welcome, {user.name} {user.surname}!! Enjoy your pooping 🚽</Text>}
-                {!user && <Text style={styles.header}>🚽 Welcome, stranger!! Enjoy your pooping 🚽</Text>}
+                {user && <Text style={styles.topHeader}>Welcome, {user.name} {user.surname}!! Enjoy your pooping 🚽</Text>}
+                {!user && <Text style={styles.topHeader}>🚽 Welcome, stranger!! Enjoy your pooping 🚽</Text>}
                 <Text>Your current position is: </Text>
                 {coordinates.latitude && coordinates.longitude &&
                     <MapView style={styles.mapStyle}
@@ -51,7 +51,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                             <View style={styles.postContent}>
                                 <View style={styles.header}>
                                     <View style={styles.headerLeft}>
-                                        <Text style={styles.place}>{toilet.place}</Text>
+                                        <Text style={styles.place}>{toilet.place} ({toilet.score})</Text>
                                         {toilet.score >= 4.5 && (<>
                                             <View style={styles.poopRating}>
                                                 <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />

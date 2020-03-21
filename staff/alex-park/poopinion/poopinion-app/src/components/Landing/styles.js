@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
         alignSelf: 'baseline',
         marginLeft: '2.5%'
     },
+    topHeader: {
+        fontWeight: 'bold'
+    },
     bold: {
         fontSize: 25,
         fontWeight: 'bold'

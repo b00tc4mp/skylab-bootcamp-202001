@@ -74,21 +74,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     scoreLeft: {
-        margin: 15
+        margin: 15,
+        justifyContent:'center',
+        flexDirection: 'column'
     },
     scoreLeftUp: {
-        alignSelf: 'center',
+        flex: 2,
         borderWidth: 5,
         borderColor: '#df7861',
-        paddingHorizontal: 20,
+        width: '100%',
         marginBottom: 10,
-        borderRadius: 50
+        borderRadius: 50,
+        alignContent: 'center',
+    },
+    scoreLeftDown: {
+        flex: 1
     },
     scoreMean: {
         fontSize: 40,
         fontWeight: 'bold',
         color: '#df7861',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     addRating: {
         backgroundColor: '#df7861',
