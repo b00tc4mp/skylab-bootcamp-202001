@@ -130,8 +130,8 @@ export default function App() {
       const response = await authenticateUser(email, password)
 
       const retrievedUser = await retrieveUser(response)
-      const top = await retrieveTopToilets()
-      setTopToilets(top)
+      __handleTopToilets__()
+      __handleToiletScore__()
       setUser(retrievedUser)
       setToken(response)
       setGoLanding(true)
@@ -194,7 +194,6 @@ export default function App() {
       try {
         await toggleFavToilet(token, toiletId)
         __handleUser__()
-        __handleTopToilets__()
         if (favToilets) {
           const _favToilets = await retrieveFavToilets(token)
           setFavToilets(_favToilets)
@@ -209,6 +208,7 @@ export default function App() {
           const toilet = await retrieveToilet(detailedToilet.id.toString())
           setDetailedToilet(toilet)
         }
+        __handleTopToilets__()
       } catch ({ message }) {
         __handleError__(message)
       }
@@ -254,6 +254,7 @@ export default function App() {
         await publishComment(token, detailedToilet.id.toString(), data)
         __handleUser__()
         __handleToiletScore__()
+        __handleTopToilets__()
         Alert.alert('Thank you for your rating! 🚽❤️')
         setView('landing')
       })()
@@ -283,6 +284,8 @@ export default function App() {
     setQuery()
     setGoLanding(true)
     setError(null)
+    __handleTopToilets__()
+    __handleToiletScore__()
     setView('landing')
   }
 
@@ -296,6 +299,7 @@ export default function App() {
           const _favToilets = await retrieveFavToilets(token)
           setFavToilets(_favToilets)
           __handleUser__()
+          __handleTopToilets__()
           setView('favToilets')
         })()
 
@@ -342,7 +346,7 @@ export default function App() {
       <ScrollView style={styles.content}>
         {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
-        {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav}/>}
+        {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav} />}
         {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
