@@ -1,0 +1,20 @@
+.telemetria {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 15vh;
+  font-size: 1rem;
+  border-radius: 1rem;
+  background-color: #e4e4e4;
+  color: white;
+  z-index: 1;
+}
+
+.telemetria > div {
+  color: #676767;
+  margin: 1.5rem 1rem;
+}
+/*# sourceMappingURL=Telemetry.css.map */

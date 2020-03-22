@@ -52,6 +52,7 @@ mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true 
 
     drone.on('message', message => {
       console.log(`Tello DICE: ${message}`)
+      io.sockets.emit('status', message.toString())
     })
 
     function handleError(err) {

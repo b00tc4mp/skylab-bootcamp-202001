@@ -42,7 +42,7 @@ export default function({toggleKeyboard, toggleGamepad, toggleLiveChart, toggleE
            
            event.preventDefault()
            setChosen1('g')
-          //  toggleGamepad()
+            toggleGamepad()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>
           <span className="lnav_linktext">Gamepad</span>
@@ -54,7 +54,7 @@ export default function({toggleKeyboard, toggleGamepad, toggleLiveChart, toggleE
            
            event.preventDefault()
            setChosen1('k')
-          //  toggleKeyboard()
+            toggleKeyboard()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x"/>
           <span className="lnav_linktext">Keyboard</span>

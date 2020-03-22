@@ -71,8 +71,8 @@ export default withRouter(function ({ history }) {
     if (isLoggedIn())
       (async () => {
         try {
-          const { name } = await retrieveUser()
-          setName(name)
+          const { name, surname } = await retrieveUser()
+          setName({name, surname})
           setState({ page: 'home' })
         } catch ({ message }) {
           setState({ error: message, page: 'login' })
@@ -96,7 +96,6 @@ export default withRouter(function ({ history }) {
   }, []);
 
 
-
   function handleLogout() {
     logout()
     setState({ page: 'login' })
@@ -116,23 +115,27 @@ export default withRouter(function ({ history }) {
     setControlsView(false)
   }
 
-  // function toggleKeyboard() {
-  //   gamepadDisconnect()
-  //   setGpad(false)
-  //   document.addEventListener('keydown', keyDown);
-  //   document.addEventListener('keyup', keyUp);
-  //   setKeyboard(true)
-   
-  // }
+  function toggleKeyboard() {
+    console.log('sssssssddfg')
+    gamepadDisconnect()
+    setChartsView(false)
+    setVideoView(true)
+    setGpad(false)
+    document.addEventListener('keydown', keyDown)
+    document.addEventListener('keyup', keyUp)
+    setKeyboard(true)
+  }
 
-  // function toggleGamepad() {
-  //   setKeyboard(false)
-  //   setGpad(true)
-  //   document.removeEventListener('keydown', keyDown);
-  //   document.removeEventListener('keyup', keyUp);
-  //   gamepadConnect()
-    
-  // }
+  function toggleGamepad() {
+    console.log('sssssssddfg')
+    setKeyboard(false)
+    setChartsView(false)
+    setVideoView(true)
+    setGpad(true)
+    document.removeEventListener('keydown', keyDown)
+    document.removeEventListener('keyup', keyUp)
+    gamepadConnect()
+  }
 
   function toggleLiveChart(){
     setHomePadding(true)
@@ -214,8 +217,8 @@ export default withRouter(function ({ history }) {
 
  
   return <>
-    <NavbarLeft toggleLiveChart={toggleLiveChart} toggleEstadistics={toggleEstadistics} toggleControls={toggleControls} toggleHomeView={toggleHomeView}/>
-    {/* toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard}    */}
+    <NavbarLeft toggleLiveChart={toggleLiveChart} toggleEstadistics={toggleEstadistics} toggleControls={toggleControls} toggleHomeView={toggleHomeView} toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard}/>
+    
     <div className={homePadding ? "home right-padding" : "home"}>
     
         {videoView && <Video />}
@@ -239,6 +242,6 @@ export default withRouter(function ({ history }) {
         
     </div>
     
-    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView}/>
+    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView} name={name} homePadding={homePadding}/>
   </>
 })

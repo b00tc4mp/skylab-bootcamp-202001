@@ -1,0 +1,121 @@
+.video-wrapper {
+  margin: 1.5rem;
+  width: 95%;
+  -webkit-box-shadow: 0.3px 1px 15px #d6d6d6;
+          box-shadow: 0.3px 1px 15px #d6d6d6;
+  border-radius: 0.5rem;
+}
+
+.aspect-ratio--16x9 {
+  background-color: #fff;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+.aspect-ratio__inner-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.drone-status {
+  top: 0;
+  width: 100%;
+  height: 5%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.status {
+  height: 100%;
+  width: 20%;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.drone-height {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  width: 20%;
+  color: #fff;
+}
+
+.drone-battery {
+  height: 100%;
+  width: 20%;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.battery {
+  width: 22%;
+  height: 40%;
+  padding: 2px;
+  border: 1px solid green;
+  border-radius: 4px;
+}
+
+.battery div {
+  width: 100%;
+  height: 100%;
+  background-color: green;
+  border-radius: 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.battery-2 {
+  width: 1.25%;
+  height: 25%;
+  margin-left: 1px;
+  background-color: green;
+  border-radius: 0 5px 5px 0;
+}
+/*# sourceMappingURL=Video.css.map */

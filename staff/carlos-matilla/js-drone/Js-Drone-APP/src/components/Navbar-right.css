@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+.navbar-right {
+  position: fixed;
+  background-color: #fff;
+  -webkit-transition: width .5s ease;
+  transition: width .5s ease;
+  z-index: 4;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.rnav {
+  overflow: scroll;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 100%;
+}
+
+.rnav_item {
+  width: 100%;
+}
+
+.rnav_button {
+  padding: 1rem;
+  border: 1px solid #61DAFB;
+  font-size: 1.25rem;
+  border-radius: 50%;
+}
+
+.rnav-logo_link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5rem;
+  color: #1f1f1f;
+  text-decoration: none;
+  -webkit-transition: 600ms;
+  transition: 600ms;
+}
+
+.rnav_link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 5rem;
+  color: #1f1f1f;
+  text-decoration: none;
+  -webkit-filter: opacity(0.7);
+          filter: opacity(0.7);
+  -webkit-transition: 600ms;
+  transition: 600ms;
+}
+
+.rnav_link:hover {
+  -webkit-filter: opacity(1);
+          filter: opacity(1);
+  background: #e4e4e4;
+  color: #000000;
+}
+
+.rnav_linktext {
+  font-size: 1.2rem;
+  display: inline;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+.fa-primary {
+  color: #ff7eee;
+}
+
+.fa-secondary {
+  color: #df49a6;
+}
+
+.fa-primary, .fa-secondary {
+  -webkit-transition: 600ms;
+  transition: 600ms;
+}
+
+.rnav_logo {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #000000;
+  background: #282c34;
+  font-size: 1.1rem;
+  letter-spacing: 0.2ch;
+  width: 100%;
+  list-style: none;
+}
+
+.rnav_logo img {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+  -webkit-transition: 600ms;
+  transition: 600ms;
+}
+
+.rnav_logo-text {
+  display: inline;
+  position: absolute;
+  direction: rtl;
+  margin-left: auto;
+  right: -999px;
+  -webkit-transition: 600ms;
+  transition: 600ms;
+}
+
+.navbar-right:hover .rnav_logo img {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+}
+
+/* Large screens */
+@media only screen and (min-width: 600px) {
+  .navbar-right {
+    top: 0;
+    right: 0;
+    width: 20rem;
+    height: 100vh;
+  }
+  .navbar-right:hover .rnav_linktext {
+    display: inline;
+  }
+  .navbar-right:hover .rnav_logo img {
+    margin-right: 11rem;
+  }
+  .navbar-right:hover .rnav_logo-text {
+    right: 4rem;
+  }
+}
+
+.little {
+  width: 5rem;
+}
+
+.rnav_svg {
+  min-width: 4rem !important;
+  font-size: 2rem;
+  padding: 0.6rem;
+  color: #5A5A5A;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.rnav_svg em {
+  font-size: 1rem;
+}
+/*# sourceMappingURL=Navbar-right.css.map */
