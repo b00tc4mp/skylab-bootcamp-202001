@@ -5,13 +5,20 @@ import { Button, Feedback, MapViewContainer } from '../index'
 const screenHeight = Dimensions.get('window').height
 export default function StepThree({ navigation, route }) {
     const { features, park } = route.params
+    console.log(features)
+    // for (let key in features) {
+    //     features[key].forEach(element => {
+    //         for (let prop in element) {
+    //             if (prop !== 'coordinates') {
 
-    for (let key in features) {
-        if (features[key] === undefined) features[key] = 'N/A'
-    }
+    //                 elemen[prop] = element[prop].charAt(0).toUpperCase() + element[prop].slice(1)
+    //             }
+    //         }
+    //     })
+    // }
 
 
-    let featuresList = Object.values(features).filter(item => item[0] !== undefined)
+    // let nu = Object.values(features).filter((item, index) => item[index] !== undefined)
 
 
     for (let key in park) {
@@ -34,6 +41,8 @@ export default function StepThree({ navigation, route }) {
                         <Text styles={styles.fixedText}>Size: </Text>
                         <Text styles={styles.fixedText}>Level: </Text>
                         <Text styles={styles.fixedText}>Flow: </Text>
+                        <Text styles={styles.fixedText}>Features: </Text>
+                        {/* here in features will just place the amount of features, no more details */}
                     </View>
                     <View style={styles.detailsCols}>
                         <Text styles={styles.variableText}>{park.name}</Text>
@@ -47,27 +56,9 @@ export default function StepThree({ navigation, route }) {
                     <MapViewContainer parkLocation={park.location[0].coordinate} _markers={[park.location[0]]} style={styles.map} />
                 </View>
 
+
             </ScrollView>
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    data={featuresList}
-                    renderItem={({ item }) => {
 
-                        return (<>
-                            <View style={{ height: 80, justifyContent: 'space-between' }}>
-                                <Text>{item[0].description}</Text>
-                                <Text>{item[0].size}</Text>
-
-                            </View>
-                        </>
-                        )
-
-                    }}
-                    keyExtractor={item => item.id}
-                />
-
-
-            </View>
         </View>
     )
 }
