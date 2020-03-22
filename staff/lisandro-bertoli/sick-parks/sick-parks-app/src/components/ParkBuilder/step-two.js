@@ -134,7 +134,7 @@ export default function StepOne({ navigation, route }) {
                     <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
                     <Text style={styles.modalText}>Pick a location</Text>
                 </View>
-                <MapViewContainer handleNewMarker={(coordinates) => {
+                <MapViewContainer style={styles.mapStyle} handleNewMarker={(coordinates) => {
                     handleEachValue(TYPES.COORDS, coordinates, currentIndex)
                 }} />
             </Modal>
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
         height: screenHeight,
         backgroundColor: '#EDF4F9',
         paddingHorizontal: 10,
-        paddingBottom: '30%'
+        paddingBottom: '50%'
     },
     textContainer: {
 
@@ -405,6 +405,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
+
+    mapStyle: {
+
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height * 0.855,
+    },
+
     modalText: {
         color: '#82A4B3',
         fontSize: 16

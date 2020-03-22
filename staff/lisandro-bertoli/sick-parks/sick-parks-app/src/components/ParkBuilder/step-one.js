@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, ScrollView, Modal, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput, Picker, Keyboard, View, Text } from 'react-native'
+import { StyleSheet, ScrollView, Modal, KeyboardAvoidingView, Dimensions, TouchableWithoutFeedback, TextInput, Picker, Keyboard, View, Text } from 'react-native'
 import { Button, Feedback, MapViewContainer } from '../index'
 import MapView, { Marker } from 'react-native-maps';
 
@@ -80,7 +80,7 @@ export default function StepOne({ navigation }) {
                                 <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
                                 <Text style={styles.modalText}>Pick a location</Text>
                             </View>
-                            <MapViewContainer _markers={location} handleNewMarker={(coordinates) => {
+                            <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinates) => {
                                 coordinates = { coordinate: coordinates }
                                 setLocation([coordinates])
                                 setTimeout(() => {
@@ -181,6 +181,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10
 
+    },
+    mapStyle: {
+
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height * 0.855,
     },
 
     numbersContainer: {

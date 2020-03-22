@@ -6,6 +6,11 @@ const screenHeight = Dimensions.get('window').height
 export default function StepThree({ navigation, route }) {
     const { features, park } = route.params
 
+    for (let key in features) {
+        if (features[key] === undefined) features[key] = 'N/A'
+    }
+
+
     let featuresList = Object.values(features).filter(item => item[0] !== undefined)
 
 
@@ -18,9 +23,10 @@ export default function StepThree({ navigation, route }) {
             park[key] = park[key].charAt(0).toUpperCase() + park[key].slice(1)
         }
     }
+
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView style={{ flexGrow: 0 }}>
                 <Text style={styles.header}>Park details:</Text>
                 <View style={styles.details}>
                     <View style={styles.detailsCols}>
@@ -36,24 +42,32 @@ export default function StepThree({ navigation, route }) {
                         <Text styles={styles.variableText}>{park.flow}</Text>
                     </View>
 
-                    <MapViewContainer _markers={[park.location[0]]} style={{ height: 150, width: 150 }} />
+                </View>
+                <View style={styles.mapContainer}>
+                    <MapViewContainer parkLocation={park.location[0].coordinate} _markers={[park.location[0]]} style={styles.map} />
                 </View>
 
             </ScrollView>
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    data={featuresList}
+                    renderItem={({ item }) => {
 
-            <FlatList
-                data={featuresList}
-                renderItem={({ item }) => {
-                    console.log(item[0])
-                    return (<>
-                        <Text>{item[0].description}</Text>
-                        <Text>{item[0].size}</Text>
-                    </>
-                    )
+                        return (<>
+                            <View style={{ height: 80, justifyContent: 'space-between' }}>
+                                <Text>{item[0].description}</Text>
+                                <Text>{item[0].size}</Text>
 
-                }}
-                keyExtractor={item => item.id}
-            />
+                            </View>
+                        </>
+                        )
+
+                    }}
+                    keyExtractor={item => item.id}
+                />
+
+
+            </View>
         </View>
     )
 }
@@ -64,17 +78,28 @@ const styles = StyleSheet.create({
         height: screenHeight,
         backgroundColor: '#EDF4F9',
         paddingHorizontal: 10,
-        paddingBottom: '30%',
+        paddingBottom: '20%',
         paddingTop: 10
+    },
+    map: {
+        flex: 1,
+        height: '100%',
+        width: '100%'
     },
     header: {
         fontSize: 18,
         margin: 10,
         alignSelf: 'center'
     },
+    mapContainer: {
+        flex: 1,
+        height: 140,
+        width: '90%',
+        alignSelf: 'center'
+    },
     details: {
         flex: 1,
-        height: 200,
+        height: 150,
         paddingHorizontal: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',

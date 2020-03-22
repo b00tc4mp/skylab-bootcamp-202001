@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, StatusBar, Image, AsyncStorage } from 'react-native'
+import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -152,7 +152,7 @@ export default function App() {
 						}}
 					>
 						<Tab.Screen name="Home" component={Home} />
-						<Tab.Screen name="Map" component={MapViewContainer} />
+						<Tab.Screen name="Map" component={() => MapViewContainer({ style: styles.mapStyle })} />
 						<Tab.Screen name="Build" component={ParkBuilder} />
 						<Tab.Screen name="Profile" initialParams={{ user, handleLogout }} component={Profile} />
 					</Tab.Navigator>
@@ -168,6 +168,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EDF4F9',
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	mapStyle: {
+
+		width: Dimensions.get('window').width,
+		height: Dimensions.get('window').height * 0.855,
 	},
 	icon: {
 
