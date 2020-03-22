@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert, ScrollView, AsyncStorage } from 'react-native'
+import {Notifications} from 'react-native-notifications';
+import pushNotification from './pushNotifications'
 
 import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient, ContactDetail } from './src/components'
 import logic, { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
 
 logic.__context__.storage =AsyncStorage 
 
-export default function App () {
+pushNotification.configure()
+
+function App () {
   const [view, setView] = useState('login')
   const [error, setError] = useState(null) 
   const [user, setUser] = useState()
@@ -17,6 +21,8 @@ export default function App () {
   const [goLanding, setGoLanding] = useState(false)
   const [ contacts, setContacts ] = useState()
   const [ contactData, setContactData ] =useState()
+
+  
 
   function __handleError__(message) {
     setError(message)
@@ -46,6 +52,8 @@ export default function App () {
     try {
       const _token = await login(email, password)
       const loggedUser = await retrieveUser(_token)
+
+      pushNotification.localNotification()
 
       if(loggedUser.profile === 'pharmacist') {
         setToken (_token)
@@ -230,3 +238,4 @@ const styles = StyleSheet.create({
 })
 
 
+export default App
