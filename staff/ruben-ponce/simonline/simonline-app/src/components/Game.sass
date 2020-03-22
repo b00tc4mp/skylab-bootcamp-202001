@@ -1,0 +1,75 @@
+.game
+    text-align: center
+    display: grid
+    grid-template: 10% 70% 20% / 1fr
+    &__top-menu
+        grid-area: 1 / 1
+        text-align: right
+        &__logout
+            cursor: pointer
+            margin: 1rem
+            font-size: 1rem
+            &:hover
+                color: white
+    &__board
+        width: 100%
+        grid-area: 2 / 1
+        margin: 0 auto
+        &__container
+            margin: 0 auto
+            width: 280px
+            height: 280px 
+            position: relative
+            &__red
+                cursor: pointer
+                background-color: #b02222
+                width: 140px
+                height: 140px
+                border-top-left-radius: 200px
+                border: 2px solid black
+                float: left
+                &:hover
+                   background-color: red
+            &__green
+                cursor: pointer
+                background-color: green
+                width: 140px
+                height: 140px
+                border-top-right-radius: 200px
+                border: 2px solid black
+                float: right
+                &:hover
+                   background-color: #04ee04
+            &__blue
+                cursor: pointer
+                background-color: #1f4db0
+                width: 140px
+                height: 140px
+                border-bottom-right-radius: 200px
+                border: 2px solid black
+                float: right
+                &:hover
+                    background-color:#0037ff
+            &__yellow
+                cursor: pointer
+                background-color: #c9c920
+                width: 140px
+                height: 140px
+                border-bottom-left-radius: 200px
+                border: 2px solid black
+                float: left
+                &:hover
+                   background-color: #f9f900
+            &__gray
+                width: 65px
+                height: 65px
+                background-color: gray
+                border-radius: 50%
+                border: 2px solid black
+                position: absolute
+                top: 39%
+                right: 38.5%
+    &__footer
+        grid-area: 3 / 1
+        &__text
+            font-size: 1rem
