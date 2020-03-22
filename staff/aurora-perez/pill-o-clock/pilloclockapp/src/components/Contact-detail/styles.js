@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         marginTop : 100
     },
     header : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         color : '#297885',
         fontSize : 30,
         marginLeft : 20,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
 
     text : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         color : '#4CBBC2',
         fontSize : 20,
         marginLeft : 50,

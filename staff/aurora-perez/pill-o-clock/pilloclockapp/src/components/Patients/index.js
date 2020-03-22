@@ -39,7 +39,7 @@ function Patients ({toAdd, onPatients, contacts}) {
                                     padding : 15,
                                     borderRadius : 10,
                                     overflow: 'hidden',
-                                    fontFamily : 'Sensei-Medium'
+                                    fontFamily : 'Sensei-Medium.ttf'
                                 }}
                             />
                         )}

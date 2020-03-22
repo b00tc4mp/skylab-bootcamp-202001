@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native'
 const styles = StyleSheet.create({
 
     text : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         color : '#297885',
         fontSize : 20,
         marginLeft : 20,
@@ -26,27 +26,27 @@ const styles = StyleSheet.create({
     },
 
     hour : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         paddingHorizontal : 20,
         fontSize: 20
     },
     
     input : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         marginTop : 30,
         fontSize : 20,
         alignSelf : 'center'
     },
 
     title : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         fontSize : 50,
         color : '#297885',
         alignSelf : 'center',
         marginBottom : 20
     },
     error : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Sensei-Medium.ttf',
         marginTop : 20,
         padding : 10,
         fontSize: 20

@@ -53,7 +53,7 @@ function App () {
       const _token = await login(email, password)
       const loggedUser = await retrieveUser(_token)
 
-      pushNotification.localNotification()
+      //pushNotification.localNotification()
 
       if(loggedUser.profile === 'pharmacist') {
         setToken (_token)

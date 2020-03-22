@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles'
-import { View, Image, TouchableOpacity, Button, Alert, ImageBackground } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Button, Alert, ImageBackground } from 'react-native'
 
 
 function NavigationBarTop({ toLogin, toMedication, toProgress, toContacts, toPatients, user }) {
@@ -8,20 +8,20 @@ function NavigationBarTop({ toLogin, toMedication, toProgress, toContacts, toPat
         <View style={styles.top}>
 
         <ImageBackground imageStyle={styles.image} style={styles.logoutContainer} source={require('../../../assets/images/logout.png')}>
-                <Button title= '' onPress={toLogin} />
+                <Text onPress={toLogin}></Text>
         </ImageBackground>
         {
                 user.profile === 'patient' && (<>
                 <ImageBackground imageStyle={styles.image} style={styles.pillsContainer} source={require('../../../assets/images/pills.png')}>
-                        <Button title= '' onPress={toMedication} />
+                        <Text onPress={toMedication}></Text>
                 </ImageBackground>
 
                 <ImageBackground imageStyle={styles.image} style={styles.calendarContainer} source={require('../../../assets/images/calendar.png')}>
-                        <Button title= '' onPress={toProgress} />
+                        <Text onPress={toProgress}></Text>
                 </ImageBackground>
 
                 <ImageBackground imageStyle={styles.image} style={styles.contactsContainer} source={require('../../../assets/images/contacts.png')}>
-                        <Button title= '' onPress={toContacts} />
+                        <Text onPress={toContacts}></Text>
                 </ImageBackground>
 
                 </>)
