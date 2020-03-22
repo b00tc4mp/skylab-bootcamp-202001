@@ -4,7 +4,7 @@ import { Context } from './ContextProvider'
 
 import './style/App.sass'
 
-import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser } from '.'
+import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -20,9 +20,19 @@ export default withRouter(function ({ history }) {
 
       setTimeout(() => {
         setState({ error: undefined })
-        history.push('/home')
+        //history.push('/home')
       }, 3000)
   }
+
+  function __handleErrorRedirect__(error) {
+      
+    setState({...state, error: error.message })
+
+    setTimeout(() => {
+      setState({ error: undefined })
+      history.push('/home')
+    }, 4000)
+}
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -69,9 +79,10 @@ export default withRouter(function ({ history }) {
   async function handleEntryVehicle(carPlate) {
     try {
       await entryVehicle(carPlate)
+      setDataTicket(undefined)
     
     }catch(error) {
-      return __handleError__(error)
+      return __handleErrorRedirect__(error)
 
     }
   }
@@ -79,6 +90,7 @@ export default withRouter(function ({ history }) {
   async function handleAtm(carPlate) {
     try{
       const infoTicket = await retrieveTicket(carPlate)
+      if(infoTicket.validated) throw new Error('ticket not valid')
       setDataTicket(infoTicket)
 
     }catch(error){
@@ -108,6 +120,8 @@ export default withRouter(function ({ history }) {
     <Route path="/atm" render={() => isLoggedIn() ? <> <Home /> <Atm onSubmit={handleAtm} infoTicket={dataTicket} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map error={error}/> </> : <Redirect to="/login" />}/>
     <Route path="/create-user" render={() => isLoggedIn() ? <> <Config /> <CreateUser onSubmit={handleCreateUser} error={error} /> </> : <Redirect to="/login" />}/>
+    <Route path="/exit-vehicle" render={() => isLoggedIn() ? <> <Home /> <ExitVehicle /> </> : <Redirect to="/login" />}/>
+    <Route path="/report" render={() => isLoggedIn() ? <> <Home /> <Report /> </> : <Redirect to="/login" />}/>
     </div>
 
 })

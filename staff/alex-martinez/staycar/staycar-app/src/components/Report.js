@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './style/Report.sass'
-
+import {retrieveTicket} from '../logic'
 
 export default function() {
 

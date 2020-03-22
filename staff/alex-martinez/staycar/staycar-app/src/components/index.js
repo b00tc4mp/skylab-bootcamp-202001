@@ -3,7 +3,7 @@ import Header from './Header'
 import Home from './Home'
 import Map from './Map'
 import EntryVehicle from './EntryVehicle'
-import ExitCar from './ExitVehicle'
+import ExitVehicle from './ExitVehicle'
 import Report from './Report'
 import Login from './Login'
 import Atm from './Atm'
@@ -20,7 +20,7 @@ export {
     Home,
     Map,
     EntryVehicle,
-    ExitCar,
+    ExitVehicle,
     Report,
     Login,
     Atm,

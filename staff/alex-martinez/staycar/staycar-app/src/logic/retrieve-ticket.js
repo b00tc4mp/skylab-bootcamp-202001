@@ -1,11 +1,12 @@
 import { NotAllowedError } from 'staycar-errors'
 import context from './context'
 import retrieveParking from './retrieve-parking'
+import { validate } from 'staycar-utils'
 
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (carPlate) {
-
+    validate.string(carPlate, 'car plate')
     return (async () => {
 
         const retrievePk = await retrieveParking()

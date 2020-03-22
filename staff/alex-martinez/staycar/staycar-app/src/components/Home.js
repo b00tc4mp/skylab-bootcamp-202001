@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import { withRouter} from 'react-router-dom'
 import './style/Home.sass'
-import { Header, Feedback } from '.'
+import { Header } from '.'
 
 import { ReactComponent as Access } from './icons/access.svg'
 import { ReactComponent as Exit } from './icons/exit.svg'
@@ -12,7 +12,7 @@ import { ReactComponent as Config } from './icons/config.svg'
 import { isLoggedIn } from '../logic'
 
 
-export default withRouter (function({history, error}) {
+export default withRouter (function({history}) {
     
     const handleGoToEntrance = () => {
         history.push('/entrance')
@@ -31,18 +31,27 @@ export default withRouter (function({history, error}) {
         history.push('/atm')
     }
 
+    const handleGoToExit = () => {
+        history.push('/exit-vehicle')
+    }
+
+    const handleGoToReport = () => {
+        history.push('/report')
+    }
+
     return <>
     <Header user={isLoggedIn() ? 'Login' : ''}/>
     <main>
         
         <section className="actions actions--first">
+
             <div className="actions__action" onClick={handleGoToEntrance}>
 
                 <Access className="actions__image" />
                 <p className="actions__text">Access</p>
             </div>
 
-            <div className="actions__action">
+            <div className="actions__action" onClick={handleGoToExit}>
                 
                 <Exit className="actions__image"/>
                 <p className="actions__text">Exit</p>
@@ -64,7 +73,7 @@ export default withRouter (function({history, error}) {
                 <p className="actions__text">Map</p>
             </div>
                
-            <div className="actions__action">
+            <div className="actions__action" onClick={handleGoToReport}>
                 
                 <Report className="actions__image"/>
                 <p className="actions__text">Report</p>
