@@ -13,6 +13,7 @@ import Config from './Config'
 import CreateParking from './CrateParking'
 import MapItem from './MapItem'
 import CreateUser from './CreateUser'
+import ReportItem from './ReportItem'
 
 export {
     App,
@@ -29,5 +30,6 @@ export {
     Config,
     CreateParking,
     MapItem,
-    CreateUser
+    CreateUser,
+    ReportItem
 }
