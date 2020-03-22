@@ -67,11 +67,7 @@ export default function Profile({ navigation, route }) {
                         animationType="slide"
                         presentationStyle='formSheet'
                         transparent={false}
-                        onDismiss={handleHideModal}
-                        visible={showModal}
-                        onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
-                        }}>
+                        visible={showModal}>
                         <View style={styles.modalHeader}>
                             <MyButton onPress={handleHideModal} style={{ paddingHorizontal: 30, marginRight: '23%' }} text='X' textStyle={{ fontSize: 20, color: '#EFEBDA' }} />
                             {publishedParks && <Text>My Parks</Text>}
