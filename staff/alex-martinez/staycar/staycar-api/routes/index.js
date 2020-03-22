@@ -11,7 +11,8 @@ const { registerUser,
     validateTicket,
     exitVehicle ,
     deleteParking,
-    deleteUser} = require('./handlers')
+    deleteUser,
+    retrieveTickets} = require('./handlers')
 //
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -35,6 +36,7 @@ router.get('/parking', retrieveParking)
 router.delete('/parking/:parking', jwtVerifierMidWare, deleteParking)
 router.delete('/users/:id', jwtVerifierMidWare, jsonBodyParser, deleteUser)
 router.get('/ticket/:carplate/:parkingname', retrieveTicket)
+router.get('/tickets', retrieveTickets)
 
 router.patch('/ticket/:id/validated', validateTicket)
 router.get('/ticket/:carplate/:parkingname/exit', exitVehicle)

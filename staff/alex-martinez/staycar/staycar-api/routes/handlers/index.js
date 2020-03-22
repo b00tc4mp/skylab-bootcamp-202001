@@ -10,5 +10,6 @@ module.exports = {
     validateTicket: require('./validate-ticket'),
     exitVehicle: require('./exit-vehicle'),
     deleteParking: require('./delete-parking'),
-    deleteUser: require('./delete-user')
+    deleteUser: require('./delete-user'),
+    retrieveTickets: require('./retrieve-tickets')
 }
