@@ -105,7 +105,8 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                     <Text style={styles.scoreMean}>{globalRating.scoreMean}</Text>
                                 </View>
                                 <TouchableOpacity style={styles.scoreLeftDown} onPress={() => onComment(toilet.id)}>
-                                    <Text style={styles.addRating}>+ Add a rating</Text>
+                                    <Text style={styles.addRating}>+ Add/
+                                    update a rating</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -138,8 +139,8 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                     <View style={styles.commentsContainer}>
                         <Text style={styles.comments}>Last ratings/comments ({toilet.comments.length}):</Text>
                         {toilet.comments.length ?
-                            (comments.map(comment => (<>
-                                <View style={styles.commentContainer}>
+                            (comments.map((comment, index) => (<>
+                                <View key={index} style={styles.commentContainer}>
                                     <View style={styles.commentTop}>
                                         <View style={styles.commentTopLeft}>
                                             <Text>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>

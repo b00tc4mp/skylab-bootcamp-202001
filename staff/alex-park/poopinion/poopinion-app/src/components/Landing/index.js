@@ -34,9 +34,9 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                     <Text style={styles.bold}>Top Toilets</Text>
                 </View>
 
-                {topTen.length > 0 && topTen.map(toilet => (<>
-                    <View style={styles.posts}>
-                        <View style={styles.post}>
+                {topTen.length > 0 && topTen.map((toilet, index) => (<>
+                    <View style={styles.posts} key={index}>
+                        <View style={styles.post} key={index}>
                             {toilet.image ? (<>
                                 <TouchableOpacity onPress={() => onDetails(toilet.id)}>
                                     <Image style={styles.image} source={{ uri: toilet.image }} />

@@ -10,8 +10,8 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                 {toilets.length > 0 &&
 
                     <View style={styles.resultsContainer}>
-                        {toilets.map(toilet => (<>
-                            <View style={styles.toiletContainer}>
+                        {toilets.map((toilet, index) => (<>
+                            <View ley={index} style={styles.toiletContainer}>
                                 <TouchableOpacity onPress={() => onDetails(toilet.id.toString())}>
                                     {toilet.image ? (<Image style={styles.image} source={{uri: toilet.image}} />)
                                     :

@@ -76,7 +76,8 @@ const styles = StyleSheet.create({
     scoreLeft: {
         margin: 15,
         justifyContent:'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        flex: 0.8
     },
     scoreLeftUp: {
         flex: 2,

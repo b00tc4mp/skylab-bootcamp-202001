@@ -14,9 +14,9 @@ function Favorites({ user, favToilets, onFav, onDetails }) {
                     favToilets.length > 0 &&
 
                     <View style={styles.resultsContainer}>
-                        {favToilets.map(toilet => (<>
-                            <View style={styles.toiletContainer}>
-                                <TouchableOpacity onPress={() => onDetails(toilet.id.toString())}>
+                        {favToilets.map((toilet, index) => (<>
+                            <View style={styles.toiletContainer} key={index}>
+                                <TouchableOpacity key={index} onPress={() => onDetails(toilet.id.toString())}>
                                     {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
                                         :
                                         (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
@@ -24,7 +24,6 @@ function Favorites({ user, favToilets, onFav, onDetails }) {
                                 <View style={styles.infoContainer}>
                                     <TouchableOpacity style={styles.result}>
                                         <Text style={styles.postHeader}>{toilet.place}</Text>
-                                        <Text style={styles.rating}>💩💩💩💩💩</Text>
                                         <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet.id) }}>

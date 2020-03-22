@@ -22,8 +22,8 @@ function Profile({ user, onDetails }) {
             <View style={styles.posts}>
                 <Text style={styles.bigText}>{user.publishedToilets.length} Post(s):</Text>
                 {user.publishedToilets.length > 0 &&
-                    user.publishedToilets.map(toilet => (
-                        <TouchableOpacity onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer}>
+                    user.publishedToilets.map((toilet, index) => (
+                        <TouchableOpacity key={index} onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeft}>
                                     <Text style={styles.postTitle}>{toilet.place}</Text>
@@ -43,8 +43,8 @@ function Profile({ user, onDetails }) {
             <View style={styles.comments}>
                 <Text style={styles.bigText}>{user.comments.length} Comment(s):</Text>
                 {user.comments.length > 0 &&
-                    user.comments.map(comment => (
-                        <TouchableOpacity onPress={() => onDetails(comment.commentedAt.toString())} style={styles.postsContainer}>
+                    user.comments.map((comment, index) => (
+                        <TouchableOpacity key={index} onPress={() => onDetails(comment.commentedAt.toString())} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeftComment}>
                                     <Text>"{comment.rating.textArea.length > 0 ? (<Text style={styles.commentText}>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
