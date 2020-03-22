@@ -3,7 +3,7 @@ import './programe.sass'
 import Feedback from './Feedback'
 import SaveWindows from './SaveWindows'
 
-export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onCancel, save, saveProgram, onPrograms }) {
+export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onCancel, save, saveProgram, onPrograms, code }) {
     
     useEffect(() => {
         onMount()
