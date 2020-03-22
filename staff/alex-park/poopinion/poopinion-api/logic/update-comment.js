@@ -3,7 +3,7 @@ const { models: { User, Comment } } = require('poopinion-data')
 const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 
 /**
- * Registers a new user on the database
+ * Updates the user's comment data
  * 
  * @param {string} id user's unique ID
  * @param {string} commentId comment's unique id
@@ -19,7 +19,8 @@ module.exports = (id, commentId, data) => {
     validate.string(id, 'id')
     validate.string(commentId, 'comment ID')
     validate.type(data, 'data', Object)
-
+    
+    
     return Promise.all([User.findById(id), Comment.findById(commentId)])
         .then(([user, comment]) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)

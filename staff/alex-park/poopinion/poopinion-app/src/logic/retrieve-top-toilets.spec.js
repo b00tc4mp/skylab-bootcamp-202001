@@ -55,8 +55,6 @@ describe('retrieveTopToilets', () => {
 
                 await user.save()
                 await toilet.save()
-                // await User.findByIdAndUpdate(user.id, { $addToSet: { comments: comment.id } })
-                // await Toilet.findByIdAndUpdate(toilet.id, { $addToSet: { comments: comment.id } })
             }
 
             const toilets = await retrieveTopToilets()

@@ -2,10 +2,10 @@ const { updateComment } = require('../../logic')
 const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    let { payload: { sub: id }, body: { data }, params: { commentId } } = req
+    let { payload: { sub: id }, body, params: { commentId } } = req
 
     try {
-        updateComment(id, commentId, data)
+        updateComment(id, commentId, body)
             .then(() =>
                 res.status(200).end()
             )

@@ -26,7 +26,8 @@ import logic, {
   toggleThumbUp,
   toggleThumbDown,
   publishComment,
-  retrieveTopToilets
+  retrieveTopToilets,
+  updateComment
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage
@@ -248,7 +249,6 @@ export default function App() {
   }
 
   function handlePublishComment(data) {
-    console.log(data)
     try {
       (async () => {
         await publishComment(token, detailedToilet.id.toString(), data)
@@ -260,6 +260,22 @@ export default function App() {
       })()
     } catch ({ message }) {
       __handleError__(message)
+    }
+  }
+
+  function handleUpdateComment(data, { commentId }) {
+    console.log(data, commentId)
+    try {
+      (async () => {
+        await updateComment(token, commentId, data)
+        __handleUser__()
+        __handleToiletScore__()
+        __handleTopToilets__()
+        Alert.alert('Comment updated, thank you! 🚽❤️')
+        setView('landing')
+      })()
+    } catch ({ message }) {
+      __handleError__()
     }
   }
 
@@ -352,7 +368,7 @@ export default function App() {
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
         {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
-        {view === 'newComment' && <NewComment toilet={detailedToilet} onSubmit={handlePublishComment} />}
+        {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

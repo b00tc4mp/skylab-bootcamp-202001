@@ -20,7 +20,6 @@ module.exports = (email, password) => {
 
     return User.findOne({ email })
         .then(user => {
-            debugger
             if (!user) throw new NotAllowedError(`wrong credentials`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${user.id} is deactivated`)
 

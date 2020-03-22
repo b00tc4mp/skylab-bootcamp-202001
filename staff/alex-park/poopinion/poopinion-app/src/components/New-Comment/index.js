@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Picker, Slider, KeyboardAvoidingView } from 'react-native'
 import styles from './styles'
 
-function NewComment({ toilet, onSubmit }) {
+function NewComment({ toilet, onSubmit, user, onUpdate }) {
     const [cleanness, setCleanness] = useState(0)
     const [looks, setLooks] = useState(0)
     const [paymentRequired, setPaymentRequired] = useState(0)
     const [multipleToilets, setMultipleToilets] = useState(0)
     const [paperDeployment, setPaperDeployment] = useState(0)
     const [overallRating, setOverallRating] = useState(0)
-    const [textArea, setTextArea] = useState()
+    const [textArea, setTextArea] = useState('')
 
     return (<>
         <ScrollView>
@@ -113,19 +113,38 @@ function NewComment({ toilet, onSubmit }) {
                 </View>
             </View>
 
-            <TouchableOpacity onPress={() => onSubmit({
-                rating: {
-                    cleanness,
-                    looks,
-                    paymentRequired,
-                    multipleToilets,
-                    paperDeployment,
-                    overallRating,
-                    textArea
-                }
-            })} >
-                <Text style={styles.submit} >💩 SUBMIT 💩</Text>
-            </TouchableOpacity>
+            {user.comments.length && typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) !== 'undefined' && (<>
+                <TouchableOpacity onPress={() => onUpdate({
+                    rating: {
+                        cleanness,
+                        looks,
+                        paymentRequired,
+                        multipleToilets,
+                        paperDeployment,
+                        overallRating,
+                        textArea
+                    }
+                }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })}>
+                    <Text style={styles.submit} >💩 SUBMIT 💩</Text>
+
+                </TouchableOpacity>
+            </>)}
+            {!user.comments.length || typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) === 'undefined' && (<>
+                <TouchableOpacity onPress={() => onSubmit({
+                    rating: {
+                        cleanness,
+                        looks,
+                        paymentRequired,
+                        multipleToilets,
+                        paperDeployment,
+                        overallRating,
+                        textArea
+                    }
+                })}>
+                    <Text style={styles.submit} >💩 SUBMIT 💩</Text>
+
+                </TouchableOpacity>
+            </>)}
         </ScrollView>
     </>)
 }

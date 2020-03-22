@@ -96,7 +96,7 @@ describe('retrieveTopToilets', () => {
                     if (toilets[0].score === rating.overallRating) {
                         const t = toilets[0]
 
-                        debugger
+                        
                         expect(t).to.be.instanceOf(Object)
                         expect(t.place).to.equal(place)
                         expect(t.publisher.id.toString()).to.equal(_id)

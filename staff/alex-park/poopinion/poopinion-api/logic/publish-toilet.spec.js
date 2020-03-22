@@ -43,7 +43,7 @@ describe('publishToilet', () => {
             publishToilet(_id, place, coordinates)
                 .then(() => Toilet.findOne({ publisher: _id }))
                 .then(toilet => {
-                    debugger
+                    
                     expect(toilet.publisher.toString()).to.equal(_id)
                     expect(toilet.place).to.equal(place)
                     expect(toilet.comments instanceof Array).to.equal(true)

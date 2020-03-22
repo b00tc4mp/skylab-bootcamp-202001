@@ -208,7 +208,7 @@ describe('toggleThumbUp', () => {
         })
 
         it('should fail on a non-string id', () => {
-            debugger
+            
             _commentId = 9328743289
             expect(() => toggleThumbUp(__id, _commentId)).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
 

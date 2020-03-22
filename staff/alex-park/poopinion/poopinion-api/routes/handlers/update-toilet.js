@@ -4,7 +4,7 @@ const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 module.exports = (req, res) => {
     let { payload: { sub: id }, body: data, params: { toiletId } } = req
 
-    debugger
+    
     try {
         updateToilet(id, toiletId, data)
             .then(() =>
