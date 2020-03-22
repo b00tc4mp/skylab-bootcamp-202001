@@ -1,10 +1,1 @@
-{
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19004,
-  "packagerPid": 58792,
-  "expoServerNgrokUrl": "https://ad-2i5.anonymous.sick-parks-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.s6-ff3.anonymous.sick-parks-app.exp.direct",
-  "ngrokPid": 58870,
-  "webpackServerPort": null
-}
+{}

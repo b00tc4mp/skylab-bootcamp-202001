@@ -6,29 +6,46 @@ module.exports = ({ q, _location }) => {
     validate.string(q, 'query')
 
     //REMEMBER TO ADD THE INDEX TO location.coordinates FROM SHELL
-
+    if (_location) _location = [_location[0], _location[0]]
     return (async () => {
-        const results = await Park.find({
-            $and: [
-                {
-                    $or: [
-                        { name: { $regex: q } },
-                        { resort: { $regex: q } },
-                        { level: { $regex: q } }]
-                },
-                {
-                    location: {
-                        $near: {
-                            $geometry: {
-                                type: 'Point',
-                                coordinates: _location.coordinates
+        let results
+        if (q === 'verified') {
+            results = await Park.find({ verified: true }).lean()
+
+        } else if (q === 'latest') {
+            results = await Park.find({ date: { $gte: new Date } }).sort({ date: -1 }).lean()
+        } else if (_location) {
+
+            results = await Park.find({
+                $and: [
+                    {
+                        $or: [
+                            { name: { $regex: q } },
+                            { resort: { $regex: q } },
+                            { level: { $regex: q } }]
+                    },
+                    {
+                        location: {
+                            $near: {
+                                $geometry: {
+                                    type: 'Point',
+                                    coordinates: _location
+                                }
                             }
                         }
                     }
-                }
 
-            ]
-        }).lean()
+                ]
+            }).lean()
+
+        } else {
+            results = await Park.find({
+                $or: [
+                    { name: { $regex: q } },
+                    { resort: { $regex: q } },
+                    { level: { $regex: q } }]
+            })
+        }
 
         if (!results.length) return results
 

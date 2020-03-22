@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, StatusBar, Image } from 'react-native'
+import { StyleSheet, StatusBar, Image, AsyncStorage } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-// import * as Location from 'expo-location'
+import * as Location from 'expo-location'
+import * as Permissions from 'expo-permissions'
 
-import { registerUser, login, isLoggedIn } from './src/logic'
+import logic, { registerUser, retrieveUser, loginUser, logoutUser, isUserLoggedIn } from 'sick-parks-logic'
 import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
-import context from './src/logic/context'
 
 const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
@@ -17,47 +17,77 @@ const profileImage = require('./assets/icon-profile.png')
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
 
-export default function App() {
+logic.__context__.storage = AsyncStorage
 
+export default function App() {
 	const [error, setError] = useState()
 	const [user, setUser] = useState()
+	const [state, setState] = useState()
 
 	useEffect(() => {
-		(async () => {//
+		(async () => {
 
 			try {
-
-				const logged = await isLoggedIn()
-
-				if (logged) {
-					//this here => retrieveUser(await context.getToken())
-					//this here => setUser for profile
-					setUser(true)
-				} else {
-					setUser(false)
+				if (await isUserLoggedIn()) {
+					const user = await retrieveUser()
+					setUser(user)
 				}
 			} catch ({ message }) {
-				setError({ message })
+				setError(message)
 			}
-
 		})()
-
 	}, [])
 
-	_getNotificationsPermissionsAsync = async () => {
-		await Permissions.askAsync(Permissions.NOTIFICATIONS)
-		return
+
+	const __handleErrors__ = (error) => {
+		setError(error)
+
+		setTimeout(() => {
+			setError(null)
+		}, 3000)
 	}
 
-	const handleLogin = async (user) => {
+
+	_getNotificationsPermissionsAsync = async () => {
+		const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
+		if (status === 'granted') return true
+	}
+
+	_getLocationAsync = async () => {
 		try {
-			await login(user)
-			setUser(user)
-			setError(null)
-			_getNotificationsPermissionsAsync()
+			const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+			if (status === 'granted') {
+				return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+			}
+			throw new Error('Location permission not granted');
+
 		} catch ({ message }) {
-			setError({ message })
-			console.log(message)
+			__handleErrors__(message)
+			return false
+		}
+
+	}
+
+	const handleLogin = async (credentials) => {
+		try {
+			await loginUser(credentials)
+			const user = await retrieveUser()
+
+			if (await _getNotificationsPermissionsAsync())
+				user.notifications = true
+
+			const location = await _getLocationAsync()
+			if (location) {
+				user.allowLocation = true
+				user.location = location
+				setUser(user)
+			} else {
+				setUser(user)
+			}
+
+			setError(null)
+		} catch ({ message }) {
+			__handleErrors__(message)
 		}
 	}
 
@@ -65,11 +95,18 @@ export default function App() {
 		try {
 			await registerUser(newUser)
 			setError(null)
-
+			setState('registered')
 		} catch ({ message }) {
-			setError({ message })
-			console.log(message)
+			__handleErrors__(message)
 		}
+	}
+
+	const handleLogout = async () => {
+		setUser(null)
+		setState(null)
+		setError(null)
+		await logoutUser()
+
 	}
 
 
@@ -82,7 +119,7 @@ export default function App() {
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
 							<Stack.Screen name="Register">
-								{props => <Register {...props} extraData={{ handleRegister, error }} />}
+								{props => <Register {...props} extraData={{ handleRegister, error, state }} />}
 							</Stack.Screen>
 							<Stack.Screen name="Login">
 								{props => <Login {...props} extraData={{ handleLogin, error }} />}
@@ -102,7 +139,7 @@ export default function App() {
 								else if (route.name === 'Build') iconName = buildImage
 								else if (route.name === 'Profile') iconName = profileImage
 
-								// You can return any component that you like here!
+
 								return <Image source={iconName} style={styles.icon} />
 							},
 						})}
@@ -117,7 +154,7 @@ export default function App() {
 						<Tab.Screen name="Home" component={Home} />
 						<Tab.Screen name="Map" component={MapViewContainer} />
 						<Tab.Screen name="Build" component={ParkBuilder} />
-						<Tab.Screen name="Profile" component={Profile} />
+						<Tab.Screen name="Profile" initialParams={{ user, handleLogout }} component={Profile} />
 					</Tab.Navigator>
 				</>}
 			</NavigationContainer>

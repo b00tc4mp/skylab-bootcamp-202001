@@ -55,10 +55,6 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         letterSpacing: 1,
         color: '#82A4B3'
-
-    },
-    positionCenter: {
-        alignSelf: 'center'
     }
 })
 

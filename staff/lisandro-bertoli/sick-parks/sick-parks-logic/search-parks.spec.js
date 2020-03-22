@@ -1,11 +1,13 @@
 require('dotenv').config()
 
-const { env: { TEST_MONGODB_URL } } = process
+const logic = require('.')
+const { searchParks } = logic
+
+const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
+
 const { mongoose, models: { Park, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { random, sqrt, pow } = Math
-
-const searchParks = require('./search-parks')
 
 describe('searchParks', () => {
     before(async () => {
@@ -23,6 +25,7 @@ describe('searchParks', () => {
         level = `begginer`
         resort = `Grindelwald`
         location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+        verified = true
 
         _location = [random() * 15 + 1, random() * 15 + 1]
 
@@ -48,22 +51,22 @@ describe('searchParks', () => {
         } else {
             first = resort
         }
-        // })
+
 
     })
     describe('when parks exists', () => {
         let park1, park2
         beforeEach(async () => {
 
-            park1 = await Park.create({ name, size, level, resort, location })
+            park1 = await Park.create({ name, size, level, resort, location, verified })
             park2 = await Park.create({ name: name2, size: size2, level: level2, resort: resort2, location: location2 })
         })
 
         it('should order the results by distance', async () => {
 
-            let q = 'begg'
+            let query = 'begg'
 
-            let results = await searchParks({ q, _location })
+            let results = await searchParks({ query, location: _location })
 
             expect(results.length).to.be.greaterThan(0)
             expect(results[0].resort).to.equal(first)
@@ -71,21 +74,23 @@ describe('searchParks', () => {
         })
 
         it('should suceed on finding parks', async () => {
-            let q = 'begg'
-            let results = await searchParks({ q, _location })
+            let query = 'begg'
+            let results = await searchParks({ query, location: _location })
 
-            results.forEach(result => {
-                expect(result.name).to.be.oneOf([park1.name, park2.name])
-                expect(result.resort).to.be.oneOf([park1.resort, park2.resort])
-                expect(result.size).to.be.oneOf([park1.size, park2.size])
-                expect(result.verified).to.be.oneOf([park1.verified, park2.verified])
-                expect(result.id).to.be.oneOf([park1.id.toString(), park2.id.toString()])
+            results.forEach((result, index) => {
+
+                expect([park1.name, park2.name]).to.include(result.name)
+                expect([park1.resort, park2.resort]).to.include(result.resort)
+                expect([park1.size, park2.size]).to.include(result.size)
+                expect([park1.verified, park2.verified]).to.include(result.verified)
+                expect([park1.id, park2.id]).to.include(result.id)
+
 
             })
 
-            q = 'Grin'
+            query = 'Grin'
 
-            results = await searchParks({ q, _location })
+            results = await searchParks({ query, location: _location })
 
             results.forEach(result => {
                 expect(result.name).to.equal(park1.name)
@@ -95,6 +100,18 @@ describe('searchParks', () => {
                 expect(result.id).to.equal(park1.id.toString())
 
             })
+
+            query = 'verified'
+
+            results = await searchParks({ query, location: _location })
+
+            expect(results[0].name).to.equal(park1.name)
+            expect(results[0].resort).to.equal(park1.resort)
+            expect(results[0].size).to.equal(park1.size)
+            expect(results[0].verified).to.equal(park1.verified)
+            expect(results[0].id).to.equal(park1.id.toString())
+
+
         })
 
         afterEach(async () => {
@@ -105,11 +122,11 @@ describe('searchParks', () => {
     })
 
     it('should return empty array when no results', async () => {
-        let q = 'Random'
+        let query = 'Random'
 
-        const result = await searchParks({ q, _location })
-        expect(result).to.be.an('array')
-        expect(result).to.have.length(0)
+        const result = await searchParks({ query, location: _location })
+        expect(result).to.be.an.instanceOf(Array)
+        expect(result.length).to.equal(0)
     })
 
 

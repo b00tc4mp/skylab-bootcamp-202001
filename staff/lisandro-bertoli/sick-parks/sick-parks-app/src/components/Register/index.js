@@ -9,7 +9,10 @@ export default function Register({ navigation, extraData }) {
     const [surname, setSurname] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    const { error, handleRegister } = extraData
+    const { error, handleRegister, state } = extraData
+
+    if (state === 'registered') navigation.navigate('Login')
+
     return (
 
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
