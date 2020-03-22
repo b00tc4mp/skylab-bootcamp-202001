@@ -10,6 +10,7 @@ module.exports = (id, gameId) => {
 
     return Promise.all([User.findById(id), Game.findById(gameId)])
         .then(([user, game]) => {
+            
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)

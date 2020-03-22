@@ -12,7 +12,7 @@ export default withRouter(function ({ history }) {
   const [games, setGames] = useState()
   const [gameId, setGameId] = useState()
   const [userId, setUserId] = useState()
-  const [players, setPlayers] = useState()
+  const [_players, setPlayers] = useState()
   const [error, setError] = useState(undefined)
 
   useEffect(() => {
@@ -57,8 +57,8 @@ export default withRouter(function ({ history }) {
       setGameId(gameId)
         const userId = await retrieveUserId(sessionStorage.token)
         
-        const _players = await join(userId, gameId)
-        setPlayers(_players)
+        const players = await join(userId, gameId)
+        setPlayers(players)
 
         history.push('/waiting')
     } catch ({ message }) {
@@ -84,6 +84,6 @@ export default withRouter(function ({ history }) {
       <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer goTo={goTo} /> : <Redirect to="/landing" />} />
       <Route path="/create" render={() => isLoggedIn() ? <Create handleCreateGame={handleCreateGame} goTo={goTo}/> : <Redirect to="/landing" />} />
       <Route path="/join" render={() => isLoggedIn() ? <Join handleJoin={handleJoin} goTo={goTo} /> : <Redirect to="/landing" />} />
-      <Route path="/waiting" render={() => isLoggedIn() ? <WaitingRoom players={players} gameId={gameId} goTo={goTo}/> : <Redirect to="/landing" />} />
+      <Route path="/waiting" render={() => isLoggedIn() ? <WaitingRoom players={_players} gameId={gameId} goTo={goTo}/> : <Redirect to="/landing" />} />
   </div>
 })
