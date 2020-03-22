@@ -20,7 +20,6 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                                 <View style={styles.infoContainer}>
                                     <TouchableOpacity style={styles.result}>
                                         <Text style={styles.postHeader}>{toilet.place}</Text>
-                                        <Text style={styles.rating}>💩💩💩💩💩</Text>
                                         <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet.id) }}>
