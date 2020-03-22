@@ -17,7 +17,7 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 :
                 (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
             <View style={styles.container}>
-                <Text style={styles.header}>New rating/comment for: <Text style={styles.italic}>{toilet.place}</Text> </Text>
+                <Text style={styles.header}>New rating/comment for: <Text style={styles.italic}>{toilet.place}</Text></Text>
 
                 <View style={styles.questionContainer}>
                     <Text style={styles.question}>Level of cleanness?: <Text style={styles.value}>{cleanness}</Text></Text>
@@ -113,38 +113,39 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 </View>
             </View>
 
-            {user.comments.length && typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) !== 'undefined' && (<>
-                <TouchableOpacity onPress={() => onUpdate({
-                    rating: {
-                        cleanness,
-                        looks,
-                        paymentRequired,
-                        multipleToilets,
-                        paperDeployment,
-                        overallRating,
-                        textArea
-                    }
-                }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })}>
-                    <Text style={styles.submit} >💩 SUBMIT 💩</Text>
-
-                </TouchableOpacity>
-            </>)}
-            {!user.comments.length || typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) === 'undefined' && (<>
-                <TouchableOpacity onPress={() => onSubmit({
-                    rating: {
-                        cleanness,
-                        looks,
-                        paymentRequired,
-                        multipleToilets,
-                        paperDeployment,
-                        overallRating,
-                        textArea
-                    }
-                })}>
-                    <Text style={styles.submit} >💩 SUBMIT 💩</Text>
-
-                </TouchableOpacity>
-            </>)}
+            <View>
+                {user.comments.length && typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) !== 'undefined' ? (<>
+                    <TouchableOpacity onPress={() => onUpdate({
+                        rating: {
+                            cleanness,
+                            looks,
+                            paymentRequired,
+                            multipleToilets,
+                            paperDeployment,
+                            overallRating,
+                            textArea
+                        }
+                    }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })}>
+                        <Text style={styles.submit}>💩 SUBMIT 💩</Text>
+                    </TouchableOpacity>
+                </>)
+                    :
+                    (<>
+                        <TouchableOpacity onPress={() => onSubmit({
+                            rating: {
+                                cleanness,
+                                looks,
+                                paymentRequired,
+                                multipleToilets,
+                                paperDeployment,
+                                overallRating,
+                                textArea
+                            }
+                        })}>
+                            <Text style={styles.submit}>💩 SUBMIT 💩</Text>
+                        </TouchableOpacity>
+                    </>)}
+            </View>
         </ScrollView>
     </>)
 }
