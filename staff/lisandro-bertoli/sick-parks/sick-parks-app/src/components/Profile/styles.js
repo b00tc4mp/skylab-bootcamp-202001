@@ -15,9 +15,10 @@ const styles = StyleSheet.create({
     },
     modalHeader: {
         flex: 0.1,
+        flexDirection: 'row',
         backgroundColor: '#82A4B3',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start'
     },
     headerText: {
         paddingTop: 10,
@@ -87,6 +88,14 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
         color: '#82A4B3'
 
+    },
+    input: {
+        backgroundColor: '#82A4B3',
+        flex: 0.8,
+        color: '#EFEBDA',
+        borderRadius: 5,
+        alignItems: 'center',
+        paddingLeft: 5,
     },
 })
 
