@@ -8,6 +8,7 @@ import retrieveLots from './retrieve-lots'
 import retrieveTicket from './retrieve-ticket'
 import registerUser from './register-user'
 import retrieveTickets from './retrieve-tickets'
+import exitVehicle from './exit-vehicle'
 
 export {
     login,
@@ -19,5 +20,6 @@ export {
     retrieveLots,
     retrieveTicket,
     registerUser,
-    retrieveTickets
+    retrieveTickets,
+    exitVehicle
 }

@@ -4,7 +4,7 @@ import QrReader from 'react-qr-reader'
 import { Feedback } from '.'
 
 
-export default function({error}) {
+export default function({onSubmit ,error}) {
 
     const [result, setResult] = useState()
 
@@ -18,10 +18,21 @@ export default function({error}) {
       console.error(err)
     }
 
+    const handleExitVehicle = (event) => {
+      event.preventDefault()
+      
+      const { target: {
+        plateNumber: {value: plateNumber}
+      } } = event
+
+      onSubmit(plateNumber)
+
+    }
+
     return <section className="exit-plate">
     <h1 className="exit-plate__title">Exit: </h1>
-    <form action="" method="" className="exit-plate__form">
-        <input type="text" placeholder="exit car plate number" className="exit-plate__input" />
+    <form action="" method="" className="exit-plate__form" onSubmit={handleExitVehicle}>
+        <input type="text" placeholder="exit car plate number" className="exit-plate__input" name="plateNumber" value={result} />
         <button className="exit-plate__submit">Add</button>
     </form>
 

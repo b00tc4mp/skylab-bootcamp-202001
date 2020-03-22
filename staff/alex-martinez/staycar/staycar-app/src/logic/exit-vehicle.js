@@ -1,6 +1,6 @@
 import { validate } from 'staycar-utils'
 import { NotAllowedError } from 'staycar-errors'
-import retrieveParking from './retrieve-parking'
+import {retrieveParking} from '../logic'
 
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -13,13 +13,13 @@ export default (carPlate) => {
 
         const retrievePk = await retrieveParking()
         if(retrievePk.length === 0) throw new Error('not found parking')
+        
     
         const pkName = retrievePk[0].parkingName
         
-        const response = await fetch(`${API_URL}/${pkName}/ticket`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({carPlate})
+        const response = await fetch(`${API_URL}/ticket/${carPlate}/${pkName}/exit`, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
         }) 
 
         if(response.status === 201){
