@@ -1,10 +1,9 @@
 {
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://8d-ccn.anonymous.sick-parks-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.8d-ccn.anonymous.sick-parks-app.exp.direct",
+  "ngrokPid": 19315,
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "webpackServerPort": null
+  "packagerPort": 19004,
+  "packagerPid": 19252
 }

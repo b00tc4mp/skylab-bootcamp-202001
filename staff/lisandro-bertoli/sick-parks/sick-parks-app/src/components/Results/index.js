@@ -12,7 +12,7 @@ export default function Results({ navigation, extraData }) {
                 data={results}
                 renderItem={({ item }) => {
 
-                    return <ResultsItem park={item} onToPark={() => navigation.navigate('ParkDetails')} />
+                    return <ResultsItem park={item} onToPark={() => { navigation && navigation.navigate('ParkDetails') }} />
                 }}
                 keyExtractor={item => item.id}
             />
