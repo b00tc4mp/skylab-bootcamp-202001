@@ -9,9 +9,16 @@ export default function Register({ navigation, extraData }) {
     const [surname, setSurname] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    const { error, handleRegister, state } = extraData
+    const { error, handleRegister } = extraData
 
-    if (state === 'registered') navigation.navigate('Login')
+
+    const registerUser = async () => {
+
+        await handleRegister({ name, surname, email, password })
+        if (!error) navigation.navigate('Login', { error: null })
+        else console.log(error)
+
+    }
 
     return (
 
@@ -23,13 +30,8 @@ export default function Register({ navigation, extraData }) {
                 <TextInput style={styles.input} placeholder='Your surname here' onChangeText={(text) => setSurname(text)} />
                 <TextInput style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} />
                 <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} />
-                <Button text='Register' type='main' textStyle='text' onPress={() => {
-
-                    handleRegister({ name, surname, email, password })
-
-                    navigation.navigate('Login')
-                }} />
-                {error && <Text style={styles.danger}>{error.message}</Text>}
+                <Button text='Register' type='main' textStyle='text' onPress={registerUser} />
+                {error && <Text style={styles.danger}>{error}</Text>}
                 <Button type='anchor' textStyle='anchor' text='Already a member? Sign in' onPress={() => navigation.navigate('Login')} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>

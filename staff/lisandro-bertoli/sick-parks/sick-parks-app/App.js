@@ -22,7 +22,7 @@ logic.__context__.storage = AsyncStorage
 export default function App() {
 	const [error, setError] = useState()
 	const [user, setUser] = useState()
-	const [state, setState] = useState()
+
 
 	useEffect(() => {
 		(async () => {
@@ -33,10 +33,16 @@ export default function App() {
 					setUser(user)
 				}
 			} catch ({ message }) {
-				setError(message)
+				if (message === 'jwt expired') {
+					logic.__context__.storage.clear()
+				} else {
+					setError(message)
+
+				}
 			}
 		})()
 	}, [])
+
 
 
 	const __handleErrors__ = (error) => {
@@ -73,10 +79,10 @@ export default function App() {
 			await loginUser(credentials)
 			const user = await retrieveUser()
 
-			if (await _getNotificationsPermissionsAsync())
-				user.notifications = true
+			user.notifications = await _getNotificationsPermissionsAsync()
 
 			const location = await _getLocationAsync()
+
 			if (location) {
 				user.allowLocation = true
 				user.location = location
@@ -95,15 +101,14 @@ export default function App() {
 		try {
 			await registerUser(newUser)
 			setError(null)
-			setState('registered')
+
 		} catch ({ message }) {
-			__handleErrors__(message)
+			setError(message)
 		}
 	}
 
 	const handleLogout = async () => {
 		setUser(null)
-		setState(null)
 		setError(null)
 		await logoutUser()
 
@@ -111,7 +116,6 @@ export default function App() {
 
 	const handleNewPark = async (data) => {
 		try {
-			debugger
 			await createPark(data)
 		} catch ({ message }) {
 			__handleErrors__(message)
@@ -128,7 +132,7 @@ export default function App() {
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
 							<Stack.Screen name="Register">
-								{props => <Register {...props} extraData={{ handleRegister, error, state }} />}
+								{props => <Register {...props} extraData={{ handleRegister, error }} />}
 							</Stack.Screen>
 							<Stack.Screen name="Login">
 								{props => <Login {...props} extraData={{ handleLogin, error }} />}

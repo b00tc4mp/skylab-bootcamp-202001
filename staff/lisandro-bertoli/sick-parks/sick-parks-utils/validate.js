@@ -5,13 +5,15 @@ const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"
 
 module.exports = {
     string(target, name, empty = true) {
-        //if (typeof target !== 'string') throw new TypeError(`${name} ${target} is not a string`)
-        this.type(target, name, String)
+        if (target === undefined) throw new TypeError(`${name} is empty`)
+        if (typeof target !== 'string') throw new TypeError(`${name} ${target} is not a string`)
+
 
         if (empty && !target.trim()) throw new ContentError(`${name} is empty`)
     },
 
     email(target) {
+        if (target === undefined) throw new TypeError(`email is empty`)
         if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} is not an e-mail`) // TODO custom error?
     },
 

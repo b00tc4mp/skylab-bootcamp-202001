@@ -7,22 +7,22 @@ import styles from './styles'
 
 
 export default function Profile({ navigation, route }) {
-    const { handleLogout } = route.params
+    const { handleLogout, user: _user } = route.params
 
     const [showModal, setShowModal] = useState(false)
     const [publishedParks, setPublishedParks] = useState()
     const [editProfile, setEditProfile] = useState()
-    const [user, setuser] = useState()
+    const [user, setUser] = useState()
 
 
     useEffect(() => {
         (async () => {
-            const _user = await retrieveUser()
+
             const myParks = await retrievePublishedParks()
             _user.parks = myParks.length
             _user.name = _user.name.charAt(0).toUpperCase() + _user.name.slice(1)
             _user.surname = _user.surname.charAt(0).toUpperCase() + _user.surname.slice(1)
-            setuser(_user)
+            setUser(_user)
 
         })()
     }, [])
