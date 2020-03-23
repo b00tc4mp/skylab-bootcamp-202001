@@ -7,7 +7,7 @@ const retrieveTickets = require('./retrieve-tickets')
 const bcrypt = require('bcryptjs')
 const { mongoose, models: { User, Parking, Ticket} } = require('staycar-data')
 
-describe.only('retrieveTickets', () => {
+describe('retrieveTickets', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             
@@ -25,6 +25,7 @@ describe.only('retrieveTickets', () => {
         rate = random()
         totalLots = 20
         carPlate = '1234KKK'
+        ticketId = `id-${random()}`
     })
 
     describe('when user already create a parking', () => {
@@ -42,7 +43,7 @@ describe.only('retrieveTickets', () => {
                     Parking.create({parkingName, rate, totalLots})
                     .then(() =>{
                         
-                        return Ticket.create({carPlate, entryHour: new Date(), parkingName})
+                        return Ticket.create({carPlate, entryHour: new Date(), ticketId, parkingName})
                     })
                 )
         )
@@ -56,6 +57,7 @@ describe.only('retrieveTickets', () => {
                     tickets.forEach(ticket => {
                         expect(ticket.id).to.be.a('string')
                         expect(ticket._id).to.be.undefined
+                        expect(ticket.ticketId).to.be.equal(ticketId)
                         expect(ticket.carPlate).to.be.a('string')
                         expect(ticket.parkingName).to.equal(parkingName)
                     })

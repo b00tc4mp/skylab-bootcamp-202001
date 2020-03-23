@@ -16,7 +16,7 @@ describe('entryVehicle', () => {
             .then(() => Promise.all([Ticket.deleteMany(), Parking.deleteMany(), User.deleteMany()]))
     )
 
-    let name, surname, username, password, pkName, rate, carPlate, totalLots, lots
+    let name, surname, username, password, pkName, rate, carPlate, totalLots, lots, ticketId
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -28,6 +28,7 @@ describe('entryVehicle', () => {
         carPlate = `plate-${random()}`
         totalLots = 20
         lots = []
+        ticketId = `id-${random()}`
 
         for (let i = 1; i <= totalLots; i++) {
             let lot = {}
@@ -55,9 +56,9 @@ describe('entryVehicle', () => {
 
         it('should succed on correct car plate and parking name', () =>{
             
-            entryVehicle(carPlate, parkingName)
+            entryVehicle(carPlate, ticketId, parkingName)
                 .then(() => {
-                    return Ticket.findOne({carPlate})
+                    return Ticket.findOne({ticketId})
                 })
                 .then((ticket) => {
                     expect(ticket.carPlate).to.be.equal(carPlate)
@@ -69,15 +70,17 @@ describe('entryVehicle', () => {
 
     it('should fail on non string car plate', () => {
         let carPlate = 1234
-        expect(() => entryVehicle(carPlate, 'parkingName')).to.throw(TypeError, `carPlate ${carPlate} is not a string`)
+        expect(() => entryVehicle(carPlate, 'ticketId', 'parkingName')).to.throw(TypeError, `car plate ${carPlate} is not a string`)
     })
     it('should fail on non string parking name', () => {
-        let parkingName = true
-        expect(() => entryVehicle('1234JJJ', parkingName)).to.throw(TypeError, `parkingName ${parkingName} is not a string`)
+        let pkName = true
+        expect(() => entryVehicle('1234JJJ', 'ticketId', pkName)).to.throw(TypeError, `parking name ${pkName} is not a string`)
     })
-    
 
-    // TODO more happies and unhappies
+    it('should fail on non string ticket id', () => {
+        let ticketid = 1212
+        expect(() => entryVehicle('1234JJJ', ticketid, 'pkName')).to.throw(TypeError, `ticket id ${ticketid} is not a string`)
+    })
 
     //after(() => Promise.all([User.deleteMany(), Parking.deleteMany()], Ticket.deleteMany()).then(() => mongoose.disconnect()))
     after(() => User.deleteMany().then(() => mongoose.disconnect()))

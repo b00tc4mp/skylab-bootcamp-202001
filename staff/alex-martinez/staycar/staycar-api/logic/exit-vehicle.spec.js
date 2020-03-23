@@ -16,18 +16,17 @@ describe('exitVehicle', () => {
             .then(() => Promise.all([Ticket.deleteMany(), Parking.deleteMany(), User.deleteMany()]))
     )
 
-    let name, surname, username, password, pkName, rate, carPlate, totalLots, lots
+    let name, surname, username, password, pkName, rate, carPlate, totalLots, lots, ticketId
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         username = `username-${random()}`
         password = `password-${random()}`
-        //parkingName = `parking-${random()}`
         parkingName = 'test-Parking'
         rate = random()
-        //carPlate = `plate-${random()}`
         carPlate = '1234AAA'
+        ticketId = `id-${random()}`
         totalLots = 20
         lots = []
 
@@ -56,24 +55,27 @@ describe('exitVehicle', () => {
                         
                 })
                 .then(() => {
-                    const ticketValid = Ticket.create({carPlate, entryHour: new Date(), parkingName})
+                    const ticketValid = Ticket.create({carPlate, entryHour: new Date(), ticketId, parkingName})
                     ticketValid.validated = true
-                    debugger
+                    ticketValid.exit = false
+                    
                     return ticketValid
                 })
         )
 
         it('should succed on correct car plate and parking name', () =>{
            
-            exitVehicle(carPlate, parkingName)
+            exitVehicle(ticketId, parkingName)
                 .then(() => {
                    
-                    return Ticket.findOne({carPlate})
+                    return Ticket.findOne({ticketId})
                 })
                 .then((ticket) => {
                     
                     expect(ticket.carPlate).to.be.equal(carPlate)
                     expect(ticket.parkingName).to.be.equal(parkingName)
+                    expect(ticket.exit).to.be(false)
+                    expect(ticket.validated).to.be(true)
                 })
                 .then(() => {
                     expect(pk.totalLots).to.be.equal(20)
@@ -82,17 +84,14 @@ describe('exitVehicle', () => {
 
     })
 
-    it('should fail on non string car plate', () => {
-        let carPlate = 1234
-        expect(() => exitVehicle(carPlate, 'parkingName')).to.throw(TypeError, `carPlate ${carPlate} is not a string`)
+    it('should fail on non string ticket id', () => {
+        let ticketId = 1234
+        expect(() => exitVehicle(ticketId, 'parkingName')).to.throw(TypeError, `ticket id ${ticketId} is not a string`)
     })
     it('should fail on non string parking name', () => {
         let parkingName = true
-        expect(() => exitVehicle('1234JJJ', parkingName)).to.throw(TypeError, `parkingName ${parkingName} is not a string`)
+        expect(() => exitVehicle('ticketId', parkingName)).to.throw(TypeError, `parking name ${parkingName} is not a string`)
     })
-    
-
-    // TODO more happies and unhappies
 
     after(() => Promise.all([User.deleteMany(), Parking.deleteMany()], Ticket.deleteMany()).then(() => mongoose.disconnect()))
     //after(() => User.deleteMany().then(() => mongoose.disconnect()))

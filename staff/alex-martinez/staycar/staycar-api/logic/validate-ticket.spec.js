@@ -14,7 +14,7 @@ describe('validateTicket', () => {
             .then(() => Promise.all([User.deleteMany(), Parking.deleteMany(), Ticket.deleteMany()]))
     )
 
-    let name, surname, username, password, parkingName, rate, totalLots, carPlate
+    let name, surname, username, password, parkingName, rate, totalLots, carPlate, ticketId
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -25,6 +25,7 @@ describe('validateTicket', () => {
         rate = random()
         totalLots = 20
         carPlate = '1234KKK'
+        ticketId = `id-${random()}`
     })
 
     describe('when user already create a parking', () => {
@@ -42,16 +43,16 @@ describe('validateTicket', () => {
                     Parking.create({parkingName, rate, totalLots})
                     .then(() =>{
                         
-                        return Ticket.create({carPlate, entryHour: new Date(), parkingName})
+                        return Ticket.create({carPlate, entryHour: new Date(), ticketId, parkingName, validated: false})
                     })
                 )
         )
 
         it('should succeed on valid car plate and ticket id', () => {
-            return Ticket.findOne({carPlate})
+            return Ticket.findOne({ticketId})
             .then((res) => {
     
-                return validateTicket(res.id)
+                return validateTicket(res.ticketId)
                 .then((ticket) => {
                     expect(ticket.validated).to.be.equal(true)
                 })
@@ -62,7 +63,7 @@ describe('validateTicket', () => {
 
     it('should fail on non string id', () => {
         let id = 1234
-        expect(() => validateTicket(id)).to.throw(TypeError, `idTicket ${id} is not a string`)
+        expect(() => validateTicket(id)).to.throw(TypeError, `ticket id ${id} is not a string`)
     })
     
 

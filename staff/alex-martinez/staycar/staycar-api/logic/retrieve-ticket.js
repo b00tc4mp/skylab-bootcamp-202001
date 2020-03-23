@@ -4,7 +4,7 @@ const { NotFoundError, NotAllowedError } = require('staycar-errors')
 
 module.exports = (ticketId, parkingName) => {
     validate.string(ticketId, 'ticket id')
-    validate.string(parkingName, 'parkingName')
+    validate.string(parkingName, 'parking name')
 
 
    return (async () => {

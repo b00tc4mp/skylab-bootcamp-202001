@@ -43,7 +43,8 @@ describe('registerUser', () => {
             .then(validPassword => expect(validPassword).to.be.true)
     )
 
-    // TODO unhappy paths and other happies if exist
+   
 
     //after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() => mongoose.disconnect())
 })

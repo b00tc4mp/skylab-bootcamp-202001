@@ -25,6 +25,7 @@ describe('retrieveTicket', () => {
         rate = random()
         totalLots = 20
         carPlate = '1234KKK'
+        ticketId = `id-${random()}`
     })
 
     describe('when user already create a parking', () => {
@@ -42,27 +43,28 @@ describe('retrieveTicket', () => {
                     Parking.create({parkingName, rate, totalLots})
                     .then(() =>{
                         
-                        return Ticket.create({carPlate, entryHour: new Date(), parkingName})
+                        return Ticket.create({carPlate, entryHour: new Date(), ticketId, parkingName})
                     })
                 )
         )
 
         it('should succeed on valid car plate', () =>
-            retrieveTicket(carPlate, parkingName)
+            retrieveTicket(ticketId, parkingName)
                 .then((ticket) => {
                    
                     expect(ticket.carPlate).to.be.equal(carPlate)
                     expect(ticket.parkingName).to.be.equal(parkingName)
+                
                 })
         )
     })
-    it('should fail on non string car plate', () => {
-        let carplate = 1234
-        expect(() => retrieveTicket(carplate, 'parkingname')).to.throw(TypeError, `carPlate ${carplate} is not a string`)
+    it('should fail on non string ticket id', () => {
+        let ticketId = 1234
+        expect(() => retrieveTicket(ticketId, 'parkingname')).to.throw(TypeError, `ticket id ${ticketId} is not a string`)
     })
     it('should fail on non string parking name', () => {
         let parkingname = false
-        expect(() => retrieveTicket('1234AAA', parkingname)).to.throw(TypeError, `parkingName ${parkingname} is not a string`)
+        expect(() => retrieveTicket('1234', parkingname)).to.throw(TypeError, `parking name ${parkingname} is not a string`)
     })
 
     // TODO more happies and unhappies
