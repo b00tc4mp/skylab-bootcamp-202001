@@ -12,14 +12,14 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 40,
     color: '#297885',
-    fontFamily: 'Sensei-Medium.ttf',
+    fontFamily: 'Sensei-Medium.ttf.ttf',
     alignSelf: 'center',
     padding: 40,
     textDecorationLine: 'underline',
   },
 
   text : {
-    fontFamily : 'Sensei-Medium.ttf',
+    fontFamily : 'Sensei-Medium.ttf.ttf',
     color : '#297885',
     padding: 10,
     fontSize: 20

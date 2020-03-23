@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native'
 const styles = StyleSheet.create({
 
     text : {
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Sensei-Medium.ttf.ttf'
     },
 
     container : {
@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
     title : {
         fontSize : 50,
         color : '#297885',
-        alignSelf : 'center'
+        alignSelf : 'center',
+        fontWeight: '200'
     },
     
     button : {

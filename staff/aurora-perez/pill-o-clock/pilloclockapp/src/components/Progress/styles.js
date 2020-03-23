@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 40,
     color: '#297885',
-    fontFamily: 'Sensei-Medium.ttf',
+    fontFamily: 'Sensei-Medium.ttf.ttf',
     alignSelf: 'center',
     padding: 50,
     textDecorationLine: 'underline',

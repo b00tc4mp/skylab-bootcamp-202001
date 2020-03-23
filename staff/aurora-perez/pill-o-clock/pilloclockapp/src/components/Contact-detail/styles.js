@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
         backgroundColor : '#fffdf9',
         borderRadius : 30,
         padding : 10,
-        marginTop : 100
+        marginTop : 100,
+        flex: 1
     },
     header : {
         fontFamily : 'Sensei-Medium.ttf',
@@ -23,7 +24,9 @@ const styles = StyleSheet.create({
         color : '#4CBBC2',
         fontSize : 20,
         marginLeft : 50,
-        marginTop : 15
+        marginTop : 15,
+        marginBottom: 20
+
     }
 
 })

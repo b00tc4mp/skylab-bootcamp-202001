@@ -23,7 +23,7 @@ const configure = () => {
  
 };
 
-const localNotification = () => {
+const localNotification = (drugName) => {
  PushNotification.localNotification({
    autoCancel: true,
    actions: '["Accept", "Reject"]',
@@ -31,13 +31,13 @@ const localNotification = () => {
    smallIcon: "ic_notification",
    //bigText: "My big text that will be shown when notification is expanded",
    //subText: "This is a subText",
-   //color: "green",
+   color: "green",
    //vibrate: true,
    //vibration: 300,
-   title: "Hola pepito!!!",
-   message: "bienvenido",
-   //playSound: true,
-   //soundName: 'default',
+   title: drugName,
+   message: "puto",
+   playSound: true,
+   soundName: 'default',
    alertAction: 'view',
  });
 };

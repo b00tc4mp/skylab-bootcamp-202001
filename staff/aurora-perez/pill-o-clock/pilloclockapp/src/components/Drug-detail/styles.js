@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
     container : {
         flex : 1,
-        width : '90%',
+        width : '100%',
         backgroundColor : '#fffdf9',
         borderRadius : 30,
         padding : 10,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     headerContainer : {
-        flex : 0.2,
+        //flex : 1,
         flexDirection : 'row'
     }
 

@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Button, Picker } from 'r
 import styles from './styles'
 
 function AddMedication ({onSubmit, error}) {
-    const [ drug, setDrug ] =useState()
+    const [ drug, setDrug ] =useState('Furosemide')
     const [ hour1, setHour1 ] = useState()
     const [ min1, setMin1 ] = useState()
     const [ secondTime, setSecondTime ] =useState(false)
@@ -20,7 +20,7 @@ function AddMedication ({onSubmit, error}) {
                 <Text style = {styles.title}>Add medication</Text>
                 <Text style = {styles.text}>Select name: </Text>
             
-                <Picker style={{ height: 100}}itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium.ttf'}} selectedValue = {drug} onValueChange = {setDrug}>
+                <Picker style={{ height: 100}} itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium.ttf'}} selectedValue = {drug} onValueChange = {setDrug}>
                 <Picker.Item label = "Furosemide" value = "Furosemide" />
                 <Picker.Item label = "Adiro" value = "Adiro" />
                 <Picker.Item label = "Atorvastatine" value = "Atorvastatine" />

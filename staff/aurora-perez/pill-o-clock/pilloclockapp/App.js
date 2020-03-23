@@ -21,8 +21,52 @@ function App () {
   const [goLanding, setGoLanding] = useState(false)
   const [ contacts, setContacts ] = useState()
   const [ contactData, setContactData ] =useState()
+  const [ schedule, setSchedule] = useState()
 
+  useEffect(()=>{
+
+    //if(user) {
+      const interval = setInterval(async () => { 
+        let schedule = await getAlarms(token)
+        if(schedule.length){
+          schedule.forEach(prescription => {
+            prescription.times.forEach(alarm => {
+              let time =alarm.toString()
+              let min = parseInt(time.slice(time.length-2, time.length))
+              let hour = parseInt(time.slice(0, time.length-2))
+
+              let now = new Date()
+              let hour2 = now.getHours()
+              let min2 = now.getMinutes()
+              if(hour === hour2 && min <= min2 && min > min-1) pushNotification.localNotification(prescription.drugName)
+            })
+
+          })
+
+        }
+
+
+      }, 60000)
   
+    return () => clearInterval(interval)
+  }, [])
+
+
+
+  async function getAlarms (token) {
+    const _medication = await retrieveMedication(token)
+    //console.log(_medication)
+
+    if(_medication.length) {
+      let _schedule = []
+      for( let i=0; i<_medication.length; i++) {
+        _schedule[i] = {}
+        _schedule[i].times=_medication[i].times
+        _schedule[i].drugName = _medication[i].drug.drugName
+      }
+      return _schedule
+    }
+  }
 
   function __handleError__(message) {
     setError(message)
@@ -52,8 +96,6 @@ function App () {
     try {
       const _token = await login(email, password)
       const loggedUser = await retrieveUser(_token)
-
-      //pushNotification.localNotification()
 
       if(loggedUser.profile === 'pharmacist') {
         setToken (_token)
@@ -101,7 +143,7 @@ function App () {
 
   async function handleAddMedication (info) {
     
-    try{ //TODO utils
+    try{ //TODO refactor
       const {drug} = info
       let keys = Object.keys(info)
       keys.slice(0,1)
@@ -149,7 +191,7 @@ function App () {
       handleToMedication()
 
     }catch({message}){
-
+      console.log(message)
     }
   }
 
@@ -176,7 +218,6 @@ function App () {
   async function handleToPatients (){
     try{
       const _contacts = await retrieveContacts(token)
-      console.log(_contacts)
       setContacts(_contacts)
       setView('patients')
 

@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native'
 const styles = StyleSheet.create({
 
     text : {
-        fontFamily : 'Sensei-Medium.ttf',
+        fontFamily : 'Sensei-Medium.ttf.ttf',
         color : '#297885',
         fontSize : 20,
         marginLeft : 20,
@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     },
 
     hourContainer : {
-        marginTop : 50,
+        //marginTop : 50,
         flex : 1,
         flexDirection : 'row',
         
