@@ -10,19 +10,34 @@ export default ({goTo, gameId}) => {
     const [_gameId, setGameId] = useState(gameId)
     // const [playersId, setPlayersId] = useState()
     const [playersName, setPlayersName] = useState()
+    const [currentPlayerName, setCurrentPlayerName] = useState()
+    const [lastPlayerOut, setLastPlayerOut] = useState()
+    const [playersRemain, setPlayersRemain] = useState()
+
     
     useEffect(() => {
-        let interval = setInterval(() => {
+        const interval = setInterval(() => {
             if (isLoggedIn()){
                 (async () => {
                     try {
-                        const _userId = await retrieveUserId(sessionStorage.token)
-                        setUserId(_userId)
-                        const _playersName = await retrievePlayersName(gameId)//retrieve players name
+                        // const _userId = await retrieveUserId(sessionStorage.token)
+                        // setUserId(_userId)
+                        const _playersName = await retrievePlayersName(gameId)
                         setPlayersName(_playersName)
                         const status = await retrieveGameStatus(gameId)
                         setGameStatus(status)
+                        //current player
+                        const currentPlayerObj = _playersName.find(x => x.id === status.currentPlayer)
+                        setCurrentPlayerName(currentPlayerObj.username)
+                        //last player out
+                        const lastPlayerOutObj = _playersName.find(x => x.id === status.watching[status.watching.length -1])
+                        setLastPlayerOut(lastPlayerOutObj.username)
+                        //players remain
+                        setPlayersRemain(status.players.length - status.watching.length)
+                        //player win
                         debugger
+
+
                     } catch (error) {
                         setError(error.message)
                         setTimeout(()=> setError(undefined), 3000)
@@ -47,8 +62,10 @@ export default ({goTo, gameId}) => {
     </div>
     <div className="game__footer">
         <p className="game__footer__text">Player 1 wins</p>
-        <p className="game__footer__text">Turn of player</p>
-        <p className="game__footer__text">Player 1 out, 20 players remain </p>
+        <p className="game__footer__text">Turn of {currentPlayerName}</p>
+        {lastPlayerOut && <p className="game__footer__text">Player {lastPlayerOut} out</p>}
+        <p> {playersRemain} players in game </p>
+        
     </div>
 </div>
 }
