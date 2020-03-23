@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import * as Location from 'expo-location'
 import * as Permissions from 'expo-permissions'
 
-import logic, { registerUser, retrieveUser, loginUser, logoutUser, isUserLoggedIn } from 'sick-parks-logic'
+import logic, { registerUser, retrieveUser, loginUser, logoutUser, isUserLoggedIn, createPark } from 'sick-parks-logic'
 import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
 
 const homeImage = require('./assets/icon-search.png')
@@ -109,6 +109,15 @@ export default function App() {
 
 	}
 
+	const handleNewPark = async (data) => {
+		try {
+
+			await createPark(data)
+		} catch ({ message }) {
+			__handleErrors__(message)
+		}
+	}
+
 
 	return (
 		<>
@@ -152,8 +161,8 @@ export default function App() {
 						}}
 					>
 						<Tab.Screen name="Home" component={Home} />
-						<Tab.Screen name="Map" component={() => MapViewContainer({ style: styles.mapStyle })} />
-						<Tab.Screen name="Build" component={ParkBuilder} />
+						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
+						<Tab.Screen name="Build" component={ParkBuilder} initialParams={{ handleNewPark, error }} />
 						<Tab.Screen name="Profile" initialParams={{ user, handleLogout }} component={Profile} />
 					</Tab.Navigator>
 				</>}

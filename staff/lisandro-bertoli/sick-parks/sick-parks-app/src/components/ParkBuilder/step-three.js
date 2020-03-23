@@ -1,39 +1,51 @@
 import React, { useState } from 'react'
-import { StyleSheet, ScrollView, Dimensions, View, Text, FlatList } from 'react-native'
-import { Button, Feedback, MapViewContainer } from '../index'
+import { StyleSheet, ScrollView, Dimensions, View, Text } from 'react-native'
+import { StackActions } from '@react-navigation/native';
+import { Button, MapViewContainer } from '../index'
 
 const screenHeight = Dimensions.get('window').height
-export default function StepThree({ navigation, route }) {
-    const { features, park } = route.params
-    console.log(features)
-    // for (let key in features) {
-    //     features[key].forEach(element => {
-    //         for (let prop in element) {
-    //             if (prop !== 'coordinates') {
+const screenWidth = Dimensions.get('window').width
 
-    //                 elemen[prop] = element[prop].charAt(0).toUpperCase() + element[prop].slice(1)
-    //             }
-    //         }
-    //     })
+
+export default function StepThree({ navigation, route }) {
+    const { features, park, getParkData } = route.params
+    let numberOfFeatures = 0
+
+    for (let key in features) numberOfFeatures += features[key].length
+
+    // for (let key in park) {
+    //     if (park[key] === undefined) park[key] = 'N/A'
+
+    //     if (key !== 'location') {
+
+
+    //         park[key] = park[key].charAt(0).toUpperCase() + park[key].slice(1)
+    //     }
     // }
 
+    const handleParkSubmission = () => {
+        let _features = []
+        Object.values(features).forEach(value => value.forEach(element => _features.push(element)))
+        const { location } = park
 
-    // let nu = Object.values(features).filter((item, index) => item[index] !== undefined)
+        _features.forEach(feature => {
+            if (feature.location.coordinates.longitude) feature.location.coordinates = [feature.coordinates.longitude, feature.coordinates.latitude]
+            else delete feature.location
+        })
+        _features.forEach(feature => delete feature.coordinates)
 
-
-    for (let key in park) {
-        if (park[key] === undefined) park[key] = 'N/A'
-
-        if (key !== 'location') {
-
-
-            park[key] = park[key].charAt(0).toUpperCase() + park[key].slice(1)
+        park.location = {
+            type: 'Point',
+            coordinates: [location[0].longitude, location[0].latitude]
         }
+        getParkData({ features: _features, park })
+
+        navigation.dispatch(StackActions.popToTop());
     }
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{ flexGrow: 0 }}>
+            <ScrollView contentContainerStyle={{ flex: 1, width: screenWidth * 0.9 }}>
                 <Text style={styles.header}>Park details:</Text>
                 <View style={styles.details}>
                     <View style={styles.detailsCols}>
@@ -42,13 +54,14 @@ export default function StepThree({ navigation, route }) {
                         <Text styles={styles.fixedText}>Level: </Text>
                         <Text styles={styles.fixedText}>Flow: </Text>
                         <Text styles={styles.fixedText}>Features: </Text>
-                        {/* here in features will just place the amount of features, no more details */}
+
                     </View>
                     <View style={styles.detailsCols}>
                         <Text styles={styles.variableText}>{park.name}</Text>
                         <Text styles={styles.variableText}>{park.size}</Text>
                         <Text styles={styles.variableText}>{park.level}</Text>
                         <Text styles={styles.variableText}>{park.flow}</Text>
+                        <Text styles={styles.variableText}>{numberOfFeatures}</Text>
                     </View>
 
                 </View>
@@ -56,7 +69,11 @@ export default function StepThree({ navigation, route }) {
                     <MapViewContainer parkLocation={park.location[0].coordinate} _markers={[park.location[0]]} style={styles.map} />
                 </View>
 
-
+                <Button
+                    text='Confirm'
+                    style={styles.mainButton}
+                    textStyle={styles.buttonText}
+                    onPress={handleParkSubmission} />
             </ScrollView>
 
         </View>
@@ -68,9 +85,13 @@ const styles = StyleSheet.create({
     container: {
         height: screenHeight,
         backgroundColor: '#EDF4F9',
-        paddingHorizontal: 10,
-        paddingBottom: '20%',
-        paddingTop: 10
+        // paddingHorizontal: 10,
+        paddingBottom: '30%',
+        width: '90%',
+        paddingTop: 10,
+        alignItems: "center",
+        alignSelf: 'center'
+
     },
     map: {
         flex: 1,
@@ -83,14 +104,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     mapContainer: {
-        flex: 1,
-        height: 140,
-        width: '90%',
-        alignSelf: 'center'
+        flex: 0.5,
+        height: 100,
+        width: '100%',
+        alignSelf: 'center',
+        paddingBottom: 10,
     },
     details: {
-        flex: 1,
-        height: 150,
+        flex: 0.5,
+
+        height: '35%',
         paddingHorizontal: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -103,7 +126,24 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderStyle: 'solid',
         borderBottomColor: 'red'
-    }
+    },
+    mainButton: {
+        height: 40,
+        backgroundColor: '#EFEBDA',
+        width: 250,
+        alignSelf: 'center',
+        borderRadius: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: '600',
+        letterSpacing: 1,
+        color: '#82A4B3'
+
+    },
 
 })
 

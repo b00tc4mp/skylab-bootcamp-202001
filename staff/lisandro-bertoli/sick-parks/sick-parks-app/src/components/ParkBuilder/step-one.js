@@ -4,7 +4,7 @@ import { Button, Feedback, MapViewContainer } from '../index'
 import MapView, { Marker } from 'react-native-maps';
 
 
-export default function StepOne({ navigation }) {
+export default function StepOne({ navigation, error: _error }) {
     const [name, setName] = useState()
     const [resort, setResort] = useState()
     const [showModal, setShowModal] = useState(false)
@@ -17,7 +17,7 @@ export default function StepOne({ navigation }) {
     const [boxes, setBoxes] = useState(0)
     const [others, setOthers] = useState(0)
     const [pipes, setPipes] = useState(0)
-    const [error, setError] = useState(undefined)
+    const [error, setError] = useState(_error)
 
 
     const handleNextStep = () => {
@@ -28,6 +28,8 @@ export default function StepOne({ navigation }) {
             case resort === undefined || resort.trim() === '':
                 setError('Resort is empty')
                 break
+            case location === undefined:
+                setError('Location is required')
             default:
                 navigation.navigate('Featues info', { features: { rails, boxes, kickers, pipes, others }, park: { name, resort, flow, size, level, location } })
         }
@@ -80,25 +82,30 @@ export default function StepOne({ navigation }) {
                                 <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
                                 <Text style={styles.modalText}>Pick a location</Text>
                             </View>
-                            <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinates) => {
-                                coordinates = { coordinate: coordinates }
-                                setLocation([coordinates])
+                            <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinate) => {
+
+                                setLocation([coordinate])
+
+
                                 setTimeout(() => {
                                     setShowModal(false)
                                 }, 100)
                             }} />
                         </Modal>
                         <Button style={styles.button} text='Set Location' onPress={() => setShowModal(true)} />
+
+                        {error && _error && <Feedback level='warn' message={error} />}
+
                         <View style={{ justifyContent: 'space-around', marginVertical: 25 }}>
                             <View style={styles.textContainer}>
                                 <Text>Name:</Text>
-                                {error && <Feedback level='warn' message={error} />}
+                                {error && !_error && <Feedback level='warn' message={error} />}
                                 <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
                             </View>
 
                             <View style={styles.textContainer}>
                                 <Text>Resort:</Text>
-                                {error && <Feedback level='warn' message={error} />}
+                                {error && !_error && <Feedback level='warn' message={error} />}
                                 <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
                             </View>
 

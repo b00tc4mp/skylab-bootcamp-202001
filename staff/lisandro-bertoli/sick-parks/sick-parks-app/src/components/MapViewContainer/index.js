@@ -17,8 +17,6 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
             else setMarkers([])
         } catch ({ message }) {
             setError({ message })
-            console.log(message)
-
         }
     }, [])
 
@@ -31,12 +29,12 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
         <View style={styles.container}>
             <MapView showsUserLocation={true} initialRegion={location} style={style} onPress={(e) => {
 
-                setMarkers([...markers, { coordinate: e.nativeEvent.coordinate }])
+                setMarkers([...markers, { coordinates: e.nativeEvent.coordinate }])
                 sendMakers(e.nativeEvent.coordinate)
             }} >
                 {markers && markers.map((marker, index) => {
                     return <Marker
-                        coordinate={marker.coordinate}
+                        coordinate={marker}
                         key={index}
                     />
                 })}

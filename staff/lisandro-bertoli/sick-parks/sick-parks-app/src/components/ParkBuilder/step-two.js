@@ -25,7 +25,12 @@ export default function StepOne({ navigation, route }) {
         const { features: { rails = [], boxes = [], kickers = [], pipes = [], others = [] } } = route.params
 
         const railsArray = new Array(rails).fill({
-            coordinates: {},
+            name: 'rail',
+            location: {
+                type: 'Point',
+                coordinates: {},
+
+            },
             size: 's',
             description: ''
         })
@@ -33,7 +38,12 @@ export default function StepOne({ navigation, route }) {
         setRails(railsArray)
 
         const boxesArray = new Array(boxes).fill({
-            coordinates: {},
+            name: 'box',
+            location: {
+                type: 'Point',
+                coordinates: {},
+
+            },
             size: 's',
             description: ''
         })
@@ -41,7 +51,12 @@ export default function StepOne({ navigation, route }) {
         setBoxes(boxesArray)
 
         const kickersArray = new Array(kickers).fill({
-            coordinates: {},
+            name: 'kicker',
+            location: {
+                type: 'Point',
+                coordinates: {},
+
+            },
             size: 's',
             description: ''
         })
@@ -49,7 +64,12 @@ export default function StepOne({ navigation, route }) {
         setKickers(kickersArray)
 
         const pipesArray = new Array(pipes).fill({
-            coordinates: {},
+            name: 'pipe',
+            location: {
+                type: 'Point',
+                coordinates: {},
+
+            },
             size: 's',
             description: ''
         })
@@ -57,7 +77,12 @@ export default function StepOne({ navigation, route }) {
         setPipes(pipesArray)
 
         const othersArray = new Array(others).fill({
-            coordinates: {},
+            name: 'transition',
+            location: {
+                type: 'Point',
+                coordinates: {},
+
+            },
             size: 's',
             description: ''
         })
