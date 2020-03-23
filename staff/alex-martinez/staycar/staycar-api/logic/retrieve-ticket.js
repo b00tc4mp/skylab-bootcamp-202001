@@ -2,14 +2,14 @@ const { validate } = require('staycar-utils')
 const { models: { Ticket, Parking } } = require('staycar-data')
 const { NotFoundError, NotAllowedError } = require('staycar-errors')
 
-module.exports = (carPlate, parkingName) => {
-    validate.string(carPlate, 'carPlate')
+module.exports = (ticketId, parkingName) => {
+    validate.string(ticketId, 'ticket id')
     validate.string(parkingName, 'parkingName')
 
 
    return (async () => {
-        const ticket = await Ticket.findOne({carPlate}).lean()
-        if(!ticket) throw new NotFoundError('this plate is not inside the parking')
+        const ticket = await Ticket.findOne({ticketId}).lean()
+        if(!ticket) throw new NotFoundError('this ticket is not inside the parking')
         //if(ticket.validated) throw new NotFoundError('this ticket is not valid')
         const parking = await Parking.findOne({parkingName})
         if(!parking) throw new NotFoundError(`parking ${parkingName} is not exist`)

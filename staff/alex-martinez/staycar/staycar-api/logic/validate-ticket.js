@@ -2,13 +2,13 @@ const { validate } = require('staycar-utils')
 const { models: { Ticket } } = require('staycar-data')
 const { NotFoundError } = require('staycar-errors')
 
-module.exports = (idTicket) => {
+module.exports = (ticketId) => {
 
-    validate.string(idTicket, 'idTicket')
+    validate.string(ticketId, 'ticket id')
 
     return (async () => {
-        const ticket = await Ticket.findById(idTicket)
-        if(!ticket) throw new NotFoundError(`ticket with id ${id} does not exist`)
+        const ticket = await Ticket.findOne({ticketId})
+        if(!ticket) throw new NotFoundError(`ticket with id ${ticketId} does not exist`)
 
         ticket.validated = true
         

@@ -31,15 +31,14 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 router.post('/:name/ticket', jsonBodyParser, entryVehicle)
 
 router.post('/parking/create', jwtVerifierMidWare, jsonBodyParser, createParking)
-/* router.get('/parking/:name', jwtVerifierMidWare, retrieveParking) */
 router.get('/parking', retrieveParking)
 router.delete('/parking/:parking', jwtVerifierMidWare, deleteParking)
 router.delete('/users/:id', jwtVerifierMidWare, jsonBodyParser, deleteUser)
-router.get('/ticket/:carplate/:parkingname', retrieveTicket)
+router.get('/ticket/:id/:parkingname', retrieveTicket)
 router.get('/tickets', retrieveTickets)
 
 router.patch('/ticket/:id/validated', validateTicket)
-router.get('/ticket/:carplate/:parkingname/exit', exitVehicle)
+router.get('/ticket/:ticketId/:parkingname/exit', exitVehicle)
 
 //router.patch('/parking/:id/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
 router.patch('/parking/:name/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)

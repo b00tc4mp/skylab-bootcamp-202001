@@ -6,7 +6,9 @@ const TicketSchema = new Schema({
     entryHour: {type: Date, required: true},
     exitHour: {type: Date},
     amount: {type: Number},
-    validated: {type: Boolean, default: false}
+    validated: {type: Boolean, default: false},
+    exit: {type: Boolean, default: false},
+    ticketId: {type: String, trim: true}
 })
 
 module.exports = model('Ticket', TicketSchema)

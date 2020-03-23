@@ -2,12 +2,12 @@ const { exitVehicle } = require('../../logic')
 const { NotAllowedError, ContentError } = require('staycar-errors')
 
 module.exports = ( req, res ) => {
-    const { params: {carplate, parkingname} } = req
-    debugger
+    const { params: {ticketId, parkingname} } = req
+    
     try{
         
-        exitVehicle(carplate, parkingname)
-        .then(() => res.status(201).json({"message": "Thank you, see you soon"}))
+        exitVehicle(ticketId, parkingname)
+        .then(() => res.status(200).json({"message": "Thank you, see you soon"}))
         .catch(error => {
             let status = 400
 

@@ -5,9 +5,9 @@ import {retrieveParking} from '../logic'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (carPlate) => {
+export default (ticketId) => {
 
-    validate.string(carPlate, 'car plate')
+    validate.string(ticketId, 'car plate')
 
     return(async () => {
 
@@ -17,12 +17,12 @@ export default (carPlate) => {
     
         const pkName = retrievePk[0].parkingName
         
-        const response = await fetch(`${API_URL}/ticket/${carPlate}/${pkName}/exit`, {
+        const response = await fetch(`${API_URL}/ticket/${ticketId}/${pkName}/exit`, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         }) 
 
-        if(response.status === 201){
+        if(response.status === 200){
             return 
         }
 

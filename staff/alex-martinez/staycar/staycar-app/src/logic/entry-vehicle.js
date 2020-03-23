@@ -5,9 +5,10 @@ import retrieveParking from './retrieve-parking'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (carPlate) => {
+export default (carPlate, ticketId) => {
 
     validate.string(carPlate, 'car plate')
+    validate.string(ticketId, 'ticketid')
 
     return(async () => {
 
@@ -19,7 +20,7 @@ export default (carPlate) => {
         const response = await fetch(`${API_URL}/${pkName}/ticket`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({carPlate})
+            body: JSON.stringify({carPlate, ticketId})
         }) 
 
         if(response.status === 201){

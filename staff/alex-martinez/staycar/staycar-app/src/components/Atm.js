@@ -23,10 +23,10 @@ export default function({onSubmit, infoTicket, error}) {
     const handleAtm = (event) => {
       event.preventDefault()
       const { target: {
-        plateNumber: {value: plateNumber}
+        ticketId: {value: ticketId}
       }} = event
 
-      onSubmit(plateNumber)
+      onSubmit(ticketId)
 
     }
 
@@ -34,7 +34,7 @@ export default function({onSubmit, infoTicket, error}) {
     return <section className="atm">
    {!infoTicket ? <><h1 className="atm__title">ATM</h1>
       <form action="" method="" className="atm__form" onSubmit={handleAtm}>
-          <input type="text" placeholder="car plate" className="atm__input" name="plateNumber" value={result}/>
+          <input type="text" placeholder="ticket id" className="atm__input" name="ticketId" value={result}/>
           <button className="atm__submit">Entry Ticket</button>
       </form>
 

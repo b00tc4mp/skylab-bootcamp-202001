@@ -22,21 +22,21 @@ export default function({onSubmit ,error}) {
       event.preventDefault()
       
       const { target: {
-        plateNumber: {value: plateNumber}
+        ticketId: {value: ticketId}
       } } = event
 
-      onSubmit(plateNumber)
+      onSubmit(ticketId)
 
     }
 
     return <section className="exit-plate">
     <h1 className="exit-plate__title">Exit: </h1>
     <form action="" method="" className="exit-plate__form" onSubmit={handleExitVehicle}>
-        <input type="text" placeholder="exit car plate number" className="exit-plate__input" name="plateNumber" value={result} />
-        <button className="exit-plate__submit">Add</button>
+        <input type="text" placeholder="ticket id" className="exit-plate__input" name="ticketId" value={result} />
+        <button className="exit-plate__submit">Exit</button>
     </form>
 
-    {error && <Feedback message={error} level="warn"/>}
+    {error && <Feedback message={error} level="error"/>}
 
     <QrReader
       className="qr"

@@ -76,9 +76,9 @@ export default withRouter(function ({ history }) {
     }
   }
 
-  async function handleEntryVehicle(carPlate) {
+  async function handleEntryVehicle(carPlate, ticketId) {
     try {
-      await entryVehicle(carPlate)
+      await entryVehicle(carPlate, ticketId)
       setDataTicket(undefined)
     
     }catch(error) {
@@ -87,9 +87,9 @@ export default withRouter(function ({ history }) {
     }
   }
 
-  async function handleAtm(carPlate) {
+  async function handleAtm(ticketId) {
     try{
-      const infoTicket = await retrieveTicket(carPlate)
+      const infoTicket = await retrieveTicket(ticketId)
       if(infoTicket.validated) throw new Error('ticket not valid')
       setDataTicket(infoTicket)
 
@@ -108,9 +108,9 @@ export default withRouter(function ({ history }) {
     }
   }
 
-  async function handleExitVehicle(carPlate) {
+  async function handleExitVehicle(ticketId) {
     try{
-      await exitVehicle(carPlate)
+      await exitVehicle(ticketId)
       history.push('/home')
     }catch(error){
       __handleError__(error)

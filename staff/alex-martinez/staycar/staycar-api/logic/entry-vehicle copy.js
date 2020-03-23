@@ -1,11 +1,10 @@
 const { validate } = require("staycar-utils")
 const { models: { Ticket, Parking } } = require("staycar-data")
-const { NotAllowedError, NotFoundError } = require("../../staycar-errors")
+const { NotAllowedError } = require("../../staycar-errors")
 
-module.exports =  (carPlate, ticketId, parkingName) => {
-  validate.string(carPlate, "car plate")
-  validate.string(parkingName, 'parking name')
-  validate.string(ticketId, 'ticket id')
+module.exports =  (carPlate, parkingName) => {
+  validate.string(carPlate, "carPlate")
+  validate.string(parkingName, 'parkingName')
   
   return (async () => {
 
@@ -13,7 +12,6 @@ module.exports =  (carPlate, ticketId, parkingName) => {
     if (car) throw new NotAllowedError(`this plate ${carPlate} is inside`)
   
     const parking = await Parking.findOne({ parkingName })
-    if(!parking) throw new NotFoundError(`this parking ${parkingName} is not exist`)
     
     let { totalLots, occupiedLots, lots } = parking
   
@@ -39,8 +37,12 @@ module.exports =  (carPlate, ticketId, parkingName) => {
   
     parking.lots = lots
   
-    await Ticket.create({ carPlate, entryHour: new Date(), ticketId, parkingName })
-    
+    //await generateQr(carPlate)
+  
+    await Ticket.create({ carPlate, entryHour: new Date(), parkingName })
+    //entryHour = moment().format('MMMM Do YYYY, h:mm:ss')
+    //await Ticket.create({ carPlate, entryHour, parkingName })
+  
     parking.save()
   })()
 }

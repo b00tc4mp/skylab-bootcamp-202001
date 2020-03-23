@@ -1,19 +1,18 @@
 import { NotAllowedError } from 'staycar-errors'
-import context from './context'
 import retrieveParking from './retrieve-parking'
 import { validate } from 'staycar-utils'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function (carPlate) {
-    validate.string(carPlate, 'car plate')
+export default (ticketId) => {
+    validate.string(ticketId, 'ticket id')
     return (async () => {
 
         const retrievePk = await retrieveParking()
         const pkName = retrievePk[0].parkingName
         if(!retrievePk) throw new Error('not found parking')
         
-        const response = await fetch(`${API_URL}/ticket/${carPlate}/${pkName}`, {
+        const response = await fetch(`${API_URL}/ticket/${ticketId}/${pkName}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -38,4 +37,4 @@ export default (function (carPlate) {
 
         throw new Error('server error')
     })()
-}).bind(context)
+}
