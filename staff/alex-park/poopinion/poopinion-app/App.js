@@ -61,10 +61,13 @@ export default function App() {
       })
     })
 
-    __handleUser__()
     __handleToiletScore__()
     __handleTopToilets__()
   }, [detailedToilet])
+
+  useEffect(() => {
+    __handleUser__()
+  }, [user])
 
   function __handleError__(message) {
     setError(message)
@@ -194,7 +197,6 @@ export default function App() {
     } else {
       try {
         await toggleFavToilet(token, toiletId)
-        __handleUser__()
         if (favToilets) {
           const _favToilets = await retrieveFavToilets(token)
           setFavToilets(_favToilets)
@@ -220,7 +222,6 @@ export default function App() {
     try {
       (async () => {
         await toggleThumbUp(token, commentId)
-        __handleUser__()
         if (detailedToilet) {
           const toilet = await retrieveToilet(detailedToilet.id.toString())
           setDetailedToilet(toilet)
@@ -236,7 +237,6 @@ export default function App() {
     try {
       (async () => {
         await toggleThumbDown(token, commentId)
-        __handleUser__()
         if (detailedToilet) {
           const toilet = await retrieveToilet(detailedToilet.id.toString())
           setDetailedToilet(toilet)
@@ -252,7 +252,6 @@ export default function App() {
     try {
       (async () => {
         await publishComment(token, detailedToilet.id.toString(), data)
-        __handleUser__()
         __handleToiletScore__()
         __handleTopToilets__()
         Alert.alert('Thank you for your rating! 🚽❤️')
@@ -268,7 +267,6 @@ export default function App() {
     try {
       (async () => {
         await updateComment(token, commentId, data)
-        __handleUser__()
         __handleToiletScore__()
         __handleTopToilets__()
         Alert.alert('Comment updated, thank you! 🚽❤️')
@@ -314,7 +312,6 @@ export default function App() {
         (async () => {
           const _favToilets = await retrieveFavToilets(token)
           setFavToilets(_favToilets)
-          __handleUser__()
           __handleTopToilets__()
           setView('favToilets')
         })()
@@ -330,7 +327,6 @@ export default function App() {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
     } else {
-      __handleUser__()
       setView('profilePage')
     }
   }
