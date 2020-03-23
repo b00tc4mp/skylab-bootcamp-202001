@@ -19,13 +19,13 @@ export default ({ goTo }) => {
                     // setState({ error: message, page: 'login' })
                 }
             })()
-        else goTo('/landing')
-    }, [])
+        else goTo('landing')
+    })
 
     return <div className="p1 home">
-        <p className="home__user">Welcome, {username}</p>
         <p className="home__logout" onClick={()=>goTo('logout')}>Logout</p>
+        <p className="home__user">Welcome, {username}</p>
         <p className="home__multi-player" onClick={()=>goTo('multiplayer')}>Multiplayer</p>
-        <p className="home__options">Options</p>
+        {/* <p className="home__options">Options</p> */}
     </div> 
 }

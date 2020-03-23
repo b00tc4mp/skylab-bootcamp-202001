@@ -1,10 +1,11 @@
 import'./Create.sass'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { isLoggedIn, retrieveUserId } from '../logic'
-
-// import Feedback from './Feedback'
+import Feedback from './Feedback'
 
 export default ({ handleCreateGame, goTo }) => {
+    const [error, setError] = useState(undefined)
+
     let owner
 
     useEffect(() => {
@@ -12,10 +13,9 @@ export default ({ handleCreateGame, goTo }) => {
             (async () => {
                 try {
                     owner = await retrieveUserId(sessionStorage.token)
-                    // setState({ page: 'home' })
-                } catch ({ message }) {
-                    // setState({ error: message, page: 'login' })
-                }
+                } catch (error) {
+                    setError(error.message)
+                    setTimeout(()=> setError(undefined), 3000)                }
             })()
         else goTo('/landing')
     },[])
@@ -33,6 +33,7 @@ export default ({ handleCreateGame, goTo }) => {
         
         handleCreateGame(name, owner)
     }}>
+        {error && <Feedback error={error}/>}
         <input className="create-group__label" name="name" type="text" placeholder="name of game"/>
         <button className="create-group__button">Create</button>
     </form>

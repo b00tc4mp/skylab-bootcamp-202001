@@ -9,7 +9,7 @@ export default ({ goTo }) => {
     useEffect(() => {
         if (isLoggedIn()) return
         else goTo('/landing')
-    },[])
+    })
 
     return <div className="p1 multiplayer">
     <div className="multiplayer__top-menu">

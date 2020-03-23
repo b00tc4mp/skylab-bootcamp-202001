@@ -13,7 +13,7 @@ export default (function (id, gameId) {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` },
         })
-        //const res = await create.json()
+
         const { status } = await join
 
         if (status === 200) {

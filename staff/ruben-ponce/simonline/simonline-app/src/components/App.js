@@ -1,27 +1,12 @@
-import { Context } from './ContextProvider'
 import './App.sass'
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Landing, Login, Register, Home, Multiplayer, Create, Join, WaitingRoom, Game } from './'
-import { register, login, isLoggedIn, createGame, retrieveUserId, retrieveGames, join, logout } from '../logic'
+import { register, login, isLoggedIn, createGame, logout } from '../logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
-
-  const [state, setState] = useContext(Context)
-
-  const [games, setGames] = useState()
   const [gameId, setGameId] = useState()
-  const [userId, setUserId] = useState()
-  const [_players, setPlayers] = useState()
   const [error, setError] = useState(undefined)
-
-  useEffect(() => {
-    if (isLoggedIn()) {
-      history.push('/home')
-    } else {
-      history.push('/landing')
-    }
-  }, [])
 
   async function handleRegister(username, password) {
     try {
@@ -46,23 +31,19 @@ export default withRouter(function ({ history }) {
   async function handleCreateGame(name, owner) {
     try {
       await createGame(name, owner)
-        history.push('/waiting')
-    } catch ({ message }) {
-        setState({ ...state, error: message })
-    }
+        history.push('/multiplayer')
+    } catch (error) {
+      setError(error.message)
+      setTimeout(()=> setError(undefined), 3000)    }
   }
 
   async function handleJoin(gameId) {
     try {
       setGameId(gameId)
-        const _userId = await retrieveUserId(sessionStorage.token)
-        setUserId(_userId)
-        const _players = await join(userId, gameId)
-        setPlayers(_players)
-
         history.push('/waiting')
-    } catch ({ message }) {
-        setError(message)
+    } catch (error) {
+        setError(error.message)
+        setTimeout(()=> setError(undefined), 3000)
     }
   }
 
@@ -73,18 +54,16 @@ export default withRouter(function ({ history }) {
     } else history.push(`/${props}`)
   }
 
-  // const { error } = state
-
   return <div className="app">
       <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/landing" />} />
       <Route path="/landing" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Landing goTo={goTo} />} />
       <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} goTo={goTo} error={error} />} />
-      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} goTo={goTo} error={error} />} />
+      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} goTo={goTo} error={error}/>} />
       <Route path="/home/" render={() => isLoggedIn() ? <Home goTo={goTo} /> : <Redirect to="/landing" />} />
       <Route path="/multiplayer" render={() => isLoggedIn() ? <Multiplayer goTo={goTo} /> : <Redirect to="/landing" />} />
       <Route path="/create" render={() => isLoggedIn() ? <Create handleCreateGame={handleCreateGame} goTo={goTo}/> : <Redirect to="/landing" />} />
       <Route path="/join" render={() => isLoggedIn() ? <Join handleJoin={handleJoin} goTo={goTo} /> : <Redirect to="/landing" />} />
       <Route path="/waiting" render={() => isLoggedIn() ? <WaitingRoom gameId={gameId} goTo={goTo}/> : <Redirect to="/landing" />} />
-      <Route path="/game" render={() => isLoggedIn() ? <Game/> : <Redirect to="/landing" />} />
+      <Route path="/game" render={() => isLoggedIn() ? <Game goTo={goTo}/> : <Redirect to="/landing" />} />
   </div>
 })
