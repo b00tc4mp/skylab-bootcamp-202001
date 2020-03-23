@@ -3,13 +3,15 @@ const logic = require('.')
 const { retrieveUser } = logic
 const { expect } = require('chai')
 const TEST_JWT_SECRET = process.env.JWT_SECRET
-const MONGODB_URL = process.env.TEST_MONGODB_URL
 const AsyncStorage = require('not-async-storage')
 const { mongoose, models: { User } } = require('sick-parks-data')
 const jwt = require('jsonwebtoken')
 const { random } = Math
 
+const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
+
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = API_URL
 
 
 describe('retrieveUser', () => {

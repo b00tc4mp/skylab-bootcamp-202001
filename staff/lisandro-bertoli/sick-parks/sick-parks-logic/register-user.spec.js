@@ -4,10 +4,13 @@ const { random } = Math
 const { expect } = require('chai')
 const bcrypt = require('bcryptjs')
 
+const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
+
+logic.__context__.API_URL = API_URL
 
 describe('registerUser', () => {
     before(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
         return await Promise.resolve(User.deleteMany())
     })

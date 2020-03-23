@@ -1,5 +1,6 @@
 const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
+const context = require('./context')
 
 module.exports = function ({ name, surname, email, password }) {
     validate.email(email, 'email')
@@ -8,9 +9,10 @@ module.exports = function ({ name, surname, email, password }) {
     validate.string(surname, 'surname')
     validate.string(password, 'password')
 
+    console.log(this.API_URL)
 
     return (async () => {
-        const response = await fetch(`http://192.168.1.101:8085/api/users`, {
+        const response = await fetch(`${this.API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, surname, email, password })
@@ -30,4 +32,4 @@ module.exports = function ({ name, surname, email, password }) {
 
 
     })()
-}
+}.bind(context)

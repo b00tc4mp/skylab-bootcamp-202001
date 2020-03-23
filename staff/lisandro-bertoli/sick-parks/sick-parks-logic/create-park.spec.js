@@ -5,16 +5,17 @@ const { createPark } = logic
 const AsyncStorage = require('not-async-storage')
 const { expect } = require('chai')
 
-const TEST_JWT_SECRET = process.env.JWT_SECRET
+const { TEST_JWT_SECRET: JWT_SECRET, TEST_API_URL: API_URL, TEST_MONGODB_URL: MONGODB_URL } = process.env
 const { mongoose, models: { Park, User } } = require('sick-parks-data')
 const { random } = Math
 const jwt = require('jsonwebtoken')
 
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = API_URL
 
 describe('createPark', () => {
     before(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return Promise.all([User.deleteMany(), Park.deleteMany()])
     })
 
@@ -51,7 +52,7 @@ describe('createPark', () => {
             userId = id
             features.push({ name: featureName, size: featureSize, location: featureLocation })
 
-            const _token = jwt.sign({ sub: id }, TEST_JWT_SECRET)
+            const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
         })
 

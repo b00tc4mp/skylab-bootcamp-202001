@@ -18,6 +18,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
 
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = 'http://192.168.1.130/api'
 
 export default function App() {
 	const [error, setError] = useState()
@@ -97,16 +98,6 @@ export default function App() {
 		}
 	}
 
-	const handleRegister = async (newUser) => {
-		try {
-			await registerUser(newUser)
-			setError(null)
-
-		} catch ({ message }) {
-			setError(message)
-		}
-	}
-
 	const handleLogout = async () => {
 		setUser(null)
 		setError(null)
@@ -122,6 +113,26 @@ export default function App() {
 		}
 	}
 
+	function RegisterScreen(props) {
+		const { navigation } = props
+
+		const handleSubmit = async newUser => {
+			try {
+				console.log(true)
+				await registerUser(newUser)
+				console.log(true)
+
+				navigation.navigate('Login', { error: null })
+
+			} catch ({ message }) {
+				console.log(message)
+				setError(message)
+			}
+		}
+
+		return <Register onSubmit={handleSubmit} error={error} />
+	}
+
 
 	return (
 		<>
@@ -131,9 +142,7 @@ export default function App() {
 					<Stack.Navigator initialRouteName='Landing' >
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
-							<Stack.Screen name="Register">
-								{props => <Register {...props} extraData={{ handleRegister, error }} />}
-							</Stack.Screen>
+							<Stack.Screen name="Register" component={RegisterScreen}/>
 							<Stack.Screen name="Login">
 								{props => <Login {...props} extraData={{ handleLogin, error }} />}
 							</Stack.Screen>

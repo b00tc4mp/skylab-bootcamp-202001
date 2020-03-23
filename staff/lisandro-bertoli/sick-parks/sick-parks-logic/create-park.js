@@ -24,7 +24,7 @@ module.exports = function (data) {
     return (async () => {
         const token = await this.storage.getItem('token')
 
-        const response = await fetch(`http://192.168.1.101:8085/api/users/parks`, {
+        const response = await fetch(`${this.API_URL}/users/parks`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ park, features })

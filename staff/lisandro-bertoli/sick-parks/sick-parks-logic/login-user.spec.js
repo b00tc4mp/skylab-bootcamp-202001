@@ -7,11 +7,14 @@ const AsyncStorage = require('not-async-storage')
 const { mongoose, models: { User } } = require('sick-parks-data')
 const bcrypt = require('bcryptjs')
 
+const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
+
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = API_URL
 
 describe('loginUser', () => {
     before(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-sick-parks', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Promise.resolve(User.deleteMany())
     })
 
