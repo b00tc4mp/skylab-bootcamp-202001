@@ -14,11 +14,21 @@ module.exports = (id)  => {
 
             delete user._id
 
-            user.programs.forEach(program => {
-                program = program.toString()
+            const programs = user.programs.map(program => {
+                
+                let _program = {
+                    code: program.code,
+                    id: program._id.toString(),
+                    name: program.name,
+                    created: program.created,
+                    author: program.author.toString()
+                }
+
+                console.log(_program)
+                return _program 
             })
 
-            return user.programs
+            return programs
         })
 
 }

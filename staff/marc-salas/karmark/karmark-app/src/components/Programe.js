@@ -84,7 +84,7 @@ export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMo
                 <button className="programebody__arrowright" onClick={handleOnRight}><i className="fas fa-arrow-alt-circle-right"></i></button>
                 <button className="programebody__arrowdown" onClick={handleOnDown}><i className="fas fa-arrow-alt-circle-down"></i></button>
             </div>
-            {save && <SaveWindows accept={handleAccept} cancel={handleOnCancel} />}
+            {save && <SaveWindows accept={handleAccept} cancel={handleOnCancel} code={code} />}
             {error && <Feedback message={error} level="error" />}
             <div className="programefooter">
                 <button className="programefooter__save" onClick={handleOnSave}><i className="fas fa-save"></i></button>

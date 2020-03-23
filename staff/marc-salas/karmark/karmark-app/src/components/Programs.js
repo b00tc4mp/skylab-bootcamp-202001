@@ -16,6 +16,8 @@ export default withRouter(function ({ history }) {
                 try {
                     const programs = await retrievePrograms()
 
+                    console.log(programs)
+
                     const { name } = await retrieveUser()
 
                     setName(name)
@@ -81,6 +83,8 @@ export default withRouter(function ({ history }) {
 
     const { delet, programName, programId } = state
 
+    //console.log(programId)
+
     return <>
         <div className="menu">
             <div className="menuheader">
@@ -89,7 +93,7 @@ export default withRouter(function ({ history }) {
             </div>
             <div className="menubody">
                 <div className="menubody__itme">
-                    {programs && programs.map(item => <Items key={item._id} name={item.name} code={item.code} play={handlePlay} id={item._id} deleteProgramWindows={handleDeleteWindows} />)}
+                    {programs && programs.map(item => <Items key={item.id} name={item.name} code={item.code} play={handlePlay} id={item.id} deleteProgramWindows={handleDeleteWindows} />)}
                 </div>
             </div>
                 {delet && <DeleteWindows accept={handleAccept} cancel={handleCancel} name={programName} id={programId} />}

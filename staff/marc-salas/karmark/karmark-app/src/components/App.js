@@ -13,24 +13,24 @@ let code = []
 
 export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
-  
-  function handleError (page, message){
+
+  function handleError(page, message) {
 
     setState({ page: page, error: message })
 
     setTimeout(() => {
 
-      setState({ page: page, error: undefined})
+      setState({ page: page, error: undefined })
 
     }, 3000);
   }
 
   useEffect(() => {
     if (isLoggedIn()) {
-        code = []
-        setState({ page: 'home' })
+      code = []
+      setState({ page: 'home' })
 
-        history.push('/home')
+      history.push('/home')
 
     } else {
       code = []
@@ -41,6 +41,7 @@ export default withRouter(function ({ history }) {
   }, [])
 
   async function handleRegister(name, surname, username, password) {
+
     try {
       await registerUser(name, surname, username, password)
 
@@ -48,8 +49,6 @@ export default withRouter(function ({ history }) {
       history.push('/login')
     } catch ({ message }) {
       history.push('/register')
-      
-      //setState({ page: 'register', error: message })
 
       handleError('register', message)
     }
@@ -59,11 +58,9 @@ export default withRouter(function ({ history }) {
     try {
       await authenticateUser(username, password)
 
-      setState({page: 'home'})
-    } catch ({message}) {
+      setState({ page: 'home' })
+    } catch ({ message }) {
       history.push('/login')
-      
-      //setState({ page: 'login', error: message })
 
       handleError('login', message)
     }
@@ -73,10 +70,8 @@ export default withRouter(function ({ history }) {
     try {
       await up()
 
-    } catch ({message}) {
+    } catch ({ message }) {
       history.push('/control')
-      
-      //setState({ page: 'control', error: message })
 
       handleError('control', message)
     }
@@ -86,10 +81,8 @@ export default withRouter(function ({ history }) {
     try {
       await down()
 
-    } catch ({message}) {
+    } catch ({ message }) {
       history.push('/control')
-      
-      //setState({ page: 'control', error: message })
 
       handleError('control', message)
     }
@@ -99,10 +92,8 @@ export default withRouter(function ({ history }) {
     try {
       await right()
 
-    } catch ({message}) {
+    } catch ({ message }) {
       history.push('/control')
-      
-      //setState({ page: 'control', error: message })
 
       handleError('control', message)
     }
@@ -112,10 +103,8 @@ export default withRouter(function ({ history }) {
     try {
       await left()
 
-    } catch ({message}) {
+    } catch ({ message }) {
       history.push('/control')
-      
-      //setState({ page: 'control', error: message })
 
       handleError('control', message)
     }
@@ -125,10 +114,8 @@ export default withRouter(function ({ history }) {
     try {
       await stop()
 
-    } catch ({message}) {
+    } catch ({ message }) {
       history.push('/control')
-      
-      //setState({ page: 'control', error: message })
 
       handleError('control', message)
     }
@@ -138,38 +125,49 @@ export default withRouter(function ({ history }) {
     try {
       await play(code)
 
-    } catch ({message}) {
+    } catch ({ message }) {
       history.push('/programe')
-      //setState({ page: 'programe', error: message })
 
       handleError('programe', message)
     }
   }
 
-  function handleSaveUp(){
+  function handleSaveProgram(name) {
+    try {
+      createProgram(name, code)
+
+      setState({ page: 'programe', save: false })
+    } catch ({ message }) {
+
+      handleError('programe', `name was empty, program not saved`)
+    }
+
+  }
+
+  function handleSaveUp() {
     code.push('up')
 
   }
 
-  function handleSaveDown(){
+  function handleSaveDown() {
     code.push('down')
     console.log(code)
   }
 
-  function handleSaveRight(){
-    code.push('right')     
+  function handleSaveRight() {
+    code.push('right')
   }
 
-  function handleSaveLeft(){
-    code.push('left')      
+  function handleSaveLeft() {
+    code.push('left')
   }
-  
-  function handleDelete(){
+
+  function handleDelete() {
     code = []
   }
-  
+
   function handleGoToLogin() {
-    
+
     history.push('/login')
   }
 
@@ -178,7 +176,7 @@ export default withRouter(function ({ history }) {
     history.push('/register')
   }
 
-  function handleGoToPrograms(){
+  function handleGoToPrograms() {
     code = []
     history.push('/programs')
   }
@@ -205,28 +203,22 @@ export default withRouter(function ({ history }) {
   }
 
   function handleOnSave() {
-    setState({page: 'programe', save: true})
+    setState({ page: 'programe', save: true })
 
   }
 
   function handleOnCancel() {
-    setState({page: 'programe', save: false})
+    setState({ page: 'programe', save: false })
   }
 
-  function handleSaveProgram(name) {
-    
-    createProgram(name, code)
-
-    setState({page: 'programe', save: false})    
-  }
   const { page, error, save } = state
   return <div className="app">
     <Page name={page}>
       <Route exact path="/" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Redirect to="/login" />} />
       <Route path="/register" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
-      <Route path="/login" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" />: <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin}/>} />
-      <Route path="/control" render={() => (isTokenValid() && isLoggedIn()) ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} />: <Redirect to="/login" />}/>
-      <Route path="/programe" render={() => (  isTokenValid() && isLoggedIn()) ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onDelete={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save} onPrograms={handleGoToPrograms} code={code}/>: <Redirect to="/login" />}/>
+      <Route path="/login" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin} />} />
+      <Route path="/control" render={() => (isTokenValid() && isLoggedIn()) ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} /> : <Redirect to="/login" />} />
+      <Route path="/programe" render={() => (isTokenValid() && isLoggedIn()) ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onDelete={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save} onPrograms={handleGoToPrograms} code={code} /> : <Redirect to="/login" />} />
       <Route path="/home" render={() => (isLoggedIn() && isTokenValid()) ? <Home /> : <Redirect to="/login" />} />
       <Route path="/programs" render={() => (isLoggedIn() && isTokenValid()) ? <Programs /> : <Redirect to="/login" />} />
     </Page>
