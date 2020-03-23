@@ -10,7 +10,7 @@ export default ({ gameId, goTo }) => {
     const [playersName, setPlayersName] = useState()
 
     useEffect(() => {
-        setInterval(() => {
+        var interval = setInterval(() => {
             if (isLoggedIn())
                 (async () => {
                     try {
@@ -21,7 +21,10 @@ export default ({ gameId, goTo }) => {
                         setPlayersName(_playersName)
                         setGameStatus(status)
                         setPlayersId(status.players)
-                        if(status.status === "started") goTo('game')
+                        if(status.status === "started") {
+                            clearInterval(interval)
+                            goTo('game')
+                        }
                     } catch ({ message }) {
                         setError(message)
                     }
