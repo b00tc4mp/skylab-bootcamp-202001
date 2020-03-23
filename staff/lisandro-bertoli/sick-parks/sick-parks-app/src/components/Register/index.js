@@ -4,15 +4,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { Button } from '../index'
 import styles from './styles'
 
-export default function Register({ onSubmit, error }) {
+export default function Register({ onSubmit, error, onToLogin }) {
     const [name, setName] = useState('n')
     const [surname, setSurname] = useState('s')
     const [email, setEmail] = useState('e2@mail.com')
     const [password, setPassword] = useState('123')
 
-    function handleSubmit() {
-        onSubmit({ name, surname, email, password })
-    }
+    const handleSubmit = () => onSubmit(name, surname, email, password)
 
     return (
 
@@ -25,7 +23,7 @@ export default function Register({ onSubmit, error }) {
                 <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} value={password} />
                 <Button text='Register' type='main' textStyle='text' onPress={handleSubmit} />
                 {error && <Text style={styles.danger}>{error}</Text>}
-                <Button type='anchor' textStyle='anchor' text='Already a member? Sign in' onPress={() => navigation.navigate('Login')} />
+                <Button type='anchor' textStyle='anchor' text='Already a member? Sign in' onPress={onToLogin} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
     )

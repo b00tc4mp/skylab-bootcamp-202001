@@ -2,7 +2,7 @@ const context = require('./context')
 const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
-module.exports = function ({ email, password }) {
+module.exports = function (email, password) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(password, 'password')

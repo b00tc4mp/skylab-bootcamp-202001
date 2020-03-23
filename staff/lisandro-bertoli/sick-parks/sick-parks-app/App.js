@@ -6,8 +6,24 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import * as Location from 'expo-location'
 import * as Permissions from 'expo-permissions'
 
-import logic, { registerUser, retrieveUser, loginUser, logoutUser, isUserLoggedIn, createPark } from 'sick-parks-logic'
-import { Login, Register, Landing, Home, MapViewContainer, Profile, ParkBuilder } from './src/components/'
+import logic, {
+	registerUser,
+	retrieveUser,
+	loginUser,
+	logoutUser,
+	isUserLoggedIn,
+	createPark
+} from 'sick-parks-logic'
+
+import {
+	Login,
+	Register,
+	Landing,
+	Home,
+	MapViewContainer,
+	Profile,
+	ParkBuilder
+} from './src/components/'
 
 const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
@@ -18,7 +34,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
 
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.1.130/api'
+logic.__context__.API_URL = 'http://192.168.1.101:8085/api'
 
 export default function App() {
 	const [error, setError] = useState()
@@ -27,10 +43,10 @@ export default function App() {
 
 	useEffect(() => {
 		(async () => {
-
 			try {
 				if (await isUserLoggedIn()) {
 					const user = await retrieveUser()
+
 					setUser(user)
 				}
 			} catch ({ message }) {
@@ -43,7 +59,6 @@ export default function App() {
 			}
 		})()
 	}, [])
-
 
 
 	const __handleErrors__ = (error) => {
@@ -62,7 +77,7 @@ export default function App() {
 
 	_getLocationAsync = async () => {
 		try {
-			const { status, permissions } = await Permissions.askAsync(Permissions.LOCATION);
+			const { status } = await Permissions.askAsync(Permissions.LOCATION);
 			if (status === 'granted') {
 				return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
 			}
@@ -75,28 +90,7 @@ export default function App() {
 
 	}
 
-	const handleLogin = async (credentials) => {
-		try {
-			await loginUser(credentials)
-			const user = await retrieveUser()
 
-			user.notifications = await _getNotificationsPermissionsAsync()
-
-			const location = await _getLocationAsync()
-
-			if (location) {
-				user.allowLocation = true
-				user.location = location
-				setUser(user)
-			} else {
-				setUser(user)
-			}
-
-			setError(null)
-		} catch ({ message }) {
-			__handleErrors__(message)
-		}
-	}
 
 	const handleLogout = async () => {
 		setUser(null)
@@ -107,30 +101,63 @@ export default function App() {
 
 	const handleNewPark = async (data) => {
 		try {
+			console.log(data)
 			await createPark(data)
 		} catch ({ message }) {
 			__handleErrors__(message)
 		}
 	}
 
-	function RegisterScreen(props) {
+	function LoginScreen(props) {
 		const { navigation } = props
-
-		const handleSubmit = async newUser => {
+		const handleSubmit = async (email, password) => {
 			try {
-				console.log(true)
-				await registerUser(newUser)
-				console.log(true)
+				await loginUser(email, password)
 
-				navigation.navigate('Login', { error: null })
+				const user = await retrieveUser()
 
+				user.notifications = await _getNotificationsPermissionsAsync()
+
+				//this makes login super slowwwww
+				const location = await _getLocationAsync()
+
+				if (location) {
+					user.allowLocation = true
+					user.location = location
+					setUser(user)
+				} else {
+					setUser(user)
+				}
+
+				setError(null)
 			} catch ({ message }) {
-				console.log(message)
-				setError(message)
+				__handleErrors__(message)
 			}
 		}
 
-		return <Register onSubmit={handleSubmit} error={error} />
+		const handleGoToRegister = () => navigation.navigate('Register')
+
+		return <Login onSubmit={handleSubmit} onToRegister={handleGoToRegister} handleerror={error} />
+	}
+
+	function RegisterScreen(props) {
+		const { navigation } = props
+
+		const handleSubmit = async (name, surname, email, password) => {
+			try {
+				await registerUser(name, surname, email, password)
+				setError(null)
+				navigation.navigate('Login')
+
+			} catch ({ message }) {
+
+				__handleErrors__(message)
+			}
+		}
+
+		const handleGoToLogin = () => navigation.navigate('Login')
+
+		return <Register onSubmit={handleSubmit} onToLogin={handleGoToLogin} error={error} />
 	}
 
 
@@ -142,10 +169,8 @@ export default function App() {
 					<Stack.Navigator initialRouteName='Landing' >
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
-							<Stack.Screen name="Register" component={RegisterScreen}/>
-							<Stack.Screen name="Login">
-								{props => <Login {...props} extraData={{ handleLogin, error }} />}
-							</Stack.Screen>
+							<Stack.Screen name="Register" component={RegisterScreen} />
+							<Stack.Screen name="Login" component={LoginScreen} />
 						</>
 					</Stack.Navigator>
 				)}
@@ -174,6 +199,7 @@ export default function App() {
 						}}
 					>
 						<Tab.Screen name="Home" component={Home} />
+						{/* TODO check move screens that top if a lot of params asre passed  */}
 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
 						<Tab.Screen name="Build" component={ParkBuilder} initialParams={{ handleNewPark, error }} />
 						<Tab.Screen name="Profile" initialParams={{ user, handleLogout }} component={Profile} />
@@ -192,7 +218,6 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	mapStyle: {
-
 		width: Dimensions.get('window').width,
 		height: Dimensions.get('window').height * 0.855,
 	},

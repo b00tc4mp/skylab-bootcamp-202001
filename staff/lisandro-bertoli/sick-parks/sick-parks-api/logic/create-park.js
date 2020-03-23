@@ -20,7 +20,7 @@ module.exports = (userId, { park, features }) => {
     //     }
     // })
 
-
+    debugger
     return (async () => {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError(`user ${userId} does not exist`)
@@ -33,8 +33,7 @@ module.exports = (userId, { park, features }) => {
 
         const newPark = await Park.create(park)
         const newFeatures = features.map(feature => {
-
-            feature.location = new Location({ coordinates: feature.location.coordinates })
+            if (feature.location) feature.location = new Location({ coordinates: feature.location.coordinates })
 
             return new Feature(feature)
         })

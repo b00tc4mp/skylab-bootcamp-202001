@@ -8,7 +8,6 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
     const [markers, setMarkers] = useState([])
 
 
-
     useEffect(() => {
         try {
             if (parkLocation) setLocation(parkLocation)
@@ -24,10 +23,9 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
         handleNewMarker(position)
     }
 
-
     return (
         <View style={styles.container}>
-            <MapView showsUserLocation={true} initialRegion={location} style={style} onPress={(e) => {
+            <MapView showsUserLocation={true} initialRegion={location} style={style || styles.mapStyle} onPress={(e) => {
 
                 setMarkers([...markers, { coordinates: e.nativeEvent.coordinate }])
                 sendMakers(e.nativeEvent.coordinate)
@@ -50,5 +48,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-end',
-    }
+    },
+    mapStyle: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height * 0.855,
+    },
 });

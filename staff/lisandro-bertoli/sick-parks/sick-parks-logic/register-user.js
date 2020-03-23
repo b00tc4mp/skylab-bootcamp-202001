@@ -2,14 +2,12 @@ const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 const context = require('./context')
 
-module.exports = function ({ name, surname, email, password }) {
+module.exports = function (name, surname, email, password) {
     validate.email(email, 'email')
     validate.string(email, 'email')
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(password, 'password')
-
-    console.log(this.API_URL)
 
     return (async () => {
         const response = await fetch(`${this.API_URL}/users`, {
