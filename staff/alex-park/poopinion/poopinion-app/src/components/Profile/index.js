@@ -8,7 +8,7 @@ function Profile({ user, onDetails }) {
             <View style={styles.nameContainer}>
                 <View style={styles.nameHeader}>
                     <View style={styles.picture}>
-                        <Text></Text>
+                        <Image source={user.image} style={styles.profilePic}/>
                     </View>
                     <View style={styles.nameInfo}>
                         <Text style={[styles.font, styles.bold]}>Name: {user.name} {user.surname}</Text>

@@ -12,11 +12,15 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row'
     },
+    profilePic: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'contain'
+    },
     picture: {
         flex: 1,
         padding: 0,
         marginRight: 15,
-        backgroundColor: 'brown',
         borderRadius: 50
     },
     nameInfo: {
