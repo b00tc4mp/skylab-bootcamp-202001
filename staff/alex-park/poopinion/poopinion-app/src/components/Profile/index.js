@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './styles'
 import { Text, ScrollView, TouchableOpacity, View, Image, Alert } from 'react-native'
 
 function Profile({ user, onDetails }) {
+    const [lastPosts, setLastPosts] = useState(user.publishedToilets.slice(0, 5))
+    const [lastComments, setLastComments] = useState(user.comments.slice(0, 5))
+
+    useEffect(() => {
+        setLastPosts(user.publishedToilets.slice(0, 5))
+        setLastComments(user.comments.slice(0, 5))
+    }, [])
+
     return (<>
         <ScrollView style={styles.container}>
             <View style={styles.nameContainer}>
                 <View style={styles.nameHeader}>
                     <View style={styles.picture}>
-                        <Image source={user.image} style={styles.profilePic}/>
+                        <Image source={user.image} style={styles.profilePic} />
                     </View>
                     <View style={styles.nameInfo}>
                         <Text style={[styles.font, styles.bold]}>Name: {user.name} {user.surname}</Text>
@@ -20,9 +28,9 @@ function Profile({ user, onDetails }) {
             </View>
 
             <View style={styles.posts}>
-                <Text style={styles.bigText}>{user.publishedToilets.length} Post(s):</Text>
+                <Text style={styles.bigText}>{user.publishedToilets.length} Post(s). Last five toilets:</Text>
                 {user.publishedToilets.length > 0 &&
-                    user.publishedToilets.map((toilet, index) => (
+                    lastPosts.map((toilet, index) => (
                         <TouchableOpacity key={index} onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeft}>
@@ -38,12 +46,15 @@ function Profile({ user, onDetails }) {
                         </TouchableOpacity>
                     ))
                 }
+                {!user.publishedToilets.length && (<>
+                    <Text>No toilets to display...</Text>
+                </>)}
             </View>
 
             <View style={styles.comments}>
-                <Text style={styles.bigText}>{user.comments.length} Comment(s):</Text>
+                <Text style={styles.bigText}>{user.comments.length} Comment(s). Last five comments: </Text>
                 {user.comments.length > 0 &&
-                    user.comments.map((comment, index) => (
+                    lastComments.map((comment, index) => (
                         <TouchableOpacity key={index} onPress={() => onDetails(comment.commentedAt.toString())} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeftComment}>
@@ -76,6 +87,9 @@ function Profile({ user, onDetails }) {
 
                     ))
                 }
+                {!user.comments.length && (<>
+                    <Text>No comments to display...</Text>
+                </>)}
             </View>
         </ScrollView>
     </>)
