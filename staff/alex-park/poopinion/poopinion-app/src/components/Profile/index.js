@@ -16,7 +16,14 @@ function Profile({ user, onDetails }) {
             <View style={styles.nameContainer}>
                 <View style={styles.nameHeader}>
                     <View style={styles.picture}>
-                        <Image source={user.image} style={styles.profilePic} />
+                        {user.publishedToilets.length < 5 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')}/>}
+                        {user.publishedToilets.length < 5 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')}/>}
+
+                        {user.publishedToilets.length >= 5 && user.publishedToilets.length < 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver.png')}/>}
+                        {user.publishedToilets.length >= 5 && user.publishedToilets.length < 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver_pro.png')}/>}
+
+                        {user.publishedToilets.length >= 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold.png')}/>}
+                        {user.publishedToilets.length >= 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold_pro.png')}/>}
                     </View>
                     <View style={styles.nameInfo}>
                         <Text style={[styles.font, styles.bold]}>Name: {user.name} {user.surname}</Text>

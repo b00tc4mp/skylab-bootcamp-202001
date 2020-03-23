@@ -30,28 +30,6 @@ module.exports = function (token) {
         if (status === 200) {
             let user = await response.json()
 
-            if (user.publishedToilets.length < 5 && user.comments.length < 10) {
-                user.image = require('../../assets/profile_bronze.png')
-            }
-
-            else if (user.publishedToilets.length < 5 && user.comments.length >= 10) {
-                user.image = require('../../assets/profile_bronze_pro.png')
-            }
-
-            if (user.publishedToilets.length >= 5 && user.comments.length < 10) {
-                user.image = require('../../assets/profile_silver.png') 
-            }
-            else if (user.publishedToilets.length >= 5 && user.comments.length >= 10) {
-                user.image = require('../../assets/profile_silver_pro.png') 
-            }
-            
-            if (user.publishedToilets.length >= 10 && user.comments.length < 10) {
-                user.image = require('../../assets/profile_gold.png') 
-            }
-            else if (user.publishedToilets.length >= 10 && user.comments.length >= 10) {
-                user.image = require('../../assets/profile_gold_pro.png') 
-            }
-
             return user
         }
 

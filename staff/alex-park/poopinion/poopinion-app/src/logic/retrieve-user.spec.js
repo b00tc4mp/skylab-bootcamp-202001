@@ -110,7 +110,7 @@ describe('retrieveUser', () => {
                 _error = error
             }
             expect(_error).toBeDefined()
-            expect(_error).toBeInstanceOf(NotFoundError)
+            expect(_error).toBeInstanceOf(Error)
             const userId = JSON.parse(atob(token.split('.')[1])).sub
             expect(_error.message).toEqual(`user with id ${userId} is deactivated`)
         })

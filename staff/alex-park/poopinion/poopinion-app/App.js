@@ -326,6 +326,7 @@ export default function App() {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
     } else {
+      __handleUser__()
       setView('profilePage')
     }
   }
