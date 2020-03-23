@@ -2,10 +2,10 @@ const { saveSession } = require('../../logic')
 const { ContentError } = require('./../../../Js-Drone-ERRORS')
 
 module.exports = (req, res) => {
-    const { payload: { sub }, body: { time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP } } = req
+    const { payload: { sub }, body: { time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP } } = req
 
     try {
-        saveSession(sub, time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP, date = new Date())
+        saveSession(sub, time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP, date = new Date())
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400

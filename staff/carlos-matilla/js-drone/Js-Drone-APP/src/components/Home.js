@@ -4,7 +4,7 @@ import { gamepadConnect, gamepadDisconnect, channelA, channelB, channelC, channe
 import { keyDown, keyUp, takeOffK, landK, v, negV } from '../logic/keyboard'
 
 import { logout, isLoggedIn, retrieveUser, saveData, parseData } from './../logic'
-import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video, Joystick } from './';
+import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video, Controls } from './';
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
 import socket from '../socket';
@@ -217,7 +217,7 @@ export default withRouter(function ({ history }) {
 
  
   return <>
-    <NavbarLeft toggleLiveChart={toggleLiveChart} toggleEstadistics={toggleEstadistics} toggleControls={toggleControls} toggleHomeView={toggleHomeView} toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard}/>
+    <NavbarLeft toggleLiveChart={toggleLiveChart} toggleEstadistics={toggleEstadistics} toggleControls={toggleControls} toggleHomeView={toggleHomeView} />
     
     <div className={homePadding ? "home right-padding" : "home"}>
     
@@ -226,10 +226,7 @@ export default withRouter(function ({ history }) {
         {mySession && chartsView && <Charts mySession={mySession} />}
 
 
-        {controlsView && 
-        <div className="joycons-wrapper">
-           <Joystick joy={joy} />
-        </div>}
+        {controlsView && <Controls joy={joy} toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard}/>}
 
         {!controlsView && 
         <div className="on-live">

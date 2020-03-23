@@ -4,7 +4,7 @@ const { NotAllowedError } = require('drone-errors')
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function (time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP) {
+export default (function (time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP) {
  
 
     return (async () => {
@@ -14,7 +14,7 @@ export default (function (time, lowTempP, hightTempP, batteryP, heightP, speedP,
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${this.token}`
             },
-            body: JSON.stringify({ time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP })
+            body: JSON.stringify({ time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP })
         })
 
         const { status } = response

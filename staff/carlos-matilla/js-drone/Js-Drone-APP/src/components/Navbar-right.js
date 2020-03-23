@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import './Navbar-right.sass';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGamepad, faKeyboard, faChartLine, faCog, faChartBar } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function ({ mySessions, handleLogout, handleSession, leftMenuView, name }) {
 
-  let hover 
+  const [hoverName, setHoverName] = useState(false)
+  const [hoverMenu, setHoverMenu] = useState(false)
+  let style
+  if(hoverMenu) style = { width: `20rem` }
 
   function dateParser(date) {
     const fullDate = date.split("T")[0]
@@ -38,13 +40,15 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     }
   }
   function handleHover(){
-    hover = `:hover { width: 50rem !important}`
+    setHoverMenu(false)
+    
+
   }
-  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} style={hover}>
+  
+  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} onMouseEnter={()=> setHoverMenu(true)} onMouseLeave={()=>setHoverMenu(false)} style={style}>
     <li className="rnav_logo">
       <a href="#" className="rnav-logo_link">
-        {/* <span className="rnav_linktext rnav_logo-text">{name}</span> */}
-        <button className="rnav_button" data-hover="Logout" onClick={handleLogout}>{nameParser(name)}</button>
+        <button className="rnav_button" onMouseEnter={()=> setHoverName(true)} onMouseLeave={()=>setHoverName(false)} onClick={handleLogout}>{hoverName ? "Logout" : nameParser(name)}</button>
       </a>
     </li>
     <ul className="rnav">

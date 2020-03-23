@@ -38,30 +38,17 @@ export default function({toggleKeyboard, toggleGamepad, toggleLiveChart, toggleE
       </li>
 
       <li className="lnav_item">
-        <a href="#" className={chosen1 === 'g' ? "lnav_link active" : "lnav_link"}  onClick={event => {
+        <a href="#" className={chosen2 === 'g' ? "lnav_link active" : "lnav_link"} onClick={event => {
            
-           event.preventDefault()
-           setChosen1('g')
-            toggleGamepad()
+          event.preventDefault()
+          setChosen2('g')
+          toggleControls()
          }}>
         <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>
-          <span className="lnav_linktext">Gamepad</span>
+          <span className="lnav_linktext">Controls</span>
         </a>
       </li>
-
-      <li className="lnav_item">
-        <a href="#" className={chosen1 === 'k' ? "lnav_link active" : "lnav_link"} onClick={event => {
-           
-           event.preventDefault()
-           setChosen1('k')
-            toggleKeyboard()
-         }}>
-        <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x"/>
-          <span className="lnav_linktext">Keyboard</span>
-        </a>
-      </li>
-
-      <hr style={{width:65}} />
+      
 
       <li className="lnav_item">
         <a href="#" className={chosen2 === 'c' ? "lnav_link active" : "lnav_link"} onClick={event => {
@@ -90,17 +77,7 @@ export default function({toggleKeyboard, toggleGamepad, toggleLiveChart, toggleE
       </li>
 
 
-      <li className="lnav_item">
-        <a href="#" className={chosen2 === 'g' ? "lnav_link active" : "lnav_link"} onClick={event => {
-           
-          event.preventDefault()
-          setChosen2('g')
-          toggleControls()
-         }}>
-        <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>
-          <span className="lnav_linktext">Estadistics</span>
-        </a>
-      </li>
+     
     </ul>
   </nav>
 

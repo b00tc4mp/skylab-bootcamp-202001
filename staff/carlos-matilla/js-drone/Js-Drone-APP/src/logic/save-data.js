@@ -1,4 +1,5 @@
 let time = 0
+let control 
 let lowTemp = []
 let hightTemp = []
 let battery = []
@@ -8,6 +9,7 @@ let atmosPressure = []
 
 export{
     time,
+    control,
     lowTemp,
     hightTemp,
     battery,
@@ -25,11 +27,12 @@ export function saveData (channelA, channelB, channelC, channelD, v, negV, temph
     }
 
     // Speed
-    if(channelA !== null){
-
+    if(channelA !== null){  
+        
         if(channelA === undefined){
             speed = []
         }else{
+            control = 'gp'
             let maxSpeed = Math.max(channelA, channelB, channelC, channelD)
             if(!isNaN(maxSpeed)) speed.push(maxSpeed)
         }
@@ -41,6 +44,7 @@ export function saveData (channelA, channelB, channelC, channelD, v, negV, temph
         if(v && negV === undefined){
             speed = []
         }else{
+            control = 'kb'
             switch (!isNaN(v) || !isNaN(negV)) {
                 case !isNaN(v):
                     speed.push(v)

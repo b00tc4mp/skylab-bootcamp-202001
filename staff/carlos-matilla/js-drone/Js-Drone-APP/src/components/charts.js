@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import './Charts.sass';
 import CountUp from 'react-countup';
-
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGamepad, faKeyboard, faChartLine, faCog, faChartBar } from '@fortawesome/free-solid-svg-icons'
+ 
 export default function ({ mySession }) {
 
 
-
+    const percentage = 66;
 
     console.log(mySession)
 
@@ -31,15 +35,17 @@ export default function ({ mySession }) {
         atmosPressureP,
         date,
         _id,
-        time
+        time,
+        control
     } = mySession
-
-    console.log(batteryP)
-
+    
     const consumedBat = batteryP[0] - batteryP[batteryP.length - 3]
-
-
-
+    let speedAdd = 0
+   
+    speedP.forEach(element => {
+        speedAdd += element
+    })
+    const speedAve = Math.floor(speedAdd / speedP.length)
 
     const temperatureData = {
         labels: lowTempP,
@@ -195,6 +201,13 @@ export default function ({ mySession }) {
 
         <div className="chart-estadistics">
             <div>
+            <p>Control</p>
+                <br />
+                {control === 'gp' && <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>}
+                {control === 'kb' && <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x"/>}
+
+            </div>
+            <div>
                 <p>Baterry consumed</p>
                 <br />
                 <p className="est-num"><CountUp delay={1} end={consumedBat} />%</p>
@@ -207,24 +220,30 @@ export default function ({ mySession }) {
             <div>
                 <p>Speed Average</p>
                 <br />
-                <p className="est-num"><CountUp delay={1} end={speedP[7]} />m/s</p>
+                <CircularProgressbar value={speedAve} circleRatio={0.75}
+                    styles={buildStyles({
+                        rotation: 1 / 2 + 1 / 8,
+                        strokeLinecap: "butt",
+                        trailColor: "#eee"
+                    })} text={`${speedAve} m/s`} />
+
             </div>
 
         </div>
 
         <div className="charts-wrapper">
-                <div className="chart-wrapper">
-                    <Line data={heightData} options={opt} />
-                </div>
-                <div className="chart-wrapper">
-                    <Line data={temperatureData} options={opt} />
-                </div>
-                <div className="chart-wrapper">
-                    <Line data={atmosData} options={opt} />
-                </div>
-                <div className="chart-wrapper">
-                    <Line data={speedData} options={opt} />
-                </div>
+            <div className="chart-wrapper">
+                <Line data={heightData} options={opt} />
+            </div>
+            <div className="chart-wrapper">
+                <Line data={temperatureData} options={opt} />
+            </div>
+            <div className="chart-wrapper">
+                <Line data={atmosData} options={opt} />
+            </div>
+            <div className="chart-wrapper">
+                <Line data={speedData} options={opt} />
+            </div>
         </div>
     </section>
 }

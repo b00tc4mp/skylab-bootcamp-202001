@@ -1,6 +1,7 @@
 const { Schema } = require('mongoose')
 const Sessions = new Schema({ 
     time: { type: Number, required: true },
+    control: { type: String, required: true },
     lowTempP: { type: Array, required: true },
     hightTempP: { type: Array, required: true },
     batteryP: { type: Array, required: true },

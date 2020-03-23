@@ -10,6 +10,8 @@ import NavbarLeft from './Navbar-left'
 import NavbarRight from './Navbar-right'
 import Video from './Video'
 import Joystick from './Joystick'
+import Controls from './Controls'
+import Keys from './Keys'
 
 
 export {
@@ -24,6 +26,8 @@ export {
     NavbarRight,
     Charts, 
     Video, 
-    Joystick
+    Joystick, 
+    Controls,
+    Keys
 
 }

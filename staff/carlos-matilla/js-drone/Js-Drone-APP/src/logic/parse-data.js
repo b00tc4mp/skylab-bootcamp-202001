@@ -1,4 +1,4 @@
-import { time, lowTemp, hightTemp, battery, height, speed, atmosPressure } from './save-data'
+import { time, control, lowTemp, hightTemp, battery, height, speed, atmosPressure } from './save-data'
 import saveSession from './save-session'
 
 const chart = 30
@@ -23,6 +23,6 @@ export default async function () {
             dataParsed[i].push(data[i][j])
         }
     }
-    await saveSession(time, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)
+    await saveSession(time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)
 
 }

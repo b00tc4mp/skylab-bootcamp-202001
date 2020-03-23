@@ -10,7 +10,7 @@ takeOffK = false
 
 
 export function keyUp(e){
-    console.log(e.code)
+    
     if(e.code === "KeyW"){
         console.log('Forward')
         socket.emit('keyboard', `rc 0 0 0 0`)
@@ -29,19 +29,19 @@ export function keyUp(e){
        socket.emit('keyboard', `rc 0 0 0 0`)
    }
    if(e.code === "ArrowUp"){
-       console.log('Up')
+    //    console.log('Up')
        socket.emit('keyboard', `rc 0 0 0 0`)
    }
    if(e.code === "ArrowLeft"){
-       console.log('Turn Left')
+    //    console.log('Turn Left')
        socket.emit('keyboard', `rc 0 0 0 0`)
    }
    if(e.code === "ArrowDown"){
-       console.log('Down')
+    //    console.log('Down')
        socket.emit('keyboard', `rc 0 0 0 0`)
    }
    if(e.code === "ArrowRight"){
-       console.log('Turn Right')
+    //    console.log('Turn Right')
        socket.emit('keyboard', `rc 0 0 0 0`)
    }
 }
@@ -82,19 +82,19 @@ export  function keyDown(e) {
         socket.emit('keyboard', `rc 0 ${negV} 0 0`)
     }
     if(e.code === "ArrowUp"){
-        console.log('Up')
+        // console.log('Up')
         socket.emit('keyboard', `rc 0 0 ${v} 0`)
     }
     if(e.code === "ArrowLeft"){
-        console.log('Turn Left')
+        // console.log('Turn Left')
         socket.emit('keyboard', `rc 0 0 0 ${negV}`)
     }
     if(e.code === "ArrowDown"){
-        console.log('Down')
+        // console.log('Down')
         socket.emit('keyboard', `rc 0 0 ${negV} 0`)
     }
     if(e.code === "ArrowRight"){
-        console.log('Turn Right')
+        // console.log('Turn Right')
         socket.emit('keyboard', `rc 0 0 0 ${v}`)
     }
     if(e.code === "KeyO"){
