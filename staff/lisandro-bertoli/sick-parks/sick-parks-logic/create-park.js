@@ -20,7 +20,7 @@ module.exports = function (data) {
                 else validate.type(feature[key], key, Object)
         })
     }
-    debugger
+
     return (async () => {
         const token = await this.storage.getItem('token')
 
@@ -29,7 +29,7 @@ module.exports = function (data) {
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ park, features })
         })
-        debugger
+
         if (response.status === 201) return
 
         if (response.status >= 400 || response.status < 500) {

@@ -20,7 +20,7 @@ module.exports = (userId, { park, features }) => {
     //     }
     // })
 
-    debugger
+
     return (async () => {
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError(`user ${userId} does not exist`)

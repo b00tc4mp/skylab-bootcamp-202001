@@ -15,7 +15,7 @@ module.exports = function retrieveUser() {
         const { error: _error } = data
 
         if (_error) throw new Error(_error)
-        debugger
+
         const { name, surname, email, contributions, image, allowLocation, notifications } = data
 
         return { name, surname, email, contributions, image, allowLocation, notifications }
