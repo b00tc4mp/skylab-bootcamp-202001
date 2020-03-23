@@ -4,7 +4,7 @@ const { random } = Math
 import retrieveLots from './retrieve-lots'
 
 
-describe('retrieveLots', () => {
+fdescribe('retrieveLots', () => {
     
     beforeAll(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })

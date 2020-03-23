@@ -31,7 +31,7 @@ export default ({onSubmit, error}) => {
         <button className="create-user__submit">Create</button>
     </form>
     
-    {error && <Feedback message={error} level="warn" />}
+    {error && <Feedback message={error} level="error" />}
     </section>
 }
 

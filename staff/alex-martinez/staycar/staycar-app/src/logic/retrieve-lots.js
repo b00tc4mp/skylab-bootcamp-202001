@@ -1,10 +1,10 @@
 import { NotAllowedError } from 'staycar-errors'
-import context from './context'
+
 import retrieveParking from './retrieve-parking'
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function () {
+export default () => {
     
     return (async () => {
         const pk = await retrieveParking()
@@ -37,4 +37,4 @@ export default (function () {
 
         throw new Error('server error')
     })()
-}).bind(context)
+}

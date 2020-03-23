@@ -33,11 +33,13 @@ debugger
     <form className="entry-plate__form" onSubmit={handleVehicle}>
         <input type="text" name="plateNumber" placeholder="car plate number" className="entry-plate__input" />
         <input type="hidden" name="ticketId" value={random()}/>
+
+        
         <button className="entry-plate__submit">Add</button>
     </form>
     </>
     }
-    {error && <Feedback message={error} level="warn" />}
 
+    {error && <div className="error-container"> <Feedback message={error} level="error" /> </div>}
 </section>
 }

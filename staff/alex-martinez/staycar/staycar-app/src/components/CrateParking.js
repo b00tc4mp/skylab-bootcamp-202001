@@ -30,6 +30,6 @@ export default ({onSubmit, error}) => {
         <button className="create-parking__submit">Create</button>
     </form>
     
-    {error && <Feedback message={error} level="warn" />}
+    {error && <Feedback message={error} level="error" />}
     </section>
 }

@@ -11,7 +11,7 @@ describe('validateTicket', () => {
         return await Promise.resolve([User.deleteMany(), Ticket.deleteMany(), Parking.deleteMany()])
     })
 
-    let parkingName, rate, totalLots, carPlate, lots, entryHour
+    let parkingName, rate, totalLots, carPlate, lots, entryHour, ticketId
 
     beforeEach(() => {
         
@@ -21,6 +21,7 @@ describe('validateTicket', () => {
         carPlate = '1234KKK'
         lots = []
         entryHour = new Date()
+        ticketId = `id-${random()}`
 
         for (let i = 1; i <= totalLots; i++) {
             let lot = {}
@@ -36,17 +37,17 @@ describe('validateTicket', () => {
         beforeEach(() => {
             return Parking.create({parkingName, rate, totalLots, lots})
             .then(() => {
-                return Ticket.create({carPlate, entryHour, parkingName})
+                return Ticket.create({carPlate, entryHour, ticketId, parkingName})
             })
         })
 
         it('should succeed on valid ticket id', async() => {
             
-            let retrieveTicket = await Ticket.findOne({carPlate})
+            let retrieveTicket = await Ticket.findOne({ticketId})
             
-            await validateTicket(retrieveTicket.id)
+            await validateTicket(retrieveTicket.ticketId)
 
-            let res = await Ticket.findOne({carPlate})
+            let res = await Ticket.findOne({ticketId})
 
             expect(res.validated).toBe(true)
             expect(res.carPlate).toBe(carPlate)

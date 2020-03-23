@@ -11,7 +11,7 @@ describe('retrieveTicket', () => {
         return await Promise.resolve([User.deleteMany(), Ticket.deleteMany(), Parking.deleteMany()])
     })
 
-    let parkingName, rate, totalLots, carPlate, lots, entryHour
+    let parkingName, rate, totalLots, carPlate, lots, entryHour, ticketId
 
     beforeEach(() => {
         
@@ -21,6 +21,7 @@ describe('retrieveTicket', () => {
         carPlate = '1234KKK'
         lots = []
         entryHour = new Date()
+        ticketId = `id-${random()}`
 
         for (let i = 1; i <= totalLots; i++) {
             let lot = {}
@@ -35,13 +36,13 @@ describe('retrieveTicket', () => {
         
         beforeEach(async() => {
             await Parking.create({parkingName, rate, totalLots})
-            await Ticket.create({carPlate, parkingName, entryHour})
+            await Ticket.create({carPlate, parkingName, ticketId, entryHour})
           
         })
 
         it('should succeed on right data', async () => {
             
-            const ticket = await retrieveTicket(carPlate)
+            const ticket = await retrieveTicket(ticketId)
            
             expect(ticket.carPlate).toBe(carPlate)
         })

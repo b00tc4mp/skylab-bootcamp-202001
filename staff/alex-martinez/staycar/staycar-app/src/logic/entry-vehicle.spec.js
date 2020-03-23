@@ -11,7 +11,7 @@ describe('entryVehicle', () => {
         return await Promise.resolve([Ticket.deleteMany(), Parking.deleteMany()])
     })
 
-    let parkingName, rate, totalLots, carPlate, lots
+    let parkingName, rate, totalLots, carPlate, lots, ticketId
 
     beforeEach(() => {
         
@@ -20,6 +20,7 @@ describe('entryVehicle', () => {
         totalLots = 10
         carPlate = '1234KKK'
         lots = []
+        ticketId = `id-${random()}`
 
         for (let i = 1; i <= totalLots; i++) {
             let lot = {}
@@ -41,9 +42,9 @@ describe('entryVehicle', () => {
 
         it('should succeed on right data', async () => {
             
-            await entryVehicle(carPlate)
+            await entryVehicle(carPlate, ticketId)
 
-            const ticket = await Ticket.findOne({ carPlate })
+            const ticket = await Ticket.findOne({ ticketId })
 
             expect(ticket).toBeDefined()
             
@@ -53,7 +54,12 @@ describe('entryVehicle', () => {
 
     it('should fail on non string carPlate', () => {
         let carPlate = 1234
-        expect(() => entryVehicle(carPlate)).toThrow(TypeError, `carPlate ${carPlate} is not a string`)
+        expect(() => entryVehicle(carPlate, ticketId)).toThrow(TypeError, `carPlate ${carPlate} is not a string`)
+    })
+
+    it('should fail on non string ticketId', () => {
+        let ticketId = 1234
+        expect(() => entryVehicle('1234', ticketId)).toThrow(TypeError, `ticket id ${ticketId} is not a string`)
     })
 
     afterAll(async () => {
