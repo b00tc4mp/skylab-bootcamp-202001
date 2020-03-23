@@ -11,7 +11,7 @@ module.exports = ({ query, location }) => {
             response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&_location=${location}`)
         } else response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}`)
 
-
+        debugger
         const data = await response.json()
 
         const { error, results } = data

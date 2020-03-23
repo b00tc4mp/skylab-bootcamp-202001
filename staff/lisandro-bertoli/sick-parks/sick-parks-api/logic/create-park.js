@@ -3,8 +3,13 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 module.exports = (userId, { park, features }) => {
-    for (key in park)
-        if (key !== 'location') validate.string(park[key], `${park[key]}`)
+    for (let key in park)
+        if (key !== 'location') {
+
+            validate.string(park[key], `${park[key]}`)
+            park[key] = park[key].toLowerCase()
+
+        }
 
     //TODO Find way to make this validation right
     // features.forEach(feature => {

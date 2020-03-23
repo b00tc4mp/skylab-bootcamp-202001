@@ -111,7 +111,7 @@ export default function App() {
 
 	const handleNewPark = async (data) => {
 		try {
-
+			debugger
 			await createPark(data)
 		} catch ({ message }) {
 			__handleErrors__(message)

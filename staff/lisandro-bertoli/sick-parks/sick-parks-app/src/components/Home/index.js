@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { Search, TopSearch, Results, ParkDetails } from '../index'
 // later move styles and this goes here => import styles from './styles'
-
+import { searchParks } from 'sick-parks-logic'
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
@@ -42,8 +42,9 @@ export default function Home({ navigation }) {
 
     const handleSearch = async (query) => {
         setCurrentQuery(query)
-        //this here => const result =  await searchParks(query)
-        // setResults(parks)
+
+        const result = await searchParks({ query })
+        setResults(result)
         navigation.navigate('Results')
 
     }

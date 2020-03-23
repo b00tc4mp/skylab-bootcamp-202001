@@ -8,7 +8,7 @@ const screenWidth = Dimensions.get('window').width
 
 
 export default function StepThree({ navigation, route }) {
-    const { features, park, getParkData } = route.params
+    const { features, park, handleNewPark } = route.params
     let numberOfFeatures = 0
 
     for (let key in features) numberOfFeatures += features[key].length
@@ -38,7 +38,7 @@ export default function StepThree({ navigation, route }) {
             type: 'Point',
             coordinates: [location[0].longitude, location[0].latitude]
         }
-        getParkData({ features: _features, park })
+        handleNewPark({ features: _features, park })
 
         navigation.dispatch(StackActions.popToTop());
     }
