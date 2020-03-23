@@ -11,6 +11,7 @@ const { models: { Toilet } } = require('poopinion-data')
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
  * @throws {NotFoundError} if the user does not exist
  */
+
 module.exports = query => {
     validate.string(query, 'query')
 
@@ -24,5 +25,4 @@ module.exports = query => {
 
             return toilets
         })
-        
 }

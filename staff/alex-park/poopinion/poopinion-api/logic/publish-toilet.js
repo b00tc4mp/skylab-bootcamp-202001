@@ -3,17 +3,18 @@ const { models: { User, Toilet } } = require('poopinion-data')
 const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 
 /**
- * Publish a new toilet post
+ * Publishes a new toilet post
  * 
  * @param {string} id user's unique id
  * @param {string} place location of the toilet
- * @param {object} coordinates google maps location of the place
+ * @param {object} coordinates Google maps location of the place. Includes: latitude, latitudeDelta, longitude, longitudeDelta
  * 
- * @returns {Promise<string>} returns an empty Promise
+ * @returns {Promise<string>} returns an empty Promise on a successful toilet publish
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
  * @throws {NotFoundError} if the user does not exist
  */
+
 module.exports = (id, place, coordinates) => {
     validate.string(id, 'id')
     validate.string(place, 'place')

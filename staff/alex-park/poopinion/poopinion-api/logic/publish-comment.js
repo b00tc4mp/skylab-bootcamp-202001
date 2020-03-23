@@ -9,11 +9,13 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
  * @param {string} toiletId toilet's unique id
  * @param {object} rating different ratings for the toilet
  * 
- * @returns {Promise} returns an empty Promise
+ * @returns {Promise} returns an empty Promise on a successful comment publish
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
- * @throws {NotFoundError} if the user does not exist
+ * @throws {NotAllowedError} if the user already commented on specific toilet
+ * @throws {NotFoundError} if the user or the toilet do not exist
  */
+
 module.exports = (id, toiletId, rating) => {
     validate.string(id, 'id')
     validate.string(toiletId, 'toilet ID')
@@ -33,7 +35,7 @@ module.exports = (id, toiletId, rating) => {
 
             user.comments.push(comment)
             toilet.comments.push(comment)
-            
+
             return Promise.all([user.save(), toilet.save(), comment.save()])
         })
         .then(() => { })

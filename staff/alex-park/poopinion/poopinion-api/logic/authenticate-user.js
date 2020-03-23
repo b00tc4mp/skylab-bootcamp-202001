@@ -9,10 +9,11 @@ const bcrypt = require('bcryptjs')
  * @param {string} email user's unique e-mail
  * @param {string} password user's password
  * 
- * @returns {Promise<string>} user id from storage
+ * @returns {Promise<string>} user's id from storage
  * 
  * @throws {NotAllowedError} on wrong credentials or deactivated user
  */
+
 module.exports = (email, password) => {
     validate.string(email, 'email')
     validate.email(email)

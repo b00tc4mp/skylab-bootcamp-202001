@@ -11,8 +11,9 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
  * @returns {Promise<string>} returns an empty Promise
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
- * @throws {NotFoundError} if the user or the comment do not exis
+ * @throws {NotFoundError} if the user or the comment do not exist
  */
+
 module.exports = (id, commentId) => {
     validate.string(id, 'id')
     validate.string(commentId, 'comment ID')

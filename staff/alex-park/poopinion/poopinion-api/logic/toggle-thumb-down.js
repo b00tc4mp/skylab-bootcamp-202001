@@ -3,16 +3,17 @@ const { models: { User, Comment } } = require('poopinion-data')
 const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 
 /**
- * Adds or removes a thumb-up functionality to a target comment
+ * Adds or removes a thumb-down functionality to a target comment
  * 
  * @param {string} id user's unique id
  * @param {string} commentId comment's unique id
  * 
- * @returns {Promise<string>} returns an empty Promise
+ * @returns {Promise<string>} returns an empty Promise on a successful thumb down
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
- * @throws {NotFoundError} if the user or the comment do not exis
+ * @throws {NotFoundError} if the user or the comment do not exist
  */
+
 module.exports = (id, commentId) => {
     validate.string(id, 'id')
     validate.string(commentId, 'comment ID')

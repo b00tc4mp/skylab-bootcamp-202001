@@ -1,4 +1,3 @@
-const { validate } = require('../utils')
 const fetch = require('node-fetch')
 const context = require('./context')
 

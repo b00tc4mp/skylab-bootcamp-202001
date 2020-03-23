@@ -38,7 +38,6 @@ module.exports = function (email, password) {
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
-
             if (status === 401) {
                 throw new NotAllowedError(error)
             }

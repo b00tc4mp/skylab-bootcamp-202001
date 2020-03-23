@@ -6,10 +6,12 @@ const context = require('./context')
 /**
  * Publishes a new toilet post
  * 
+ * @param {string} token user's unique token
  * @param {string} place the place's name of the toilet
+ * @param {string} image URI of the toilet's image
  * @param {Object} coordinates google maps coordinates
  * 
- * @returns {string} user's unique token
+ * @returns {undefined} on a successful publish
  * 
  * @throws {NotAllowedError} on wrong credentials or deactivated user
  * @throws {NotFoundError} on non-existent user

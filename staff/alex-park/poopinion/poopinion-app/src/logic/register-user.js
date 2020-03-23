@@ -9,7 +9,7 @@ const fetch = require('node-fetch')
  * @param {string} email user's unique e-mail
  * @param {string} password user's password
  * @param {number} age user's age
- * @param {string} email user's gender
+ * @param {string} gender user's gender
  * 
  * @returns {undefined} on a successful user registration
  * 

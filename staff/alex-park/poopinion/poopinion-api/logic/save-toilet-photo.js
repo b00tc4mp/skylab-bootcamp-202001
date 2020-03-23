@@ -16,7 +16,6 @@ const path = require('path')
 * @returns {Promise} returns an empty promise on a successful upload  
 */
 
-
 module.exports = function (userId, toiletId, file, filename) {
     validate.string(userId, 'userId')
     validate.string(toiletId, 'toiletId')
@@ -32,7 +31,7 @@ module.exports = function (userId, toiletId, file, filename) {
 
         const dir = `./data/toilets/${toiletId}`
         if (!fs.existsSync(dir)) fs.mkdirSync(dir)
-        
+
         let saveTo = path.join(__dirname, `../data/toilets/${toiletId}/${filename}.jpg`)
         file.pipe(fs.createWriteStream(saveTo))
     })()

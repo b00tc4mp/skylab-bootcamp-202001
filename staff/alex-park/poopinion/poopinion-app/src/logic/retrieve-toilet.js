@@ -10,7 +10,7 @@ const context = require('./context')
  * 
  * @returns {Object} returns an object with all the toilet info
  * 
- * @throws {NotFoundError} if the toilet do not exist
+ * @throws {NotFoundError} if the toilet does not exist
  */
 
 module.exports = function (toiletId) {

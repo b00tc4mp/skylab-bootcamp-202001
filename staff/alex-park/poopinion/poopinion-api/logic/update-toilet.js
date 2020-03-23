@@ -1,21 +1,20 @@
 const { validate } = require('poopinion-utils')
 const { models: { User, Toilet } } = require('poopinion-data')
 const { NotAllowedError, NotFoundError } = require('poopinion-errors')
-const bcrypt = require('bcryptjs')
 
 /**
- * Registers a new user on the database
+ * Updates the comment post info
  * 
  * @param {string} id user's unique ID
  * @param {string} toiletId toilet's unique id
  * @param {object} data the elements that will be updated
  * 
- * @returns {Promise<string>} an empty Promise
+ * @returns {Promise<string>} an empty Promise on a successful update
  * 
- * @throws {NotAllowedError} if a user set a wrong password or is deactivated
+ * @throws {NotAllowedError} if a user is deactivated
  * @throws {NotFoundError} if the user or the toilet do not exist
-
  */
+
 module.exports = (id, toiletId, data) => {
     validate.string(id, 'id')
     validate.string(toiletId, 'toilet ID')
@@ -30,5 +29,4 @@ module.exports = (id, toiletId, data) => {
             return Toilet.findByIdAndUpdate(toiletId, { $set: data })
         })
         .then(() => { })
-
 }

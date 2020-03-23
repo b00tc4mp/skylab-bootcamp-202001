@@ -10,13 +10,14 @@ const bcrypt = require('bcryptjs')
  * @param {string} surname user's surname
  * @param {string} email user's unique e-mail
  * @param {string} password user's password, with further encryptation
- * @param {number} age user'sage
+ * @param {number} age user's age
  * @param {string} gender user's gender, with a three-choice only
  * 
- * @returns {Promise<string>} an empty Promise
+ * @returns {Promise<string>} an empty Promise on a successful registration
  * 
  * @throws {NotAllowedError} if a user with that same email already exists on the database
  */
+
 module.exports = (name, surname, email, password, age, gender) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')

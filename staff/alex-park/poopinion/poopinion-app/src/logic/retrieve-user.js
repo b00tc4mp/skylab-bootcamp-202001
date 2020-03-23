@@ -8,7 +8,7 @@ const context = require('./context')
  * 
  * @param {string} token user's unique token
  * 
- * @returns {Object} user's unique token
+ * @returns {Object} an Object containing all user's info
  * 
  * @throws {NotAllowedError} on wrong credentials or deactivated user
  * @throws {NotFoundError} on non-existent user

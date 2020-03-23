@@ -4,18 +4,18 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
 const bcrypt = require('bcryptjs')
 
 /**
- * Registers a new user on the database
+ * Updates the user's info
  * 
  * @param {string} id user's unique ID
  * @param {object} data the elements that will be updated
  * @param {string} password user's password
  * 
- * @returns {Promise<string>} an empty Promise
+ * @returns {Promise<string>} an empty Promise on a successful update
  * 
  * @throws {NotAllowedError} if a user set a wrong password
  * @throws {NotFoundError} if the user does not exist
-
  */
+
 module.exports = (id, data, password) => {
     validate.string(id, 'id')
     validate.type(data, 'data', Object)

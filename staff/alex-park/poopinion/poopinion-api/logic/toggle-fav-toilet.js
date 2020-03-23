@@ -13,6 +13,7 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
  * @throws {NotFoundError} if the user or the toilet do not exis
  */
+
 module.exports = (id, toiletId) => {
     validate.string(id, 'id')
     validate.string(toiletId, 'toilet ID')

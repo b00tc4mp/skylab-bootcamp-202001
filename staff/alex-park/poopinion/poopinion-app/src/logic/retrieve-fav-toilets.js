@@ -4,14 +4,14 @@ const { NotAllowedError, NotFoundError } = require('../errors')
 const context = require('./context')
 
 /**
- * Toggles or untoggles the selected toilet to favorites
+ * Retrieves all toilets that are marked as favorite by the user
  * 
  * @param {string} token user's unique token
  * 
- * @returns {undefined} returns undefined if the toggle or untoggle was successful
+ * @returns {Array} returns an array of all the toilet posts. Empty array if there is none.
  * 
  * @throws {NotAllowedError} if the user exists but has the property 'deactivated' as true
- * @throws {NotFoundError} if the user or the toilet do not exis
+ * @throws {NotFoundError} if the user does not exist
  */
 
 module.exports = function (token) {

@@ -9,18 +9,17 @@ const { NotAllowedError, NotFoundError } = require('poopinion-errors')
  * @param {string} commentId comment's unique id
  * @param {object} data the elements that will be updated
  * 
- * @returns {Promise<string>} an empty Promise
+ * @returns {Promise<string>} an empty Promise on a successful update
  * 
  * @throws {NotAllowedError} if a user set a wrong password or is deactivated
  * @throws {NotFoundError} if the user or the comment do not exist
-
  */
+
 module.exports = (id, commentId, data) => {
     validate.string(id, 'id')
     validate.string(commentId, 'comment ID')
     validate.type(data, 'data', Object)
-    
-    
+
     return Promise.all([User.findById(id), Comment.findById(commentId)])
         .then(([user, comment]) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)

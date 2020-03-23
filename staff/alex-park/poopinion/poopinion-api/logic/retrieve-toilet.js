@@ -7,13 +7,14 @@ const { NotFoundError } = require('poopinion-errors')
  * 
  * @param {string} toiletId toilet's unique id
  * 
- * @returns {Object} returns an object with all the specific info of that toilet
+ * @returns {Object} returns an object with all the specific info of the toilet
  * @throws {NotFoundError} if the user does not exist
  */
+
 module.exports = toiletId => {
     validate.string(toiletId, 'toilet ID')
 
-    return Toilet.findById(toiletId).populate('publisher', 'name surname email age gender').populate('comments').populate({path:'comments', populate: {path:'publisher'}}).lean()
+    return Toilet.findById(toiletId).populate('publisher', 'name surname email age gender').populate('comments').populate({ path: 'comments', populate: { path: 'publisher' } }).lean()
         .then(toilet => {
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
             toilet.id = toilet._id.toString()
