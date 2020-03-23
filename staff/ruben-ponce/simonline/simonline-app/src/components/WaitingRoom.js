@@ -1,37 +1,39 @@
 import'./WaitingRoom.sass'
 import React, { useState, useEffect } from 'react'
-import { isLoggedIn, retrieveGameStatus, retrieveUserId, join, startGame } from '../logic'
+import { isLoggedIn, retrieveGameStatus, retrieveUserId, join, retrievePlayersName, startGame } from '../logic'
 import Feedback from './Feedback'
 
 export default ({ gameId, goTo }) => {
     const [error, setError] = useState(undefined)
     const [gameStatus, setGameStatus] = useState()
     const [userId, setUserId] = useState()
+    const [_gameId, setGameId] = useState(gameId)
     // const [playersId, setPlayersId] = useState()
     const [playersName, setPlayersName] = useState()
 
     useEffect(() => {
-        var interval = setInterval(() => {
+        let interval = setInterval(() => {
             if (isLoggedIn())
                 (async () => {
                     try {
+                        // setGameId(gameId)
                         const _userId = await retrieveUserId(sessionStorage.token)
                         setUserId(_userId)
-                        const _playersName = await join(_userId, gameId)//retrieve players name
+                        const _playersName = await retrievePlayersName(gameId)
                         setPlayersName(_playersName)
                         const status = await retrieveGameStatus(gameId)
                         setGameStatus(status)
-                        // setPlayersId(status.players)
                         if(status.status === "started") {
                             clearInterval(interval)
-                            goTo('game')
+                            return goTo('game')
                         }
+                        // setPlayersId(status.players)
                     } catch (error) {
                         setError(error.message)
                         setTimeout(()=> setError(undefined), 3000)
                     }
                 })()
-                else goTo('/landing')
+                else goTo('landing')
         }, 5000)
     },[])
 
@@ -42,7 +44,6 @@ export default ({ gameId, goTo }) => {
         (async () => {
             if (userId === gameStatus.owner) {
                 const started = await startGame(gameId)
-                debugger
                 setGameStatus(started)
             }
         })}>Start</p>

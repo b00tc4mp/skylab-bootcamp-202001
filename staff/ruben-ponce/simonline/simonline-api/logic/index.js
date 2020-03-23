@@ -8,5 +8,6 @@ module.exports = {
     updateCombination: require('./update-combination'),
     startGame: require('./start-game'),
     retrieveGameStatus: require('./retrieve-game-status'),
-    playCombination: require('./play-combination')
+    playCombination: require('./play-combination'),
+    retrievePlayersName: require('./retrieve-players-name')
 }

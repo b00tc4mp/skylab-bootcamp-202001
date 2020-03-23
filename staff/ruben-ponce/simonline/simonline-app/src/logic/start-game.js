@@ -15,15 +15,13 @@ export default (function (gameId) {
 
         const { status } = await start
 
-        if (status === 200) {
-            const started = await start.json()
-            return started
+            if (status === 409 || status === 406 || status === 403) {
+                const { error } = await start
+                throw new Error(error)
         }
 
-        if (status === 201)
-            return
+        else if (status === 201) return
 
-        if(status === 404)
-            return status.statusText
+        else return new Error('Unknown error')
     })()
 }).bind(context)

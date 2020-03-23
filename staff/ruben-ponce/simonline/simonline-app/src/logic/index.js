@@ -7,8 +7,10 @@ import retrieveGames from './retrieve-games'
 import join from './join'
 import retrieveGameStatus from './retrieve-game-status'
 import startGame from './start-game'
+import retrievePlayersName from './retrieve-players-name'
 import isLoggedIn from './is-logged-in'
 import logout from './logout'
+
 
 export {
     register,
@@ -20,6 +22,7 @@ export {
     join,
     retrieveGameStatus,
     startGame,
+    retrievePlayersName,
     isLoggedIn,
     logout
 }

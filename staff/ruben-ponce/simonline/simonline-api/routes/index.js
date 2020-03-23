@@ -9,7 +9,8 @@ const {
     updateCombination,
     startGame,
     retrieveGameStatus,
-    playCombination
+    playCombination,
+    retrievePlayersName
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -38,5 +39,7 @@ router.patch('/users/games/:gameId/start', [jwtVerifierMidWare, jsonBodyParser],
 router.patch('/users/games/:gameId/retrieve', [jwtVerifierMidWare, jsonBodyParser], retrieveGameStatus)
 
 router.patch('/users/games/playcombination', [jwtVerifierMidWare, jsonBodyParser], playCombination)
+
+router.get('/users/games/:gameId/players', jwtVerifierMidWare, retrievePlayersName)
 
 module.exports = router
