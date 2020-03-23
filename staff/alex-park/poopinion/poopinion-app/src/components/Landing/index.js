@@ -51,7 +51,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                             <View style={styles.postContent}>
                                 <View style={styles.header}>
                                     <View style={styles.headerLeft}>
-                                        <Text style={styles.place}>{toilet.place} ({toilet.score})</Text>
+                                        <Text style={styles.place}>{toilet.place} ({toilet.score === null ? (<Text>0</Text>) : <Text>{toilet.score}</Text>})</Text>
                                         {toilet.score >= 4.5 && (<>
                                             <View style={styles.poopRating}>
                                                 <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
