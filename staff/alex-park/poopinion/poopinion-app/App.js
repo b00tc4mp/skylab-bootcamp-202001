@@ -263,7 +263,6 @@ export default function App() {
   }
 
   function handleUpdateComment(data, { commentId }) {
-    console.log(data, commentId)
     try {
       (async () => {
         await updateComment(token, commentId, data)
