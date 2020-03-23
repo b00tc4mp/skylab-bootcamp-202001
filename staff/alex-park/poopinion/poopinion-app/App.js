@@ -276,6 +276,10 @@ export default function App() {
     }
   }
 
+  function handleDeleteComment(id, toiletId, commentId) {
+    console.log(id, toiletId, commentId)
+  }
+
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
     setGoLanding(false)
@@ -363,7 +367,7 @@ export default function App() {
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
-        {view === 'details' && detailedToilet && <ToiletDetails user={user} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
+        {view === 'details' && detailedToilet && <ToiletDetails user={user} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
       </ScrollView>
 

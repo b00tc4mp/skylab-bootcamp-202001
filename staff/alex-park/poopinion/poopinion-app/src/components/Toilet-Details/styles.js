@@ -189,6 +189,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 10,
         alignItems: 'center'
+    },
+    trashContainer: {
+        flex: 1,
+        width: '100%',
+        alignItems: 'flex-end',
+    },
+    trash: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+
     }
 })
 

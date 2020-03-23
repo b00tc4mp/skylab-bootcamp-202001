@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-na
 import MapView from 'react-native-maps'
 import styles from './styles'
 
-function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment }) {
+function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
 
     useEffect(() => {
@@ -148,6 +148,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                         </View>
                                         <View style={styles.commentTopRight}>
                                             <Text style={styles.commentTopRightText}>Rating: <Text style={{ color: '#df7861' }}>{comment.rating.overallRating}</Text><Text style={{ color: 'brown' }}>/5</Text></Text>
+
                                         </View>
                                     </View>
 
@@ -183,6 +184,10 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
 
                                                 <Text>{comment.thumbsDown.length}</Text>
                                             </View>
+
+                                            <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(user.id.toString(), toilet.id.toString(), comment.id.toString())}>
+                                                {comment.publisher._id.toString() === user.id.toString() && <Image style={styles.trash} source={require('../../../assets/delete.png')} />}
+                                            </TouchableOpacity>
                                         </View>
                                     </View>
 
