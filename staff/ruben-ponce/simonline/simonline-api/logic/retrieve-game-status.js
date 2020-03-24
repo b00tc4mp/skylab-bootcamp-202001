@@ -30,8 +30,19 @@ module.exports = (playerId, gameId) => {
                 game.watching.push(game.currentPlayer)
                 const j = game.players.indexOf(game.currentPlayer)
       
-                if(game.players.length === (game.watching.length -1)) return status = 'finished'
-
+              if (game.players.length === (game.watching.length + 1)) {
+                //change winner player to current player
+                for (let i = j; i < game.players.length; i++) {
+                  if(!game.players[j+1]) i = 0
+                  debugger
+                  if(!game.watching.includes(game.players[i])) {
+                    game.currentPlayer = game.players[i]
+                    game.status = 'finished'
+                    game.save()
+                    return game
+                  }
+                }
+              }
                 for (let i = j; i < game.players.length; i++) {
                     if(!game.players[j+1]) i = 0
                     if(!game.watching.includes(game.players[i])) {

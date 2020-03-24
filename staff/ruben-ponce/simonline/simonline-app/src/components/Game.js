@@ -14,7 +14,7 @@ export default ({goTo, gameId}) => {
     const [lastPlayerOut, setLastPlayerOut] = useState()
     const [playersRemain, setPlayersRemain] = useState()
     const [winner, setWinner] = useState()
-
+    const [timeout, setTimeout] = useState()
     
     useEffect(() => {
         const interval = setInterval(() => {
@@ -34,14 +34,15 @@ export default ({goTo, gameId}) => {
                             setLastPlayerOut(lastPlayerOutObj.username)
                             //players remain
                             setPlayersRemain(status.players.length - status.watching.length)
+                            //timeout
+                            setTimeout(40 - (Math.floor((new Date(status.date) - new Date(status.turnStart)) / (1000*60*60*24))))
                         } else if (status.status === 'finished') {
-                            //break interval
                             //player win
-                            debugger
+                            const currentPlayerObj = _playersName.find(x => x.id === status.currentPlayer)
+                            setWinner(currentPlayerObj.username)
+                            //break interval
                             console.log('finished')
                         }
-                        
-
                     } catch (error) {
                         setError(error.message)
                         setTimeout(()=> setError(undefined), 3000)
@@ -65,10 +66,11 @@ export default ({goTo, gameId}) => {
         </div>
     </div>
     <div className="game__footer">
-        <p className="game__footer__text">Player 1 wins</p>
-        <p className="game__footer__text">Turn of {currentPlayerName}</p>
+        {winner && <p className="game__footer__text">Player {winner} wins!</p>}
+        {timeout && <p className="game__footer__text">timeout: {timeout}sec.</p>}
+        {currentPlayerName && <p className="game__footer__text">Turn of {currentPlayerName}</p>}
         {lastPlayerOut && <p className="game__footer__text">Player {lastPlayerOut} out</p>}
-        {playersRemain && <p> {playersRemain} players in game </p>}
+        {playersRemain && <p className="game__footer__text"> {playersRemain} players in game </p>}
         
     </div>
 </div>
