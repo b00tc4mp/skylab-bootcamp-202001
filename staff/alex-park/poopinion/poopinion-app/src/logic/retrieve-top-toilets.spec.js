@@ -85,6 +85,7 @@ describe('retrieveTopToilets', () => {
     afterAll(async () => {
         await User.deleteMany()
         await Toilet.deleteMany()
+        await Comment.deleteMany()
         await mongoose.disconnect()
     })
 })

@@ -283,7 +283,7 @@ export default function App() {
       (async () => {
         await deleteComment(token, toiletId, commentId)
         Alert.alert('Comment successfully deleted! 💩')
-        __handleTopToilets__() //AFFECTS PERFORMANCE!!! CONSIDER REMOVING
+        // __handleTopToilets__() //AFFECTS PERFORMANCE!!! CONSIDER REMOVING
         setView('landing')
       })()
     } catch ({ message }) {
