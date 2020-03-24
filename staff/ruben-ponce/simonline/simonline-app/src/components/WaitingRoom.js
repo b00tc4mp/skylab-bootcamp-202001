@@ -34,7 +34,7 @@ export default ({ gameId, goTo }) => {
                     }
                 })()
                 else goTo('landing')
-        }, 5000)
+        }, 1500)
     },[])
 
     return  <div className="p1 waiting-room">

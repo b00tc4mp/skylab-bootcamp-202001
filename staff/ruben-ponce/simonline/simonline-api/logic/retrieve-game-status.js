@@ -34,7 +34,6 @@ module.exports = (playerId, gameId) => {
                 //change winner player to current player
                 for (let i = j; i < game.players.length; i++) {
                   if(!game.players[j+1]) i = 0
-                  debugger
                   if(!game.watching.includes(game.players[i])) {
                     game.currentPlayer = game.players[i]
                     game.status = 'finished'

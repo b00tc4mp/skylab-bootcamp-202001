@@ -19,6 +19,7 @@ module.exports = (playerId, gameId) => {
             
             const combination = Math.floor(random() * 4)
             
+            game.date = new Date()
             game.players.shuffle()
             game.pushCombination.push(combination)
             game.turnStart = new Date()
