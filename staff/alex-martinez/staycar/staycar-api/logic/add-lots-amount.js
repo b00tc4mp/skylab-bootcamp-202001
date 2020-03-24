@@ -4,8 +4,8 @@ const { NotFoundError } = require("staycar-errors")
 
 module.exports = (id, parkingName,rate, number) => {
   validate.string(id, "id")
-  validate.string(parkingName, "parkingName")
-  validate.type(number, "number", Number)
+  validate.string(parkingName, "parking name")
+  validate.type(number, "total lots", Number)
   validate.type(rate, "rate", Number)
   
   if (number <= 0) throw new TypeError("the number of lots must be bigger than 0")

@@ -16,7 +16,7 @@ describe('addLotsAmount', () => {
             .then(() => Promise.all([User.deleteMany(), Parking.deleteMany()]))
     )
 
-    let name, surname, username, password, totalLots, pkName, rate
+    let name, surname, username, password, totalLots, parkingName, rate
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -24,7 +24,7 @@ describe('addLotsAmount', () => {
         username = `username-${random()}`
         password = `password-${random()}`
         totalLots = round(random()*(20-1)+parseInt(1))
-        pkName = `pkname-${random()}`
+        parkingName = `pkname-${random()}`
         rate = random()
     })
 
@@ -39,31 +39,59 @@ describe('addLotsAmount', () => {
                 .then(user => _id = user.id)  
                 .then(() => 
                     
-                    Parking.create({parkingName: pkName, rate})
+                    Parking.create({parkingName, rate, totalLots})
                 )
         )
 
         it('should succed on correct data', () =>
-            addLotsAmount(_id, pkName, totalLots)
+            addLotsAmount(_id, parkingName, rate, totalLots)
+                .then(() => {
+                    const pk = Parking.findOne({parkingName})
+                    return pk
+                })
                 .then((pk) => {
-                    expect(pk.parkingName).to.be.equal(pkName)
+                    expect(pk.parkingName).to.be.equal(parkingName)
                     expect(pk.totalLots).to.be.equal(totalLots)
+                    expect(pk.rate).to.be.equal(rate)
                 })
         )
     })
-
-    it('should fail on non number totalLots', () => {
-        let totalLots = '20'
-        let pkId = '1234'
-        expect(() => addLotsAmount('1', pkId, totalLots)).to.throw(TypeError, `number ${totalLots} is not a number`)
-    })
+    
     it('should fail on non string id', () => {
-        let id = 2
-        let pkId = '1234'
-        expect(() => addLotsAmount(id, pkId ,20)).to.throw(TypeError, `id ${id} is not a string`)
+        const id = 1
+        const parkingName = 'name'
+        const rate = 1
+        const totalLots = 10
+        
+        expect(() => addLotsAmount(id, parkingName, rate, totalLots)).to.throw(TypeError, `id ${id} is not a string`)
+    })
+    
+    it('should fail on non number total lots', () => {
+        const id = '1'
+        const parkingName = 'name'
+        const rate = 1
+        const totalLots = '20'
+        
+        expect(() => addLotsAmount(id, parkingName, rate, totalLots)).to.throw(TypeError, `total lots ${totalLots} is not a number`)
+    })
+    it('should fail on non string parking name', () => {
+        const id = '1'
+        const parkingName = true
+        const rate = 1
+        const totalLots = 10
+        
+        expect(() => addLotsAmount(id, parkingName, rate, totalLots)).to.throw(TypeError, `parking name ${parkingName} is not a string`)
     })
 
-    // TODO more happies and unhappies
+    it('should fail on non number rate', () => {
+        const id = '1'
+        const parkingName = 'name'
+        const rate = '0.5'
+        const totalLots = 10
+        
+        expect(() => addLotsAmount(id, parkingName, rate, totalLots)).to.throw(TypeError, `rate ${rate} is not a number`)
+    })
+    
 
     after(() => Promise.all([User.deleteMany(), Parking.deleteMany()]).then(() => mongoose.disconnect()))
     //after(() => User.deleteMany().then(() => mongoose.disconnect()))
