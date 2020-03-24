@@ -12,7 +12,7 @@ describe('retrieveDrug', () => {
             .then(() => Drug.deleteMany())
     )
 
-    let drugName, description
+    let drugName, description, _drugId
 
     beforeEach(() => {
         drugName = `drugName-${random()}`
@@ -24,38 +24,39 @@ describe('retrieveDrug', () => {
 
         beforeEach(() =>
             Drug.create({ drugName, description})       
-            .then(()=>{})
+            .then(({id})=> _drugId = id)
         )
 
         it('should succeed on correct and valid and right data', () =>
-            retrieveDrug(drugName)
+            retrieveDrug(_drugId)
                 .then(drug => { 
                     expect(drug.drugName).to.equal(drugName)
                     expect(drug.description).to.equal(description)
                     
                 })
         )
-        it('should succeed on invalid right data', () =>
-            retrieveDrug(`${drugName}-wrong`)
-                .then(() => { 
-                    throw new Error('should not reach this point')
-                    
-                })
-                .catch(error => {
-                    expect(error.message).to.equal(`drug with name ${drugName}-wrong does not exist`)
-                })
+        it('should succeed on invalid data', () =>
+            Drug.findByIdAndRemove(_drugId)
+            .then(() => retrieveDrug(_drugId))
+            .then(() => { 
+                throw new Error('should not reach this point')
+                
+            })
+            .catch(error => {
+                expect(error.message).to.equal(`drug with id ${_drugId} does not exist`)
+            })
         )
     })
 
     it('should fail on a non-string drugName', () => {
-        drugName = 9328743289
-        expect(() => retrieveDrug(drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        drugName = false
-        expect(() => retrieveDrug(drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        drugName = undefined
-        expect(() => retrieveDrug(drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
-        drugName = []
-        expect(() => retrieveDrug(drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+        _drugId = 9328743289
+        expect(() => retrieveDrug(_drugId)).to.throw(TypeError, `id ${_drugId} is not a string`)
+        _drugId = false
+        expect(() => retrieveDrug(_drugId)).to.throw(TypeError, `id ${_drugId} is not a string`)
+        _drugId = undefined
+        expect(() => retrieveDrug(_drugId)).to.throw(TypeError, `id ${_drugId} is not a string`)
+        _drugId = []
+        expect(() => retrieveDrug(_drugId)).to.throw(TypeError, `id ${_drugId} is not a string`)
     })
 
     after(() => Drug.deleteMany().then(() => mongoose.disconnect()))

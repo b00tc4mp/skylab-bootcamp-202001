@@ -45,7 +45,7 @@ router.post('/users/add-progress', [jwtVerifierMidWare, jsonBodyParser], addProg
 
 router.get('/users/retrieve-progress', jwtVerifierMidWare, retrieveProgress)
 
-router.get('/drug/:drugName', retrieveDrug)
+router.get('/drug/:id', retrieveDrug)
 
 router.get('/users/contacts', jwtVerifierMidWare, retrieveContacts)
 

@@ -29,8 +29,8 @@ function Medication ({medication, toAdd, onDrug}) {
                         renderItem={({item})=>(
                             <ListItem 
                                 onPress ={()=> {
-                                    const {drug: {drugName}, times} = item
-                                    onDrug({drugName, times})
+                                    const {drug: {drugName, _id: id}, times} = item
+                                    onDrug({id, times})
                                 }}
                                 title ={item.drug.drugName.toString()}
                                 titleStyle = {{

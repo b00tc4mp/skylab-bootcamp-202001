@@ -2,13 +2,13 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { Drug } } = require('pill-o-clock-data')
 const { NotFoundError } = require('pill-o-clock-errors')
 
-module.exports = (drugName) => {
-    validate.string(drugName, 'drugName')
+module.exports = (id) => {
+    validate.string(id, 'id')
 
-    return Drug.findOne({drugName}).lean()
+    return Drug.findById(id).lean()
         .then(drug => {
 
-            if(!drug)throw new NotFoundError(`drug with name ${drugName} does not exist`)
+            if(!drug) throw new NotFoundError(`drug with id ${id} does not exist`)
 
             drug.id = drug._id
 

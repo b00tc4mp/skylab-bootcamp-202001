@@ -2,10 +2,10 @@ const { retrieveDrug } = require('../../logic')
 const { NotAllowedError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
-    const {params: {drugName}} = req
+    const {params: {id}} = req
     
     try {
-        retrieveDrug(drugName)
+        retrieveDrug(id)
             .then(drug =>
                 res.status(200).json(drug)
             )

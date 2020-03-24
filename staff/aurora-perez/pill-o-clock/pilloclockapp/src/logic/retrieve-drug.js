@@ -3,12 +3,12 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
-module.exports = function (drugName) {
-    validate.string(drugName, 'drugName')
+module.exports = function (id) {
+    validate.string(id, 'id')
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/drug/${drugName}`)
+        const response = await fetch(`http://192.168.1.85:8085/api/drug/${id}`)
     
         const { status } = response
         
