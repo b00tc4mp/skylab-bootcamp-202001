@@ -8,6 +8,7 @@ const API_URL = process.env.REACT_APP_API_URL
 export default (carPlate, ticketId) => {
 
     validate.string(carPlate, 'car plate')
+    validate.carplate(carPlate)
     validate.string(ticketId, 'ticketid')
 
     return(async () => {

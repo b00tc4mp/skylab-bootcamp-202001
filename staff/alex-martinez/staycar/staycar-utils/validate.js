@@ -1,6 +1,7 @@
 const { ContentError } = require('events-errors')
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const PLATE_REGEX = /(\d{4})([A-Z]{3})/
 
 module.exports = {
     string(target, name, empty = true) {
@@ -32,5 +33,10 @@ module.exports = {
         const [header, payload, signature] = parts
 
         if (!header.trim().length || !payload.trim().length || !signature.trim().length) throw new ContentError('invalid token')
+    },
+    
+    carplate(target) {
+
+        if(!PLATE_REGEX.exec(target)) throw new ContentError('invalid format plate')
     }
 }
