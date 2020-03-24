@@ -19,7 +19,8 @@ function AddMedication ({onSubmit, error}) {
             <View style={styles.container}>
                 <Text style = {styles.title}>Add medication</Text>
                 <Text style = {styles.text}>Select name: </Text>
-            
+
+                <View style={{width: 150, marginLeft: 50}}>
                 <Picker style={{ height: 100}} itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium.ttf'}} selectedValue = {drug} onValueChange = {setDrug}>
                 <Picker.Item label = "Furosemide" value = "Furosemide" />
                 <Picker.Item label = "Adiro" value = "Adiro" />
@@ -27,6 +28,7 @@ function AddMedication ({onSubmit, error}) {
                 <Picker.Item label = "Paracetamol" value = "Paracetamol" />
                 <Picker.Item label = "Anticonceptive" value = "Anticonceptive" />
                 </Picker>
+                </View>
 
                 <View style={styles.hourContainer}>                
                     <Text style = {styles.text}>Select hour: </Text> 

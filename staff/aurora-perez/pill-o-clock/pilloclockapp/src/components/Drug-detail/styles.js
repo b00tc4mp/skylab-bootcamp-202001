@@ -2,22 +2,23 @@ import {StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
     
-    header : {
+    title2 : {
         fontFamily : 'Sensei-Medium.ttf',
         color : '#297885',
         fontSize : 30,
         marginLeft : 20,
-        marginTop : 30,
+       // marginTop : 30,
         
     },
 
     container : {
         flex : 1,
-        width : '100%',
+        //width : '100%',
         backgroundColor : '#fffdf9',
         borderRadius : 30,
-        padding : 10,
-        marginTop : 100
+        paddingBottom : '30%',
+        padding: '7%',
+        marginTop : '7%'
     },
 
     text : {
@@ -38,25 +39,28 @@ const styles = StyleSheet.create({
         fontFamily : 'Sensei-Medium.ttf',
         color : '#297885',
         fontSize : 40,
-        marginLeft : 20,
+        //marginLeft : 20,
         textDecorationLine: 'underline',
-        flex : 3,
-        alignSelf: 'center'
+        //flex : 3,
+        alignSelf: 'center',
+        
     },
 
     bin : {
-        flex: 1
+        flex: 1,
+        padding: '3%'
     },
     logoBin : {
         resizeMode: 'contain',
-        width:'40%',
-        height: '40%',
-        flex: 1,
+        width: 40,
+        height: 40,
+        //flex: 1,
         alignSelf: 'center'
     },
     headerContainer : {
-        //flex : 1,
+        alignItems:'center',
         flexDirection : 'row'
+        
     }
 
 })

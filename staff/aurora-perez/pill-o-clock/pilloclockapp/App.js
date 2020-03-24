@@ -24,21 +24,25 @@ function App () {
   const [ schedule, setSchedule] = useState()
 
   useEffect(()=>{
-
     //if(user) {
       const interval = setInterval(async () => { 
         let schedule = await getAlarms(token)
         if(schedule.length){
+          //console.log(schedule)
           schedule.forEach(prescription => {
             prescription.times.forEach(alarm => {
-              let time =alarm.toString()
+              console.log(alarm)
+              let time =alarm.time.toString()
               let min = parseInt(time.slice(time.length-2, time.length))
               let hour = parseInt(time.slice(0, time.length-2))
 
               let now = new Date()
               let hour2 = now.getHours()
               let min2 = now.getMinutes()
-              if(hour === hour2 && min <= min2 && min > min-1) pushNotification.localNotification(prescription.drugName)
+              if(hour === hour2 && min >= min2 ) {
+                //alarm.sounded=true 
+                pushNotification.localNotification(prescription.drugName)
+              }
             })
 
           })
@@ -49,9 +53,7 @@ function App () {
       }, 60000)
   
     return () => clearInterval(interval)
-  }, [])
-
-
+  }, [schedule])
 
   async function getAlarms (token) {
     const _medication = await retrieveMedication(token)
@@ -61,10 +63,16 @@ function App () {
       let _schedule = []
       for( let i=0; i<_medication.length; i++) {
         _schedule[i] = {}
-        _schedule[i].times=_medication[i].times
         _schedule[i].drugName = _medication[i].drug.drugName
+        _schedule[i].times= []
+        for (let j=0; j<_medication[i].times.length; j++){
+          _schedule[i].times.push({time: _medication[i].times[j], sounded: false})
+        }
+        
       }
-      return _schedule
+      //console.log(_schedule[0].times)
+      // return _schedule
+      setSchedule(_schedule)
     }
   }
 
