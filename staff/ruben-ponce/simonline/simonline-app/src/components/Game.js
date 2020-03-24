@@ -13,6 +13,7 @@ export default ({goTo, gameId}) => {
     const [currentPlayerName, setCurrentPlayerName] = useState()
     const [lastPlayerOut, setLastPlayerOut] = useState()
     const [playersRemain, setPlayersRemain] = useState()
+    const [winner, setWinner] = useState()
 
     
     useEffect(() => {
@@ -20,23 +21,26 @@ export default ({goTo, gameId}) => {
             if (isLoggedIn()){
                 (async () => {
                     try {
-                        // const _userId = await retrieveUserId(sessionStorage.token)
-                        // setUserId(_userId)
                         const _playersName = await retrievePlayersName(gameId)
                         setPlayersName(_playersName)
                         const status = await retrieveGameStatus(gameId)
                         setGameStatus(status)
-                        //current player
-                        const currentPlayerObj = _playersName.find(x => x.id === status.currentPlayer)
-                        setCurrentPlayerName(currentPlayerObj.username)
-                        //last player out
-                        const lastPlayerOutObj = _playersName.find(x => x.id === status.watching[status.watching.length -1])
-                        setLastPlayerOut(lastPlayerOutObj.username)
-                        //players remain
-                        setPlayersRemain(status.players.length - status.watching.length)
-                        //player win
-                        debugger
-
+                        if (status.status === 'started') {
+                            //current player
+                            const currentPlayerObj = _playersName.find(x => x.id === status.currentPlayer)
+                            setCurrentPlayerName(currentPlayerObj.username)
+                            //last player out
+                            const lastPlayerOutObj = _playersName.find(x => x.id === status.watching[status.watching.length -1])
+                            setLastPlayerOut(lastPlayerOutObj.username)
+                            //players remain
+                            setPlayersRemain(status.players.length - status.watching.length)
+                        } else if (status.status === 'finished') {
+                            //break interval
+                            //player win
+                            debugger
+                            console.log('finished')
+                        }
+                        
 
                     } catch (error) {
                         setError(error.message)
@@ -64,7 +68,7 @@ export default ({goTo, gameId}) => {
         <p className="game__footer__text">Player 1 wins</p>
         <p className="game__footer__text">Turn of {currentPlayerName}</p>
         {lastPlayerOut && <p className="game__footer__text">Player {lastPlayerOut} out</p>}
-        <p> {playersRemain} players in game </p>
+        {playersRemain && <p> {playersRemain} players in game </p>}
         
     </div>
 </div>
