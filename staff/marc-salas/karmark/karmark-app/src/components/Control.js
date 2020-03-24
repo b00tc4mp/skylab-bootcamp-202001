@@ -7,38 +7,32 @@ export default function ({ onUp, onDown, onRight, onLeft, onStop, onMount, onGoT
         onMount()
     }, [])
 
-    function handleOnUp(event){
-        //event.preventDefault()
+    function handleOnUp(){
 
         onUp()
     }
 
-    function handleOnDown(event){
-        //event.preventDefault()
+    function handleOnDown(){
 
         onDown()
     }
 
-    function handleOnRight(event){
-        //event.preventDefault()
+    function handleOnRight(){
 
         onRight()
     }
 
-    function handleOnLeft(event){
-        //event.preventDefault()
+    function handleOnLeft(){
 
         onLeft()
     }
 
-    function handleOnStop(event){
-        //event.preventDefault()
+    function handleOnStop(){
 
         onStop()
     }
 
-    function handleGoToHome(event){
-        //event.preventDefault()
+    function handleGoToHome(){
         
         onGoToHome()
     }

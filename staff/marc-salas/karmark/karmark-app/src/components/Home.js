@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { retrieveUser, isLoggedIn, logeOut } from '../logic'
 import './home.sass'
 import { withRouter } from 'react-router-dom'
-import {Context} from './ContextProvider'
+import { Context } from './ContextProvider'
 
 export default withRouter(function ({ history }) {
     const [, setState] = useContext(Context)
@@ -26,11 +26,11 @@ export default withRouter(function ({ history }) {
 
                 }
             })()
-        else{
-            setState({ page: 'login' }) 
+        else {
+            setState({ page: 'login' })
 
             history.push('/login')
-        } 
+        }
     }, [])
 
     function handleLogeOut() {
@@ -41,16 +41,36 @@ export default withRouter(function ({ history }) {
         history.push('/login')
     }
 
-    function handleOnToControl(){
-        setState({ page: 'control' })
+    async function handleOnToControl() {
+        try {
+            await retrieveUser()
 
-        history.push('/control')
+            setState({ page: 'control' })
+
+            history.push('/control')
+        } catch (error) {
+
+            logeOut()
+            setState({ page: 'login' })
+
+            history.push('/login')
+        }
     }
-    
-    function handleOnToPrograme(){
-        setState({ page: 'programe' })
 
-        history.push('/programe')
+    async function handleOnToPrograme() {
+        try {
+            await retrieveUser()
+
+            setState({ page: 'control' })
+
+            history.push('/programe')
+        } catch (error) {
+
+            logeOut()
+            setState({ page: 'login' })
+
+            history.push('/login')
+        }
     }
 
     return <>
@@ -64,7 +84,7 @@ export default withRouter(function ({ history }) {
                 <button className="homemenu__control" onClick={handleOnToControl}>CONTROL</button>
             </main>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>
+                integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous" />
         </div>
     </>
 })

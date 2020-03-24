@@ -1,6 +1,8 @@
 import React from 'react'
 import './saveWindows.sass'
 
+let stringCode
+
 export default function ({ accept, cancel, code }) {
     function handleAccept(event) {
         event.preventDefault()
@@ -16,9 +18,20 @@ export default function ({ accept, cancel, code }) {
 
         cancel()
     }
+
+    (function handleCode(){
+        stringCode = ''
+        
+        code.forEach( item => {
+            stringCode += `${item}, `
+        })
+
+        return stringCode
+    })();
+
     return <>
         <form className='saveWindow' onSubmit={handleAccept}>
-            <h4 className='saveWindow__text'>Introduce program name for {code}</h4>
+            <h4 className='saveWindow__text'>Introduce program name for {stringCode}</h4>
             <input className='saveWindow__name' name='name' />
             <div>
                 <button className='saveWindow__accept'>Accept</button>

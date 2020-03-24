@@ -15,10 +15,14 @@ It is componed by one nodeMCU and four servomotors. The fiality of Karmark is cr
 
 ## Flowcharts
 
-
+![flowcharts](./images/flowcharts.jpg)
 
 # Tecnocal Description
 
 ## Blocks
 
-![use case](./images/blocks.jpg)
+![blocks](./images/blocks.jpg)
+
+## Data model
+
+![data model](./images/data-model.jpg)

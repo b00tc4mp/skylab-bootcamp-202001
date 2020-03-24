@@ -1,6 +1,6 @@
 export default function() {
     return (async () => {
-        await fetch(`http://192.168.43.236/down`, {
+        await fetch(`http://192.168.43.27/down`, {
             method: 'GET',
             mode: 'no-cors'
         })

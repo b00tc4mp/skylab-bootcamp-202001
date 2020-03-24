@@ -1,6 +1,6 @@
 let i = 0
 export default async function recursive(code) {
-    await fetch(`http://192.168.43.236/${code[i]}`, {
+    await fetch(`http://192.168.43.27/${code[i]}`, {
         method: 'GET',
         mode: 'no-cors'
     })
@@ -11,7 +11,7 @@ export default async function recursive(code) {
             i++
             recursive(code)
         } else {
-            await fetch(`http://192.168.43.236/stop`, {
+            await fetch(`http://192.168.43.27/stop`, {
                 method: 'GET',
                 mode: 'no-cors'
             })

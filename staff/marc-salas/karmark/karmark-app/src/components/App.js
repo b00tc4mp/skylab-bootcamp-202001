@@ -6,7 +6,7 @@ import Home from './Home'
 import Control from './Control'
 import Programe from './Programe'
 import Programs from './Programs'
-import { registerUser, isLoggedIn, authenticateUser, up, down, right, left, stop, play, logeOut, retrieveUser, isTokenValid, createProgram } from '../logic'
+import { registerUser, isLoggedIn, authenticateUser, up, down, right, left, stop, play, createProgram } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 let code = []
@@ -196,6 +196,7 @@ export default withRouter(function ({ history }) {
 
   function handleMountControl() {
     setState({ page: 'control' })
+
   }
 
   function handleMountPrograme() {
@@ -214,13 +215,13 @@ export default withRouter(function ({ history }) {
   const { page, error, save } = state
   return <div className="app">
     <Page name={page}>
-      <Route exact path="/" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Redirect to="/login" />} />
-      <Route path="/register" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
-      <Route path="/login" render={() => (isLoggedIn() && isTokenValid()) ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin} />} />
-      <Route path="/control" render={() => (isTokenValid() && isLoggedIn()) ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} /> : <Redirect to="/login" />} />
-      <Route path="/programe" render={() => (isTokenValid() && isLoggedIn()) ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onDelete={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save} onPrograms={handleGoToPrograms} code={code} /> : <Redirect to="/login" />} />
-      <Route path="/home" render={() => (isLoggedIn() && isTokenValid()) ? <Home /> : <Redirect to="/login" />} />
-      <Route path="/programs" render={() => (isLoggedIn() && isTokenValid()) ? <Programs /> : <Redirect to="/login" />} />
+      <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/login" />} />
+      <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
+      <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin} />} />
+      <Route path="/control" render={() => isLoggedIn() ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} /> : <Redirect to="/login" />} />
+      <Route path="/programe" render={() => isLoggedIn() ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onDelete={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save} onPrograms={handleGoToPrograms} code={code} /> : <Redirect to="/login" />} />
+      <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />} />
+      <Route path="/programs" render={() => isLoggedIn() ? <Programs /> : <Redirect to="/login" />} />
     </Page>
   </div>
 })

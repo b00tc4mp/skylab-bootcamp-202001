@@ -53,12 +53,22 @@ export default withRouter(function ({ history }) {
         }
     }
 
-    function handleOnPrograme(event) {
+    async function handleOnPrograme(event) {
         event.preventDefault()
+        
+        try {
+            await retrieveUser()
 
-        setState({ page: 'programe' })
+            setState({ page: 'control' })
 
-        history.push('/programe')
+            history.push('/programe')
+        } catch (error) {
+
+            logeOut()
+            setState({ page: 'login' })
+
+            history.push('/login')
+        }
     }
 
     function handleDeleteWindows(name, id) {

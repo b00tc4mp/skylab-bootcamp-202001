@@ -10,7 +10,6 @@ import left from './left'
 import stop from './stop'
 import play from './play'
 import createProgram from './create-program'
-import isTokenValid from './is-token-valid'
 import retrievePrograms from './retrieve-programs'
 import deleteProgram from './delete-program'
 
@@ -27,7 +26,6 @@ export {
     stop,
     play,
     createProgram,
-    isTokenValid,
     retrievePrograms,
     deleteProgram
 }

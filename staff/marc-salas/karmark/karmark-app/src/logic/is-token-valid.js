@@ -9,7 +9,7 @@ export default ( async function (){
         try {
             await retrieveUser()
 
-            return false
+            return true
         } catch (error) {
             
             logeOut()
