@@ -37,6 +37,6 @@ module.exports = {
     
     carplate(target) {
 
-        if(!PLATE_REGEX.exec(target)) throw new ContentError('invalid format plate')
+        if(!PLATE_REGEX.exec(target)) throw new TypeError(`car plate ${target} is not valid format`)
     }
 }
