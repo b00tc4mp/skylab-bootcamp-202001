@@ -6,8 +6,10 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
 
   const [hoverName, setHoverName] = useState(false)
   const [hoverMenu, setHoverMenu] = useState(false)
+
   let style
-  if(hoverMenu) style = { width: `20rem` }
+
+  if (hoverMenu) style = { width: `20rem` }
 
   function dateParser(date) {
     const fullDate = date.split("T")[0]
@@ -15,7 +17,6 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     const month = fullDate.split("-")[1]
     const year2 = fullDate.split("-")[0]
     const hour = (date.split("T")[1]).split(".")[0]
-
     return `${hour}  ${day}-${month}-${year2}`
   }
 
@@ -25,30 +26,28 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     return day
   }
 
-  function monthParser(date){
+  function monthParser(date) {
     const fullDate = date.split("T")[0]
     const month = fullDate.split("-")[1]
     const monthArray = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    return monthArray[Number(month)-1]
+    return monthArray[Number(month) - 1]
   }
-   
-  function nameParser(name){
-    if(name){
-    const iName = name.name[0]
-    const iSurname = name.surname[0]
-    return `${iName}${iSurname}`
+
+  function nameParser(name) {
+    if (name) {
+      const iName = name.name[0]
+      const iSurname = name.surname[0]
+      return `${iName}${iSurname}`
     }
   }
-  function handleHover(){
+  function handleHover() {
     setHoverMenu(false)
-    
-
   }
-  
-  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} onMouseEnter={()=> setHoverMenu(true)} onMouseLeave={()=>setHoverMenu(false)} style={style}>
+
+  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} onMouseEnter={() => setHoverMenu(true)} onMouseLeave={() => setHoverMenu(false)} style={style}>
     <li className="rnav_logo">
       <a href="#" className="rnav-logo_link">
-        <button className="rnav_button" onMouseEnter={()=> setHoverName(true)} onMouseLeave={()=>setHoverName(false)} onClick={handleLogout}>{hoverName ? "Logout" : nameParser(name)}</button>
+        <button className="rnav_button" onMouseEnter={() => setHoverName(true)} onMouseLeave={() => setHoverName(false)} onClick={handleLogout}>{hoverName ? "Logout" : nameParser(name)}</button>
       </a>
     </li>
     <ul className="rnav">
@@ -67,7 +66,7 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
             <span className="rnav_linktext">{dateParser(session.date)}</span>
           </a>
         </li>
-        
+
       </>))}
     </ul>
   </nav>

@@ -17,7 +17,7 @@ export default function(){
         return droneState;
     }
 
-    const { pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, h, bat, baro, time, agx, agy, agz } = DroneState()
+    const { pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, bat, time, agx, agy, agz } = DroneState()
 
     
     return<>

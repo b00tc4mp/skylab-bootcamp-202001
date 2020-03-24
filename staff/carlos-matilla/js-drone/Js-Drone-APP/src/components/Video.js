@@ -4,13 +4,8 @@ import './Video.sass'
 import socket from '../socket';
 
 
-
-
-
-
-
 export default function () {
-    const [status, updateStatus] = useState('DISCONNECTED');
+    const [status, updateStatus] = useState('-');
     const [battery, setBattery] = useState()
     const [height, setHeight] = useState('-')
 
@@ -21,13 +16,9 @@ export default function () {
         }
     })
 
-
     let batStyle = { width: `${battery}%` }
 
     useEffect(() => {
-
-
-
 
         var socketURL = 'ws://localhost:8080';
         var jmuxer = new JMuxer({
@@ -51,8 +42,6 @@ export default function () {
 
         socket.on('status', data => updateStatus(data))
 
-
-
     }, []);
 
     return <>
@@ -60,7 +49,7 @@ export default function () {
             <div className="aspect-ratio--16x9">
                 <div className="aspect-ratio__inner-wrapper">
                     <div className="drone-status">
-                        <div className="status">{status}</div>
+                        <div className="status">{`TELLO dice: ${status}`}</div>
                         <div className="drone-height"><p>{`${height} cm`}</p></div>
                         <div className="drone-battery">
                             <div className="battery">

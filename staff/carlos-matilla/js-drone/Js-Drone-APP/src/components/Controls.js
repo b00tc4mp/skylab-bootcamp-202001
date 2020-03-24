@@ -1,37 +1,36 @@
 import React, { useState } from 'react'
 import './Controls.sass'
-import { Joystick, Keys } from './'
+import { Joystick } from './'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGamepad, faKeyboard } from '@fortawesome/free-solid-svg-icons'
 
 
-
-export default function ({ toggleKeyboard, toggleGamepad, joy }) {
+export default function ({ toggleKeyboard, toggleGamepad }) {
 
     const [active, setActive] = useState('g')
     const [key, setKey] = useState()
 
-    function handleKeyDown(event){
+    function handleKeyDown(event) {
         console.log(event.key)
-        if(event.key === 'w') setKey('w')
-        if(event.key === 'a') setKey('a')
-        if(event.key === 's') setKey('s')
-        if(event.key === 'd') setKey('d')
-        if(event.key === 'ArrowUp') setKey('ArrowUp')
-        if(event.key === 'ArrowLeft') setKey('ArrowLeft')
-        if(event.key === 'ArrowRight') setKey('ArrowRight')
-        if(event.key === 'ArrowDown') setKey('ArrowDown')
+        if (event.key === 'w') setKey('w')
+        if (event.key === 'a') setKey('a')
+        if (event.key === 's') setKey('s')
+        if (event.key === 'd') setKey('d')
+        if (event.key === 'ArrowUp') setKey('ArrowUp')
+        if (event.key === 'ArrowLeft') setKey('ArrowLeft')
+        if (event.key === 'ArrowRight') setKey('ArrowRight')
+        if (event.key === 'ArrowDown') setKey('ArrowDown')
     }
 
-    function handleKeyUp(event){
-        if(event.key === 'w') setKey('')
-        if(event.key === 'a') setKey('')
-        if(event.key === 's') setKey('')
-        if(event.key === 'd') setKey('')
-        if(event.key === 'ArrowUp') setKey('')
-        if(event.key === 'ArrowLeft') setKey('')
-        if(event.key === 'ArrowRight') setKey('')
-        if(event.key === 'ArrowDown') setKey('')
+    function handleKeyUp(event) {
+        if (event.key === 'w') setKey('')
+        if (event.key === 'a') setKey('')
+        if (event.key === 's') setKey('')
+        if (event.key === 'd') setKey('')
+        if (event.key === 'ArrowUp') setKey('')
+        if (event.key === 'ArrowLeft') setKey('')
+        if (event.key === 'ArrowRight') setKey('')
+        if (event.key === 'ArrowDown') setKey('')
     }
     return <>
 
@@ -61,32 +60,32 @@ export default function ({ toggleKeyboard, toggleGamepad, joy }) {
 
             </nav>
 
-            
-            {active==='k' && <div><div className="letter-keys">
+
+            {active === 'k' && <div><div className="letter-keys">
                 <div className="w">
-                    <li><a href="#" className={ key === 'w'? "key key-active": "key"} ><span>w</span></a></li>
+                    <li><a href="#" className={key === 'w' ? "key key-active" : "key"} ><span>w</span></a></li>
                 </div>
                 <div className="asd">
-                    <li><a href="#" className={ key === 'a'? "key key-active": "key"}><span>a</span></a></li>
-                    <li><a href="#" className={ key === 's'? "key key-active": "key"}><span>s</span></a></li>
-                    <li><a href="#" className={ key === 'd'? "key key-active": "key"}><span>d</span></a></li>
+                    <li><a href="#" className={key === 'a' ? "key key-active" : "key"}><span>a</span></a></li>
+                    <li><a href="#" className={key === 's' ? "key key-active" : "key"}><span>s</span></a></li>
+                    <li><a href="#" className={key === 'd' ? "key key-active" : "key"}><span>d</span></a></li>
                 </div>
 
             </div>
-           
-            <div className="arrow-keys">
-               <div className="w">
-                    <li><a href="#" className={ key === 'ArrowUp'? "key key-active": "key"}><span>t</span></a></li>
-                </div>
-                <div className="asd">
-                    <li><a href="#" className={ key === 'ArrowRight'? "key key-active": "key"}><span>r</span></a></li>
-                    <li><a href="#" className={ key === 'ArrowDown'? "key key-active": "key"}><span>d</span></a></li>
-                    <li><a href="#" className={ key === 'ArrowLeft'? "key key-active": "key"}><span>l</span></a></li>
-                </div>
-            </div> </div> 
+
+                <div className="arrow-keys">
+                    <div className="w">
+                        <li><a href="#" className={key === 'ArrowUp' ? "key key-active" : "key"}><span>t</span></a></li>
+                    </div>
+                    <div className="asd">
+                        <li><a href="#" className={key === 'ArrowRight' ? "key key-active" : "key"}><span>r</span></a></li>
+                        <li><a href="#" className={key === 'ArrowDown' ? "key key-active" : "key"}><span>d</span></a></li>
+                        <li><a href="#" className={key === 'ArrowLeft' ? "key key-active" : "key"}><span>l</span></a></li>
+                    </div>
+                </div> </div>
             }
 
-            {active === 'g' && <Joystick joy={joy} />}
+            {active === 'g' && <Joystick />}
         </div>
 
     </>

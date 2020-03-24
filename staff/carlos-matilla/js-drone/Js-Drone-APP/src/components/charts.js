@@ -1,31 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Line } from 'react-chartjs-2'
 import './Charts.sass';
 import CountUp from 'react-countup';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faGamepad, faKeyboard, faChartLine, faCog, faChartBar } from '@fortawesome/free-solid-svg-icons'
- 
+import { faGamepad, faKeyboard } from '@fortawesome/free-solid-svg-icons'
+
 export default function ({ mySession }) {
-
-
-    const percentage = 66;
 
     console.log(mySession)
 
-
-
-
-    function dateParser(date) {
-        const fullDate = date.split("T")[0]
-        const day = fullDate.split("-")[2]
-        const month = fullDate.split("-")[1]
-        const year2 = fullDate.split("-")[0]
-        const hour = (date.split("T")[1]).split(".")[0]
-
-        return `${hour}  ${day}-${month}-${year2}`
-    }
     const {
         lowTempP,
         hightTempP,
@@ -34,17 +19,27 @@ export default function ({ mySession }) {
         speedP,
         atmosPressureP,
         date,
-        _id,
         time,
         control
     } = mySession
-    
-    const consumedBat = batteryP[0] - batteryP[batteryP.length - 3]
+
+    function dateParser(date) {
+        const fullDate = date.split("T")[0]
+        const day = fullDate.split("-")[2]
+        const month = fullDate.split("-")[1]
+        const year2 = fullDate.split("-")[0]
+        const hour = (date.split("T")[1]).split(".")[0]
+        return `${hour}  ${day}-${month}-${year2}`
+    }
+
+    const consumedBat = batteryP[0] - batteryP[batteryP.length - 2]
+
     let speedAdd = 0
-   
+
     speedP.forEach(element => {
         speedAdd += element
     })
+
     const speedAve = Math.floor(speedAdd / speedP.length)
 
     const temperatureData = {
@@ -201,10 +196,10 @@ export default function ({ mySession }) {
 
         <div className="chart-estadistics">
             <div>
-            <p>Control</p>
+                <p>Control</p>
                 <br />
-                {control === 'gp' && <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x"/>}
-                {control === 'kb' && <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x"/>}
+                {control === 'gp' && <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x" />}
+                {control === 'kb' && <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x" />}
 
             </div>
             <div>
