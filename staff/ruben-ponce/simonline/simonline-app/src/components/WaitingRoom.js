@@ -42,7 +42,7 @@ export default ({ gameId, goTo }) => {
     <p className="waiting-room__top-menu__back" onClick={()=>goTo('multiplayer')}>Back</p>
     <p className="waiting-room__top-menu__title" onClick={
         (async () => {
-            if (userId === gameStatus.owner) {
+            if (userId === gameStatus.owner && gameStatus.players.length > 1) {
                 const started = await startGame(gameId)
                 setGameStatus(started)
             }

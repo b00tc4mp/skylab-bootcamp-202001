@@ -40,11 +40,13 @@ export default ({goTo, gameId}) => {
                             //show combination
 
                         } else if (status.status === 'finished') {
-                            //player win
-                            const currentPlayerObj = playersName.find(x => x.id === status.currentPlayer)
-                            setWinner(currentPlayerObj.username)
-                            //break interval
+                            const playerWin = playersName.find(x => x.id === status.currentPlayer)
+                            setWinner(playerWin.username)
+                            setTimeout(undefined)
+                            setCurrentPlayerName(undefined)
+                            setPlayersRemain(undefined)
                             console.log('finished')
+                            clearInterval(interval)
                         }
                     } catch (error) {
                         setError(error.message)
@@ -62,18 +64,18 @@ export default ({goTo, gameId}) => {
     <div className="game__board">
         <div className="game__board__container">
             <div className={color === 'r' ? "game__board__container__red .red_active" : "game__board__container__red"}></div>
-            <div className="game__board__container__green"></div>
-            <div className="game__board__container__blue"></div>
-            <div className="game__board__container__yellow"></div>
+            <div className={color === 'g' ? "game__board__container__green .green_active" : "game__board__container__green"}></div>
+            <div className={color === 'b' ? "game__board__container__blue .blue_active" : "game__board__container__blue"}></div>
+            <div className={color === 'y' ? "game__board__container__yellow .yellow_active" : "game__board__container__yellow"}></div>
             <div className="game__board__container__gray"></div>
         </div>
     </div>
     <div className="game__footer">
         {winner && <p className="game__footer__text">Player {winner} wins!</p>}
-        {timeout && <p className="game__footer__text">timeout: {timeout}sec.</p>}
-        {currentPlayerName && <p className="game__footer__text">Turn of {currentPlayerName}</p>}
+        {currentPlayerName && <p className="game__footer__text">Turn of: {currentPlayerName}</p>}
+        {timeout && <p className="game__footer__text">Remaining time: {timeout}sec.</p>}
         {lastPlayerOut && <p className="game__footer__text">Player {lastPlayerOut} out</p>}
-        {playersRemain && <p className="game__footer__text"> {playersRemain} players in game </p>}
+        {playersRemain && <p className="game__footer__text">Remaining players: {playersRemain}</p>}
         {error && <Feedback error={error}/>}
     </div>
 </div>
