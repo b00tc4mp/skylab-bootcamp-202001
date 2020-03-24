@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 
 module.exports = function (data) {
     const { features, park } = data
-    if (park.flow) validate.string(flow, 'flow')
+    if (park.flow) validate.string(park.flow, 'flow')
 
     for (key in park) {
         if (key === 'location') validate.type(park[key], key, Object)

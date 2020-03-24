@@ -25,7 +25,7 @@ export default function Profile({ navigation, route }) {
             setUser(_user)
 
         })()
-    }, [])
+    }, [_user.parks])
 
 
 
