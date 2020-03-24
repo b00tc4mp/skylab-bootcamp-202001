@@ -4,12 +4,12 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random, floor } = Math
 const publishToilet = require('./publish-toilet')
-const { mongoose, models: { User, Toilet } } = require('poopinion-data')
+const { mongoose, models: { User, Toilet, Comment } } = require('poopinion-data')
 
 describe('publishToilet', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany()]))
+            .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()]))
             .then(() => { })
     )
 
@@ -43,7 +43,7 @@ describe('publishToilet', () => {
             publishToilet(_id, place, coordinates)
                 .then(() => Toilet.findOne({ publisher: _id }))
                 .then(toilet => {
-                    
+
                     expect(toilet.publisher.toString()).to.equal(_id)
                     expect(toilet.place).to.equal(place)
                     expect(toilet.comments instanceof Array).to.equal(true)
@@ -154,7 +154,7 @@ describe('publishToilet', () => {
     })
 
     after(() =>
-        Promise.all([User.deleteMany(), Toilet.deleteMany()])
+        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
             .then(() => mongoose.disconnect())
     )
 })

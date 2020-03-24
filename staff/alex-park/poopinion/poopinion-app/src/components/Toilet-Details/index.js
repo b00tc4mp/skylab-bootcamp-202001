@@ -20,7 +20,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
                             <Text style={styles.place}>{toilet.place}</Text>
-                            {globalRating.scoreMean >= 4.5 && (<>
+                            {toilet.score >= 4.5 && (<>
                                 <View style={styles.poopRating}>
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
@@ -31,7 +31,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 </View>
                             </>)}
 
-                            {globalRating.scoreMean >= 3.5 && globalRating.scoreMean < 4.5 && (<>
+                            {toilet.score >= 3.5 && toilet.score < 4.5 && (<>
                                 <View style={styles.poopRating}>
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
@@ -42,7 +42,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 </View>
                             </>)}
 
-                            {globalRating.scoreMean >= 2.5 && globalRating.scoreMean < 3.5 && (<>
+                            {toilet.score >= 2.5 && toilet.score < 3.5 && (<>
                                 <View style={styles.poopRating}>
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
@@ -53,7 +53,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 </View>
                             </>)}
 
-                            {globalRating.scoreMean >= 1.5 && globalRating.scoreMean < 2.5 && (<>
+                            {toilet.score >= 1.5 && toilet.score < 2.5 && (<>
                                 <View style={styles.poopRating}>
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
@@ -64,7 +64,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 </View>
                             </>)}
 
-                            {globalRating.scoreMean >= 0.5 && globalRating.scoreMean < 1.5 && (<>
+                            {toilet.score >= 0.5 && toilet.score < 1.5 && (<>
                                 <View style={styles.poopRating}>
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRating.png')} />
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
@@ -102,7 +102,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                         <View style={styles.allScoreInfo}>
                             <View style={styles.scoreLeft}>
                                 <View style={styles.scoreLeftUp}>
-                                    <Text style={styles.scoreMean}>{globalRating.scoreMean}</Text>
+                                    <Text style={styles.scoreMean}>{toilet.score ? toilet.score : 0}</Text>
                                 </View>
                                 <TouchableOpacity style={styles.scoreLeftDown} onPress={() => onComment(toilet.id)}>
                                     <Text style={styles.addRating}>+ Add/

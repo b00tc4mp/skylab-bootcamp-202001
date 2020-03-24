@@ -28,7 +28,7 @@ module.exports = () => {
                         delete comment._id
                         delete comment.__v
 
-                        toilet.score += comment.rating.overallRating
+                        toilet.score += ((comment.rating.overallRating + (comment.rating.cleanness * 0.5) + (comment.rating.looks * 0.5)) / 2)
                     })
 
                     toilet.score = toilet.score / toilet.comments.length

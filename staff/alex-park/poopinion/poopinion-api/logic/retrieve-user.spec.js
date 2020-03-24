@@ -4,12 +4,13 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random, floor } = Math
 const retrieveUser = require('./retrieve-user')
-const { mongoose, models: { User } } = require('poopinion-data')
+const { mongoose, models: { User, Toilet, Comment } } = require('poopinion-data')
 
 describe('retrieveUser', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany())
+            .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()]))
+            .then(() => { })
     )
 
     let name, surname, email, password, age, gender, _id
@@ -66,7 +67,7 @@ describe('retrieveUser', () => {
             User.create({ name, surname, email, password, age, gender, deactivated: true })
                 .then(({ id }) => _id = id)
                 .then(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } }))
-                .then(() => {})
+                .then(() => { })
         )
         it('should fail to retrieve a deactivated user', () =>
             retrieveUser(_id)
@@ -92,5 +93,8 @@ describe('retrieveUser', () => {
         expect(() => retrieveUser(_id)).to.throw(TypeError, `id ${_id} is not a string`)
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() =>
+        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
+            .then(() => mongoose.disconnect())
+    )
 })

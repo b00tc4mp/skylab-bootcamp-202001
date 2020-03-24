@@ -40,7 +40,7 @@ describe('retrieveTopToilets', () => {
         rating.multipleToilets = YESORNO[floor(random() * YESORNO.length)]
         rating.paymentRequired = YESORNO[floor(random() * YESORNO.length)]
         rating.paperDeployment = YESORNO[floor(random() * YESORNO.length)]
-        rating.overallRating = random() * 5
+        rating.overallRating = floor(random() * 5)
         rating.textArea = `opinion-${random()}`
 
         rating2.cleanness = floor(random() * 5)
@@ -48,7 +48,7 @@ describe('retrieveTopToilets', () => {
         rating2.multipleToilets = YESORNO[floor(random() * YESORNO.length)]
         rating2.paymentRequired = YESORNO[floor(random() * YESORNO.length)]
         rating2.paperDeployment = YESORNO[floor(random() * YESORNO.length)]
-        rating2.overallRating = random() * 5
+        rating2.overallRating = floor(random() * 5)
         rating2.textArea = `opinion2-${random()}`
     })
 
@@ -93,10 +93,9 @@ describe('retrieveTopToilets', () => {
 
                     expect(toilets[0].score > toilets[1].score).to.be.true
 
-                    if (toilets[0].score === rating.overallRating) {
+                    if (toilets[0].comments[0].rating.textArea === rating.textArea) {
                         const t = toilets[0]
 
-                        
                         expect(t).to.be.instanceOf(Object)
                         expect(t.place).to.equal(place)
                         expect(t.publisher.id.toString()).to.equal(_id)

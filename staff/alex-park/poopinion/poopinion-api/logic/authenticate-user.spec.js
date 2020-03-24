@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User } } = require('poopinion-data')
+const { mongoose, models: { User, Toilet, Comment } } = require('poopinion-data')
 const { expect } = require('chai')
 const { random, floor } = Math
 const authenticateUser = require('./authenticate-user')
@@ -11,7 +11,8 @@ const { ContentError } = require('poopinion-errors')
 describe('authenticateUser', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany())
+            .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()]))
+            .then(() => { })
     )
 
     let name, surname, email, password, age, gender
@@ -119,5 +120,8 @@ describe('authenticateUser', () => {
         })
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() =>
+        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
+            .then(() => mongoose.disconnect())
+    )
 })

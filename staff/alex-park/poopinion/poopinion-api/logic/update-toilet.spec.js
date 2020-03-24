@@ -149,30 +149,30 @@ describe('updateToilet', () => {
 
         it('should fail on a non-string user id', () => {
             _id = 9328743289
-            expect(() => updateToilet(_id, _toiletId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateToilet(_id, _toiletId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
 
             _id = false
-            expect(() => updateToilet(_id, _toiletId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateToilet(_id, _toiletId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
 
             _id = undefined
-            expect(() => updateToilet(_id, _toiletId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateToilet(_id, _toiletId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
 
             _id = []
-            expect(() => updateToilet(_id, _toiletId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateToilet(_id, _toiletId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
         })
 
         it('should fail on a non-string toilet id', () => {
             _toiletId = 9328743289
-            expect(() => updateToilet(__id, _toiletId, {place})).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+            expect(() => updateToilet(__id, _toiletId, { place })).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
 
             _toiletId = false
-            expect(() => updateToilet(__id, _toiletId, {place})).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+            expect(() => updateToilet(__id, _toiletId, { place })).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
 
             _toiletId = undefined
-            expect(() => updateToilet(__id, _toiletId, {place})).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+            expect(() => updateToilet(__id, _toiletId, { place })).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
 
             _toiletId = []
-            expect(() => updateToilet(__id, _toiletId, {place})).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
+            expect(() => updateToilet(__id, _toiletId, { place })).to.throw(TypeError, `toilet ID ${_toiletId} is not a string`)
         })
 
         it('should fail on a non-object data', () => {
@@ -190,5 +190,8 @@ describe('updateToilet', () => {
         })
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() =>
+        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
+            .then(() => mongoose.disconnect())
+    )
 })

@@ -24,11 +24,17 @@ module.exports = toiletId => {
             toilet.publisher.id = toilet.publisher._id.toString()
             delete toilet.publisher._id
 
-            toilet.comments.forEach(comment => {
+            toilet.score = 0
+
+            toilet.comments.length > 0 && toilet.comments.forEach(comment => {
                 comment.id = comment._id.toString()
                 delete comment._id
                 delete comment.__v
+
+                toilet.score += ((comment.rating.overallRating + (comment.rating.cleanness * 0.5) + (comment.rating.looks * 0.5)) / 2)
             })
+
+            toilet.score = toilet.score / toilet.comments.length
 
             return toilet
         })

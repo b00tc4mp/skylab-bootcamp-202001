@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { random, floor } = Math
-const { mongoose, models: { User } } = require('poopinion-data')
+const { mongoose, models: { User, Toilet, Comment } } = require('poopinion-data')
 const updateUser = require('./update-user')
 const bcrypt = require('bcryptjs')
 const { env: { TEST_MONGODB_URL } } = process
@@ -13,7 +13,8 @@ describe('updateUser', () => {
 
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-            .then(() => User.deleteMany())
+            .then(() => Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()]))
+            .then(() => { })
     )
 
     beforeEach(() => {
@@ -152,5 +153,8 @@ describe('updateUser', () => {
         })
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() =>
+        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
+            .then(() => mongoose.disconnect())
+    )
 })

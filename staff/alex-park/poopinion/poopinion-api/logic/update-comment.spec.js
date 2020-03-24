@@ -168,30 +168,30 @@ describe('updateComment', () => {
 
         it('should fail on a non-string user id', () => {
             _id = 9328743289
-            expect(() => updateComment(_id, _commentId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateComment(_id, _commentId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
 
             _id = false
-            expect(() => updateComment(_id, _commentId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateComment(_id, _commentId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
 
             _id = undefined
-            expect(() => updateComment(_id, _commentId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateComment(_id, _commentId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
 
             _id = []
-            expect(() => updateComment(_id, _commentId, {place})).to.throw(TypeError, `id ${_id} is not a string`)
+            expect(() => updateComment(_id, _commentId, { place })).to.throw(TypeError, `id ${_id} is not a string`)
         })
 
         it('should fail on a non-string comment id', () => {
             _commentId = 9328743289
-            expect(() => updateComment(__id, _commentId, {place})).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+            expect(() => updateComment(__id, _commentId, { place })).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
 
             _commentId = false
-            expect(() => updateComment(__id, _commentId, {place})).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+            expect(() => updateComment(__id, _commentId, { place })).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
 
             _commentId = undefined
-            expect(() => updateComment(__id, _commentId, {place})).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+            expect(() => updateComment(__id, _commentId, { place })).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
 
             _commentId = []
-            expect(() => updateComment(__id, _commentId, {place})).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
+            expect(() => updateComment(__id, _commentId, { place })).to.throw(TypeError, `comment ID ${_commentId} is not a string`)
         })
 
         it('should fail on a non-object data', () => {
@@ -209,5 +209,8 @@ describe('updateComment', () => {
         })
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() =>
+        Promise.all([User.deleteMany(), Toilet.deleteMany(), Comment.deleteMany()])
+            .then(() => mongoose.disconnect())
+    )
 })
