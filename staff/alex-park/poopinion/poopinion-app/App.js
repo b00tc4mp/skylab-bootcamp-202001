@@ -27,7 +27,8 @@ import logic, {
   toggleThumbDown,
   publishComment,
   retrieveTopToilets,
-  updateComment
+  updateComment,
+  deleteComment
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage
@@ -61,6 +62,7 @@ export default function App() {
       })
     })
 
+    __handleUser__()
     __handleToiletScore__()
     __handleTopToilets__()
   }, [detailedToilet])
@@ -276,8 +278,17 @@ export default function App() {
     }
   }
 
-  function handleDeleteComment(id, toiletId, commentId) {
-    console.log(id, toiletId, commentId)
+  function handleDeleteComment(toiletId, commentId) {
+    try {
+      (async () => {
+        await deleteComment(token, toiletId, commentId)
+        Alert.alert('Comment successfully deleted! 💩')
+        __handleTopToilets__() //AFFECTS PERFORMANCE!!! CONSIDER REMOVING
+        setView('landing')
+      })()
+    } catch ({ message }) {
+      __handleError__(message)
+    }
   }
 
   // ROUTE FUNCTIONS

@@ -185,7 +185,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                                 <Text>{comment.thumbsDown.length}</Text>
                                             </View>
 
-                                            <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(user.id.toString(), toilet.id.toString(), comment.id.toString())}>
+                                            <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(toilet.id.toString(), comment.id.toString())}>
                                                 {comment.publisher._id.toString() === user.id.toString() && <Image style={styles.trash} source={require('../../../assets/delete.png')} />}
                                             </TouchableOpacity>
                                         </View>

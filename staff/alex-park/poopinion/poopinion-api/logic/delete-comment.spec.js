@@ -141,7 +141,7 @@ describe('deleteComment', () => {
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
-                    expect(message).to.equal(`comment with id null does not exist`)
+                    expect(message).to.equal(`comment with id ${_commentId} does not exist`)
                 })
                 .then(() => { })
         )

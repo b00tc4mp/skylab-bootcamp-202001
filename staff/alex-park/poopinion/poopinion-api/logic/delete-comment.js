@@ -26,7 +26,7 @@ module.exports = (id, toiletId, commentId) => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
             if (!toilet) throw new NotFoundError(`toilet with id ${toiletId} does not exist`)
-            if (!comment) throw new NotFoundError(`comment with id ${comment} does not exist`)
+            if (!comment) throw new NotFoundError(`comment with id ${commentId} does not exist`)
 
             return Promise.all([User.findByIdAndUpdate(id, { $pull: { comments: commentId } }), Toilet.findByIdAndUpdate(toiletId, { $pull: { comments: commentId } })])
         })
