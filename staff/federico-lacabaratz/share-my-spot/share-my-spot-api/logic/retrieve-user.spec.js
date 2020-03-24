@@ -7,7 +7,7 @@ const retrieveUser = require('./retrieve-user')
 const { NotFoundError } = require('share-my-spot-errors')
 
 describe('retrieveUser', () => {
-    let name, surname, email, password
+    let name, surname, email, phone, password
 
 
     before(async () => {
@@ -20,6 +20,7 @@ describe('retrieveUser', () => {
         name = 'name-' + Math.random()
         surname = 'surname-' + Math.random()
         email = Math.random() + '@mail.com'
+        phone = 666555444
         password = 'password-' + Math.random()
 
     })
@@ -27,7 +28,7 @@ describe('retrieveUser', () => {
         let _id
         describe('when user is not deactivated', () => {
             beforeEach(() =>
-                User.create({ name, surname, email, password })
+                User.create({ name, surname, email, phone, password })
                     .then(({ id }) => _id = id)
             )
 
@@ -38,6 +39,7 @@ describe('retrieveUser', () => {
                         expect(user.name).to.equal(name)
                         expect(user.surname).to.equal(surname)
                         expect(user.email).to.equal(email)
+                        expect(user.phone).to.equal(phone)
                         expect(user.password).to.be.undefined
                     })
             })

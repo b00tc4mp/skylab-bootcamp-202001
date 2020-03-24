@@ -1,40 +1,47 @@
+const { validate } = require('share-my-spot-utils')
 const { models: { Spot } } = require('share-my-spot-data')
 
 module.exports = (filter = {}) => {
-    const { location, length, height, width, price, acceptBarker } = filter
-    const _filter = {  status: 'available' }
-
-    if (typeof location !== 'undefined') {
-        validate.string(location, 'location')
-        _filter.addressLocation = { $regex: location }
+    let { addressLocation, length, height, width, price, acceptsBarker } = filter
+    let _filter = {  status: 'available' }
+    
+    
+    if (typeof addressLocation !== 'undefined') {
+        validate.string(addressLocation, 'location')
+        _filter.addressLocation = { $regex: addressLocation }
     }
     
     if (typeof length !== 'undefined') {
-        validate.number(length, 'length')
+        length = Number(length)
+        validate.type(length, 'length', Number)
         _filter.length = { $gte: length }
     }
     
     if (typeof height !== 'undefined') {
-        validate.number(height, 'height')
+        height = Number(height)
+        validate.type(height, 'height', Number)
         _filter.height = { $gte: height }
     }
     
     if (typeof width !== 'undefined') {
-        validate.number(width, 'width')
+        width = Number(width)
+        validate.type(width, 'width', Number)
         _filter.width = { $gte: width }
     }
 
     if (typeof price !== 'undefined') {
-        validate.number(price, 'price')
+        price = Number(price)
+        validate.type(price, 'price', Number)
         _filter.price = { $lte: price }
     }
 
-    if (typeof acceptBarker !== 'undefined') {
-        validate.type(acceptBarker, 'acceptBarker', Boolean)
-        _filter.acceptBarker = acceptBarker
+    if (typeof acceptsBarker !== 'undefined') {
+        acceptsBarker === 'yes' ? acceptsBarker = true : acceptsBarker = false
+        validate.type(acceptsBarker, 'acceptsBarker', Boolean)
+        _filter.acceptsBarker = acceptsBarker
     }
-
-    return Spot.find(_filter).sort({ created: -1 })
+    
+    return Spot.find(_filter).populate("publisherId", "name surname email phone").sort({ created: -1 })
         .then(spots => {
             return spots
         })

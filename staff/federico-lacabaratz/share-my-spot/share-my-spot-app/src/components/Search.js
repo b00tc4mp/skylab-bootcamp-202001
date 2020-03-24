@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { retrieveUser, isLoggedIn, logout } from '../logic'
+import React, { useEffect, useContext } from 'react'
+import { isLoggedIn } from '../logic'
 import { withRouter } from 'react-router-dom'
 import { Context } from './ContextProvider'
 import Feedback from './Feedback'
-import Header from './Header'
+import './Feedback.sass'
+import './Search.sass'
+import imgBack from '../images/homeBckgrnd.png'
 
-export default withRouter(({ history }) => {
+export default withRouter(({ history, onSearch, error }) => {
 
     const [set, setState] = useContext(Context)
 
@@ -26,19 +28,48 @@ export default withRouter(({ history }) => {
         }
     }, [])
 
-    const handleLogout = () => {
-        logout()
 
-        history.push('/login')
+    const handleOnSearch = (event) => {
+        event.preventDefault()
+        
+        let addressLocation = event.target.location.value
+        let length = event.target.length.value
+        let height = event.target.height.value
+        let width = event.target.width.value
+        let price = event.target.price.value
+        let acceptsBarker = event.target.acceptsBarker.value.toLowerCase()
+
+        let query = {addressLocation, length, height, width, price, acceptsBarker}
+
+        let _query = ''
+        
+        for (const keys in query) {
+            if (query[keys].length) {
+                _query += keys + '=' + query[keys] + '&'
+            }
+        }
+
+        onSearch(_query)
     }
 
-    const { error } = set
-    return <div>
-        <Header />
-        <h1>HELLO</h1>
-        <button onClick={event => {
-            event.preventDefault()
-            handleLogout()
-        }}>Logout</button>
-    </div>
+    return <>
+        <div className="search">
+            <div className="search__container">
+                <main>
+                    <form className="search__form" onSubmit={handleOnSearch}>
+                        <img className="search__backgroundImg" src={imgBack} alt="ShareMySpotLogo" />
+                        <input className="search__input" type="text" name="location" placeholder="Search by location" />
+                        <input className="search__input" type="text" name="length" placeholder="Search by length" />
+                        <input className="search__input" type="text" name="height" placeholder="Search by height" />
+                        <input className="search__input" type="text" name="width" placeholder="Search by width" />
+                        <input className="search__input" type="text" name="price" placeholder="Search by price" />
+                        <input className="search__input" type="text" name="acceptsBarker" placeholder="Barker Exchange?" />
+                        
+                        <button className="search__goSearch">Search</button>
+                    </form>
+                    {error && <Feedback message={error} level="warn" />}    
+                </main>
+            </div>
+        </div>
+    </>
 })

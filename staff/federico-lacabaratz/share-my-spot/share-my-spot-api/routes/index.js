@@ -7,6 +7,7 @@ const {
     createSpot,
     findAvailableSpots,
     retrievePublishedSpots,
+    retrieveSpot,
     updateSpot,
     deleteSpot,
     saveSpotPhoto,
@@ -34,7 +35,9 @@ router.post('/spots', [jwtVerifierMidWare, jsonBodyParser], createSpot)
 
 router.get('/spots', jwtVerifierMidWare, retrievePublishedSpots)
 
-router.get('/find-available-spots', findAvailableSpots)
+router.get('/:spotId', retrieveSpot)
+
+router.get('/?', findAvailableSpots)
 
 router.patch('/update-spot/:spotId', [jwtVerifierMidWare, jsonBodyParser], updateSpot)
 

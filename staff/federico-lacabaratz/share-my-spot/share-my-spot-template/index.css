@@ -97,6 +97,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   font-size: 1.25em;
   width: 50%;
   border-radius: 0.5em;
@@ -107,6 +108,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   font-size: 1.2em;
   width: 50%;
   border-radius: 0.5em;
@@ -168,6 +170,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   font-size: 1.25em;
   width: 50%;
   border-radius: 0.5em;
@@ -178,6 +181,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   font-size: 1.2em;
   width: 50%;
   border-radius: 0.5em;
@@ -231,10 +235,17 @@ main {
   background-color: #5cddc8;
   padding: 0.5em;
 }
+.updateUser__h3 {
+  font-size: 1.25em;
+  text-align: center;
+  margin: 1.5em;
+  font-weight: bold;
+}
 .updateUser__input {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   font-size: 1.25em;
   width: 65%;
   border-radius: 0.5em;
@@ -245,6 +256,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   font-size: 1.2em;
   width: 65%;
   border-radius: 0.5em;
@@ -486,6 +498,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 1.5em;
   width: 20%;
   font-size: 1.2em;
@@ -561,12 +574,25 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 1.5em;
   width: 20%;
   font-size: 1.2em;
   border-radius: 0.5em;
   padding: 0.2em;
   margin: 0.5em;
+}
+.results__bottom-phone {
+  display: none;
+}
+.results__bottom-call:hover + .results__bottom-phone {
+  display: block;
+}
+.results__bottom-email {
+  display: none;
+}
+.results__bottom-envelope:hover + .results__bottom-email {
+  display: block;
 }
 
 .login__h2, .register__h2, .updateUser__h2 {
@@ -675,6 +701,7 @@ main {
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 1.5em;
   width: 20%;
   font-size: 1.2em;
@@ -687,6 +714,7 @@ main {
   align-items: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   width: 80%;
   height: 1.75em;
   font-size: 1.2em;
@@ -755,12 +783,13 @@ main {
   padding: 1.5em;
   width: 100%;
 }
-.yourSpots__bottom-edit {
+.yourSpots__bottom-edit, .yourSpots__bottom-trash {
   align-content: center;
   align-items: center;
   text-align: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 1.5em;
   width: 20%;
   font-size: 1.2em;
@@ -810,6 +839,7 @@ main {
   align-items: center;
   background-color: #ffffff;
   border: 1px solid black;
+  outline-color: #2c5043;
   padding-top: 1.5em;
   padding-bottom: 1.5em;
   margin: 1.5em;
@@ -840,6 +870,7 @@ main {
   background-color: #c0c9c7;
   text-align: center;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 2em;
   border-radius: 0.5em;
   width: 60;
@@ -867,6 +898,114 @@ main {
   align-items: flex-start;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
+  height: 2em;
+  width: 75%;
+  font-size: 1.2em;
+  border-radius: 0.5em;
+}
+
+.login__h2, .register__h2, .updateUser__h2 {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1.75em;
+}
+
+.login__toRegister, .register__toLogin {
+  font-weight: bold;
+  color: #000000;
+  font-size: 1em;
+}
+
+.yourBookings__buttons-call, .yourBookings__buttons-envelope, .yourBookings__bottom, .manageRequests__buttons, .manageRequests__bottom, .header__container, .header__logo, .header__account, .item__bottom, .results__bottom, .detail__photo, .detail__bottom, .detail__mAbook, .yourSpots__bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.login, .register, .updateUser, .search__container, .search__backgroundImg, .item__container, .item__photo, .results__container, .results__photo, .detail__container, .yourSpots__container, .yourSpots__photo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.updateSpot {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  background-color: #5cddc8;
+  height: auto;
+  width: 100%;
+}
+.updateSpot__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid black;
+  outline-color: #2c5043;
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  margin: 1.5em;
+}
+.updateSpot__form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  font-size: 1.2em;
+  margin: 0.5em;
+}
+.updateSpot__form2 {
+  display: inline-block;
+  height: auto;
+  font-size: 1.2em;
+  margin: 0.5em;
+}
+.updateSpot__infoToComplete {
+  background-color: #c0c9c7;
+  text-align: center;
+  font-size: 1em;
+  height: 2.25em;
+  margin: 0.5em;
+}
+.updateSpot__infoToComplete-upButton {
+  background-color: #c0c9c7;
+  text-align: center;
+  border: 1px solid black;
+  outline-color: #2c5043;
+  height: 2em;
+  border-radius: 0.5em;
+  width: 60;
+  margin: 0.5em;
+}
+.updateSpot_h3 {
+  text-align: center;
+  margin: 0.5em;
+  font-weight: bold;
+}
+.updateSpot__checkBox {
+  text-align: start;
+  margin: 0.5em;
+  font-size: 1em;
+}
+.updateSpot p {
+  text-align: start;
+  margin: 0.5em;
+  font-size: 1em;
+}
+.updateSpot .updateSpot__submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #c0c9c7;
+  border: 1px solid black;
+  outline-color: #2c5043;
   height: 2em;
   width: 75%;
   font-size: 1.2em;
@@ -942,6 +1081,7 @@ main {
   align-items: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 1.75em;
   width: 50%;
   font-size: 1.2em;
@@ -1019,6 +1159,7 @@ main {
   align-items: center;
   background-color: #c0c9c7;
   border: 1px solid black;
+  outline-color: #2c5043;
   height: 1.75em;
   width: 35%;
   font-size: 1.2em;

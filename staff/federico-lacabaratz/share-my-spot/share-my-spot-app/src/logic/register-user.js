@@ -4,18 +4,19 @@ require('dotenv').config()
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function (name, surname, email, password) {
+export default function (name, surname, email, phone, password) {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
     validate.email(email)
+    validate.type(phone, 'phone', Number)
     validate.string(password, 'password')
 
     return (async () => {
         const response = await fetch(`${API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, surname, email, password })
+            body: JSON.stringify({ name, surname, email, phone, password })
         })
 
         const { status } = response

@@ -5,6 +5,7 @@ module.exports = {
     updateUser: require('./update-user'),
     createSpot: require('./create-spot'),
     retrievePublishedSpots: require('./retrieve-published-spots'),
+    retrieveSpot: require('./retrieve-spot'),
     findAvailableSpots: require('./find-available-spots'),
     updateSpot: require('./update-spot'),
     deleteSpot: require('./delete-spot'),

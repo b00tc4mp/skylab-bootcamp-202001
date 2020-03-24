@@ -2,6 +2,7 @@ import React from 'react'
 import logo from '../images/logo.png'
 import './Login.sass'
 import Feedback from './Feedback'
+import './Feedback.sass'
 import { withRouter } from 'react-router-dom'
 
 export default withRouter(function ({ onLogin, history, error }) {
@@ -19,13 +20,7 @@ export default withRouter(function ({ onLogin, history, error }) {
 
         history.push('/register')
     }
-
-    /* function handleGoToRegister(event) {
-        event.preventDefault()
-
-        history.push('/register')
-    } */
-
+    
     return <>
         <div className="login" >
             <form className="login__container" onSubmit={handleOnLogin}>
@@ -34,8 +29,8 @@ export default withRouter(function ({ onLogin, history, error }) {
                 <input className="login__input" type="text" name="email" placeholder="email" />
                 <input className="login__input" type="password" name="password" placeholder="password" />
                 <button className="login__login">Login</button><br></br>
-                <a className="login__toRegister" href="" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
                 {error && <Feedback message={error} level="warn" />}
+                <a className="login__toRegister" href="/login" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
             </form>
         </div>
     </>

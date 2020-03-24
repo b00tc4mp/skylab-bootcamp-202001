@@ -20,6 +20,7 @@ describe('deleteSpot', () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
+        phone = 666555444
         password = `password-${random()}`
 
         title = `title-${random()}`
@@ -48,16 +49,16 @@ describe('deleteSpot', () => {
 
     describe('when user already exists', () => {
 
-        beforeEach(() => 
-            Promise.all([User.create({ name, surname, email, password }), Spot.create({_id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun }) ])
+        beforeEach(() =>
+            Promise.all([User.create({ name, surname, email, phone, password }), Spot.create({ _id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun })])
                 .then(([user, spot]) => {
                     _id = user.id
                     _spotId = spot.id
                     user.save()
                     return spot.save()
                 })
-                .then(() => {})
-                )
+                .then(() => { })
+        )
 
         it('should succeed on correct and valid and right data', () =>
             User.findById(_id)
@@ -94,16 +95,16 @@ describe('deleteSpot', () => {
             let userId
 
             userId = 12345
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
             userId = false
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
             userId = undefined
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
             userId = []
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
         })
 

@@ -23,6 +23,7 @@ describe('createSpot', () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
+        phone = 666555444
         password = `password-${random()}`
         
         title = `title-${random()}`
@@ -53,7 +54,7 @@ describe('createSpot', () => {
         let _id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
+            User.create({ name, surname, email, phone, password })
                 .then(({ id }) => _id = id)
         )
 

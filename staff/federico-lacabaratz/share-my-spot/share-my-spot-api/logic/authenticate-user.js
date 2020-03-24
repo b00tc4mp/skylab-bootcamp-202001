@@ -33,7 +33,7 @@ module.exports = (email, password) => {
         user.authenticated = await new Date
     
         const { id } = await user.save()
-    
+        
         return id
     })()
 }
