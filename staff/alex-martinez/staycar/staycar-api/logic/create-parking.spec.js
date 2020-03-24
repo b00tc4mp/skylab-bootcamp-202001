@@ -56,7 +56,7 @@ describe('crateParking', () => {
     })
     it('should fail on non string parking name', () => {
         let parkingName = true
-        expect(() => createParking('123', parkingName, 1, 20 )).to.throw(TypeError, `pkName ${parkingName} is not a string`)
+        expect(() => createParking('123', parkingName, 1, 20 )).to.throw(TypeError, `parkingName ${parkingName} is not a string`)
     })
     it('should fail on non rate number', () => {
         let rate = '1'
