@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert, Modal } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal } from 'react-native'
 import MyButton from '../Button'
 import MapView from 'react-native-maps'
 import styles from './styles'
@@ -24,19 +24,17 @@ function ParkDetails({ park, error }) {
                 <View style={styles.infoContainer}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
-                            <Text style={styles.postedAt}>Posted at: {park.created.toString().slice(0, 10)}.</Text>
+                            <Text style={styles.postedAt}>Creation date: {park.created.toString().slice(0, 10)}.</Text>
                             <Text>Created by: {park.creator.name}</Text>
                         </View>
-                        <TouchableOpacity style={styles.headerRight} >
-                            {park.verified && <Text style={styles.isVerified}>Verified Park</Text>}
-
-                            {!park.verified && <Text style={styles.isNotVerified}>Park not verified</Text>}
-                        </TouchableOpacity>
+                        <View style={styles.headerRight}>
+                            <TouchableOpacity style={styles.commentsButton} onPress={() => setShowComments(true)}>
+                                <Text style={styles.commentsLink}>See what people are saying</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     <View style={styles.top}>
-
-
                         <View style={styles.basicInfoContainer}>
                             <View>
                                 <Text style={styles.basicInfo}>{park.resort.toUpperCase()}</Text>
@@ -47,9 +45,7 @@ function ParkDetails({ park, error }) {
                             <View >
                                 <Text style={styles.basicInfo}>{park.level}</Text>
                             </View>
-
                         </View>
-
                         <View style={styles.votesContainer}>
                             <TouchableOpacity>
                                 <Text style={styles.upVote}>+ Vote</Text>
@@ -63,9 +59,8 @@ function ParkDetails({ park, error }) {
 
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => setShowComments(true)}>
-                        <Text>Check the park comments</Text>
-                    </TouchableOpacity>
+
+
                     <Modal
                         animationType="slide"
                         transparent={false}
@@ -102,7 +97,7 @@ function ParkDetails({ park, error }) {
 
                     </Modal>
                     <View style={styles.mapContainer}>
-                        {/* <Text style={styles.sectionHeader}>Location:</Text> */}
+
                         <MapView style={styles.mapStyle}
                             region={{
                                 latitude: park.location.coordinates[1],
@@ -114,6 +109,26 @@ function ParkDetails({ park, error }) {
                             }} />
                         </MapView>
                     </View>
+                    {park.verified && (<View>
+                        <Text style={styles.approve}>Verified Park</Text>
+                    </View>
+                    )}
+                    {!park.verified && (
+
+                        <View style={styles.actionsContainer}>
+
+                            <TouchableOpacity style={styles.approve}>
+                                <Text style={styles.actionText}>Approve</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.report}>
+                                <Text style={styles.actionText}>Report</Text>
+                            </TouchableOpacity>
+
+
+                        </View>
+
+                    )}
                     <View style={styles.featuresContainer}>
                         <Text style={styles.sectionHeader}>Park features ({park.features.length}):</Text>
                         {park.features.length ?

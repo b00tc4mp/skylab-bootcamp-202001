@@ -11,10 +11,7 @@ const styles = StyleSheet.create({
         width: '95%',
         marginHorizontal: '2.5%'
     },
-    scoreContainer: {
-        width: '100%',
-        marginVertical: 15
-    },
+
     mapContainer: {
         width: '100%',
         marginVertical: 15
@@ -42,9 +39,13 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200
     },
+    commentsButton: {
+        alignSelf: 'flex-end'
+    },
     header: {
         flex: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     headerLeft: {
         flex: 0.7,
@@ -90,29 +91,46 @@ const styles = StyleSheet.create({
         padding: 5,
     },
 
-    favButton: {
-        resizeMode: 'contain',
-        width: '60%',
-        height: '60%',
-        alignSelf: 'center'
-    },
+
     votesContainer: {
         margin: 10,
         width: '35%',
         alignSelf: 'flex-end',
 
     },
+
     basicInfoContainer: {
         marginLeft: 10,
         width: '50%'
     },
-    place: {
-        fontSize: 25,
-        fontWeight: 'bold'
+
+    actionsContainer: {
+        flex: 1,
+        margin: 10,
+        marginBottom: 25,
+        width: '95%',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
     },
-    rating: {
-        fontSize: 20
+    approve: {
+        padding: 5,
+        borderRadius: 5,
+        flex: 0.4,
+        backgroundColor: 'green'
     },
+    actionText: {
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: 'white'
+    },
+
+    report: {
+        backgroundColor: 'red',
+        padding: 5,
+        borderRadius: 5,
+        flex: 0.4
+    },
+
     postedAt: {
         fontStyle: 'italic',
         paddingBottom: 3,
@@ -122,28 +140,19 @@ const styles = StyleSheet.create({
         height: 150,
         marginVertical: 10
     },
-    location: {
-        fontSize: 25,
-        fontWeight: 'bold'
-    },
+
     sectionHeader: {
         fontSize: 25,
         fontWeight: 'bold'
     },
 
-    scoreLeft: {
-        margin: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        flex: 0.8
-    },
     votes: {
         fontSize: 35,
         fontWeight: 'bold',
         color: '#82A4B3',
         textAlign: 'center',
     },
+
 
     basicInfo: {
         backgroundColor: '#82A4B3',
@@ -172,31 +181,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'red',
     },
-    scoreRight: {
-        margin: 15,
-        flex: 1,
-        width: '50%',
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    smallScore: {
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    poopRating: {
-        flex: 1,
-        width: '70%',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-    },
 
-    smallPoop: {
-        flex: 1,
-        resizeMode: 'contain',
-        width: '100%',
-        height: '100%',
-        alignSelf: 'flex-start'
-    },
+
     commentsContainer: {
         marginVertical: 15,
         borderWidth: 2,
@@ -223,16 +209,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-around'
     },
-    trashContainer: {
-        flex: 1,
-        width: '100%',
-        alignItems: 'flex-end',
-    },
-    trash: {
-        width: 40,
-        height: 40,
-        resizeMode: 'contain',
-
+    commentsLink: {
+        textAlign: 'center',
+        fontWeight: 'bold'
     }
 })
 
