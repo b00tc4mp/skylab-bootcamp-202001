@@ -15,14 +15,35 @@ const { models: { Toilet } } = require('poopinion-data')
 module.exports = query => {
     validate.string(query, 'query')
 
-    return Toilet.find({ "place": { $regex: `.*${query}.*` } }).populate('publisher', 'name surname').lean()
+    return Toilet.find({ "place": { $regex: `.*${query}.*` } }).populate('publisher', 'name surname').populate('comments').lean()
         .then(toilets => {
-            toilets.forEach(toilet => {
-                toilet.id = toilet._id.toString()
-                delete toilet._id
-                delete toilet.__v
-            })
+            if (toilets.length > 0) {
+                toilets.forEach(toilet => {
+                    toilet.score = 0
 
-            return toilets
+                    toilet.id = toilet._id.toString()
+                    delete toilet._id
+                    delete toilet.__v
+
+                    if (typeof toilet.publisher._id !== 'undefined') {
+                        toilet.publisher.id = toilet.publisher._id.toString()
+                        delete toilet.publisher._id
+                    }
+
+                    toilet.comments.length > 0 && toilet.comments.forEach(comment => {
+                        comment.id = comment._id.toString()
+                        delete comment._id
+                        delete comment.__v
+
+                        toilet.score += ((comment.rating.overallRating + (comment.rating.cleanness * 0.5) + (comment.rating.looks * 0.5)) / 2)
+                    })
+
+                    toilet.score = toilet.score / toilet.comments.length
+                })
+
+                return toilets.sort(function (a, b) {
+                    return b.score - a.score
+                })
+            } else return [] 
         })
 }

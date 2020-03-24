@@ -4,8 +4,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        width: '95%',
-        marginHorizontal: '2.5%'
+        width: '100%',
     },
     resultsContainer: {
         flex: 1,
@@ -14,38 +13,78 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row'
     },  
-    toiletContainer: {
-        marginBottom: 30
-    },
-    rating: {
-        fontSize: 20
-    },
     header: {
+        flex: 1,
+        flexDirection: 'row',
         fontSize: 25,
-        marginVertical: 20
+        marginLeft: '2.5%',
     },
-    postHeader: {
-        fontSize: 22.5,
+    place: {
+        fontSize: 25,
         fontWeight: 'bold'
     },
-    postedAt: {
-        fontStyle: 'italic'
+    posts: {
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%',
+    },
+    post: {
+        width: '95%',
+        marginHorizontal: '2.5%',
+        marginVertical: '4%',
     },
     image: {
         width: '100%',
         height: 200
     },
-    result: {
-        flex: 4
+    postContent: {
+        flex: 1,
+        flexDirection: 'row',
     },
-    favContainer: {
-        flex: 0.5,
+    contentLeft: {
+        flex: 1,
+    },
+    headerLeft: {
+        flex: 1,
+        flexDirection: 'column'
+    },
+    left: {
+        fontSize: 18,
+    },
+    contentRight: {
+        flex: 0.25,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    right: {
+        fontSize: 30
+    },
+    poopRating: {
+        flex: 1,
+        width: '70%',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+    },
+    headerRight: {
+        flex: 0.25,
+
+    },
+    postedAt: {
+        fontStyle: 'italic'
     },
     favButton: {
         resizeMode: 'contain',
+        width: '60%',
+        height: '60%',
+        alignSelf: 'center'
+    },
+    smallPoop: {
+        flex: 1,
+        resizeMode: 'contain',
         width: '100%',
-        height: '100%'
-    }
+        height: '100%',
+        alignSelf: 'flex-start'
+    },
 })
 
 export default styles
