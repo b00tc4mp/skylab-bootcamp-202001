@@ -14,7 +14,7 @@ logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = API_URL
 
 
-describe.only('approvePark', () => {
+describe('approvePark', () => {
     before(async () => {
         await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [Park.deleteMany(), User.deleteMany()]

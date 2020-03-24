@@ -12,5 +12,6 @@ module.exports = {
     retrievePublishedParks: require('./retrieve-published-parks'),
     searchParks: require('./search-parks'),
     reportPark: require('./report-park'),
-    approvePark: require('./approve-park')
+    approvePark: require('./approve-park'),
+    publishComment: require('./publish-comment')
 }
