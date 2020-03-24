@@ -1,5 +1,6 @@
 const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
 const { mongoose, models: { Parking, Ticket, User } } = require('staycar-data')
+const { ContentError } = require('staycar-errors')
 const { random } = Math
 import entryVehicle from './entry-vehicle'
 
@@ -54,7 +55,7 @@ describe('entryVehicle', () => {
 
     it('should fail on non string carPlate', () => {
         let carPlate = 1234
-        expect(() => entryVehicle(carPlate, ticketId)).toThrow(TypeError, `carPlate ${carPlate} is not a string`)
+        expect(() => entryVehicle(carPlate, ticketId)).toThrow(TypeError, `car plate ${carPlate} is not a valid format`)
     })
 
     it('should fail on non string ticketId', () => {
