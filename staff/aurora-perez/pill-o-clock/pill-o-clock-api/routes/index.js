@@ -13,7 +13,8 @@ const {
     retrieveProgress,
     retrieveDrug,
     retrieveContacts,
-    addContact
+    addContact,
+    retrieveDrugs
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -46,6 +47,8 @@ router.post('/users/add-progress', [jwtVerifierMidWare, jsonBodyParser], addProg
 router.get('/users/retrieve-progress', jwtVerifierMidWare, retrieveProgress)
 
 router.get('/drug/:id', retrieveDrug)
+
+router.get('/drugs', retrieveDrugs)
 
 router.get('/users/contacts', jwtVerifierMidWare, retrieveContacts)
 

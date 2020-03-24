@@ -6,16 +6,15 @@ const configure = () => {
  PushNotification.configure({
 
    onNotification: function(notification) {
-     // process the notification
-     // required on iOS only
      notification.finish(PushNotificationIOS.FetchResult.NoData)
+     
      if (notification.action == "Take pill") {
         console.log('hello pill');
       }
       else if (notification.action == "Reject") {
           console.log('hello reject');
       }
-    },
+  },
 
    permissions: {
      alert: true,

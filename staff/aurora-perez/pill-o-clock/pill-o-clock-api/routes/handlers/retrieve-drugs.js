@@ -1,14 +1,17 @@
-const { addPrescription } = require('../../logic')
-const { ContentError } = require('pill-o-clock-errors')
+const { retrieveDrugs } = require('../../logic')
+const { NotAllowedError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id }, body: { drugId, time } } = req
-
     try {
-        addPrescription(id, drugId, time) 
-            .then(() => res.status(201).end())
+        retrieveDrugs()
+            .then(drugs =>
+                res.status(200).json(drugs)
+            )
             .catch(error => {
                 let status = 400
+
+                if (error instanceof NotAllowedError)
+                    status = 401 // not authorized
 
                 const { message } = error
 

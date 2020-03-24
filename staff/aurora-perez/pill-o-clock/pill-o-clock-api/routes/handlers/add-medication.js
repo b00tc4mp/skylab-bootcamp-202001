@@ -2,10 +2,10 @@ const { addMedication } = require('../../logic')
 const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
-    const { payload: { sub: id }, body: { drugName } } = req
-
+    const { payload: { sub: id }, body: { drugId } } = req
+    
     try {
-        addMedication(id, drugName) 
+        addMedication(id, drugId) 
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400

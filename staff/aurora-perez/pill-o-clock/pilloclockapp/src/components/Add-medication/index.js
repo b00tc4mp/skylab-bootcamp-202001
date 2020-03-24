@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Button, Picker } from 'r
 //import TimePicker from 'react-time-picker'
 import styles from './styles'
 
-function AddMedication ({onSubmit, error}) {
-    const [ drug, setDrug ] =useState('Furosemide')
+function AddMedication ({onSubmit, error, drugs}) {
+    const [ drug, setDrug ] =useState(drugs[0].id.toString())
     const [ hour1, setHour1 ] = useState()
     const [ min1, setMin1 ] = useState()
     const [ secondTime, setSecondTime ] =useState(false)
@@ -22,12 +22,11 @@ function AddMedication ({onSubmit, error}) {
 
                 <View style={{width: 150, marginLeft: 50}}>
                 <Picker style={{ height: 100}} itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium.ttf'}} selectedValue = {drug} onValueChange = {setDrug}>
-                <Picker.Item label = "Furosemide" value = "Furosemide" />
-                <Picker.Item label = "Adiro" value = "Adiro" />
-                <Picker.Item label = "Atorvastatine" value = "Atorvastatine" />
-                <Picker.Item label = "Paracetamol" value = "Paracetamol" />
-                <Picker.Item label = "Anticonceptive" value = "Anticonceptive" />
+                    {drugs.map(drug => {
+                        return <Picker.Item label = {drug.drugName} value = {drug.id.toString()}/>
+                    })}
                 </Picker>
+
                 </View>
 
                 <View style={styles.hourContainer}>                

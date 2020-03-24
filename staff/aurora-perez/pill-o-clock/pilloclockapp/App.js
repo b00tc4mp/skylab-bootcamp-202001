@@ -7,7 +7,7 @@ import PushNotificationAndroid from 'react-native-push-notification'
 
 
 import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient, ContactDetail } from './src/components'
-import logic, { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
+import logic, { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts, retrieveDrugs } from './src/logic'
 
 logic.__context__.storage =AsyncStorage 
 
@@ -25,6 +25,7 @@ function App () {
   const [ contacts, setContacts ] = useState()
   const [ contactData, setContactData ] =useState()
   const [ schedule, setSchedule] = useState()
+  const [drugs, setDrugs] = useState()
 
   //AsyncStorage.clear()
 
@@ -32,12 +33,12 @@ function App () {
     //if(user) {
       const interval = setInterval(async () => { 
         let date = AsyncStorage.getItem('date')
-        let alarms = await  AsyncStorage.getItem('alarms')
+        let alarms = await AsyncStorage.getItem('alarms')
+        console.log(alarms)
        
         date && (date = moment(date).format('MM-DD-YYYY'))
         !date && (await AsyncStorage.setItem('date', (date = moment().format('MM-DD-YYYY'))))
 
-        //let alarms = await AsyncStorage.getItem('alarms')
         alarms && (alarms = JSON.parse(alarms))
 
         let now = moment(new Date).format('MM-DD-YYYY')
@@ -70,6 +71,7 @@ function App () {
 
             if(hour === hour2 && min >= min2 && !alarms[drug][time] ) {
               alarms[drug][time] = true;
+              await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
               pushNotification.localNotification(drugName)
 
             }
@@ -142,17 +144,18 @@ function App () {
     try{
       const _medication = await retrieveMedication(token)
 
-      // let alarms ={}
+      let alarms ={}
 
-      // _medication.forEach(drug => {
-      //   alarms[drug.drug._id.toString()] = {} 
-      //   drug.times.forEach(hour => {
-      //     alarms[drug.drug._id.toString()][hour.toString()] = false
-      //   })
-      // })
+      _medication.forEach(drug => {
+        alarms[drug.drug._id.toString()] = {} 
+        drug.times.forEach(hour => {
+          if (alarms[drug.drug._id.toString()][hour.toString()]) return 
+          else {alarms[drug.drug._id.toString()][hour.toString()]= false}
+        })
+      })
    
 
-      // await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
+      await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
 
     
 
@@ -165,56 +168,53 @@ function App () {
     }
   }
 
-  function handleToAdd () {
+  async function handleToAdd () {
+    const drugs = await retrieveDrugs()
+    setDrugs(drugs)
     setView('addMedication')
   }
 
   async function handleAddMedication (info) {
+    const {drug} = info
     
     try{ //TODO refactor
-      const {drug} = info
+      delete info.drug
       let keys = Object.keys(info)
-      keys.slice(0,1)
-
+      
       for (const key in info){
-        if (key !=='drug') {
           if (key.includes('hour') && !isNaN(info[key]) && info[key]>24) throw new Error('Please, introduce a correct hour')
           if (key.includes('min') && !isNaN(info[key]) && info[key]>59) throw new Error('Please, introduce a correct minutes')
-        }
       }
 
       const times = []
 
-      for (let i = 1; i < keys.length/2; i++) {
-          times.push(parseInt(`${info[`hour${i}`]}${info[`min${i}`]}`))
+      for (let i = 1; i < keys.length/2 +1; i++) {
+          times.push(parseInt(`${info[`hour${i}`]}`+`${info[`min${i}`]}`))
       }
-
+      
       await addMedication(token, drug, times)
 
-      const _medication = await retrieveMedication(token)
+      // const _medication = await retrieveMedication(token)
 
-      let alarms = await AsyncStorage.getItem('alarms')
-      alarms && (JSON.parse(alarms))
-      if (!alarms) alarms = {}
-        console.log('alarm1: ' + alarms)
+      // let alarms = await AsyncStorage.getItem('alarms')
+      // alarms && (JSON.parse(alarms))
+      // if (!alarms) alarms = {}
+      //   console.log('alarm1: ' + alarms)
 
-      _medication.forEach(prescription => {
-        if(prescription.drug.drugName === drug ) {
-          const drugId = prescription.drug._id.toString()
+      // _medication.forEach(prescription => {
+      //     alarms[drug] = {}
+      //     console.log('alarm2: ' + alarms)
 
-          alarms[drugId] = {}
-          console.log('alarm2: ' + alarms)
-
-          prescription.times.forEach(hour => {
-            const newTime = hour.toString()
-            console.log(hour)
-            alarms[drugId][newTime] = false
-          })
-          console.log('alarm3: ' + alarms)
-        }
-      })
+      //     prescription.times.forEach(hour => {
+      //       alarms[drug][hour] = false
+      //     })
+      //     console.log('alarm3: ' + alarms)
+        
+      // })
       
-      await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
+      // await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
+
+      ////////////////////////////////////////////////////////
       
       // let alarms = await AsyncStorage.getItem('alarms')
       // alarms && (alarms = JSON.parse(alarms))
@@ -231,7 +231,9 @@ function App () {
 
       // await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
       
+      //setMedication(_medication)
       handleToMedication()
+      //setView('medication')
 
     } catch({message}){
       __handleError__(message)
@@ -322,7 +324,7 @@ function App () {
       { view === 'landingPatient' && <LandingPatient user={user} toMedication={handleToMedication} toProgress={handleToProgress} toContacts={handleToContacts} /> }
       { view === 'landingPharmacist' && <LandingPharmacist user={user} toPatients = {handleToPatients}/> }
       { view === 'medication' && <Medication medication = {medication} toAdd={handleToAdd} onDrug={handleToDrug}/> }
-      { view === 'addMedication' && <AddMedication onSubmit = {handleAddMedication} error = {error}/>}
+      { view === 'addMedication' && <AddMedication drugs={drugs} onSubmit = {handleAddMedication} error = {error}/>}
       { view === 'drugDetail' && <DrugDetail drugDetail={drugDetail} times ={times} toDelete ={handleToDeleteMedication}/>}
       { view === 'contacts' && <Contacts contacts ={contacts} toAdd={handleToAddContacts} onContact={handleToContactDetail}/> }
       { view === 'progress' && <Progress/>}
