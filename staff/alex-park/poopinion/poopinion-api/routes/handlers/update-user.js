@@ -2,12 +2,12 @@ const { updateUser } = require('../../logic')
 const { NotFoundError, NotAllowedError } = require('poopinion-errors')
 
 module.exports = (req, res) => {
-    let { payload: { sub: id }, body: { data } } = req
-    const { password } = data
-    delete data.password
+    let { payload: { sub: id }, body } = req
+    const { password } = body
+    delete body.password
 
     try {
-        updateUser(id, data, password)
+        updateUser(id, body, password)
             .then(() =>
                 res.status(200).end()
             )

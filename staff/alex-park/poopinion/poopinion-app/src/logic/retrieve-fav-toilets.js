@@ -15,7 +15,7 @@ const context = require('./context')
  */
 
 module.exports = function (token) {
-    validate.string(token, 'token')
+    validate.stringFrontend(token, 'token')
 
     return (async () => {
         const response = await fetch(`http://192.168.1.253:8085/api/users/favorites`, {

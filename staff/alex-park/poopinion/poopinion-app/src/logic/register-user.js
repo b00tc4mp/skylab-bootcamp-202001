@@ -17,13 +17,13 @@ const fetch = require('node-fetch')
  */
 
 module.exports = (name, surname, email, password, age, gender) => {
-    validate.string(name, 'name')
-    validate.string(surname, 'surname')
-    validate.string(email, 'email')
+    validate.stringFrontend(name, 'name')
+    validate.stringFrontend(surname, 'surname')
+    validate.stringFrontend(email, 'email')
     validate.email(email)
     validate.type(age, 'age', Number)
     validate.gender(gender, 'gender')
-    validate.string(password, 'password')
+    validate.stringFrontend(password, 'password')
 
     return (async () => {
         const response = await fetch('http://192.168.1.253:8085/api/users', {

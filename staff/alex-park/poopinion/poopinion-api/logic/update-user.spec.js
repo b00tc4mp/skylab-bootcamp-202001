@@ -80,7 +80,7 @@ describe('updateUser', () => {
         )
     })
 
-    describe('on wrong credentials', () => {
+    describe('when the user is deactivated', () => {
         beforeEach(() =>
             User.create({ name, surname, email, password, age, gender })
                 .then(({ id }) => _id = id)
@@ -93,7 +93,23 @@ describe('updateUser', () => {
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
-                    expect(message).to.equal(`wrong credentials`)
+                    expect(message).to.equal(`user with id ${_id} is deactivated`)
+                })
+                .then(() => { })
+        )
+    })
+
+    describe('on wrong credentials', () => {
+        beforeEach(() => User.findByIdAndUpdate(_id, { $set: { deactivated: true } })
+            .then(() => { })
+        )
+
+        it('should fail to update if the password is wrong', () =>
+            updateUser(_id, { name, surname, email }, `${password}-wrong`)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch(({ message }) => {
+                    expect(message).not.to.be.undefined
+                    expect(message).to.equal(`user with id ${_id} is deactivated`)
                 })
                 .then(() => { })
         )

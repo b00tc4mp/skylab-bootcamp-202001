@@ -1,12 +1,13 @@
 const { validate } = require('../utils')
-const { NotAllowedError, NotFoundError } = require('../errors')
 const fetch = require('node-fetch')
+const { NotAllowedError, NotFoundError } = require('../errors')
 const context = require('./context')
 
 /**
- * Checks user credentials against the storage
+ * Updates the user's info. Requires a password
  * 
- * @param {string} email user's unique e-mail
+ * @param {string} token user's unique token
+ * @param {Object} data all new data info
  * @param {string} password user's password
  * 
  * @returns {string} user's unique token
@@ -15,30 +16,25 @@ const context = require('./context')
  * @throws {NotFoundError} on non-existent user
  */
 
-module.exports = function (email, password) {
-    validate.stringFrontend(email, 'email')
-    validate.email(email)
-    validate.stringFrontend(password, 'password')
+module.exports = function (token, data) {
+    validate.stringFrontend(token, 'token')
+    validate.type(data, 'data', Object)
 
     return (async () => {
-        const response = await fetch(`http://192.168.1.253:8085/api/users/auth`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
+        const response = await fetch(`http://192.168.1.253:8085/api/users/`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify(data)
         })
 
         const { status } = response
 
-        if (status === 200) {
-            const { token } = await response.json()
-
-            return token
-        }
+        if (status === 200) return
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
-            if (status === 401) {
+            if (status === 409) {
                 throw new NotAllowedError(error)
             }
 

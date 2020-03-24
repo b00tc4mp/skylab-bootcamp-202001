@@ -17,8 +17,8 @@ const context = require('./context')
  */
 
 module.exports = function (token, toiletId, rating) {
-    validate.string(token, 'token')
-    validate.string(toiletId, 'toiletId')
+    validate.stringFrontend(token, 'token')
+    validate.stringFrontend(toiletId, 'toiletId')
     validate.type(rating, 'rating', Object)
 
     return (async () => {

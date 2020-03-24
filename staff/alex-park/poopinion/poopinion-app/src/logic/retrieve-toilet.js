@@ -14,7 +14,7 @@ const context = require('./context')
  */
 
 module.exports = function (toiletId) {
-    validate.string(toiletId, 'toiletId')
+    validate.stringFrontend(toiletId, 'toiletId')
 
     return (async () => {
         const response = await fetch(`http://192.168.1.253:8085/api/toilets/${toiletId}`)

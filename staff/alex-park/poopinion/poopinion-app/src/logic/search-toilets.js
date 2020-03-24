@@ -12,7 +12,7 @@ const context = require('./context')
  */
 
 module.exports = function (query='') {
-    validate.string(query, 'query')
+    validate.stringFrontend(query, 'query')
 
     return (async () => {
         const response = await fetch(`http://192.168.1.253:8085/api/toilets?q=${query}`)

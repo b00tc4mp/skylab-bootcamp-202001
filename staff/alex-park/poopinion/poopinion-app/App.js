@@ -28,7 +28,8 @@ import logic, {
   publishComment,
   retrieveTopToilets,
   updateComment,
-  deleteComment
+  deleteComment,
+  updateUser
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage

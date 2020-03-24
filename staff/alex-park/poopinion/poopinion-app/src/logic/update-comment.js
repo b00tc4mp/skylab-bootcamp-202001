@@ -8,7 +8,7 @@ const context = require('./context')
  * 
  * @param {string} token user's unique token
  * @param {string} commentId comment's unique ID
- * @param {Object} data all rating info
+ * @param {Object} rating all rating info
  * 
  * @returns {string} user's unique token
  * 
@@ -17,8 +17,8 @@ const context = require('./context')
  */
 
 module.exports = function (token, commentId, rating) {
-    validate.string(token, 'token')
-    validate.string(commentId, 'commentId')
+    validate.stringFrontend(token, 'token')
+    validate.stringFrontend(commentId, 'commentId')
     validate.type(rating, 'rating', Object)
 
     return (async () => {

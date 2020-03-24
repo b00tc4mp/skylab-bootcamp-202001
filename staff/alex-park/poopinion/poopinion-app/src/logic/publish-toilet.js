@@ -18,8 +18,8 @@ const context = require('./context')
  */
 
 module.exports = function (token, place='(No place defined)', image, coordinates) {
-    validate.string(token, 'token')
-    validate.string(place, 'place')
+    validate.stringFrontend(token, 'token')
+    validate.stringFrontend(place, 'place')
     validate.type(coordinates, 'coordinates', Object)
 
     return (async () => {
