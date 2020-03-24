@@ -14,6 +14,10 @@ export default async ({code, email, password, passwordAgain}) => {
   validate.string(passwordAgain, 'Contraseña 2')
   passwordAgain = passwordAgain.trim().toLowerCase()
 
+  validate.string(email, 'email')
+  email = email.trim().toLowerCase()
+  validate.email(email)
+
   if (password !== passwordAgain) throw new Error('Contraseñas no coinciden')
 
   const response = await fetch(`${API_URL}/users/update-password`, {

@@ -6,24 +6,24 @@ const { sign } = require('jsonwebtoken')
 
 module.exports = {
   register: asyncHandler(async (req, res, next) => {
-    await registerUser(req.payload.com, req.body)
+    console.log(req.payload.sub, req.body)
+    await registerUser(req.payload.sub, req.body)
     res.json({ message: 'User registered successfully' })
   }),
 
   authenticate: asyncHandler(async (req, res, next) => {
-    const { sub, com } = await authenticateUser(req.body)
-    res.json({ token: sign({ sub, com }, JWT_SECRET, { expiresIn }) })
+    const id = await authenticateUser(req.body)
+    res.json({ token: sign({ sub: id }, JWT_SECRET, { expiresIn }) })
   }),
 
-  retrieve: asyncHandler(async (req, res, next) => {
-    const user = await retrieveUser(req.payload.sub)
-    res.json({ user })
+  retrieve: asyncHandler(async ({ payload, params: { id } }, res, next) => {
+    if (!id) id = payload.sub
+    res.json({ user: await retrieveUser(id) })
   }),
 
   retrieveAll: asyncHandler(async (req, res, next) => {
-    console.log(req)
-    const users = await retrieveAllUsers(req.payload.com)
-    res.json({ users })
+    console.log('RETR')
+    res.json({ users: await retrieveAllUsers(req.payload.sub) })
   }),
 
   update: asyncHandler(async ({ payload, body, params: { id } }, res, next) => {

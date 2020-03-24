@@ -7,7 +7,6 @@ const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-template')
 
 module.exports = ({ companyName, username, email, password }) => {
-  debugger
 
   validate.string(companyName, 'Nombre de Compañia')
   validate.length(companyName, 'Nombre de Compañia', 3, 20)
@@ -19,13 +18,13 @@ module.exports = ({ companyName, username, email, password }) => {
   validate.length(password, 'password', 3, 30);
 
   return (async () => {
-    debugger
-
     const companyFound = await Company.findOne({ name: companyName.toLowerCase() })
     if (companyFound) throw new Error('El nombre de Compañia ya existe')
 
     const userFound = await User.findOne({ username: username.toLowerCase() })
     if (userFound) throw new Error('El nombre de Usuario ya existe')
+
+    if (await User.findOne({ email })) throw new Error('Correo ya existe')
 
     const newCompany = await Company.create({ name: companyName.toLowerCase() })
 
@@ -37,6 +36,8 @@ module.exports = ({ companyName, username, email, password }) => {
       role: 'owner',
       company: newCompany.id,
     })
+
+    console.log(newCompany.id)
 
     const confirmUser = await User.findOne({ _id: newUser._id })
     if (!confirmUser) throw new Error('User was not created')

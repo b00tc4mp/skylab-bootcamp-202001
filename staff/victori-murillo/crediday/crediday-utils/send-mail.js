@@ -4,7 +4,7 @@ const pdf = require('./pdf-creator')
 
 module.exports = async ({ authMail, to, subject, html }) => {
 
-  await pdf().then(res => console.log(res))
+  // await pdf().then(res => console.log(res))
 
   async function main() {
 
@@ -33,11 +33,11 @@ module.exports = async ({ authMail, to, subject, html }) => {
 
     let info = await transporter.sendMail(mailOptions)
 
-    console.log("Message sent: %s", info.messageId);
+    // console.log("Message sent: %s", info.messageId);
     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
     // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
   }
 

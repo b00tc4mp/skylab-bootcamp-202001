@@ -17,7 +17,8 @@ const schema = new Schema({
 
   paymentFrecuency: {
     type: 'String',
-    default: 'Weekly'
+    enum: ['daily' ,'weekly', 'biweekly', 'monthly'],
+    required: true
   },
 
   frequency: Number,
@@ -27,10 +28,10 @@ const schema = new Schema({
     required: true
   },
 
-  balance: {
-    type: Number,
-    required: true
-  },
+  // balance: {
+  //   type: Number,
+  //   required: true
+  // },
 
   paymentDefault: {
     type: Number,

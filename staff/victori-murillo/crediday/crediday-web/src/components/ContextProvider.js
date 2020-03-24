@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 const Context = React.createContext()
 
 function Provider({ children }) {
-    const [token, setToken] = useState()
+    const [token, setToken] = useState(sessionStorage.session)
     const [users, setUsers] = useState([])
 
     const state = { token, setToken, users, setUsers }

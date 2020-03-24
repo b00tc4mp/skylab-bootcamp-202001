@@ -7,7 +7,7 @@ const template = require('./confirm-data-to-recover-password-template')
 
 module.exports = ({ company, email }) => {
   validate.string(company, 'company')
-  validate.string(email, 'email');
+  validate.string(email, 'email')
 
   return (async () => {
 

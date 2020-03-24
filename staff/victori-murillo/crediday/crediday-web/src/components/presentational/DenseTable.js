@@ -31,34 +31,42 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ]
 
-export default function DenseTable(props) {
+export default function DenseTable({ results }) {
   const { table, title } = useStyles()
 
+  const paintHead = headers =>
+    headers.map((head, index) =>
+      !index
+        ? <TableCell key={index} style={{ fontWeight: 'bold' }}>{head}</TableCell>
+        : <TableCell key={index} className={title}>{head}</TableCell>
+    )
+
+  const paintBody = (body, keys) =>
+    body.map((user, index) =>
+      <TableRow key={index}>
+        {
+          keys.map((key, index) =>
+            !index
+              ? <TableCell key={index} component="th" scope="row">{user[key]}</TableCell>
+              : <TableCell key={index} align="right">{user[key]}</TableCell>
+          )
+        }
+      </TableRow>
+    )
+
+  let keys = Object.keys(results[0])
+  console.log(results)
+
   return (
-    <TableContainer component={Paper} style={{width: '100%'}}>
-      <Table className={table} size="medium" aria-label="a dense table">
+    <TableContainer component={Paper} style={{ width: '100%' }}>
+      <Table className={table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            {/* Create dinamic table */}
-            <TableCell style={{ fontWeight: 'bold' }}>Nombre</TableCell>
-            <TableCell className={title}>ID</TableCell>
-            <TableCell className={title}>Fat&nbsp(g)</TableCell>
-            <TableCell className={title}>Carbs&nbsp(g)</TableCell>
-            <TableCell className={title}>Protein&nbsp(g)</TableCell>
+            {paintHead(keys)}
           </TableRow>
         </TableHead>
         <TableBody>
-          {false && [].map(user => (
-            <TableRow key={user.id}>
-              <TableCell component="th" scope="row">
-                {user.firstName}
-              </TableCell>
-              <TableCell align="right">{user.id}</TableCell>
-              {/* <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell> */}
-            </TableRow>
-          ))}
+          {paintBody(results, keys)}
         </TableBody>
       </Table>
     </TableContainer>

@@ -66,7 +66,7 @@ export default (props) => {
 
       setTimeout(() => {
         history.push('/drawer')
-      }, 2000)
+      }, 500)
       
 
     } catch (error) {

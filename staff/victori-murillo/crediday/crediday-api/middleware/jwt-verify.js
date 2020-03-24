@@ -4,6 +4,7 @@ const { env: { JWT_SECRET } } = process
 module.exports = (req, res, next) => {
   try {
     const { headers: { authorization } } = req
+
     if (!authorization) throw new Error('no authorization header provided')
 
     const [bearer, token] = authorization.split(' ')

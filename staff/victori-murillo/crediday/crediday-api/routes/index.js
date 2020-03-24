@@ -26,12 +26,11 @@ module.exports = router
 
   .post('/users', user.register)
   
-  .get('/users/:id', user.retrieve)
+  .get('/users/:id?', user.retrieve)
   .get('/users-companies', user.retrieveAll)
   .patch('/users/:id?', user.update)
   .delete('/users/:id', user.delete)
   
-
   .post('/credits/users/:id', credit.register)
   .get('/credits/users/:id', credit.retrieve)
   // .patch('/credits/:id', credit.update)

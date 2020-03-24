@@ -97,19 +97,19 @@ module.exports = ({company, username, companyId}) => {
     <body id="body" style="margin: 0 !important; padding: 0 !important;">
 
     <div class="container">
-      <a href="http://192.168.1.121:3000/login/${companyId}" target="_blank" style="cursor: pointer;">
+      <a href="http://localhost:3000/login/${companyId}" target="_blank" style="cursor: pointer;">
         <h1 style="color: #303F9F; font-size: 36px;">CrediDay</h1>
       </a>
 
       <p>Compañia: ${company}</p>
       <p style="margin-bottom: 10px;">Usuario: ${username}</p>
-      <a href="http://192.168.1.121:3000/login/${companyId}" target="_blank" style="cursor: pointer;">
+      <a href="http://localhost:3000/login/${companyId}" target="_blank" style="cursor: pointer;">
         <button style="cursor: pointer;" class="link">click para confirmar tu correo</button>
       </a>
 
       <p style="font-size: "14px" class="contact">Celular: (+506) 8315-0519</p>
 
-      <a href="http://192.168.1.121:3000/login/${companyId}" target="_blank" style="cursor: pointer;">
+      <a href="http://localhost:3000/login/${companyId}" target="_blank" style="cursor: pointer;">
         <p style="font-size: "14px">Sitio web: www.crediday.com</p>
       </a>
     </div>

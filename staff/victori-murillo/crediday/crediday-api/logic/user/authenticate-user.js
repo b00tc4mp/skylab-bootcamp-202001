@@ -22,12 +22,9 @@ module.exports = ({ username, password }) => {
 
     user.authenticatedDates.push(new Date)
 
-    const { id, company } = await user.save()
+    const { id } = await user.save()
 
-    return {
-      sub: id,
-      com: company
-    }
+    return id
   })()
 
 }

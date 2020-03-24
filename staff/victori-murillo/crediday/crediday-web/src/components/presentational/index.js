@@ -1,9 +1,11 @@
-import Table from './Table'
+import DenseTable from './DenseTable'
+import EditableTable from './EditableTable'
 import Drawer from './Drawer'
 import Loader from './Loader'
 
 export {
-  Table,
+  DenseTable,
+  EditableTable,
   Drawer,
   Loader
 }

@@ -8,6 +8,10 @@ export default async ({code, email}) => {
   code = code.trim().toLowerCase()
   validate.length(code, 'Código incorrecto', 6, 6, true)
 
+  validate.string(email, 'email')
+  email = email.trim().toLowerCase()
+  validate.email(email)
+
   const response = await fetch(`${API_URL}/users/confirm-verification-code`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
