@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styles from './styles'
 import { Text, ScrollView, TouchableOpacity, View, Image, Alert } from 'react-native'
 
-function Profile({ user, onDetails }) {
+function Profile({ user, onDetails, onToUpdateUser }) {
     const [lastPosts, setLastPosts] = useState(user.publishedToilets.slice(0, 5))
     const [lastComments, setLastComments] = useState(user.comments.slice(0, 5))
 
@@ -15,7 +15,7 @@ function Profile({ user, onDetails }) {
         <ScrollView style={styles.container}>
             <View style={styles.nameContainer}>
                 <View style={styles.nameHeader}>
-                    <View style={styles.picture}>
+                    <TouchableOpacity style={styles.picture} onPress={() => onToUpdateUser}>
                         {user.publishedToilets.length < 5 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')}/>}
                         {user.publishedToilets.length < 5 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')}/>}
 
@@ -24,7 +24,7 @@ function Profile({ user, onDetails }) {
 
                         {user.publishedToilets.length >= 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold.png')}/>}
                         {user.publishedToilets.length >= 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold_pro.png')}/>}
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.nameInfo}>
                         <Text style={[styles.font, styles.bold]}>Name: {user.name} {user.surname}</Text>
                         <Text style={styles.font}>Gender: {user.gender}</Text>

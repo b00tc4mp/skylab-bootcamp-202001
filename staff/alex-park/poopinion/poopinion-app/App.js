@@ -11,7 +11,8 @@ import {
   Favorites,
   NewToilet,
   ToiletDetails,
-  NewComment
+  NewComment,
+  UpdateUser
 } from './src/components'
 
 import logic, {
@@ -292,6 +293,8 @@ export default function App() {
     }
   }
 
+
+
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
     setGoLanding(false)
@@ -299,6 +302,16 @@ export default function App() {
     setToken()
     setUser()
     setView('login')
+  }
+
+  function handleGoToUpdateUser() {
+    if (!user) {
+      Alert.alert('You are not logged in yet!')
+      handleGoToLogin();
+    } else {
+      __handleUser__()
+      setView('update')
+    }
   }
 
   function handleGoToRegister() {
@@ -376,11 +389,12 @@ export default function App() {
         {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav} />}
         {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
-        {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} />}
+        {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} onToUpdateUser={handleGoToUpdateUser} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
         {view === 'details' && detailedToilet && <ToiletDetails user={user} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
+        {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding}/>}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

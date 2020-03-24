@@ -8,9 +8,8 @@ const context = require('./context')
  * 
  * @param {string} token user's unique token
  * @param {Object} data all new data info
- * @param {string} password user's password
  * 
- * @returns {string} user's unique token
+ * @returns {undefined} undefined on a successful update
  * 
  * @throws {NotAllowedError} on wrong credentials or deactivated user
  * @throws {NotFoundError} on non-existent user

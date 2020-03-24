@@ -10,6 +10,7 @@ import Favorites from './Favorites'
 import NewToilet from './New-Toilet'
 import ToiletDetails from './Toilet-Details'
 import NewComment from './New-Comment'
+import UpdateUser from './Update-User'
 
 export {
     Register,
@@ -23,5 +24,6 @@ export {
     Favorites,
     NewToilet,
     ToiletDetails,
-    NewComment
+    NewComment,
+    UpdateUser
 }
