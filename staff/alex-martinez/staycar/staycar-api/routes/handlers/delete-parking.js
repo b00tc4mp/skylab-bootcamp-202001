@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     
     try{
         deleteParking(id, parking)
-        .then(() => res.status(200).json({"message": `parking ${parking} was successfully removed`}))
+        .then(() => res.status(201).json({"message": `parking ${parking} was successfully removed`}))
         .catch(error => {
             let status = 400
 

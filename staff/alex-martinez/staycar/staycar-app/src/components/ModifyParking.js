@@ -1,10 +1,10 @@
 import React from 'react'
 import './style/ModifyParking.sass'
-
+import { withRouter } from 'react-router-dom'
 import {Feedback} from '.'
 
 
-export default ({onSubmit, error}) => {
+export default withRouter(function({onSubmit, error, history}) {
 
 
     const handleSubmit = (event) => {
@@ -18,6 +18,11 @@ export default ({onSubmit, error}) => {
 
         onSubmit(parkingName, parseFloat(rate), parseFloat(totalLots))
     }
+
+    const handleToDeleteParking = (event) => {
+        event.preventDefault()
+        history.push('/delete-parking')
+    }
    
     return <section className="modify-parking">
     <div className="modify-parking__head">
@@ -28,8 +33,9 @@ export default ({onSubmit, error}) => {
         <input type="text" name="rate" placeholder="rate" className="modify-parking__input" />
         <input type="text" name="totalLots" placeholder="total lots" className="modify-parking__input" />
         <button className="modify-parking__submit">Update</button>
+        <a href="#" className="modify-parking__delete" onClick={handleToDeleteParking}>Delete Parking</a>
     </form>
     
     {error && <Feedback message={error} level="error" />}
     </section>
-}
+})

@@ -3,11 +3,11 @@ const { NotAllowedError, ContentError } = require('staycar-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id } } = req
-    const { body: { password }} = req
+    const { body: { password, username }} = req
     
     try{
-        deleteUser(id, password)
-        .then(() => res.status(200).json({"message": `user with id ${id} was successfully removed`}))
+        deleteUser(id, username, password)
+        .then(() => res.status(201).end())
         .catch(error => {
             let status = 400
 

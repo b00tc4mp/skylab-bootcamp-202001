@@ -33,7 +33,7 @@ router.post('/:name/ticket', jsonBodyParser, entryVehicle)
 router.post('/parking/create', jwtVerifierMidWare, jsonBodyParser, createParking)
 router.get('/parking', retrieveParking)
 router.delete('/parking/:parking', jwtVerifierMidWare, deleteParking)
-router.delete('/users/:id', jwtVerifierMidWare, jsonBodyParser, deleteUser)
+router.delete('/users', jwtVerifierMidWare, jsonBodyParser, deleteUser)
 router.get('/ticket/:id/:parkingname', retrieveTicket)
 router.get('/tickets', retrieveTickets)
 

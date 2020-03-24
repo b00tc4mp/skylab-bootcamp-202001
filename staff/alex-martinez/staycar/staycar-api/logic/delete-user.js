@@ -3,18 +3,20 @@ const { models: { User }} = require('staycar-data')
 const { NotAllowedError } = require('staycar-errors')
 const bcrypt = require('bcryptjs')
 
-module.exports = (id, password) => {
+module.exports = (id, username, password) => {
     validate.string(id, 'id')
+    validate.string(username, 'user name')
     validate.string(password, 'password')
 
     return (async() => {
-        const user = await User.findById(id)
-        if(!user) throw new NotAllowedError('do not have permission')
+        debugger
+        const user = await User.findOne({username})
+        if(!user) throw new NotAllowedError(`username ${username} is not exist`)
 
         const pass = await bcrypt.compare(password, user.password)
         if(!pass) throw new NotAllowedError('wrong credentials')
-
-        return await User.findOneAndDelete(user.id)
+        debugger
+        return await User.deleteOne({username})
 
     })()
 }

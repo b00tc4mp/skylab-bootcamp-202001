@@ -9,7 +9,7 @@ export default () => {
     return (async () => {
         const pk = await retrieveParking()
     
-        if(pk.length === 0) throw new Error('there are no parkings')
+        if(pk.length === 0) throw new Error('There are not parkings')
         
         const response = await fetch(`${API_URL}/parking`, {
             headers: {

@@ -15,6 +15,8 @@ import MapItem from './MapItem'
 import CreateUser from './CreateUser'
 import ReportItem from './ReportItem'
 import ModifyParking from './ModifyParking'
+import DeleteParking from './DeleteParking'
+import DeleteUser from './DeleteUser'
 
 export {
     App,
@@ -33,5 +35,7 @@ export {
     MapItem,
     CreateUser,
     ReportItem,
-    ModifyParking
+    ModifyParking,
+    DeleteParking,
+    DeleteUser
 }
