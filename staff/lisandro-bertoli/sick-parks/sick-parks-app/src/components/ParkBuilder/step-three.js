@@ -27,12 +27,19 @@ export default function StepThree({ navigation, route }) {
         let _features = []
         Object.values(features).forEach(value => value.forEach(element => _features.push(element)))
         const { location } = park
+        debugger
 
         _features.forEach(feature => {
-            if (feature.location.coordinates.longitude) feature.location.coordinates = [feature.coordinates.longitude, feature.coordinates.latitude]
-            else delete feature.location
+            if (feature.coordinates) {
+                feature.location = {
+                    type: 'Point',
+                    coordinates: [feature.coordinates.longitude, feature.coordinates.latitude],
+                }
+                delete feature.coordinates
+            }
         })
-        _features.forEach(feature => delete feature.coordinates)
+
+
 
         park.location = {
             type: 'Point',
@@ -40,7 +47,7 @@ export default function StepThree({ navigation, route }) {
         }
         handleNewPark({ features: _features, park })
 
-        navigation.dispatch(StackActions.popToTop());
+        // navigation.dispatch(StackActions.popToTop());
     }
 
     return (

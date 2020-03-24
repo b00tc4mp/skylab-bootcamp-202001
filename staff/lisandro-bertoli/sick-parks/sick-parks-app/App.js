@@ -101,9 +101,10 @@ export default function App() {
 
 	const handleNewPark = async (data) => {
 		try {
-			console.log(data)
+
 			await createPark(data)
 		} catch ({ message }) {
+			console.log(message)
 			__handleErrors__(message)
 		}
 	}

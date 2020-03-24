@@ -3,6 +3,7 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 module.exports = (userId, { park, features }) => {
+    debugger
     for (let key in park)
         if (key !== 'location') {
 

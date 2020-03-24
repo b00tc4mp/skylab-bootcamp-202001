@@ -1,21 +1,24 @@
 import React from 'react'
 import { StyleSheet, View, FlatList } from 'react-native'
 import ResultsItem from '../ResultsItem'
+import FeedBack from '../Feedback'
 import styles from './styles'
 
-export default function Results({ navigation, extraData }) {
-    const { results } = extraData
+export default function Results({ results, onToDetails, error }) {
+
 
     return (<>
         <View style={styles.container}>
-            <FlatList
+            {!error && <FlatList
                 data={results}
                 renderItem={({ item }) => {
 
-                    return <ResultsItem park={item} onToPark={() => { navigation && navigation.navigate('ParkDetails') }} />
+                    return <ResultsItem park={item} onToPark={onToDetails} />
                 }}
                 keyExtractor={item => item.id}
-            />
+            />}
+
+            {error && <FeedBack level='warn' message={error} />}
         </View>
     </>
     )
