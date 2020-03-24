@@ -21,15 +21,13 @@ export default function Home({ navigation }) {
 
 
 
-    // useEffect(() => {
-    //     try {
-    //         _getLocationAsync()
-    //     } catch ({ message }) {
-    //         setError({ message })
-    //         console.log(message)
-
-    //     }
-    // }, [])
+    useEffect(() => {
+        try {
+            _getLocationAsync()
+        } catch ({ message }) {
+            console.log(message)
+        }
+    }, [])
 
 
     _getLocationAsync = async () => {
@@ -37,7 +35,7 @@ export default function Home({ navigation }) {
 
         if (status === 'granted') {
             const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
-            setLocation({ location })
+            setLocation([location.coords.longitude, location.coords.latitude])
         }
     }
 
@@ -49,18 +47,18 @@ export default function Home({ navigation }) {
         const handleSearch = async (query) => {
             try {
                 setCurrentQuery(query)
+                const results = await searchParks({ query, location })
 
-                const result = await searchParks({ query })
-                if (!results.length) setError('No results for this query')
+                if (!results.length) setError(`No ${query} parks found`)
+                else setError(null)
 
-                setResults(result)
-
+                setResults(results)
                 navigation.navigate('Results')
             } catch ({ message }) {
                 setError(message)
 
                 navigation.navigate('Results')
-                console.log(error)
+
             }
 
         }
@@ -75,11 +73,12 @@ export default function Home({ navigation }) {
         const handleGoToDetails = async (id) => {
             try {
                 const item = await retrievePark(id)
+                setError(null)
                 setDetailedPark(item)
-
                 navigation.navigate('ParkDetails')
             } catch ({ message }) {
                 setError(message)
+
 
             }
 
@@ -94,13 +93,15 @@ export default function Home({ navigation }) {
             try {
                 setCurrentQuery(query)
 
-                const result = await searchParks({ query })
-                setResults(result)
+                const results = await searchParks({ query, location })
 
+                if (!results.length) setError(`No ${query} parks found`)
+                else setError(null)
+
+                setResults(results)
             } catch ({ message }) {
                 setError(message)
 
-                console.log(error)
             }
 
         }
@@ -133,13 +134,4 @@ export default function Home({ navigation }) {
     )
 }
 
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         backgroundColor: '#EDF4F9',
-//         alignItems: 'center',
-//         justifyContent: 'flex-start',
-//         width: '100%'
-//     }
-// })
 

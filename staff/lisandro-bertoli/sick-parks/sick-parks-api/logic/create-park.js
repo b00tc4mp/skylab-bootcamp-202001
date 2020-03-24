@@ -3,7 +3,6 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 module.exports = (userId, { park, features }) => {
-    debugger
     for (let key in park)
         if (key !== 'location') {
 
@@ -41,10 +40,7 @@ module.exports = (userId, { park, features }) => {
 
         newPark.features.push(...newFeatures)
         newPark.creator = user
-        // if (park.location.geometry) {
-        //     newPark.location = park.location.geometry
 
-        // }
         user.parks.push(newPark)
 
         await newPark.save()
