@@ -2,12 +2,12 @@ const { addLotsAmount } = require('../../logic')
 const { NotAllowedError, ContentError } = require('staycar-errors')
 
 module.exports = ( req, res ) => {
-    const { payload: { sub: id } , body: { totalLots } } = req
+    const { payload: { sub: id } , body: { totalLots, rate } } = req
     
     let pkname = req.params.name
     try{
-        addLotsAmount(id, pkname ,totalLots)
-        .then(() => res.status(200).end())
+        addLotsAmount(id, pkname, rate, totalLots)
+        .then(() => res.status(201).end())
         .catch(error => {
             let status = 400
 

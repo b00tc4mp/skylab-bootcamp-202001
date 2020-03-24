@@ -9,6 +9,7 @@ import retrieveTicket from './retrieve-ticket'
 import registerUser from './register-user'
 import retrieveTickets from './retrieve-tickets'
 import exitVehicle from './exit-vehicle'
+import modifyParking from './modify-parking'
 
 export {
     login,
@@ -21,5 +22,6 @@ export {
     retrieveTicket,
     registerUser,
     retrieveTickets,
-    exitVehicle
+    exitVehicle,
+    modifyParking
 }

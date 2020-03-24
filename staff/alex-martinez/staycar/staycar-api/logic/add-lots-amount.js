@@ -2,12 +2,15 @@ const { validate } = require("staycar-utils")
 const { models: { User, Parking } } = require("staycar-data")
 const { NotFoundError } = require("staycar-errors")
 
-module.exports = (id, nameParking, number) => {
+module.exports = (id, parkingName,rate, number) => {
   validate.string(id, "id")
-  validate.string(nameParking, "nameParking")
+  validate.string(parkingName, "parkingName")
   validate.type(number, "number", Number)
-  if (number <= 0)
-    throw new TypeError("the number of lots must be biger than 0")
+  validate.type(rate, "rate", Number)
+  
+  if (number <= 0) throw new TypeError("the number of lots must be bigger than 0")
+  
+  if(rate <= 0) throw new TypeError("rate must be bigger than 0")
 
   return (async () => {
     
@@ -15,10 +18,10 @@ module.exports = (id, nameParking, number) => {
     
     if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-    const parking = await Parking.findOne({ parkingName: nameParking })
+    const parking = await Parking.findOne({ parkingName})
     
     if (!parking)
-      throw new NotFoundError(`parking with name ${name} does not exist`)
+      throw new NotFoundError(`parking with name ${parkingName} does not exist`)
 
     let { lots } = parking
 
@@ -30,6 +33,8 @@ module.exports = (id, nameParking, number) => {
       for (let i = lots.length+1; i >= difLots; i--) {
         lots.pop(i)
       }
+
+      parking.rate = rate
 
       await parking.save()
       return 
@@ -43,8 +48,10 @@ module.exports = (id, nameParking, number) => {
       lots.push(lot)
     }
 
+    parking.rate = rate
+
     await parking.save()
 
-    return parking
+    return 
   })();
 };
