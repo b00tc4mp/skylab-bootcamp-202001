@@ -23,18 +23,18 @@ const configure = () => {
  
 };
 
-const localNotification = (drugName) => {
+const localNotification = () => {
  PushNotification.localNotification({
    autoCancel: false,
    actions: '["Accept", "Reject"]',
    largeIcon: "ic_launcher",
    smallIcon: "ic_notification",
-   bigText: "Hey! You have to take "+drugName,
+   bigText: "Hey! You have to take ",
    //subText: "This is a subText",
    color: "green",
    //vibrate: true,
    //vibration: 300,
-   title: drugName,
+   title: 'drugName',
    message: "Take pill!",
    playSound: true,
    soundName: 'default',

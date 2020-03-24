@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Text, View, StyleSheet, Alert, ScrollView, AsyncStorage } from 'react-native'
 import {Notifications} from 'react-native-notifications';
 import pushNotification from './pushNotifications'
+import moment from 'moment'
 
 import { Register, Login, LandingPatient, LandingPharmacist, Medication, AddMedication, DrugDetail, NavigationBarTop, Progress, Contacts, AddContacts, Patients, AddPatient, ContactDetail } from './src/components'
 import logic, { registerUser, login, retrieveUser, retrieveMedication, addMedication, retrieveDrug, deleteMedication, retrieveContacts } from './src/logic'
@@ -26,55 +27,49 @@ function App () {
   useEffect(()=>{
     //if(user) {
       const interval = setInterval(async () => { 
-        let schedule = await getAlarms(token)
-        if(schedule.length){
-          //console.log(schedule)
-          schedule.forEach(prescription => {
-            prescription.times.forEach(alarm => {
-              console.log(alarm)
-              let time =alarm.time.toString()
-              let min = parseInt(time.slice(time.length-2, time.length))
-              let hour = parseInt(time.slice(0, time.length-2))
+        let date = AsyncStorage.getItem('date')
+        date && (date = moment(date))
+        !date && (await AsyncStorage.setItem('date', (date = moment().format('MM-DD-YYYY'))))
 
-              let now = new Date()
-              let hour2 = now.getHours()
-              let min2 = now.getMinutes()
-              if(hour === hour2 && min >= min2 ) {
-                //alarm.sounded=true 
-                pushNotification.localNotification(prescription.drugName)
-              }
-            })
+        let alarms = await AsyncStorage.getItem('alarms')
+        alarms && (alarms = JSON.parse(alarms))
 
-          })
+        let now = moment(new Date).format('MM-DD-YYYY')
 
+        if( now > date ){
+          await AsyncStorage.setItem('date', now)
+
+          for (const drug in alarms) {
+            for(const time in alarms[drug]) {
+              alarms[drug][time] = false
+            }
+          }
+          await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
         }
 
+       // hoursArray = Object.keys(alarms)
+        for (const drug in alarms) {
+          for(const time in alarms[drug]) {
+            let min = parseInt(time.slice(time.length-2, time.length))
+            let hour = parseInt(time.slice(0, time.length-2))
 
+            let now2 = new Date()
+
+            let hour2 = now2.getHours()
+            let min2 = now2.getMinutes()
+
+           // const drugName = await retrieveDrug(drug)
+
+            if(hour === hour2 && min >= min2 && !drug[time] ) {
+              pushNotification.localNotification()
+              alarms[drug][time] = true
+            }
+          }
+        }
       }, 60000)
   
     return () => clearInterval(interval)
   }, [schedule])
-
-  async function getAlarms (token) {
-    const _medication = await retrieveMedication(token)
-    //console.log(_medication)
-
-    if(_medication.length) {
-      let _schedule = []
-      for( let i=0; i<_medication.length; i++) {
-        _schedule[i] = {}
-        _schedule[i].drugName = _medication[i].drug.drugName
-        _schedule[i].times= []
-        for (let j=0; j<_medication[i].times.length; j++){
-          _schedule[i].times.push({time: _medication[i].times[j], sounded: false})
-        }
-        
-      }
-      //console.log(_schedule[0].times)
-      // return _schedule
-      setSchedule(_schedule)
-    }
-  }
 
   function __handleError__(message) {
     setError(message)
@@ -137,8 +132,24 @@ function App () {
   async function handleToMedication () {
     try{
       const _medication = await retrieveMedication(token)
+
+      let alarms ={}
+
+      _medication.forEach(drug => {
+        alarms[drug.drug._id.toString()] = {} 
+        drug.times.forEach(hour => {
+          alarms[drug.drug._id.toString()][hour.toString()] = false
+        })
+      })
+      //console.log(alarms)
+
+      await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
+
+      console.log(await AsyncStorage.getItem('alarms'))
+
       setMedication(_medication)
       setView('medication')
+
 
     }catch({message}){
       __handleError__(message)

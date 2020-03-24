@@ -8,11 +8,7 @@ module.exports = function (drugName) {
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/drug/${drugName}`, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        const response = await fetch(`http://192.168.1.85:8085/api/drug/${drugName}`)
     
         const { status } = response
         
