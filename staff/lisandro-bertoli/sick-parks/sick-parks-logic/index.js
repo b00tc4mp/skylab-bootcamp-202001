@@ -13,5 +13,6 @@ module.exports = {
     searchParks: require('./search-parks'),
     reportPark: require('./report-park'),
     approvePark: require('./approve-park'),
-    publishComment: require('./publish-comment')
+    publishComment: require('./publish-comment'),
+    updateUser: require('./update-user')
 }
