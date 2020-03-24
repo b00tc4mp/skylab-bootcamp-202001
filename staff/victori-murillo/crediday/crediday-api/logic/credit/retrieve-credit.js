@@ -3,9 +3,8 @@ const validate = require('crediday-utils')
 
 module.exports = creditId => {
   validate.string(creditId, 'creditId');
-
-
-  (async () => {
+  
+  return (async () => {
 
     let credit = await Credit.findOne({ _id: creditId }).lean()
 

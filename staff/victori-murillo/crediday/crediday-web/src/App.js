@@ -71,8 +71,11 @@ export default () => {
         <Route exact path="/register">
           <Register />
         </Route>
-        <Route path="/drawer">
-          {verifyToken() ? <Drawer /> : <Redirect to="/login" />}
+        <Route exact path="/drawer">
+          {verifyToken() ? <Drawer view='customers' /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/drawer/credits">
+          {verifyToken() ? <Drawer view='credits' /> : <Redirect to="/login" />}
         </Route>
         <Route>
           <Redirect to={`/home`} />

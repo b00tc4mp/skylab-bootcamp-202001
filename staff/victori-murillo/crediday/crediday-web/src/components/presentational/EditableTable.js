@@ -6,7 +6,6 @@ import { green } from '@material-ui/core/colors';
 
 import Modal from './Modal'
 import FullDialog from './FullDialog'
-
 const API_URL = process.env.REACT_APP_API_URL
 
 const padding = 'dense'
@@ -17,6 +16,7 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
   const [row, setRow] = useState(null)
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState()
+  const [credits, setCredits] = useState([])
 
   const handleClickOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -36,6 +36,9 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
     }
   }
 
+  const fetchCredits = (id) => {
+    return axios.get(`${API_URL}/credits/user/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.session}` } })
+  }
   console.log(data)
 
   return (
@@ -51,7 +54,8 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
             return new Promise((resolve, reject) => resolve())
               .then(() => registerUser(newData))
               .then(() => {
-                setData([...data, newData])
+                window.location.reload()
+                // setData([...data, newData])
               })
               .catch(e => {
                 console.log(e.message)
@@ -69,7 +73,7 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
             color: (row && row.tableData.id === rowData.tableData.id) ? 'white' : 'black',
 
             backgroundColor: (row && row.tableData.id === rowData.tableData.id) ? '#3F50B5'
-              : ((rowData.tableData.id % 2) ? 'white' : '#eee')
+              : ((rowData.tableData.id % 2) ? 'white' : 'white')
           }),
           emptyRowsWhenPaging: false,
           padding,
@@ -90,25 +94,25 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
           }
         ]}
 
-        detailPanel={[
-          {
-            tooltip: 'Show Name',
-            render: rowData => {
-              return (
-                <div
-                  style={{
-                    fontSize: 50,
-                    textAlign: 'center',
-                    color: 'white',
-                    backgroundColor: '#43A047',
-                  }}
-                >
-                  {rowData.firstName}
-                </div>
-              )
-            },
-          }
-        ]}
+        // detailPanel={[
+        //   {
+        //     render: (rowData) => {
+        //       return (
+        //         <div
+        //           onClick={() => console.log('show credits')}
+        //           style={{
+        //             fontSize: 20,
+        //             textAlign: 'center',
+        //             color: 'white',
+        //             backgroundColor: '#43A047',
+        //           }}
+        //         >
+
+        //         </div>
+        //       )
+        //     },
+        //   }
+        // ]}
       />
     </>
   )

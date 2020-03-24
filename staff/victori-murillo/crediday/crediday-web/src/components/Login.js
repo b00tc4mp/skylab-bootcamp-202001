@@ -67,7 +67,7 @@ export default (props) => {
       setTimeout(() => {
         history.push('/drawer')
       }, 500)
-      
+
 
     } catch (error) {
       setError(error.message)
@@ -128,7 +128,7 @@ export default (props) => {
             />
 
             {error && <Alert severity="error">{error}</Alert>}
-            {feedback === 'loader' && !error && <Loader/>}
+            {feedback === 'loader' && !error && <Loader />}
 
 
             <Button
@@ -146,8 +146,8 @@ export default (props) => {
                   Olvidaste tu contraseña?
                 </Link>
               </Grid>
-              <Grid style={{textAlign: 'right'}} item xs={6}>
-                <Link style={{ cursor: 'pointer'}} ml={4}  onClick={() => history.push('/home')} variant="body2">
+              <Grid style={{ textAlign: 'right' }} item xs={6}>
+                <Link style={{ cursor: 'pointer' }} ml={4} onClick={() => history.push('/home')} variant="body2">
                   No tienes cuenta?
               </Link>
               </Grid>

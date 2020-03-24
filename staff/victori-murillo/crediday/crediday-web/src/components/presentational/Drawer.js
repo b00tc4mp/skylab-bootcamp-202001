@@ -10,9 +10,10 @@ import { makeStyles, useTheme } from '@material-ui/core/styles'
 
 import { useLocation, useHistory } from 'react-router-dom'
 import { ListCustomers } from '../'
+import { ListCredits } from '../'
 
 function ResponsiveDrawer(props) {
-  const { container } = props
+  const { container, view } = props
   const classes = useStyles()
   const theme = useTheme()
   const [mobileOpen, setMobileOpen] = React.useState(false)
@@ -36,14 +37,28 @@ function ResponsiveDrawer(props) {
 
       <Divider />
       <List>
-        {['Clientes', 'Créditos', 'Salir'].map((text, index) => (
+        {/* {['Clientes', 'Créditos', 'Salir'].map((text, index) => (
           <ListItem button key={text} onClick={
             text === 'Salir' ? logout : undefined
           } >
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
             <ListItemText primary={text} />
-          </ListItem>
-        ))}
+          </ListItem> */}
+        {/* ))} */}
+        <ListItem button key='Clientes' onClick={() => history.push('/drawer')}>
+          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+          <ListItemText primary='Clientes' />
+        </ListItem>
+
+        <ListItem button key='Créditos' onClick={() => history.push('/drawer/credits')}>
+          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+          <ListItemText primary='Créditos' />
+        </ListItem>
+
+        <ListItem button key='Salir' onClick={logout}>
+          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+          <ListItemText primary='Salir' />
+        </ListItem>
       </List>
       <Divider />
       {/* <List>
@@ -113,7 +128,9 @@ function ResponsiveDrawer(props) {
       <main className={classes.content} >
         <div className={classes.toolbar} />
         {/* {location === 'customers' && } */}
-        <ListCustomers />
+        {view === 'customers' && <ListCustomers />}
+        {view === 'credits' && <ListCredits />}
+
       </main>
     </div>
   )

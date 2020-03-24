@@ -8,7 +8,6 @@ const { Company, User, Credit } = require('crediday-models')
 const { ContentError } = require('crediday-errors')
 const { randomInt } = require('crediday-utils/index')
 const registerCredit = require('./register-credit')
-const retrieveCredit = require('./retrieve-credit')
 
 describe('retrieveCredit', () => {
 

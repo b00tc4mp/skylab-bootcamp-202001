@@ -91,7 +91,7 @@ export default function FullScreenDialog({ open, handleClose, user }) {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Crédito
+              Nuevo Crédito
             </Typography>
             <Button autoFocus color="inherit" variant="outlined" onClick={onSubmit}>
               Guardar

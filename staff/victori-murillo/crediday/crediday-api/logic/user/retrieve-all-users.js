@@ -8,7 +8,7 @@ module.exports = (userId) => {
   return (async () => {
     console.log('retrieve all')
     let user = await User.findOne({ _id: userId })
-    let users = await User.find({company: user.company}).lean()
+    let users = await User.find({company: user.company}).sort({firstName: 1}).lean()
 
     if (!users) throw new Error('Something wrong finding users from the company')
 

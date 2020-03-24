@@ -16,6 +16,8 @@ module.exports = {
 
   registerCredit: require('./credit/register-credit'),
   retrieveCredit: require('./credit/retrieve-credit'),
+  retrieveCreditsByUser: require('./credit/retrieve-credits-by-user'),
+  retrieveCreditsByCompany: require('./credit/retrieve-credits-by-company'),
 
   registerPayment: require('./payment/register-payment'),
   

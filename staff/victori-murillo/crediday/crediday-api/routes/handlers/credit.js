@@ -1,4 +1,5 @@
-const { registerCredit, retrieveCredit } = require('../../logic')
+const { registerCredit, retrieveCredit, retrieveCreditsByUser, 
+  retrieveCreditsByCompany } = require('../../logic')
 const { asyncHandler } = require('../../middleware')
 
 module.exports = {
@@ -8,7 +9,14 @@ module.exports = {
   }),
 
   retrieve: asyncHandler(async ({ params, query }, res, next) => {
-    const credit = await retrieveCredit(params.id, query)
-    res.status(200).json({ credit })
+    res.status(200).json({ credit: await retrieveCredit(params.creditId, query) })
+  }),
+
+  retrieveByUser: asyncHandler(async ({ params }, res, next) => {
+    res.status(200).json({ credits: await retrieveCreditsByUser(params.userId) })
+  }),
+
+  retrieveByCompany: asyncHandler(async ({ payload }, res, next) => {
+    res.status(200).json({ credits: await retrieveCreditsByCompany(payload.sub) })
   })
 }

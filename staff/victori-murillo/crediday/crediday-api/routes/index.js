@@ -32,7 +32,9 @@ module.exports = router
   .delete('/users/:id', user.delete)
   
   .post('/credits/users/:id', credit.register)
-  .get('/credits/users/:id', credit.retrieve)
+  .get('/credit/:creditId', credit.retrieve)
+  .get('/credits/user/:userId', credit.retrieveByUser)
+  .get('/credits/company', credit.retrieveByCompany)
   // .patch('/credits/:id', credit.update)
   // .delete('/credits/:id', credit.register)
 
