@@ -120,12 +120,23 @@ export default function Home({ navigation }) {
 
     return (
 
-        <Stack.Navigator screenOptions={{ headerBackTitleVisible: false }} mode='modal' headerMode='screen' initialRouteName='Search' >
+        <Stack.Navigator
+            screenOptions={{
+                headerBackTitleVisible: false,
+                headerStyle: {
+                    backgroundColor: '#82A4B3',
+                },
+                headerTintColor: '#EFEBDA'
+            }}
+            mode='modal'
+            headerMode='screen'
+            initialRouteName='Search'
+
+        >
             <Stack.Screen name="Search" options={{ headerShown: false }} component={SearchScreen} />
             <Stack.Screen name="Results"
                 component={ResultsScreen}
                 options={{
-                    headerStyle: { height: 80, backgroundColor: '#82A4B3' },
                     headerTitle: TopSearchHeader
                 }} />
             <Stack.Screen name="ParkDetails" component={ParkDetailsScreen} />
