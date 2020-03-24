@@ -21,7 +21,6 @@ export default withRouter(function ({ history }) {
 
       setTimeout(() => {
         setState({ error: undefined })
-        //history.push('/home')
       }, 3000)
   }
 
@@ -151,7 +150,7 @@ export default withRouter(function ({ history }) {
     <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Redirect to="/login"/>}/>
     <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Login onSubmit={handleLogin} error={error} /> }/>
     <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />}/>
-    <Route path="/entrance" render={() => isLoggedIn() ? <> <Home error={error} /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
+<Route path="/entrance" render={() => isLoggedIn() ? <> <Home error={error} /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create-parking" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/modify-parking" render={() => isLoggedIn() ? <> <Config /> <ModifyParking onSubmit={handleModifyParking} error={error}/> </> : <Redirect to="/login" />}/>

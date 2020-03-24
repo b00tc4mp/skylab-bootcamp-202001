@@ -4,11 +4,12 @@ import Feedback from './Feedback'
 import { useQrEncode } from 'react-qr-hooks'
 const { random } = Math
 
+
 export default function({onSubmit, error}) {
 
     const [plate, setPlate] = useState('')
     const [id, setId] = useState()
-debugger
+
     const handleVehicle = (event) => {
         event.preventDefault()
 
@@ -39,7 +40,7 @@ debugger
     </form>
     </>
     }
+        {error && <div className="error-container"> <Feedback message={error} level="error" /> </div>}
 
-    {error && <div className="error-container"> <Feedback message={error} level="error" /> </div>}
-</section>
+    </section>
 }

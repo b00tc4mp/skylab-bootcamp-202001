@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { withRouter} from 'react-router-dom'
 import './style/Home.sass'
 import { Header } from '.'
-
+import retrieveParking from '../logic/retrieve-parking'
 import { ReactComponent as Access } from './icons/access.svg'
 import { ReactComponent as Exit } from './icons/exit.svg'
 import { ReactComponent as AtmIcon } from './icons/atm.svg'
@@ -13,6 +13,8 @@ import { isLoggedIn } from '../logic'
 
 
 export default withRouter (function({history}) {
+
+    const [state, setState] = useState('free')
     
     const handleGoToEntrance = () => {
         history.push('/entrance')
@@ -39,16 +41,31 @@ export default withRouter (function({history}) {
         history.push('/report')
     }
 
+    const handleParkingFull = async() => {
+       const pk = await retrieveParking()
+       debugger
+
+        if(pk[0].totalLots === pk[0].occupiedLots){
+            setState('fully')
+        }else{
+            setState('free')
+        }
+    }
+
+    useEffect(() => {
+      handleParkingFull()
+    })
+
     return <>
     <Header user={isLoggedIn() ? 'Login' : ''}/>
     <main>
         
         <section className="actions actions--first">
 
-            <div className="actions__action" onClick={handleGoToEntrance}>
-
+            <div className={state === 'free' ? "actions__action" : "actions__full"} onClick={ state === 'free' ? handleGoToEntrance : ''}>
+            
                 <Access className="actions__image" />
-                <p className="actions__text">Access</p>
+                <p className="actions__text">{state === 'free' ? 'Acces' : 'Parking full' }</p>
             </div>
 
             <div className="actions__action" onClick={handleGoToExit}>
