@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { withRouter} from 'react-router-dom'
 import './style/Home.sass'
-import { Header } from '.'
+import { Header, Feedback } from '.'
 import retrieveParking from '../logic/retrieve-parking'
 import { ReactComponent as Access } from './icons/access.svg'
 import { ReactComponent as Exit } from './icons/exit.svg'
@@ -15,6 +15,13 @@ import { isLoggedIn } from '../logic'
 export default withRouter (function({history}) {
 
     const [state, setState] = useState('free')
+
+    const [err, setErr] = useState()
+
+    function __handleError__(error) {
+      
+        setErr(error.message)
+    }
     
     const handleGoToEntrance = () => {
         history.push('/entrance')
@@ -41,20 +48,25 @@ export default withRouter (function({history}) {
         history.push('/report')
     }
 
-    const handleParkingFull = async() => {
-       const pk = await retrieveParking()
-       debugger
+    async function handleParkingFull() {
+        try{
+            const pk = await retrieveParking()
+            if(pk.length === 0){
+                history.push('/create-parking')
+            }
 
-        if(pk[0].totalLots === pk[0].occupiedLots){
-            setState('fully')
-        }else{
-            setState('free')
+            if(pk[0].totalLots === pk[0].occupiedLots){
+                setState('fully')
+            }
+            
+        }catch(error){  
+            __handleError__(error)
         }
     }
 
     useEffect(() => {
       handleParkingFull()
-    })
+    },[state])
 
     return <>
     <Header user={isLoggedIn() ? 'Login' : ''}/>
@@ -103,6 +115,8 @@ export default withRouter (function({history}) {
             </div>
                 
         </section>
+
+        {err && <Feedback message={err} level="info" />}
 
     </main>
     </>
