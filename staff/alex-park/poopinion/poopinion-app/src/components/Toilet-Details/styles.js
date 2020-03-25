@@ -200,7 +200,18 @@ const styles = StyleSheet.create({
         height: 40,
         resizeMode: 'contain',
 
-    }
+    },
+    deleteButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 10,
+        fontWeight: 'bold',
+        fontSize: 20,
+        color: 'white',
+        marginBottom: 15,
+        textAlign: 'center'
+    },
+
 })
 
 export default styles

@@ -41,6 +41,7 @@ describe('deleteToilet', () => {
                 .then(({ id }) => _id = id)
                 .then(() => Promise.resolve(Toilet.create({ publisher: _id, place })))
                 .then(({ id }) => _toiletId = id)
+                .then(() => Promise.all([User.findByIdAndUpdate(_id, { $push: { favToilets: _toiletId } }), Toilet.findByIdAndUpdate(_toiletId, { $push: { isFavedBy: _id } })]))
                 .then(() => Promise.all([User.findById(_id), Toilet.findById(_toiletId)]))
                 .then(([user, toilet]) => {
                     const comment = new Comment({ place, publisher: _id, commentedAt: _toiletId, rating })
@@ -57,8 +58,10 @@ describe('deleteToilet', () => {
             return Promise.all([User.findOne({ comments: _commentId }).lean(), Toilet.findOne({ comments: _commentId }).lean()])
                 .then(([user, toilet]) => {
                     expect(user).to.exist
+                    expect(user.favToilets[0].toString()).to.equal(_toiletId)
                     expect(user.comments[0]._id.toString()).to.equal(_commentId)
                     expect(toilet).to.exist
+                    expect(toilet.isFavedBy[0].toString()).to.equal(_id)
                     expect(toilet.comments[0]._id.toString()).to.equal(_commentId)
                 })
                 .then(() => deleteToilet(_id, _toiletId))
@@ -67,10 +70,10 @@ describe('deleteToilet', () => {
                     expect(user).to.exist
                     expect(user.comments.length).to.equal(0)
                     expect(user.publishedToilets).not.to.include(_toiletId)
+                    expect(user.favToilets).not.to.include(_toiletId)
                 })
                 .then(() => Toilet.findById(_toiletId))
                 .catch(({ message }) => {
-                    
                     expect(message).to.exist
                     expect(message).to.equal(`toilet with id ${_toiletId} does not exist`)
                 })
@@ -84,7 +87,7 @@ describe('deleteToilet', () => {
             deleteToilet(_id, _toiletId, _commentId)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
-                    
+
                     expect(message).not.to.be.undefined
                     expect(message).to.equal(`user with id ${_id} does not exist`)
                 })

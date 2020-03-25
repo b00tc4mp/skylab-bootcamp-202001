@@ -17,5 +17,6 @@ module.exports = {
     deleteComment: require('./delete-comment'),
     toggleThumbUp: require('./toggle-thumb-up'),
     toggleThumbDown: require('./toggle-thumb-down'),
-    retrieveTopToilets: require('./retrieve-top-toilets')
+    retrieveTopToilets: require('./retrieve-top-toilets'),
+    deleteToiletPhoto: require('./delete-toilet-photo')
 }

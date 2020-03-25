@@ -3,7 +3,7 @@ import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-na
 import MapView from 'react-native-maps'
 import styles from './styles'
 
-function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete }) {
+function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete, onDeleteToilet }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
 
     useEffect(() => {
@@ -196,6 +196,12 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                             :
                             (<Text>No comments to display...</Text>)}
                     </View>
+
+                    {toilet.publisher.id.toString() === user.id.toString() && (<>
+                        <TouchableOpacity onPress={() => onDeleteToilet(toilet.id.toString())} style={styles.deleteContainer}>
+                            <Text style={styles.deleteButton}>🗑️ Delete this toilet</Text>
+                        </TouchableOpacity>
+                    </>)}
 
                 </View>
             </View>

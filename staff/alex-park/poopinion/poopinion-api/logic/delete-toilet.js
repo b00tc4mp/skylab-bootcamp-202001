@@ -32,7 +32,13 @@ module.exports = (id, toiletId) => {
         })
         .then(() => Comment.find({ commentedAt: toiletId }))
         .then(commentsArray => commentsArray.forEach(comment => Promise.resolve(Comment.findByIdAndRemove(comment.id))))
-        .then(() => User.findByIdAndUpdate(id, { $pull: { publishedToilets: toiletId } }))
+        .then(() => User.find({ favToilets: toiletId }))
+        .then(users => {
+            users.forEach(user => {
+                Promise.resolve(User.findByIdAndUpdate(user.id, { $pull: { favToilets: toiletId } }))
+            })
+        })
+        .then(() => User.findByIdAndUpdate(id, { $pull: { publishedToilets: toiletId, favToilets: toiletId } }))
         .then(() => Toilet.findByIdAndRemove(toiletId))
         .then(() => { })
 }

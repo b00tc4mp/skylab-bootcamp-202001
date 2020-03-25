@@ -16,5 +16,6 @@ module.exports = {
     retrieveTopToilets: require('./retrieve-top-toilets'),
     updateComment: require('./update-comment'),
     deleteComment: require('./delete-comment'),
-    updateUser: require('./update-user')
+    updateUser: require('./update-user'),
+    deleteToilet: require('./delete-toilet')
 }

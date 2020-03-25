@@ -30,7 +30,8 @@ import logic, {
   retrieveTopToilets,
   updateComment,
   deleteComment,
-  updateUser
+  updateUser,
+  deleteToilet
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage
@@ -194,7 +195,7 @@ export default function App() {
     }
   }
 
-  async function handleToggleFav(toiletId) { //WILL NEED TO UPLOAD WHEN DETAILS ARE DISPLAYED
+  async function handleToggleFav(toiletId) {
     if (!user) {
       Alert.alert('You are not logged in yet!')
       handleGoToLogin();
@@ -306,6 +307,18 @@ export default function App() {
     }
   }
 
+  async function handleDeleteToilet(toiletId) {
+    try {
+      await deleteToilet(token, toiletId)
+
+      Alert.alert('Toilet successfully deleted! 🚽')
+      setView('landing')
+      
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
+
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
     setGoLanding(false)
@@ -403,7 +416,7 @@ export default function App() {
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} onToUpdateUser={handleGoToUpdateUser} />}
         {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
-        {view === 'details' && detailedToilet && <ToiletDetails user={user} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
+        {view === 'details' && detailedToilet && <ToiletDetails user={user} onDeleteToilet={handleDeleteToilet} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
         {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
       </ScrollView>
