@@ -293,7 +293,18 @@ export default function App() {
     }
   }
 
+  async function handleUpdateUser(data) {
+    try {
+      await updateUser(token, data)
 
+      Alert.alert('Personal info updated!')
+      __handleUser__()
+      setView('landing')
+
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
 
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
@@ -394,7 +405,7 @@ export default function App() {
         {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
         {view === 'details' && detailedToilet && <ToiletDetails user={user} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
-        {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding}/>}
+        {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

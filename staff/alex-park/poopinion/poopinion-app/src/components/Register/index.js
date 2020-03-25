@@ -15,7 +15,7 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
         <ScrollView>
             <KeyboardAvoidingView behavior='position'>
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.formContainer}>
+                    <View style={styles.formContainer}>
                         <Text style={styles.header}>Register</Text>
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
@@ -34,7 +34,7 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
 
                         </View>
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
-                    </TouchableOpacity>
+                    </View>
                     {error && <Feedback level='warn' message={error} />}
                     <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 Submit! 💩</Text>
                     <View style={styles.navButtons}>

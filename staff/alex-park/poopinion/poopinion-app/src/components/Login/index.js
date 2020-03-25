@@ -13,11 +13,11 @@ function Login({ onSubmit, error, goToRegister, goToLanding }) {
                 <View style={styles.container}>
                     <Image source={require('../../../assets/header.png')} style={styles.image} />
                     <View style={styles.formContainer}>
-                        <TouchableOpacity>
+                        <View>
                             <Text style={styles.header}>Login</Text>
                             <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@mail.com' onChangeText={(text) => setEmail(text.toLowerCase().trim())} />
                             <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
-                        </TouchableOpacity>
+                        </View>
                         {error && <Feedback level='warn' message={error} />}
                         <TouchableOpacity>
                             <Text style={styles.button} onPress={() => onSubmit(email, password)}>💩 Log in! 💩</Text>

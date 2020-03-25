@@ -15,7 +15,7 @@ function Profile({ user, onDetails, onToUpdateUser }) {
         <ScrollView style={styles.container}>
             <View style={styles.nameContainer}>
                 <View style={styles.nameHeader}>
-                    <TouchableOpacity style={styles.picture} onPress={() => onToUpdateUser}>
+                    <TouchableOpacity style={styles.picture} onPress={() => onToUpdateUser(user.id.toString())}>
                         {user.publishedToilets.length < 5 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')}/>}
                         {user.publishedToilets.length < 5 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')}/>}
 

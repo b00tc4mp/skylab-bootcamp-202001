@@ -5,12 +5,13 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '90%',
         flexDirection: 'column',
-        marginTop: 100,
+        marginTop: 30,
         marginHorizontal: '5%'
     },
     header: {
-        fontSize: 40,
-        fontWeight: 'bold'
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginTop: 20
     },
     form: {
         fontSize: 20
@@ -71,7 +72,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         fontSize: 16,
         fontWeight: 'bold',
-        color: 'white'
+        color: 'white',
+        marginBottom: 20
     }
 })
 

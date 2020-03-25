@@ -18,6 +18,9 @@ const context = require('./context')
 module.exports = function (token, data) {
     validate.stringFrontend(token, 'token')
     validate.type(data, 'data', Object)
+    const { password, newPassword } = data
+    validate.stringFrontend(password, 'password')
+    if (!newPassword) delete data.newPassword
 
     return (async () => {
         const response = await fetch(`http://192.168.1.253:8085/api/users/`, {
