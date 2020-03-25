@@ -24,6 +24,8 @@ module.exports = new Schema({
         required: true
     },
     image: String,
+    upVotes: [{ type: ObjectId, ref: 'User' }],
+    downVotes: [{ type: ObjectId, ref: 'User' }],
     rating: Number,
     features: [Feature],
     description: String,
