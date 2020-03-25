@@ -2,7 +2,6 @@ const { User } = require('crediday-models')
 const validate = require('crediday-utils')
 
 module.exports = ({ code, email }) => {
-  console.log(code, email)
   validate.string(code, 'code');
   validate.string(email, 'email')
   validate.email(email);

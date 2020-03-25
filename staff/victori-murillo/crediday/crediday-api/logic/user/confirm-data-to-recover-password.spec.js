@@ -4,11 +4,11 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose } = require('crediday-models')
 const { expect } = require('chai')
 const { random } = Math
-const registerUser = require('./register-user')
+const confirmDataToRecoverPassword = require('./confirm-data-to-recover-password')
 const { Company, User } = require('crediday-models')
 const { registerCompany, confirmCompany } = require("..")
 
-describe('registerUser', () => {
+describe('confirmDataToRecoverPassword', () => {
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     await Promise.all([Company.deleteMany(), User.deleteMany()])
@@ -33,14 +33,9 @@ describe('registerUser', () => {
       _user = await User.findOne({ email })
     })
 
-    it('should register user successfully', async () => {
-      const firstName = (`Firstname-${random()}`).slice(0, 20)
-
-      const response = await registerUser(_user.id, { firstName })
-      expect(response).to.be.an('undefined')
-
-      const user = await User.findOne({ firstName })
-      expect(user.firstName).to.equal(firstName)
+    it('should confirm recover password successfully', async () => {
+      const response = await confirmDataToRecoverPassword({ company: companyName, email })
+      expect(response).to.equal('Data confirmed')
     })
   })
 

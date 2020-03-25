@@ -4,6 +4,7 @@ import Register from './Register'
 import Copyright from './Copyright'
 import ListCustomers from './ListCustomers'
 import ListCredits from './ListCredits'
+import Report from './Report'
 
 export {
   Home,
@@ -11,5 +12,6 @@ export {
   Register,
   Copyright,
   ListCustomers,
-  ListCredits
+  ListCredits,
+  Report
 }

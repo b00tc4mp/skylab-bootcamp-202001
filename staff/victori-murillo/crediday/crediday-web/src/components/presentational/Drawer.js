@@ -1,24 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem,
-  ListItemIcon, ListItemText, Toolbar, Typography
+  ListItemText, Toolbar, Typography, ListItemIcon
 } from '@material-ui/core'
 
-import { MoveToInbox as InboxIcon, Mail as MailIcon, Menu as MenuIcon } from '@material-ui/icons'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { ListCustomers } from '../'
 import { ListCredits } from '../'
+import { Report } from '../'
+
+import MenuIcon from '@material-ui/icons/Menu'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PeopleIcon from '@material-ui/icons/People';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import DescriptionIcon from '@material-ui/icons/Description';
 
 function ResponsiveDrawer(props) {
+
   const { container, view } = props
   const classes = useStyles()
   const theme = useTheme()
-  const [mobileOpen, setMobileOpen] = React.useState(false)
 
   const history = useHistory()
+
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen)
 
@@ -31,44 +39,33 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Typography variant="h6" color="primary">
-          Victori Murillo
+          Nombre
         </Typography>
       </div>
 
       <Divider />
       <List>
-        {/* {['Clientes', 'Créditos', 'Salir'].map((text, index) => (
-          <ListItem button key={text} onClick={
-            text === 'Salir' ? logout : undefined
-          } >
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem> */}
-        {/* ))} */}
-        <ListItem button key='Clientes' onClick={() => history.push('/drawer')}>
-          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+        <ListItem button key='Clientes' onClick={() => history.push('/drawer/customers')}>
+          <ListItemIcon><PeopleIcon /></ListItemIcon>
           <ListItemText primary='Clientes' />
         </ListItem>
 
         <ListItem button key='Créditos' onClick={() => history.push('/drawer/credits')}>
-          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+          <ListItemIcon><AttachMoneyIcon /></ListItemIcon>
           <ListItemText primary='Créditos' />
         </ListItem>
 
+        <ListItem button key='Reporte' onClick={() => history.push('/drawer/report')}>
+          <ListItemIcon><DescriptionIcon /></ListItemIcon>
+          <ListItemText primary='Reporte' />
+        </ListItem>
+
         <ListItem button key='Salir' onClick={logout}>
-          {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
+          <ListItemIcon><ExitToAppIcon /></ListItemIcon>
           <ListItemText primary='Salir' />
         </ListItem>
       </List>
       <Divider />
-      {/* <List>
-        {['Semanal', 'Mensual', 'Control de Caja'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List> */}
     </div>
   )
 
@@ -130,6 +127,7 @@ function ResponsiveDrawer(props) {
         {/* {location === 'customers' && } */}
         {view === 'customers' && <ListCustomers />}
         {view === 'credits' && <ListCredits />}
+        {view === 'report' && <Report />}
 
       </main>
     </div>

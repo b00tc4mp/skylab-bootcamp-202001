@@ -6,7 +6,7 @@ const { hash } = require('bcryptjs')
 const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-template')
 
-module.exports = ({ companyName, username, email, password }) => {
+module.exports = async ({ companyName, username, email, password }) => {
 
   validate.string(companyName, 'Nombre de Compañia')
   validate.length(companyName, 'Nombre de Compañia', 3, 20)
@@ -28,16 +28,16 @@ module.exports = ({ companyName, username, email, password }) => {
 
     const newCompany = await Company.create({ name: companyName.toLowerCase() })
 
+    const firstName = username.slice(0, 1).toUpperCase() + username.slice(1).toLowerCase()
+
     const newUser = await User.create({
       username: username,
-      firstName: username,
+      firstName,
       email,
       password: await hash(password, 10),
       role: 'owner',
       company: newCompany.id,
     })
-
-    console.log(newCompany.id)
 
     const confirmUser = await User.findOne({ _id: newUser._id })
     if (!confirmUser) throw new Error('User was not created')

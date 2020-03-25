@@ -38,7 +38,8 @@ module.exports = router
   // .patch('/credits/:id', credit.update)
   // .delete('/credits/:id', credit.register)
 
-  .post('/payments/credits/:id', payment.register)
+  .post('/payments/credit/:creditId', payment.register)
+  .post('/payments/company', payment.retrieveByCompany)
 
 
   

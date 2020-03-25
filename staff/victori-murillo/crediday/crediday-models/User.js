@@ -103,14 +103,5 @@ const schema = new Schema({
   
 }, { versionKey: false })
 
-schema.pre('save', function (next) {
-  this.firstName = this.firstName.trim()[0].toUpperCase() + this.firstName.trim().slice(1).toLowerCase()
-
-  if (this.lastName) {
-    this.lastName = this.lastName.trim()[0].toUpperCase() + this.lastName.trim().slice(1).toLowerCase()
-  }
-
-  next()
-})
 
 module.exports = model('User', schema)

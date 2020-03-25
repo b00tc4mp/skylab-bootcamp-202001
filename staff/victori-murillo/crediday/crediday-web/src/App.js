@@ -5,11 +5,9 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { Context } from './components/ContextProvider'
 
 import RecoverPassword from './components/recover-password/RecoverPassword'
-// import Calendar from './components/calendar/Calendar'
 
 import jwt from 'jsonwebtoken'
 
-// const { env: { REACT_APP_JWT_SECRET: JWT_SECRET } } = process
 const JWT_SECRET = process.env.REACT_APP_JWT_SECRET
 
 export default () => {
@@ -74,8 +72,14 @@ export default () => {
         <Route exact path="/drawer">
           {verifyToken() ? <Drawer view='customers' /> : <Redirect to="/login" />}
         </Route>
+        <Route exact path="/drawer/customers">
+          {verifyToken() ? <Drawer view='customers' /> : <Redirect to="/login" />}
+        </Route>
         <Route exact path="/drawer/credits">
           {verifyToken() ? <Drawer view='credits' /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/drawer/report">
+          {verifyToken() ? <Drawer view='report' /> : <Redirect to="/login" />}
         </Route>
         <Route>
           <Redirect to={`/home`} />

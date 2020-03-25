@@ -1,10 +1,12 @@
 const { random } = Math
 const { mongoose, User, Company } = require('crediday-models')
-const registerCompany = require('./register-company').default
 const { compare } = require('bcryptjs')
+const registerCompany = require('./register-company')
 const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
 
+
 const API_URL = process.env.REACT_APP_API_URL
+
 
 describe('registerCompany', () => {
 
@@ -28,13 +30,13 @@ describe('registerCompany', () => {
       await fetch(`${API_URL}/companies`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ companyName, username, email, password,  })
+        body: JSON.stringify({ companyName, username, email, password, })
       })
     })
 
     it('Should fail because companyName already exist', async () => {
       try {
-        await registerCompany({companyName, email, username, password, passwordValidation})
+        await registerCompany({ companyName, email, username, password, passwordValidation })
         throw new Error('should not reach this point')
 
       } catch (error) {

@@ -1,37 +1,35 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { registerUser } from '../logic'
+import { registerUser, retrieveUsers } from '../logic'
 import { Context } from './ContextProvider'
-import { DenseTable, EditableTable } from './presentational'
-import axios from 'axios'
-// const { env: { REACT_APP_API_URL: API_URL } } = process
-const API_URL = process.env.REACT_APP_API_URL
+import { EditableTable } from './presentational'
 
 export default () => {
   const [users, setUsers] = useState()
   const { token } = useContext(Context)
 
   useEffect(() => {
-    axios.get(`${API_URL}/users-companies`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(res => setUsers(res.data.users))
-      .catch(e => console.log(e))
+    retrieveUsers(token)
+      .then(users => setUsers(users))
+      .catch(error => console.log(error.message))
   }, [])
 
   const columns = [
-    { title: 'Nombre', field: 'firstName' },
-    // { title: 'Apellido', field: 'lastName' },
+    { title: 'Nombre', field: 'firstName' }
   ]
 
   return (
     <>
       {
-        // users && <EditableTable results={users} header={header} />
         users &&
         <EditableTable
-          data={users} 
-          setData={setUsers} 
-          
-          columns={columns} 
-          registerUser={registerUser} 
+          onRowAdd={true}
+          father='customers'
+          actions={['add_circle', 'editable']}
+          data={users}
+          setData={setUsers}
+
+          columns={columns}
+          registerUser={registerUser}
         />
       }
     </>

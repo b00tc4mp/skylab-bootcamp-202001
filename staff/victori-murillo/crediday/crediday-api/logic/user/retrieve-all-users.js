@@ -2,11 +2,9 @@ const { User } = require('crediday-models')
 const validate = require('crediday-utils')
 
 module.exports = (userId) => {
-  console.log(userId)
   validate.string(userId, 'userId');
 
   return (async () => {
-    console.log('retrieve all')
     let user = await User.findOne({ _id: userId })
     let users = await User.find({company: user.company}).sort({firstName: 1}).lean()
 

@@ -6,9 +6,9 @@ const { expect } = require('chai')
 const { random } = Math
 const { Company, User, Credit } = require('crediday-models')
 const { randomInt } = require('crediday-utils/index')
-const retrieveCredit = require('./retrieve-credit')
+const retrieveCreditsByCompany = require('./retrieve-credits-by-company')
 
-describe('retrieveCredit', () => {
+describe('retrieveCreditsByCompany', () => {
 
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -48,34 +48,33 @@ describe('retrieveCredit', () => {
     })
 
     it('should retrieve the credit successfully', async () => {
-      const response = await retrieveCredit(credit.id)
-
-      expect(response).to.be.an('object')
+      const response = await retrieveCreditsByCompany(customer.id)
+      expect(response).to.be.an('array')
     })
 
-    it('should fail with credit id not exists', async () => {
+    it('should fail with user id not exists', async () => {
       const randomId = (`${random()}`)
 
       try {
-        await retrieveCredit(randomId)
+        await retrieveCreditsByCompany(randomId)
         throw new Error('should not reach here')
 
       } catch (error) {
         expect(error).to.instanceOf(CastError)
         expect(error.name).to.equal('CastError')
-        expect(error.message).to.equal(`Cast to ObjectId failed for value "${randomId}" at path "_id" for model "Credit"`)
+        expect(error.message).to.equal(`Cast to ObjectId failed for value "${randomId}" at path "_id" for model "User"`)
       }
     })
 
-    it('should fail with wrong credit id syntax ', async () => {
+    it('should fail with wrong user id syntax', async () => {
       const numberId = 123
 
       try {
-        await retrieveCredit(numberId)
+        await retrieveCreditsByCompany(numberId)
         throw new Error('should not reach here')
 
       } catch (error) {
-        expect(error.message).to.equal(`creditId ${numberId} is not a string`)
+        expect(error.message).to.equal(`userId ${numberId} is not a string`)
       }
 
     })

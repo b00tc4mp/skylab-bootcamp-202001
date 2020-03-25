@@ -3,7 +3,7 @@ const { Schema, model, SchemaTypes: { ObjectId } } = require('mongoose')
 const schema = new Schema({
   paymentBy: {
     type: String,
-    enum: ["Cash", "BN", "BCR", "BAC"],
+    enum: ["cash", "bn", "bcr", "bac"],
     required: true
   },
 
@@ -17,27 +17,27 @@ const schema = new Schema({
   //   required: true
   // },
   
-  datePayment: {
+  date: {
     type: Date,
     default: Date.now
   },
 
-  amountPayment: {
+  amount: {
     type: Number,
     required: true
   },
 
-  moratoriumPayment: {
+  moratorium: {
     type: Number,
     required: true
   },
 
-  interestPayment: {
+  interest: {
     type: Number,
     required: true
   },
 
-  amortizePayment: {
+  amortize: {
     type: Number,
     required: true
   },

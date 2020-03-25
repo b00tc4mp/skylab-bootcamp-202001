@@ -1,9 +1,11 @@
 const { random } = Math
 const { mongoose, User, Company } = require('crediday-models')
-const { login } = require('.')
+
 const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
 
 const API_URL = process.env.REACT_APP_API_URL
+
+// const { login } =require('./re') './index'
 
 describe('registerCompany', () => {
 
@@ -48,7 +50,7 @@ describe('registerCompany', () => {
       const user = await User.findOne({ email })
 
       // Confirming email
-      await fetch(`${API_URL}/companies/email/${company.id}`, {method: 'PATCH'})
+      await fetch(`${API_URL}/companies/email/${company.id}`, { method: 'PATCH' })
 
       const token = await login({ username, password })
 

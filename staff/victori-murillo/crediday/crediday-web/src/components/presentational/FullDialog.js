@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import { Button, TextField, Grid, Paper } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { Button, TextField, Grid } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItem from '@material-ui/core/ListItem'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import CloseIcon from '@material-ui/icons/Close'
 import Slide from '@material-ui/core/Slide'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import DatePicker from './DatePicker'
 import SimpleSelect from './SimpleSelect'
@@ -51,7 +47,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function FullScreenDialog({ open, handleClose, user }) {
   const classes = useStyles()
 
-  const [selectedDate, setSelectedDate] = useState(new Date)
+  const [selectedDate, setSelectedDate] = useState(new Date())
 
   const [paymentFrecuency, setPaymentFrecuency] = useState('')
   const [paymentByDefault, setPaymentByDefault] = useState('')
@@ -101,7 +97,11 @@ export default function FullScreenDialog({ open, handleClose, user }) {
         <form className={classes.root} noValidate autoComplete="off">
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+              <DatePicker
+                text='Fecha de Constitución'
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
             </Grid>
             <Grid item xs={12}>
               <SimpleSelect

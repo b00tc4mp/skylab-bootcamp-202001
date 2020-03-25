@@ -4,9 +4,9 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, Company, User, mongoose: { Mongoose: { prototype: { CastError } } } } = require('crediday-models')
 const { expect } = require('chai')
 const { random } = Math
-const retrieveCompany = require('./retrieve-company')
+const confirmCompany = require('./confirm-company')
 
-describe('retrieveCompany', () => {
+describe('confirmCompany', () => {
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     await Promise.all([Company.deleteMany(), User.deleteMany()])
@@ -24,25 +24,34 @@ describe('retrieveCompany', () => {
   })
 
 
-  it('should return the company', async () => {
-
-    const _company = await retrieveCompany(company.id)
-    expect(_company).to.be.an('object')
-    expect(_company.id).to.equal(company.id)
-    expect(_company.name).to.equal(companyName);
+  it('should confirm a company successfully', async () => {
+    const response = await confirmCompany(company.id)
+    expect(response).to.equal('Company successfully confirmed by email')
   })
 
-  it('should fail with wrong syntax company id', async () => {
+  it('should fail with company not foud', async () => {
     const randomCompanyId = `${random()}`
-    let _company
 
     try {
-      _company = await retrieveCompany(randomCompanyId)
+      _company = await confirmCompany(randomCompanyId)
       throw new Error('should now reach this point')
 
     } catch (error) {
       expect(error).to.instanceOf(CastError)
       expect(error.message).to.equal(`Cast to ObjectId failed for value "${randomCompanyId}" at path "_id" for model "Company"`)
+    }
+  })
+
+  it('should fail with company id is not a string', async () => {
+    const randomCompanyId = 1235
+
+    try {
+      _company = await confirmCompany(randomCompanyId)
+      throw new Error('should now reach this point')
+
+    } catch (error) {
+      expect(error).to.instanceOf(Error)
+      expect(error.message).to.equal(`_id ${randomCompanyId} is not a string`)
     }
   })
 

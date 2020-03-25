@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState } from 'react'
 import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, Container } from '@material-ui/core'
-import BusinessCenterIcon from '@material-ui/icons/BusinessCenter'
 import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation';
 import { makeStyles } from '@material-ui/core/styles'
 import { Copyright } from '.'
@@ -18,11 +17,6 @@ export default () => {
   const [view, setView] = useState()
   const [email, setEmail] = useState()
 
-  // useEffect(() => {
-
-  //   if (feedback) setTimeout(() => history.push('login'), 3000)
-
-  // }, [feedback])
 
   const handleSubmit = async (e) => {
     try {

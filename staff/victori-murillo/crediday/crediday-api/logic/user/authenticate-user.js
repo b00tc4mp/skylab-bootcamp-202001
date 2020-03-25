@@ -6,7 +6,6 @@ module.exports = ({ username, password }) => {
   validate.string(username, 'username')
   validate.string(password, 'password');
 
-
   return (async () => {
     const user = await User
       .findOne({ username: username.toLowerCase() })

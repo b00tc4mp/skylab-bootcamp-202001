@@ -4,7 +4,6 @@ import { Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid,
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Alert } from '@material-ui/lab'
-import { flexbox } from '@material-ui/system';
 import { Types } from 'mongoose'
 
 import { Copyright } from '.'
@@ -58,7 +57,6 @@ export default (props) => {
 
     try {
       const token = await login(json)
-      console.log(token)
       sessionStorage.session = token
       localStorage.lastSession = new Date()
 

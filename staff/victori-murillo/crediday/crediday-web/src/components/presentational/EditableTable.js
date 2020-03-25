@@ -1,28 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import MaterialTable from 'material-table'
-import axios from 'axios'
 import Icon from '@material-ui/core/Icon';
-import { green } from '@material-ui/core/colors';
-
-import Modal from './Modal'
 import FullDialog from './FullDialog'
-const API_URL = process.env.REACT_APP_API_URL
+import Payment from './Payment'
 
 const padding = 'dense'
 const pageSize = 10
 
-export default function MaterialTableDemo({ data, setData, columns, registerUser }) {
+export default function MaterialTableDemo({onRowAdd, father, data, setData, columns, registerUser, actions }) {
 
   const [row, setRow] = useState(null)
   const [open, setOpen] = useState(false)
-  const [user, setUser] = useState()
-  const [credits, setCredits] = useState([])
+  const [rowData, setRowData] = useState()
 
   const handleClickOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const handleAddCredit = (event, data) => {
-    setUser(data)
+  const handleRowData = (event, data) => {
+    setRowData(data)
     handleClickOpen()
   }
 
@@ -36,20 +31,23 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
     }
   }
 
-  const fetchCredits = (id) => {
-    return axios.get(`${API_URL}/credits/user/${id}`, { headers: { Authorization: `Bearer ${sessionStorage.session}` } })
-  }
-  console.log(data)
-
   return (
     <>
-      <FullDialog user={user} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+      {
+        father === 'credits' && rowData &&
+        <Payment credit={rowData} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+      }
+      {
+        father === 'customers' &&
+        <FullDialog user={rowData} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
+      }
 
       <MaterialTable
         title={window.innerWidth < 460 ? '' : 'Clientes'}
         columns={columns}
         data={data}
-        editable={{
+        editable={
+          onRowAdd && {
           onRowAdd: newData => {
             return new Promise((resolve, reject) => resolve())
               .then(() => registerUser(newData))
@@ -63,56 +61,47 @@ export default function MaterialTableDemo({ data, setData, columns, registerUser
           }
         }}
 
-        // onRowClick={((event, selectedRow) => {
-        //   setRow(selectedRow)
-        // })}
+        onRowClick={((event, selectedRow) => {
+          setRow(selectedRow)
+        })}
 
         options={{
           addRowPosition: 'first',
           rowStyle: rowData => ({
-            color: (row && row.tableData.id === rowData.tableData.id) ? 'white' : 'black',
+            color: (row && row.tableData.id === rowData.tableData.id) ? 'Black' : 'black',
 
-            backgroundColor: (row && row.tableData.id === rowData.tableData.id) ? '#3F50B5'
+            backgroundColor: (row && row.tableData.id === rowData.tableData.id) ? '#eee'
               : ((rowData.tableData.id % 2) ? 'white' : 'white')
           }),
           emptyRowsWhenPaging: false,
           padding,
           pageSize,
           pageSizeOptions: [...pageSizeOptions, data.length],
-          // columnsButton: true,
           detailPanelColumnAlignment: 'left',
           actionsColumnIndex: -1
         }}
-        actions={[
-          {
-            icon: () => <Icon style={{ color: 'green' }}>add_circle</Icon>,
-            onClick: handleAddCredit,
-          },
-          {
-            icon: () => <Icon style={{ color: '#3F50B5' }}>editable</Icon>,
-            onClick: (event, rowData) => alert("You want to delete " + rowData.name),
-          }
-        ]}
-
-        // detailPanel={[
-        //   {
-        //     render: (rowData) => {
-        //       return (
-        //         <div
-        //           onClick={() => console.log('show credits')}
-        //           style={{
-        //             fontSize: 20,
-        //             textAlign: 'center',
-        //             color: 'white',
-        //             backgroundColor: '#43A047',
-        //           }}
-        //         >
-
-        //         </div>
-        //       )
-        //     },
-        //   }
-        // ]}
+        actions={
+          actions.map(action => {
+            if (action === 'add_circle') {
+              return {
+                icon: () => <Icon style={{ color: 'green' }}>{action}</Icon>,
+                onClick: handleRowData,
+              }
+            }
+            // if (action === 'add_circle' && father === 'credits') {
+            //   return {
+            //     icon: () => <Icon style={{ color: 'green' }}>{action}</Icon>,
+            //     onClick: handleAddPayment,
+            //   }
+            // }
+            if (action === 'editable') {
+              return {
+                icon: () => <Icon style={{ color: '#3F50B5' }}>{action}</Icon>,
+                onClick: (event, rowData) => alert("You want to delete " + rowData.name),
+              }
+            }
+          })
+        }
       />
     </>
   )

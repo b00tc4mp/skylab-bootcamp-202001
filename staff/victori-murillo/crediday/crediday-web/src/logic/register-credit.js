@@ -1,5 +1,5 @@
 import validate from 'crediday-utils'
-// import { NotAllowedError } from 'events-errors'
+import { NotAllowedError } from 'crediday-errors'
 const API_URL = process.env.REACT_APP_API_URL
 
 export default async (body, userId) => {
@@ -9,18 +9,15 @@ export default async (body, userId) => {
   body.paymentInterest = parseInt(paymentInterest)
   body.paymentAmortize = parseInt(paymentAmortize)
   body.paymentMoratorium = parseInt(paymentMoratorium)
-
-  body.paymentDefault = body.paymentInterest + body.paymentMoratorium
-
-  debugger
-  console.log(body)
+  body.paymentDefault = body.paymentInterest + body.paymentAmortize
   
-  // validate.string(firstName, 'Nombre')
-  // validate.string(username, 'Nombre de Usuario')
-  // validate.string(email, 'Correo electónico')
-  // validate.email(email)
-  // validate.string(password, 'Contraseña')
-  // validate.string(passwordValidation, 'Confirmación de Contraseña ')
+  validate.type(body.amount, 'Monto', Number)
+  validate.type(body.paymentInterest, 'Pago de Interes', Number)
+  validate.type(body.paymentAmortize, 'Pago de Amortización', Number)
+  validate.type(body.paymentMoratorium, 'Pago de Moratoria', Number)
+  validate.type(body.paymentDefault, 'Pago', Number)
+  
+  validate.string(userId, 'userId')
 
   const response = await fetch(`${API_URL}/credits/users/${userId}`, {
     method: 'POST',
@@ -42,8 +39,7 @@ export default async (body, userId) => {
     const { error } = await response.json()
 
     if (status === 401) {
-      // throw new NotAllowedError(error)
-      throw new Error(error)
+      throw new NotAllowedError(error)
     }
 
     throw new Error(error)

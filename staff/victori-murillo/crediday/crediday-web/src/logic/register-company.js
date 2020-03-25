@@ -1,9 +1,8 @@
-import validate from 'crediday-utils'
-// import { NotAllowedError } from 'events-errors'
+const validate = require('crediday-utils')
+const { NotAllowedError } = require('crediday-errors')
 const API_URL = process.env.REACT_APP_API_URL
-console.log(API_URL)
 
-export default async ({ companyName, username, email, password, passwordValidation }) => {
+module.exports = async ({ companyName, username, email, password, passwordValidation }) => {
   validate.string(companyName, 'Nombre de Compañia')
   validate.string(username, 'Nombre de Usuario')
   validate.string(email, 'Correo electónico')
@@ -30,8 +29,7 @@ export default async ({ companyName, username, email, password, passwordValidati
     const { error } = await response.json()
 
     if (status === 401) {
-      // throw new NotAllowedError(error)
-      throw new Error(error)
+      throw new NotAllowedError(error)
     }
 
     throw new Error(error)

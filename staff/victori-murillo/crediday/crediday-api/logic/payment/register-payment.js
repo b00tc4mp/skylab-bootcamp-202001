@@ -1,9 +1,13 @@
-const { Payment } = require('crediday-models')
+const { Payment, User } = require('crediday-models')
 const validate = require('crediday-utils')
 
 module.exports = async (creditId, body) => {
+  validate.string(creditId, 'creditId')
+  validate.type(body, 'body', Object);
 
-  // TO DO --> validate with destructuring and every single key
+  return (async () => {
+    const { id } = await Payment.create({ credit: creditId, ...body })
+    return id
+  })()
 
-  await Payment.create({ credit: creditId, ...body })
 }

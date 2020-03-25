@@ -1,16 +1,15 @@
 const { User } = require('crediday-models')
 const validate = require('crediday-utils')
 
-module.exports = (_id, companyId) => {
+module.exports = _id => {
   validate.string(_id, 'id')
-  validate.string(companyId, 'companyId');
 
   return (async () => {
     const user = await User.findOne({ _id }).lean()
     if (!user) throw new Error(`User does not exist to delete it`)
-    if (user.company.toString() !== companyId) throw new Error(`You can't remove an user from other company`)
 
     await User.deleteOne({ _id })
   
+    return
   })()
 }

@@ -4,11 +4,11 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose } = require('crediday-models')
 const { expect } = require('chai')
 const { random } = Math
-const registerUser = require('./register-user')
+const deleteUser = require('./delete-user')
 const { Company, User } = require('crediday-models')
 const { registerCompany, confirmCompany } = require("..")
 
-describe('registerUser', () => {
+describe('deleteUser', () => {
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     await Promise.all([Company.deleteMany(), User.deleteMany()])
@@ -24,6 +24,7 @@ describe('registerUser', () => {
   })
 
   describe('when company and owner already exist', () => {
+
     let _user
 
     beforeEach(async () => {
@@ -33,14 +34,12 @@ describe('registerUser', () => {
       _user = await User.findOne({ email })
     })
 
-    it('should register user successfully', async () => {
-      const firstName = (`Firstname-${random()}`).slice(0, 20)
+    it('should succed on delete a user', async () => {
+      const response = await deleteUser(_user.id)
+      expect(response).to.be.undefined
 
-      const response = await registerUser(_user.id, { firstName })
-      expect(response).to.be.an('undefined')
-
-      const user = await User.findOne({ firstName })
-      expect(user.firstName).to.equal(firstName)
+      const user = await User.findById(_user.id)
+      expect(user).to.equal(null)
     })
   })
 

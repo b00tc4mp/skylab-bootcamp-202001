@@ -1,9 +1,8 @@
 const { User } = require('crediday-models')
 const validate = require('crediday-utils')
 
-module.exports = (_id, companyId, body) => {
+module.exports = (_id, body) => {
   validate.string(_id, 'id')
-  validate.string(companyId, 'companyId')
   validate.type(body, 'body', Object)
 
   if (!body) throw new Error('Please add something to update')
@@ -39,13 +38,11 @@ module.exports = (_id, companyId, body) => {
   return (async () => {
     user = await User.findOne({ _id })
 
-    if (user.company.toString() !== companyId) throw new Error('You can only update users from your company')
-
     for (const key in body) {
       user[key] = body[key]
     }
 
     return await user.save()
-  })
+  })()
 
 }

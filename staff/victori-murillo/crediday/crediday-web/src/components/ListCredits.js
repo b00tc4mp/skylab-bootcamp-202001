@@ -1,37 +1,45 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { registerUser } from '../logic'
+import { registerUser, retrieveCredits } from '../logic'
 import { Context } from './ContextProvider'
-import { DenseTable, EditableTable } from './presentational'
-import axios from 'axios'
-// const { env: { REACT_APP_API_URL: API_URL } } = process
-const API_URL = process.env.REACT_APP_API_URL
+import { EditableTable } from './presentational'
 
 export default () => {
   const [credits, setCredits] = useState()
   const { token } = useContext(Context)
 
   useEffect(() => {
-    axios.get(`${API_URL}/credits/company`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(res => setCredits(res.data.credits))
-      .catch(e => console.log(e))
+    retrieveCredits(token)
+      .then(credits => {
+        credits.forEach(credit => {
+          if (credit.firstName.split(" ").length > 1) {
+            let names = credit.firstName.split(" ")
+            credit.firstName = names[0]
+            names.shift()
+            credit.firstName2 = names.join(" ")
+          }
+        })
+        setCredits(credits)
+      })
+      .catch(error => console.log(error.message))
   }, [])
 
   const columns = [
-    { title: 'Monto', field: 'amount' },
-    // { title: 'Apellido', field: 'lastName' },
+    { title: 'Nombre', field: 'firstName' },
+    { title: 'Pago', field: 'paymentDefault' },
+    { title: 'Monto', field: 'amount' }
   ]
 
   return (
     <>
       {
-        // users && <EditableTable results={users} header={header} />
         credits &&
         <EditableTable
-          data={credits} 
-          setData={setCredits} 
-          
-          columns={columns} 
-          registerUser={registerUser} 
+          father='credits'
+          actions={['add_circle']}
+          data={credits}
+          setData={setCredits}
+          columns={columns}
+          registerUser={registerUser}
         />
       }
     </>

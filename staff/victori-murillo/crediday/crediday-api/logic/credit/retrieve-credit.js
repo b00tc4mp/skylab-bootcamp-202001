@@ -10,7 +10,7 @@ module.exports = creditId => {
 
     if (!credit) throw new Error('Credit not Found')
 
-    credit.id = credit_id.toString()
+    credit.id = credit._id.toString()
     delete credit._id
 
     return credit

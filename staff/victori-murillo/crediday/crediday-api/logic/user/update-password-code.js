@@ -8,12 +8,14 @@ module.exports = ({ code, email, password }) => {
   validate.email(email)
   validate.string(password, 'password')
 
-
   return (async () => {
     let user = await User.findOne({ email })
 
     if (!user) throw new Error('Ningún usuario tiene ese correo electrónico')
     if (user.verificationCode !== code) throw new Error('Código incorrecto')
+
+    console.log(user)
+    console.log(code)
 
     user.verificationCode = ''
     user.password = await hash(password, 10)
@@ -23,5 +25,5 @@ module.exports = ({ code, email, password }) => {
     if (user.verificationCode !== '') throw new Error('Left remove the verfication code')
 
     return 'Contraseña actualizada'
-  })
+  })()
 }

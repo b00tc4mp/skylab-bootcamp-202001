@@ -4,11 +4,11 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose } = require('crediday-models')
 const { expect } = require('chai')
 const { random } = Math
-const registerUser = require('./register-user')
+const updateUser = require('./update-user')
 const { Company, User } = require('crediday-models')
 const { registerCompany, confirmCompany } = require("..")
 
-describe('registerUser', () => {
+describe('updateUser', () => {
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     await Promise.all([Company.deleteMany(), User.deleteMany()])
@@ -19,7 +19,7 @@ describe('registerUser', () => {
   beforeEach(() => {
     companyName = (`companyname-${random()}`).slice(0, 19)
     username = (`username-${random()}`).slice(0, 29)
-    email = (`email${random()}@mail.com`)
+    email = 'victori.murillo.mora@gmail.com'
     password = (`password${random()}`)
   })
 
@@ -33,15 +33,15 @@ describe('registerUser', () => {
       _user = await User.findOne({ email })
     })
 
-    it('should register user successfully', async () => {
-      const firstName = (`Firstname-${random()}`).slice(0, 20)
+    it('should succed on update', async () => {
+      const newFirstName = (`Vam${random()}`).slice(0, 7)
 
-      const response = await registerUser(_user.id, { firstName })
-      expect(response).to.be.an('undefined')
+      const user = await updateUser(_user.id, { firstName: newFirstName })
 
-      const user = await User.findOne({ firstName })
-      expect(user.firstName).to.equal(firstName)
+      expect(user).to.be.an('object')
+      expect(user.firstName).to.equal(newFirstName)
     })
+
   })
 
   after(() =>

@@ -5,7 +5,7 @@ const API_URL = process.env.REACT_APP_API_URL
 export default async (token) => {
   validate.string(token, 'token')
 
-  const response = await fetch(`${API_URL}/users-companies`, {
+  const response = await fetch(`${API_URL}/credits/company`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -16,8 +16,8 @@ export default async (token) => {
   const { status } = response
 
   if (status === 200) {
-    const { users } = await response.json()
-    return users
+    const { credits } = await response.json()
+    return credits
   }
 
   if (status >= 400 && status < 500) {

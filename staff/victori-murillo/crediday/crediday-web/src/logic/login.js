@@ -3,6 +3,7 @@ import { NotAllowedError } from 'crediday-errors'
 const API_URL = process.env.REACT_APP_API_URL
 
 export default async ({username, password}) => {
+  console.log(username)
   
   validate.string(username, 'username')
   validate.string(password, 'password')

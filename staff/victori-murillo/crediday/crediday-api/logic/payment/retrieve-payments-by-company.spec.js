@@ -8,8 +8,9 @@ const { Company, User, Credit, Payment } = require('crediday-models')
 const { randomInt } = require('crediday-utils/index')
 const { registerCredit } = require('..')
 const registerPayment = require('./register-payment')
+const retrievePaymentsByCompany = require('./retrieve-payments-by-company')
 
-describe('registerPayment', () => {
+describe('retrievePaymentsByCompany', () => {
 
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -34,7 +35,7 @@ describe('registerPayment', () => {
   })
 
   describe('when company and user already exist', () => {
-    let company, customer, creditId
+    let company, customer, creditId, paymentId
     let amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault, paymentFrecuency
 
     beforeEach(async () => {
@@ -52,51 +53,43 @@ describe('registerPayment', () => {
       creditId = await registerCredit(customer.id, {
         amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault, paymentFrecuency
       })
-    })
 
-    it('should create a new payment', async () => {
-      const response = await registerPayment(creditId, {
+      paymentId = await registerPayment(creditId, {
         amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
         paymentFrecuency, paymentBy,
         company: company._id
       })
-
-      expect(response).to.be.a('string')
-      const payment = await Payment.findOne({ credit: creditId })
-      expect(payment).to.be.an('object')
-      expect(payment.paymentBy).to.equal(paymentBy)
     })
 
-    it('should fail with wrong id credit', async () => {
+    it('should retrieve payments', async () => {
+      const payments = await retrievePaymentsByCompany(customer.id)
+
+      expect(payments).to.be.an('array')
+      expect(payments[0].id).to.equal(paymentId)
+    })
+
+    it('should fail with wrong user Id', async () => {
       const wrongId = customer.id + '-wrong'
 
       try {
-        await registerPayment(wrongId, {
-          amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
-          paymentFrecuency, paymentBy,
-          company: company._id
-        })
+        await retrievePaymentsByCompany(wrongId)
 
         throw new Error('should not reach here')
       } catch (error) {
-        expect(error.message).to.equal(`Payment validation failed: credit: Cast to ObjectID failed for value "${wrongId}" at path "credit"`)
+        expect(error.message).to.equal(`Cast to ObjectId failed for value "${wrongId}" at path "_id" for model "User"`)
       }
 
     })
 
     it('should fail with not a string', async () => {
-      const creditId = 123
+      const userId = 123
 
       try {
-        await registerPayment(creditId, {
-          amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
-          paymentFrecuency, paymentBy,
-          company: company._id
-        })
+        await retrievePaymentsByCompany(userId)
 
         throw new Error('should not reach here')
       } catch (error) {
-        expect(error.message).to.equal(`creditId ${creditId} is not a string`)
+        expect(error.message).to.equal(`userId ${userId} is not a string`)
       }
     })
   })

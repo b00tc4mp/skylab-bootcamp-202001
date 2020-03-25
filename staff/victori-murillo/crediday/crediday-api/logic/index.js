@@ -20,5 +20,5 @@ module.exports = {
   retrieveCreditsByCompany: require('./credit/retrieve-credits-by-company'),
 
   registerPayment: require('./payment/register-payment'),
-  
+  retrievePaymentsByCompany: require('./payment/retrieve-payments-by-company'),
 }

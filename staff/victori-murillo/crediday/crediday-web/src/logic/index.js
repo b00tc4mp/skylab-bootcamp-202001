@@ -4,8 +4,13 @@ import confirmCompany from './confirmCompany'
 import confirmData from './confirmData'
 import confirmVerificationCode from './confirm-verification-code'
 import updatePassword from './update-password'
+
 import registerUser from './register-user'
 import registerCredit from './register-credit'
+import registerPayment from './register-payment'
+
+import retrieveUsers from './retrieve-users'
+import retrieveCredits from './retrieve-credits'
 
 export {
   registerCompany,
@@ -14,6 +19,11 @@ export {
   confirmData,
   confirmVerificationCode,
   updatePassword,
+
   registerUser,
   registerCredit,
+  registerPayment,
+
+  retrieveUsers,
+  retrieveCredits
 }

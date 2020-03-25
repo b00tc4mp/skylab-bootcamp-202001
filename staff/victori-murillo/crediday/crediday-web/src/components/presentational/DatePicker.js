@@ -9,7 +9,7 @@ import {
 } from '@material-ui/pickers'
 
 
-export default function MaterialUIPickers({selectedDate, setSelectedDate}) {
+export default function MaterialUIPickers({text, selectedDate, setSelectedDate}) {
 
   const handleDateChange = date => setSelectedDate(date._d)
 
@@ -20,7 +20,7 @@ export default function MaterialUIPickers({selectedDate, setSelectedDate}) {
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
-          label="Fecha de Constitución"
+          label={text}
           format="DD / MMM / YYYY"
           value={selectedDate}
           onChange={handleDateChange}

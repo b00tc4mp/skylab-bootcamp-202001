@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -17,7 +17,6 @@ import Box from '@material-ui/core/Box'
 import { useHistory } from "react-router-dom"
 import { Copyright } from '.'
 
-import { Context } from './ContextProvider'
 
 const useStyles = makeStyles(theme => ({
   '@global': {

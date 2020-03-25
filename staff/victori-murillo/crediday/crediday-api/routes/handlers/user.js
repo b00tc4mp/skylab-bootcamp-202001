@@ -6,7 +6,6 @@ const { sign } = require('jsonwebtoken')
 
 module.exports = {
   register: asyncHandler(async (req, res, next) => {
-    console.log(req.payload.sub, req.body)
     await registerUser(req.payload.sub, req.body)
     res.json({ message: 'User registered successfully' })
   }),
@@ -22,7 +21,6 @@ module.exports = {
   }),
 
   retrieveAll: asyncHandler(async (req, res, next) => {
-    console.log('RETR')
     res.json({ users: await retrieveAllUsers(req.payload.sub) })
   }),
 

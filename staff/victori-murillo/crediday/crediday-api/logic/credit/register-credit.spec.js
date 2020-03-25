@@ -5,7 +5,6 @@ const { mongoose, mongoose: { Mongoose: { prototype: { CastError } } } } = requi
 const { expect } = require('chai')
 const { random } = Math
 const { Company, User, Credit } = require('crediday-models')
-const { ContentError } = require('crediday-errors')
 const { randomInt } = require('crediday-utils/index')
 const registerCredit = require('./register-credit')
 
@@ -16,17 +15,19 @@ describe('registerCredit', () => {
     await [Company.deleteMany(), User.deleteMany(), Credit.deleteMany()]
   })
 
-  let companyName, username, customerName
+  let companyName, username, email, password, customerName
 
   beforeEach(() => {
     companyName = (`companyname${random()}`).slice(0, 19)
     username = (`username${random()}`).slice(0, 29)
+    email = (`email${random()}@mail.com`)
+    password = (`password${random()}`)
     customerName = (`customer-name-${random()}`).slice(0, 29)
   })
 
   describe('when company and user already exist', () => {
     let company, customer
-    let amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault
+    let amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault, paymentFrecuency
 
     beforeEach(async () => {
       company = await Company.create({ name: companyName })
@@ -38,43 +39,50 @@ describe('registerCredit', () => {
       paymentInterest = (`${random()}`).slice(6)
       balance = (`${random()}`).slice(5)
       paymentDefault = (`${random()}`).slice(5)
+      paymentFrecuency = 'weekly'
     })
 
-    it('should create a new credit', () => {
-      return registerCredit(customer.id, {
-        amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault,
+    it('should create a new credit', async () => {
+      const response = await registerCredit(customer.id, {
+        amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault, paymentFrecuency,
         company: company._id
       })
-        .then(result => {
-          expect(result).to.be.an('undefined')
-        })
+
+      expect(response).to.be.a('string')
     })
 
-    it('should fail with company id not exists', () => {
-      return registerCredit(customer.id, {
-        amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault,
-        company: `5e69fd9bbd0d13e702136fc8`
-      })
-        .then(() => { throw new Error('should not reach here') })
-        .catch(error => {
-          expect(error).to.instanceOf(Error)
-          expect(error.message).to.equal('Company doesnt exist')
+    it('should fail with wrong id customer', async () => {
+      const wrongId = customer.id + '-wrong'
+      try {
+        await registerCredit(wrongId, {
+          amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault,
+          paymentFrecuency
         })
+
+        throw new Error('should not reach here')
+      } catch (error) {
+        expect(error.message).to.equal(`Cast to ObjectId failed for value "${wrongId}" at path "_id" for model "User"`)
+      }
+
     })
 
-    it('should fail with wrong syntax of company id ', () => {
-      const companyId = `${random()}`
+    it('should fail with not a string', async () => {
+      const userId = 123
 
-      return registerCredit(customer.id, {
-        amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault,
-        company: companyId
-      })
-        .then(() => { throw new Error('should not reach here') })
-        .catch(error => {
-          expect(error).to.instanceOf(CastError)
-          expect(error.name).to.equal('CastError')
-          expect(error.message).to.equal(`Cast to ObjectId failed for value "${companyId}" at path "_id" for model "Company"`)
+      try {
+        await registerCredit(userId, {
+          amount, paymentByDefault, paymentAmortize, paymentInterest, balance,
+          paymentDefault, paymentFrecuency,
         })
+
+        throw new Error('should not reach here')
+      } catch (error) {
+        expect(error.message).to.equal(`userId ${userId} is not a string`)
+      }
     })
   })
+
+  after(() =>
+    Promise.all([Company.deleteMany(), User.deleteMany()])
+      .then(() => mongoose.disconnect()))
 })

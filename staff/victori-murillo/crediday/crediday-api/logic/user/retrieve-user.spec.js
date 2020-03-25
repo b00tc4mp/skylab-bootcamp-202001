@@ -4,11 +4,11 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose } = require('crediday-models')
 const { expect } = require('chai')
 const { random } = Math
-const registerUser = require('./register-user')
+const retrieveUser = require('./retrieve-user')
 const { Company, User } = require('crediday-models')
 const { registerCompany, confirmCompany } = require("..")
 
-describe('registerUser', () => {
+describe('retrieveUser', () => {
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     await Promise.all([Company.deleteMany(), User.deleteMany()])
@@ -33,14 +33,10 @@ describe('registerUser', () => {
       _user = await User.findOne({ email })
     })
 
-    it('should register user successfully', async () => {
-      const firstName = (`Firstname-${random()}`).slice(0, 20)
-
-      const response = await registerUser(_user.id, { firstName })
-      expect(response).to.be.an('undefined')
-
-      const user = await User.findOne({ firstName })
-      expect(user.firstName).to.equal(firstName)
+    it('should succed on retrieve all users', async () => {
+      const user = await retrieveUser(_user.id)
+      expect(user).to.be.an('object')
+      expect(user.username).to.equal(username)
     })
   })
 
