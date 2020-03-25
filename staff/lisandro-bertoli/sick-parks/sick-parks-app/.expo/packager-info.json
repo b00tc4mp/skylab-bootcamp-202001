@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "expoServerPort": null,
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
@@ -6,4 +7,13 @@
   "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null
+=======
+  "expoServerPort": 19000,
+  "expoServerNgrokUrl": "https://9g-fem.anonymous.sick-parks-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.9g-fem.anonymous.sick-parks-app.exp.direct",
+  "ngrokPid": 77962,
+  "devToolsPort": 19002,
+  "packagerPort": 19001,
+  "packagerPid": 77880
+>>>>>>> Stashed changes
 }

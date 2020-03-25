@@ -5,20 +5,20 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { Search, TopSearch, Results, ParkDetails } from '../index'
 // later move styles and this goes here => import styles from './styles'
-import { searchParks, retrievePark } from 'sick-parks-logic'
+import { searchParks, retrievePark, publishComment, votePark } from 'sick-parks-logic'
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
 const Stack = createStackNavigator()
 
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route }) {
     const [detailedPark, setDetailedPark] = useState()
     const [results, setResults] = useState(false)
     const [location, setLocation] = useState()
     const [currentQuery, setCurrentQuery] = useState()
     const [error, setError] = useState()
-
+    const { params: user } = route
 
 
     useEffect(() => {
@@ -112,9 +112,28 @@ export default function Home({ navigation }) {
     function ParkDetailsScreen(props) {
         const { navigation } = props
 
+        const handleVote = async (vote) => {
+            try {
+                console.log(user)
+                if (!user) throw new Error('need to be registered to vote')
+                await votePark(user.id, detailedPark.id, vote)
+                const updatedPark = await retrievePark(detailedPark.id)
+                setDetailedPark(updatedPark)
+            } catch ({ message }) {
+                console.log(message)
+                setError(message)
+            }
+        }
+
+        // handleCommentSubmit
 
 
-        return <ParkDetails park={detailedPark} error={error} />
+        return <ParkDetails
+            park={detailedPark}
+            onVote={handleVote}
+            // onCommentSubmit={handleCommentSubmit}
+            // onToComments={handleGoToComments}
+            error={error} />
 
     }
 

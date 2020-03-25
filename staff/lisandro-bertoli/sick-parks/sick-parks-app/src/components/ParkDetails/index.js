@@ -4,7 +4,7 @@ import MyButton from '../Button'
 import MapView from 'react-native-maps'
 import styles from './styles'
 
-function ParkDetails({ park, error }) {
+function ParkDetails({ park, error, onVote }) {
     const [comments, setComments] = useState([0, 1])
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
@@ -14,6 +14,7 @@ function ParkDetails({ park, error }) {
     }, [park.rating])
 
     const handleHideModal = () => setShowComments(false)
+    const handleUpVote = () => onVote(true)
 
     return (<>
         <ScrollView >
@@ -47,7 +48,7 @@ function ParkDetails({ park, error }) {
                             </View>
                         </View>
                         <View style={styles.votesContainer}>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={handleUpVote}>
                                 <Text style={styles.upVote}>+ Vote</Text>
                             </TouchableOpacity>
                             <View>

@@ -119,7 +119,7 @@ export default function App() {
 				user.notifications = await _getNotificationsPermissionsAsync()
 
 				//this makes login super slowwwww
-				const location = await _getLocationAsync()
+				// const location = await _getLocationAsync()
 
 				if (location) {
 					user.allowLocation = true
@@ -198,7 +198,7 @@ export default function App() {
 							}
 						}}
 					>
-						<Tab.Screen name="Home" component={Home} />
+						<Tab.Screen name="Home" component={Home} initialParams={user} />
 						{/* TODO check move screens that top if a lot of params asre passed  */}
 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
 						<Tab.Screen name="Build" component={ParkBuilder} initialParams={{ handleNewPark, error }} />
