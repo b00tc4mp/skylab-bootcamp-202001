@@ -1,19 +1,21 @@
-const { validate } = require('sick-parks-utils')
-const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const context = require('./context')
+const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
-module.exports = function (userId, parkId) {
+module.exports = function (userId, parkId, vote) {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
+    validate.type(vote, 'vote', Boolean)
 
     return (async () => {
 
         const token = await this.storage.getItem('token')
 
-        const response = await fetch(`${this.API_URL}/users/${userId}/parks/${parkId}/approve`, {
+        const response = await fetch(`${this.API_URL}/users/${userId}/parks/${parkId}/vote`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ vote })
         })
 
         if (response.status === 200) return

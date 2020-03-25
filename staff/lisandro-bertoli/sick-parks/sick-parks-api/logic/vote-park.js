@@ -7,7 +7,7 @@ module.exports = (userId, parkId, vote) => {
     validate.string(parkId, 'parkId')
     validate.type(vote, 'vote', Boolean)
 
-    return (() => {
+    return (async () => {
 
         const user = await User.findById(userId)
         if (!user) throw new NotFoundError(`user with id ${userId} does not exist`)
@@ -20,9 +20,9 @@ module.exports = (userId, parkId, vote) => {
 
             park.upVotes.push(user._id)
         } else {
-            if (park.dowVotes.includes(user._id)) throw new NotAllowedError(`user with id ${userId} already downVoted`)
+            if (park.downVotes.includes(user._id)) throw new NotAllowedError(`user with id ${userId} already downVoted`)
 
-            park.dowVotes.push(user._id)
+            park.downVotes.push(user._id)
         }
 
         park.rating = park.upVotes.length - park.downVotes.length
@@ -30,6 +30,6 @@ module.exports = (userId, parkId, vote) => {
         await park.save()
 
         return
-    })
+    })()
 
 }

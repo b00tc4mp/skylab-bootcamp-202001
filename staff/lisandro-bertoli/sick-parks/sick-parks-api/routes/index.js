@@ -21,7 +21,7 @@ router.get('/users/:id?', [jwtValidationMidWare], user.retrieve)
 
 router.post('/users/:id/parks/:id/comment', [jwtValidationMidWare, jsonBodyParser], user.comment)
 
-router.get('/users/:id/parks', [jwtValidationMidWare], user.retrieveParks)
+router.get('/users/:id?/parks', [jwtValidationMidWare], user.retrieveParks)
 
 router.post('/users/:id?/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
 

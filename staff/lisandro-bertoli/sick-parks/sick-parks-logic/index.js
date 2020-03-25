@@ -14,5 +14,6 @@ module.exports = {
     reportPark: require('./report-park'),
     approvePark: require('./approve-park'),
     publishComment: require('./publish-comment'),
-    updateUser: require('./update-user')
+    updateUser: require('./update-user'),
+    votePark: require('./vote-park')
 }
