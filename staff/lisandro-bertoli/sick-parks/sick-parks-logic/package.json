@@ -12,11 +12,11 @@
     "@babel/runtime": "^7.8.7",
     "js-base64": "^2.5.2",
     "node-fetch": "^2.6.0",
-    "sick-parks-data": "file:../sick-parks-data",
     "sick-parks-errors": "file:../sick-parks-errors",
     "sick-parks-utils": "file:../sick-parks-utils"
   },
   "devDependencies": {
+    "sick-parks-data": "file:../sick-parks-data",
     "bcryptjs": "^2.4.3",
     "chai": "^4.2.0",
     "dotenv": "^8.2.0",

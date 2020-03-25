@@ -3,6 +3,10 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
+<<<<<<< HEAD
   "urlRandomness": "y2-skt",
+=======
+  "urlRandomness": "af-b3r",
+>>>>>>> sick-parks-feature/app
   "https": false
 }

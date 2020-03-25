@@ -1,7 +1,6 @@
 const context = require('./context')
 const { validate } = require('sick-parks-utils')
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
-const { models: { User, Park } } = require('sick-parks-data')
 const fetch = require('node-fetch')
 
 module.exports = function (parkId) {
