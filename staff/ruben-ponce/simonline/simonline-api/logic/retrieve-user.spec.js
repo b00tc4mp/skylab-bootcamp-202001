@@ -45,6 +45,21 @@ describe('retrieveUser', () => {
                     })
             })
         )
+
+
+        it('should fail on a non-string gameId', () => {
+            let id = 1
+            expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+
+            id = false
+            expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+
+            id = undefined
+            expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+
+            id = []
+            expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
+        })
     })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))

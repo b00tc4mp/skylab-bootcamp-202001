@@ -85,8 +85,36 @@ describe('retrieveGameStatus', () => {
                     })
             })  
         })
+
+        it('should fail on a non-string playerId', () => {
+            let playerId = 1
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = false
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = undefined
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = []
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+        })
+
+        it('should fail on a non-string gameId', () => {
+            let gameId = 1
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = false
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = undefined
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = []
+            expect(() => retrieveGameStatus(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+        })
     })
 })
 
-    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
+after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
 

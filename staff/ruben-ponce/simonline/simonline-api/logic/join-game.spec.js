@@ -34,7 +34,7 @@ describe('join-game', () => {
                 })
         })
         
-        it('should succeed on correct and valid and right data', () =>
+        it('should succeed on correct and valid data and player joined', () =>
             joinGame(id, gameId)
                 .then(() =>
                     Promise.all([User.findById(id),Game.findById(gameId)])

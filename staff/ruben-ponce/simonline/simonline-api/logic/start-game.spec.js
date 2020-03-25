@@ -63,6 +63,34 @@ describe('startGame', () => {
                 })
         })
 
+        it('should fail on a non-string playerId', () => {
+            let playerId = 1
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = false
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = undefined
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = []
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+        })
+
+        it('should fail on a non-string gameId', () => {
+            let gameId = 1
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = false
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = undefined
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = []
+            expect(() => startGame(playerId, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+        })
+
     })
 
     after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))

@@ -4,6 +4,20 @@ const { models: { Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 const { random } = Math 
 
+/**
+ * Start game
+ * 
+ * @param {string} id of player
+ * @param {string} id of game
+ * 
+ * @returns {Promise<empty>} empty promise
+ * 
+ * @throws {NotFoundError} when not found game
+ * @throws {NotAllowedError} when not the owner try start game
+ * @throws {NotAllowedError} when owner try start game again
+ * 
+ */
+
 module.exports = (playerId, gameId) => {
     validate.string(playerId, 'playerId')
     validate.string(gameId, 'gameId')

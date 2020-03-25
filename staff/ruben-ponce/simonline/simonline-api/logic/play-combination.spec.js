@@ -81,6 +81,34 @@ describe('play combination', () => {
                 })
         })
 
+        it('should fail on a non-string playerId', () => {
+            let playerId = 1
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = false
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = undefined
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+
+            playerId = []
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+        })
+
+        it('should fail on a non-object combinationPlayer', () => {
+            let combinationPlayer = 1
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+
+            combinationPlayer = false
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+
+            combinationPlayer = undefined
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+
+            combinationPlayer = 'a'
+            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+        })
+
     })
 
 })

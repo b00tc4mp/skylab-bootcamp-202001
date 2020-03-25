@@ -59,6 +59,20 @@ describe('createGame', () => {
                 })
         })
 
+        it('should fail on a non-string gameId', () => {
+            let gameId = 1
+            expect(() => updateCombination(gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = false
+            expect(() => updateCombination(gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = undefined
+            expect(() => updateCombination(gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = []
+            expect(() => updateCombination(gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+        })
+
         afterEach(() => {
             Game.deleteOne({ name })
             User.deleteOne({ playerId })

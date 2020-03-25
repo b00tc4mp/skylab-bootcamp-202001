@@ -1,6 +1,15 @@
 const validate = require("simonline-utils/validate")
 const { models: { Game } } = require("simonline-data")
 
+/**
+ * Play combination from flayer in game and match with game combination
+ * 
+ * @param {string} playerId unique user id
+ * @param {Object} combination array sent of player in game
+ * 
+ * @returns {Promise<Object>} status game
+ */
+
 module.exports = (playerId, combination) => {
     validate.string(playerId, 'playerId')
     validate.type(combination, 'combination', Object)
@@ -32,11 +41,8 @@ module.exports = (playerId, combination) => {
             const j = playersStr.indexOf(currentPlayerStr)
     
             for (var i = j; i < playersStr.length; i++) {
-
                 if(!playersStr[j+1]) i = 0
-
                 if(!watchingStr.includes(playersStr[i])) {
-
                     const combination = Math.floor(Math.random() * 4)
                     pushCombination.push(combination)
                     game.combinationViewed = []
@@ -56,11 +62,8 @@ module.exports = (playerId, combination) => {
             var j = playersStr.indexOf(currentPlayerStr)
     
             for (var i = j; i < playersStr.length; i++) {
-
                 if(!playersStr[j+1]) i = 0
-
                 if(!watchingStr.includes(playersStr[i])) {
-
                     game.currentPlayer = game.players[i]
                     game.combinationViewed = []
                     game.turnStart = new Date()

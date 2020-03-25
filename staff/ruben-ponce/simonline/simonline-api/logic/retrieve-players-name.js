@@ -1,6 +1,14 @@
 const { validate } = require('simonline-utils')
 const { models: { Game } } = require('simonline-data')
 
+/**
+ * Retrieve players id and name
+ * 
+ * @param {string} id of game
+ * 
+ * @returns {Promise<Object>} Array of Objects
+ */
+
 module.exports = (gameId) => {
     validate.string(gameId, 'gameId')
 
