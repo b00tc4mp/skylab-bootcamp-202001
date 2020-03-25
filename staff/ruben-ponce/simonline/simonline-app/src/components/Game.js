@@ -29,7 +29,6 @@ export default ({goTo, gameId}) => {
                             const currentPlayerObj = playersName.find(x => x.id === status.currentPlayer)
                             setCurrentPlayerName(currentPlayerObj.username)
                             //timeout
-                           
                             let x = (Math.floor((new Date() - new Date(status.turnStart)) / 1000))
                             setTimeout(status.turnTimeout - x)
                             //players remain
@@ -43,7 +42,7 @@ export default ({goTo, gameId}) => {
                             }
                             //set combination each time (if not combinationViewed)
                             setCombination(status.pushCombination)
-                            showCombination(status.pushCombination)
+                            //showCombination(status.pushCombination)
 
                         } else if (status.status === 'finished') {
                             const playerWin = playersName.find(x => x.id === status.currentPlayer)
@@ -53,6 +52,7 @@ export default ({goTo, gameId}) => {
                             setPlayersRemain(undefined)
                             console.log('finished')
                             clearInterval(interval)
+                            //delete game & goTo multiplayer
                         }
                     } catch (error) {
                         setError(error.message)
@@ -60,7 +60,7 @@ export default ({goTo, gameId}) => {
                     }
                 })()
         } else goTo('landing')
-        }, 5000)
+        }, 1000)
     },[])
 
     //reproduce combination (if not combinationViewed)
@@ -74,11 +74,11 @@ export default ({goTo, gameId}) => {
         }
     }
 
-    //match current player & userId to active logic onclick
+//match current player & userId to active logic onclick
 
-    return  <div className="p1 game">
-        {console.log(combination)}
-        {console.log(color)}
+return  <div className="p1 game">
+    {console.log(combination)}
+    {console.log(color)}
 
     <div className="game__top-menu">
         <p className="game__top-menu__logout">Leave</p>
