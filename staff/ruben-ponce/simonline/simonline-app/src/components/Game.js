@@ -29,6 +29,7 @@ export default ({goTo, gameId}) => {
                             const currentPlayerObj = playersName.find(x => x.id === status.currentPlayer)
                             setCurrentPlayerName(currentPlayerObj.username)
                             //timeout
+                           
                             let x = (Math.floor((new Date() - new Date(status.turnStart)) / 1000))
                             setTimeout(status.turnTimeout - x)
                             //players remain
@@ -42,7 +43,7 @@ export default ({goTo, gameId}) => {
                             }
                             //set combination each time (if not combinationViewed)
                             setCombination(status.pushCombination)
-                            //showCombination(status.pushCombination)
+                            showCombination(status.pushCombination)
 
                         } else if (status.status === 'finished') {
                             const playerWin = playersName.find(x => x.id === status.currentPlayer)
@@ -68,7 +69,8 @@ export default ({goTo, gameId}) => {
         let refColor = ["r","g","b","y"]
         for (let i = 0; i < combination.length; i++) {
             setColor(refColor[combination[i]])
-            setTimeout(() => setColor(''), 1500)
+            //in this point the board shows combination ok
+            setTimeout(() => setColor(''), 2000)
         }
     }
 
@@ -76,17 +78,17 @@ export default ({goTo, gameId}) => {
 
     return  <div className="p1 game">
         {console.log(combination)}
-        {/* {console.log(color)} */}
+        {console.log(color)}
 
     <div className="game__top-menu">
         <p className="game__top-menu__logout">Leave</p>
     </div>
     <div className="game__board">
         <div className="game__board__container">
-            <div className={color === 'r' ? "game__board__container__red red_active" : "game__board__container__red"}></div>
-            <div className={color === 'g' ? "game__board__container__green green_active" : "game__board__container__green"}></div>
-            <div className={color === 'b' ? "game__board__container__blue blue_active" : "game__board__container__blue"}></div>
-            <div className={color === 'y' ? "game__board__container__yellow yellow_active" : "game__board__container__yellow"}></div>
+            <div className={ color === 'r' ? "game__board__container__red red_active" : "game__board__container__red"}></div>
+            <div className={ color === 'g' ? "game__board__container__green green_active" : "game__board__container__green"}></div>
+            <div className={ color === 'b' ? "game__board__container__blue blue_active" : "game__board__container__blue"}></div>
+            <div className={ color === 'y' ? "game__board__container__yellow yellow_active" : "game__board__container__yellow"}></div>
             <div className="game__board__container__gray"></div>
         </div>
     </div>
