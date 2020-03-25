@@ -39,21 +39,31 @@ describe('deleteUser', () => {
         it('should succed on delete an existed user', () =>{
             let _id = _user.id
             let pass = _user.password
+            let username = _user.username
             
-            deleteUser(_id, pass)
+            deleteUser(_id, username, pass)
                 .then((res) => {
                     expect(res).to.be.undefined
+                    expect(_user.username).to.be.equal(username)
+                    expect(_user.password).to.be.equal(password)
+                    expect(_user.id).to.be.a('string')
+                    expect(_user.username).to.be.a('string')
+                    expect(_user.password).to.be.a('string')
                 })
         })
     })
 
     it('should fail on non string id', () => {
         let id = 2
-        expect(() => deleteUser(id, 'password' )).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => deleteUser(id, 'username', 'password' )).to.throw(TypeError, `id ${id} is not a string`)
     })
     it('should fail on non string password', () => {
         let password = 1234
-        expect(() => deleteUser('1234', password)).to.throw(TypeError, `password ${password} is not a string`)
+        expect(() => deleteUser('1234','username', password)).to.throw(TypeError, `password ${password} is not a string`)
+    })
+    it('should fail on non string username', () => {
+        let username = true
+        expect(() => deleteUser('1234',username, password)).to.throw(TypeError, `user name ${username} is not a string`)
     })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
