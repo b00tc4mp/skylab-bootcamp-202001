@@ -2,11 +2,22 @@ const { validate } = require('simonline-utils')
 const { models: { User, Game } } = require('simonline-data')
 const { NotFoundError, NotAllowedError } = require('simonline-errors')
 
+/**
+ * Register and save user on database
+ * 
+ * @param {string} id unique user id
+ * @param {string} gameId unique game id
+ * 
+ * @returns {Promise<empty>} empty promise
+ * 
+ * @throws {NotFoundError} when user id no exist
+ * @throws {NotFoundError} when game id no exist
+ * @throws {NotAllowedError} when player try to join game started
+ */
+
 module.exports = (id, gameId) => {
     validate.string(id, 'id')
     validate.string(gameId, 'gameId')
-
-    let playersName = []
 
     return Promise.all([User.findById(id), Game.findById(gameId)])
         .then(([user, game]) => {
@@ -15,9 +26,7 @@ module.exports = (id, gameId) => {
 
             if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-            // if (game.players.includes(user.id) && user.id !== game.owner) throw new NotAllowedError(`user with id ${id} already subscribed to this game`)
-
-            if (game.status === "started") throw new NotAllowedError(`game of ${game.name} already start`)
+            if (game.status === "started" || game.status === "finished") throw new NotAllowedError(`game of ${game.name} already start`)
 
             if (user.id !== game.owner && !(game.players.includes(user.id))) {
                 game.players.push(user.id)
@@ -25,14 +34,4 @@ module.exports = (id, gameId) => {
 
             return Promise.all([game.save()])
         })
-        .then(() => { 
-            return Game.findById(gameId)
-            .populate('players', 'username id')
-                .then(({players}) => {
-                    players.forEach(player => {
-                        playersName.push({username:player.username, id:player.id})
-                    })
-                    return playersName
-                })
-         })
 }

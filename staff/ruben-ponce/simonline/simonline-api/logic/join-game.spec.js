@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { User, Game }, ObjectId } = require('simonline-data')
+const { mongoose, models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
 const { random } = Math
 const joinGame = require('./join-game')
@@ -37,10 +37,7 @@ describe('join-game', () => {
         it('should succeed on correct and valid and right data', () =>
             joinGame(id, gameId)
                 .then(() =>
-                    Promise.all([
-                        User.findById(id),
-                        Game.findById(gameId)
-                    ])
+                    Promise.all([User.findById(id),Game.findById(gameId)])
                 )
                 .then(([user, game]) => {
                     expect(user).to.exist
@@ -50,6 +47,35 @@ describe('join-game', () => {
                     expect(game.owner).to.be.an.instanceOf(Object)
                 })
         )
+
+        it('should fail on a non-string user id', () => {
+            let id = 1
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `id ${id} is not a string`)
+
+            id = false
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `id ${id} is not a string`)
+
+            id = undefined
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `id ${id} is not a string`)
+
+            id = []
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `id ${id} is not a string`)
+        })
+
+        it('should fail on a non-string game id', () => {
+            let gameId = 1
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = false
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = undefined
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+
+            gameId = []
+            expect(() => joinGame(id, gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)
+        })
+
     })
 
     after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))

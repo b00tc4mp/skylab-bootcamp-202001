@@ -53,6 +53,34 @@ describe('createGame', () => {
                 })
         })
 
+        it('should fail on a non-string name', () => {
+            let name = 1
+            expect(() => createGame(name, owner)).to.throw(TypeError, `name ${name} is not a string`)
+
+            name = false
+            expect(() => createGame(name, owner)).to.throw(TypeError, `name ${name} is not a string`)
+
+            name = undefined
+            expect(() => createGame(name, owner)).to.throw(TypeError, `name ${name} is not a string`)
+
+            name = []
+            expect(() => createGame(name, owner)).to.throw(TypeError, `name ${name} is not a string`)
+        })
+
+        it('should fail on a non-string owner', () => {
+            let owner = 1
+            expect(() => createGame(name, owner)).to.throw(TypeError, `owner ${owner} is not a string`)
+
+            owner = false
+            expect(() => createGame(name, owner)).to.throw(TypeError, `owner ${owner} is not a string`)
+
+            owner = undefined
+            expect(() => createGame(name, owner)).to.throw(TypeError, `owner ${owner} is not a string`)
+
+            owner = []
+            expect(() => createGame(name, owner)).to.throw(TypeError, `owner ${owner} is not a string`)
+        })
+
         afterEach(() => {
             Game.deleteOne({ name })
             User.deleteOne({ id })
