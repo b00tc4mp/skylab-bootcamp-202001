@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
         marginLeft: '2.5%'
     },
     topHeader: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        width: '95%'
     },
     bold: {
         fontSize: 25,
