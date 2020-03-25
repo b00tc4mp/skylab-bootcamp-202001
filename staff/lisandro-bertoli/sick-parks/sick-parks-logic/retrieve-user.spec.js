@@ -2,19 +2,18 @@ require('dotenv').config()
 const logic = require('.')
 const { retrieveUser } = logic
 const { expect } = require('chai')
-const TEST_JWT_SECRET = process.env.JWT_SECRET
 const AsyncStorage = require('not-async-storage')
 const { mongoose, models: { User } } = require('sick-parks-data')
 const jwt = require('jsonwebtoken')
 const { random } = Math
 
-const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
+const { TEST_JWT_SECRET: JWT_SECRET, TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = API_URL
 
 
-describe('retrieveUser', () => {
+describe.only('retrieveUser', () => {
     let name, surname, email, password, userId
 
 
@@ -37,13 +36,14 @@ describe('retrieveUser', () => {
             beforeEach(async () => {
                 const user = await User.create({ name, surname, email, password })
                 userId = user.id
-                const _token = jwt.sign({ sub: user.id }, TEST_JWT_SECRET)
+                const _token = jwt.sign({ sub: user.id }, JWT_SECRET)
                 await logic.__context__.storage.setItem('token', _token)
             })
 
             it('should succeed on valid id, returning the user', async () => {
                 const user = await retrieveUser()
 
+                debugger
                 expect(user.constructor).to.equal(Object)
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
@@ -62,7 +62,7 @@ describe('retrieveUser', () => {
     describe('when user does not exist', () => {
         it('should fail throwing jwt malformed', async () => {
             try {
-                debugger
+
                 await retrieveUser()
 
                 throw new Error('should not reach this point')
