@@ -5,7 +5,7 @@ const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 module.exports = async (id, drugId, time) => {  
     validate.string(id, 'id')
     validate.string(drugId, 'drugId')
-    validate.type(time, 'time', Array)
+    //validate.stringOfNumbers(time)
 
     let user = await User.findById(id).lean()
     let drug = await Drug.findById(drugId).lean()

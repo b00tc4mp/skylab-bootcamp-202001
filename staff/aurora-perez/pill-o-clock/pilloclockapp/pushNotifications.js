@@ -1,18 +1,21 @@
 import PushNotification from 'react-native-push-notification'
 import PushNotificationAndroid from 'react-native-push-notification'
-import { PushNotificationIOS, DeviceEventEmitter } from 'react-native'
+import { PushNotificationIOS, DeviceEventEmitter, AsyncStorage } from 'react-native'
+import logic, {addProgress} from './src/logic'
 
-const configure = () => {
+logic.__context__.storage =AsyncStorage 
+
+const configure = (token) => {
  PushNotification.configure({
 
    onNotification: function(notification) {
      notification.finish(PushNotificationIOS.FetchResult.NoData)
      
      if (notification.action == "Take pill") {
-        console.log('hello pill');
+        addProgress(token, true)
       }
       else if (notification.action == "Reject") {
-          console.log('hello reject');
+        addProgress(token, false)
       }
   },
 
@@ -48,25 +51,7 @@ const localNotification = (drugName) => {
    soundName: 'default',
    alertAction: 'view',
  })
-};
-
-
-// (function() {
-//   // Register all the valid actions for notifications here and add the action handler for each action
-//   PushNotificationAndroid.registerNotificationActions(["Take pill", "Reject"])
-//   DeviceEventEmitter.addListener('notificationActionReceived', function(action){
-//     console.log ('Notification action received: ' + action)
-
-//     const info = JSON.parse(action.dataJSON)
-
-//     if (info.action == 'Take pill') {
-//       console.log('take pill oh yeah')
-//     } else if (info.action == 'Reject') {
-//       console.log('not take pill :(')
-//     }
-//     // Add all the required actions handlers
-//   })
-// })()
+}
 
 
 export default {

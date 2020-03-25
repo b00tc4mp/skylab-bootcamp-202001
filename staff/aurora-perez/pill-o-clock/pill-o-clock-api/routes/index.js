@@ -44,7 +44,7 @@ router.delete('/users/prescription/:drugId', jwtVerifierMidWare, deletePrescript
 
 router.post('/users/add-progress', [jwtVerifierMidWare, jsonBodyParser], addProgress)
 
-router.get('/users/retrieve-progress', jwtVerifierMidWare, retrieveProgress)
+router.get('/users/progress', jwtVerifierMidWare, retrieveProgress)
 
 router.get('/drug/:id', retrieveDrug)
 

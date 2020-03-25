@@ -1,27 +1,27 @@
-const { NotAllowedError, NotFoundError } = require( '../errors')
+const { NotAllowedError, NotFoundError } = require('../errors') 
 const { validate } = require('../utils')
 const fetch = require('node-fetch') 
-const context= require('./context')
+const context = require('./context')
 
-module.exports = function (token, drugId, time) {
+module.exports = function (token) {
     validate.string(token, 'token')
-    validate.string(drugId, 'drugId')
-    //validate.stringOfNumbers(time)
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users/add-prescription`, {
-            method: 'POST',
+        const response = await fetch(`http://192.168.1.85:8085/api/users/progress`, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,  
-            },
-            body: JSON.stringify({ drugId, time })
+                'Authorization': `Bearer ${token}`
+            }
         })
     
         const { status } = response
         
-        if (status === 201) return
+        if (status === 200) {
+            const contacts = await response.json()
+            
+            return contacts
+        }
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()

@@ -25,7 +25,7 @@ describe('addPrescription', () => {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = [random()]
+        time = `${[random()]}`
 
     })
 

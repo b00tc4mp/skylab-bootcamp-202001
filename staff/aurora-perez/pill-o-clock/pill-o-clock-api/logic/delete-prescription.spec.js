@@ -27,7 +27,7 @@ describe('deletePrescritpion', ()=> {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = `times-${random()}`
+        time = `${[random()]}`
 
     })
 

@@ -3,20 +3,19 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
-module.exports = function (token, drugId, time) {
+module.exports = function (token, check) {
     validate.string(token, 'token')
-    validate.string(drugId, 'drugId')
-    //validate.stringOfNumbers(time)
+    validate.type(check, 'check', Boolean)
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users/add-prescription`, {
+        const response = await fetch(`http://192.168.1.85:8085/api/users/add-progress`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,  
             },
-            body: JSON.stringify({ drugId, time })
+            body: JSON.stringify({ check })
         })
     
         const { status } = response

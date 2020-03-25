@@ -1,6 +1,7 @@
 const { ContentError } = require('pill-o-clock-errors')
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+const TIME_REGEX = /^\d+$/
 
 module.exports = {
     string(target, name, empty = true) {
@@ -12,6 +13,10 @@ module.exports = {
 
     email(target) {
         if (!EMAIL_REGEX.test(target)) throw new ContentError(`${target} is not an e-mail`) // TODO custom error?
+    },
+
+    stringOfNumbers(target){
+        if(!TIME_REGEX.test(target)) throw new ContentError(`${target} is not a valid time`)
     },
 
     type(target, name, type) {

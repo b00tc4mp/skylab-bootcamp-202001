@@ -26,7 +26,7 @@ describe('retrievePrescription', ()=> {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = random()
+        time = `${[random()]}`
     })
 
     describe ('when user alredy exists', ()=> {
