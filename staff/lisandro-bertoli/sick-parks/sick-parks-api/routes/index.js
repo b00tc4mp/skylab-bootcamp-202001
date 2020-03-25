@@ -31,6 +31,8 @@ router.patch('/users/:id/parks/:pid/report', [jwtValidationMidWare, jsonBodyPars
 
 router.patch('/users/:id/parks/:pid/update', [jwtValidationMidWare, jsonBodyParser], park.update)
 
+router.patch('/users/:id/parks/:pid/vote', [jwtValidationMidWare, jsonBodyParser], user.vote)
+
 router.delete('/users/:id/parks/:pid/', jwtValidationMidWare, park.delete)
 
 router.delete('/users/:id?', [jwtValidationMidWare, jsonBodyParser], user.delete)
