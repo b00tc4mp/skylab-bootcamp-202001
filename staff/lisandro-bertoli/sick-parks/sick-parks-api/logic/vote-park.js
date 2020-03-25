@@ -2,7 +2,7 @@ const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { models: { Park, User } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 
-module.exports = (userId, { id: parkId }, vote) => {
+module.exports = (userId, parkId, vote) => {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
     validate.type(vote, 'vote', Boolean)
