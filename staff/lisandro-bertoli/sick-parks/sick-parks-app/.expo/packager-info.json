@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://y2-skt.anonymous.sick-parks-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.y2-skt.anonymous.sick-parks-app.exp.direct",
-  "ngrokPid": 51221,
+  "expoServerPort": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "devToolsPort": 19002,
-  "packagerPort": 19001,
-  "packagerPid": 51165
+  "packagerPort": null,
+  "packagerPid": null
 }
