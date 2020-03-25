@@ -21,19 +21,67 @@ const styles = StyleSheet.create({
         marginBottom: 40
 
     },
-
-    commentsContainer: {
-        marginTop: 15,
-        marginBottom: 40
-    },
-    commentsHeader: {
+    commentButton: {
+        color: '#82A4B3',
+        fontWeight: 'bold',
 
     },
-    commentsBody: {
+    newCommentContainer: {
+        margin: 15,
+        borderWidth: 2,
+        borderColor: '#82A4B3',
+        borderRadius: 5,
+        paddingBottom: 10,
+        justifyContent: 'space-between'
+    },
+
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'flex-end',
+
+        marginTop: 15
+    },
+    buttonContainer: {
+        borderColor: '#82A4B3',
+        borderWidth: 2,
+        backgroundColor: 'white',
+        padding: 5,
 
     },
-    commentsFooter: {
+    newComment: {
+        backgroundColor: '#EFEBDA',
+        height: 50,
+    },
 
+    noComments: {
+        alignItems: 'center'
+    },
+
+    commentContainer: {
+        marginVertical: 15,
+        borderWidth: 2,
+        borderColor: '#82A4B3',
+        borderRadius: 5,
+        padding: 15,
+
+        backgroundColor: '#EFEBDA',
+        justifyContent: 'space-between'
+    },
+
+    commentPublisher: {
+        fontWeight: 'bold'
+    },
+
+    commentHeader: {
+        paddingBottom: 5,
+    },
+    commentBody: {
+        paddingVertical: 15
+    },
+    commentFooter: {
+        width: '30%',
+        alignSelf: 'flex-end'
     },
     image: {
         width: '100%',
@@ -70,7 +118,8 @@ const styles = StyleSheet.create({
     },
 
     modalHeader: {
-        flex: 0.1,
+        flex: 1,
+        height: 60,
         flexDirection: 'row',
         padding: 5,
         paddingHorizontal: 10,
@@ -185,11 +234,8 @@ const styles = StyleSheet.create({
 
     commentsContainer: {
         marginVertical: 15,
-        borderWidth: 2,
-        borderColor: '#82A4B3',
-        borderRadius: 5,
         padding: 15,
-        backgroundColor: 'white'
+        backgroundColor: '#EDF4F9'
     },
 
     featureContainer: {

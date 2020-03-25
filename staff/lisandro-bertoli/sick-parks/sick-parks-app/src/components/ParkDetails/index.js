@@ -5,7 +5,7 @@ import MapView from 'react-native-maps'
 import styles from './styles'
 import { TextInput } from 'react-native-gesture-handler'
 
-function ParkDetails({ park, error, onVote, onCommentSubmit }) {
+function ParkDetails({ park, onVote, onCommentSubmit, onContribution }) {
     const [comments, setComments] = useState(park.comments)
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
@@ -13,19 +13,28 @@ function ParkDetails({ park, error, onVote, onCommentSubmit }) {
     const [value, onChangeText] = useState('')
 
     useEffect(() => {
-        setVotes(park.rating)
         setComments(park.comments)
         setVotes(park.rating)
-    }, [park.rating, park.comments, park.rating])
+    }, [park.rating, park.comments])
 
     const handleHideModal = () => setShowComments(false)
     const handleUpVote = () => onVote(true)
     const handleDownVote = () => onVote(false)
-    const handleNewComment = () => {
-        onCommentSubmit(value)
+    const handleNewComment = () => onCommentSubmit(value)
+    const handleReport = () => {
+        Alert.alert(
+            "Report a problem",
+            'Please let us know what went wrong',
+            [
+                { text: 'Fake', onPress: () => onContribution('unreal') },
+                { text: 'Duplicate', onPress: () => onContribution('duplicate') },
+                { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+            ],
+        )
+
     }
 
-    console.log(comments)
+
     return (<>
         <ScrollView >
             <View style={styles.container}>
@@ -75,48 +84,66 @@ function ParkDetails({ park, error, onVote, onCommentSubmit }) {
                     <Modal
                         animationType="slide"
                         transparent={false}
-                        visible={showComments}>
-                        <View style={styles.modalHeader}>
-                            <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.headerText} />
-                            <Text style={styles.headerText}>Comments</Text>
-                            <TouchableOpacity onPress={() => setCreateComment(true)}>
-                                <Text style={styles.headerText}>Add</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.commentsContainer}>
-                            {createComment && (<>
-                                <TextInput
-                                    multiline={true}
-                                    numberOfLines={4}
-                                    onChangeText={(text) => onChangeText(text)}
-                                    value={value}
-                                />
-                                <TouchableOpacity onPress={handleNewComment}>
-                                    <Text style={styles.headerText}>Publish</Text>
-                                </TouchableOpacity>
-                            </>)}
-                            {comments.length && (comments.map((comment, index) => (<>
-                                <View key={index} style={styles.commentContainer}>
-                                    <View style={styles.comentHeader}>
-                                        <Text style={styles.commentPublisher}>{comment.postedBy.name}</Text>
-                                    </View>
-                                    <View style={styles.commentBody}>
-                                        <Text style={styles.commentBodyText}>{comment.body}</Text>
-                                    </View>
-                                    <View style={styles.commentFooter}>
-                                        <Text style={styles.commentDate}>{comment.date.toString().slice(0, 10)}</Text>
-                                    </View>
-                                </View>
-                            </>)))}
-                            {!comments.length && (<View>
-                                <Text>No comments yet...</Text>
-                                <TouchableOpacity>
-                                    <Text>Post the first comment!</Text>
-                                </TouchableOpacity>
-                            </View>
-                            )}
-                        </View>
 
+                        visible={showComments}>
+                        <View style={{ backgroundColor: '#EDF4F9', flex: 1 }}>
+
+
+                            <ScrollView contentContainerStyle={{ backgroundColor: '#EDF4F9' }}>
+
+                                <View style={styles.modalHeader}>
+                                    <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.headerText} />
+                                    <Text style={styles.headerText}>Comments</Text>
+                                    <TouchableOpacity onPress={() => setCreateComment(true)}>
+                                        <Text style={styles.headerText}>Add</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                                {createComment && (
+                                    <View style={styles.newCommentContainer}>
+                                        <TextInput
+                                            style={styles.newComment}
+                                            multiline={true}
+                                            numberOfLines={4}
+                                            onChangeText={(text) => onChangeText(text)}
+                                            value={value}
+                                        />
+                                        <View style={styles.buttonsContainer}>
+                                            <TouchableOpacity style={styles.buttonContainer} onPress={() => setCreateComment(false)}>
+                                                <Text style={styles.commentButton}>Cancel</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={styles.buttonContainer} onPress={handleNewComment}>
+                                                <Text style={styles.commentButton}>Publish</Text>
+                                            </TouchableOpacity>
+
+                                        </View>
+                                    </View>)}
+                                <View style={styles.commentsContainer}>
+
+                                    {comments.length > 0 ? (comments.map((comment, index) => (<>
+                                        <View key={index} style={styles.commentContainer}>
+                                            <View style={styles.commentHeader}>
+                                                <Text style={styles.commentPublisher}>{comment.postedBy.name}</Text>
+                                            </View>
+                                            <View style={styles.commentBody}>
+                                                <Text style={styles.commentBodyText}>{comment.body}</Text>
+                                            </View>
+                                            <View style={styles.commentFooter}>
+                                                <Text style={styles.commentDate}>{comment.date.toString().slice(0, 10)}</Text>
+                                            </View>
+                                        </View>
+                                    </>))) :
+                                        (<View style={styles.noComments}>
+                                            <Text>No comments yet...</Text>
+
+                                            <Text>Be the firs one!</Text>
+
+                                        </View>
+                                        )
+                                    }
+                                </View>
+                            </ScrollView>
+                        </View>
                     </Modal>
                     <View style={styles.mapContainer}>
 
@@ -139,11 +166,11 @@ function ParkDetails({ park, error, onVote, onCommentSubmit }) {
 
                         <View style={styles.actionsContainer}>
 
-                            <TouchableOpacity style={styles.approve}>
+                            <TouchableOpacity style={styles.approve} onPress={() => onContribution('approve')}>
                                 <Text style={styles.actionText}>Approve</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={styles.report}>
+                            <TouchableOpacity style={styles.report} onPress={handleReport}>
                                 <Text style={styles.actionText}>Report</Text>
                             </TouchableOpacity>
 

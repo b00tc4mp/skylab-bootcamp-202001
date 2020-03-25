@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
-
-
 import { Search, TopSearch, Results, ParkDetails } from '../index'
-// later move styles and this goes here => import styles from './styles'
-import { searchParks, retrievePark, publishComment, votePark } from 'sick-parks-logic'
+import {
+    searchParks,
+    retrievePark,
+    publishComment,
+    votePark,
+    approvePark,
+    reportPark
+} from 'sick-parks-logic'
+
 import * as Permissions from 'expo-permissions'
 import * as Location from 'expo-location'
 
@@ -36,6 +41,16 @@ export default function Home({ navigation, route }) {
         if (status === 'granted') {
             const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
             setLocation([location.coords.longitude, location.coords.latitude])
+        }
+    }
+
+    const __handleParkUpdate__ = async (id) => {
+        try {
+            const item = await retrievePark(id)
+            setDetailedPark(item)
+            setError(null)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -72,9 +87,8 @@ export default function Home({ navigation, route }) {
 
         const handleGoToDetails = async (id) => {
             try {
-                const item = await retrievePark(id)
-                setError(null)
-                setDetailedPark(item)
+                await __handleParkUpdate__(id)
+
                 navigation.navigate('ParkDetails')
             } catch ({ message }) {
                 setError(message)
@@ -113,15 +127,12 @@ export default function Home({ navigation, route }) {
         const { navigation } = props
 
         const handleVote = async (vote) => {
-            try {
-                if (!user) throw new Error('need to be registered to vote')
+            if (!user) throw new Error('this action needs you to be registered')
 
+            try {
                 await votePark(user.id, detailedPark.id, vote)
 
-                const updatedPark = await retrievePark(detailedPark.id)
-
-                setDetailedPark(updatedPark)
-                setError(null)
+                await __handleParkUpdate__(detailedPark.id)
             } catch ({ message }) {
                 //TODO, change error message given by logic
                 Alert.alert(message)
@@ -130,14 +141,28 @@ export default function Home({ navigation, route }) {
         }
 
         const handleCommentSubmit = async (body) => {
+            if (!user) throw new Error('this action needs you to be registered')
+
             try {
-                if (!user) throw new Error('need to be registered to vote')
-
                 await publishComment(user.id, detailedPark.id, body)
-                const updatedPark = await retrievePark(detailedPark.id)
 
-                setDetailedPark(updatedPark)
-                setError(null)
+                await __handleParkUpdate__(detailedPark.id)
+            } catch ({ message }) {
+                Alert.alert(message)
+            }
+        }
+
+        const handleContribution = async (action) => {
+            if (!user) throw new Error('this action needs you to be registered')
+
+            try {
+                if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
+
+                else if (action === 'approve') await approvePark(user.id, detailedPark.id)
+
+                await __handleParkUpdate__(detailedPark.id)
+
+                Alert.alert('Thanks for contributing!')
 
             } catch ({ message }) {
                 Alert.alert(message)
@@ -149,6 +174,7 @@ export default function Home({ navigation, route }) {
             park={detailedPark}
             onVote={handleVote}
             onCommentSubmit={handleCommentSubmit}
+            onContribution={handleContribution}
             error={error} />
 
     }
