@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { ContentError } = require('sick-parks-errors')
+const { ContentError, NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const context = require('./context')
 
 
@@ -9,22 +9,30 @@ module.exports = function () {
     return (async () => {
         const token = await this.storage.getItem('token')
 
-        const response = await fetch(`http://192.168.1.101:8085/api/users/parks`, {
+        const response = await fetch(`${this.API_URL}/users/asdfasdf/parks`, {
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })
 
-        if (response.status === 406) {
-            const { error } = await response.json()
-            throw new ContentError(error)
+
+        if (response.status === 200) {
+            const { results } = await response.json()
+
+            return results
         }
 
-        if (response.status >= 400 && response.status < 500) throw new Error('Unknown Error')
+        if (response.status >= 400 || response.status < 500) {
+            const data = await response.json()
 
-        if (response.status >= 500) throw new Error('server error')
+            const { error } = data
+            if (response.status === 404) throw new NotFoundError(error)
+            if (response.status === 403) throw new NotAllowedError(error)
+            if (response.status === 406) throw new ContentError(error)
 
-        const { results } = await response.json()
+            throw new Error(error)
 
-        return results
+
+        } else throw new Error('Server error')
+
     })()
 
 }.bind(context)
