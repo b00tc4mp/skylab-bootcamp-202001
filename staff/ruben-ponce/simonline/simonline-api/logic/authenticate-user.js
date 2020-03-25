@@ -13,6 +13,7 @@ const bcrypt = require('bcryptjs')
  * 
  * @throws {NotAllowedError} on wrong credentials
  */
+
 module.exports = (username, password) => {
     validate.string(username, 'username')
     validate.string(password, 'password')

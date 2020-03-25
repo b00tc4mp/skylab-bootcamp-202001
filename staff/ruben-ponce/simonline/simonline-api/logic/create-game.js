@@ -1,6 +1,6 @@
 const { validate } = require('simonline-utils')
 const { models: { User, Game } } = require('simonline-data')
-const { NotFoundError, NotAllowedError } = require('simonline-errors')
+const { NotFoundError } = require('simonline-errors')
 
 module.exports = (name, owner ) => {
     validate.string(name, 'name')
