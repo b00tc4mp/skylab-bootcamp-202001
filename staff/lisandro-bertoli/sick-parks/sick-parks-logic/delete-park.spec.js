@@ -13,7 +13,7 @@ const { random } = Math
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = API_URL
 
-describe.only('deletePark', () => {
+describe('deletePark', () => {
     before(async () => {
         await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [User.deleteMany(), Park.deleteMany()]
