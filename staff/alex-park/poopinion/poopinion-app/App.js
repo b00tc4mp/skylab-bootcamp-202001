@@ -31,7 +31,8 @@ import logic, {
   updateComment,
   deleteComment,
   updateUser,
-  deleteToilet
+  deleteToilet,
+  isLoggedIn
 } from 'poopinion-logic'
 
 logic.__context__.storage = AsyncStorage
@@ -56,6 +57,12 @@ export default function App() {
   const [topToilets, setTopToilets] = useState()
 
   useEffect(() => {
+    (async () => {
+      __handleUser__()
+    })()
+  }, [user])
+
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
       setCoordinates({
         latitude: pos.coords.latitude,
@@ -70,10 +77,6 @@ export default function App() {
     __handleTopToilets__()
   }, [detailedToilet])
 
-  useEffect(() => {
-    __handleUser__()
-  }, [user])
-
   function __handleError__(message) {
     setError(message)
     setTimeout(() => {
@@ -81,12 +84,19 @@ export default function App() {
     }, 3000)
   }
 
-  function __handleUser__() {
-    if (token) {
-      (async () => {
-        const _user = await retrieveUser(token)
-        setUser(_user)
-      })()
+  async function __handleUser__() {
+    try {
+      if (await isLoggedIn()) {
+        const user = await retrieveUser()
+
+        setUser(user)
+      } else {
+        await logic.__context__.storage.clear()
+      }
+    } catch ({ message }) {
+      if (message === 'jwt expired')
+        await logic.__context__.storage.clear()
+
     }
   }
 
@@ -312,7 +322,7 @@ export default function App() {
 
       Alert.alert('Toilet successfully deleted! 🚽')
       setView('landing')
-      
+
     } catch ({ message }) {
       __handleError__(message)
     }
@@ -320,11 +330,13 @@ export default function App() {
 
   // ROUTE FUNCTIONS
   function handleGoToLogin() {
-    setGoLanding(false)
-    setError(null)
-    setToken()
-    setUser()
-    setView('login')
+    (async () => {
+      await logic.__context__.storage.clear()
+      setView('login')
+      setGoLanding(false)
+      setError(null)
+      setUser(undefined)
+    })()
   }
 
   function handleGoToUpdateUser() {
@@ -340,18 +352,18 @@ export default function App() {
   function handleGoToRegister() {
     setGoLanding(false)
     setError(null)
-    setToken()
     setUser()
     setView('register')
   }
 
-  function handleGoToLanding() {
+  async function handleGoToLanding() {
     setQuery()
     setGoLanding(true)
     setError(null)
-    __handleTopToilets__()
-    __handleToiletScore__()
-    setView('landing')
+    await __handleUser__()
+    await __handleTopToilets__()
+    await __handleToiletScore__()
+    await setView('landing')
   }
 
   function handleGoToFavorites() {
@@ -408,8 +420,8 @@ export default function App() {
       {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
 
       <ScrollView style={styles.content}>
-        {view === 'login' && !token && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
-        {view === 'register' && !token && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
+        {view === 'login' && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+        {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav} />}
         {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
         {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} onToUpdateUser={handleGoToUpdateUser} />}

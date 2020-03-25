@@ -38,7 +38,7 @@ module.exports = query => {
                         toilet.score += ((comment.rating.overallRating + (comment.rating.cleanness * 0.5) + (comment.rating.looks * 0.5)) / 2)
                     })
 
-                    toilet.score = toilet.score / toilet.comments.length
+                    toilet.score = parseFloat((toilet.score / toilet.comments.length).toFixed(2))
                 })
 
                 return toilets.sort(function (a, b) {
