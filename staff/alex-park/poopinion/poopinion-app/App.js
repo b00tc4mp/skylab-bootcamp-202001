@@ -32,9 +32,10 @@ import logic, {
   deleteComment,
   updateUser,
   deleteToilet
-} from './src/logic'
+} from 'poopinion-logic'
 
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = 'http://192.168.1.253:8085/api'
 
 export default function App() {
   const [coordinates, setCoordinates] = useState({
@@ -45,7 +46,6 @@ export default function App() {
   })
   const [view, setView] = useState('login')
   const [error, setError] = useState(null)
-  const [token, setToken] = useState()
   const [user, setUser] = useState()
   const [goLanding, setGoLanding] = useState(false)
   const [query, setQuery] = useState()
@@ -136,13 +136,12 @@ export default function App() {
 
   async function handleLogin(email, password) {
     try {
-      const response = await authenticateUser(email, password)
+      await authenticateUser(email, password)
 
-      const retrievedUser = await retrieveUser(response)
+      const retrievedUser = await retrieveUser()
       __handleTopToilets__()
       __handleToiletScore__()
       setUser(retrievedUser)
-      setToken(response)
       setGoLanding(true)
       setView('landing')
 
@@ -170,7 +169,7 @@ export default function App() {
 
   async function handlePublishToilet(place, image) {
     try {
-      await publishToilet(token, place, image, coordinates)
+      await publishToilet(place, image, coordinates)
       Alert.alert('Toilet posted! Thank you! 🚽❤️')
       setView('landing')
 
@@ -201,9 +200,9 @@ export default function App() {
       handleGoToLogin();
     } else {
       try {
-        await toggleFavToilet(token, toiletId)
+        await toggleFavToilet(toiletId)
         if (favToilets) {
-          const _favToilets = await retrieveFavToilets(token)
+          const _favToilets = await retrieveFavToilets()
           setFavToilets(_favToilets)
         }
 
@@ -226,7 +225,7 @@ export default function App() {
   function handleToggleThumbUp(commentId) {
     try {
       (async () => {
-        await toggleThumbUp(token, commentId)
+        await toggleThumbUp(commentId)
         if (detailedToilet) {
           const toilet = await retrieveToilet(detailedToilet.id.toString())
           setDetailedToilet(toilet)
@@ -241,7 +240,7 @@ export default function App() {
   function handleToggleThumbDown(commentId) {
     try {
       (async () => {
-        await toggleThumbDown(token, commentId)
+        await toggleThumbDown(commentId)
         if (detailedToilet) {
           const toilet = await retrieveToilet(detailedToilet.id.toString())
           setDetailedToilet(toilet)
@@ -256,7 +255,7 @@ export default function App() {
   function handlePublishComment(data) {
     try {
       (async () => {
-        await publishComment(token, detailedToilet.id.toString(), data)
+        await publishComment(detailedToilet.id.toString(), data)
         __handleToiletScore__()
         __handleTopToilets__()
         Alert.alert('Thank you for your rating! 🚽❤️')
@@ -270,7 +269,7 @@ export default function App() {
   function handleUpdateComment(data, { commentId }) {
     try {
       (async () => {
-        await updateComment(token, commentId, data)
+        await updateComment(commentId, data)
         __handleToiletScore__()
         __handleTopToilets__()
         Alert.alert('Comment updated, thank you! 🚽❤️')
@@ -284,7 +283,7 @@ export default function App() {
   function handleDeleteComment(toiletId, commentId) {
     try {
       (async () => {
-        await deleteComment(token, toiletId, commentId)
+        await deleteComment(toiletId, commentId)
         Alert.alert('Comment successfully deleted! 💩')
         // __handleTopToilets__() //AFFECTS PERFORMANCE!!! CONSIDER REMOVING
         setView('landing')
@@ -296,7 +295,7 @@ export default function App() {
 
   async function handleUpdateUser(data) {
     try {
-      await updateUser(token, data)
+      await updateUser(data)
 
       Alert.alert('Personal info updated!')
       __handleUser__()
@@ -309,7 +308,7 @@ export default function App() {
 
   async function handleDeleteToilet(toiletId) {
     try {
-      await deleteToilet(token, toiletId)
+      await deleteToilet(toiletId)
 
       Alert.alert('Toilet successfully deleted! 🚽')
       setView('landing')
@@ -362,7 +361,7 @@ export default function App() {
     } else {
       try {
         (async () => {
-          const _favToilets = await retrieveFavToilets(token)
+          const _favToilets = await retrieveFavToilets()
           setFavToilets(_favToilets)
           __handleTopToilets__()
           setView('favToilets')
