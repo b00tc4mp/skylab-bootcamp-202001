@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 
@@ -114,25 +114,41 @@ export default function Home({ navigation, route }) {
 
         const handleVote = async (vote) => {
             try {
-                console.log(user)
                 if (!user) throw new Error('need to be registered to vote')
+
                 await votePark(user.id, detailedPark.id, vote)
+
                 const updatedPark = await retrievePark(detailedPark.id)
+
                 setDetailedPark(updatedPark)
+                setError(null)
             } catch ({ message }) {
-                console.log(message)
-                setError(message)
+                //TODO, change error message given by logic
+                Alert.alert(message)
+
             }
         }
 
-        // handleCommentSubmit
+        const handleCommentSubmit = async (body) => {
+            try {
+                if (!user) throw new Error('need to be registered to vote')
+
+                await publishComment(user.id, detailedPark.id, body)
+                const updatedPark = await retrievePark(detailedPark.id)
+
+                setDetailedPark(updatedPark)
+                setError(null)
+
+            } catch ({ message }) {
+                Alert.alert(message)
+            }
+        }
 
 
         return <ParkDetails
             park={detailedPark}
             onVote={handleVote}
-            // onCommentSubmit={handleCommentSubmit}
-            // onToComments={handleGoToComments}
+            onCommentSubmit={handleCommentSubmit}
             error={error} />
 
     }

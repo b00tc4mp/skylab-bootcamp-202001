@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native'
 import MyButton from '../Button'
 import MapView from 'react-native-maps'
 import styles from './styles'
+import { TextInput } from 'react-native-gesture-handler'
 
-function ParkDetails({ park, error, onVote }) {
-    const [comments, setComments] = useState([0, 1])
+function ParkDetails({ park, error, onVote, onCommentSubmit }) {
+    const [comments, setComments] = useState(park.comments)
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
+    const [createComment, setCreateComment] = useState(false)
+    const [value, onChangeText] = useState('')
 
     useEffect(() => {
         setVotes(park.rating)
-    }, [park.rating])
+        setComments(park.comments)
+        setVotes(park.rating)
+    }, [park.rating, park.comments, park.rating])
 
     const handleHideModal = () => setShowComments(false)
     const handleUpVote = () => onVote(true)
+    const handleDownVote = () => onVote(false)
+    const handleNewComment = () => {
+        onCommentSubmit(value)
+    }
 
+    console.log(comments)
     return (<>
         <ScrollView >
             <View style={styles.container}>
@@ -54,7 +64,7 @@ function ParkDetails({ park, error, onVote }) {
                             <View>
                                 <Text style={styles.votes}>{votes ? votes : 0}</Text>
                             </View>
-                            <TouchableOpacity >
+                            <TouchableOpacity onPress={handleDownVote}>
                                 <Text style={styles.downVote}>- Vote</Text>
                             </TouchableOpacity>
 
@@ -69,21 +79,32 @@ function ParkDetails({ park, error, onVote }) {
                         <View style={styles.modalHeader}>
                             <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.headerText} />
                             <Text style={styles.headerText}>Comments</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={() => setCreateComment(true)}>
                                 <Text style={styles.headerText}>Add</Text>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.commentsContainer}>
-                            {comments.length && (park.comments.map(comment => (<>
+                            {createComment && (<>
+                                <TextInput
+                                    multiline={true}
+                                    numberOfLines={4}
+                                    onChangeText={(text) => onChangeText(text)}
+                                    value={value}
+                                />
+                                <TouchableOpacity onPress={handleNewComment}>
+                                    <Text style={styles.headerText}>Publish</Text>
+                                </TouchableOpacity>
+                            </>)}
+                            {comments.length && (comments.map((comment, index) => (<>
                                 <View key={index} style={styles.commentContainer}>
                                     <View style={styles.comentHeader}>
-                                        <Text style={styles.commentPublisher}>{comment.postedBy}</Text>
+                                        <Text style={styles.commentPublisher}>{comment.postedBy.name}</Text>
                                     </View>
                                     <View style={styles.commentBody}>
                                         <Text style={styles.commentBodyText}>{comment.body}</Text>
                                     </View>
                                     <View style={styles.commentFooter}>
-                                        <Text style={styles.commentDate}>{comment.date}</Text>
+                                        <Text style={styles.commentDate}>{comment.date.toString().slice(0, 10)}</Text>
                                     </View>
                                 </View>
                             </>)))}
