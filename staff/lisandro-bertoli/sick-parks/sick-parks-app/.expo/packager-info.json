@@ -1,8 +1,8 @@
 {
   "expoServerPort": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://c5-aar.anonymous.sick-parks-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.c5-aar.anonymous.sick-parks-app.exp.direct",
+  "ngrokPid": 41596,
   "devToolsPort": 19002,
   "packagerPort": null,
   "packagerPid": null
