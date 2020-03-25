@@ -1,24 +1,28 @@
 require('dotenv').config()
 
-
 const { mongoose, models: { Park, User, Location } } = require('sick-parks-data')
 const logic = require('.')
 const { retrievePublishedParks } = logic
 const AsyncStorage = require('not-async-storage')
-const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
+const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
+const JWT_SECRET = process.env.TEST_JWT_SECRET
+
 const { expect } = require('chai')
 const { NotFoundError } = require('sick-parks-errors')
 const jwt = require('jsonwebtoken')
-const TEST_JWT_SECRET = process.env.JWT_SECRET
+
 
 const { random } = Math
 
+
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = API_URL
 
 
-describe('retrievePublishedParks', () => {
+
+describe.only('retrievePublishedParks', () => {
     before(async () => {
-        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [Park.deleteMany(), User.deleteMany()]
     })
 
@@ -50,7 +54,8 @@ describe('retrievePublishedParks', () => {
 
             const park = await Park.create({ name: parkName, size, level, resort, description, location, creator: id })
             parkId = park.id
-            const _token = jwt.sign({ sub: id }, TEST_JWT_SECRET)
+
+            const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
         })
 
@@ -67,7 +72,7 @@ describe('retrievePublishedParks', () => {
     describe('when user has no parks', () => {
         beforeEach(async () => {
             const { id } = await User.create({ name, surname, email, password })
-            const _token = jwt.sign({ sub: id }, TEST_JWT_SECRET)
+            const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
 
         })
