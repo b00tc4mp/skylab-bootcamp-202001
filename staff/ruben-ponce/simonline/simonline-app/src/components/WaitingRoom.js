@@ -1,14 +1,12 @@
 import'./WaitingRoom.sass'
 import React, { useState, useEffect } from 'react'
-import { isLoggedIn, retrieveGameStatus, retrieveUserId, join, retrievePlayersName, startGame } from '../logic'
+import { isLoggedIn, retrieveGameStatus, retrieveUserId, retrievePlayersName, startGame } from '../logic'
 import Feedback from './Feedback'
 
 export default ({ gameId, goTo }) => {
     const [error, setError] = useState(undefined)
     const [gameStatus, setGameStatus] = useState()
     const [userId, setUserId] = useState()
-    const [_gameId, setGameId] = useState(gameId)
-    // const [playersId, setPlayersId] = useState()
     const [playersName, setPlayersName] = useState()
 
     useEffect(() => {
@@ -27,7 +25,6 @@ export default ({ gameId, goTo }) => {
                             clearInterval(interval)
                             return goTo('game')
                         }
-                        // setPlayersId(status.players)
                     } catch (error) {
                         setError(error.message)
                         setTimeout(()=> setError(undefined), 3000)
