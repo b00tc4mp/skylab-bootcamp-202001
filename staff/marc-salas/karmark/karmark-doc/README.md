@@ -4,8 +4,8 @@
 
 ![karmak](https://media.giphy.com/media/3ov9jWu7BuHufyLs7m/giphy.gif)
 
-Karmark is a progamable electrical car. 
-It is componed by one nodeMCU and four servomotors. The fiality of Karmark is create a toy for the kids and the posiblity to make the first contacr with the programation on a very simply way.
+Karmark is a programmable electric car. 
+It is compounded by one wifi card and two servo motors. The finality of Karmark is create a toy for the kids and the possibility to make the first contact with the programation on a very simply way.
 
 # Functional Description
 
@@ -26,3 +26,9 @@ It is componed by one nodeMCU and four servomotors. The fiality of Karmark is cr
 ## Data model
 
 ![data model](./images/data-model.jpg)
+
+# Futures versions
+
+* Receive information form car to be able to connect receptors and have a better control of it.
+* Be able to configure in your app the ip of your car and the wifi net that you want to connect.
+* Make it responsive

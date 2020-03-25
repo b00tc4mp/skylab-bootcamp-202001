@@ -5,6 +5,7 @@
     width: 100%
     height: 100%
     &header
+        padding: auto
         color: white
         background-color: #814717d7
         border-radius: 10px
@@ -41,4 +42,13 @@
             // background-image: url("https://www.multijobys.es/buggy-1000-05-coche-radio-control-coche-rc-coche-r-c-coche-teledirigido_pic231792ni1t0.jpg")
             background-repeat: no-repeat
             background-size: 100% 100%
+@media only screen and (min-width: 550px)
+    .home
+        &header
+            justify-content: space-around
+            &__user
+                text-align: center
+                width: 50%
+                margin-left: 22%
+
 

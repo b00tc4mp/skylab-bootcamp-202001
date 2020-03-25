@@ -6,6 +6,11 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/** Athenticate the user
+ *
+ * @param {string} username username of the user, will be used to login in the application
+ * @param {string} password password used for sign in
+ */
 export default (function (username, password) {
     validate.string(username, 'username')
     validate.string(password, 'password')

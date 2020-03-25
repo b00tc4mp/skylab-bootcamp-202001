@@ -4,6 +4,11 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/** Creates a new program on the DB with the given data
+ *
+ * @param {string} name name of the program you want to save
+ * @param {array} code array of istructions of the program
+ */
 export default (function (name, code) {
     validate.string(name, 'name')
     validate.type(code, 'code', Array)

@@ -2,6 +2,10 @@ const {validate} = require('karmark-utils')
 const {models: {User}} = require('karmark-data')
 const {NotFoundError} = require('karmark-errors')
 
+/** Retrieve all the user's programs
+ *
+ * @param {string} id id of the user
+ */
 module.exports = (id)  => {
     validate.string(id, 'id')
 

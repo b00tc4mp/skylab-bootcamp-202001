@@ -4,6 +4,10 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/** Delete a user program on the DB 
+ *
+ * @param {string} id id of the program
+ */
 export default (function (id) {
     validate.string(id, 'id')
 

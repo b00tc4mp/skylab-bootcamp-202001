@@ -3,6 +3,9 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/** Retrieve all the user's programs
+ *
+ */
 export default (function () {
     return (async () => {
         const response = await fetch(`${API_URL}/programs`, {

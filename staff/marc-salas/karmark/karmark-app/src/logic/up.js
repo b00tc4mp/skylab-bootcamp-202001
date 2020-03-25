@@ -1,7 +1,10 @@
+/** Send instruction up to car
+ *
+ */
 export default function async() {
     return (async () => {
         try {
-            await fetch(`http://192.168.43.27/up`,{
+            await fetch(`http://172.20.10.2/up`,{
                 method: 'GET',
                 mode: 'no-cors'
             })
