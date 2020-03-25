@@ -7,6 +7,11 @@ module.exports = (parkId, userId) => {
     if (userId || userId === '') validate.string(userId, 'userId')
 
     return (async () => {
+
+        const park = await Park.findById(parkId)
+
+        if (!park) throw new NotFoundError(`park ${parkId} does not exist`)
+
         if (userId) {
             const user = await User.findById(userId)
             if (!user) throw new NotFoundError(`user ${userId} does not exist`)
@@ -21,10 +26,6 @@ module.exports = (parkId, userId) => {
             await user.save()
             return
         }
-
-        const park = await Park.findById(parkId)
-
-        if (!park) throw new NotFoundError(`park ${parkId} does not exist`)
         if (!park.underReview) throw new NotAllowedError(`park ${parkId} is not under review. A user id is required`)
 
         const difference = park.approvals.length - park.reports.length
