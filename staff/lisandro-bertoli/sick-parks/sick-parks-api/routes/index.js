@@ -21,7 +21,7 @@ router.get('/users/:id?', [jwtValidationMidWare], user.retrieve)
 
 router.post('/users/:id/parks/:id/comment', [jwtValidationMidWare, jsonBodyParser], user.comment)
 
-router.get('/users/:id/parks', [jwtValidationMidWare], user.retrieveParks)
+router.get('/users/:id?/parks', [jwtValidationMidWare], user.retrieveParks)
 
 router.post('/users/:id?/parks', [jwtValidationMidWare, jsonBodyParser], park.create)
 
@@ -30,6 +30,8 @@ router.patch('/users/:id/parks/:id/approve', jwtValidationMidWare, park.approve)
 router.patch('/users/:id/parks/:pid/report', [jwtValidationMidWare, jsonBodyParser], park.report)
 
 router.patch('/users/:id/parks/:pid/update', [jwtValidationMidWare, jsonBodyParser], park.update)
+
+router.patch('/users/:id/parks/:pid/vote', [jwtValidationMidWare, jsonBodyParser], user.vote)
 
 router.delete('/users/:id/parks/:pid/', jwtValidationMidWare, park.delete)
 

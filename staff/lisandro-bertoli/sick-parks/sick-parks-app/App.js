@@ -101,7 +101,10 @@ export default function App() {
 
 	const handleNewPark = async (data) => {
 		try {
+<<<<<<< HEAD
 
+=======
+>>>>>>> sick-parks-feature/app
 			await createPark(data)
 		} catch ({ message }) {
 			console.log(message)

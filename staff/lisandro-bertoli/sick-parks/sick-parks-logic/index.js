@@ -10,5 +10,11 @@ module.exports = {
     createPark: require('./create-park'),
     retrievePark: require('./retrieve-park'),
     retrievePublishedParks: require('./retrieve-published-parks'),
-    searchParks: require('./search-parks')
+    searchParks: require('./search-parks'),
+    reportPark: require('./report-park'),
+    approvePark: require('./approve-park'),
+    publishComment: require('./publish-comment'),
+    updateUser: require('./update-user'),
+    votePark: require('./vote-park'),
+    deletePark: require('./delete-park')
 }

@@ -1,4 +1,5 @@
-const { registerUser } = require('.')
+const logic = require('.')
+const { registerUser } = logic
 const { mongoose, models: { User } } = require('sick-parks-data')
 const { random } = Math
 const { expect } = require('chai')
