@@ -35,37 +35,5 @@ module.exports = (id, parkingName,rate, totalLots) => {
 
     await parking.updateOne({rate, totalLots, lots})
 
-    //await parking.save()
-
-    /* let { lots } = parking
-
-    parking.totalLots = number
-    
-    if (number < lots.length) {
-      let difLots = lots.length - number
-
-      for (let i = lots.length+1; i >= difLots; i--) {
-        lots.pop(i)
-      }
-
-      parking.rate = rate
-
-      await parking.save()
-      return 
-    } 
-
-    for (let i = lots.length + 1; i <= number; i++) {
-      let lot = {}
-      lot.number = i
-      lot.status = false
-
-      lots.push(lot)
-    }
-
-    parking.rate = rate
-
-    await parking.save()
-
-    return  */
   })();
 };
