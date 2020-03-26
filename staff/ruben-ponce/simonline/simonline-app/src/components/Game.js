@@ -20,6 +20,7 @@ export default ({ goTo, gameId }) => {
   const [color, setColor] = useState("");
   let playersName;
   let status;
+  let combinationPlayer = [];
   //let combinationLaunched = false;
 
   useEffect(() => {
@@ -103,7 +104,7 @@ export default ({ goTo, gameId }) => {
           setColor(refColor[combination[i]]);
           setTimeout(() => setColor(''), 1000);
           setTimeout(() => showColor(i + 1), 2000);
-        } else resolve()
+        } else resolve() //in this else activeClicks = true
       })(0);
     });
   }
@@ -113,7 +114,6 @@ export default ({ goTo, gameId }) => {
   return (
     <div className="p1 game">
       {console.log(combinationLaunched)}
-      {/* {console.log(color)} */}
 
       {/* Block__Element--Modifier */}
 
@@ -128,6 +128,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__red red_active"
                 : "game__board__container__red"
             }
+            onClick={() => {
+                if (userId === status.currentPlayer) combinationPlayer.push(0)
+            }}
           ></div>
           <div
             className={
@@ -135,6 +138,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__green green_active"
                 : "game__board__container__green"
             }
+            onClick={() => {
+                if (userId === status.currentPlayer) combinationPlayer.push(1)
+            }}
           ></div>
           <div
             className={
@@ -142,6 +148,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__blue blue_active"
                 : "game__board__container__blue"
             }
+            onClick={() => {
+                if (userId === status.currentPlayer) combinationPlayer.push(2)
+            }}
           ></div>
           <div
             className={
@@ -149,6 +158,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__yellow yellow_active"
                 : "game__board__container__yellow"
             }
+            onClick={() => {
+                if (userId === status.currentPlayer) combinationPlayer.push(3)
+            }}
           ></div>
           <div className="game__board__container__gray"></div>
         </div>
