@@ -3,7 +3,7 @@ import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions } from 'react-na
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import * as Location from 'expo-location'
+
 import * as Permissions from 'expo-permissions'
 
 import logic, {
@@ -40,7 +40,6 @@ export default function App() {
 	const [error, setError] = useState()
 	const [user, setUser] = useState()
 
-
 	useEffect(() => {
 		(async () => {
 			try {
@@ -48,10 +47,12 @@ export default function App() {
 					const user = await retrieveUser()
 
 					setUser(user)
+				} else {
+					await logic.__context__.storage.clear()
 				}
 			} catch ({ message }) {
 				if (message === 'jwt expired') {
-					logic.__context__.storage.clear()
+					await logic.__context__.storage.clear()
 				} else {
 					setError(message)
 
@@ -59,6 +60,7 @@ export default function App() {
 			}
 		})()
 	}, [])
+
 
 
 	const __handleErrors__ = (error) => {
@@ -75,11 +77,11 @@ export default function App() {
 		if (status === 'granted') return true
 	}
 
-	_getLocationAsync = async () => {
+	_getLocationPermissionsAsync = async () => {
 		try {
 			const { status } = await Permissions.askAsync(Permissions.LOCATION);
 			if (status === 'granted') {
-				return Location.getCurrentPositionAsync({ enableHighAccuracy: true });
+				return true
 			}
 			throw new Error('Location permission not granted');
 
@@ -118,16 +120,9 @@ export default function App() {
 
 				user.notifications = await _getNotificationsPermissionsAsync()
 
-				//this makes login super slowwwww
-				// const location = await _getLocationAsync()
+				user.allowLocation = await _getLocationPermissionsAsync()
 
-				if (location) {
-					user.allowLocation = true
-					user.location = location
-					setUser(user)
-				} else {
-					setUser(user)
-				}
+				setUser(user)
 
 				setError(null)
 			} catch ({ message }) {
@@ -146,9 +141,9 @@ export default function App() {
 		const handleSubmit = async (name, surname, email, password) => {
 			try {
 				await registerUser(name, surname, email, password)
+
 				setError(null)
 				navigation.navigate('Login')
-
 			} catch ({ message }) {
 
 				__handleErrors__(message)

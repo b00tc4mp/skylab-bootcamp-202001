@@ -11,9 +11,6 @@ import {
     reportPark
 } from 'sick-parks-logic'
 
-import * as Permissions from 'expo-permissions'
-import * as Location from 'expo-location'
-
 const Stack = createStackNavigator()
 
 
@@ -25,24 +22,18 @@ export default function Home({ navigation, route }) {
     const [error, setError] = useState()
     const { params: user } = route
 
-
     useEffect(() => {
-        try {
-            _getLocationAsync()
-        } catch ({ message }) {
-            console.log(message)
-        }
+        user.allowLocation && navigator.geolocation.getCurrentPosition(function (pos) {
+            setLocation({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude,
+                latitudeDelta: 0.001922,
+                longitudeDelta: 0.000821
+            })
+        })
     }, [])
 
 
-    _getLocationAsync = async () => {
-        const { status } = await Permissions.askAsync(Permissions.LOCATION)
-
-        if (status === 'granted') {
-            const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
-            setLocation([location.coords.longitude, location.coords.latitude])
-        }
-    }
 
     const __handleParkUpdate__ = async (id) => {
         try {
@@ -62,8 +53,8 @@ export default function Home({ navigation, route }) {
         const handleSearch = async (query) => {
             try {
                 setCurrentQuery(query)
-                const results = await searchParks({ query, location })
-
+                const results = await searchParks({ query, location: [location.longitude, location.latitude] })
+                //change logic on api side
                 if (!results.length) setError(`No ${query} parks found`)
                 else setError(null)
 
@@ -92,10 +83,7 @@ export default function Home({ navigation, route }) {
                 navigation.navigate('ParkDetails')
             } catch ({ message }) {
                 setError(message)
-
-
             }
-
         }
 
         return <Results results={results} error={error} onToDetails={handleGoToDetails} />
@@ -115,33 +103,28 @@ export default function Home({ navigation, route }) {
                 setResults(results)
             } catch ({ message }) {
                 setError(message)
-
             }
-
         }
 
         return <TopSearch onSubmit={handleSearch} query={currentQuery} />
     }
 
     function ParkDetailsScreen(props) {
-        const { navigation } = props
 
         const handleVote = async (vote) => {
-            if (!user) throw new Error('this action needs you to be registered')
+            if (!user) return Alert.alert('this action needs you to be registered')
 
             try {
                 await votePark(user.id, detailedPark.id, vote)
 
                 await __handleParkUpdate__(detailedPark.id)
             } catch ({ message }) {
-                //TODO, change error message given by logic
-                Alert.alert(message)
-
+                Alert.alert('This action cannot be performed twice by the same user')
             }
         }
 
         const handleCommentSubmit = async (body) => {
-            if (!user) throw new Error('this action needs you to be registered')
+            if (!user) return Alert.alert('this action needs you to be registered')
 
             try {
                 await publishComment(user.id, detailedPark.id, body)
@@ -153,7 +136,7 @@ export default function Home({ navigation, route }) {
         }
 
         const handleContribution = async (action) => {
-            if (!user) throw new Error('this action needs you to be registered')
+            if (!user) return Alert.alert('this action needs you to be registered')
 
             try {
                 if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
@@ -165,7 +148,7 @@ export default function Home({ navigation, route }) {
                 Alert.alert('Thanks for contributing!')
 
             } catch ({ message }) {
-                Alert.alert(message)
+                Alert.alert('This action cannot be performed twice by the same user')
             }
         }
 
