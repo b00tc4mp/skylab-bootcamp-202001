@@ -164,6 +164,7 @@ export default withRouter(function ({ history }) {
 
   function handleDelete() {
     code = []
+    setState({ page: 'programe', erase: false })
   }
 
   function handleGoToLogin() {
@@ -202,24 +203,26 @@ export default withRouter(function ({ history }) {
   function handleMountPrograme() {
     setState({ page: 'programe' })
   }
-
+  function handleOnErase() {
+    setState({ page: 'programe', erase: true }) 
+  }
   function handleOnSave() {
     setState({ page: 'programe', save: true })
 
   }
 
   function handleOnCancel() {
-    setState({ page: 'programe', save: false })
+    setState({ page: 'programe', save: false, erase: false })
   }
 
-  const { page, error, save } = state
+  const { page, error, save, erase } = state
   return <div className="app">
     <Page name={page}>
       <Route exact path="/" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Redirect to="/login" />} />
       <Route path="/register" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Register onSubmit={handleRegister} onGoToLogin={handleGoToLogin} error={error} onMount={handleMountRegister} />} />
       <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home" /> : <Login onSubmit={handleLogin} onGoToRegister={handleGoToRegister} error={error} onMount={handleMountLogin} />} />
       <Route path="/control" render={() => isLoggedIn() ? <Control onUp={handleUp} onDown={handleDown} onRight={handleRight} onLeft={handleLeft} onStop={handleStop} onMount={handleMountControl} onGoToHome={handleGoToHome} error={error} /> : <Redirect to="/login" />} />
-      <Route path="/programe" render={() => isLoggedIn() ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onDelete={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save} onPrograms={handleGoToPrograms} code={code} /> : <Redirect to="/login" />} />
+      <Route path="/programe" render={() => isLoggedIn() ? <Programe onUp={handleSaveUp} onDown={handleSaveDown} onRight={handleSaveRight} onLeft={handleSaveLeft} onDelete={handleDelete} onPlay={handleOnPlay} onMount={handleMountPrograme} onGoToHome={handleGoToHome} error={error} onSave={handleOnSave} onCancel={handleOnCancel} saveProgram={handleSaveProgram} save={save} erase={erase} onErase={handleOnErase} onPrograms={handleGoToPrograms} code={code} /> : <Redirect to="/login" />} />
       <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />} />
       <Route path="/programs" render={() => isLoggedIn() ? <Programs /> : <Redirect to="/login" />} />
     </Page>

@@ -5,7 +5,7 @@
 ![karmak](https://media.giphy.com/media/3ov9jWu7BuHufyLs7m/giphy.gif)
 
 Karmark is a programmable electric car. 
-It is compounded by one wifi card and two servo motors. The finality of Karmark is create a toy for the kids and the possibility to make the first contact with the programation on a very simply way.
+It is compounded by one wemos d1 mini and two servo motors. The finality of Karmark is create a toy for the kids and the possibility to make the first contact with the programation on a very simply way.
 
 # Functional Description
 
@@ -21,7 +21,7 @@ It is compounded by one wifi card and two servo motors. The finality of Karmark 
 
 ## Blocks
 
-![blocks](./images/blocks.jpg)
+![blocks](./images/blocks01.jpg)
 
 ## Data model
 

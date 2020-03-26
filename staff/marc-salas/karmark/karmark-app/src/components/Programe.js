@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import './programe.sass'
 import Feedback from './Feedback'
 import SaveWindows from './SaveWindows'
+import EraseWindows from './EraseWinows'
 
-export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onCancel, save, saveProgram, onPrograms, code }) {
+export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMount, onGoToHome, error, onSave, onErase, onCancel, save, saveProgram, erase, onPrograms, code }) {
     
     useEffect(() => {
         onMount()
@@ -39,8 +40,7 @@ export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMo
         onPlay()
     }
 
-    function handleOnDelete(event) {
-        event.preventDefault()
+    function handleOnDelete() {
 
         onDelete()
     }
@@ -55,6 +55,11 @@ export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMo
         event.preventDefault()
         
         onSave()
+    }
+        function handleOnErase(event) {
+        event.preventDefault()
+        
+        onErase()
     }
 
     function handleAccept(name){
@@ -85,10 +90,11 @@ export default function ({ onUp, onDown, onRight, onLeft, onDelete, onPlay, onMo
                 <button className="programebody__arrowdown" onClick={handleOnDown}><i className="fas fa-arrow-alt-circle-down"></i></button>
             </div>
             {save && <SaveWindows accept={handleAccept} cancel={handleOnCancel} code={code} />}
+            {erase && <EraseWindows accept={handleOnDelete} cancel={handleOnCancel} code={code} />}
             {error && <Feedback message={error} level="error" />}
             <div className="programefooter">
                 <button className="programefooter__save" onClick={handleOnSave}><i className="fas fa-save"></i></button>
-                <button className="programefooter__stop" onClick={handleOnDelete}><i className="fas fa-undo-alt"></i></button>
+                <button className="programefooter__stop" onClick={handleOnErase}><i className="fas fa-undo-alt"></i></button>
             </div>
             <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossOrigin="anonymous"/>

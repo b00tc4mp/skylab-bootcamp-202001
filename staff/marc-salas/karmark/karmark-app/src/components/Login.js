@@ -26,7 +26,7 @@ export default function ({onSubmit, onGoToRegister, error, onMount}){
     
     return <>
             <form className="login" onSubmit={handleOnSubmit}>
-            <h1 className="login__tittle">karmark</h1>
+            <h1 className="login__tittle">KARMARK</h1>
             <input className="login__username" type="text" placeholder="username" name="username"/>
             <input className="login__password" type="password" placeholder="password" name="password"/>
             <button className="login__button">login</button>
