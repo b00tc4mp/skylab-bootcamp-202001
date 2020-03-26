@@ -19,6 +19,7 @@ module.exports = (ticketId) => {
 
         ticket.validated = true
         
+        ticket.validatedTime = new Date()
         
         await ticket.save()
         return ticket
