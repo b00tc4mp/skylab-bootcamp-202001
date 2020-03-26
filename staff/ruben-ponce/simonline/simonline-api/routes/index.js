@@ -10,7 +10,8 @@ const {
     startGame,
     retrieveGameStatus,
     playCombination,
-    retrievePlayersName
+    retrievePlayersName,
+    deleteGame
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -27,6 +28,8 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.post('/games', jsonBodyParser, createGame)
+
+router.delete('/games/:gameId', jwtVerifierMidWare, deleteGame)
 
 router.get('/games', jwtVerifierMidWare, retrieveGames)
 

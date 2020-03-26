@@ -13,7 +13,7 @@ const { NotFoundError } = require('simonline-errors')
  * @throws {NotFoundError} when user create game no exist
  */
 
-module.exports = (name, owner ) => {
+module.exports = (name, owner) => {
     validate.string(name, 'name')
     validate.string(owner, 'owner')
 

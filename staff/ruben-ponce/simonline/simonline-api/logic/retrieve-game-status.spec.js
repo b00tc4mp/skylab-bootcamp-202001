@@ -75,8 +75,8 @@ describe('retrieveGameStatus', () => {
         })
 
         it('should current player change to watching when the player has passed his turn 1sec', function() {
-            this.timeout(3000);
-            return wait(2000)
+            this.timeout(2000);
+            return wait(1500)
             .then(() => {
                 return retrieveGameStatus(playerId, gameId)
                     .then(game => {

@@ -9,5 +9,6 @@ module.exports = {
     startGame: require('./start-game'),
     retrieveGameStatus: require('./retrieve-game-status'),
     playCombination: require('./play-combination'),
-    retrievePlayersName: require('./retrieve-players-name')
+    retrievePlayersName: require('./retrieve-players-name'),
+    deleteGame: require('./delete-game')
 }

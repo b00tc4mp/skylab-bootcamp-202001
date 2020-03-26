@@ -1,6 +1,6 @@
 import'./Game.sass'
 import React, { useState, useEffect } from 'react'
-import { isLoggedIn, retrieveUserId, retrieveGameStatus, retrievePlayersName } from '../logic'
+import { isLoggedIn, retrieveUserId, retrieveGameStatus, retrievePlayersName, deleteGame } from '../logic'
 import Feedback from './Feedback'
 
 export default ({goTo, gameId}) => {
@@ -52,6 +52,9 @@ export default ({goTo, gameId}) => {
                             setPlayersRemain(undefined)
                             console.log('finished')
                             clearInterval(interval)
+                            deleteGame(gameId)
+                            goTo('multiplayer')
+                            
                             //delete game & goTo multiplayer
                         }
                     } catch (error) {
@@ -77,8 +80,8 @@ export default ({goTo, gameId}) => {
 //match current player & userId to active logic onclick
 
 return  <div className="p1 game">
-    {console.log(combination)}
-    {console.log(color)}
+    {/* {console.log(combination)} OK*/}
+    {/* {console.log(color)} */}
 
     <div className="game__top-menu">
         <p className="game__top-menu__logout">Leave</p>
