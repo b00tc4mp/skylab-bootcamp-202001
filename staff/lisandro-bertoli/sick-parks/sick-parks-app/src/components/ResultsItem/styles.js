@@ -4,12 +4,13 @@ const styles = StyleSheet.create({
     container: {
         width: 350,
         marginVertical: 10,
-        height: 125
+
 
     },
     item: {
         flex: 1,
         padding: 15,
+        // height: 140,
         flexDirection: 'row',
         borderStyle: 'solid',
         borderColor: '#82A4B3',
@@ -19,10 +20,11 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#82A4B3',
+        fontWeight: '500'
     },
     textBold: {
         color: '#82A4B3',
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: '600',
         letterSpacing: 1
     },
@@ -33,22 +35,23 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     colOne: {
-        flex: 1,
-        paddingLeft: 20,
+        flex: 0.65,
+        paddingHorizontal: 8,
         justifyContent: 'space-between',
 
     },
     colTwo: {
+        flex: 0.35,
         justifyContent: "space-between",
 
     },
     true: {
-        backgroundColor: 'lightgreen',
+        backgroundColor: 'rgba(0,250,154, 0.7)',
         width: 80,
         textAlign: 'center'
     },
     false: {
-        backgroundColor: 'orange',
+        backgroundColor: 'rgba(255,69,0, 0.3)',
         width: 80,
         textAlign: 'center'
     }

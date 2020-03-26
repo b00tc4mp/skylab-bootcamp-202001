@@ -15,12 +15,14 @@ export default function ResultsItem({ park, onToPark }) {
                 <Image style={styles.image} source={require('../../../assets/logo.png')} />
                 <View style={styles.colOne}>
                     <Text style={styles.textBold}>{name}</Text>
-                    <Text style={styles.text}>Size: {size}</Text>
+                    <Text> </Text>
                     <Text style={styles.text}>Resort: {resort}</Text>
+                    <Text style={styles.text}>Size: {size.toUpperCase()}</Text>
                 </View>
                 <View style={styles.colTwo}>
-                    <Text style={styles[verified]}>Verified</Text>
-                    <Text style={styles.textBold}>Rating:{rating}</Text>
+                    {verified && <Text style={styles.true}>Verified</Text>}
+                    {!verified && <Text style={styles.false}>Unverified</Text>}
+                    <Text style={styles.text}>Rating: {rating ? rating : 0}</Text>
                 </View>
             </View>
         </TouchableOpacity>

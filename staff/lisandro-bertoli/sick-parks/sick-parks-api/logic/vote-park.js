@@ -19,13 +19,13 @@ module.exports = (userId, parkId, vote) => {
             if (park.upVotes.includes(user._id)) throw new NotAllowedError(`user with id ${userId} already upVoted`)
             park.upVotes.push(user._id)
 
-            const index = park.downVotes.indexOf(user._ud)
+            const index = park.downVotes.indexOf(user._id)
             if (index !== -1) park.downVotes.splice(index, 1)
         } else {
             if (park.downVotes.includes(user._id)) throw new NotAllowedError(`user with id ${userId} already downVoted`)
             park.downVotes.push(user._id)
 
-            const index = park.upVotes.indexOf(user._ud)
+            const index = park.upVotes.indexOf(user._id)
             if (index !== -1) park.upVotes.splice(index, 1)
         }
 

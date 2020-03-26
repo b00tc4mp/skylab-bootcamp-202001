@@ -27,12 +27,11 @@ export default function Home({ navigation, route }) {
             setLocation({
                 latitude: pos.coords.latitude,
                 longitude: pos.coords.longitude,
-                latitudeDelta: 0.001922,
-                longitudeDelta: 0.000821
+                latitudeDelta: 1,
+                longitudeDelta: 1,
             })
         })
     }, [])
-
 
 
     const __handleParkUpdate__ = async (id) => {
@@ -53,7 +52,7 @@ export default function Home({ navigation, route }) {
         const handleSearch = async (query) => {
             try {
                 setCurrentQuery(query)
-                const results = await searchParks(query, location: [location.longitude, location.latitude])
+                const results = await searchParks(query, [location.longitude, location.latitude])
                 //change logic on api side
                 if (!results.length) setError(`No ${query} parks found`)
                 else setError(null)

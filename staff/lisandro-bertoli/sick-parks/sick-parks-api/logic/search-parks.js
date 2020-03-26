@@ -62,9 +62,9 @@ module.exports = ({ q, _location }) => {
             result.name = result.name.charAt(0).toUpperCase() + result.name.slice(1)
             result.resort = result.resort.charAt(0).toUpperCase() + result.resort.slice(1)
 
-            const { id, name, resort, size, verified } = result //TODO send location
+            const { id, name, resort, size, verified, rating } = result //TODO send location
 
-            return { id, name, resort, size, verified }
+            return { id, name, resort, size, verified, rating }
         })
 
         return sanitizedResults

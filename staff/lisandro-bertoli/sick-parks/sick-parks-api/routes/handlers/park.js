@@ -26,7 +26,7 @@ module.exports = {
         res.status(200).end()
     }),
     report: asyncHandler(async (req, res, next) => {
-        const review = await reportPark(req.params, req.body)
+        const review = await reportPark(req.params, req.body, req.payload)
         if (review) deletePark(req.params.pid)
         res.status(201).end()
     }),

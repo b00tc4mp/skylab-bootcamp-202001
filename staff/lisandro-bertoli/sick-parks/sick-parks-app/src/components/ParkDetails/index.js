@@ -15,7 +15,7 @@ function ParkDetails({ park, onVote, onCommentSubmit, onContribution }) {
     useEffect(() => {
         setComments(park.comments)
         setVotes(park.rating)
-    }, [park.rating, park.comments])
+    }, [park.rating])
 
     const handleHideModal = () => setShowComments(false)
     const handleUpVote = () => onVote(true)
@@ -151,15 +151,19 @@ function ParkDetails({ park, onVote, onCommentSubmit, onContribution }) {
                             region={{
                                 latitude: park.location.coordinates[1],
                                 longitude: park.location.coordinates[0],
+                                latitudeDelta: 0.1422,
+                                longitudeDelta: 0.121,
                             }}>
                             <MapView.Marker coordinate={{
                                 latitude: park.location.coordinates[1],
-                                longitude: park.location.coordinates[0]
+                                longitude: park.location.coordinates[0],
+                                latitudeDelta: 0.1422,
+                                longitudeDelta: 0.121,
                             }} />
                         </MapView>
                     </View>
-                    {park.verified && (<View>
-                        <Text style={styles.approve}>Verified Park</Text>
+                    {park.verified && (<View style={styles.approve}>
+                        <Text style={styles.actionText}>Verified Park</Text>
                     </View>
                     )}
                     {!park.verified && (

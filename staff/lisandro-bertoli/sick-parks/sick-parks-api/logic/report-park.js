@@ -2,9 +2,10 @@ const { validate } = require('sick-parks-utils')
 const { models: { Park, User } } = require('sick-parks-data')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
-module.exports = (params, body) => {
-    const { id: userId, pid: parkId } = params
+module.exports = (params, body, payload) => {
+    const { pid: parkId } = params
     const { problem } = body
+    const { sub: userId } = payload
 
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
