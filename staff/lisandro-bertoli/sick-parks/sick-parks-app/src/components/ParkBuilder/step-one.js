@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { StyleSheet, ScrollView, Modal, KeyboardAvoidingView, Dimensions, TouchableWithoutFeedback, TextInput, Picker, Keyboard, View, Text } from 'react-native'
 import { Button, Feedback, MapViewContainer } from '../index'
 import MapView, { Marker } from 'react-native-maps';
+// import styles from '../Button/styles';
 
 
 export default function StepOne({ navigation, error: _error }) {
@@ -30,123 +31,127 @@ export default function StepOne({ navigation, error: _error }) {
                 break
             case location === undefined:
                 setError('Location is required')
+                break
             default:
                 navigation.navigate('Featues info', { features: { rails, boxes, kickers, pipes, others }, park: { name, resort, flow, size, level, location } })
         }
     }
 
     return (
-
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.container}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1, padding: 10, paddingBottom: '60%' }} scrollEnabled={true}>
-                    <KeyboardAvoidingView behavior='position' contentContainerStyle={{ flex: 1, justifyContent: 'space-between', marginTop: 10 }}>
-                        <Text style={{ alignSelf: 'center' }}>Park Details</Text>
-                        <View style={{ justifyContent: 'space-around', height: '25%' }}>
-                            <Text>Size</Text>
-                            <Picker
-                                selectedValue={size}
-                                style={{ height: 45, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 45 }}
-                                onValueChange={value =>
-                                    setSize(value)
-                                }>
-                                <Picker.Item label="Small" value="s" />
-                                <Picker.Item label="Medium" value="m" />
-                                <Picker.Item label="Large" value="l" />
-                                <Picker.Item label="Massive" value="xl" />
-                            </Picker>
-                            <Text>Level</Text>
-                            <Picker
-                                selectedValue={level}
-                                style={{ height: 45, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 45 }}
-                                onValueChange={value =>
-                                    setLevel(value)
-                                }>
-                                <Picker.Item label="Begginer" value="begginer" />
-                                <Picker.Item label="Intermediate" value="intermediate" />
-                                <Picker.Item label="Advanced" value="advanced" />
-                                <Picker.Item label="Only for rippers" value="ripper" />
-                            </Picker>
-                        </View>
-                        <Modal
-                            animationType="slide"
-                            transparent={false}
-                            presentationStyle='formSheet'
-                            visible={showModal}
-                            onRequestClose={() => {
-                                Alert.alert('Modal has been closed.');
-                            }}>
-                            <View style={styles.modalHeader}>
-                                <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
-                                <Text style={styles.modalText}>Pick a location</Text>
-                            </View>
-                            <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinate) => {
-
-                                setLocation([coordinate])
-
-
-                                setTimeout(() => {
-                                    setShowModal(false)
-                                }, 100)
-                            }} />
-                        </Modal>
-                        <Button style={styles.button} text='Set Location' onPress={() => setShowModal(true)} />
-
-                        {error && _error && <Feedback level='warn' message={error} />}
-
-                        <View style={{ justifyContent: 'space-around', marginVertical: 25 }}>
-                            <View style={styles.textContainer}>
-                                <Text>Name:</Text>
-                                {error && !_error && <Feedback level='warn' message={error} />}
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
-                            </View>
-
-                            <View style={styles.textContainer}>
-                                <Text>Resort:</Text>
-                                {error && !_error && <Feedback level='warn' message={error} />}
-                                <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
-                            </View>
-
-                            <View style={styles.textContainer}>
-                                <Text>Flow:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='Eg: Jib/Rail garden' style={styles.textInput} onChangeText={(text) => setFlow(text)} />
-                            </View>
-
-                            <Text style={{ alignSelf: 'center', paddingTop: 15 }}>Number of features</Text>
-
-                            <View style={styles.numbersContainer}>
-                                <Text>Rails:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setRails(Number(text))} />
-                            </View>
-
-                            <View style={styles.numbersContainer}>
-                                <Text>Boxes:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setBoxes(Number(text))} />
-                            </View >
-
-                            <View style={styles.numbersContainer}>
-                                <Text>Kickers:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setKickers(Number(text))} />
-                            </View >
-                            <View style={styles.numbersContainer}>
-                                <Text>Pipes:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setPipes(Number(text))} />
-                            </View >
-                            <View style={styles.numbersContainer}>
-                                <Text>Other:</Text>
-                                <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setOthers(Number(text))} />
-                            </View >
-
-
-                            <Button text='Next' style={styles.button} textStyle='text' onPress={handleNextStep} />
+        <KeyboardAvoidingView behavior='padding'>
+            <ScrollView scrollEnabled={true}>
+                <View style={styles.container}>
+                    <View style={styles.topContainer}>
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Name:</Text>
+                            <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
                         </View>
 
-                    </KeyboardAvoidingView>
-                </ScrollView>
-            </View>
-        </TouchableWithoutFeedback >
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Resort:</Text>
+
+                            <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                        </View>
+
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Flow:</Text>
+                            <TextInput selectionColor='#EDF4F9' placeholder='Eg: Jib/Rail garden' style={styles.textInput} onChangeText={(text) => setFlow(text)} />
+                        </View>
+
+
+                        <View style={{ justifyContent: 'space-between' }}>
+
+                            <View style={styles.pickerContainer}>
+                                <Text style={styles.label}>Size: </Text>
+                                <Picker
+                                    selectedValue={size}
+                                    style={styles.picker}
+                                    itemStyle={{ height: 40 }}
+                                    onValueChange={value =>
+                                        setSize(value)
+                                    }>
+                                    <Picker.Item label="Small" value="s" />
+                                    <Picker.Item label="Medium" value="m" />
+                                    <Picker.Item label="Large" value="l" />
+                                    <Picker.Item label="Massive" value="xl" />
+                                </Picker>
+                            </View>
+                            <View style={styles.pickerContainer}>
+                                <Text style={styles.label}>Level:</Text>
+                                <Picker
+                                    selectedValue={level}
+                                    style={styles.picker}
+                                    itemStyle={{ height: 40 }}
+                                    onValueChange={value =>
+                                        setLevel(value)
+                                    }>
+                                    <Picker.Item label="Begginer" value="begginer" />
+                                    <Picker.Item label="Intermediate" value="intermediate" />
+                                    <Picker.Item label="Advanced" value="advanced" />
+                                    <Picker.Item label="Only for rippers" value="ripper" />
+                                </Picker>
+                            </View>
+                        </View>
+
+                        <Button style={styles.buttonContainer} textStyle={styles.button} text='Set Location' onPress={() => setShowModal(true)} />
+
+                    </View>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        presentationStyle='formSheet'
+                        visible={showModal}
+                        onRequestClose={() => {
+                            Alert.alert('Modal has been closed.');
+                        }}>
+                        <View style={styles.modalHeader}>
+                            <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
+                            <Text style={styles.modalText}>Pick a location</Text>
+                        </View>
+                        <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinate) => {
+                            setLocation([coordinate])
+
+                            setTimeout(() => {
+                                setShowModal(false)
+                            }, 100)
+                        }} />
+                    </Modal>
+
+                    <View style={styles.bottomContainer}>
+
+                        <Text style={styles.sectionHeader}>Number of features</Text>
+
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Rails:</Text>
+                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setRails(Number(text))} />
+                        </View>
+
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Boxes:</Text>
+                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setBoxes(Number(text))} />
+                        </View >
+
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Kickers:</Text>
+                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setKickers(Number(text))} />
+                        </View >
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Pipes:</Text>
+                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setPipes(Number(text))} />
+                        </View >
+                        <View style={styles.inputsContainer}>
+                            <Text style={styles.label}>Other:</Text>
+                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setOthers(Number(text))} />
+                        </View >
+
+
+                        {error && <Feedback level='warn' message={error} />}
+                    </View>
+                    <Button text='Next' style={styles.nextButton} textStyle={styles.button} onPress={handleNextStep} />
+                </View>
+            </ScrollView>
+
+        </KeyboardAvoidingView >
 
     )
 }
@@ -154,13 +159,28 @@ export default function StepOne({ navigation, error: _error }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: '100%',
         backgroundColor: '#EDF4F9',
         justifyContent: 'space-between',
         alignItems: 'stretch',
         paddingHorizontal: 10,
-        marginTop: '1%'
+        marginTop: 10,
+        paddingBottom: '5%'
     },
+    topContainer: {
+
+        flex: 1
+    },
+    bottomContainer: {
+        justifyContent: 'space-between',
+        marginVertical: 25
+    },
+
+    sectionHeader: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        fontSize: 16
+    },
+
     modalText: {
         color: '#82A4B3',
         fontSize: 16
@@ -173,24 +193,38 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between'
     },
-    textContainer: {
+    inputsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 10,
-        height: '8%',
-        alignItems: 'center',
+        marginVertical: 25,
+        flex: 1,
     },
+
     textInput: {
-        height: '100%',
+        height: '160%',
         backgroundColor: '#82A4B3',
         width: '60%',
         alignSelf: 'flex-end',
-        borderRadius: 5,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        borderColor: '#EFEBDA',
+        borderWidth: 2
 
     },
+    pickerContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10
+    },
+    picker: {
+        height: 40,
+        color: '#EFEBDA',
+        width: '60%',
+        backgroundColor: '#82A4B3',
+        borderColor: '#EFEBDA',
+        borderWidth: 2
+    },
     mapStyle: {
-
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height * 0.855,
     },
@@ -198,27 +232,48 @@ const styles = StyleSheet.create({
     numbersContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginVertical: 10,
-        height: '5%',
-        alignItems: 'center'
+        marginVertical: 25,
+        flex: 1
     },
 
     numberInput: {
-        height: '100%',
+        height: '150%',
         backgroundColor: '#82A4B3',
         width: '20%',
         alignSelf: 'flex-end',
-        borderRadius: 5,
+        borderColor: '#EFEBDA',
+        borderWidth: 2,
         paddingHorizontal: 10
 
     },
-    button: {
-        height: 40,
+    buttonContainer: {
+        alignItems: 'center',
+        borderColor: '#82A4B3',
+        borderWidth: 2,
+        backgroundColor: 'white',
+        padding: 10,
+        marginTop: 10,
+        width: '90%',
+        alignSelf: 'center'
+
+    },
+    nextButton: {
+        alignItems: 'center',
+        borderColor: '#82A4B3',
+        borderWidth: 2,
         backgroundColor: '#EFEBDA',
-        width: 250,
+        padding: 10,
+        width: '75%',
         alignSelf: 'center',
-        borderRadius: 5,
-        justifyContent: 'center',
+        marginTop: 10
+    },
+    button: {
+        color: '#82A4B3',
+        fontWeight: 'bold',
+    },
+
+    label: {
+        fontWeight: 'bold',
 
     }
 

@@ -23,7 +23,7 @@ export default function Home({ navigation, route }) {
     const { params: user } = route
 
     useEffect(() => {
-        user.allowLocation && navigator.geolocation.getCurrentPosition(function (pos) {
+        navigator.geolocation.getCurrentPosition(function (pos) {
             setLocation({
                 latitude: pos.coords.latitude,
                 longitude: pos.coords.longitude,
@@ -32,7 +32,7 @@ export default function Home({ navigation, route }) {
             })
         })
     }, [])
-
+    console.log(location)
 
     const __handleParkUpdate__ = async (id) => {
         try {
