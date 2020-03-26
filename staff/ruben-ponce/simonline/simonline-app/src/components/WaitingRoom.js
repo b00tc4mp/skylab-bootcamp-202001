@@ -1,6 +1,6 @@
 import'./WaitingRoom.sass'
 import React, { useState, useEffect } from 'react'
-import { isLoggedIn, retrieveGameStatus, retrieveUserId, retrievePlayersName, startGame } from '../logic'
+import { isLoggedIn, retrieveGameStatus, retrieveUserId, retrievePlayersBasicData, startGame } from '../logic'
 import Feedback from './Feedback'
 
 export default ({ gameId, goTo }) => {
@@ -17,7 +17,7 @@ export default ({ gameId, goTo }) => {
                         // setGameId(gameId)
                         const _userId = await retrieveUserId(sessionStorage.token)
                         setUserId(_userId)
-                        const _playersName = await retrievePlayersName(gameId)
+                        const _playersName = await retrievePlayersBasicData(gameId)
                         setPlayersName(_playersName)
                         const status = await retrieveGameStatus(gameId)
                         setGameStatus(status)
