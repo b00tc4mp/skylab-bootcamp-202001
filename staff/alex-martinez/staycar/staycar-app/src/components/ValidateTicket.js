@@ -36,7 +36,7 @@ export default withRouter (function({history, infoTicket}) {
     <h1 className="validate__title">Validate Ticket</h1>
 
     <form className="validate__form" onSubmit={handleValidate}>
-        <input type="text" name="price" value={infoTicket.amount} className="validate__price"/>
+        <input type="text" name="price" value={`${infoTicket.amount}€`} className="validate__price"/>
         <button className="validate__submit">Validate</button>
     </form>
     

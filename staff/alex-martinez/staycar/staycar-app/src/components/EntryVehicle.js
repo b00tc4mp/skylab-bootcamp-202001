@@ -36,7 +36,7 @@ export default function({onSubmit, error}) {
         <input type="hidden" name="ticketId" value={random()}/>
 
         
-        <button className="entry-plate__submit">Add</button>
+        <button className="entry-plate__submit">Entry</button>
     </form>
     </>
     }
