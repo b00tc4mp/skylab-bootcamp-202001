@@ -21,7 +21,7 @@ It is compounded by one wemos d1 mini and two servo motors. The finality of Karm
 
 ## Blocks
 
-![blocks](./images/blocks01.jpg)
+![blocks](./images/blocks.jpg)
 
 ## Data model
 
@@ -31,4 +31,4 @@ It is compounded by one wemos d1 mini and two servo motors. The finality of Karm
 
 * Receive information form car to be able to connect receptors and have a better control of it.
 * Be able to configure in your app the ip of your car and the wifi net that you want to connect.
-* Make it responsive
+* Make better styles
