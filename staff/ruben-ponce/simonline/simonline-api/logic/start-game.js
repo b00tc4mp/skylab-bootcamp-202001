@@ -39,7 +39,7 @@ module.exports = (playerId, gameId) => {
             game.turnStart = new Date()
             game.currentPlayer = game.players[0]
             game.status = "started"
-            game.turnTimeout = 40
+            game.turnTimeout = 20
 
             return game.save()
         })

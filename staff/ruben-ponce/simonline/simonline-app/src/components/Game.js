@@ -41,7 +41,7 @@ export default ({goTo, gameId}) => {
                                 setLastPlayerOut(lastPlayerOutObj.username)
                             }
                             //set combination each time (if not combinationViewed)
-                            setCombination(status.pushCombination)
+                            //setCombination(status.pushCombination)
                             //showCombination(status.pushCombination)
 
                         } else if (status.status === 'finished') {
@@ -52,10 +52,10 @@ export default ({goTo, gameId}) => {
                             setPlayersRemain(undefined)
                             console.log('finished')
                             clearInterval(interval)
-                            deleteGame(gameId)
-                            goTo('multiplayer')
-                            
                             //delete game & goTo multiplayer
+                            await deleteGame(gameId)
+                            //setTimeout(()=> goTo('multiplayer'), 3000)
+
                         }
                     } catch (error) {
                         setError(error.message)
