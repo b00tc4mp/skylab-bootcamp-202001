@@ -16,7 +16,8 @@ const {
     addContact,
     retrieveDrugs,
     addProgressRecord,
-    retrieveProgressRecord
+    retrieveProgressRecord,
+    updateProgress,
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -59,5 +60,7 @@ router.post('/users/add-contact', [jwtVerifierMidWare, jsonBodyParser], addConta
 router.post('/users/add-progress-record', [jwtVerifierMidWare, jsonBodyParser], addProgressRecord)
 
 router.get('/users/progress-record', jwtVerifierMidWare, retrieveProgressRecord)
+
+router.patch('/users/update-progress', jwtVerifierMidWare, updateProgress)
 
 module.exports = router

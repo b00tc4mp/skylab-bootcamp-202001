@@ -333,52 +333,15 @@ function App() {
   }
 
   return (
-    <View style={styles.container}>
-      {goLanding && (
-        <NavigationBarTop
-          style={styles.navbar}
-          toLogin={handleToLogin}
-          toMedication={handleToMedication}
-          toContacts={handleToContacts}
-          toProgress={handleToProgress}
-          toPatients={handleToPatients}
-          user={user}
-        />
-      )}
+    <View style={styles.container}> 
+        {goLanding && (<NavigationBarTop style={styles.navbar} toLogin={handleToLogin} toMedication={handleToMedication} toContacts={handleToContacts} toProgress={handleToProgress} toPatients={handleToPatients} user={user}/>)}
 
       <ScrollView style={styles.content}>
-        {view === 'register' && (
-          <Register
-            onSubmit={handleRegister}
-            onToLogin={handleToLogin}
-            error={error}
-          />
-        )}
-        {view === 'login' && (
-          <Login
-            onSubmit={handleLogin}
-            toRegister={handleToRegister}
-            error={error}
-          />
-        )}
-        {view === 'landingPatient' && (
-          <LandingPatient
-            user={user}
-            toMedication={handleToMedication}
-            toProgress={handleToProgress}
-            toContacts={handleToContacts}
-          />
-        )}
-        {view === 'landingPharmacist' && (
-          <LandingPharmacist user={user} toPatients={handleToPatients} />
-        )}
-        {view === 'medication' && (
-          <Medication
-            medication={medication}
-            toAdd={handleToAdd}
-            onDrug={handleToDrug}
-          />
-        )}
+        {view === 'register' && ( <Register onSubmit={handleRegister} onToLogin={handleToLogin} error={error}/>)}
+        {view === 'login' && ( <Login onSubmit={handleLogin} toRegister={handleToRegister} error={error} />)}
+        {view === 'landingPatient' && ( <LandingPatient user={user} toMedication={handleToMedication} toProgress={handleToProgress} toContacts={handleToContacts}/>)}
+        {view === 'landingPharmacist' && ( <LandingPharmacist user={user} toPatients={handleToPatients} />)}
+        {view === 'medication' && (<Medication medication={medication} toAdd={handleToAdd} onDrug={handleToDrug} /> )}
         {view === 'addMedication' && (
           <AddMedication
             drugs={drugs}
@@ -400,7 +363,7 @@ function App() {
             onContact={handleToContactDetail}
           />
         )}
-        {view === 'progress' && <Progress progress={progress} user={user}/>}
+        {view === 'progress' && <Progress progress={progress} user={user} token={token}/>}
         {view === 'addContacts' && <AddContacts />}
         {view === 'patients' && (
           <Patients contacts={contacts} toAdd={handleToAddPatients} />

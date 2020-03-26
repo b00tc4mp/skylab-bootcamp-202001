@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
+import logic, { addProgressRecord, retrieveProgressRecord, updateProgress } from './src/logic';
 import { View, Text, ScrollView, Image, Button, TouchableOpacity, AsyncStorage} from 'react-native'
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars'
 import styles from './styles'
 import moment from 'moment'
 
-function Progress ({progress, user}) {
+function Progress ({progress, user, token}) {
     console.log(progress)
 
     const [ markedDates, setMarketDates] = useState()
@@ -15,6 +16,7 @@ function Progress ({progress, user}) {
         let _check
 
         progress.includes(false) ? _check = 'red' : check = 'green'
+
 
         let date = AsyncStorage.getItem('date')
 
@@ -27,8 +29,19 @@ function Progress ({progress, user}) {
         let _today = moment(new Date).format('YYYY-MM-DD')
 
         if (_today > date) {
+            await updateProgress(progress)
+
+            const index = (progress.reduce((accum, value) => accum + value, 0))/progress.length
+            const recordDaily ={}
+
+            recordDaily.date = _today
+            recordDaily.record = index
+
+            await addProgressRecord(token, recordDaily)
           // con el array sacar index, y con la fecha de date mandarla junto con el index a un add-progressRecord
         }
+
+        //TODO INDEEEX
 
         
         setToday(_today)
