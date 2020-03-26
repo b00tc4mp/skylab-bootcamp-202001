@@ -10,8 +10,6 @@ module.exports = id => {
             
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
-            if(!user.progressRecord.length) throw new NotFoundError (`this user does not have progress record yet`)
-
             return user.progressRecord
         })
 

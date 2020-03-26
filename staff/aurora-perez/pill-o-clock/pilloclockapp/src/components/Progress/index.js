@@ -1,22 +1,18 @@
 import React, {useState, useEffect} from 'react'
-import logic, { addProgressRecord, retrieveProgressRecord, updateProgress } from './src/logic';
+import logic, { addProgressRecord, retrieveProgressRecord, updateProgress } from '../../logic';
 import { View, Text, ScrollView, Image, Button, TouchableOpacity, AsyncStorage} from 'react-native'
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars'
 import styles from './styles'
 import moment from 'moment'
 
 function Progress ({progress, user, token}) {
-    console.log(progress)
+    //console.log(progress)
+    //console.log(token)
 
     const [ markedDates, setMarketDates] = useState()
-    const [ today, setToday] = useState()
-    const [check, setCheck ] = useState()
 
-    useEffect( async ()=>{
-        let _check
-
-        progress.includes(false) ? _check = 'red' : check = 'green'
-
+    async function calendar() {
+        let check
 
         let date = AsyncStorage.getItem('date')
 
@@ -24,36 +20,48 @@ function Progress ({progress, user, token}) {
 
         !date && (await AsyncStorage.setItem('date', (date = moment().format('YYYY-MM-DD'))))
 
-        //console.log(date)
+        console.log(date)
        
-        let _today = moment(new Date).format('YYYY-MM-DD')
+        let today = moment(new Date).format('YYYY-MM-DD')
 
-        if (_today > date) {
-            await updateProgress(progress)
+        if (today > date) {
+            await updateProgress(progress); //vaciar array 
 
-            const index = (progress.reduce((accum, value) => accum + value, 0))/progress.length
+            let index
+
+            check = (progress.reduce((accum, value) => accum + value, 0))/progress.length
+            if (check===1) {index = 'green'}
+            else if (check <1 && check >= 0.75) {index= '#7CBA00'}
+            else if (check < 0.75 && check > 0.5) {index = "#DBE900"}
+            else if (check === 0.5) {index ='yellow'}
+            else if (check < 0.5 && check >= 0.25) {index = "#FF8000"}
+            else check = 'red'
+
             const recordDaily ={}
 
-            recordDaily.date = _today
+            recordDaily.date = date
             recordDaily.record = index
 
             await addProgressRecord(token, recordDaily)
-          // con el array sacar index, y con la fecha de date mandarla junto con el index a un add-progressRecord
         }
 
-        //TODO INDEEEX
+        const allProgress = await retrieveProgressRecord(token);
 
-        
-        setToday(_today)
-
-        setCheck(_check)
+        console.log(allProgress)
 
         let _markedDates = {}
-        _markedDates[_today] = {disabled: true, startingDay: true, color: _check, endingDay: true};
-
-        _markedDates['2020-03-26'] = {disabled: true, startingDay: true, color: _check, endingDay: true}
+        allProgress.forEach(day => {
+            _markedDates[day.date] = {disabled: true, startingDay: true, color: day.record, endingDay: true};
+        })
+   
         console.log(_markedDates)
-        setMarketDates(_markedDates)
+        setMarketDates(_markedDates);
+    }
+
+    useEffect( ()=>{
+
+        calendar();
+        
     },[])
 
     return (<>

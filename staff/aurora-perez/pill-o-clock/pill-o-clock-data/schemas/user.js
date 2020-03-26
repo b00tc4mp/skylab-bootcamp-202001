@@ -22,6 +22,6 @@ module.exports = new Schema({
     contacts: [{type: ObjectId, ref: 'User' }],
     progressRecord: [{
         date: {type: String},
-        record: {type: Number}
+        record: {type: String}
     }]
 })
