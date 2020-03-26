@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TextInput, ScrollView, Button, Picker } from 'r
 import styles from './styles'
 
 function AddMedication ({onSubmit, error, drugs}) {
-    const [ drug, setDrug ] =useState()
+    const [ drug, setDrug ] =useState(drugs[0].id.toString())
     const [ hour1, setHour1 ] = useState()
     const [ min1, setMin1 ] = useState()
     const [ secondTime, setSecondTime ] =useState(false)

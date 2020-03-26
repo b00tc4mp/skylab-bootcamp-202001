@@ -51,7 +51,19 @@ function Progress ({progress, user, token}) {
 
         let _markedDates = {}
         allProgress.forEach(day => {
-            _markedDates[day.date] = {disabled: true, startingDay: true, color: day.record, endingDay: true};
+            _markedDates[day.date] = {
+      customStyles: {
+        container: {
+          backgroundColor: day.record
+        },
+        text: {
+          color: 'black',
+          fontWeight: 'bold'
+        }
+      }
+    }
+
+            //_markedDates[day.date] = {disabled: true, startingDay: true, color: day.record, endingDay: true};
         })
    
         console.log(_markedDates)
@@ -130,7 +142,8 @@ function Progress ({progress, user, token}) {
                         
                         markedDates ={markedDates}
 
-                        markingType={'period'}
+                        //markingType={'period'}
+                        markingType={'custom'}
          
                     />
             </View>

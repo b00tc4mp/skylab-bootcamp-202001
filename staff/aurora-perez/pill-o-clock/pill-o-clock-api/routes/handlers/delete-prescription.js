@@ -3,7 +3,7 @@ const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     const { params: { drugId }, payload: { sub: id } } = req
-
+    debugger
     try {
         deletePrescription(id, drugId)
             .then(() => res.status(200).end())

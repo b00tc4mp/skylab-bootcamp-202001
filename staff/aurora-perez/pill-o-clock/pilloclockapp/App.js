@@ -192,13 +192,12 @@ function App() {
     try {
       const _medication = await retrieveMedication(token);
 
+      console.log(_medication)
+
       let alarms = await AsyncStorage.getItem('alarms');
 
       if(alarms) {(alarms = JSON.parse(alarms))
       }else{ alarms = {}; }
-
-
-      //(alarms && (alarms = JSON.parse(alarms))) || alarms = {};
 
       _medication.forEach(medication => {
         const currAlarms = alarms[medication.drug._id] || {};
@@ -211,6 +210,7 @@ function App() {
 
         alarms[medication.drug._id] = newAlarms
       });
+      console.log(_medication)
 
       await AsyncStorage.setItem('alarms', JSON.stringify(alarms));
 
@@ -258,6 +258,7 @@ function App() {
 
   async function handleToDrug({id, times}) {
     try {
+      
       const _drugDetail = await retrieveDrug(id);
 
       setTimes(times);
@@ -272,6 +273,7 @@ function App() {
 
   async function handleToDeleteMedication({id}) {
     try {
+      console.log(id)
       await deleteMedication(token, id);
 
       const _medication = await retrieveMedication(token);
@@ -342,36 +344,14 @@ function App() {
         {view === 'landingPatient' && ( <LandingPatient user={user} toMedication={handleToMedication} toProgress={handleToProgress} toContacts={handleToContacts}/>)}
         {view === 'landingPharmacist' && ( <LandingPharmacist user={user} toPatients={handleToPatients} />)}
         {view === 'medication' && (<Medication medication={medication} toAdd={handleToAdd} onDrug={handleToDrug} /> )}
-        {view === 'addMedication' && (
-          <AddMedication
-            drugs={drugs}
-            onSubmit={handleAddMedication}
-            error={error}
-          />
-        )}
-        {view === 'drugDetail' && (
-          <DrugDetail
-            drugDetail={drugDetail}
-            times={times}
-            toDelete={handleToDeleteMedication}
-          />
-        )}
-        {view === 'contacts' && (
-          <Contacts
-            contacts={contacts}
-            toAdd={handleToAddContacts}
-            onContact={handleToContactDetail}
-          />
-        )}
+        {view === 'addMedication' && (<AddMedication drugs={drugs} onSubmit={handleAddMedication} error={error} />)}
+        {view === 'drugDetail' && (<DrugDetail drugDetail={drugDetail} times={times} toDelete={handleToDeleteMedication} />)}
+        {view === 'contacts' && ( <Contacts contacts={contacts} toAdd={handleToAddContacts} onContact={handleToContactDetail}/>)}
         {view === 'progress' && <Progress progress={progress} user={user} token={token}/>}
         {view === 'addContacts' && <AddContacts />}
-        {view === 'patients' && (
-          <Patients contacts={contacts} toAdd={handleToAddPatients} />
-        )}
+        {view === 'patients' && ( <Patients contacts={contacts} toAdd={handleToAddPatients} />)}
         {view === 'addPatients' && <AddPatient user={user} />}
-        {view === 'contactDetail' && (
-          <ContactDetail contactData={contactData} />
-        )}
+        {view === 'contactDetail' && (<ContactDetail contactData={contactData} /> )}
       </ScrollView>
     </View>
   );

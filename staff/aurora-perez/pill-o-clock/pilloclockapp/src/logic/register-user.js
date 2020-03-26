@@ -1,6 +1,7 @@
 const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
-import fetch from 'node-fetch'
+const fetch = require ('node-fetch')
+const context = require('./context')
 
 module.exports = function (name, surname, gender, age, phone, profile, email, password){
     validate.string(name, 'name')
@@ -39,4 +40,4 @@ module.exports = function (name, surname, gender, age, phone, profile, email, pa
 
     })()
    
-}
+}.bind(context)

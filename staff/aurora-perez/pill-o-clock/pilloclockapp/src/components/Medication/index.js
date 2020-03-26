@@ -4,6 +4,7 @@ import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
 function Medication ({medication, toAdd, onDrug}) {
+    console.log(medication)
     //console.log(medication[0].drug.drugName)
     //{`${item.drug.drugName}`}
     //{medication.length ? bablabla : <Text>You don't have medication yet! Do you want to add one?</Text>
