@@ -10,13 +10,13 @@ const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
-describe('crateParking', () => {
+describe.only('crateParking', () => {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Parking.deleteMany()]))
     )
 
-    let name, surname, username, password, parkingName, price, totalLots
+    let name, surname, username, password, parkingName, price, totalLots, lots
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -26,6 +26,16 @@ describe('crateParking', () => {
         parkingName = `parkingName-${random()}`
         price = random()
         totalLots = 20
+        lots = []
+        ticketId = `id-${random()}`
+
+        for (let i = 1; i <= totalLots; i++) {
+            let lot = {}
+            lot.number = i
+            lot.status = false
+      
+            lots.push(lot)
+          }
     })
 
     describe('when user already exists', () => {
@@ -46,6 +56,7 @@ describe('crateParking', () => {
                     expect(pk.parkingName).to.be.equal(parkingName)
                     expect(pk.rate).to.be.equal(price)
                     expect(pk.totalLots).to.be.equal(totalLots)
+                    expect(pk.lots.length).to.be.equal(totalLots)
                 })
         )
     })
