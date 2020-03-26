@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import MaterialTable from 'material-table'
 import Icon from '@material-ui/core/Icon';
 import FullDialog from './FullDialog'
 import Payment from './Payment'
+import { Context } from '../ContextProvider'
 
 const padding = 'dense'
 const pageSize = 10
 
-export default function MaterialTableDemo({onRowAdd, father, data, setData, columns, registerUser, actions }) {
+export default function MaterialTableDemo({ onRowAdd, father, data, setData, columns, registerUser, actions }) {
+  const { token } = useContext(Context)
 
   const [row, setRow] = useState(null)
   const [open, setOpen] = useState(false)
@@ -48,18 +50,18 @@ export default function MaterialTableDemo({onRowAdd, father, data, setData, colu
         data={data}
         editable={
           onRowAdd && {
-          onRowAdd: newData => {
-            return new Promise((resolve, reject) => resolve())
-              .then(() => registerUser(newData))
-              .then(() => {
-                window.location.reload()
-                // setData([...data, newData])
-              })
-              .catch(e => {
-                console.log(e.message)
-              })
-          }
-        }}
+            onRowAdd: newData => {
+              return new Promise((resolve, reject) => resolve())
+                .then(() => registerUser({ ...newData, token }))
+                .then(() => {
+                  window.location.reload()
+                  // setData([...data, newData])
+                })
+                .catch(e => {
+                  console.log(e.message)
+                })
+            }
+          }}
 
         onRowClick={((event, selectedRow) => {
           setRow(selectedRow)

@@ -1,11 +1,8 @@
 module.exports = (err, req, res, next) => {
-
   let { message, name } = err
 
   let status = 400
   let error = 'error'
-
-  console.log(name)
 
   if (name === 'CastError') message = 'Invalid id'
 

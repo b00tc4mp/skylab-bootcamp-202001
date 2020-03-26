@@ -20,7 +20,7 @@ export default () => {
 
   const handleSubmit = async (e) => {
     try {
-      
+
       e.preventDefault()
       setView('loader')
       setError(undefined)
@@ -33,7 +33,7 @@ export default () => {
         passwordValidation: e.target.passwordValidation.value
       }
 
-      const email = await registerCompany(json)
+      const { email } = await registerCompany(json)
       setEmail(email)
 
     } catch (error) {
@@ -124,19 +124,19 @@ export default () => {
             </Grid>
           </Grid>
 
-          { view === "loader" && !email && !error && <Loader /> }
+          {view === "loader" && !email && !error && <Loader />}
 
           {
             email &&
             <Alert severity="success">
               <Link href="https://www.gmail.com" target="_blank" variant="body2" onClick={() => history.push('login')}>
-              Confirmar correo: {email.toLowerCase()}
+                Confirmar correo: {email.toLowerCase()}
               </Link>
             </Alert>
           }
 
-          { error && <Alert severity='error'>{error}</Alert>}
-          
+          {error && <Alert severity='error'>{error}</Alert>}
+
 
           <Button
             type="submit"

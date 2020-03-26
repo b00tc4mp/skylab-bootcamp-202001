@@ -1,9 +1,8 @@
 const { Company } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = (_id, query = {}) => {
   validate.string(_id, 'id');
-
 
   return (async () => {
     const fields = Object.keys(Company.schema.obj)

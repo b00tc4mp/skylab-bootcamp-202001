@@ -1,16 +1,14 @@
 const { Company } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
-module.exports = _id => {
-  validate.string(_id, '_id')
+module.exports = companyId => {
+  validate.string(companyId, 'companyId');
 
   return (async () => {
-    const company = await Company.findOne({ _id })
+    const company = await Company.findOne({ _id: companyId })
     if (!company) throw new Error('Company Not Found')
 
     company.emailConfirmation = true
     await company.save()
-
-    return 'Company successfully confirmed by email'
   })()
 }

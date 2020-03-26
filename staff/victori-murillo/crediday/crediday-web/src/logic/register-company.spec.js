@@ -1,20 +1,18 @@
+require('dotenv').config()
 const { random } = Math
 const { mongoose, User, Company } = require('crediday-models')
-const { compare } = require('bcryptjs')
+const { bcrypt: { compare } } = require('crediday-utils')
 const registerCompany = require('./register-company')
-const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
-
-
-const API_URL = process.env.REACT_APP_API_URL
-
+const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL, REACT_APP_API_URL: API_URL } } = process
+const { expect } = require('chai')
+const fetch = require("node-fetch")
 
 describe('registerCompany', () => {
-
   let companyName, email, username, password, passwordValidation
 
-  beforeAll(async () => {
+  before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    await User.deleteMany()
+    await Promise.all([Company.deleteMany(), User.deleteMany()])
   })
 
   beforeEach(() => {
@@ -40,8 +38,8 @@ describe('registerCompany', () => {
         throw new Error('should not reach this point')
 
       } catch (error) {
-        expect(error).toBeInstanceOf(Error)
-        expect(error.message).toBe('El nombre de Compañia ya existe')
+        expect(error).to.be.an.instanceof(Error)
+        expect(error.message).to.equal('El nombre de Compañia ya existe')
       }
     })
 
@@ -49,29 +47,25 @@ describe('registerCompany', () => {
       await User.deleteMany()
       await Company.deleteMany()
     })
-
   })
 
-
   it('should succed on correct user data', async () => {
-    const result = await registerCompany({ companyName, email, username, password, passwordValidation })
-    expect(result).toBe(email)
+    const response = await registerCompany({ companyName, email, username, password, passwordValidation })
+    expect(response.email).to.equal(email)
 
     const user = await User.findOne({ email })
 
-    expect(typeof user).toBe('object')
-    expect(typeof user.id).toBe('string')
+    expect(typeof user).to.equal('object')
+    expect(typeof user.id).to.equal('string')
     // expect(user.companyName).toBe(companyName) -> only with populate
-    expect(user.email).toBe(email)
-    expect(user.username).toBe(username)
-    expect(user.created).toBeInstanceOf(Date)
-
-    expect(await compare(password, user.password)).toBeTruthy()
+    expect(user.email).to.equal(email)
+    expect(user.username).to.equal(username)
+    expect(user.created).to.be.an.instanceof(Date)
+    expect(await compare(password, user.password)).to.be.true
   })
 
-  afterAll(async () => {
-    await User.deleteMany()
-    await Company.deleteMany()
+  after(async () => {
+    await Promise.all([Company.deleteMany(), User.deleteMany()])
     await mongoose.disconnect()
   })
 })

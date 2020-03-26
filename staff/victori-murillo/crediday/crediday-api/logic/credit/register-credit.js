@@ -1,5 +1,5 @@
 const { Credit, Company, User } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = (userId, body) => {
 
@@ -9,9 +9,9 @@ module.exports = (userId, body) => {
   validate.type(body, 'body', Object)
 
   return (async () => {
-    const user = await User.findOne({_id: userId})
+    const user = await User.findOne({ _id: userId })
     if (!user) throw new Error('User doesnt exist')
-    
+
     const companyFound = await Company.findOne({ _id: user.company })
     if (!companyFound) throw new Error('Company doesnt exist')
     //TO DO -> ONLY ALLOW REGISTER BY THE SAME COMPANY

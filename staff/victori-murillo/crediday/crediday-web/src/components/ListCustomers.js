@@ -9,9 +9,10 @@ export default () => {
 
   useEffect(() => {
     retrieveUsers(token)
-      .then(users => setUsers(users))
+      .then(({ users }) => setUsers(users))
       .catch(error => console.log(error.message))
-  }, [])
+    console.log('be c')
+  }, [token])
 
   const columns = [
     { title: 'Nombre', field: 'firstName' }

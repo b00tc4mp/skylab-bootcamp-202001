@@ -1,8 +1,8 @@
 const { User } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = (id) => {
-  validate.string(id, 'id');
+  validate.string(id, 'id')
 
   return (async () => {
     const userFound = await User.findOne({ _id: id }).lean()

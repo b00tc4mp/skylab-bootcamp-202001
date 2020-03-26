@@ -1,6 +1,5 @@
 const { User } = require('crediday-models')
-const validate = require('crediday-utils')
-const { hash, compare } = require('bcryptjs')
+const { validate, bcrypt: { hash } } = require('crediday-utils')
 
 module.exports = ({ code, email, password }) => {
   validate.string(code, 'code')
@@ -14,16 +13,10 @@ module.exports = ({ code, email, password }) => {
     if (!user) throw new Error('Ningún usuario tiene ese correo electrónico')
     if (user.verificationCode !== code) throw new Error('Código incorrecto')
 
-    console.log(user)
-    console.log(code)
-
     user.verificationCode = ''
     user.password = await hash(password, 10)
-
     user = await user.save()
 
     if (user.verificationCode !== '') throw new Error('Left remove the verfication code')
-
-    return 'Contraseña actualizada'
   })()
 }

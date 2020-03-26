@@ -1,8 +1,6 @@
 const { User } = require('crediday-models')
-const validate = require('crediday-utils')
-const randomNumber = require('crediday-utils/randomNumber')
+const { validate, randomNumber, sendMail } = require('crediday-utils')
 const { env: { GMAIL, GMAIL_PASSWORD } } = process
-const sendMail = require('crediday-utils/send-mail')
 const template = require('./confirm-data-to-recover-password-template')
 
 module.exports = ({ company, email }) => {
@@ -10,7 +8,6 @@ module.exports = ({ company, email }) => {
   validate.string(email, 'email')
 
   return (async () => {
-
     let user = await User.findOne({ email }).populate({ path: 'company', select: 'name' })
 
     if (!user) throw new Error('Ningún usuario tiene ese correo electrónico')
@@ -30,10 +27,6 @@ module.exports = ({ company, email }) => {
     })
 
     const response = await sendMail({ authMail, to, subject, html })
-
     if (response instanceof Error) throw new Error(response.message)
-
-
-    return 'Data confirmed'
   })()
 }

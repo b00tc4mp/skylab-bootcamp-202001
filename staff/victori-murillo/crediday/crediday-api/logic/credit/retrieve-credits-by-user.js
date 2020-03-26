@@ -1,5 +1,5 @@
 const { Credit } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = userId => {
   validate.string(userId, 'userId')

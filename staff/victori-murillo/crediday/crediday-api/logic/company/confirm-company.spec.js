@@ -26,14 +26,14 @@ describe('confirmCompany', () => {
 
   it('should confirm a company successfully', async () => {
     const response = await confirmCompany(company.id)
-    expect(response).to.equal('Company successfully confirmed by email')
+    expect(response).to.be.an('undefined')
   })
 
   it('should fail with company not foud', async () => {
     const randomCompanyId = `${random()}`
 
     try {
-      _company = await confirmCompany(randomCompanyId)
+      await confirmCompany(randomCompanyId)
       throw new Error('should now reach this point')
 
     } catch (error) {
@@ -46,12 +46,11 @@ describe('confirmCompany', () => {
     const randomCompanyId = 1235
 
     try {
-      _company = await confirmCompany(randomCompanyId)
+      await confirmCompany(randomCompanyId)
       throw new Error('should now reach this point')
 
     } catch (error) {
-      expect(error).to.instanceOf(Error)
-      expect(error.message).to.equal(`_id ${randomCompanyId} is not a string`)
+      expect(error.message).to.equal(`companyId ${randomCompanyId} is not a string`)
     }
   })
 

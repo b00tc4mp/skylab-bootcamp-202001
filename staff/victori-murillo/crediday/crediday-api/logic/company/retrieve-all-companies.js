@@ -6,7 +6,6 @@ module.exports = (query = {}) => {
   const filter = Object.keys(query).filter(key => fields.some(field => field === key));
 
   return (async () => {
-
     const companies = await Company.find().select(filter).lean()
 
     if (!companies.length) throw new Error('Not Found')

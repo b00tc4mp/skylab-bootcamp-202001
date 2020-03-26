@@ -1,9 +1,9 @@
 const { Credit } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = creditId => {
   validate.string(creditId, 'creditId');
-  
+
   return (async () => {
 
     let credit = await Credit.findOne({ _id: creditId }).lean()

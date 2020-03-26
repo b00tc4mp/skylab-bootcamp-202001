@@ -3,14 +3,12 @@ const { random } = Math
 const { mongoose, User, Company } = require('crediday-models')
 const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL, REACT_APP_API_URL: API_URL } } = process
 const { expect } = require('chai')
-const login = require('./login')
 const fetch = require("node-fetch")
-const atob = require("atob")
+const confirmVerificationCode = require('./confirm-verification-code')
 
 
-describe('login', () => {
-
-  let companyName, email, username, password, passwordValidation
+describe('confirmVerificationCode', () => {
+  let companyName, email, username, password, code
 
   before(async () => {
     await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -23,7 +21,7 @@ describe('login', () => {
     email = (`email-${random()}@mail.com`)
     username = (`username-${random()}`).slice(0, 19)
     password = (`password-${random()}`)
-    passwordValidation = password
+    code = (`${random()}`).slice(0, 7)
 
     await fetch(`${API_URL}/companies`, {
       method: 'POST',
@@ -35,35 +33,26 @@ describe('login', () => {
 
   describe('When company and username already exists', () => {
 
-    it('Should fail when not confirm the mail', async () => {
+    it('Should fail when wrong code - sync', () => {
       try {
-        await login({ username, password })
+        confirmVerificationCode({ code, email })
+        throw new Error('should not reach this point')
 
       } catch (error) {
         expect(error).to.be.an.instanceof(Error)
-        expect(error.message).to.equal("Confirma tu correo electrónico")
+        expect(error.message).to.equal('Código incorrecto')
       }
     })
 
-    it('should succed on correct username and password, after confirm email', async () => {
+    it('Should fail when wrong code - async', async () => {
+      try {
+        await confirmVerificationCode({ code: code.slice(0, 6), email })
+        throw new Error('should not reach this point')
 
-      const company = await Company.findOne({ name: companyName })
-      const user = await User.findOne({ email })
-
-      // Confirming email
-      await fetch(`${API_URL}/companies/email/${company.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' }
-      })
-
-      const { token } = await login({ username, password })
-
-      expect(typeof token).to.equal('string')
-      expect(token.split(".")).to.have.lengthOf(3)
-
-      const { sub } = JSON.parse(atob(token.split('.')[1]))
-
-      expect(sub).to.equal(user.id)
+      } catch (error) {
+        expect(error).to.be.an.instanceof(Error)
+        expect(error.message).to.equal('Código incorrecto')
+      }
     })
 
   })

@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha logic/*/*.spec.js",
-    "test-wait": "npx mocha --timeout 5000 logic/*/*.spec.js",
+    "test": "npx mocha --timeout 10000 logic/*/*.spec.js",
     "test-debug": "npx mocha debug logic utils"
   },
   "keywords": [],

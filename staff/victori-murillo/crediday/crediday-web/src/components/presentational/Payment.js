@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   Button, TextField, Grid, Dialog, MenuItem, InputLabel, AppBar, Toolbar,
@@ -7,6 +7,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import DatePicker from './DatePicker'
 import { registerPayment } from '../../logic'
+import { Context } from '../ContextProvider'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -47,6 +48,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FullScreenDialog({ open, handleClose, credit }) {
   const classes = useStyles()
+  const { token } = useContext(Context)
+
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [paymentBy, setPaymentBy] = useState('')
   const [interest, setInterest] = useState('')
@@ -56,14 +59,14 @@ export default function FullScreenDialog({ open, handleClose, credit }) {
   const onSubmit = () => {
     handleClose()
     try {
-      const json = {
+      const body = {
         date: selectedDate,
         paymentBy,
         interest,
         amortize,
         moratorium
       }
-      registerPayment(json, credit.id)
+      registerPayment({ body, creditId: credit.id, token })
     } catch (error) {
       console.log(error)
     }

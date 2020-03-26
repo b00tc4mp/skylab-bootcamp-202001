@@ -36,7 +36,8 @@ module.exports = {
   }),
 
   confirmData: asyncHandler(async ({ body }, res, next) => {
-    res.json({ message: await confirmDataToRecoverPassword(body) })
+    await confirmDataToRecoverPassword(body)
+    res.json({ message: 'Data confirmed' })
   }),
 
   confirmCode: asyncHandler(async ({ body }, res, next) => {
@@ -44,6 +45,7 @@ module.exports = {
   }),
 
   updatePassword: asyncHandler(async ({ body }, res, next) => {
-    res.json({ message: await updatePasswordCode(body) })
+    await updatePasswordCode(body)
+    res.json({ message: 'Contraseña actualizada' })
   })
 }

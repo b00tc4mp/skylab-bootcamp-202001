@@ -9,5 +9,4 @@ db()
     app.use(api)
     app.listen(PORT, () => console.log(`Api listening on port ${PORT}!`))
   })
-  .catch(err => console.error('Something went wrong', err))
-  
+  .catch(error => console.error('Something went wrong', error))

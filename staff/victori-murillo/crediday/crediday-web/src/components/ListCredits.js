@@ -9,7 +9,7 @@ export default () => {
 
   useEffect(() => {
     retrieveCredits(token)
-      .then(credits => {
+      .then(({ credits }) => {
         credits.forEach(credit => {
           if (credit.firstName.split(" ").length > 1) {
             let names = credit.firstName.split(" ")

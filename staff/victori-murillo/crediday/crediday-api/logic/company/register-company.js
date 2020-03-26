@@ -1,8 +1,5 @@
-require('dotenv').config()
 const { Company, User } = require('crediday-models')
-const validate = require('crediday-utils')
-const sendMail = require('crediday-utils/send-mail')
-const { hash } = require('bcryptjs')
+const { validate, sendMail, bcrypt: { hash } } = require('crediday-utils')
 const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-template')
 

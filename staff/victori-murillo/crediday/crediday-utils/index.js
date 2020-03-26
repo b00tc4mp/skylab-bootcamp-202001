@@ -1,6 +1,9 @@
 module.exports = {
   randomInt: require('./randomInt'),
   randomNumber: require('./randomNumber'),
-  validate: require('./validate')
-  
+  handleError: require('./handle-error'),
+  sendMail: require('./send-mail'),
+  fetch: require('./fetch'),
+  validate: require('./validate'),
+  bcrypt: require('bcryptjs')
 }

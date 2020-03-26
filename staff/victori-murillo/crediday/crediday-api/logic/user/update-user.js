@@ -1,5 +1,5 @@
 const { User } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = (_id, body) => {
   validate.string(_id, 'id')
@@ -18,7 +18,6 @@ module.exports = (_id, body) => {
   const forbiddenKeys = ['registrationDate', 'credits', 'authenticatedDates', 'company']
 
   forbiddenKeys.forEach(_key => {
-
     for (const key in body) {
       if (key === _key) throw new Error(`The property '${key}' is forbidden to modify it`)
 
@@ -41,7 +40,7 @@ module.exports = (_id, body) => {
     for (const key in body) {
       user[key] = body[key]
     }
-
+    
     return await user.save()
   })()
 

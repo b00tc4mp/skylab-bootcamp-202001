@@ -1,10 +1,10 @@
 const { User } = require('crediday-models')
-const validate = require('crediday-utils')
+const { validate } = require('crediday-utils')
 
 module.exports = ({ code, email }) => {
-  validate.string(code, 'code');
+  validate.string(code, 'code')
   validate.string(email, 'email')
-  validate.email(email);
+  validate.email(email)
 
   return (async () => {
     let user = await User.findOne({ email })
@@ -17,7 +17,5 @@ module.exports = ({ code, email }) => {
     if (user.verificationCode !== '') throw new Error('Left remove the verfication code')
 
     return 'Code confirmed'
-
-  })();
-
+  })()
 }

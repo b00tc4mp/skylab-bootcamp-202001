@@ -56,7 +56,7 @@ export default (props) => {
     }
 
     try {
-      const token = await login(json)
+      const { token } = await login(json)
       sessionStorage.session = token
       localStorage.lastSession = new Date()
 

@@ -15,7 +15,8 @@ module.exports = {
   }),
 
   confirm: asyncHandler(async ({ params: { id } }, res, next) => {
-    res.json({ message: await confirmCompany(id) })
+    await confirmCompany(id)
+    res.json({ message: 'Company successfully confirmed by email' })
   })
 
   // TODO after Bootcamp

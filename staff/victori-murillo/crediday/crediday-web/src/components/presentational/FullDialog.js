@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Button, TextField, Grid } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
@@ -13,6 +13,7 @@ import Slide from '@material-ui/core/Slide'
 import DatePicker from './DatePicker'
 import SimpleSelect from './SimpleSelect'
 
+import { Context } from '../ContextProvider'
 import { registerCredit } from '../../logic'
 
 const useStyles = makeStyles(theme => ({
@@ -25,12 +26,8 @@ const useStyles = makeStyles(theme => ({
   },
   root: {
     padding: theme.spacing(3),
-    // paddingTop: theme.spacing(3),
-    // paddingLeft: theme.spacing(10),
-    // paddingRight: theme.spacing(10),
   },
   paper: {
-    // padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     border: '1px solid red'
@@ -46,6 +43,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function FullScreenDialog({ open, handleClose, user }) {
   const classes = useStyles()
+  const { token } = useContext(Context)
 
   const [selectedDate, setSelectedDate] = useState(new Date())
 
@@ -60,16 +58,15 @@ export default function FullScreenDialog({ open, handleClose, user }) {
   const onSubmit = () => {
     handleClose()
     try {
-      const json = {
+      const body = {
         dateConstituted: selectedDate,
         amount, paymentFrecuency, paymentByDefault, paymentInterest, paymentAmortize, paymentMoratorium
       }
-      // console.log(json, user.id)
-      registerCredit(json, user.id)
+
+      registerCredit({ body, userId: user.id, token })
     } catch (error) {
       console.log(error)
     }
-
   }
 
   return (
@@ -112,8 +109,6 @@ export default function FullScreenDialog({ open, handleClose, user }) {
                 setPaymentByDefault={setPaymentByDefault}
               />
             </Grid>
-
-
             <Grid item xs={12}>
               <TextField
                 onChange={e => setAmount(e.target.value)}
@@ -159,8 +154,6 @@ export default function FullScreenDialog({ open, handleClose, user }) {
               />
             </Grid>
           </Grid>
-          {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" /> */}
         </form>
       </Dialog>
     </div>

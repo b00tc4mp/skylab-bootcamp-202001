@@ -1,10 +1,9 @@
 const { User } = require('crediday-models')
-const validate = require('crediday-utils')
-const { compare } = require('bcryptjs')
+const { validate, bcrypt: { compare } } = require('crediday-utils')
 
 module.exports = ({ username, password }) => {
   validate.string(username, 'username')
-  validate.string(password, 'password');
+  validate.string(password, 'password')
 
   return (async () => {
     const user = await User
@@ -18,11 +17,9 @@ module.exports = ({ username, password }) => {
 
     if (!validPassword) throw new Error('Credenciales incorrectas')
 
-
     user.authenticatedDates.push(new Date)
 
     const { id } = await user.save()
-
     return id
   })()
 
