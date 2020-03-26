@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "chartjs-plugin-streaming";
-import socket from '../socket';
+import {socket} from '../socket';
 import { Line } from 'react-chartjs-2';
 
 

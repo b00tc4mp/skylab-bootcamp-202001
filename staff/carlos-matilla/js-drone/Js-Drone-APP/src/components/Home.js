@@ -6,7 +6,7 @@ import { logout, isLoggedIn, retrieveUser, saveData, parseData } from './../logi
 import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video, Controls } from './'
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
-import socket from '../socket'
+import {socket} from '../socket'
 
 
 
@@ -31,6 +31,8 @@ export default withRouter(function ({ history }) {
 
 
   useEffect(() => {
+
+    
 
     window.addEventListener("gamepadconnected", gamepadConnect)
     window.addEventListener("gamepaddisconnected", gamepadDisconnect)

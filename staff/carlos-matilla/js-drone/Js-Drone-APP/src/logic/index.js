@@ -5,6 +5,7 @@ import logout from './logout'
 import retrieveUser from './retrieve-user'
 import { saveData } from './save-data'
 import parseData from './parse-data'
+import startDrone from './start-drone'
 
 
 export {
@@ -14,5 +15,6 @@ export {
     logout,
     retrieveUser,
     saveData,
-    parseData
+    parseData, 
+    startDrone
 }

@@ -7,21 +7,21 @@ export default function () {
     const [joy, setJoy] = useState([])
 
     function useInterval(callback, delay) {
-        const savedCallback = useRef();
+        const savedCallback = useRef()
 
         useEffect(() => {
             savedCallback.current = callback;
-        }, [callback]);
+        }, [callback])
 
         useEffect(() => {
             function tick() {
-                savedCallback.current();
+                savedCallback.current()
             }
             if (delay !== null) {
-                let id = setInterval(tick, delay);
-                return () => clearInterval(id);
+                let id = setInterval(tick, delay)
+                return () => clearInterval(id)
             }
-        }, [delay]);
+        }, [delay])
     }
 
 

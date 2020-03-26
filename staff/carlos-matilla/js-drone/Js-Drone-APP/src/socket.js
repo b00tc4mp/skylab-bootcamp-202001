@@ -1,5 +1,6 @@
-import io from 'socket.io-client';
+import io from 'socket.io-client'
 
-const socket = io('http://localhost:6767');
+const socket = io('http://localhost:6768')
 
-export default socket;
+
+export{socket} 

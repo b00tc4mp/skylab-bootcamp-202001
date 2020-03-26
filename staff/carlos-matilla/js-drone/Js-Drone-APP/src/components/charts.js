@@ -35,12 +35,11 @@ export default function ({ mySession }) {
     const consumedBat = batteryP[0] - batteryP[batteryP.length - 2]
 
     let speedAdd = 0
-
     speedP.forEach(element => {
         speedAdd += element
     })
-
     const speedAve = Math.floor(speedAdd / speedP.length)
+    speedAdd = 0
 
     const temperatureData = {
         labels: lowTempP,
@@ -221,9 +220,7 @@ export default function ({ mySession }) {
                         strokeLinecap: "butt",
                         trailColor: "#eee"
                     })} text={`${speedAve} m/s`} />
-
             </div>
-
         </div>
 
         <div className="charts-wrapper">

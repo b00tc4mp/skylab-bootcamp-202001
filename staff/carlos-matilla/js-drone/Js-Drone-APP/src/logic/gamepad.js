@@ -1,4 +1,4 @@
-import socket from "../socket"
+import {socket} from "../socket"
 import { NotAllowedError } from 'drone-errors'
 
 let semaforo2 = true,
@@ -10,6 +10,9 @@ start,
 fps = 30,
 landG = false,
 takeOffG = false
+
+// var socketURL = 'ws://localhost:8080'
+// var ws = new WebSocket(socketURL)
 
 export { channelA, channelB, channelC, channelD, takeOffG, landG }
 
@@ -75,14 +78,16 @@ export const gameLoop = () => {
       // // 13 is arrow-down
       if (buttonPressed(gp.buttons[13])) {
         console.log('arrow-down')
-        socket.emit('gamepad', `land`)
+        socket.emit('control', `land`)
+        // ws.send(`land`)
         takeOffG = false
         landG = true
       }
       // 16 is home
       if (buttonPressed(gp.buttons[16])) {
         console.log('home')
-        socket.emit('gamepad', `takeoff`)
+        socket.emit('control', `takeoff`)
+        // ws.send(`takeoff`)
         landG = false
         takeOffG = true
       }
@@ -93,8 +98,9 @@ export const gameLoop = () => {
         channelC = parse(gp.axes[3])
         channelD = parse(gp.axes[2])
 
-        // console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
-        socket.emit('gamepad', `rc ${channelA} ${channelB} ${channelC} ${channelD}`)
+        console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
+        socket.emit('control', `rc ${channelA} ${channelB} ${channelC} ${channelD}`)
+        // ws.send(`rc ${channelA} ${channelB} ${channelC} ${channelD}`)
       }
 
       setTimeout(function () {

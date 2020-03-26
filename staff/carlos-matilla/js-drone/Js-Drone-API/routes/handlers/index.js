@@ -3,5 +3,6 @@ module.exports = {
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
     saveSession: require('./save-session'),
-    retrieveUserAndSession: require('./retrieve-user-and-sessions')
+    retrieveUserAndSession: require('./retrieve-user-and-sessions'),
+    startDrone: require('./start-drone')
 }

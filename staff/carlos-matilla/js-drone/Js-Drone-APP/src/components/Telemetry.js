@@ -1,6 +1,6 @@
 
 import React, {useState} from 'react';
-import socket from '../socket';
+import {socket} from '../socket';
 import './Telemetry.sass';
 
 

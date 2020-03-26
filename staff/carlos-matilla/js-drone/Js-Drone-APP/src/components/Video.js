@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import JMuxer from 'jmuxer';
 import './Video.sass'
-import socket from '../socket';
+import {socket} from '../socket';
+import {startDrone} from './../logic'
 
 
 export default function () {
@@ -17,18 +18,33 @@ export default function () {
     })
 
     let batStyle = { width: `${battery}%` }
+    let port =  Math.floor(1000 + Math.random() * 9000);
 
     useEffect(() => {
 
-        var socketURL = 'ws://localhost:8080';
+        
+
+    }, [])
+    
+
+    async function handleStartDrone(){
+        
+      
+        port++
+      try {
+        debugger
+        console.log(port)
+        port = await startDrone(port)
+        console.log(port)
+        var socketURL = `ws://localhost:${port}`
+        const ws = new WebSocket(socketURL)
+       
         var jmuxer = new JMuxer({
             node: 'player',
             mode: 'video',
             flushingTime: 1,
             fps: 30
         })
-
-        var ws = new WebSocket(socketURL);
         ws.binaryType = 'arraybuffer'
         ws.addEventListener('message', function (event) {
             jmuxer.feed({
@@ -41,8 +57,20 @@ export default function () {
         })
 
         socket.on('status', data => updateStatus(data))
+          
+      } catch (error) {
+          console.log(error)
+      }
+        
+    }
 
-    }, []);
+    async function handleStopDrone(){
+      debugger
+       
+        socket.emit('stop')
+       
+    }
+
 
     return <>
         <section className="video-wrapper">
@@ -58,6 +86,11 @@ export default function () {
                             <div className="battery-2"></div>
                         </div>
                     </div>
+                    <div className="start_button_wrapper" >
+                        <button className="start-button" onClick={handleStartDrone}>Connect to TELLO</button>
+                        <button className="start-button" onClick={handleStopDrone}>Disconnect to TELLO</button>
+                    </div>
+                    
                     <video className="video" id='player' autoPlay muted />
                 </div>
             </div>

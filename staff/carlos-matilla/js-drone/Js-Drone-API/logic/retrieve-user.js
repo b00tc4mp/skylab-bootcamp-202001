@@ -9,7 +9,7 @@ module.exports = id => {
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             let sortedSessions = []
-            debugger
+           
             for(let i = user.sessions.length - 1; i >=0; i--){
                 sortedSessions.push(user.sessions[i])
             }

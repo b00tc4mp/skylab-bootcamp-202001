@@ -4,7 +4,8 @@ const {
     authenticateUser,
     retrieveUser,
     saveSession,
-    retrieveUserAndSession
+    retrieveUserAndSession,
+    startDrone
 } = require('./handlers')
 const { jwtVerifierMidWare } = require('../mid-wares')
 const bodyParser = require('body-parser')
@@ -22,6 +23,8 @@ router.get('/users', jwtVerifierMidWare, retrieveUser)
 router.get('/users/sessions', jwtVerifierMidWare, retrieveUserAndSession)
 
 router.post('/sessions', [jwtVerifierMidWare, jsonBodyParser], saveSession)
+
+router.post('/', jsonBodyParser, startDrone)
 
 
 
