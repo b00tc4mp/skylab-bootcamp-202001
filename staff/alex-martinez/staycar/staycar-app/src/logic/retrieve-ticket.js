@@ -4,6 +4,16 @@ import { validate } from 'staycar-utils'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Retrieve ticket
+ * 
+ * @param {string} ticketId ticket id
+ * 
+ * @throws {NotFoundError} if ticket is not inside the parking
+ * @throws {NotFoundError} if parking is not exist
+ * 
+ */
+
 export default (ticketId) => {
     validate.string(ticketId, 'ticket id')
     return (async () => {

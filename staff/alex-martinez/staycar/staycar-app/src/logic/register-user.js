@@ -4,6 +4,18 @@ import { NotAllowedError } from 'staycar-errors'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Register user
+ * 
+ * @param {string} name user's name
+ * @param {string} surname user's surname
+ * @param {string} username user's username
+ * @param {string} password user's password
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 export default (name, surname, username, password) => {
 
     validate.string(name, 'name')

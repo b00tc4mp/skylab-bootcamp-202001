@@ -4,6 +4,17 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Update parking
+ * 
+ * @param {string} parkingName parking name
+ * @param {number} rate parking rate price
+ * @param {number} totalLots parking total lots
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 export default (function (parkingName, rate, totalLots) {
     
     validate.string(parkingName, 'parking name')

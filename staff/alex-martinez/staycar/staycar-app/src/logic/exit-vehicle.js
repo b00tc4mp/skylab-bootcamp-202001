@@ -5,6 +5,15 @@ import {retrieveParking} from '../logic'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Exit vehicle
+ * 
+ * @param {string} ticketId ticket id
+ * 
+ * @throws {NotAllowedError} if status >= 400 && response.status < 500
+ * @throws {Error} server error 
+ */
+
 export default (ticketId) => {
 
     validate.string(ticketId, 'car plate')

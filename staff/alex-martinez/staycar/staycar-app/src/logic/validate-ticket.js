@@ -3,6 +3,13 @@ import { NotAllowedError } from 'staycar-errors'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Validate ticket
+ * 
+ * @param {string} ticketId ticket id
+ * @throws {NotFoundError} if ticket is not exist
+ */
+
 export default (ticketId) => {
     validate.string(ticketId, 'ticket id')
 

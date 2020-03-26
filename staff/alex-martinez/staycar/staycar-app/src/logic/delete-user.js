@@ -4,6 +4,16 @@ import context from './context'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Delete user
+ * 
+ * @param {string} username username 
+ * @param {string} password user's password 
+ * 
+ * @throws {NotAllowedError} if status >= 400 && status < 500
+ * @throws {Error} server error
+ */
+
 export default (function (username, password) {
     
     validate.string(username, 'user name')

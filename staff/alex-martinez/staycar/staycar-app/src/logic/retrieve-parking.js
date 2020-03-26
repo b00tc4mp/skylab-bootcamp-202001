@@ -2,6 +2,11 @@ import { NotAllowedError } from 'staycar-errors'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Retrieve parking
+ * @return {object} parking object
+ */
+
 export default () => {
     
     return (async () => {

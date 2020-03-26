@@ -5,6 +5,16 @@ import retrieveParking from './retrieve-parking'
 
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * Entry vehicle
+ * 
+ * @param {string} carPlate car plate
+ * @param {string} ticketId ticket id
+ * 
+ * @throws {NotAllowedError} if status >= 400 && < 500
+ * @throws {Error} server error
+ */
+
 export default (carPlate, ticketId) => {
 
     validate.string(carPlate, 'car plate')
