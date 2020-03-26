@@ -6,6 +6,7 @@ const AsyncStorage = require('not-async-storage')
 
 const { mongoose, models: { User } } = require('sick-parks-data')
 const bcrypt = require('bcryptjs')
+const { ContentError } = require('sick-parks-errors')
 
 const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 
@@ -23,7 +24,7 @@ describe('loginUser', () => {
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        email = `${random()}@mail.com`
         password = `password-${random()}`
     })
 
@@ -36,7 +37,7 @@ describe('loginUser', () => {
 
         it('should succeed on correct credentials', async () => {
 
-            const returnValue = await loginUser({ email, password })
+            const returnValue = await loginUser(email, password)
 
             expect(returnValue).to.be.undefined
 
@@ -52,7 +53,7 @@ describe('loginUser', () => {
         it('should fail on incorrect password', async () => {
             password = `${password}-wrong`
             try {
-                await loginUser({ email, password })
+                await loginUser(email, password)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(Error)
@@ -64,13 +65,37 @@ describe('loginUser', () => {
     it('should fail on incorrect email', async () => {
         email = `wrong-${email}`
         try {
-            await loginUser({ email, password })
+            await loginUser(email, password)
             throw new Error('should not reach this point')
 
         } catch (error) {
             expect(error).to.be.instanceOf(Error)
             expect(error.message).to.equal('wrong credentials')
         }
+
+    })
+
+    it('should fail on non-string password', () => {
+        password = 1
+        expect(() => loginUser(email, password)).to.Throw(TypeError, `password ${password} is not a string`)
+
+        password = undefined
+        expect(() => loginUser(email, password)).to.Throw(ContentError, `password is empty`)
+
+        password = true
+        expect(() => loginUser(email, password)).to.Throw(TypeError, `password ${password} is not a string`)
+
+    })
+
+    it('should fail on non-email email', () => {
+        email = 1
+        expect(() => loginUser(email, password)).to.Throw(TypeError, `email ${email} is not a string`)
+
+        email = undefined
+        expect(() => loginUser(email, password)).to.Throw(ContentError, `email is empty`)
+
+        email = 'email'
+        expect(() => loginUser(email, password)).to.Throw(ContentError, `${email} is not an e-mail`)
 
     })
     after(async () => {

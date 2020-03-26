@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-errors')
 const { mongoose, models: { User, Park, Location } } = require('sick-parks-data')
 const logic = require('.')
 const { votePark } = logic
@@ -159,7 +159,7 @@ describe('votePark', () => {
 
         userId = undefined
         parkId = 'string'
-        expect(() => votePark(userId, parkId, upVote)).to.Throw(TypeError, `userId is empty`)
+        expect(() => votePark(userId, parkId, upVote)).to.Throw(ContentError, `userId is empty`)
 
         userId = true
         parkId = 'string'
@@ -174,7 +174,7 @@ describe('votePark', () => {
 
         parkId = undefined
         userId = 'string'
-        expect(() => votePark(userId, parkId, upVote)).to.Throw(TypeError, `parkId is empty`)
+        expect(() => votePark(userId, parkId, upVote)).to.Throw(ContentError, `parkId is empty`)
 
         parkId = true
         userId = 'string'

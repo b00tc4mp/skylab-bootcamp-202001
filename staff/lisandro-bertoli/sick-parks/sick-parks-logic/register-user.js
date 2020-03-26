@@ -3,11 +3,11 @@ const fetch = require('node-fetch')
 const context = require('./context')
 
 module.exports = function (name, surname, email, password) {
+    validate.stringFrontend(email, 'email')
+    validate.stringFrontend(name, 'name')
+    validate.stringFrontend(surname, 'surname')
+    validate.stringFrontend(password, 'password')
     validate.email(email, 'email')
-    validate.string(email, 'email')
-    validate.string(name, 'name')
-    validate.string(surname, 'surname')
-    validate.string(password, 'password')
 
     return (async () => {
         const response = await fetch(`${this.API_URL}/users`, {

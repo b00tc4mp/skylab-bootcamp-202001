@@ -119,7 +119,7 @@ describe('deletePark', () => {
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
-                expect(error.message).to.equal(`user ${_userId} did not create this park`)
+                expect(error.message).to.equal('Only the creator can delete the park')
             }
         })
     })

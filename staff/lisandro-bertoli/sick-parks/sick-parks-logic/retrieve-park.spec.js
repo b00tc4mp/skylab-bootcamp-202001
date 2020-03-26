@@ -6,7 +6,7 @@ const AsyncStorage = require('not-async-storage')
 const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
 const { mongoose, models: { Park, User, Feature, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
-const { NotFoundError } = require('sick-parks-errors')
+const { NotFoundError, ContentError } = require('sick-parks-errors')
 
 const { random } = Math
 
@@ -100,7 +100,7 @@ describe('retrievePark', () => {
             parkId = undefined
             expect(() => {
                 retrievePark(parkId)
-            }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
+            }).to.Throw(ContentError, `parkId is empty`)
 
             parkId = true
             expect(() => {

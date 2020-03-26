@@ -4,17 +4,17 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const fetch = require('node-fetch')
 
 module.exports = function (id, data) {
-    validate.string(id, 'userId')
+    validate.stringFrontend(id, 'userId')
     validate.type(data, 'updates', Object)
 
     const { name, email, allowLocation, notifications, password, oldPassword } = data
 
     if (name !== undefined) {
-        validate.string(name, 'name')
+        validate.stringFrontend(name, 'name')
     }
 
     if (email !== undefined) {
-        validate.string(email, 'email')
+        validate.stringFrontend(email, 'email')
     }
 
     if (notifications !== undefined) {
@@ -26,11 +26,11 @@ module.exports = function (id, data) {
     }
 
     if (password !== undefined) {
-        validate.string(password, 'password')
+        validate.stringFrontend(password, 'password')
     }
 
     if (oldPassword !== undefined) {
-        validate.string(oldPassword, 'oldPassword')
+        validate.stringFrontend(oldPassword, 'oldPassword')
     }
 
     if (password && !oldPassword) throw new Error('oldPassword is not defined')
@@ -58,7 +58,7 @@ module.exports = function (id, data) {
             const data = await response.json()
             const { error } = data
 
-            if (response.status === 404) throw new NotFoundError(error)
+            if (response.status === 404) throw new NotFoundError('User could not be found in our records')
             if (response.status === 403) throw new NotAllowedError(error)
 
             throw new Error(error)

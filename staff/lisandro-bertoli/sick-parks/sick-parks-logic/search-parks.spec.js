@@ -20,7 +20,7 @@ describe('searchParks', () => {
     let _location
 
     beforeEach(() => {
-        name = `parkName-${random()}`
+        name = `ParkName-${random()}`
         size = `l`
         level = `begginer`
         resort = `Grindelwald`
@@ -29,7 +29,7 @@ describe('searchParks', () => {
 
         _location = [random() * 15 + 1, random() * 15 + 1]
 
-        name2 = `parkName-${random()}`
+        name2 = `ParkName-${random()}`
         size2 = `l`
         level2 = `begginer`
         resort2 = `Laax`
@@ -66,7 +66,7 @@ describe('searchParks', () => {
 
             let query = 'begg'
 
-            let results = await searchParks({ query, location: _location })
+            let results = await searchParks(query, _location)
 
             expect(results.length).to.be.greaterThan(0)
             expect(results[0].resort).to.equal(first)
@@ -75,10 +75,10 @@ describe('searchParks', () => {
 
         it('should suceed on finding parks', async () => {
             let query = 'begg'
-            let results = await searchParks({ query, location: _location })
+            let results = await searchParks(query, _location)
 
             results.forEach((result, index) => {
-
+                debugger
                 expect([park1.name, park2.name]).to.include(result.name)
                 expect([park1.resort, park2.resort]).to.include(result.resort)
                 expect([park1.size, park2.size]).to.include(result.size)
@@ -90,7 +90,7 @@ describe('searchParks', () => {
 
             query = 'Grin'
 
-            results = await searchParks({ query, location: _location })
+            results = await searchParks(query, _location)
 
             results.forEach(result => {
                 expect(result.name).to.equal(park1.name)
@@ -103,7 +103,7 @@ describe('searchParks', () => {
 
             query = 'verified'
 
-            results = await searchParks({ query, location: _location })
+            results = await searchParks(query, _location)
 
             expect(results[0].name).to.equal(park1.name)
             expect(results[0].resort).to.equal(park1.resort)
@@ -124,7 +124,7 @@ describe('searchParks', () => {
     it('should return empty array when no results', async () => {
         let query = 'Random'
 
-        const result = await searchParks({ query, location: _location })
+        const result = await searchParks(query, _location)
         expect(result).to.be.an.instanceOf(Array)
         expect(result.length).to.equal(0)
     })

@@ -4,8 +4,8 @@ const context = require('./context')
 const fetch = require('node-fetch')
 
 module.exports = function (userId, parkId) {
-    validate.string(userId, 'userId')
-    validate.string(parkId, 'parkId')
+    validate.stringFrontend(userId, 'userId')
+    validate.stringFrontend(parkId, 'parkId')
 
     return (async () => {
 
@@ -23,7 +23,7 @@ module.exports = function (userId, parkId) {
 
             const { error } = data
             if (response.status === 404) throw new NotFoundError(error)
-            if (response.status === 403) throw new NotAllowedError(error)
+            if (response.status === 403) throw new NotAllowedError('You already approved this park')
 
             throw new Error(error)
 

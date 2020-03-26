@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-errors')
 const { mongoose, models: { User, Park, Location } } = require('sick-parks-data')
 const logic = require('.')
 const { approvePark } = logic
@@ -72,7 +72,7 @@ describe('approvePark', () => {
                     throw new Error('should not reach this point')
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)
-                    expect(error.message).to.equal(`user with id ${userId} already approved`)
+                    expect(error.message).to.equal('You already approved this park')
 
                 }
             })
@@ -158,7 +158,7 @@ describe('approvePark', () => {
 
         userId = undefined
         parkId = 'string'
-        expect(() => approvePark(userId, parkId)).to.Throw(TypeError, `userId is empty`)
+        expect(() => approvePark(userId, parkId)).to.Throw(ContentError, `userId is empty`)
 
         userId = true
         parkId = 'string'
@@ -173,7 +173,7 @@ describe('approvePark', () => {
 
         parkId = undefined
         userId = 'string'
-        expect(() => approvePark(userId, parkId)).to.Throw(TypeError, `parkId is empty`)
+        expect(() => approvePark(userId, parkId)).to.Throw(ContentError, `parkId is empty`)
 
         parkId = true
         userId = 'string'

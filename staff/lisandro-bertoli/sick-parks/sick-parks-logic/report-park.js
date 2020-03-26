@@ -4,9 +4,9 @@ const context = require('./context')
 const fetch = require('node-fetch')
 
 module.exports = function (userId, parkId, problem) {
-    validate.string(userId, 'userId')
-    validate.string(parkId, 'parkId')
-    validate.string(problem, 'problem')
+    validate.stringFrontend(userId, 'userId')
+    validate.stringFrontend(parkId, 'parkId')
+    validate.stringFrontend(problem, 'problem')
 
     return (async () => {
 
@@ -24,7 +24,7 @@ module.exports = function (userId, parkId, problem) {
 
             const { error } = data
             if (response.status === 404) throw new NotFoundError(error)
-            if (response.status === 403) throw new NotAllowedError(error)
+            if (response.status === 403) throw new NotAllowedError('You already filed this report')
 
             throw new Error(error)
 

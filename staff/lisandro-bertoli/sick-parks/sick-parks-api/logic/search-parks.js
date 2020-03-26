@@ -3,11 +3,16 @@ const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 
 module.exports = ({ q, _location }) => {
-    validate.string(q, 'query')
-    q = q.toLowerCase()
+    if (q) {
+        validate.string(q, 'query')
+        q = q.toLowerCase()
+    }
+
     return (async () => {
         let results
-        if (q === 'verified') {
+        if (!q) {
+            results = await Park.find().lean()
+        } else if (q === 'verified') {
             results = await Park.find({ verified: true }).lean()
 
         } else if (q === 'latest') {
@@ -54,6 +59,8 @@ module.exports = ({ q, _location }) => {
 
         const sanitizedResults = results.map(result => {
             result.id = result._id.toString()
+            result.name = result.name.charAt(0).toUpperCase() + result.name.slice(1)
+            result.resort = result.resort.charAt(0).toUpperCase() + result.resort.slice(1)
 
             const { id, name, resort, size, verified } = result //TODO send location
 

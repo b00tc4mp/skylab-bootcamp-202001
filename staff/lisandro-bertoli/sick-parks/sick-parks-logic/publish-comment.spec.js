@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const logic = require('.')
 const { publishComment } = logic
-const { NotFoundError } = require('sick-parks-errors')
+const { NotFoundError, ContentError } = require('sick-parks-errors')
 const { mongoose, models: { User, Park, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { random } = Math
@@ -118,7 +118,7 @@ describe('publishComment', () => {
 
         userId = undefined
         parkId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `userId is empty`)
+        expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `userId is empty`)
 
         userId = true
         parkId = 'string'
@@ -133,7 +133,7 @@ describe('publishComment', () => {
 
         parkId = undefined
         userId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `parkId is empty`)
+        expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `parkId is empty`)
 
         parkId = true
         userId = 'string'
@@ -150,7 +150,7 @@ describe('publishComment', () => {
         parkId = 'string'
         userId = 'string'
         body = undefined
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `body is empty`)
+        expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `body is empty`)
 
         parkId = 'string'
         userId = 'string'

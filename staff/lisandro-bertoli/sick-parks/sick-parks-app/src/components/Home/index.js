@@ -53,7 +53,7 @@ export default function Home({ navigation, route }) {
         const handleSearch = async (query) => {
             try {
                 setCurrentQuery(query)
-                const results = await searchParks({ query, location: [location.longitude, location.latitude] })
+                const results = await searchParks(query, location: [location.longitude, location.latitude])
                 //change logic on api side
                 if (!results.length) setError(`No ${query} parks found`)
                 else setError(null)

@@ -18,7 +18,7 @@ describe('searchParks', () => {
     let _location
 
     beforeEach(() => {
-        name = `parkName-${random()}`
+        name = `ParkName-${random()}`
         size = `l`
         level = `begginer`
         resort = `Grindelwald`
@@ -26,7 +26,7 @@ describe('searchParks', () => {
 
         _location = [random() * 15 + 1, random() * 15 + 1]
 
-        name2 = `parkName-${random()}`
+        name2 = `ParkName-${random()}`
         size2 = `l`
         level2 = `begginer`
         resort2 = `Laax`

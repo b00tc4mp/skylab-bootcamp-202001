@@ -4,8 +4,8 @@ const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
 module.exports = function (userId, parkId, vote) {
-    validate.string(userId, 'userId')
-    validate.string(parkId, 'parkId')
+    validate.stringFrontend(userId, 'userId')
+    validate.stringFrontend(parkId, 'parkId')
     validate.type(vote, 'vote', Boolean)
 
     return (async () => {

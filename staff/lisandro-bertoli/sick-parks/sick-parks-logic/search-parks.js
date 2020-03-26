@@ -2,13 +2,15 @@ const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
-module.exports = ({ query, location }) => {
-    validate.string(query, 'query')
+module.exports = (query, location) => {
+    validate.stringFrontend(query, 'query')
+    validate.type(location, 'location', Array)
+    location.forEach(coordinate => validate.type(coordinate, 'coordinate', Number))
 
     return (async () => {
         let response
         if (location) {
-            response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&_location=${location}`)
+            response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&location=${location}`)
         } else response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}`)
 
         const data = await response.json()

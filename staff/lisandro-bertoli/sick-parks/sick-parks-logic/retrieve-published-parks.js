@@ -24,8 +24,6 @@ module.exports = function () {
             const data = await response.json()
 
             const { error } = data
-            if (response.status === 404) throw new NotFoundError(error)
-            if (response.status === 403) throw new NotAllowedError(error)
             if (response.status === 406) throw new ContentError(error)
 
             throw new Error(error)

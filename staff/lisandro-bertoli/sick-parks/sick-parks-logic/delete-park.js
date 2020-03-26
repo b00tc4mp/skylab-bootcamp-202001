@@ -22,7 +22,7 @@ module.exports = function (parkId) {
 
             const { error } = data
             if (response.status === 404) throw new NotFoundError(error)
-            if (response.status === 403) throw new NotAllowedError(error)
+            if (response.status === 403) throw new NotAllowedError('Only the creator can delete the park')
 
             throw new Error(error)
 

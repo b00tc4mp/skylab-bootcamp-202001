@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-errors')
 const { mongoose, models: { User, Park, Location } } = require('sick-parks-data')
 const logic = require('.')
 const { reportPark } = logic
@@ -79,8 +79,6 @@ describe('reportPark', () => {
 
                 for (let i = 1; i < 5; i++) {
                     const { id } = await User.create({ name, surname, email, password })
-                    // const _token = jwt.sign({ sub: id }, JWT_SECRET)
-                    // await logic.__context__.storage.setItem('token', _token)
 
                     const report = {
                         user: id,
@@ -114,7 +112,7 @@ describe('reportPark', () => {
                     throw new Error('should not reach this point')
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)
-                    expect(error.message).to.equal(`user ${userId} alredy filed this report`)
+                    expect(error.message).to.equal(`You already filed this report`)
                 }
 
             })
@@ -131,7 +129,7 @@ describe('reportPark', () => {
 
         userId = undefined
         parkId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `userId is empty`)
+        expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `userId is empty`)
 
         userId = true
         parkId = 'string'
@@ -146,7 +144,7 @@ describe('reportPark', () => {
 
         parkId = undefined
         userId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `parkId is empty`)
+        expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `parkId is empty`)
 
         parkId = true
         userId = 'string'
@@ -163,7 +161,7 @@ describe('reportPark', () => {
         parkId = 'string'
         userId = 'string'
         problem = undefined
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `problem is empty`)
+        expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `problem is empty`)
 
         parkId = 'string'
         userId = 'string'

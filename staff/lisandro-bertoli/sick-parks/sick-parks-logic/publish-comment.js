@@ -4,9 +4,9 @@ const { NotFoundError } = require('sick-parks-errors')
 const fetch = require('node-fetch')
 
 module.exports = function (userId, parkId, body) {
-    validate.string(userId, 'userId')
-    validate.string(parkId, 'parkId')
-    validate.string(body, 'body')
+    validate.stringFrontend(userId, 'userId')
+    validate.stringFrontend(parkId, 'parkId')
+    validate.stringFrontend(body, 'body')
 
     return (async () => {
         const token = await this.storage.getItem('token')

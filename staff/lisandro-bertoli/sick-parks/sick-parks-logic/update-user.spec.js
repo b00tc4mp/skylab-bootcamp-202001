@@ -4,7 +4,7 @@ require('dotenv').config()
 const bcrypt = require('bcryptjs')
 const logic = require('.')
 const { updateUser } = logic
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError, ContentError, NotAllowedError } = require('sick-parks-errors')
 const { mongoose, models: { User, Park } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { random } = Math
@@ -97,7 +97,7 @@ describe('updateUser', () => {
         userId = undefined
         expect(() =>
             updateUser(userId, {}, () => { })
-        ).to.Throw(TypeError, `userId is empty`)
+        ).to.Throw(ContentError, `userId is empty`)
     })
 
     it('should fail on unsatisfying password and oldPassword pair', () => {

@@ -2,6 +2,7 @@ require('dotenv').config()
 const logic = require('.')
 const { retrieveUser } = logic
 const { expect } = require('chai')
+const { NotFoundError } = require('sick-parks-errors')
 const AsyncStorage = require('not-async-storage')
 const { mongoose, models: { User } } = require('sick-parks-data')
 const jwt = require('jsonwebtoken')
@@ -13,7 +14,7 @@ logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = API_URL
 
 
-describe.only('retrieveUser', () => {
+describe('retrieveUser', () => {
     let name, surname, email, password, userId
 
 
@@ -67,8 +68,8 @@ describe.only('retrieveUser', () => {
 
                 throw new Error('should not reach this point')
             } catch (error) {
-                expect(error).to.be.an.instanceOf(Error)
-                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+                expect(error).to.be.an.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`This user does not exist anymore`)
 
             }
 

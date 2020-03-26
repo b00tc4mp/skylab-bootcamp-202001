@@ -1,6 +1,7 @@
 const logic = require('.')
 const { registerUser } = logic
 const { mongoose, models: { User } } = require('sick-parks-data')
+const { ContentError } = require('sick-parks-errors')
 const { random } = Math
 const { expect } = require('chai')
 const bcrypt = require('bcryptjs')
@@ -27,7 +28,7 @@ describe('registerUser', () => {
     })
 
     it('should succeed on new user', async () => {
-        const response = await registerUser({ name, surname, email, password })
+        const response = await registerUser(name, surname, email, password)
 
         expect(response).to.be.undefined
 
@@ -52,7 +53,7 @@ describe('registerUser', () => {
         it('should fail on already existing user', async () => {
             try {
 
-                await registerUser({ name, surname, email, password })
+                await registerUser(name, surname, email, password)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -62,6 +63,56 @@ describe('registerUser', () => {
             }
 
         })
+    })
+
+
+    it('should fail on non-string password', () => {
+        password = 1
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `password ${password} is not a string`)
+
+        password = undefined
+        expect(() => registerUser(name, surname, email, password)).to.Throw(ContentError, `password is empty`)
+
+        password = true
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `password ${password} is not a string`)
+
+    })
+
+
+    it('should fail on non-string name', () => {
+        name = 1
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `name ${name} is not a string`)
+
+        name = undefined
+        expect(() => registerUser(name, surname, email, password)).to.Throw(ContentError, `name is empty`)
+
+        name = true
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `name ${name} is not a string`)
+
+    })
+
+    it('should fail on non-string surname', () => {
+        surname = 1
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `surname ${surname} is not a string`)
+
+        surname = undefined
+        expect(() => registerUser(name, surname, email, password)).to.Throw(ContentError, `surname is empty`)
+
+        surname = true
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `surname ${surname} is not a string`)
+
+    })
+
+    it('should fail on non-email email', () => {
+        email = 1
+        expect(() => registerUser(name, surname, email, password)).to.Throw(TypeError, `email ${email} is not a string`)
+
+        email = undefined
+        expect(() => registerUser(name, surname, email, password)).to.Throw(ContentError, `email is empty`)
+
+        email = 'email'
+        expect(() => registerUser(name, surname, email, password)).to.Throw(ContentError, `${email} is not an e-mail`)
+
     })
 
     after(async () => {

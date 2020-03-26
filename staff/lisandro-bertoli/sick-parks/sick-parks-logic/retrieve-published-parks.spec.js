@@ -8,7 +8,6 @@ const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 const JWT_SECRET = process.env.TEST_JWT_SECRET
 
 const { expect } = require('chai')
-const { NotFoundError } = require('sick-parks-errors')
 const jwt = require('jsonwebtoken')
 
 
