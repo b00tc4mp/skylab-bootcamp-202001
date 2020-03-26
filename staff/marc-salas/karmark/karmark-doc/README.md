@@ -27,6 +27,10 @@ It is compounded by one wemos d1 mini and two servo motors. The finality of Karm
 
 ![data model](./images/data-model.jpg)
 
+## Api coverage
+
+![coverage](./images/coverage.PNG)
+
 # Futures versions
 
 * Receive information form car to be able to connect receptors and have a better control of it.

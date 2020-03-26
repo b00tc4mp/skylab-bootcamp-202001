@@ -18,7 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --runInBand --no-cache",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:coverage": "react-scripts test --runInBand --coverage --no-cache"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -39,6 +40,7 @@
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^8.5.1",
     "karmark-data": "file:../karmark-data",
-    "node-sass": "^4.13.1"
+    "node-sass": "^4.13.1",
+    "nyc": "^15.0.0"
   }
 }
