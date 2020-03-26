@@ -27,11 +27,18 @@ module.exports = (ticketId, parkingName) => {
         if(!parking) throw new NotFoundError(`parking ${parkingName} is not exist`)
         
         ticket.exitHour = new Date()
+        let exit, entry, diff, minutes
         
-        let exit = ticket.exitHour
-        let entry = ticket.entryHour
-        let diff = exit.getTime() - entry.getTime()
-        let minutes = Math.floor(diff / 60000);
+        if(ticket.validatedTime){
+          entry = ticket.validatedTime
+        }else{
+          entry = ticket.entryHour
+        }
+
+        exit = ticket.exitHour
+     
+        diff = exit.getTime() - entry.getTime()
+        minutes = Math.floor(diff / 60000);
 
         const rate = parking.rate
         const totalPrice = parseFloat(minutes * rate)
