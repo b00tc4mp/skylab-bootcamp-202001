@@ -1,6 +1,14 @@
 const { models: { Ticket } } = require('staycar-data')
 const { NotFoundError, NotAllowedError } = require('staycar-errors')
 
+/**
+ * Retrieve tickets
+ * 
+ * @throws {NotFoundError} if there are not tickets
+ * 
+ * @return {object} tickets objects
+ */
+
 module.exports = () => {
     
    return (async () => {

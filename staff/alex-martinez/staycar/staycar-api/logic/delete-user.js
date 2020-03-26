@@ -3,6 +3,17 @@ const { models: { User }} = require('staycar-data')
 const { NotAllowedError } = require('staycar-errors')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Delete user
+ * 
+ * @param {string} id user's id
+ * @param {string} username username 
+ * @param {string} password user's password 
+ * 
+ * @throws {NotAllowedError} if user does not exist
+ * @throws {NotAllowedError} if incorrect password 
+ */
+
 module.exports = (id, username, password) => {
     validate.string(id, 'id')
     validate.string(username, 'user name')

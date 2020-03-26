@@ -2,6 +2,17 @@ const { validate } = require("staycar-utils")
 const { models: { Ticket, Parking } } = require("staycar-data")
 const { NotAllowedError } = require("../../staycar-errors")
 
+/**
+ * Exit vehicle
+ * 
+ * @param {string} ticketId ticket id
+ * @param {string} parkingName parking name
+ * 
+ * @throws {NotAllowedError} if ticket id is not valid
+ * @throws {NotAllowedError} if ticket was not validated
+ * @throws {NotAllowedError} if ticket outside the parking yet 
+ */
+
 module.exports =  (ticketId, parkingName) => {
   validate.string(ticketId, "ticket id")
   validate.string(parkingName, 'parking name')

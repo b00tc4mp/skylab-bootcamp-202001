@@ -2,6 +2,18 @@ const { validate } = require('staycar-utils')
 const { models: { User, Parking } } = require('staycar-data')
 const { NotFoundError, NotAllowedError } = require('staycar-errors')
 
+/**
+ * Create parking
+ * 
+ * @param {string} id user's id
+ * @param {string} parkingName parking name
+ * @param {number} price parking rate price
+ * @param {number} totalLots parking total lots
+ * 
+ * @throws {NotAllowedError} if parking does not exist
+ * @throws {NotFoundError} if user does not exist
+ */
+
 module.exports = (id, parkingName, price, totalLots) => {
     validate.string(id, 'id')
     validate.string(parkingName, 'parkingName')
