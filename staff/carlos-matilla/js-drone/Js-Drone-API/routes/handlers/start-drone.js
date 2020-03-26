@@ -1,14 +1,14 @@
-
+var fork = require("child_process").fork
 
 const { startDrone } = require('../../logic')
-const { NotAllowedError } = require('./../../../Js-Drone-ERRORS')
+const { NotAllowedError, WifiError, DroneError } = require('./../../../Js-Drone-ERRORS')
 
 
 module.exports = (req, res) => {
   
-    const { body: { port } } = req
+    const { body: { port, httpPort } } = req
     try {
-        startDrone(port)
+        startDrone(port, httpPort)
             .then((port => {
                 
                 res.status(200).json({ port })
@@ -16,7 +16,7 @@ module.exports = (req, res) => {
             .catch(error => {
                 let status = 400
                 console.log(error)
-                if (error instanceof NotAllowedError)
+                if (error instanceof NotAllowedError || WifiError || DroneError)
                     status = 409 // conflict
 
                 const { message } = error

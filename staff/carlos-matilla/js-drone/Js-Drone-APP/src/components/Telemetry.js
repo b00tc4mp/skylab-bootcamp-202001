@@ -9,6 +9,7 @@ export default function(){
     const DroneState = () =>{
         const [droneState, setDroneState] = useState('No Data');
         socket.on('dronestate', data => {
+          console.log(data)
           setDroneState(data)
         })
         socket.on('disconnect', () => {
@@ -18,7 +19,6 @@ export default function(){
     }
 
     const { pitch, roll, yaw, vgx, vgy, vgz, templ, temph, tof, bat, time, agx, agy, agz } = DroneState()
-
     
     return<>
     <section className="telemetria">

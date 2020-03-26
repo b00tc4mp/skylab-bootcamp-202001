@@ -1,6 +1,13 @@
 import io from 'socket.io-client'
 
-const socket = io('http://localhost:6768')
+let httpPort = Math.floor(1000 + Math.random() * 9000)
+let socket = io(`http://localhost:${httpPort}`)
+function resetHttpPort(){
+
+    httpPort = Math.floor(1000 + Math.random() * 9000)
+    socket = io(`http://localhost:${httpPort}`)
+}
 
 
-export{socket} 
+
+export{socket, httpPort, resetHttpPort} 

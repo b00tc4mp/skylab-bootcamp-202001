@@ -1,8 +1,60 @@
 import React, { useEffect, useState } from 'react'
 import JMuxer from 'jmuxer';
 import './Video.sass'
-import {socket} from '../socket';
+import {socket, httpPort, resetHttpPort} from '../socket';
 import {startDrone} from './../logic'
+import io from 'socket.io-client'
+
+
+
+
+async function handleStartDrone(){
+
+   let port = Math.floor(1000 + Math.random() * 9000)
+    // console.log('http 1 ',httpPort)
+    // console.log(socket.io.opts)
+
+    
+
+  try {
+    port++
+    resetHttpPort()
+
+    console.log('http 2 ', httpPort)
+    console.log(socket.io.opts)
+    
+    port = await startDrone(port, httpPort)
+    console.log(port)
+    var socketURL = `ws://localhost:${port}`
+    const ws = new WebSocket(socketURL)
+
+   
+    var jmuxer = new JMuxer({
+        node: 'player',
+        mode: 'video',
+        flushingTime: 1,
+        fps: 30
+    })
+    ws.binaryType = 'arraybuffer'
+    ws.addEventListener('message', function (event) {
+        jmuxer.feed({
+            video: new Uint8Array(event.data)
+        })
+    })
+
+    ws.addEventListener('error', function (e) {
+        console.log('Socket Error');
+    })
+    
+    // socket.on('status', data => updateStatus(data))
+    // socket.emit('start')
+      
+  } catch (error) {
+      console.log(error)
+  }
+    
+}
+
 
 
 export default function () {
@@ -10,15 +62,15 @@ export default function () {
     const [battery, setBattery] = useState()
     const [height, setHeight] = useState('-')
 
-    socket.on('dronestate', data => {
-        if (data !== undefined) {
-            setBattery(data.bat)
-            setHeight(data.tof)
-        }
-    })
+    // socket.on('dronestate', data => {
+    //     if (data !== undefined) {
+    //         setBattery(data.bat)
+    //         setHeight(data.tof)
+    //     }
+    // })
 
     let batStyle = { width: `${battery}%` }
-    let port =  Math.floor(1000 + Math.random() * 9000);
+    let port =  Math.floor(1000 + Math.random() * 9000)
 
     useEffect(() => {
 
@@ -27,49 +79,7 @@ export default function () {
     }, [])
     
 
-    async function handleStartDrone(){
-        
-      
-        port++
-      try {
-        debugger
-        console.log(port)
-        port = await startDrone(port)
-        console.log(port)
-        var socketURL = `ws://localhost:${port}`
-        const ws = new WebSocket(socketURL)
-       
-        var jmuxer = new JMuxer({
-            node: 'player',
-            mode: 'video',
-            flushingTime: 1,
-            fps: 30
-        })
-        ws.binaryType = 'arraybuffer'
-        ws.addEventListener('message', function (event) {
-            jmuxer.feed({
-                video: new Uint8Array(event.data)
-            })
-        })
-
-        ws.addEventListener('error', function (e) {
-            console.log('Socket Error');
-        })
-
-        socket.on('status', data => updateStatus(data))
-          
-      } catch (error) {
-          console.log(error)
-      }
-        
-    }
-
-    async function handleStopDrone(){
-      debugger
-       
-        socket.emit('stop')
-       
-    }
+  
 
 
     return <>
@@ -88,7 +98,6 @@ export default function () {
                     </div>
                     <div className="start_button_wrapper" >
                         <button className="start-button" onClick={handleStartDrone}>Connect to TELLO</button>
-                        <button className="start-button" onClick={handleStopDrone}>Disconnect to TELLO</button>
                     </div>
                     
                     <video className="video" id='player' autoPlay muted />

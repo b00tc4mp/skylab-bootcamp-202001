@@ -1,10 +1,12 @@
 import { NotAllowedError } from 'drone-errors'
 import context from './context'
+import {httpPort} from './'
+
 
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function (port) {
+export default (function (port, httpPort) {
     return (async () => {
        
         const response = await fetch(`${API_URL}/`, {
@@ -13,7 +15,7 @@ export default (function (port) {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${this.token}`
             },
-            body: JSON.stringify( {port} )
+            body: JSON.stringify( {port, httpPort} )
         })
         
         const { status } = response
@@ -21,6 +23,7 @@ export default (function (port) {
         if (status === 200) {
             
             const { port } = await response.json()
+
             
             return port
         }
