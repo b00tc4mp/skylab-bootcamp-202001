@@ -18,7 +18,7 @@ module.exports = ({ id: parkId }) => {
         delete park.creator._id
         delete park._id
         delete park.__v
-        delete park.location
+
         park.features.forEach(feature => {
             feature.id = feature._id.toString()
             delete feature._id

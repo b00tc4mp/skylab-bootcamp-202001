@@ -29,6 +29,7 @@ export default function Profile({ navigation, route }) {
 
 
 
+
     const handleSettingsChange = async () => {
         //await updateUser()
 
@@ -39,6 +40,7 @@ export default function Profile({ navigation, route }) {
         const myParks = await retrievePublishedParks()
 
         setPublishedParks(myParks)
+
         setShowModal(true)
     }
 
@@ -54,7 +56,6 @@ export default function Profile({ navigation, route }) {
         setPublishedParks()
         setEditProfile()
     }
-
 
     return (
         <>
@@ -73,7 +74,7 @@ export default function Profile({ navigation, route }) {
                             {publishedParks && <Text>My Parks</Text>}
                             {editProfile && <Text>Settings</Text>}
                         </View>
-                        {publishedParks && <Results extraData={{ results: publishedParks }} />}
+                        {publishedParks && <Results results={publishedParks} />}
 
 
                         {editProfile &&

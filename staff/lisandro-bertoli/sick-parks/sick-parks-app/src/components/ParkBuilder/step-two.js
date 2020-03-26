@@ -26,11 +26,6 @@ export default function StepOne({ navigation, route }) {
 
         const railsArray = new Array(rails).fill({
             name: 'rail',
-            location: {
-                type: 'Point',
-                coordinates: {},
-
-            },
             size: 's',
             description: ''
         })
@@ -39,11 +34,6 @@ export default function StepOne({ navigation, route }) {
 
         const boxesArray = new Array(boxes).fill({
             name: 'box',
-            location: {
-                type: 'Point',
-                coordinates: {},
-
-            },
             size: 's',
             description: ''
         })
@@ -52,11 +42,6 @@ export default function StepOne({ navigation, route }) {
 
         const kickersArray = new Array(kickers).fill({
             name: 'kicker',
-            location: {
-                type: 'Point',
-                coordinates: {},
-
-            },
             size: 's',
             description: ''
         })
@@ -65,11 +50,6 @@ export default function StepOne({ navigation, route }) {
 
         const pipesArray = new Array(pipes).fill({
             name: 'pipe',
-            location: {
-                type: 'Point',
-                coordinates: {},
-
-            },
             size: 's',
             description: ''
         })
@@ -78,11 +58,6 @@ export default function StepOne({ navigation, route }) {
 
         const othersArray = new Array(others).fill({
             name: 'transition',
-            location: {
-                type: 'Point',
-                coordinates: {},
-
-            },
             size: 's',
             description: ''
         })

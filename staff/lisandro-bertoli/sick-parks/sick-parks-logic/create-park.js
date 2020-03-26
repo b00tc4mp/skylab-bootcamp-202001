@@ -12,11 +12,11 @@ module.exports = function (data) {
         else if (key !== 'flow') validate.string(park[key], key)
     }
 
-    if (features) {
+    if (features.length) {
         validate.type(features, 'features', Array)
         features.forEach(feature => {
             for (key in feature)
-                if (key !== 'location') validate.string(feature[key], key)
+                if (key !== 'location') validate.string(feature[key], key, false)
                 else validate.type(feature[key], key, Object)
         })
     }

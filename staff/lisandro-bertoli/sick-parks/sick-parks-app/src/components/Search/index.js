@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, TextInput, ImageBackground, Image } from 'react-native'
-import { Button } from '../index'
+import Button from '../Button'
 import styles from './styles'
 
 const mainImg = require('../../../assets/home.jpg')
@@ -8,9 +8,9 @@ const leftImage = require('../../../assets/left-side.png')
 const rightImage = require('../../../assets/right-side.png')
 
 
-export default function ({ extraData }) {
+export default function ({ onSubmit }) {
     const [query, setQuery] = useState()
-    const { onSubmit } = extraData
+
 
     return (<>
         <ImageBackground source={mainImg}
