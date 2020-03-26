@@ -121,266 +121,236 @@ export default function StepOne({ navigation, route }) {
     }
 
     return (
-        <View style={styles.container}>
-            <Modal
-                animationType="slide"
-                transparent={false}
-                visible={showModal}
-                presentationStyle='formSheet'
-                onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
-                }}>
-                <View style={styles.modalHeader}>
-                    <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
-                    <Text style={styles.modalText}>Pick a location</Text>
+        <KeyboardAvoidingView behavior='padding'>
+            <ScrollView scrollEnabled={true}>
+                <View style={styles.container}>
+                    <Modal
+                        animationType="slide"
+                        transparent={false}
+                        visible={showModal}
+                        presentationStyle='formSheet'
+                    >
+                        <View style={styles.modalHeader}>
+                            <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
+                            <Text style={styles.modalText}>Pick a location</Text>
+                        </View>
+                        <MapViewContainer style={styles.mapStyle} handleNewMarker={(coordinates) => {
+                            handleEachValue(TYPES.COORDS, coordinates, currentIndex)
+                        }} />
+                    </Modal>
+                    {stateRails && stateRails.map((rail, index) => {
+                        return (
+                            <View key={index.toString()} style={styles.itemContainer}>
+                                <Text style={styles.itemLabel}>Rail {index + 1}:</Text>
+                                {error && <Feedback level='warn' message={error} />}
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.label} >Size: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['rail', index])}
+                                    >
+                                        <Picker.Item label="Small" value="s" />
+                                        <Picker.Item label="Medium" value="m" />
+                                        <Picker.Item label="Large" value="l" />
+                                        <Picker.Item label="XL" value="xl" />
+                                    </Picker>
+                                </View>
+
+                                <View style={styles.inputsContainer}>
+                                    <Text style={styles.label}>Description:</Text>
+                                    <TextInput
+                                        onFocus={() => setError(null)}
+                                        selectionColor='#EDF4F9'
+                                        placeholder='Eg: Gnarly kinked rail'
+                                        style={styles.textInput}
+                                        onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['rail', index])}
+                                    />
+                                </View>
+                                <Button
+                                    text='Set Location'
+                                    style={styles.buttonContainer}
+                                    textStyle={styles.button}
+                                    onPress={() => {
+                                        setCurrentIndex(['rail', index]);
+                                        setShowModal(true)
+                                    }}
+                                />
+                            </View>
+                        )
+                    })}
+                    {stateBoxes && stateBoxes.map((box, index) => {
+                        return (
+                            <View key={index.toString()} style={styles.itemContainer}>
+                                <Text style={styles.itemLabel}>Box {index + 1}:</Text>
+                                {error && <Feedback level='warn' message={error} />}
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.label} >Size: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['box', index])}
+                                    >
+                                        <Picker.Item label="Small" value="s" />
+                                        <Picker.Item label="Medium" value="m" />
+                                        <Picker.Item label="Large" value="l" />
+                                        <Picker.Item label="XL" value="xl" />
+                                    </Picker>
+                                </View>
+
+                                <View style={styles.inputsContainer}>
+                                    <Text style={styles.label}>Description:</Text>
+                                    <TextInput
+                                        onFocus={() => setError(null)}
+                                        selectionColor='#EDF4F9'
+                                        placeholder='Eg: mellow box'
+                                        style={styles.textInput}
+                                        onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['box', index])}
+                                    />
+                                </View>
+                                <Button
+                                    text='Set Location'
+                                    style={styles.buttonContainer}
+                                    textStyle={styles.button}
+                                    onPress={() => {
+                                        setCurrentIndex(['box', index]);
+                                        setShowModal(true)
+                                    }}
+                                />
+                            </View>
+                        )
+                    })}
+                    {stateKickers && stateKickers.map((kicker, index) => {
+                        return (
+                            <View key={index.toString()} style={styles.itemContainer}>
+                                <Text style={styles.itemLabel}>Kicker {index + 1}:</Text>
+                                {error && <Feedback level='warn' message={error} />}
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.label} >Size: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['kicker', index])}
+                                    >
+                                        <Picker.Item label="Small" value="s" />
+                                        <Picker.Item label="Medium" value="m" />
+                                        <Picker.Item label="Large" value="l" />
+                                        <Picker.Item label="XL" value="xl" />
+                                    </Picker>
+                                </View>
+
+                                <View style={styles.inputsContainer}>
+                                    <Text style={styles.label}>Description:</Text>
+                                    <TextInput
+                                        onFocus={() => setError(null)}
+                                        selectionColor='#EDF4F9'
+                                        placeholder='Eg: 10ft step-up'
+                                        style={styles.textInput}
+                                        onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['kicker', index])}
+                                    />
+                                </View>
+                                <Button
+                                    text='Set Location'
+                                    style={styles.buttonContainer}
+                                    textStyle={styles.button}
+                                    onPress={() => {
+                                        setCurrentIndex(['kicker', index]);
+                                        setShowModal(true)
+                                    }}
+                                />
+                            </View>
+                        )
+                    })}
+                    {statePipes && statePipes.map((pipes, index) => {
+                        return (
+                            <View key={index.toString()} style={styles.itemContainer}>
+                                <Text style={styles.itemLabel}>Pipe {index + 1}:</Text>
+                                {error && <Feedback level='warn' message={error} />}
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.label} >Size: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['pipe', index])}
+                                    >
+                                        <Picker.Item label="Small" value="s" />
+                                        <Picker.Item label="Medium" value="m" />
+                                        <Picker.Item label="Large" value="l" />
+                                        <Picker.Item label="XL" value="xl" />
+                                    </Picker>
+                                </View>
+
+                                <View style={styles.inputsContainer}>
+                                    <Text style={styles.label}>Description:</Text>
+                                    <TextInput
+                                        onFocus={() => setError(null)}
+                                        selectionColor='#EDF4F9'
+                                        placeholder='Eg: Super pipe'
+                                        style={styles.textInput}
+                                        onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['pipe', index])}
+                                    />
+                                </View>
+                                <Button
+                                    text='Set Location'
+                                    style={styles.buttonContainer}
+                                    textStyle={styles.button}
+                                    onPress={() => {
+                                        setCurrentIndex(['pipe', index]);
+                                        setShowModal(true)
+                                    }}
+                                />
+                            </View>
+                        )
+                    })}
+                    {stateOthers && stateOthers.map((other, index) => {
+                        return (
+                            <View key={index.toString()} style={styles.itemContainer}>
+                                <Text style={styles.itemLabel}>Other {index + 1}:</Text>
+                                {error && <Feedback level='warn' message={error} />}
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.label} >Size: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['other', index])}
+                                    >
+                                        <Picker.Item label="Small" value="s" />
+                                        <Picker.Item label="Medium" value="m" />
+                                        <Picker.Item label="Large" value="l" />
+                                        <Picker.Item label="XL" value="xl" />
+                                    </Picker>
+                                </View>
+
+                                <View style={styles.inputsContainer}>
+                                    <Text style={styles.label}>Description:</Text>
+                                    <TextInput
+                                        onFocus={() => setError(null)}
+                                        selectionColor='#EDF4F9'
+                                        placeholder='Eg: Wallride'
+                                        style={styles.textInput}
+                                        onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['other', index])}
+                                    />
+                                </View>
+                                <Button
+                                    text='Set Location'
+                                    style={styles.buttonContainer}
+                                    textStyle={styles.button}
+                                    onPress={() => {
+                                        setCurrentIndex(['other', index]);
+                                        setShowModal(true)
+                                    }}
+                                />
+                            </View>
+                        )
+                    })}
+                    <Button style={styles.nextButton} text='Next' textStyle={styles.button}
+                        onPress={() => navigation.navigate(
+                            'Summary',
+                            { features: { stateRails, stateBoxes, stateKickers, statePipes, stateOthers }, park })}
+                    />
                 </View>
-                <MapViewContainer style={styles.mapStyle} handleNewMarker={(coordinates) => {
-                    handleEachValue(TYPES.COORDS, coordinates, currentIndex)
-                }} />
-            </Modal>
-            <ScrollView>
-                {stateRails && stateRails.map((rail, index) => {
-                    return (
-                        <View key={index.toString()} style={{ height: 220, justifyContent: 'space-around' }}>
-                            <Text style={{ alignSelf: 'center' }}>Rail {index + 1}:</Text>
-                            {error && <Feedback level='warn' message={error} />}
-                            <Text >Size: </Text>
-
-                            <Picker
-                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 40 }}
-                                onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['rail', index])}
-                            >
-                                <Picker.Item label="Small" value="s" />
-                                <Picker.Item label="Medium" value="m" />
-                                <Picker.Item label="Large" value="l" />
-                                <Picker.Item label="XL" value="xl" />
-                            </Picker>
-
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
-                                <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput
-                                    onFocus={() => setError(null)}
-                                    selectionColor='#EDF4F9'
-                                    placeholder='Eg: Gnarly kinked rail'
-                                    style={styles.textInput}
-                                    onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['rail', index])}
-                                />
-                            </View>
-                            <Button
-                                text='Set Location'
-                                textStyle='text'
-                                style={{
-                                    backgroundColor: '#EFEBDA',
-                                    flex: 0.3,
-                                    alignSelf: 'flex-start',
-                                    borderRadius: 5,
-                                    justifyContent: 'center'
-                                }}
-                                onPress={() => {
-                                    setCurrentIndex(['rail', index]);
-                                    setShowModal(true)
-                                }}
-                            />
-                        </View>
-                    )
-                })}
-                {stateBoxes && stateBoxes.map((box, index) => {
-                    return (
-                        <View key={index.toString()} style={{ height: 220, justifyContent: 'space-around' }}>
-                            <Text style={{ alignSelf: 'center' }}>Box {index + 1}:</Text>
-                            {error && <Feedback level='warn' message={error} />}
-                            <Text >Size: </Text>
-
-                            <Picker
-                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 40 }}
-                                onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['box', index])}
-                            >
-                                <Picker.Item label="Small" value="s" />
-                                <Picker.Item label="Medium" value="m" />
-                                <Picker.Item label="Large" value="l" />
-                                <Picker.Item label="XL" value="xl" />
-                            </Picker>
-
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
-                                <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput
-                                    onFocus={() => setError(null)}
-                                    selectionColor='#EDF4F9'
-                                    placeholder='Eg: mellow flat rail'
-                                    style={styles.textInput}
-                                    onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['box', index])}
-                                />
-                            </View>
-                            <Button
-                                text='Set Location'
-                                textStyle='text'
-                                style={{
-                                    backgroundColor: '#EFEBDA',
-                                    flex: 0.3,
-                                    alignSelf: 'flex-start',
-                                    borderRadius: 5,
-                                    justifyContent: 'center'
-                                }}
-                                onPress={() => {
-                                    setCurrentIndex(['box', index]);
-                                    setShowModal(true)
-                                }}
-                            />
-                        </View>
-                    )
-                })}
-                {stateKickers && stateKickers.map((kicker, index) => {
-                    return (
-                        <View key={index.toString()} style={{ height: 220, justifyContent: 'space-around' }}>
-                            <Text style={{ alignSelf: 'center' }}>Kicker {index + 1}:</Text>
-                            {error && <Feedback level='warn' message={error} />}
-                            <Text >Size: </Text>
-
-                            <Picker
-                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 40 }}
-                                onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['kicker', index])}
-                            >
-                                <Picker.Item label="Small" value="s" />
-                                <Picker.Item label="Medium" value="m" />
-                                <Picker.Item label="Large" value="l" />
-                                <Picker.Item label="XL" value="xl" />
-                            </Picker>
-
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
-                                <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput
-                                    onFocus={() => setError(null)}
-                                    selectionColor='#EDF4F9'
-                                    placeholder='Eg: 12ft step-up'
-                                    style={styles.textInput}
-                                    onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['kicker', index])}
-                                />
-                            </View>
-                            <Button
-                                text='Set Location'
-                                textStyle='text'
-                                style={{
-                                    backgroundColor: '#EFEBDA',
-                                    flex: 0.3,
-                                    alignSelf: 'flex-start',
-                                    borderRadius: 5,
-                                    justifyContent: 'center'
-                                }}
-                                onPress={() => {
-                                    setCurrentIndex(['kicker', index]);
-                                    setShowModal(true)
-                                }}
-                            />
-                        </View>
-                    )
-                })}
-                {statePipes && statePipes.map((pipes, index) => {
-                    return (
-                        <View key={index.toString()} style={{ height: 220, justifyContent: 'space-around' }}>
-                            <Text style={{ alignSelf: 'center' }}>Pipe {index + 1}:</Text>
-                            {error && <Feedback level='warn' message={error} />}
-                            <Text >Size: </Text>
-
-                            <Picker
-                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 40 }}
-                                onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['pipe', index])}
-                            >
-                                <Picker.Item label="Small" value="s" />
-                                <Picker.Item label="Medium" value="m" />
-                                <Picker.Item label="Large" value="l" />
-                                <Picker.Item label="XL" value="xl" />
-                            </Picker>
-
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
-                                <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput
-                                    onFocus={() => setError(null)}
-                                    selectionColor='#EDF4F9'
-                                    placeholder='Eg: minipipe'
-                                    style={styles.textInput}
-                                    onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['pipe', index])}
-                                />
-                            </View>
-                            <Button
-                                text='Set Location'
-                                textStyle='text'
-                                style={{
-                                    backgroundColor: '#EFEBDA',
-                                    flex: 0.3,
-                                    alignSelf: 'flex-start',
-                                    borderRadius: 5,
-                                    justifyContent: 'center'
-                                }}
-                                onPress={() => {
-                                    setCurrentIndex(['pipe', index]);
-                                    setShowModal(true)
-                                }}
-                            />
-                        </View>
-                    )
-                })}
-                {stateOthers && stateOthers.map((other, index) => {
-                    return (
-                        <View key={index.toString()} style={{ height: 220, justifyContent: 'space-around' }}>
-                            <Text style={{ alignSelf: 'center' }}>Other {index + 1}:</Text>
-                            {error && <Feedback level='warn' message={error} />}
-                            <Text >Size: </Text>
-
-                            <Picker
-                                style={{ height: 40, color: '#EFEBDA', backgroundColor: '#82A4B3' }}
-                                itemStyle={{ height: 40 }}
-                                onValueChange={(value) => handleEachValue(TYPES.SIZE, value, ['other', index])}
-                            >
-                                <Picker.Item label="Small" value="s" />
-                                <Picker.Item label="Medium" value="m" />
-                                <Picker.Item label="Large" value="l" />
-                                <Picker.Item label="XL" value="xl" />
-                            </Picker>
-
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', height: '10%' }}>
-                                <Text style={{ alignSelf: 'center' }}>Description:</Text>
-                                <TextInput
-                                    onFocus={() => setError(null)}
-                                    selectionColor='#EDF4F9'
-                                    placeholder='Eg: spine'
-                                    style={styles.textInput}
-                                    onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['other', index])}
-                                />
-                            </View>
-                            <Button
-                                text='Set Location'
-                                textStyle='text'
-                                style={{
-                                    backgroundColor: '#EFEBDA',
-                                    flex: 0.3,
-                                    alignSelf: 'flex-start',
-                                    borderRadius: 5,
-                                    justifyContent: 'center'
-                                }}
-                                onPress={() => {
-                                    setCurrentIndex(['other', index]);
-                                    setShowModal(true)
-                                }}
-                            />
-                        </View>
-                    )
-                })}
-                <Button style={styles.mainButton} text='Next' textStyle={{ color: '#82A4B3' }}
-                    onPress={() => navigation.navigate(
-                        'Summary',
-                        { features: { stateRails, stateBoxes, stateKickers, statePipes, stateOthers }, park })}
-                />
             </ScrollView>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -388,14 +358,27 @@ export default function StepOne({ navigation, route }) {
 
 const styles = StyleSheet.create({
     container: {
-        height: screenHeight,
+        flex: 1,
         backgroundColor: '#EDF4F9',
+        justifyContent: 'space-around',
+
         paddingHorizontal: 10,
-        paddingBottom: '50%'
+        paddingBottom: 10
     },
-    textContainer: {
-
-
+    pickerContainer: {
+        flex: 0.2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 5,
+        alignItems: 'center'
+    },
+    picker: {
+        height: 40,
+        color: '#EFEBDA',
+        width: '60%',
+        backgroundColor: '#82A4B3',
+        borderColor: '#EFEBDA',
+        borderWidth: 2
     },
     modalHeader: {
         flex: 0.1,
@@ -416,32 +399,65 @@ const styles = StyleSheet.create({
         color: '#82A4B3',
         fontSize: 16
     },
-    textInput: {
-        backgroundColor: '#82A4B3',
+    inputsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 25,
+        flex: 1,
+    },
+
+    itemContainer: {
+        flex: 1,
+        marginVertical: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 2,
+        borderBottomColor: '#EFEBDA',
+    },
+    itemLabel: {
         alignSelf: 'center',
-        borderRadius: 5,
+        fontWeight: 'bold',
+        fontSize: 16,
+        marginBottom: 5
+    },
+    textInput: {
+        height: '170%',
+        backgroundColor: '#82A4B3',
+        width: '60%',
+        alignSelf: 'flex-end',
         paddingHorizontal: 10,
-        flex: 0.8,
-        height: 30
+        borderColor: '#EFEBDA',
+        borderWidth: 2
+
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        borderColor: '#82A4B3',
+        borderWidth: 2,
+        backgroundColor: 'white',
+        padding: 10,
+        width: '50%',
+        alignSelf: 'center'
+
+    },
+
+    nextButton: {
+        alignItems: 'center',
+        borderColor: '#82A4B3',
+        borderWidth: 2,
+        backgroundColor: '#EFEBDA',
+        padding: 10,
+        width: '75%',
+        alignSelf: 'center',
+        marginTop: 10
     },
 
     button: {
-        height: 40,
-        backgroundColor: '#EFEBDA',
-        width: 250,
-        alignSelf: 'center',
-        borderRadius: 5,
-        justifyContent: 'center',
+        color: '#82A4B3',
+        fontWeight: 'bold',
     },
+    label: {
+        fontWeight: 'bold',
 
-    mainButton: {
-        height: 40,
-        backgroundColor: '#EFEBDA',
-        width: 250,
-        alignSelf: 'center',
-        borderRadius: 5,
-        alignItems: 'center',
-        justifyContent: 'center',
     }
 
 })

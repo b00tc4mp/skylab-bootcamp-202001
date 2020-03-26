@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, ScrollView, Dimensions, View, Text } from 'react-native'
+import { StyleSheet, ScrollView, Dimensions, View, Text, Alert } from 'react-native'
 import { StackActions } from '@react-navigation/native';
 import { Button, MapViewContainer } from '../index'
 
@@ -13,21 +13,20 @@ export default function StepThree({ navigation, route }) {
 
     for (let key in features) numberOfFeatures += features[key].length
 
-    // for (let key in park) {
-    //     if (park[key] === undefined) park[key] = 'N/A'
+    for (let key in park) {
+        if (park[key] === undefined) park[key] = 'N/A'
 
-    //     if (key !== 'location') {
+        if (key !== 'location') {
 
 
-    //         park[key] = park[key].charAt(0).toUpperCase() + park[key].slice(1)
-    //     }
-    // }
+            park[key] = park[key].charAt(0).toUpperCase() + park[key].slice(1)
+        }
+    }
 
     const handleParkSubmission = () => {
         let _features = []
         Object.values(features).forEach(value => value.forEach(element => _features.push(element)))
         const { location } = park
-        debugger
 
         _features.forEach(feature => {
             if (feature.coordinates) {
@@ -39,36 +38,35 @@ export default function StepThree({ navigation, route }) {
             }
         })
 
-
-
         park.location = {
             type: 'Point',
             coordinates: [location[0].longitude, location[0].latitude]
         }
         handleNewPark({ features: _features, park })
 
-        // navigation.dispatch(StackActions.popToTop());
+        Alert.alert('Park created!')
+        const parent = navigation.dangerouslyGetParent()
+        parent.navigate('Home')
     }
 
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={{ flex: 1, width: screenWidth * 0.9 }}>
-                <Text style={styles.header}>Park details:</Text>
                 <View style={styles.details}>
                     <View style={styles.detailsCols}>
-                        <Text styles={styles.fixedText}>Name: </Text>
-                        <Text styles={styles.fixedText}>Size: </Text>
-                        <Text styles={styles.fixedText}>Level: </Text>
-                        <Text styles={styles.fixedText}>Flow: </Text>
-                        <Text styles={styles.fixedText}>Features: </Text>
+                        <Text style={styles.label}>Name: </Text>
+                        <Text style={styles.label}>Size: </Text>
+                        <Text style={styles.label}>Level: </Text>
+                        <Text style={styles.label}>Flow: </Text>
+                        <Text style={styles.label}>Features: </Text>
 
                     </View>
                     <View style={styles.detailsCols}>
-                        <Text styles={styles.variableText}>{park.name}</Text>
-                        <Text styles={styles.variableText}>{park.size}</Text>
-                        <Text styles={styles.variableText}>{park.level}</Text>
-                        <Text styles={styles.variableText}>{park.flow}</Text>
-                        <Text styles={styles.variableText}>{numberOfFeatures}</Text>
+                        <Text>{park.name}</Text>
+                        <Text>{park.size}</Text>
+                        <Text>{park.level}</Text>
+                        <Text>{park.flow}</Text>
+                        <Text>{numberOfFeatures}</Text>
                     </View>
 
                 </View>
@@ -78,8 +76,8 @@ export default function StepThree({ navigation, route }) {
 
                 <Button
                     text='Confirm'
-                    style={styles.mainButton}
-                    textStyle={styles.buttonText}
+                    style={styles.nextButton}
+                    textStyle={styles.button}
                     onPress={handleParkSubmission} />
             </ScrollView>
 
@@ -92,7 +90,6 @@ const styles = StyleSheet.create({
     container: {
         height: screenHeight,
         backgroundColor: '#EDF4F9',
-        // paddingHorizontal: 10,
         paddingBottom: '30%',
         width: '90%',
         paddingTop: 10,
@@ -134,23 +131,24 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderBottomColor: 'red'
     },
-    mainButton: {
-        height: 40,
-        backgroundColor: '#EFEBDA',
-        width: 250,
-        alignSelf: 'center',
-        borderRadius: 5,
+    nextButton: {
         alignItems: 'center',
-        justifyContent: 'center',
+        borderColor: '#82A4B3',
+        borderWidth: 2,
+        backgroundColor: '#EFEBDA',
+        padding: 10,
+        width: '75%',
+        alignSelf: 'center',
+        marginTop: 10
     },
-    buttonText: {
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: '600',
-        letterSpacing: 1,
-        color: '#82A4B3'
+    button: {
+        color: '#82A4B3',
+        fontWeight: 'bold',
+    },
+    label: {
+        fontWeight: 'bold',
 
-    },
+    }
 
 })
 
