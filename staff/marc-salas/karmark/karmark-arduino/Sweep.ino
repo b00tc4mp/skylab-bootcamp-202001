@@ -141,7 +141,7 @@ void no_encontrado() {
 }
 
 void setup() {
-  //inicializa el puerto serie
+
   Serial.begin(115200);
   delay(10);
   pinMode(LEDR,OUTPUT);
@@ -161,36 +161,33 @@ void setup() {
   digitalWrite(LEDK1,LOW);
   digitalWrite(LEDK2,LOW);
   digitalWrite(LEDK3,LOW);
-  //inicializa el led
-  //Inicializa el módulo wifi
-  WiFi.mode(WIFI_STA); //Establece el módulo como cliente wifi
-  WiFi.disconnect(); //Se desconecta de cualquier WiFi conectado previamente
+
+  WiFi.mode(WIFI_STA); 
+  WiFi.disconnect(); 
   Serial.println();  
-  //conecta con la red wifi
+
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {   // Espera por una conexión WiFi
+  while (WiFi.status() != WL_CONNECTED) {   
     delay(500);
     Serial.print(".");
   }
   Serial.println("");
   Serial.println("WiFi connected");
   Serial.print("IP address: "); 
+  Serial.println(WiFi.localIP());
 
   kit();
   moving = false;
   
-  Serial.println(WiFi.localIP());
-  //definimos los paths
-  server.on("/up",up);    //al recivir /srv1 a traves de GET ejecuta handleServo
-  server.on("/down",down);    //al recivir /srv1 a traves de GET ejecuta handleServo
-  server.on("/left",left);    //al recivir /srv1 a traves de GET ejecuta handleServo
-  server.on("/right",right);    //al recivir /srv1 a traves de GET ejecuta handleServo
-  server.on("/stop",alto);    //al recivir /srv1 a traves de GET ejecuta handleServo
-  
+  server.on("/up",up);    
+  server.on("/down",down);    
+  server.on("/left",left);    
+  server.on("/right",right);    
+  server.on("/stop",alto);    
   server.onNotFound(no_encontrado);
-  //inicializa el servidor web
+  
   server.begin();
  Serial.println("Servidor HTTP activo");
 }
