@@ -29,3 +29,13 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 ### Components
 
 ![](./images/component-diagram.jpg)
+
+## 🚽 Code coverage 🚽
+
+### Server-side
+
+![](./images/code-coverage-server-side.png)
+
+### Client-side
+
+![](./images/code-coverage-client-side.png)

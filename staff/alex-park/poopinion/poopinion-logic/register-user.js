@@ -1,5 +1,6 @@
 const { validate } = require ('poopinion-utils')
 const fetch = require('node-fetch')
+const context = require('./context')
 
 /**
  * Registers a new user to the poopinion database
@@ -16,7 +17,7 @@ const fetch = require('node-fetch')
  * @throws {Error} if there is a server error or if the user already exists
  */
 
-module.exports = (name, surname, email, password, age, gender) => {
+module.exports = function(name, surname, email, password, age, gender) {
     validate.stringFrontend(name, 'name')
     validate.stringFrontend(surname, 'surname')
     validate.stringFrontend(email, 'email')
@@ -26,7 +27,7 @@ module.exports = (name, surname, email, password, age, gender) => {
     validate.stringFrontend(password, 'password')
 
     return (async () => {
-        const response = await fetch(`http://192.168.1.253:8085/api/users`, {
+        const response = await fetch(`${this.API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, surname, email, password, age, gender })
@@ -47,4 +48,4 @@ module.exports = (name, surname, email, password, age, gender) => {
 
         throw new Error('server error')
     })()
-}
+}.bind(context)
