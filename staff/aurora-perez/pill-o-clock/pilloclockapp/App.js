@@ -69,14 +69,11 @@ function App() {
         alarms = JSON.parse(alarms);
 
         let date = AsyncStorage.getItem('date');
-        date && (date = moment(date).format('yyyyMMdd'));
-        !date &&
-          (await AsyncStorage.setItem(
-            'date',
-            (date = moment().format('yyyyMMdd')),
-          ));
+        date && (date = moment(date).format('YYYYMMDD'));
+        !date && (await AsyncStorage.setItem('date', (date = moment().format('YYYYMMDD'))))
 
-        let now = moment(new Date()).format('yyyyMMdd');
+
+        let now = moment(new Date()).format('YYYYMMDD');
 
         if (now > date) {
           await AsyncStorage.setItem('date', now);
@@ -89,7 +86,7 @@ function App() {
           await AsyncStorage.setItem('alarms', JSON.stringify(alarms));
         }
 
-        console.log(alarms)
+        
         for (const drug in alarms) {
           for (const time in alarms[drug]) {
             const now = moment().format('HHmm');
@@ -151,10 +148,11 @@ function App() {
     }
   }
 
-  function handleToLogin() {
+  async function handleToLogin() {
     setToken();
     setError(null);
     setGoLanding(false);
+    await AsyncStorage.clear()
     setView('login');
   }
 
@@ -402,7 +400,7 @@ function App() {
             onContact={handleToContactDetail}
           />
         )}
-        {view === 'progress' && <Progress progress={progress} />}
+        {view === 'progress' && <Progress progress={progress} user={user}/>}
         {view === 'addContacts' && <AddContacts />}
         {view === 'patients' && (
           <Patients contacts={contacts} toAdd={handleToAddPatients} />

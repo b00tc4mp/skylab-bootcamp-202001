@@ -1,23 +1,46 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, ScrollView, Image, Button, TouchableOpacity} from 'react-native'
+import { View, Text, ScrollView, Image, Button, TouchableOpacity, AsyncStorage} from 'react-native'
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars'
 import styles from './styles'
 import moment from 'moment'
 
-function Progress ({progress}) {
-   
+function Progress ({progress, user}) {
+    console.log(progress)
+
+    const [ markedDates, setMarketDates] = useState()
     const [ today, setToday] = useState()
     const [check, setCheck ] = useState()
-    useEffect(()=>{
-        let _check
-        if (progress.includes(false)) _check = 'red'
-        else _check = 'green'
-        let _today = moment(new Date).format('YYYY-MM-DD').toString()
-        setToday(_today)
-        setCheck(_check)
-        console.log(_today, typeof _today)
-        console.log(_check)
 
+    useEffect( async ()=>{
+        let _check
+
+        progress.includes(false) ? _check = 'red' : check = 'green'
+
+        let date = AsyncStorage.getItem('date')
+
+        date && (date = moment(date).format('YYYY-MM-DD'))
+
+        !date && (await AsyncStorage.setItem('date', (date = moment().format('YYYY-MM-DD'))))
+
+        //console.log(date)
+       
+        let _today = moment(new Date).format('YYYY-MM-DD')
+
+        if (_today > date) {
+          // con el array sacar index, y con la fecha de date mandarla junto con el index a un add-progressRecord
+        }
+
+        
+        setToday(_today)
+
+        setCheck(_check)
+
+        let _markedDates = {}
+        _markedDates[_today] = {disabled: true, startingDay: true, color: _check, endingDay: true};
+
+        _markedDates['2020-03-26'] = {disabled: true, startingDay: true, color: _check, endingDay: true}
+        console.log(_markedDates)
+        setMarketDates(_markedDates)
     },[])
 
     return (<>
@@ -53,7 +76,7 @@ function Progress ({progress}) {
                             selectedDotColor: '#ffffff',
                             arrowColor: 'orange',
                             disabledArrowColor: '#d9e1e8',
-                            monthTextColor: 'blue',
+                            //monthTextColor: 'blue',
                             indicatorColor: 'blue',
                             textDayFontFamily: 'monospace',
                             textMonthFontFamily: 'monospace',
@@ -61,9 +84,9 @@ function Progress ({progress}) {
                             textDayFontWeight: '300',
                             textMonthFontWeight: 'bold',
                             textDayHeaderFontWeight: '300',
-                            textDayFontSize: 25,
+                            textDayFontSize: 15,
                             textMonthFontSize: 20,
-                            textDayHeaderFontSize: 20
+                            textDayHeaderFontSize: 15
                         }}
                         onDayPress={(day) => {console.log('selected day', day)}}
                         // Handler which gets executed on day long press. Default = undefined
@@ -84,15 +107,8 @@ function Progress ({progress}) {
                         // Handler which gets executed when press arrow icon right. It receive a callback can go next month
                         onPressArrowRight={addMonth => addMonth()}
                         
-                        markedDates={{
-                            [today]: {disabled: true, startingDay: true, color: check, endingDay: true},
-                            
-                            
-                            // '2020-03-22': {startingDay: true, color: 'green'},
-                            // '2020-03-23': {selected: true, endingDay: true, color: 'green', textColor: 'gray'},
-                            //'2020-04-04': {disabled: true, startingDay: true, color: 'green', endingDay: true}
-                        }}
-                        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+                        markedDates ={markedDates}
+
                         markingType={'period'}
          
                     />

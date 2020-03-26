@@ -19,6 +19,9 @@ module.exports = new Schema({
     medication: [drug],
     prescription: [guideline],
     progress: [{type: Boolean}],
-    contacts: [{type: ObjectId, ref: 'User' }] 
-    
+    contacts: [{type: ObjectId, ref: 'User' }],
+    progressRecord: [{
+        date: {type: String},
+        record: {type: Number}
+    }]
 })

@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffdf9',
     borderRadius: 30,
     textDecorationLine: 'underline',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    //marginBottom: 50
   },
 
   titleText: {
