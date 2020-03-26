@@ -57,12 +57,6 @@ export default function App() {
   const [topToilets, setTopToilets] = useState()
 
   useEffect(() => {
-    (async () => {
-      __handleUser__()
-    })()
-  }, [user])
-
-  useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (pos) {
       setCoordinates({
         latitude: pos.coords.latitude,
@@ -76,6 +70,20 @@ export default function App() {
     __handleToiletScore__()
     __handleTopToilets__()
   }, [detailedToilet])
+
+  useEffect(() => {
+    (async () => {
+      if (await isLoggedIn()) {
+        const user = await retrieveUser()
+        await setUser(user)
+        await __handleTopToilets__()
+        await setQuery()
+        await setGoLanding(true)
+        await setError(null)
+        await setView('landing')
+      }
+    })()
+  }, [])
 
   function __handleError__(message) {
     setError(message)
@@ -129,7 +137,7 @@ export default function App() {
   function __handleTopToilets__() {
     (async () => {
       const top = await retrieveTopToilets()
-      setTopToilets(top)
+      await setTopToilets(top)
     })()
   }
 
