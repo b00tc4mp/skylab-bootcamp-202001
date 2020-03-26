@@ -7,6 +7,7 @@ const TicketSchema = new Schema({
     exitHour: {type: Date},
     amount: {type: Number},
     validated: {type: Boolean, default: false},
+    validatedTime : {type: Date},
     exit: {type: Boolean, default: false},
     ticketId: {type: String, trim: true}
 })
