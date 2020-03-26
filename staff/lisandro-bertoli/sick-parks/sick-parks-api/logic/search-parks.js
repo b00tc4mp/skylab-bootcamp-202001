@@ -5,8 +5,6 @@ const { validate } = require('sick-parks-utils')
 module.exports = ({ q, _location }) => {
     validate.string(q, 'query')
     q = q.toLowerCase()
-    //REMEMBER TO ADD THE INDEX TO location.coordinates FROM SHELL
-    if (_location) _location = [_location[0], _location[0]]
     return (async () => {
         let results
         if (q === 'verified') {
