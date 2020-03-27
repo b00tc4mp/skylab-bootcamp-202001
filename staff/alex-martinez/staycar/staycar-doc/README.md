@@ -36,7 +36,11 @@ The first thing that user should do after login is create the parking, after thi
 
 ### Data Model
 
-![DataModel](./staycar-data-model-diagram.png)
+![Data Model](./staycar-data-model-diagram.png)
+
+### API code coverage
+
+![code-coverage](./api-code-coverage.png)
 
 ### Trello
 
