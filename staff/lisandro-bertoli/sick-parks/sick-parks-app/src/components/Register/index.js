@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View, TextInput, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
+import { TextInput, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Button } from '../index'
+import Button from '../Button'
 import styles from './styles'
 
 export default function Register({ onSubmit, error, onToLogin }) {
@@ -21,9 +21,9 @@ export default function Register({ onSubmit, error, onToLogin }) {
                 <TextInput style={styles.input} placeholder='Your surname here' onChangeText={(text) => setSurname(text)} value={surname} />
                 <TextInput style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} value={email} />
                 <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} value={password} />
-                <Button text='Register' type='main' textStyle='text' onPress={handleSubmit} />
+                <Button text='Register' style={styles.buttonContainer} textStyle={styles.button} onPress={handleSubmit} />
                 {error && <Text style={styles.danger}>{error}</Text>}
-                <Button type='anchor' textStyle='anchor' text='Already a member? Sign in' onPress={onToLogin} />
+                <Button textStyle={styles.anchor} text='Already a member? Sign in' onPress={onToLogin} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
     )

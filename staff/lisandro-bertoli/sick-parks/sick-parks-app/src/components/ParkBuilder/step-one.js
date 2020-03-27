@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, ScrollView, Modal, KeyboardAvoidingView, Dimensions, TouchableWithoutFeedback, TextInput, Picker, Keyboard, View, Text } from 'react-native'
-import { Button, Feedback, MapViewContainer } from '../index'
+import React, { useState } from 'react'
+import { StyleSheet, ScrollView, Modal, KeyboardAvoidingView, Dimensions, TextInput, Picker, View, Text } from 'react-native'
+import Button from '../Button'
+import Feedback from '../Feedback'
+import MapViewContainer from '../MapViewContainer'
 import MapView, { Marker } from 'react-native-maps';
 // import styles from '../Button/styles';
 

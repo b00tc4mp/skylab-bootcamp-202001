@@ -22,7 +22,7 @@ export default function ResultsItem({ park, onToPark }) {
                 <View style={styles.colTwo}>
                     {verified && <Text style={styles.true}>Verified</Text>}
                     {!verified && <Text style={styles.false}>Unverified</Text>}
-                    <Text style={styles.text}>Rating: {rating ? rating : 0}</Text>
+                    <Text style={styles.text}>Votes: {rating ? rating : 0}</Text>
                 </View>
             </View>
         </TouchableOpacity>

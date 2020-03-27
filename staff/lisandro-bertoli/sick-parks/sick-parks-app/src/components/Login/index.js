@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { TextInput, Text, TouchableWithoutFeedback, Keyboard, Image } from 'react-native'
 import Button from '../Button'
 import styles from './styles'
@@ -19,9 +19,9 @@ export default function Login({ onSubmit, onToRegister, error }) {
                 <TextInput style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} value={email} />
                 <TextInput style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} value={password} />
 
-                <Button text='Login' type='main' textStyle='text' onPress={handleOnSubmit} />
+                <Button text='Login' style={styles.buttonContainer} textStyle={styles.button} onPress={handleOnSubmit} />
                 {error && <Text style={styles.danger}>{error}</Text>}
-                <Button text='Not a member yet? Sign up' textStyle='anchor' onPress={onToRegister} />
+                <Button text='Not a member yet? Sign up' textStyle={styles.anchor} onPress={onToRegister} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
 

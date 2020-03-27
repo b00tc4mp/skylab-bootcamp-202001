@@ -41,20 +41,27 @@ export default function App() {
 	const [user, setUser] = useState()
 
 	useEffect(() => {
+		setError(null)
+	}, [])
+
+	useEffect(() => {
 		(async () => {
 			try {
 				if (await isUserLoggedIn()) {
 					const user = await retrieveUser()
 
 					setUser(user)
-				} else {
-					await logic.__context__.storage.clear()
 				}
+				// else {
+				// 	await logic.__context__.storage.clear()
+				// }
 			} catch ({ message }) {
 				if (message === 'jwt expired') {
+					__handleErrors__('Session has expired')
 					await logic.__context__.storage.clear()
 				} else {
-					setError(message)
+
+					__handleErrors__(message)
 
 				}
 			}
@@ -132,7 +139,7 @@ export default function App() {
 
 		const handleGoToRegister = () => navigation.navigate('Register')
 
-		return <Login onSubmit={handleSubmit} onToRegister={handleGoToRegister} handleerror={error} />
+		return <Login onSubmit={handleSubmit} onToRegister={handleGoToRegister} error={error} />
 	}
 
 	function RegisterScreen(props) {
@@ -145,7 +152,6 @@ export default function App() {
 				setError(null)
 				navigation.navigate('Login')
 			} catch ({ message }) {
-
 				__handleErrors__(message)
 			}
 		}

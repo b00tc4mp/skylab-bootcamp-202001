@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, ScrollView, Dimensions, View, Text, Alert } from 'react-native'
-import { StackActions } from '@react-navigation/native';
-import { Button, MapViewContainer } from '../index'
+import Button from '../Button'
+import MapViewContainer from '../MapViewContainer'
 
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width

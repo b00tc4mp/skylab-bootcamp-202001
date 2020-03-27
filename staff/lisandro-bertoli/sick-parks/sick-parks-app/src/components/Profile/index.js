@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { retrieveUser, retrievePublishedParks } from 'sick-parks-logic'
+import { retrievePublishedParks } from 'sick-parks-logic'
 import { ScrollView, Button, KeyboardAvoidingView, TextInput, View, Text, Modal } from 'react-native'
-import { Button as MyButton, Results } from '../index'
+import MyButton from '../Button'
+import Results from '../Results'
+
 import styles from './styles'
 
 
@@ -38,7 +40,7 @@ export default function Profile({ navigation, route }) {
 
     const handleGoToMyParks = async () => {
         const myParks = await retrievePublishedParks()
-
+        console.log(myParks)
         setPublishedParks(myParks)
 
         setShowModal(true)

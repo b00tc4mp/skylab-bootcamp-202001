@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import ResultsItem from '../ResultsItem'
 import FeedBack from '../Feedback'
 import styles from './styles'

@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
-import { Search, TopSearch, Results, ParkDetails } from '../index'
+import Search from '../Search'
+import TopSearch from '../TopSearch'
+import Results from '../Results'
+import ParkDetails from '../ParkDetails'
 import {
     searchParks,
     retrievePark,
@@ -32,7 +35,6 @@ export default function Home({ navigation, route }) {
             })
         })
     }, [])
-    console.log(location)
 
     const __handleParkUpdate__ = async (id) => {
         try {

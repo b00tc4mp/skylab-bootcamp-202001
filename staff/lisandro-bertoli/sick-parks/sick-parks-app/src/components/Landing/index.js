@@ -11,9 +11,9 @@ export default function Login({ navigation }) {
         <View style={styles.container}>
             < Image source={require('../../../assets/logo.png')} style={styles.logo}></Image>
 
-            <Button text='Sign in with Facebook' textStyle='text' type='facebook' />
-            <Button text='Sign up with an e-email' textStyle='text' type='main' onPress={() => navigation.navigate('Register')} />
-            <Button text='Already a member? Sing-in' textStyle='anchor' onPress={() => navigation.navigate('Login')} />
+            <Button text='Sign in now' style={styles.buttonContainer} textStyle={styles.button} onPress={() => navigation.navigate('Login')} />
+            <Button text='Sign up with an e-email' style={styles.buttonContainer} textStyle={styles.button} onPress={() => navigation.navigate('Register')} />
+            <Button text='Skip sign in' style={styles.skipButton} textStyle={styles.button} onPress={() => navigation.navigate('Login')} />
         </View>
     )
 }

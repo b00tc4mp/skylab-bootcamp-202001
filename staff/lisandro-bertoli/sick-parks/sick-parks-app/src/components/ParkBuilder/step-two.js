@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, ScrollView, KeyboardAvoidingView, Modal, Dimensions, TextInput, Picker, View, Text } from 'react-native'
-import { Button, Feedback, MapViewContainer } from '../index'
-
-const screenHeight = Dimensions.get('window').height
+import Button from '../Button'
+import Feedback from '../Feedback'
+import MapViewContainer from '../MapViewContainer'
 const TYPES = {
     COORDS: 'coordinates',
     SIZE: 'size',

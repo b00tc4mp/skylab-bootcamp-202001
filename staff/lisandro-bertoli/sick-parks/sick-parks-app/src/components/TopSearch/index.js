@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { View, TextInput, Image } from 'react-native'
-// import { Button } from '../index'
 import styles from './styles'
 const searchIcon = require('../../../assets/icon-search.png')
 
@@ -23,7 +22,6 @@ export default function ({ onSubmit, query }) {
                 onSubmitEditing={handleOnSubmit}
                 returnKeyType="search"
             />
-
         </View>
     )
 }

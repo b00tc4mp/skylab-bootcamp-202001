@@ -14,7 +14,7 @@ export default function ({ onSubmit }) {
 
     return (<>
         <ImageBackground source={mainImg}
-            style={{ alignItems: 'center', flex: 1, height: '100%', width: '100%', justifyContent: 'flex-end' }} >
+            style={styles.topImageContainer} imageStyle={styles.topImage} >
             <View style={{ flexDirection: 'row', flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 10 }}>
                 <View style={styles.queryButton} >
                     <Image style={styles.queryIcon} source={require('../../../assets/icon-search.png')} />
