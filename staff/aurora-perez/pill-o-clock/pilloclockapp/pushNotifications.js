@@ -37,7 +37,7 @@ const configure = (token) => {
 const localNotification = (drugName) => {
  PushNotification.localNotification({
    autoCancel: true,
-   actions: '["Take pill", "Reject"]',
+   actions: `["Took ${drugName}", "Did not take pill"]`,
    largeIcon: "ic_launcher",
    smallIcon: "ic_notification",
    bigText: "Hey! You have to take take your medicine",

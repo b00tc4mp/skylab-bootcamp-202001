@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         color : '#297885',
         fontSize : 30,
         marginLeft : 20,
-       // marginTop : 30,
+        marginTop : 30,
         
     },
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         color : '#4CBBC2',
         fontSize : 20,
         marginLeft : 50,
-        marginTop : 15
+        marginTop : 10
     },
     
     logo : {
@@ -35,6 +35,11 @@ const styles = StyleSheet.create({
         height: 150,
         alignSelf : 'center'   
     },
+
+    link:{
+        color : '#FC94AD'
+    },
+
     title : {
         fontFamily : 'Sensei-Medium',
         color : '#297885',

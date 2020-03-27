@@ -27,7 +27,8 @@ import {
   Patients,
   AddPatient,
   ContactDetail,
-} from './src/components';
+} from './src/components'
+
 import logic, {
   registerUser,
   login,
@@ -39,196 +40,180 @@ import logic, {
   retrieveContacts,
   retrieveDrugs,
   retrieveProgress,
-} from './src/logic';
+} from './src/logic'
 
-logic.__context__.storage = AsyncStorage;
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = 'http://192.168.1.85:8085/api/'
+console.disableYellowBox = true
 
 function App() {
-  const [view, setView] = useState('login');
-  const [error, setError] = useState(null);
-  const [user, setUser] = useState();
-  const [token, setToken] = useState();
-  const [medication, setMedication] = useState();
-  const [drugDetail, setDrugDetail] = useState();
-  const [times, setTimes] = useState();
-  const [goLanding, setGoLanding] = useState(false);
-  const [contacts, setContacts] = useState();
-  const [contactData, setContactData] = useState();
-  const [schedule, setSchedule] = useState();
-  const [drugs, setDrugs] = useState();
-  const [progress, setProgress] = useState();
+  const [view, setView] = useState('login')
+  const [error, setError] = useState(null)
+  const [user, setUser] = useState()
+  const [token, setToken] = useState()
+  const [medication, setMedication] = useState()
+  const [drugDetail, setDrugDetail] = useState()
+  const [times, setTimes] = useState()
+  const [goLanding, setGoLanding] = useState(false)
+  const [contacts, setContacts] = useState()
+  const [contactData, setContactData] = useState()
+  const [schedule, setSchedule] = useState()
+  const [drugs, setDrugs] = useState()
+  const [progress, setProgress] = useState()
 
   //AsyncStorage.clear()
 
   useEffect(() => {
     //if(user) {
     const interval = setInterval(async () => {
-      let alarms = await AsyncStorage.getItem('alarms');
+      let alarms = await AsyncStorage.getItem('alarms')
 
+      console.log(alarms)
       if (alarms) {
-        alarms = JSON.parse(alarms);
+        alarms = JSON.parse(alarms)
 
         let date = AsyncStorage.getItem('date');
-        date && (date = moment(date).format('YYYYMMDD'));
-        !date && (await AsyncStorage.setItem('date', (date = moment().format('YYYYMMDD'))))
+        date && (date = moment(date).format('YYYYMMDD'))
+        !date && (await AsyncStorage.setItem('date', (date = moment().local().format('YYYYMMDD'))))
 
 
-        let now = moment(new Date()).format('YYYYMMDD');
+        let now = moment(new Date()).local().format('YYYYMMDD')
 
         if (now > date) {
           await AsyncStorage.setItem('date', now);
 
           for (const drug in alarms) {
             for (const time in alarms[drug]) {
-              alarms[drug][time] = false;
+              alarms[drug][time] = false
             }
           }
-          await AsyncStorage.setItem('alarms', JSON.stringify(alarms));
+          await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
         }
 
         
         for (const drug in alarms) {
           for (const time in alarms[drug]) {
-            const now = moment().format('HHmm');
+            let nowHour = moment.utc(new Date).local().format('HHmm')
 
-            const drugInfo = await retrieveDrug(drug);
+            const drugInfo = await retrieveDrug(drug)
 
-            const {drugName} = drugInfo;
+            //console.log(drugInfo)
 
-            const sounded = alarms[drug][time];
+            const {drugName} = drugInfo
 
-            if (!sounded && now >= time) {
-              alarms[drug][time] = true;
+            const sounded = alarms[drug][time]
 
-              await AsyncStorage.setItem('alarms', JSON.stringify(alarms));
+            if (!sounded && nowHour >= time) {
+              console.log('alarma')
+              alarms[drug][time] = true
 
-              pushNotification.localNotification(drugName);
+              await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
+
+              pushNotification.localNotification(drugName)
             }
           }
         }
       }
     }, 60000);
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval)
   }, []);
 
-  pushNotification.configure(token);
+  pushNotification.configure(token)
 
   function __handleError__(message) {
-    setError(message);
+    setError(message)
     setTimeout(() => {
       setError(null);
     }, 5000);
   }
 
-  async function handleRegister({
-    name,
-    surname,
-    gender,
-    age,
-    phone,
-    profile,
-    email,
-    password,
-  }) {
+  async function handleRegister({ name, surname, gender, age, phone, profile, email, password }) {
     try {
-      await registerUser(
-        name,
-        surname,
-        gender,
-        age,
-        phone,
-        profile,
-        email,
-        password,
-      );
-      setView('login');
+      await registerUser( name, surname, gender, age, phone, profile, email, password)
+      setView('login')
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   async function handleToLogin() {
-    setToken();
-    setError(null);
-    setGoLanding(false);
-    await AsyncStorage.clear()
-    setView('login');
+    setToken()
+    setError(null)
+    setGoLanding(false)
+    setView('login')
   }
 
   async function handleLogin({email, password}) {
     try {
-      const _token = await login(email, password);
-      const loggedUser = await retrieveUser(_token);
+      const _token = await login(email, password)
+      const loggedUser = await retrieveUser(_token)
 
       if (loggedUser.profile === 'pharmacist') {
-        setToken(_token);
+        setToken(_token)
 
-        setUser(loggedUser);
+        setUser(loggedUser)
 
-        setGoLanding(true);
+        setGoLanding(true)
 
-        setView('landingPharmacist');
+        setView('landingPharmacist')
       } else if (loggedUser.profile === 'patient') {
-        setToken(_token);
+        setToken(_token)
 
-        setUser(loggedUser);
-        setGoLanding(true);
-        setView('landingPatient');
+        setUser(loggedUser)
+        setGoLanding(true)
+        setView('landingPatient')
       } else {
         //TODO
       }
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   function handleToRegister() {
-    setError(null);
-    setView('register');
+    setError(null)
+    setView('register')
   }
 
   async function handleToMedication() {
     try {
-      const _medication = await retrieveMedication(token);
+      const _medication = await retrieveMedication(token)
 
-      console.log(_medication)
-
-      let alarms = await AsyncStorage.getItem('alarms');
+      let alarms = await AsyncStorage.getItem('alarms')
 
       if(alarms) {(alarms = JSON.parse(alarms))
-      }else{ alarms = {}; }
+      }else{ alarms = {} }
 
       _medication.forEach(medication => {
-        const currAlarms = alarms[medication.drug._id] || {};
+        const currAlarms = alarms[medication.drug._id] || {}
 
-        const newAlarms = {};
+        const newAlarms = {}
 
         medication.times.forEach(hour => {
-          newAlarms[hour] = currAlarms[hour] || false;
+          newAlarms[hour] = currAlarms[hour] || false
         });
 
         alarms[medication.drug._id] = newAlarms
-      });
-      console.log(_medication)
+      })
 
-      await AsyncStorage.setItem('alarms', JSON.stringify(alarms));
+      await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
 
-      setMedication(_medication);
-      setView('medication');
+      setMedication(_medication)
+      setView('medication')
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   async function handleToAdd() {
-    const drugs = await retrieveDrugs();
-    setDrugs(drugs);
-    setView('addMedication');
+    const drugs = await retrieveDrugs()
+    setDrugs(drugs)
+    setView('addMedication')
   }
 
   async function handleAddMedication(info) {
-    const {drug} = info;
+    const {drug} = info
 
     try {
       //TODO refactor
@@ -237,101 +222,103 @@ function App() {
 
       for (const key in info) {
         if (key.includes('hour') && !isNaN(info[key]) && info[key] > 24)
-          throw new Error('Please, introduce a correct hour');
+          throw new Error('Please, introduce a correct hour')
         if (key.includes('min') && !isNaN(info[key]) && info[key] > 59)
-          throw new Error('Please, introduce a correct minutes');
+          throw new Error('Please, introduce a correct minutes')
       }
 
-      const times = [];
+      const times = []
 
       for (let i = 1; i < keys.length / 2 + 1; i++) {
         times.push(`${info[`hour${i}`]}` + `${info[`min${i}`]}`);
       }
-      console.log(times);
 
-      await addMedication(token, drug, times);
-      handleToMedication();
+      await addMedication(token, drug, times)
+      handleToMedication()
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   async function handleToDrug({id, times}) {
     try {
       
-      const _drugDetail = await retrieveDrug(id);
+      const _drugDetail = await retrieveDrug(id)
+      const {drugName} = _drugDetail
+      //pushNotification.localNotification(drugName)
 
-      setTimes(times);
+      setTimes(times)
 
-      setDrugDetail(_drugDetail);
+      setDrugDetail(_drugDetail)
 
-      setView('drugDetail');
+      setView('drugDetail')
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   async function handleToDeleteMedication({id}) {
     try {
-      console.log(id)
-      await deleteMedication(token, id);
+      await deleteMedication(token, id)
 
-      const _medication = await retrieveMedication(token);
+      const _medication = await retrieveMedication(token)
 
-      let alarms = await AsyncStorage.getItem('alarms');
-      alarms && (alarms = JSON.parse(alarms));
+      let alarms = await AsyncStorage.getItem('alarms')
+      alarms && (alarms = JSON.parse(alarms))
 
-      delete alarms[id];
+      delete alarms[id]
 
-      await AsyncStorage.setItem('alarms', JSON.stringify(alarms));
+      await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
 
-      handleToMedication();
+      handleToMedication()
     } catch ({message}) {
-      console.log(message);
+      console.log(message)
     }
   }
 
   async function handleToProgress() {
     try {
-      const _progress = await retrieveProgress(token);
-      setProgress(_progress);
+      const _progress = await retrieveProgress(token)
+      setProgress(_progress)
 
-      setView('progress');
+      setView('progress')
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   async function handleToContacts() {
     try {
-      const _contacts = await retrieveContacts(token);
-      setContacts(_contacts);
-      setView('contacts');
+      const _contacts = await retrieveContacts(token)
+      setContacts(_contacts)
+      setView('contacts')
+
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   function handleToAddContacts() {
-    setView('addContacts');
+    setView('addContacts')
   }
 
   async function handleToPatients() {
     try {
-      const _contacts = await retrieveContacts(token);
-      setContacts(_contacts);
-      setView('patients');
+      const _contacts = await retrieveContacts(token)
+      setContacts(_contacts)
+      setView('patients')
+
     } catch ({message}) {
-      __handleError__(message);
+      __handleError__(message)
     }
   }
 
   function handleToAddPatients() {
-    setView('addPatients');
+    setView('addPatients')
   }
   function handleToContactDetail({name, surname, phone}) {
     setContactData({name, surname, phone});
-    setView('contactDetail');
+    setView('contactDetail')
   }
 
   return (

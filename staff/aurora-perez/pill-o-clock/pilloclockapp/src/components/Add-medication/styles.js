@@ -26,17 +26,11 @@ const styles = StyleSheet.create({
     },
 
     hour : {
-        fontFamily : 'Sensei-Medium',
+        //fontFamily : 'Sensei-Medium',
         paddingHorizontal : 20,
         fontSize: 20
     },
-    
-    input : {
-        fontFamily : 'Sensei-Medium',
-        marginTop : 30,
-        fontSize : 20,
-        alignSelf : 'center'
-    },
+
 
     title : {
         fontFamily : 'Sensei-Medium',

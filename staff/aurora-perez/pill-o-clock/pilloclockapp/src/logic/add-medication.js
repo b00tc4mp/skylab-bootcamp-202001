@@ -6,6 +6,7 @@ const context= require('./context')
 module.exports = function (token, drugId, time) {
     validate.string(token, 'token')
     validate.string(drugId, 'drugId')
+    console.log(time)
     //validate.stringOfNumbers(time)
 
     return (async() => {
