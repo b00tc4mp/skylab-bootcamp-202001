@@ -22,9 +22,13 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 
 ## 🚽 Technical description 🚽
 
-### Blocks
+### Flowchart
 
 ![](./images/block-diagram.jpg)
+
+### Data model
+
+![](./images/data-model.jpg)
 
 ### Components
 
