@@ -38,7 +38,7 @@ router.delete('/users', jwtVerifierMidWare, jsonBodyParser, deleteUser)
 router.get('/ticket/:id/:parkingname', retrieveTicket)
 router.get('/tickets', retrieveTickets)
 
-router.patch('/ticket/:id/validated', validateTicket)
+router.patch('/ticket/:id/validated', jsonBodyParser, validateTicket)
 router.get('/ticket/:ticketId/:parkingname/exit', exitVehicle)
 
 //router.patch('/parking/:id/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)

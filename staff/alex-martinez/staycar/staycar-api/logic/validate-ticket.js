@@ -9,7 +9,7 @@ const { NotFoundError } = require('staycar-errors')
  * @throws {NotFoundError} if ticket is not exist
  */
 
-module.exports = (ticketId) => {
+module.exports = (ticketId, amount) => {
 
     validate.string(ticketId, 'ticket id')
 
@@ -18,7 +18,7 @@ module.exports = (ticketId) => {
         if(!ticket) throw new NotFoundError(`ticket with id ${ticketId} does not exist`)
 
         ticket.validated = true
-        
+        ticket.amount = amount
         ticket.validatedTime = new Date()
         
         await ticket.save()

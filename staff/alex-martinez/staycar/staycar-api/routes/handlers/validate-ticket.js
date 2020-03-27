@@ -4,9 +4,10 @@ const { NotAllowedError } = require('staycar-errors')
 module.exports = (req, res) => {
     
     const idParking = req.params.id
+    const amount = req.body.amount
 
     try {
-        validateTicket(idParking)
+        validateTicket(idParking, amount)
             .then(() =>
                 res.status(200).json({"message": "your ticket was validated"})
                 

@@ -10,7 +10,7 @@ const API_URL = process.env.REACT_APP_API_URL
  * @throws {NotFoundError} if ticket is not exist
  */
 
-export default (ticketId) => {
+export default (ticketId, amount) => {
     validate.string(ticketId, 'ticket id')
 
     return (async () => {
@@ -19,7 +19,8 @@ export default (ticketId) => {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ amount })
         })
 
         const { status } = response

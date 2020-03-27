@@ -22,7 +22,7 @@ export default withRouter (function({history, infoTicket}) {
 
             event.preventDefault()
             let ticketid = infoTicket.ticketId
-            validateTicket(ticketid)
+            validateTicket(ticketid, infoTicket.amount)
 
             history.push('/home')
 
