@@ -1,5 +1,5 @@
 require('dotenv').config()
-
+const {NotAllowedError} = require('staycar-errors')
 const { expect } = require('chai')
 const { random } = Math
 const { mongoose, models: { Ticket, Parking, User } } = require('staycar-data')
@@ -63,7 +63,7 @@ describe('exitVehicle', () => {
                 })
         )
 
-        it('should succed on correct car plate and parking name', () =>{
+        it('should succeed on correct car plate and parking name', () =>{
            
             exitVehicle(ticketId, parkingName)
                 .then(() => {
@@ -77,12 +77,43 @@ describe('exitVehicle', () => {
                     expect(ticket.exit).to.be(false)
                     expect(ticket.validated).to.be(true)
                     expect(ticket.exit).to.be.an.instanceOf(Date)
-                    expect(ticket.exit).to.be(true)
                     expect(ticket.validatedTime).to.be.an.instanceOf(Date)
                 })
                 .then(() => {
                     expect(pk.totalLots).to.be.equal(20)
                     expect(pk.lots.length).to.be.equal(totalLots)
+                })
+                .then(() => {
+                    const tick = Ticket.findOne({ticketId})
+                    return tick
+                })
+                .then((tick) =>{
+                    expect(tick.exit).to.be(true)
+                    expect(tick).to.exist
+                    expect(tick.carPlate).to.be.equal(carPlate)
+                    expect(tick.parkingName).to.be.equal(parkingName)
+                    expect(tick.validated).to.be(true)
+                    expect(tick.exit).to.be.an.instanceOf(Date)
+                    expect(tick.amount).to.be.exist
+                })
+        })
+        it('should fail on expired validation time', () =>{
+           
+            exitVehicle(ticketId, parkingName)
+                .then(() => {
+                   
+                    const ticket = Ticket.findOne({ticketId})
+                    let { validatedTime: valid } = ticket
+                    let minutes = Math.floor(((new Date().getTime()) - valid.getTime()) / 60000);
+                    minutes + 2
+                    return ticket
+                })
+                .then((ticket) => {
+                    expect(ticket).to.exist
+                    expect(ticket.validated).to.be(false)
+                    expect(ticket.exit).to.be(false)
+                    expect(ticket).to.throw(NotAllowedError, 'validation expired, please go to ATM')
+                    
                 })
         })
 

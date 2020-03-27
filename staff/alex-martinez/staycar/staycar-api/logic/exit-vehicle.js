@@ -24,21 +24,18 @@ module.exports =  (ticketId, parkingName) => {
     if(!ticket.validated) throw new NotAllowedError('this ticket was not validated')
     if(ticket.exit) throw new NotAllowedError('this ticket is not allowed')
 
-    let now = new Date()
-    let valid = ticket.validatedTime
-    let diff = now.getTime() - valid.getTime()
-    let minutes = Math.floor(diff / 60000);
+    let { validatedTime: valid } = ticket
+    let minutes = Math.floor(((new Date().getTime()) - valid.getTime()) / 60000);
     
     if(minutes > 1){
       ticket.validated = false
       await ticket.save()
-      throw new NotAllowedError('validation expired, please got to ATM')
+      throw new NotAllowedError('validation expired, please go to ATM')
     } 
   
     const parking = await Parking.findOne({ parkingName })
     
     let { lots } = parking
-  
   
     parking.occupiedLots--
   
@@ -57,11 +54,12 @@ module.exports =  (ticketId, parkingName) => {
     } while (condition===false);
   
     parking.lots = lots
+  
 
     ticket.exit = true
     
-    ticket.save()
+    await ticket.save()
     
-    parking.save()
+    await parking.save()
   })()
 }
