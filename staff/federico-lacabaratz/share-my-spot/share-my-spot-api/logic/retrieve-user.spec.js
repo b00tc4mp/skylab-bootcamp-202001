@@ -1,10 +1,10 @@
 require('dotenv').config()
-
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('share-my-spot-data')
 const { expect } = require('chai')
 const retrieveUser = require('./retrieve-user')
 const { NotFoundError } = require('share-my-spot-errors')
+const bcrypt = require('bcryptjs')
 
 describe('retrieveUser', () => {
     let name, surname, email, phone, password
@@ -28,9 +28,12 @@ describe('retrieveUser', () => {
         let _id
         describe('when user is not deactivated', () => {
             beforeEach(() =>
-                User.create({ name, surname, email, phone, password })
-                    .then(({ id }) => _id = id)
-            )
+            bcrypt.hash(password, 10)
+                .then(password =>
+                    User.create({ name, surname, email, phone, password })
+                )
+                .then(user => _id = user.id)
+        )
 
             it('should succeed on valid id, returning the user', () => {
                 return retrieveUser(_id)

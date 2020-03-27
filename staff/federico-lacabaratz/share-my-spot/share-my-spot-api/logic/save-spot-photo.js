@@ -20,6 +20,7 @@ const path = require('path')
 module.exports = function (userId, spotId, file, filename) {
     validate.string(userId, 'userId')
     validate.string(spotId, 'spotId')
+    // validate.type(file, 'file', Stream)
     validate.string(filename, 'filename')
 
     return (async () => {
@@ -32,7 +33,7 @@ module.exports = function (userId, spotId, file, filename) {
         const dir = `./data/spots/${spotId}`
         if (!fs.existsSync(dir)) throw new NotFoundError(`folder in ${dir} hasn't been created yet`)
 
-        let saveTo = path.join(__dirname, `../data/spots/${spotId}/${filename}.jpg`)
+        let saveTo = path.join(__dirname, `../data/spots/${spotId}/${filename}`)
         return file.pipe(fs.createWriteStream(saveTo))
     })()
 }

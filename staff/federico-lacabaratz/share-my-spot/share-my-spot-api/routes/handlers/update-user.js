@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     try {
         updateUser(userId, body)
             .then(() =>
-                res.status(200).json({ message: "You've successfully updated this User" })
+                res.status(200).json()
             )
             .catch(({ message }) =>
                 res

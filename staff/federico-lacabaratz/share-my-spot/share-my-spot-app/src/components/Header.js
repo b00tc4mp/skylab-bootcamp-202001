@@ -5,7 +5,7 @@ import './Header.sass'
 import logo from '../images/logo.png'
 
 export default withRouter(({ history }) => {
-
+    // const [state, setState] = useContext(Context)
     const [menu, setMenu] = useState(false)
 
     const handleOpenNav = (event) => {
@@ -38,10 +38,9 @@ export default withRouter(({ history }) => {
         history.push('/add-a-spot')
     }
 
-    const handleYourSpots = (event) => {
+    const handleMySpots = (event) => {
         event.preventDefault()
-
-        history.push('/your-spots')
+        history.push('/my-spots')
     }
 
     const handleYourRequests = (event) => {
@@ -50,10 +49,10 @@ export default withRouter(({ history }) => {
         history.push('/manage-your-requests')
     }
 
-    const handleYourBookings = (event) => {
+    const handleMyBookings = (event) => {
         event.preventDefault()
 
-        history.push('/your-bookings')
+        history.push('/my-bookings')
     }
 
     return <>
@@ -69,11 +68,11 @@ export default withRouter(({ history }) => {
             </ul>
             <div className={menu ? "sidemenu active" : "sidemenu"}>
                 <ul>
-                <li><a className="textMenu" href="/search" onClick={handleSearch} >New Search</a></li>
-                <li><a className="textMenu" href="/add-a-spot" onClick={handleAddSpot} >Add A Spot</a></li>
-                <li><a className="textMenu" href="/your-spots" onClick={handleYourSpots}>Your Spots</a></li>
-                <li><a className="textMenu" href="/manage-your-requests" onClick={handleYourRequests}>Manage Your Requests</a></li>
-                <li><a className="textMenu" href="/your-bookings" onClick={handleYourBookings}>Your Bookings</a></li>
+                <li><a className="textMenu" onClick={handleSearch} >New Search</a></li>
+                <li><a className="textMenu" onClick={handleAddSpot} >Add A Spot</a></li>
+                <li><a className="textMenu" onClick={handleMySpots}>My Spots</a></li>
+                <li><a className="textMenu" onClick={handleYourRequests}>Manage Your Requests</a></li>
+                <li><a className="textMenu" onClick={handleMyBookings}>My Bookings</a></li>
                 </ul>
             </div>
         </nav>

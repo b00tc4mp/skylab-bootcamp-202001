@@ -7,25 +7,26 @@ var chai = require('chai')
 chai.use(require('chai-fs'))
 const path = require('path')
 const { ContentError } = require('share-my-spot-errors')
+const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
 describe('createSpot', () => {
-    let publisherId, title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered
 
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
     )
 
+    let title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        phone = 666555444
+        phone = 666555 + Math.random()
         password = `password-${random()}`
-        
+
         title = `title-${random()}`
         addressLocation = `addressLocation-${random()}`
         addressStNumber = `addressStNumber-${random()}`
@@ -36,37 +37,51 @@ describe('createSpot', () => {
         area = 10
         description = `description-${random()}`
         price = 2
-        acceptsBarker = true
+        acceptsBarker = 'yes'
         surveillance = false
-        isCovered = true
-        hourStarts = 9
-        hourEnds = 18
-        mon = true
-        tue = true
-        wed = true
-        thu = true
-        fri = true
+        isCovered = 'yes'
+        hourStarts = '9:00'
+        hourEnds = '18:00'
+        mon = 'yes'
+        tue = 'yes'
+        wed = 'yes'
+        thu = 'yes'
+        fri = 'yes'
         sat = false
         sun = false
     })
 
     describe('when user already exists', () => {
         let _id
-
         beforeEach(() =>
-            User.create({ name, surname, email, phone, password })
-                .then(({ id }) => _id = id)
+            bcrypt.hash(password, 10)
+                .then(password =>
+                    User.create({ name, surname, email, phone, password })
+                )
+                .then(user => _id = user.id)
         )
 
         it('should succeed on correct data', () =>
-            createSpot(_id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun )
+            createSpot(_id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun)
                 .then(() =>
                     Promise.all([
                         User.findById(_id),
-                        Spot.findOne({ publisherId: _id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun })
+                        Spot.findOne({ publisherId: _id, title }).lean()
                     ])
                 )
                 .then(([user, spot]) => {
+
+                    spot.acceptsBarker === true ? acceptsBarker = true : acceptsBarker = false
+                    spot.surveillance === true ? surveillance = true : surveillance = false
+                    spot.isCovered === true ? isCovered = true : isCovered = false
+                    spot.mon === true ? mon = true : mon = false
+                    spot.tue === true ? tue = true : tue = false
+                    spot.wed === true ? wed = true : wed = false
+                    spot.thu === true ? thu = true : thu = false
+                    spot.fri === true ? fri = true : fri = false
+                    spot.sat === true ? sat = true : sat = false
+                    spot.sun === true ? sun = true : sun = false
+
                     expect(user).to.exist
                     expect(user.publishedSpots).to.contain(spot._id)
                     expect(spot).to.exist
@@ -93,7 +108,7 @@ describe('createSpot', () => {
                     expect(spot.sat).to.equal(sat)
                     expect(spot.sun).to.equal(sun)
                     expect(spot.publisherId.toString()).to.equal(_id)
-                    expect(path.join(__dirname, `../data/spots/${spot.id}`)).to.be.a.directory()
+                    expect(path.join(__dirname, `../data/spots/${spot._id}`)).to.be.a.directory()
                 })
         )
     })
@@ -105,7 +120,7 @@ describe('createSpot', () => {
         expect(() => createSpot(title, [])).to.throw(TypeError, ' is not a string')
         expect(() => createSpot(title, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => createSpot(title, undefined)).to.throw(TypeError, 'undefined is not a string')
-        
+
         expect(() => createSpot(title, '')).to.throw(ContentError, 'title is empty')
         expect(() => createSpot(title, ' \t\r')).to.throw(ContentError, 'title is empty')
 
@@ -115,7 +130,7 @@ describe('createSpot', () => {
         expect(() => createSpot(title, addressLocation, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => createSpot(title, addressLocation, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => createSpot(title, addressLocation, null)).to.throw(TypeError, 'null is not a string')
-        
+
         expect(() => createSpot(title, addressLocation, '')).to.throw(ContentError, 'addressLocation is empty')
         expect(() => createSpot(title, addressLocation, ' \t\r')).to.throw(ContentError, 'addressLocation is empty')
 
@@ -125,7 +140,7 @@ describe('createSpot', () => {
         expect(() => createSpot(title, addressLocation, addressStNumber, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => createSpot(title, addressLocation, addressStNumber, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => createSpot(title, addressLocation, addressStNumber, null)).to.throw(TypeError, 'null is not a string')
-        
+
         expect(() => createSpot(title, addressLocation, addressStNumber, '')).to.throw(ContentError, 'addressStNumber is empty')
         expect(() => createSpot(title, addressLocation, addressStNumber, ' \t\r')).to.throw(ContentError, 'addressStNumber is empty')
 
@@ -135,7 +150,7 @@ describe('createSpot', () => {
         expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, null)).to.throw(TypeError, 'null is not a string')
-        
+
         expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, '')).to.throw(ContentError, 'addressOther is empty')
         expect(() => createSpot(title, addressLocation, addressStNumber, addressOther, ' \t\r')).to.throw(ContentError, 'addressOther is empty')
 

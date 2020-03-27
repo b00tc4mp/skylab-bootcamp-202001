@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     try {
         deleteSpot(userId, spotId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully deleted this spot from the database" })
+                res.status(200).json()
             )
             .catch(({ message }) =>
                 res

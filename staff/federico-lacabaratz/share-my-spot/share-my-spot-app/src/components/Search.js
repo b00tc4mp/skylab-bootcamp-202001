@@ -6,17 +6,21 @@ import Feedback from './Feedback'
 import './Feedback.sass'
 import './Search.sass'
 import imgBack from '../images/homeBckgrnd.png'
+import {useParams} from "react-router-dom";
 
 export default withRouter(({ history, onSearch, error }) => {
+    let { spotId } = useParams();
 
     const [set, setState] = useContext(Context)
 
     useEffect(() => {
+
         if (isLoggedIn) {
             (async () => {
                 try {
 
-                    history.push('/search')
+                    if(spotId) history.push(`/detail/${spotId}`)
+                    else history.push('/search')
 
                 } catch (error) {
                     setState({ error: error.message })
@@ -28,10 +32,9 @@ export default withRouter(({ history, onSearch, error }) => {
         }
     }, [])
 
-
     const handleOnSearch = (event) => {
         event.preventDefault()
-        
+
         let addressLocation = event.target.location.value
         let length = event.target.length.value
         let height = event.target.height.value
@@ -39,10 +42,10 @@ export default withRouter(({ history, onSearch, error }) => {
         let price = event.target.price.value
         let acceptsBarker = event.target.acceptsBarker.value.toLowerCase()
 
-        let query = {addressLocation, length, height, width, price, acceptsBarker}
+        let query = { addressLocation, length, height, width, price, acceptsBarker }
 
         let _query = ''
-        
+
         for (const keys in query) {
             if (query[keys].length) {
                 _query += keys + '=' + query[keys] + '&'
@@ -64,10 +67,9 @@ export default withRouter(({ history, onSearch, error }) => {
                         <input className="search__input" type="text" name="width" placeholder="Search by width" />
                         <input className="search__input" type="text" name="price" placeholder="Search by price" />
                         <input className="search__input" type="text" name="acceptsBarker" placeholder="Barker Exchange?" />
-                        
+                        {error && <Feedback message={error} level="warn" />}
                         <button className="search__goSearch">Search</button>
                     </form>
-                    {error && <Feedback message={error} level="warn" />}    
                 </main>
             </div>
         </div>

@@ -5,19 +5,18 @@ require('dotenv').config()
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function () {
-    
+
     return (async () => {
-        const response = await fetch(`${API_URL}/users`, {
+        const response = await fetch(`${API_URL}/spots`, {
             method: 'GET',
-            headers: { Authorization: 'Bearer ' + this.token },
+            headers: { Authorization: 'Bearer ' + this.token }
         })
 
         const { status } = response
 
         if (status === 200){
-            const user = await response.json()
-
-            return user
+            const spots = await response.json()
+            return spots
         }
 
         if (status >= 400 && status < 500) {

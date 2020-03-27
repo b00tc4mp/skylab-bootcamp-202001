@@ -1,13 +1,15 @@
-const { validate } = require('share-my-spot-utils')
-const { models: { User, Spot } } = require('share-my-spot-data')
-const fs = require('fs').promises
-const path = require('path')
-const { NotFoundError } = require('share-my-spot-errors')
+import { validate } from 'share-my-spot-utils'
+import { NotAllowedError } from 'share-my-spot-errors'
+import context from './context'
+require('dotenv').config()
 
-const filesDir = path.join(__dirname, `../data/spots`)
+const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = (publisherId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun) => {
-    validate.string(publisherId, 'publisherId')
+export default (function (body, spotId) {
+    let { title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun } = body
+
+    validate.string(spotId, 'spotId')
+    //validate.string(publisherId, 'publisherId')
     validate.string(title, 'title')
     validate.string(addressLocation, 'addressLocation')
     validate.string(addressStNumber, 'addressStNumber')
@@ -71,17 +73,31 @@ module.exports = (publisherId, title, addressLocation, addressStNumber, addressO
         sun === 'yes' ? sun = true : sun = false
         validate.type(sun, 'sun', Boolean)
     }
-
-    return User.findById(publisherId)
-        .then(user => {
-            if (!user) throw new NotFoundError(`user with id ${publisherId} does not exist`)
-
-            const spot = new Spot({ publisherId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, created: new Date })
-            
-            user.publishedSpots.push(spot.id)
-
-            return Promise.all([user.save(), spot.save()])
-                .then(() => fs.mkdir(path.join(filesDir, spot.id)))
-                .then(() => spot.id)
+    return (async () => {
+        const response = await fetch(`${API_URL}/update-spot/${spotId}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Bearer ' + this.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
         })
-}
+
+        const { status } = response
+
+        if (status === 200) return
+
+        if (status >= 400 && status < 500) {
+            const { error } = await response.json()
+
+            if (status === 401) {
+                throw new NotAllowedError(error)
+            }
+
+            throw new Error(error)
+        }
+
+        throw new Error('server error')
+    })()
+
+}).bind(context)

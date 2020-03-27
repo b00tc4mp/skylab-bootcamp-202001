@@ -12,12 +12,13 @@ describe('findAvailableSpots', () => {
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
     )
 
-    let name, surname, email, password, title, description, date, location
+    let name, surname, email, phone, password, title, description, date, location
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
+        phone = 123456789
         password = `password-${random()}`
         title = `title-${random()}`
         description = `description-${random()}`
@@ -29,7 +30,7 @@ describe('findAvailableSpots', () => {
         let _id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
+            User.create({ name, surname, email, phone, password })
                 .then(({ id }) => _id = id)
                 .then(() => {
                     const spots = []

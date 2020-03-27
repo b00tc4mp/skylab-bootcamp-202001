@@ -14,9 +14,10 @@ export default (function (body) {
         validate.email(email)
         if (!email.trim().length) throw new Error(`email is empty or blank`)
     }
-
+    
     if (phone) {
         validate.type(phone, 'phone', Number)
+        if (!phone.trim().length) throw new Error(`phone is empty or blank`)
     }
 
     if (password) {

@@ -30,7 +30,7 @@ export default withRouter(function ({ onLogin, history, error }) {
                 <input className="login__input" type="password" name="password" placeholder="password" />
                 <button className="login__login">Login</button><br></br>
                 {error && <Feedback message={error} level="warn" />}
-                <a className="login__toRegister" href="/login" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
+                <a className="login__toRegister" onClick={handleGoToRegister}>Not registered yet? - Go To Register</a>
             </form>
         </div>
     </>

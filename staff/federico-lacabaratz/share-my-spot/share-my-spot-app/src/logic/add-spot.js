@@ -1,57 +1,39 @@
 import { validate } from 'share-my-spot-utils'
-import { NotAllowedError } from 'share-my-spot-errors'
+import { NotAllowedError, NotFoundError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function (publisherId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun)) {
-
-    if (email) {
-        validate.string(email, 'email')
-        validate.email(email)
-        if (!email.trim().length) throw new Error(`email is empty or blank`)
-    }
-
-    if (phone) {
-        validate.type(phone, 'phone', Number)
-    }
-
-    if (password) {
-        validate.string(password, 'password')
-        if (!password.trim().length) throw new Error(`password is empty or blank`)
-    }
-
-    if (oldPassword) {
-        validate.string(oldPassword, 'oldPassword')
-        if (!oldPassword.trim().length) throw new Error(`oldPassword is empty or blank`)
-    }    
+export default (function (title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun) {
 
     return (async () => {
-        const response = await fetch(`${API_URL}/users`, {
-            method: 'PATCH',
+        let response = await fetch(`${API_URL}/spots`, {
+            method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + this.token,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify({title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun})
         })
 
         const { status } = response
 
-        if (status === 200) return
+        response = await response.json()
 
-        if (status >= 400 && status < 500) {
-            const { error } = await response.json()
-
-            if (status === 401) {
-                throw new NotAllowedError(error)
-            }
-
-            throw new Error(error)
+        if (status === 200) {
+            const { id } = response
+            
+            return id
         }
+        
+        const { message } = response
 
-        throw new Error('server error')
+        if (status === 401) throw new NotAllowedError(message)
+
+        if (status === 404) throw new NotFoundError(message)
+
+        throw new Error(message)
     })()
 
 }).bind(context)
