@@ -1,92 +1,52 @@
 @import ./config
 @import ./base-components
 
-body
-    display: flex
-    background-color: $genbg-color
-
 .header
-    @extend %flexRowCenter
-    background-color: $genbg-inputColor
     height: 10%
     width: 100%
 
-    #mySidepanel--open
-        width: 250px
+.navbar
+    background-color: #e6e6e6
+.navbar__ul
+    display: flex
+    justify-content: space-between
+    align-items: center
+    list-style: none
 
-    #mySidepanel--closed
-        width: 0px
+.header__logo-img
+    margin-left: 1em
+    max-width: 8.5rem
 
-    .sidepanel  
-        width: 0
-        position: fixed
-        z-index: 1
-        height: 20em
-        top: 0
-        left: 0
-        background-color: #4e4b4b
-        overflow-x: hidden
-        transition: 0.25s
-        padding-top: 2.5em
+.burger
+    font-size: 2rem
+    margin-left: 1rem
 
+.navbar__social
+    font-size: 1.5rem
+    
+    a 
+        margin-right: 1rem
 
-    .sidepanel a 
-        padding: 0.25em 0.25em 0.25em 1em
-        text-decoration: none
-        font-size: 1.5em
-        color: #818181
-        display: block
-        transition: 0.2s
+.textMenu
+    margin: 0.2em
+    padding: 0.25em 0.25em 0.25em 0.25em
+    text-decoration: none
+    font-size: 1.5em
+    color: #d3d1d1
+    display: block
+    transition: 0.2s
+    cursor: pointer
 
+.textMenu a:hover
+    color: #f1f1f1
 
-    .sidepanel a:hover 
-        color: #f1f1f1
+.sidemenu
+    height: 30vh
+    width: 63%
+    position: absolute
+    left: -999px
+    background-color: #4e4b4b
+    transition: ease 1s
 
-
-    .sidepanel .closebtn 
-        position: absolute
-        top: 0
-        right: 0.25em
-        font-size: 1.5em
-
-
-    .openbtn 
-        font-size: 1.5em
-        cursor: pointer
-        margin-left: 1em
-        width: 15%
-        border: none
-
-
-    .openbtn:hover 
-        background-color:#444
-
-        
-    .header__logo
-        @extend %flexRowCenter
-        justify-content: center
-
-        img
-            display: block
-            text-align: center
-            width: 55%
-
-    .header__account
-        @extend %flexRowCenter
-        justify-content: flex-start
-        width: 30%
-
-        &__logout
-            font-size: 1.5em
-            cursor: pointer
-            margin-left: 0.05em
-            margin-right: 0.5em
-            display: block
-            text-align: left
-
-        &__user
-            font-size: 1.5em
-            cursor: pointer
-            margin-right: 0.05em
-            display: block
-            text-align: right
+.active
+    left: 0

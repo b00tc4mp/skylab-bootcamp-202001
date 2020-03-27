@@ -3,8 +3,6 @@ import { NotAllowedError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()
 
-//const { env: { REACT_APP_API_URL: API_URL } } = process
-
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (email, password) {

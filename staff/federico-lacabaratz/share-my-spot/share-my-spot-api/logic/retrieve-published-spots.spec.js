@@ -12,12 +12,13 @@ describe('retrievePublishedSpots', () => {
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
     )
 
-    let name, surname, email, password, title, description, date, location
+    let name, surname, email, phone, password, title, description, date, location
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
+        phone = 123456+`${random()}`
         password = `password-${random()}`
         title = `title-${random()}`
         description = `description-${random()}`
@@ -30,8 +31,8 @@ describe('retrievePublishedSpots', () => {
 
         beforeEach(() =>
             User.insertMany([
-                { name, surname, email, password },
-                { name, surname, email, password }
+                { name, surname, email, phone, password },
+                { name, surname, email, phone, password }
             ])
                 .then(([{ id }, { id: other }]) => {
                     _id = id

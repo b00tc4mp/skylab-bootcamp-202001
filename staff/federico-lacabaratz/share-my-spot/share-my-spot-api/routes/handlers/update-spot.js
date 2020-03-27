@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     try {
         updateSpot(userId, body, spotId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully updated this spot" })
+                res.status(200).json()
             )
             .catch(({ message }) =>
                 res

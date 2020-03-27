@@ -15,12 +15,13 @@ describe('updateUser', () => {
     })
 
 
-    let userId, name, surname, email, password, oldPassword, phone
+    let userId, name, surname, email, phone, password, oldPassword
 
     beforeEach(() => {
         name = 'name-' + random()
         surname = 'surname-' + random()
         email = random() + '@mail.com'
+        phone = 666555444
         password = 'password-' + random()
     })
 
@@ -28,7 +29,7 @@ describe('updateUser', () => {
 
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
-            const user = await User.create({ name, surname, email, password: _password })
+            const user = await User.create({ name, surname, email, phone, password: _password })
             userId = user.id
         })
 

@@ -3,11 +3,12 @@ const { models: { User } } = require('share-my-spot-data')
 const { NotAllowedError } = require('share-my-spot-errors')
 const bcrypt = require('bcryptjs')
 
-module.exports = (name, surname, email, password) => {
+module.exports = (name, surname, email, phone, password) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
     validate.string(email, 'email')
     validate.email(email)
+    validate.type(phone, 'phone', Number)
     validate.string(password, 'password')
 
     return User.findOne({ email })
@@ -17,7 +18,7 @@ module.exports = (name, surname, email, password) => {
             return bcrypt.hash(password, 10)
         })
         .then(password => {
-            user = new User({ name, surname, email, password, created: new Date })
+            user = new User({ name, surname, email, phone, password, created: new Date })
 
             return user.save()
         })

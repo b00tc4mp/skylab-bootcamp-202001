@@ -2,9 +2,10 @@ const { findAvailableSpots } = require('../../logic')
 const {  ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-
+    const  { query } = req
+    
     try {
-        findAvailableSpots()
+        findAvailableSpots(query)
             .then(spots =>
                 res.status(200).json(spots)
             )

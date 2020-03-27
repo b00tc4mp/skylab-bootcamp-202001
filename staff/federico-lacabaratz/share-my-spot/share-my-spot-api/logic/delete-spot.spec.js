@@ -8,18 +8,18 @@ const deleteSpot = require('./delete-spot')
 
 describe('deleteSpot', () => {
 
-    let publisherId, title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered
-
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
     )
 
+    let title, description, addressLocation, addressStNumber, addressOther, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun, length, width, height, area, price, acceptsBarker, surveillance, isCovered
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
+        phone = 666555 + Math.random()
         password = `password-${random()}`
 
         title = `title-${random()}`
@@ -32,39 +32,39 @@ describe('deleteSpot', () => {
         area = 10
         description = `description-${random()}`
         price = 2
-        acceptsBarker = true
+        acceptsBarker = 'yes'
         surveillance = false
-        isCovered = true
+        isCovered = 'yes'
         hourStarts = 9
         hourEnds = 18
-        mon = true
-        tue = true
-        wed = true
-        thu = true
-        fri = true
+        mon = 'yes'
+        tue = 'yes'
+        wed = 'yes'
+        thu = 'yes'
+        fri = 'yes'
         sat = false
         sun = false
     })
 
     describe('when user already exists', () => {
-
-        beforeEach(() => 
-            Promise.all([User.create({ name, surname, email, password }), Spot.create({_id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun }) ])
+        let _id
+        beforeEach(() =>
+            Promise.all([User.create({ name, surname, email, phone, password }), 
+                Spot.create({ _id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun })])
                 .then(([user, spot]) => {
                     _id = user.id
                     _spotId = spot.id
                     user.save()
                     return spot.save()
                 })
-                .then(() => {})
-                )
-
+                .then(() => { })
+        )
+                
         it('should succeed on correct and valid and right data', () =>
             User.findById(_id)
                 .then((user) => {
                     expect(user.id).to.exist
                 })
-
                 .then(() => deleteSpot(_id, _spotId)
                     .then(() => User.findById(_id).lean())
                     .then((user) => {
@@ -94,16 +94,16 @@ describe('deleteSpot', () => {
             let userId
 
             userId = 12345
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
             userId = false
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
             userId = undefined
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
             userId = []
-            expect(() => deleteSpot(userId, )).to.throw(TypeError, `userId ${userId} is not a string`)
+            expect(() => deleteSpot(userId)).to.throw(TypeError, `userId ${userId} is not a string`)
 
         })
 

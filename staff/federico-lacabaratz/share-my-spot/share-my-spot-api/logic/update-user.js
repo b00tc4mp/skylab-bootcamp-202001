@@ -1,18 +1,18 @@
     const { validate } = require('share-my-spot-utils')
     const { models: { User } } = require('share-my-spot-data')
-    const { ContentError, NotAllowedError, NotFoundError } = require('share-my-spot-errors')
+    const { NotAllowedError, NotFoundError } = require('share-my-spot-errors')
     const bcrypt = require('bcryptjs')
     
     module.exports = (userId, body) => {
         validate.string(userId, 'userId')
     
-        const validFields = ['email', 'password', 'oldPassword', 'phone']
+        const validFields = ['email', 'phone', 'password', 'oldPassword']
     
         for (key in body) {
             if (!validFields.includes(key)) throw new NotAllowedError(`field ${key} cannot be modified`)
     
             if (key === 'password' && !body.oldPassword) throw new Error('OldPassword is needed to change to a new password')
-            if (key === 'OldPassword' && !body.password) throw new Error('a new password is needed to change an OldPassword')
+            if (key === 'oldPassword' && !body.password) throw new Error('a new password is needed to change an OldPassword')
         }
     
         return (async() => {

@@ -2,10 +2,10 @@ const { registerUser } = require('../../logic')
 const { NotAllowedError, ContentError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    const { body: { name, surname, email, password } } = req
+    const { body: { name, surname, email, phone, password } } = req
 
     try {
-        registerUser(name, surname, email, password)
+        registerUser(name, surname, email, phone, password)
             .then(() => res.status(201).end())
             .catch(error => {
                 let status = 400
