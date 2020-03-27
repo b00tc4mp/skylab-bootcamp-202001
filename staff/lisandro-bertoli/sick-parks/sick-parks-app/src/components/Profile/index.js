@@ -30,7 +30,7 @@ export default function Profile({ navigation, route }) {
     }, [_user.parks])
 
 
-
+    const handleOnToDetails = () => { }
 
     const handleSettingsChange = async () => {
         //await updateUser()
@@ -40,7 +40,7 @@ export default function Profile({ navigation, route }) {
 
     const handleGoToMyParks = async () => {
         const myParks = await retrievePublishedParks()
-        console.log(myParks)
+
         setPublishedParks(myParks)
 
         setShowModal(true)
@@ -81,7 +81,7 @@ export default function Profile({ navigation, route }) {
                             {publishedParks && <Text style={styles.headerText} >My Parks</Text>}
                             {editProfile && <Text style={styles.headerText} >Settings</Text>}
                         </View>
-                        {publishedParks && <Results results={publishedParks} />}
+                        {publishedParks && <Results onToDetails={handleOnToDetails} results={publishedParks} />}
 
 
                         {editProfile &&
