@@ -34,6 +34,7 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "npx mocha --timeout 10000 src/logic/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha --timeout 10000 src/logic/*.spec.js",
     "build": "react-scripts build",
     "test-jest": "react-scripts test",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
@@ -58,6 +59,7 @@
     "chai": "^4.2.0",
     "mocha": "^7.1.1",
     "node-sass": "^4.13.1",
+    "nyc": "^15.0.0",
     "sass-loader": "^8.0.2",
     "surge": "^0.21.3"
   }

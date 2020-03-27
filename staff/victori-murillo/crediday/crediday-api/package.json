@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx mocha --timeout 10000 logic/*/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha --timeout 10000 logic/*/*.spec.js",
     "test-debug": "npx mocha debug logic utils"
   },
   "keywords": [],
@@ -25,6 +26,7 @@
     "chai": "^4.2.0",
     "chalk": "^3.0.0",
     "dotenv": "^8.2.0",
-    "mocha": "^7.1.0"
+    "mocha": "^7.1.0",
+    "nyc": "^15.0.0"
   }
 }

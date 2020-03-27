@@ -23,5 +23,17 @@ The user can create a company selecting the some plan. Also if the user lost the
 
 ### Server-side
 
+#### Company
+![titulo](images/coverage-company.png)
+
+#### Credit
+![titulo](images/coverage-credit.png)
+
+#### Payment
+![titulo](images/coverage-payment.png)
+
+#### User
+![titulo](images/coverage-user.png)
 
 ### Client-side
+![titulo](images/coverage-web.png)
