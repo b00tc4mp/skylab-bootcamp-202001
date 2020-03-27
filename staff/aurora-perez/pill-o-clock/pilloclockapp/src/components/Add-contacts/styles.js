@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 32,
     color: '#777',
+    fontFamily: 'Sensei-Medium'
   },
   textBold: {
     fontWeight: '500',

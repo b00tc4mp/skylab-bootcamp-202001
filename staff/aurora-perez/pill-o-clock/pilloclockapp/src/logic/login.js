@@ -2,6 +2,7 @@ const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
 const fetch = require ('node-fetch')
 const context = require('./context')
+const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function(email, password) {
     validate.string(email, 'email')
@@ -9,7 +10,7 @@ module.exports = function(email, password) {
     validate.string(password, 'password')
 
     return (async() => {
-        const response = await fetch(`http://192.168.1.85:8085/api/users/auth`, {
+        const response = await fetch(`${API_URL}/api/users/auth`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })

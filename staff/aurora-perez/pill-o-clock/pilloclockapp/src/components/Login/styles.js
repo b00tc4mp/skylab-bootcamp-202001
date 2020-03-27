@@ -2,10 +2,6 @@ import {StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
 
-    text : {
-        fontFamily : 'Sensei-Medium.ttf.ttf'
-    },
-
     container : {
         flex : 1,
         backgroundColor : '#fffdf9',
@@ -24,7 +20,8 @@ const styles = StyleSheet.create({
         fontSize : 50,
         color : '#297885',
         alignSelf : 'center',
-        fontWeight: '200'
+        fontWeight: '200',
+        fontFamily : 'Sensei-Medium'
     },
     
     button : {
@@ -35,19 +32,22 @@ const styles = StyleSheet.create({
         backgroundColor : '#297885',
         padding : 10,
         borderRadius : 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        fontFamily : 'Sensei-Medium'
     },
 
     toRegister : {
         marginTop : 20,
         fontSize : 15,
         alignSelf : 'center',
-        color : '#79BABF'
+        color : '#79BABF',
+        fontFamily : 'Sensei-Medium'
     },
 
     error : {
         marginTop : 20,
-        padding : 10
+        padding : 10,
+        fontFamily : 'Sensei-Medium'
     },
 
     logo : {

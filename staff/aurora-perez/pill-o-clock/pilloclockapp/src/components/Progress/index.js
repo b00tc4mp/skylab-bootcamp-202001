@@ -8,11 +8,21 @@ import moment from 'moment'
 function Progress ({progress, user, token}) {
     //console.log(progress)
     //console.log(token)
-
     const [ markedDates, setMarketDates] = useState()
 
+    function colorCheck (check) {
+        let index
+        check = (progress.reduce((accum, value) => accum + value, 0))/progress.length
+        if (check===1) return index = '#75cf67'
+        else if (check <1 && check >= 0.75) return index= '#c6f186'
+        else if (check < 0.75 && check > 0.5) return index = "#DBF186"
+        else if (check === 0.5) return index ='#FFF881'
+        else if (check < 0.5 && check >= 0.25) return index = "#FFBF84"
+        else check = 'F8764F'
+    }
+
     async function calendar() {
-        let check
+        let _markedDates = {}
 
         let date = AsyncStorage.getItem('date')
 
@@ -27,15 +37,10 @@ function Progress ({progress, user, token}) {
         if (today > date) {
             await updateProgress(progress); //vaciar array 
 
-            let index
+            
+            let check = (progress.reduce((accum, value) => accum + value, 0))/progress.length
 
-            check = (progress.reduce((accum, value) => accum + value, 0))/progress.length
-            if (check===1) {index = 'green'}
-            else if (check <1 && check >= 0.75) {index= '#7CBA00'}
-            else if (check < 0.75 && check > 0.5) {index = "#DBE900"}
-            else if (check === 0.5) {index ='yellow'}
-            else if (check < 0.5 && check >= 0.25) {index = "#FF8000"}
-            else check = 'red'
+            let index = colorCheck(check)
 
             const recordDaily ={}
 
@@ -43,29 +48,26 @@ function Progress ({progress, user, token}) {
             recordDaily.record = index
 
             await addProgressRecord(token, recordDaily)
-        }
+        } else {
+            let checkToday
 
-        const allProgress = await retrieveProgressRecord(token);
+            checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
+            
+            let indexToday = colorCheck(checkToday, indexToday)
+
+            _markedDates[today] = { customStyles: { container: {backgroundColor: indexToday}, text: {color: 'black', fontWeight: 'bold'}}}
+        }
+       
+        const allProgress = await retrieveProgressRecord(token)
 
         console.log(allProgress)
 
-        let _markedDates = {}
+        
         allProgress.forEach(day => {
-            _markedDates[day.date] = {
-      customStyles: {
-        container: {
-          backgroundColor: day.record
-        },
-        text: {
-          color: 'black',
-          fontWeight: 'bold'
-        }
-      }
-    }
-
-            //_markedDates[day.date] = {disabled: true, startingDay: true, color: day.record, endingDay: true};
+            _markedDates[day.date] = { customStyles: { container: {backgroundColor: day.record }, text: {color: 'black', fontWeight: 'bold'}}}
         })
    
+
         console.log(_markedDates)
         setMarketDates(_markedDates);
     }

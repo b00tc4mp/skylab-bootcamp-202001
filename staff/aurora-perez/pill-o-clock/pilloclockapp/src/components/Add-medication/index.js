@@ -21,7 +21,7 @@ function AddMedication ({onSubmit, error, drugs}) {
                 <Text style = {styles.text}>Select name: </Text>
 
                 <View style={{width: 150, marginLeft: 50}}>
-                <Picker style={{ height: 100}} itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium.ttf'}} selectedValue = {drug} onValueChange = {setDrug}>
+                <Picker style={{ height: 100}} itemStyle={{ height: 100, color:'#4CBBC2', fontFamily:'Sensei-Medium'}} selectedValue = {drug} onValueChange = {setDrug}>
                     {drugs.map(drug => {
                         return <Picker.Item label = {drug.drugName} value = {drug.id.toString()}/>
                     })}
