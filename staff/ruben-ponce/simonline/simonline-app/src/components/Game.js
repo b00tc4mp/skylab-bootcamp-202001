@@ -12,16 +12,17 @@ export default ({ goTo, gameId }) => {
   const [error, setError] = useState(undefined);
   const [userId, setUserId] = useState();
   const [currentPlayerName, setCurrentPlayerName] = useState();
+  const [currentPlayerId, setCurrentPlayerId] = useState();
   const [lastPlayerOut, setLastPlayerOut] = useState();
   const [playersRemain, setPlayersRemain] = useState();
   const [winner, setWinner] = useState();
   const [countdown, setCountdown] = useState();
-  const [combinationLaunched, setCombinationLaunched] = useState(false);
+  //const [combinationLaunched, setCombinationLaunched] = useState();
   const [color, setColor] = useState("");
+  const [combinationPlayer, setCombinationPlayer] = useState([])
   let playersName;
   let status;
-  let combinationPlayer = [];
-  //let combinationLaunched = false;
+  let combinationLaunched = false;
 
   useEffect(() => {
     (async () => {
@@ -38,8 +39,10 @@ export default ({ goTo, gameId }) => {
                 const currentPlayerData = playersName.find(
                   x => x.id === status.currentPlayer
                 );
+                
                 setCurrentPlayerName(currentPlayerData.username);
-                //timeout
+                setCurrentPlayerId(currentPlayerData.id)
+                //countdown
                 let x = Math.floor(
                   (new Date() - new Date(status.turnStart)) / 1000
                 );
@@ -57,14 +60,11 @@ export default ({ goTo, gameId }) => {
                   );
                   setLastPlayerOut(lastPlayerOutObj.username);
                 }
-                //set combination each time (if not combinationViewed)
-                //setCombination(status.pushCombination)
                 // await setCombinationViewed(gameId)
-
                 
                 if (!combinationLaunched) { 
-                    //combinationLaunched = true
-                    setCombinationLaunched(true); // state
+                    combinationLaunched = true
+                    //setCombinationLaunched(true); // state
 
                     await showCombination(status.pushCombination);
 
@@ -80,7 +80,6 @@ export default ({ goTo, gameId }) => {
                 setCountdown(undefined);
                 setCurrentPlayerName(undefined);
                 setPlayersRemain(undefined);
-                console.log("finished");
                 clearInterval(interval);
                 // TODO do not delete games (keep them in db for later consultation)
                 setTimeout(()=> goTo('multiplayer'), 5000)
@@ -114,6 +113,7 @@ export default ({ goTo, gameId }) => {
   return (
     <div className="p1 game">
       {console.log(combinationLaunched)}
+      {console.log(combinationPlayer)}
 
       {/* Block__Element--Modifier */}
 
@@ -128,8 +128,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__red red_active"
                 : "game__board__container__red"
             }
-            onClick={() => {
-                if (userId === status.currentPlayer) combinationPlayer.push(0)
+            onClick={ e  => {
+                e.preventDefault()
+                if (userId === currentPlayerId) setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
             }}
           ></div>
           <div
@@ -138,8 +139,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__green green_active"
                 : "game__board__container__green"
             }
-            onClick={() => {
-                if (userId === status.currentPlayer) combinationPlayer.push(1)
+            onClick={ e => {
+                e.preventDefault()
+                if (userId === currentPlayerId) setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
             }}
           ></div>
           <div
@@ -148,8 +150,9 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__blue blue_active"
                 : "game__board__container__blue"
             }
-            onClick={() => {
-                if (userId === status.currentPlayer) combinationPlayer.push(2)
+            onClick={ e => {
+                e.preventDefault()
+                if (userId === currentPlayerId) setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
             }}
           ></div>
           <div
@@ -158,8 +161,10 @@ export default ({ goTo, gameId }) => {
                 ? "game__board__container__yellow yellow_active"
                 : "game__board__container__yellow"
             }
-            onClick={() => {
-                if (userId === status.currentPlayer) combinationPlayer.push(3)
+            onClick={ e => {
+                e.preventDefault()
+                if (userId === currentPlayerId) combinationPlayer.push(3)
+                //setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
             }}
           ></div>
           <div className="game__board__container__gray"></div>
