@@ -139,6 +139,7 @@ export default withRouter(function ({ history }) {
   async function handleExitVehicle(ticketId) {
     try{
       await exitVehicle(ticketId)
+      setDataTicket(undefined)
       history.push('/home')
     }catch(error){
       setDataTicket(undefined)
