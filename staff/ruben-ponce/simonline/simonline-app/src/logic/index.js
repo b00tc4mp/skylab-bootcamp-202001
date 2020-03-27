@@ -8,6 +8,7 @@ import join from './join'
 import retrieveGameStatus from './retrieve-game-status'
 import startGame from './start-game'
 import retrievePlayersBasicData from './retrieve-players-basic-data'
+import playCombination from './play-combination'
 import deleteGame from './delete-game'
 import isLoggedIn from './is-logged-in'
 import logout from './logout'
@@ -25,6 +26,7 @@ export {
     startGame,
     retrievePlayersBasicData,
     deleteGame,
+    playCombination,
     isLoggedIn,
     logout
 }

@@ -2,7 +2,7 @@ const { playCombination } = require('../../logic')
 const { NotFoundError ,ContentError } = require('simonline-errors')
 
 module.exports = (req, res) => {
-    
+    debugger
     const { payload: {sub: playerId} , body: { combination } } = req
     try {
         playCombination(playerId, combination)
@@ -17,12 +17,7 @@ module.exports = (req, res) => {
                 if (error instanceof NotFoundError)
                     status = 404
 
-                res
-                    .status(status)
-                    .json({
-                        error: message
-                    })
-            })
+                res.status(status).json({error: message})})
     } catch (error) {
         let status = 400
 
@@ -31,10 +26,6 @@ module.exports = (req, res) => {
 
         const { message } = error
 
-        res
-            .status(status)
-            .json({
-                error: message
-            })
+        res.status(status).json({error: message})
     }
 }

@@ -4,7 +4,8 @@ import {
   isLoggedIn,
   retrieveUserId,
   retrieveGameStatus,
-  retrievePlayersBasicData
+  retrievePlayersBasicData,
+  playCombination
 } from "../logic";
 import Feedback from "./Feedback";
 
@@ -17,12 +18,14 @@ export default ({ goTo, gameId }) => {
   const [playersRemain, setPlayersRemain] = useState();
   const [winner, setWinner] = useState();
   const [countdown, setCountdown] = useState();
+  const [_status, setStatus] = useState();
   //const [combinationLaunched, setCombinationLaunched] = useState();
   const [color, setColor] = useState("");
   const [combinationPlayer, setCombinationPlayer] = useState([])
   let playersName;
   let status;
   let combinationLaunched = false;
+  let t;
 
   useEffect(() => {
     (async () => {
@@ -34,6 +37,7 @@ export default ({ goTo, gameId }) => {
             try {
               setUserId(retrieveUserId(sessionStorage.token));
               status = await retrieveGameStatus(gameId);
+              setStatus(status)
               if (status.status === "started") {
                 //current player
                 const currentPlayerData = playersName.find(
@@ -108,12 +112,23 @@ export default ({ goTo, gameId }) => {
     });
   }
 
+  async function send() {
+    debugger
+    t = setTimeout(await playCombination(combinationPlayer), 4000)
+  }
+
+  function stop() {
+    clearTimeout(t)
+  }
+
   //match current player & userId to active logic onclick
 
   return (
     <div className="p1 game">
       {console.log(combinationLaunched)}
       {console.log(combinationPlayer)}
+      {_status && console.log(_status.pushCombination)}
+      {/* {status.pushCombination && console.log(status.pushCombination)} */}
 
       {/* Block__Element--Modifier */}
 
@@ -130,7 +145,17 @@ export default ({ goTo, gameId }) => {
             }
             onClick={ e  => {
                 e.preventDefault()
-                if (userId === currentPlayerId) setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
+                if (userId === currentPlayerId) {
+                  setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
+                  if (t) {
+                    debugger
+                    stop()
+                    send()
+                  } else{
+                    debugger
+                    send()
+                  }
+                }
             }}
           ></div>
           <div
