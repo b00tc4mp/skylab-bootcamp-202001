@@ -6,7 +6,7 @@ const context= require('./context')
 module.exports = function () {
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/drugs`)
+        const response = await fetch(`${this.API_URL}/drugs`)
     
         const { status } = response
         

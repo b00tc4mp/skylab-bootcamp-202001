@@ -3,13 +3,13 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
-module.exports = function (token, check) {
-    validate.string(token, 'token')
+module.exports = function (check) {
     validate.type(check, 'check', Boolean)
 
     return (async() => {
+        const token = await this.storage.getItem('token')
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users/add-progress`, {
+        const response = await fetch(`${this.API_URL}/api/users/add-progress`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

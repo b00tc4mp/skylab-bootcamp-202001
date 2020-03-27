@@ -16,7 +16,7 @@ module.exports = function (name, surname, gender, age, phone, profile, email, pa
     
     return (async() => {
 
-        const response = await fetch(`http://192.168.1.85:8085/api/users`, {
+        const response = await fetch(`${this.API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, surname, gender, age, phone, profile, email, password })

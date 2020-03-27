@@ -3,15 +3,17 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
-module.exports = function (token, drugId, time) {
-    validate.string(token, 'token')
+module.exports = function (drugId, time) {
+   
     validate.string(drugId, 'drugId')
-    console.log(time)
-    //validate.stringOfNumbers(time)
+    time.forEach(alarm =>{
+        validate.stringOfNumbers(alarm)
+    })
 
     return (async() => {
+        const token = await this.storage.getItem('token')
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users/add-prescription`, {
+        const response = await fetch(`${this.API_URL}/users/add-prescription`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

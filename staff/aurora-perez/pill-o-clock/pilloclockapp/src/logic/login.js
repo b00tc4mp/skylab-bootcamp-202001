@@ -20,8 +20,9 @@ module.exports = function(email, password) {
 
         if (status === 200) {
             const { token } = await response.json()
-            
-            return token
+
+            await this.storage.setItem('token', token)
+            return
         }
 
         if (status >= 400 && status < 500) {

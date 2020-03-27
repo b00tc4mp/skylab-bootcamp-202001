@@ -8,7 +8,7 @@ module.exports = function (id) {
 
     return (async() => {
    
-        const response = await fetch(`http://192.168.1.85:8085/api/drug/${id}`)
+        const response = await fetch(`${this.API_URL}/drug/${id}`)
     
         const { status } = response
         

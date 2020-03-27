@@ -10,7 +10,7 @@ const fs = require('fs')
 const path = require('path')
 const { mongoose } = require('pill-o-clock-data')
 const router = require('./routes')
-var cors = require('cors')
+const cors = require('cors')
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {

@@ -3,12 +3,12 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch')
 const context = require('./context')
 
-module.exports = function (token) {
-    validate.string(token, 'token')
+module.exports = function () {
 
     return (async() => {
+        const token = await this.storage.getItem('token')
    
-        const response = await fetch(`http://192.168.1.85:8085/api/users`, {
+        const response = await fetch(`${this.API_URL}/users`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`

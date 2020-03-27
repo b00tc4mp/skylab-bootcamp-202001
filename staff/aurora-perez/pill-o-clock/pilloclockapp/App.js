@@ -40,17 +40,17 @@ import logic, {
   retrieveContacts,
   retrieveDrugs,
   retrieveProgress,
+  isLoggedIn
 } from './src/logic'
 
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.1.85:8085/api/'
+logic.__context__.API_URL = 'http://192.168.1.85:8085/api'
 console.disableYellowBox = true
 
 function App() {
   const [view, setView] = useState('login')
   const [error, setError] = useState(null)
   const [user, setUser] = useState()
-  const [token, setToken] = useState()
   const [medication, setMedication] = useState()
   const [drugDetail, setDrugDetail] = useState()
   const [times, setTimes] = useState()
@@ -61,7 +61,33 @@ function App() {
   const [drugs, setDrugs] = useState()
   const [progress, setProgress] = useState()
 
-  //AsyncStorage.clear()
+  useEffect(()=>{
+    try{
+      (async()=>{
+        if(await isLoggedIn()) {
+          const user = await retrieveUser()
+          if (user.profile === 'pharmacist') {
+              setUser(user)
+
+              setGoLanding(true)
+
+              setView('landingPharmacist')
+            } else if (user.profile === 'patient') {
+              setUser(user)
+              setGoLanding(true)
+              setView('landingPatient')
+
+            } else {
+              setView('login')
+            }
+          
+        }
+      })()
+
+    }catch({message}){
+      console.log(message)
+    }
+  })
 
   useEffect(() => {
     //if(user) {
@@ -119,7 +145,7 @@ function App() {
     return () => clearInterval(interval)
   }, []);
 
-  pushNotification.configure(token)
+  pushNotification.configure()
 
   function __handleError__(message) {
     setError(message)
@@ -138,7 +164,6 @@ function App() {
   }
 
   async function handleToLogin() {
-    setToken()
     setError(null)
     setGoLanding(false)
     setView('login')
@@ -146,25 +171,22 @@ function App() {
 
   async function handleLogin({email, password}) {
     try {
-      const _token = await login(email, password)
-      const loggedUser = await retrieveUser(_token)
+      await login(email, password)
+      const loggedUser = await retrieveUser()
 
       if (loggedUser.profile === 'pharmacist') {
-        setToken(_token)
-
         setUser(loggedUser)
 
         setGoLanding(true)
 
         setView('landingPharmacist')
       } else if (loggedUser.profile === 'patient') {
-        setToken(_token)
-
         setUser(loggedUser)
         setGoLanding(true)
         setView('landingPatient')
+
       } else {
-        //TODO
+        setView('login')
       }
     } catch ({message}) {
       __handleError__(message)
@@ -178,7 +200,7 @@ function App() {
 
   async function handleToMedication() {
     try {
-      const _medication = await retrieveMedication(token)
+      const _medication = await retrieveMedication()
 
       let alarms = await AsyncStorage.getItem('alarms')
 
@@ -213,6 +235,7 @@ function App() {
   }
 
   async function handleAddMedication(info) {
+    console.log(info)
     const {drug} = info
 
     try {
@@ -233,7 +256,7 @@ function App() {
         times.push(`${info[`hour${i}`]}` + `${info[`min${i}`]}`);
       }
 
-      await addMedication(token, drug, times)
+      await addMedication(drug, times)
       handleToMedication()
     } catch ({message}) {
       __handleError__(message)
@@ -259,9 +282,9 @@ function App() {
 
   async function handleToDeleteMedication({id}) {
     try {
-      await deleteMedication(token, id)
+      await deleteMedication(id)
 
-      const _medication = await retrieveMedication(token)
+      const _medication = await retrieveMedication()
 
       let alarms = await AsyncStorage.getItem('alarms')
       alarms && (alarms = JSON.parse(alarms))
@@ -278,7 +301,7 @@ function App() {
 
   async function handleToProgress() {
     try {
-      const _progress = await retrieveProgress(token)
+      const _progress = await retrieveProgress()
       setProgress(_progress)
 
       setView('progress')
@@ -289,7 +312,7 @@ function App() {
 
   async function handleToContacts() {
     try {
-      const _contacts = await retrieveContacts(token)
+      const _contacts = await retrieveContacts()
       setContacts(_contacts)
       setView('contacts')
 
@@ -304,7 +327,7 @@ function App() {
 
   async function handleToPatients() {
     try {
-      const _contacts = await retrieveContacts(token)
+      const _contacts = await retrieveContacts()
       setContacts(_contacts)
       setView('patients')
 
@@ -334,7 +357,7 @@ function App() {
         {view === 'addMedication' && (<AddMedication drugs={drugs} onSubmit={handleAddMedication} error={error} />)}
         {view === 'drugDetail' && (<DrugDetail drugDetail={drugDetail} times={times} toDelete={handleToDeleteMedication} />)}
         {view === 'contacts' && ( <Contacts contacts={contacts} toAdd={handleToAddContacts} onContact={handleToContactDetail}/>)}
-        {view === 'progress' && <Progress progress={progress} user={user} token={token}/>}
+        {view === 'progress' && <Progress progress={progress} user={user}/>}
         {view === 'addContacts' && <AddContacts />}
         {view === 'patients' && ( <Patients contacts={contacts} toAdd={handleToAddPatients} />)}
         {view === 'addPatients' && <AddPatient user={user} />}
