@@ -49,7 +49,6 @@ describe('exitVehicle', () => {
                 .then(user => _id = user.id)  
                 .then(() => {
                     
-                    //return Parking.create({parkingName, rate, totalLots, lots})
                     const pk = Parking.create({parkingName, rate, totalLots, lots})
                     return pk
                         
@@ -58,6 +57,7 @@ describe('exitVehicle', () => {
                     const ticketValid = Ticket.create({carPlate, entryHour: new Date(), ticketId, parkingName})
                     ticketValid.validated = true
                     ticketValid.exit = false
+                    ticketValid.validatedTime = new Date()
                     
                     return ticketValid
                 })
@@ -71,14 +71,18 @@ describe('exitVehicle', () => {
                     return Ticket.findOne({ticketId})
                 })
                 .then((ticket) => {
-                    
+                    expect(ticket).to.exist
                     expect(ticket.carPlate).to.be.equal(carPlate)
                     expect(ticket.parkingName).to.be.equal(parkingName)
                     expect(ticket.exit).to.be(false)
                     expect(ticket.validated).to.be(true)
+                    expect(ticket.exit).to.be.an.instanceOf(Date)
+                    expect(ticket.exit).to.be(true)
+                    expect(ticket.validatedTime).to.be.an.instanceOf(Date)
                 })
                 .then(() => {
                     expect(pk.totalLots).to.be.equal(20)
+                    expect(pk.lots.length).to.be.equal(totalLots)
                 })
         })
 

@@ -21,7 +21,7 @@ module.exports =  (carPlate, ticketId, parkingName) => {
   
   return (async () => {
 
-    const car = await Ticket.findOne({ carPlate, validated: false })
+    const car = await Ticket.findOne({ carPlate, exit: false })
     if (car) throw new NotAllowedError(`this plate ${carPlate} is inside`)
   
     const parking = await Parking.findOne({ parkingName })
