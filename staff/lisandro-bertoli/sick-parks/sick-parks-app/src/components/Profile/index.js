@@ -64,7 +64,12 @@ export default function Profile({ navigation, route }) {
             {user && (
                 <View style={styles.container}>
                     <View style={styles.header}>
-                        <Text style={styles.headerText}>{`${user.name} ${user.surname}`}</Text>
+                        <Text style={styles.headerText}>{`${user.name}'s Profile`}</Text>
+                        <MyButton
+                            onPress={handleLogout}
+                            text='Logout'
+                            style={styles.logoutButtonContainer}
+                            textStyle={styles.logoutButton} />
                     </View>
                     <Modal
                         animationType="slide"
@@ -72,45 +77,43 @@ export default function Profile({ navigation, route }) {
                         transparent={false}
                         visible={showModal}>
                         <View style={styles.modalHeader}>
-                            <MyButton onPress={handleHideModal} style={{ paddingHorizontal: 30, marginRight: '23%' }} text='X' textStyle={{ fontSize: 20, color: '#EFEBDA' }} />
-                            {publishedParks && <Text>My Parks</Text>}
-                            {editProfile && <Text>Settings</Text>}
+                            <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.modalButton} style={styles.modalButtonContainer} />
+                            {publishedParks && <Text style={styles.headerText} >My Parks</Text>}
+                            {editProfile && <Text style={styles.headerText} >Settings</Text>}
                         </View>
                         {publishedParks && <Results results={publishedParks} />}
 
 
                         {editProfile &&
-                            <KeyboardAvoidingView style={{ flex: 1 }}>
-                                <View style={{ flex: 1, backgroundColor: '#EDF4F9', justifyContent: 'space-around' }}>
-                                    <View style={{ flex: 0.3, justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <Text style={{ alignSelf: 'center' }}>Update e-mail</Text>
-                                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 15 }}>
-                                            <Text style={{ flex: 0.7 }}>New e-mail:  </Text>
-                                            <TextInput style={styles.input} placeholder='Your email password' />
+                            <KeyboardAvoidingView behavior='padding'>
+                                <ScrollView scrollEnabled={true}>
+                                    <View style={styles.settingsContainer}>
+                                        <View style={styles.topSettings}>
+                                            <Text style={styles.sectionHeader}>Update e-mail</Text>
+                                            <View style={styles.inputsContainer}>
+                                                <Text style={styles.label}>New e-mail:  </Text>
+                                                <TextInput style={styles.textInput} placeholder='Your email password' />
+                                            </View>
 
+                                            <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} />
                                         </View>
+                                        <View style={styles.bottomSettings}>
+                                            <Text style={styles.sectionHeader}>Change Password</Text>
+                                            <View style={styles.inputsContainer}>
+                                                <Text style={styles.label}>New Password:  </Text>
+                                                <TextInput style={styles.textInput} placeholder='Your new password' />
+                                            </View>
+                                            <View style={styles.inputsContainer}>
+                                                <Text style={styles.label}>Old Password:  </Text>
 
-                                        <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} />
+                                                <TextInput style={styles.textInput} placeholder='Your old password' />
+
+                                            </View>
+                                            <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} />
+                                        </View>
                                     </View>
-                                    <View style={{ flex: 0.4, justifyContent: 'space-between', alignItems: 'center' }}>
-                                        <Text style={{ alignSelf: 'center' }}>Change Password</Text>
-                                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 15 }}>
-                                            <Text style={{ flex: 0.7 }}>New Password:  </Text>
-                                            <TextInput style={styles.input} placeholder='Your new password' />
-
-                                        </View>
-                                        <View style={{ flex: 1, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', paddingHorizontal: 15 }}>
-                                            <Text style={{ flex: 0.7 }}>Old Password:  </Text>
-
-                                            <TextInput style={styles.input} placeholder='Your old password' />
-
-                                        </View>
-                                        <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} />
-                                    </View>
-                                </View>
+                                </ScrollView>
                             </KeyboardAvoidingView>}
-
-
                     </Modal>
                     <ScrollView contentContainerStyle={{ flex: 1 }}>
                         <View style={styles.top}>
@@ -133,14 +136,18 @@ export default function Profile({ navigation, route }) {
                             </View>
                             <View style={styles.topDataContainer}>
                                 <View style={styles.topData}>
-                                    <Text style={{ alignSelf: 'center' }}>Parks</Text>
-                                    <Text style={{ alignSelf: 'center' }}>{user.parks}</Text>
+                                    <Text style={styles.dataType}>Parks</Text>
+                                    <Text style={styles.data}>{user.parks}</Text>
                                 </View>
                                 <View style={styles.topData}>
-                                    <Text style={{ alignSelf: 'center' }}>Contributions</Text>
-                                    <Text style={{ alignSelf: 'center' }}> {user.contributions.length}</Text>
+                                    <Text style={styles.dataType}>Contributions</Text>
+                                    <Text style={styles.data}> {user.contributions.length}</Text>
                                 </View>
                             </View>
+                        </View>
+                        <View style={styles.userInfo}>
+                            <Text>{`${user.name} ${user.surname}`}</Text>
+                            <Text>{user.email}</Text>
                         </View>
                         <View style={styles.bottom}>
 
@@ -160,35 +167,33 @@ export default function Profile({ navigation, route }) {
 
                         </View>
 
-                        <MyButton
-                            onPress={handleLogout}
-                            text='Logout'
-                            style={styles.logoutButton}
-                            textStyle={{ color: 'red', fontSize: 16 }} />
+
 
                     </ScrollView>
                 </View>
-            )}
-            {!user && (
-                <View style={styles.container}>
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>Hey stranger!</Text>
-
-                    </View>
-                    <View style={styles.top}>
-                        <Text
-                            style={{ textAlign: 'center' }}
-                        >Hey there, if you want full access you will need to create an account</Text>
-                    </View>
-                    <View style={styles.bottom}>
-                        <MyButton
-                            onPress={() => navigation.navigate('Login')}
-                            style={styles.actionButton}
-                            text='Login'
-                            textStyle={styles.buttonText} />
-                    </View>
-                </View>
             )
+            }
+            {
+                !user && (
+                    <View style={styles.container}>
+                        <View style={styles.header}>
+                            <Text style={styles.headerText}>Hey stranger!</Text>
+
+                        </View>
+                        <View style={styles.top}>
+                            <Text
+                                style={{ textAlign: 'center' }}
+                            >Hey there, if you want full access you will need to create an account</Text>
+                        </View>
+                        <View style={styles.bottom}>
+                            <MyButton
+                                onPress={() => navigation.navigate('Login')}
+                                style={styles.actionButton}
+                                text='Login'
+                                textStyle={styles.buttonText} />
+                        </View>
+                    </View>
+                )
             }
         </>
     )

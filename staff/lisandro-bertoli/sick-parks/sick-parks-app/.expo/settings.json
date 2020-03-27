@@ -1,7 +1,7 @@
 {
   "dev": true,
   "minify": false,
-  "urlRandomness": "fx-8uv",
+  "urlRandomness": "zk-an6",
   "hostType": "lan",
   "lanType": "ip",
   "https": false

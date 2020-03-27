@@ -9,20 +9,77 @@ const styles = StyleSheet.create({
     },
     header: {
         flex: 0.1,
+        flexDirection: 'row',
         backgroundColor: '#82A4B3',
-        justifyContent: 'center',
-        paddingVertical: 15,
+        justifyContent: 'space-between',
+        padding: 15,
+
     },
     modalHeader: {
-        flex: 0.1,
+        height: 60,
         flexDirection: 'row',
         backgroundColor: '#82A4B3',
         alignItems: 'center',
-        justifyContent: 'flex-start'
+        paddingHorizontal: 25,
+        justifyContent: 'space-between'
     },
+
+    modalButton: {
+        color: '#EFEBDA',
+        paddingTop: 10
+    },
+
+    settingsContainer: {
+        flex: 1,
+        backgroundColor: '#EDF4F9',
+        justifyContent: 'space-between',
+        paddingHorizontal: 15,
+        paddingVertical: 50
+    },
+    topSettings: {
+        flex: 1
+    },
+
+    inputsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 25,
+        paddingVertical: 15,
+        flex: 1,
+    },
+
+    label: {
+        fontWeight: '500',
+
+    },
+
+    sectionHeader: {
+        fontWeight: 'bold',
+        alignSelf: 'center'
+    },
+
+    textInput: {
+        height: '160%',
+        backgroundColor: '#82A4B3',
+        width: '60%',
+        alignSelf: 'flex-end',
+        paddingHorizontal: 10,
+        borderColor: '#EFEBDA',
+        borderWidth: 2
+
+    },
+
+    bottomSettings: {
+        justifyContent: 'space-between',
+        marginVertical: 50
+    },
+
     headerText: {
         paddingTop: 10,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color: '#EFEBDA',
+        fontWeight: 'bold',
+        fontSize: 18
     },
     noImage: {
         width: 100,
@@ -37,10 +94,18 @@ const styles = StyleSheet.create({
     },
     topDataContainer: {
         flex: 1,
-        height: '40%',
         flexDirection: 'row',
         justifyContent: "space-around",
         alignContent: 'center'
+    },
+
+    dataType: {
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        paddingBottom: 25,
+    },
+    data: {
+        alignSelf: 'center'
     },
     topData: {
         flex: 1,
@@ -48,12 +113,17 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     top: {
-        height: '40%',
+        height: '30%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         paddingHorizontal: 15
 
+    },
+    userInfo: {
+        flex: 0.15,
+        justifyContent: 'space-between',
+        margin: 15
     },
     bottom: {
         flex: 0.4,
@@ -73,13 +143,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
 
-    logoutButton: {
+    logoutButtonContainer: {
         height: 40,
         width: 100,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end'
 
+    },
+    logoutButton: {
+        color: 'red',
     },
     buttonText: {
         textAlign: 'center',
