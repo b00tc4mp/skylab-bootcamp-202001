@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { registerUser, retrieveCredits } from '../logic'
+import { registerUser, retrieveCredits } from '../../logic'
 import { Context } from './ContextProvider'
-import { EditableTable } from './presentational'
+import { EditableTable } from '../presentational'
 
 export default () => {
   const [credits, setCredits] = useState()
@@ -34,7 +34,7 @@ export default () => {
       {
         credits &&
         <EditableTable
-          father='credits'
+          title='Créditos'
           actions={['add_circle']}
           data={credits}
           setData={setCredits}

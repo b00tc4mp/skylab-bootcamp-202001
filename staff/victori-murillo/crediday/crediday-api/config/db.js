@@ -1,7 +1,7 @@
 const { mongoose } = require('crediday-models')
 const chalk = require('chalk')
-// const { env: { MONGODB_URL } } = process
-const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
+const { env: { MONGODB_URL } } = process
+// const { env: { TEST_MONGODB_URL: MONGODB_URL } } = process
 
 var connected = chalk.cyan
 var error = chalk.bold.yellow

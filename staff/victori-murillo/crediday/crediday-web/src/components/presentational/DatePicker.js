@@ -1,16 +1,9 @@
-// import 'date-fns'
 import React from 'react'
 import Grid from '@material-ui/core/Grid'
-// import DateFnsUtils from '@date-io/date-fns'
 import MomentUtils from '@date-io/moment';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
 
-
-export default function MaterialUIPickers({text, selectedDate, setSelectedDate}) {
-
+export default ({ text, selectedDate, setSelectedDate }) => {
   const handleDateChange = date => setSelectedDate(date._d)
 
   return (

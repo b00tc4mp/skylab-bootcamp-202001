@@ -7,7 +7,6 @@ import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
-// import StarIcon from '@material-ui/icons/StarBorder'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
@@ -16,7 +15,6 @@ import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import { useHistory } from "react-router-dom"
 import { Copyright } from '.'
-
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -67,21 +65,24 @@ const tiers = [
   {
     title: 'Básico',
     price: 'Gratis',
-    description: ['20 usuarios', '50 créditos registrados', 'Acceso al centro de ayuda', 'Atención por correo'],
+    description: [
+      '20 usuarios',
+      '50 créditos registrados',
+      'Acceso al centro de ayuda',
+      'Atención por correo'
+    ],
     buttonText: 'Regístrate',
     buttonVariant: 'contained',
   },
   {
     title: 'Profesional',
-    // subheader: 'Most popular',
     price: '₡30,000',
     description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
-      'Phone & email support',
-      'Phone & email support',
+      '100 usuarios',
+      '200 créditos registrados',
+      'Acceso al centro de ayuda',
+      'Atención por correo',
+      'Atención por teléfono',
     ],
     buttonText: 'Regístrate',
     buttonVariant: 'contained',
@@ -90,14 +91,13 @@ const tiers = [
     title: 'Empresarial',
     price: '₡60,000',
     description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-      'Phone & email support',
-      'Phone & email support',
-      'Phone & email support',
-      'Phone & email support',
+      '300 usuarios',
+      '1000 créditos registrados',
+      'Acceso al centro de ayuda',
+      'Atención por correo',
+      'Atención por teléfono',
+      'Geolocalización',
+      'Chat'
     ],
     buttonText: 'Regístrate',
     buttonVariant: 'contained',
@@ -105,20 +105,12 @@ const tiers = [
 ]
 const footers = [
   {
-    title: 'Company',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'Features',
-    description: ['Cool stuff', 'Random feature', 'Team feature', 'Developer stuff', 'Another one'],
-  },
-  {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
+    title: 'Sobre Nosotros',
+    description: ['Equipo', 'Historia', 'Contacto', 'Oficina'],
   },
   {
     title: 'Legal',
-    description: ['Privacy policy', 'Terms of use'],
+    description: ['Privacidad', 'Términos de uso', 'Plazos', 'Contratos'],
   },
 ]
 
@@ -134,22 +126,6 @@ export default () => {
           <Typography variant="h4" color="inherit" noWrap className={classes.toolbarTitle}>
             CrediDay
           </Typography>
-          {/* <nav> */}
-          {/* <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Features
-            </Link> */}
-          {/* <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Enterprise
-            </Link> */}
-          {/* <Link variant="button" color="textPrimary" href="#" className={classes.link}>
-              Support
-            </Link> */}
-          {/* </nav> */}
-
-          {/* <Button onClick={() => history.push('/dashboard')} color="primary" variant="outlined" className={classes.link}>
-            Dashboard
-          </Button> */}
-
           <Button onClick={() => history.push('/login')} color="primary" variant="outlined" className={classes.link}>
             Login
           </Button>

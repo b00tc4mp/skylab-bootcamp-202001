@@ -11,11 +11,8 @@ module.exports = ({ code, email }) => {
     if (!user) throw new Error('Ningún usuario tiene ese correo electrónico')
     if (user.verificationCode !== code) throw new Error('Código incorrecto')
 
-    user.verificationCode = ''
-    user = await user.save()
-
-    if (user.verificationCode !== '') throw new Error('Left remove the verfication code')
-
-    return 'Code confirmed'
+    // user.verificationCode = ''
+    // user = await user.save()
+    // if (user.verificationCode !== '') throw new Error('Left remove the verfication code')
   })()
 }

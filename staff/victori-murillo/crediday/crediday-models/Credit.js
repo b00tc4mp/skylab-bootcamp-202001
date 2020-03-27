@@ -72,7 +72,6 @@ const schema = new Schema({
   firstTwiceMonthly: Number,
   secondTwiceMonthly: Number,
 
-
   //I have to make the inputs in the front, props underneath
   type: {
     type: String,

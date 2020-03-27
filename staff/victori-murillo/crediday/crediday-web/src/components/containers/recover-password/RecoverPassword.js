@@ -11,8 +11,8 @@ import ConfirmData from './ConfirmData'
 import Code from './Code'
 import NewData from './NewData'
 import Copyright from '../Copyright'
-import { confirmData, confirmVerificationCode, updatePassword } from '../../logic'
-import { useLocalStorage } from '../hooks'
+import { confirmData, confirmVerificationCode, updatePassword } from '../../../logic'
+import { useLocalStorage } from '../../hooks'
 import { useHistory } from 'react-router-dom'
 
 const steps = ['Datos', 'Código', 'Contraseña']
@@ -120,15 +120,15 @@ export default () => {
                 <Typography variant="h5" gutterBottom>
                   Cambio de contraseña exitoso!
                 </Typography>
-                <br/>
-                <Button 
+                <br />
+                <Button
                   onClick={() => history.push('/login')}
                   type="submit"
                   fullWidth
                   variant="outlined"
                   color="primary"
                   className={classes.submit}
-                  >
+                >
                   Click aqui para probar la nueva contraseña
                 </Button>
               </React.Fragment>

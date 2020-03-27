@@ -12,12 +12,16 @@ module.exports = (userId, body) => {
     const user = await User.findOne({ _id: userId })
     if (!user) throw new Error('User doesnt exist')
 
+
     const companyFound = await Company.findOne({ _id: user.company })
     if (!companyFound) throw new Error('Company doesnt exist')
     //TO DO -> ONLY ALLOW REGISTER BY THE SAME COMPANY
     // TO DO --> validate with destructuring and every single key
 
     const { id } = await Credit.create({ user: userId, ...body, company: companyFound._id })
+    user.credits.push(id)
+    await user.save()
+    
     return id
   })()
 

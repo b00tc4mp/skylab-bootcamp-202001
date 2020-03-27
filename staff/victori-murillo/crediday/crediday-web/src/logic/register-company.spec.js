@@ -57,7 +57,6 @@ describe('registerCompany', () => {
 
     expect(typeof user).to.equal('object')
     expect(typeof user.id).to.equal('string')
-    // expect(user.companyName).toBe(companyName) -> only with populate
     expect(user.email).to.equal(email)
     expect(user.username).to.equal(username)
     expect(user.created).to.be.an.instanceof(Date)

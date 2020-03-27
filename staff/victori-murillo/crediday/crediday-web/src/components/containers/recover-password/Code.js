@@ -1,7 +1,6 @@
 import React from 'react'
-import { Typography, TextField } from '@material-ui/core'
-import Grid from '@material-ui/core/Grid'
-import Loader from '../presentational/Loader'
+import { Typography, TextField, Grid } from '@material-ui/core'
+import { Loader } from '../../presentational'
 import { Alert } from '@material-ui/lab'
 
 export default ({ email, code, setCode, error, feedback }) => {

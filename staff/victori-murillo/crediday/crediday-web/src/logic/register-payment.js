@@ -14,6 +14,8 @@ module.exports = ({ body, creditId, token }) => {
   validate.type(body.moratorium, 'Pago de Moratoria', Number)
   validate.type(body.amount, 'Pago total', Number)
 
+  console.log(creditId)
+  console.log(typeof creditId)
   validate.string(creditId, 'creditId')
 
   return (async () => {

@@ -3,37 +3,18 @@ const { env: { MONGODB_URL } } = process
 const { mongoose } = require('crediday-models')
 const { registerUser } = require('../logic')
 
-let users = []
+let users = ['jennifer alpizar valenciano', 'dora mora chaves', 'beatriz reyes centeno',
+'carlos campos rojas', 'mario alberto barrantes', 'juan carlos mora mora', 'stiven uribe soto',
+'jose pablo gonzalez', 'carmen vega soto', 'jose antonio rojas', 'estrella chaves barrantes', 
+'rosa cano pavon', 'jose joaquin', 'jose daniel alvarado', 'luis emilio alpizar rojas',
+'Joseph Alvarado alvarado', 'cristian rodriguez', 'alex green wright', 'nataly alpizar valenciano',
+'randy steven tapia mora', 'irene villalobos mora']
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
-    let count = 0
-    let result = ''
-    const characters = 'bcdfghjklmnpqrstvwxyz'
-    const vowels = 'aeiou'
-
-    while (count < 30) {
-      for (var i = 0; i < 3; i++) {
-        result += characters.charAt(Math.floor(Math.random() * characters.length));
-        result += vowels.charAt(Math.floor(Math.random() * vowels.length));
-      }
-      users.push(result)
-      count++
-      console.log(result)
-      result = ''
-    }
-    
-  })
-  .then(() => {
     users.forEach(async (user, index) => {
-      await registerUser('5e7c2d4ce04a44926dc90cba', { firstName: user })
-
+      await registerUser('5e7d9ffcc9f9df92f4465e2c', { firstName: user })
       if (users.length - 1 === index) mongoose.disconnect()
     })
   })
-
-
-
-
-
-
+  .catch(error => console.log("script users didn't work", error.message))

@@ -35,7 +35,7 @@ describe('confirmDataToRecoverPassword', () => {
 
     it('should confirm recover password successfully', async () => {
       const response = await confirmDataToRecoverPassword({ company: companyName, email })
-      expect(response).to.equal('Data confirmed')
+      expect(response).to.be.an('undefined')
     })
   })
 

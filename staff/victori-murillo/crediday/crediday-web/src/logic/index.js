@@ -9,8 +9,10 @@ import registerUser from './register-user'
 import registerCredit from './register-credit'
 import registerPayment from './register-payment'
 
+import retrieveUser from './retrieve-user'
 import retrieveUsers from './retrieve-users'
 import retrieveCredits from './retrieve-credits'
+import retrievePayments from './retrieve-payments'
 
 export {
   registerCompany,
@@ -24,6 +26,8 @@ export {
   registerCredit,
   registerPayment,
 
+  retrieveUser,
   retrieveUsers,
-  retrieveCredits
+  retrieveCredits,
+  retrievePayments
 }

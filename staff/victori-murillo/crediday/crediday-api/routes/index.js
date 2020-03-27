@@ -39,7 +39,7 @@ module.exports = router
   // .delete('/credits/:id', credit.register)
 
   .post('/payments/credit/:creditId', payment.register)
-  .post('/payments/company', payment.retrieveByCompany)
+  .get('/payments/company', payment.retrieveByCompany)
 
 
   

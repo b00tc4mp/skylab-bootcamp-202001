@@ -1,8 +1,7 @@
-import React from 'react';
-import { Typography, TextField } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
+import React from 'react'
+import { Typography, TextField, Grid } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
-import Loader from '../presentational/Loader'
+import { Loader } from '../../presentational'
 
 export default ({ password, setPassword, passwordAgain, setPasswordAgain, error, feedback }) => {
   return (
@@ -37,5 +36,5 @@ export default ({ password, setPassword, passwordAgain, setPasswordAgain, error,
 
       </Grid>
     </React.Fragment>
-  );
+  )
 }

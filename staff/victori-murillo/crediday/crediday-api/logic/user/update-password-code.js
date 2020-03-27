@@ -2,6 +2,7 @@ const { User } = require('crediday-models')
 const { validate, bcrypt: { hash } } = require('crediday-utils')
 
 module.exports = ({ code, email, password }) => {
+  debugger
   validate.string(code, 'code')
   validate.string(email, 'email')
   validate.email(email)

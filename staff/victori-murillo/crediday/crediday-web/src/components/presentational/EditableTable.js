@@ -2,13 +2,13 @@ import React, { useState, useContext } from 'react'
 import MaterialTable from 'material-table'
 import Icon from '@material-ui/core/Icon';
 import FullDialog from './FullDialog'
-import Payment from './Payment'
-import { Context } from '../ContextProvider'
+import Payment from '../containers/Payment'
+import { Context } from '../containers/ContextProvider'
 
 const padding = 'dense'
-const pageSize = 10
+const pageSize = 15
 
-export default function MaterialTableDemo({ onRowAdd, father, data, setData, columns, registerUser, actions }) {
+export default function MaterialTableDemo({ setUpdate, onRowAdd, title, data, columns, registerUser, actions }) {
   const { token } = useContext(Context)
 
   const [row, setRow] = useState(null)
@@ -36,16 +36,16 @@ export default function MaterialTableDemo({ onRowAdd, father, data, setData, col
   return (
     <>
       {
-        father === 'credits' && rowData &&
+        title === 'Créditos' && rowData &&
         <Payment credit={rowData} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
       }
       {
-        father === 'customers' &&
+        title === 'Clientes' &&
         <FullDialog user={rowData} open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} />
       }
 
       <MaterialTable
-        title={window.innerWidth < 460 ? '' : 'Clientes'}
+        title={window.innerWidth < 460 ? '' : title}
         columns={columns}
         data={data}
         editable={
@@ -53,10 +53,7 @@ export default function MaterialTableDemo({ onRowAdd, father, data, setData, col
             onRowAdd: newData => {
               return new Promise((resolve, reject) => resolve())
                 .then(() => registerUser({ ...newData, token }))
-                .then(() => {
-                  window.location.reload()
-                  // setData([...data, newData])
-                })
+                .then(() => setUpdate(update => !update))
                 .catch(e => {
                   console.log(e.message)
                 })
@@ -78,7 +75,7 @@ export default function MaterialTableDemo({ onRowAdd, father, data, setData, col
           emptyRowsWhenPaging: false,
           padding,
           pageSize,
-          pageSizeOptions: [...pageSizeOptions, data.length],
+          pageSizeOptions: [5, 10, 15, 20, data.length],
           detailPanelColumnAlignment: 'left',
           actionsColumnIndex: -1
         }}
@@ -90,12 +87,6 @@ export default function MaterialTableDemo({ onRowAdd, father, data, setData, col
                 onClick: handleRowData,
               }
             }
-            // if (action === 'add_circle' && father === 'credits') {
-            //   return {
-            //     icon: () => <Icon style={{ color: 'green' }}>{action}</Icon>,
-            //     onClick: handleAddPayment,
-            //   }
-            // }
             if (action === 'editable') {
               return {
                 icon: () => <Icon style={{ color: '#3F50B5' }}>{action}</Icon>,

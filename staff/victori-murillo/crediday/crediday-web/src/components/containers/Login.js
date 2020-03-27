@@ -10,9 +10,9 @@ import { Copyright } from '.'
 import { useHistory } from "react-router-dom"
 import { Context } from './ContextProvider'
 
-import login from '../logic/login'
-import { confirmCompany } from '../logic'
-import { Loader } from './presentational'
+import login from '../../logic/login'
+import { confirmCompany } from '../../logic'
+import { Loader } from '../presentational'
 
 export default (props) => {
   const classes = useStyles()

@@ -41,7 +41,8 @@ module.exports = {
   }),
 
   confirmCode: asyncHandler(async ({ body }, res, next) => {
-    res.json({ message: await confirmVerificationCode(body) })
+    await confirmVerificationCode(body)
+    res.json({ message: 'Code confirmed' })
   }),
 
   updatePassword: asyncHandler(async ({ body }, res, next) => {

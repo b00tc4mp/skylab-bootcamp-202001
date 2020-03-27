@@ -55,10 +55,11 @@ describe('registerPayment', () => {
     })
 
     it('should create a new payment', async () => {
-      const response = await registerPayment(creditId, {
-        amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
-        paymentFrecuency, paymentBy,
-        company: company._id
+      const response = await registerPayment({
+        creditId, body: {
+          amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
+          paymentFrecuency, paymentBy
+        }
       })
 
       expect(response).to.be.a('string')
@@ -71,15 +72,16 @@ describe('registerPayment', () => {
       const wrongId = customer.id + '-wrong'
 
       try {
-        await registerPayment(wrongId, {
-          amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
-          paymentFrecuency, paymentBy,
-          company: company._id
+        await registerPayment({
+          creditId: wrongId, body: {
+            amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
+            paymentFrecuency, paymentBy
+          }
         })
 
         throw new Error('should not reach here')
       } catch (error) {
-        expect(error.message).to.equal(`Payment validation failed: credit: Cast to ObjectID failed for value "${wrongId}" at path "credit"`)
+        expect(error.message).to.equal(`Cast to ObjectId failed for value "${wrongId}" at path "_id" for model "Credit"`)
       }
 
     })
@@ -88,10 +90,11 @@ describe('registerPayment', () => {
       const creditId = 123
 
       try {
-        await registerPayment(creditId, {
-          amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
-          paymentFrecuency, paymentBy,
-          company: company._id
+        await registerPayment({
+          creditId, body: {
+            amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
+            paymentFrecuency, paymentBy
+          }
         })
 
         throw new Error('should not reach here')

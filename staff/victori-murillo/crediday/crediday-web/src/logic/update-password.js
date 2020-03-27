@@ -1,7 +1,7 @@
 const { validate, fetch, handleError } = require('crediday-utils')
 const API_URL = process.env.REACT_APP_API_URL
 
-export default async ({ code, email, password, passwordAgain }) => {
+module.exports = ({ code, email, password, passwordAgain }) => {
   validate.string(code, 'Código')
   code = code.trim().toLowerCase()
   validate.length(code, 'Código incorrecto', 6, 6, true)

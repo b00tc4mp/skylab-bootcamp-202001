@@ -1,26 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Home, Login, Register } from './components'
+import { Home, Login, Register } from './components/containers'
 import { Drawer } from './components/presentational'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
-import { Context } from './components/ContextProvider'
-
-import RecoverPassword from './components/recover-password/RecoverPassword'
-
+import { Context } from './components/containers/ContextProvider'
+import RecoverPassword from './components/containers/recover-password/RecoverPassword'
 import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.REACT_APP_JWT_SECRET
 
 export default () => {
   const [view, setView] = useState()
-
-  useContext(Context)
+  const { token } = useContext(Context)
 
   function verifyToken() {
     try {
-      const { session } = sessionStorage
-
-      if (!session) throw new Error("theres no session in session storage")
-      jwt.verify(session, JWT_SECRET)
+      if (!token) throw new Error("Token not found")
+      jwt.verify(token, JWT_SECRET)
       return true
 
     } catch (error) {
@@ -41,7 +36,6 @@ export default () => {
     } catch (error) {
       const { lastSession } = localStorage
 
-      // go to login or Home (public routes)
       lastSession ? setView('login') : setView('home')
     }
 
@@ -59,13 +53,8 @@ export default () => {
         <Route exact path="/login">
           <Login />
         </Route>
-
         <Route exact path="/password" component={RecoverPassword} />
-
         <Route exact path="/login/:companyId" component={Login} />
-
-        {/* <Route exact path="/calendar" component={Calendar} /> */}
-
         <Route exact path="/register">
           <Register />
         </Route>
@@ -78,8 +67,14 @@ export default () => {
         <Route exact path="/drawer/credits">
           {verifyToken() ? <Drawer view='credits' /> : <Redirect to="/login" />}
         </Route>
+        <Route exact path="/drawer/collect">
+          {verifyToken() ? <Drawer view='collect' /> : <Redirect to="/login" />}
+        </Route>
         <Route exact path="/drawer/report">
           {verifyToken() ? <Drawer view='report' /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/drawer/dashboard">
+          {verifyToken() ? <Drawer view='dashboard' /> : <Redirect to="/login" />}
         </Route>
         <Route>
           <Redirect to={`/home`} />

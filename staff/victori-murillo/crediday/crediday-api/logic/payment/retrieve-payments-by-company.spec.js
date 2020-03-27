@@ -54,10 +54,12 @@ describe('retrievePaymentsByCompany', () => {
         amount, paymentByDefault, paymentAmortize, paymentInterest, balance, paymentDefault, paymentFrecuency
       })
 
-      paymentId = await registerPayment(creditId, {
-        amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
-        paymentFrecuency, paymentBy,
-        company: company._id
+      paymentId = await registerPayment({
+        creditId, body: {
+          amount, paymentByDefault, amortize, moratorium, interest, paymentDefault,
+          paymentFrecuency, paymentBy,
+          company: company._id
+        }
       })
     })
 
@@ -73,12 +75,11 @@ describe('retrievePaymentsByCompany', () => {
 
       try {
         await retrievePaymentsByCompany(wrongId)
-
         throw new Error('should not reach here')
+
       } catch (error) {
         expect(error.message).to.equal(`Cast to ObjectId failed for value "${wrongId}" at path "_id" for model "User"`)
       }
-
     })
 
     it('should fail with not a string', async () => {
@@ -86,8 +87,8 @@ describe('retrievePaymentsByCompany', () => {
 
       try {
         await retrievePaymentsByCompany(userId)
-
         throw new Error('should not reach here')
+
       } catch (error) {
         expect(error.message).to.equal(`userId ${userId} is not a string`)
       }

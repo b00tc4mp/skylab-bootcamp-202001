@@ -1,30 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Context } from '../containers/ContextProvider'
 import PropTypes from 'prop-types'
 import {
   AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, ListItem,
   ListItemText, Toolbar, Typography, ListItemIcon
 } from '@material-ui/core'
-
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-
-import { useHistory } from 'react-router-dom'
-import { ListCustomers } from '../'
-import { ListCredits } from '../'
-import { Report } from '../'
-
+import { ListCustomers, ListCredits, Collect, Report } from '../containers'
 import MenuIcon from '@material-ui/icons/Menu'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PeopleIcon from '@material-ui/icons/People';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import DescriptionIcon from '@material-ui/icons/Description';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import PeopleIcon from '@material-ui/icons/People'
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import DescriptionIcon from '@material-ui/icons/Description'
+import PollIcon from '@material-ui/icons/Poll'
+import EmojiTransportationIcon from '@material-ui/icons/EmojiTransportation'
+import FaceIcon from '@material-ui/icons/Face'
 
 function ResponsiveDrawer(props) {
+  const { loggedUser } = useContext(Context)
 
   const { container, view } = props
   const classes = useStyles()
   const theme = useTheme()
 
-  const history = useHistory()
+  const { push } = useHistory()
 
   const [mobileOpen, setMobileOpen] = useState(false)
 
@@ -32,31 +32,41 @@ function ResponsiveDrawer(props) {
 
   const logout = () => {
     sessionStorage.clear()
-    history.push('/login')
+    push('/login')
+  }
+
+  const handlePath = path => {
+    setMobileOpen(false)
+    push(`/drawer/${path}`)
   }
 
   const drawer = (
     <div>
       <div className={classes.toolbar} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Typography variant="h6" color="primary">
-          Nombre
+        <Typography style={{ display: 'flex', alignItems: 'center' }} color="primary" variant="h6" noWrap onClick={() => push('/drawer')} >
+          <FaceIcon style={{ marginRight: 10 }} /> {loggedUser && loggedUser.firstName}
         </Typography>
       </div>
 
       <Divider />
       <List>
-        <ListItem button key='Clientes' onClick={() => history.push('/drawer/customers')}>
+        <ListItem button key='Clientes' onClick={() => handlePath('customers')}>
           <ListItemIcon><PeopleIcon /></ListItemIcon>
           <ListItemText primary='Clientes' />
         </ListItem>
 
-        <ListItem button key='Créditos' onClick={() => history.push('/drawer/credits')}>
+        <ListItem button key='Créditos' onClick={() => handlePath('credits')}>
           <ListItemIcon><AttachMoneyIcon /></ListItemIcon>
           <ListItemText primary='Créditos' />
         </ListItem>
 
-        <ListItem button key='Reporte' onClick={() => history.push('/drawer/report')}>
+        <ListItem button key='Cobro' onClick={() => handlePath('collect')}>
           <ListItemIcon><DescriptionIcon /></ListItemIcon>
+          <ListItemText primary='Cobro' />
+        </ListItem>
+
+        <ListItem button key='Reporte' onClick={() => handlePath('report')}>
+          <ListItemIcon><PollIcon /></ListItemIcon>
           <ListItemText primary='Reporte' />
         </ListItem>
 
@@ -73,26 +83,21 @@ function ResponsiveDrawer(props) {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-
         <Toolbar style={{ display: 'flex', justifyContent: 'space-between' }}>
-
-          <Typography variant="h6" noWrap onClick={() => history.push('/drawer')} >
-            Company Name
+          <Typography style={{ display: 'flex', alignItems: 'center' }} variant="h6" noWrap onClick={() => push('/drawer')} >
+            <EmojiTransportationIcon style={{ marginRight: 10 }} /> {loggedUser && loggedUser.company.name.toUpperCase()}
           </Typography>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            className={classes.menuButton}
-          >
+            className={classes.menuButton}>
             <MenuIcon />
           </IconButton>
-
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
@@ -104,7 +109,7 @@ function ResponsiveDrawer(props) {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: false, // Better open performance on mobile.
+              keepMounted: false,
             }}
           >
             {drawer}
@@ -124,11 +129,10 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content} >
         <div className={classes.toolbar} />
-        {/* {location === 'customers' && } */}
         {view === 'customers' && <ListCustomers />}
         {view === 'credits' && <ListCredits />}
+        {view === 'collect' && <Collect />}
         {view === 'report' && <Report />}
-
       </main>
     </div>
   )
@@ -149,11 +153,10 @@ const useStyles = makeStyles(theme => ({
   appBar: {
     [theme.breakpoints.up('lg')]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-      // height: '0px'
+      marginLeft: drawerWidth
     },
   },
-  menuButton: { // burger 3 lines
+  menuButton: {
     marginRight: theme.spacing(0),
     [theme.breakpoints.up('lg')]: {
       display: 'none',
@@ -170,13 +173,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   container: PropTypes.any,
 }
-
-
 
 export default ResponsiveDrawer

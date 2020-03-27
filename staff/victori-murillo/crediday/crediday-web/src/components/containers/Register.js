@@ -6,8 +6,8 @@ import { Copyright } from '.'
 import { useHistory } from "react-router-dom"
 
 import { Alert } from '@material-ui/lab'
-import { registerCompany } from '../logic'
-import { Loader } from './presentational'
+import { registerCompany } from '../../logic'
+import { Loader } from '../presentational'
 
 export default () => {
   const classes = useStyles()

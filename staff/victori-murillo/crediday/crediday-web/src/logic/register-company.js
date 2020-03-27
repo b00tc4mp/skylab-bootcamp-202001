@@ -1,4 +1,3 @@
-// require('dotenv').config()
 const { validate, fetch, handleError } = require('crediday-utils')
 const API_URL = process.env.REACT_APP_API_URL
 

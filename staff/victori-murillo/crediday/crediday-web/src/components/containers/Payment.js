@@ -5,9 +5,9 @@ import {
   IconButton, Typography, Slide, Select, FormControl
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import DatePicker from './DatePicker'
+import DatePicker from '../presentational/DatePicker'
 import { registerPayment } from '../../logic'
-import { Context } from '../ContextProvider'
+import { Context } from './ContextProvider'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -46,7 +46,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
-export default function FullScreenDialog({ open, handleClose, credit }) {
+export default ({ open, handleClose, credit }) => {
   const classes = useStyles()
   const { token } = useContext(Context)
 

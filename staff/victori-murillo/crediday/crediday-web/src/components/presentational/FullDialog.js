@@ -13,7 +13,7 @@ import Slide from '@material-ui/core/Slide'
 import DatePicker from './DatePicker'
 import SimpleSelect from './SimpleSelect'
 
-import { Context } from '../ContextProvider'
+import { Context } from '../containers/ContextProvider'
 import { registerCredit } from '../../logic'
 
 const useStyles = makeStyles(theme => ({
