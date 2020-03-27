@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser } from '../logic'
+import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout } from '../logic'
 import { Context } from './ContextProvider'
 
 import './style/App.sass'
@@ -129,7 +129,8 @@ export default withRouter(function ({ history }) {
   async function handleDeleteUser(userName, password) {
     try{
       await deleteUser(userName, password)
-      history.push('/home')
+      logout()
+      history.push('/login')
     }catch(error){
       __handleError__(error)
     }

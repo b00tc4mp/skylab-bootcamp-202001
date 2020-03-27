@@ -13,7 +13,7 @@ export default withRouter (function({user, history}) {
 
     function handleLogout() {
         logout()
-        window.location.reload()
+        history.push('/home')       
     }
 
     function handleToHome() {
