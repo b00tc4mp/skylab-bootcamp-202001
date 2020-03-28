@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text : {
-      fontFamily : 'Sensei-Medium',
+      fontFamily : 'Chocolate_DRINK_DEMO',
       color : '#297885',
       padding: 10,
       fontSize: 20

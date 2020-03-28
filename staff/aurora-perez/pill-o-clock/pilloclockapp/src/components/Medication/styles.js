@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
         padding : 15,
         borderRadius : 10,
         overflow: 'hidden',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     text : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
         padding: 10,
         fontSize: 20
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     title : {
         fontSize : 30,
         color : '#297885',
-        fontFamily : 'Sensei-Medium' ,
+        fontFamily : 'Chocolate_DRINK_DEMO' ,
         alignSelf : 'center',
         textDecorationLine: 'underline',
     },

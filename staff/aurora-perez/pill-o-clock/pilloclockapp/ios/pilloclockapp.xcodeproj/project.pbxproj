@@ -37,6 +37,7 @@
 		65060D1DDBF24B19B8F471FE /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D187BA1AD825462791B8D9E4 /* Octicons.ttf */; };
 		054F0F16E2D048C3ABA4BC62 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCF4824C066A4DC38DA12231 /* SimpleLineIcons.ttf */; };
 		EDA10E06167347D6837AAC12 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 55CA1C2658EB4264A3469BBA /* Zocial.ttf */; };
+		70A281E16CF647678E3BFC1D /* Chocolate_DRINK_DEMO.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8588DC9DA127453EA4355FB4 /* Chocolate_DRINK_DEMO.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		D187BA1AD825462791B8D9E4 /* Octicons.ttf */ = {isa = PBXFileReference; name = "Octicons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		FCF4824C066A4DC38DA12231 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; name = "SimpleLineIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		55CA1C2658EB4264A3469BBA /* Zocial.ttf */ = {isa = PBXFileReference; name = "Zocial.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		8588DC9DA127453EA4355FB4 /* Chocolate_DRINK_DEMO.ttf */ = {isa = PBXFileReference; name = "Chocolate_DRINK_DEMO.ttf"; path = "../assets/fonts/Chocolate_DRINK_DEMO.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 				D187BA1AD825462791B8D9E4 /* Octicons.ttf */,
 				FCF4824C066A4DC38DA12231 /* SimpleLineIcons.ttf */,
 				55CA1C2658EB4264A3469BBA /* Zocial.ttf */,
+				8588DC9DA127453EA4355FB4 /* Chocolate_DRINK_DEMO.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -416,6 +419,7 @@
 				65060D1DDBF24B19B8F471FE /* Octicons.ttf in Resources */,
 				054F0F16E2D048C3ABA4BC62 /* SimpleLineIcons.ttf in Resources */,
 				EDA10E06167347D6837AAC12 /* Zocial.ttf in Resources */,
+				70A281E16CF647678E3BFC1D /* Chocolate_DRINK_DEMO.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

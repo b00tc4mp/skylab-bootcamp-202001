@@ -43,7 +43,7 @@ function Medication ({medication, toAdd, onDrug}) {
                                     padding : 15,
                                     borderRadius : 10,
                                     overflow: 'hidden',
-                                    fontFamily : 'Sensei-Medium'
+                                    fontFamily : 'Chocolate_DRINK_DEMO'
                                 }}
                             />
                         )}

@@ -122,5 +122,5 @@ describe('addMedication', () => {
             } expect(_error.message).toBe(`times ${time} is not a Array`)
         })
     })
-    afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
 })

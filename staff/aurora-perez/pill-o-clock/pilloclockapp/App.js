@@ -27,6 +27,7 @@ import {
   Patients,
   AddPatient,
   ContactDetail,
+  PatientDetail
 } from './src/components'
 
 import logic, {
@@ -64,6 +65,7 @@ function App() {
   const [schedule, setSchedule] = useState()
   const [drugs, setDrugs] = useState()
   const [progress, setProgress] = useState()
+  const [patient, setPatient] = useState()
 
   useEffect(()=>{
     try{
@@ -97,7 +99,7 @@ function App() {
     //if(user) {
     const interval = setInterval(async () => {
       let alarms = await AsyncStorage.getItem('alarms')
-      //console.log(alarms)
+      console.log(alarms)
 
       if (alarms) {
         alarms = JSON.parse(alarms)
@@ -349,6 +351,12 @@ function App() {
     setView('contactDetail')
   }
 
+  function handleToPatientDetail(patient){
+    setPatient(patient)
+    setView('patientDetail')
+
+  }
+
   return (
     <View style={styles.container}> 
         {goLanding && (<NavigationBarTop style={styles.navbar} toLogin={handleToLogin} toMedication={handleToMedication} toContacts={handleToContacts} toProgress={handleToProgress} toPatients={handleToPatients} user={user}/>)}
@@ -364,9 +372,10 @@ function App() {
         {view === 'contacts' && ( <Contacts contacts={contacts} toAdd={handleToAddContacts} onContact={handleToContactDetail}/>)}
         {view === 'progress' && <Progress progress={progress} user={user}/>}
         {view === 'addContacts' && <AddContacts />}
-        {view === 'patients' && ( <Patients contacts={contacts} toAdd={handleToAddPatients} />)}
+        {view === 'patients' && ( <Patients contacts={contacts} toAdd={handleToAddPatients} onPatient={handleToPatientDetail}/>)}
         {view === 'addPatients' && <AddPatient user={user} />}
         {view === 'contactDetail' && (<ContactDetail contactData={contactData} /> )}
+        {view === 'patientDetail' && (<PatientDetail patient={patient} />)  }
       </ScrollView>
     </View>
   );

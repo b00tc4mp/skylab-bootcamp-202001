@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
         marginTop : 30,
         fontSize : 17,
         alignSelf : 'center',
-        color:'#4CBBC2'
+        color:'#4CBBC2',
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     title : {
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         color : '#297885',
         alignSelf : 'center',
         fontWeight: '200',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
     
     button : {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         padding : 10,
         borderRadius : 10,
         overflow: 'hidden',
-        fontFamily : 'Sensei-Medium.ttf'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     toRegister : {
@@ -41,13 +42,13 @@ const styles = StyleSheet.create({
         fontSize : 15,
         alignSelf : 'center',
         color : '#79BABF',
-        fontFamily : 'Sensei-Medium.ttf'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     error : {
         marginTop : 20,
         padding : 10,
-        fontFamily : 'Sensei-Medium.ttf'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     logo : {

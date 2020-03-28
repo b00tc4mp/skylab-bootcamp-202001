@@ -33,8 +33,6 @@ function Progress ({progress, user}) {
        
         let today = moment(new Date).format('YYYY-MM-DD')
 
-        //let today = '2020-03-30'
-
         if (today > dateDay) {
 
             let check = (progress.reduce((accum, value) => accum + value, 0))/progress.length
@@ -58,8 +56,6 @@ function Progress ({progress, user}) {
         }
        
         const allProgress = await retrieveProgressRecord()
-
-        console.log(allProgress)
 
         
         allProgress.forEach(day => {

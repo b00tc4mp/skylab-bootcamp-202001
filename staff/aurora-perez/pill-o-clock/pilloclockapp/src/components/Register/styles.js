@@ -14,14 +14,15 @@ const styles = StyleSheet.create({
     input : {
         marginTop : 30,
         fontSize : 17,
-        color:'#4CBBC2'
+        color:'#4CBBC2',
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     title : {
         fontSize : 50,
         color : '#297885',
         fontWeight: '600',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     button : {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         padding : 10,
         borderRadius : 10,
         overflow: 'hidden',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     toLogin : {
@@ -41,13 +42,13 @@ const styles = StyleSheet.create({
         fontSize : 15,
         alignItems : 'center',
         color : '#79BABF',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     error : {
         marginTop : 20,
         padding : 10,
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Chocolate_DRINK_DEMO'
     }
 
 })

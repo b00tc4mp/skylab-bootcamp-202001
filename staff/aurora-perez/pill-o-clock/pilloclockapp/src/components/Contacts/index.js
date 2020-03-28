@@ -40,7 +40,7 @@ function Contacts ({toAdd, onContact, contacts}) {
                                     padding : 15,
                                     borderRadius : 10,
                                     overflow: 'hidden',
-                                    fontFamily : 'Sensei-Medium'
+                                    fontFamily : 'Chocolate_DRINK_DEMO'
                                 }}
                             />
                         )}

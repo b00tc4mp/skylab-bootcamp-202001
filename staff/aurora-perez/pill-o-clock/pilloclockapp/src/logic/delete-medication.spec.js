@@ -128,7 +128,8 @@ describe('deleteMedication', () => {
             } expect(_error.message).toBe(`idDrug ${_idDrug} is not a string`)
         })
     })
-    afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
+
 
 
 })

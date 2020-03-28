@@ -112,5 +112,6 @@ describe('retrieveMedication', () => {
             } expect(_error.message).toBe(`token ${token} is not a string`)
         })
     })
-    afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
+
 })

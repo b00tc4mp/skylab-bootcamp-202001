@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native'
 const styles = StyleSheet.create({
 
     text : {
-        fontFamily : 'Sensei-Medium',
+        fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
         fontSize : 40,
         alignSelf : 'center'

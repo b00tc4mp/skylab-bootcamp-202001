@@ -25,9 +25,9 @@ function Patients ({toAdd, onPatients, contacts}) {
                         renderItem={({item})=>(
                             <ListItem 
                                 onPress ={()=> {
-                                    const {name, surname, phone} = item
+                                    const patient = item
                                     
-                                    onPatients({name, surname, phone})
+                                    onPatients(patient)
                                 }}
                                 title ={item.name.toString() }
                                 titleStyle = {{
@@ -39,7 +39,7 @@ function Patients ({toAdd, onPatients, contacts}) {
                                     padding : 15,
                                     borderRadius : 10,
                                     overflow: 'hidden',
-                                    fontFamily : 'Sensei-Medium'
+                                    fontFamily : 'Chocolate_DRINK_DEMO'
                                 }}
                             />
                         )}
