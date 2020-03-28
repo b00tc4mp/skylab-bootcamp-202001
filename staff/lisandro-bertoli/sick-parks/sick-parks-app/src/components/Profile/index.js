@@ -78,8 +78,8 @@ export default function Profile({ navigation, route }) {
                         visible={showModal}>
                         <View style={styles.modalHeader}>
                             <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.modalButton} style={styles.modalButtonContainer} />
-                            {publishedParks && <Text style={styles.headerText} >My Parks</Text>}
-                            {editProfile && <Text style={styles.headerText} >Settings</Text>}
+                            {publishedParks && <Text style={styles.modalHeaderText} >My Parks</Text>}
+                            {editProfile && <Text style={styles.modalHeaderText} >Settings</Text>}
                         </View>
                         {publishedParks && <Results onToDetails={handleOnToDetails} results={publishedParks} />}
 

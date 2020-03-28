@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#EDF4F9',
     },
     header: {
-        flex: 0.1,
+        flex: 0.5,
         flexDirection: 'row',
         backgroundColor: '#82A4B3',
         justifyContent: 'space-between',
@@ -79,7 +79,16 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         color: '#EFEBDA',
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 18,
+        alignSelf: 'flex-end'
+    },
+    modalHeaderText: {
+        paddingTop: 10,
+        alignSelf: 'center',
+        color: '#EFEBDA',
+        fontWeight: 'bold',
+        fontSize: 18,
+        alignSelf: 'center'
     },
     noImage: {
         width: 100,
@@ -96,21 +105,20 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: "space-around",
-        alignContent: 'center'
+        alignContent: 'center',
+        alignSelf: 'center'
     },
 
     dataType: {
         alignSelf: 'center',
         fontWeight: 'bold',
-        paddingBottom: 25,
+        paddingBottom: 30,
     },
     data: {
         alignSelf: 'center'
     },
     topData: {
-        flex: 1,
-        alignContent: 'center',
-        justifyContent: 'space-evenly'
+
     },
     top: {
         height: '30%',
