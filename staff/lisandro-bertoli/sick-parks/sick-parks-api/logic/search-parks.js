@@ -22,10 +22,10 @@ module.exports = ({ q, location }) => {
     }
 
     switch (true) {
-        case q === 'latest':
+        case q.toLowerCase() === 'latest':
             filter = 'latest'
             break
-        case q === 'verified':
+        case q.toLowerCase() === 'verified':
             filter.$and.unshift({ verified: true })
             break
         case q !== '':

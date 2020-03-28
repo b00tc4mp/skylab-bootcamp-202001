@@ -28,10 +28,10 @@ export default function Home({ navigation, route }) {
     const { params: user } = route
 
     useEffect(() => {
-        navigator.geolocation.getCurrentPosition(function (pos) {
+        navigator.geolocation.getCurrentPosition(function ({ coords }) {
             setLocation({
-                latitude: pos.coords.latitude,
-                longitude: pos.coords.longitude,
+                latitude: coords.latitude,
+                longitude: coords.longitude,
                 latitudeDelta: 1,
                 longitudeDelta: 1,
             })
@@ -51,9 +51,7 @@ export default function Home({ navigation, route }) {
 
 
 
-    function SearchScreen(props) {
-        const { navigation } = props
-
+    function SearchScreen({ navigation }) {
         const handleSearch = async (query) => {
             try {
                 setCurrentQuery(query)
@@ -77,9 +75,7 @@ export default function Home({ navigation, route }) {
 
     }
 
-    function ResultsScreen(props) {
-        const { navigation } = props
-
+    function ResultsScreen({ navigation }) {
         const handleGoToDetails = async (id) => {
             try {
                 await __handleParkUpdate__(id)
@@ -99,7 +95,7 @@ export default function Home({ navigation, route }) {
             try {
                 setCurrentQuery(query)
 
-                const results = await searchParks({ query, location })
+                const results = await searchParks(query, [location.longitude, location.latitude])
 
                 if (!results.length) setError(`No ${query} parks found`)
                 else setError(null)

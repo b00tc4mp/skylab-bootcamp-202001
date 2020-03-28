@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { StyleSheet, View, Dimensions, ShadowPropTypesIOS } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 
 export default function MapViewContainer({ style, parkLocation, userLocation, _markers, handleNewMarker }) {
     const [location, setLocation] = useState()
-    const [error, setError] = useState()
     const [markers, setMarkers] = useState([])
 
 
@@ -15,7 +14,7 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
             if (_markers) setMarkers(_markers)
             else setMarkers([])
         } catch ({ message }) {
-            setError({ message })
+            console.log(message)
         }
     }, [])
 
@@ -31,6 +30,7 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
                 sendMakers(e.nativeEvent.coordinate)
             }} >
                 {markers && markers.map((marker, index) => {
+                    console.log('marker', marker)
                     return <Marker
                         coordinate={marker}
                         key={index}

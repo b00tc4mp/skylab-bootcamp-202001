@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions } from 'react-native'
+import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions, PickerIOSBase } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -13,7 +13,9 @@ import logic, {
 	loginUser,
 	logoutUser,
 	isUserLoggedIn,
-	createPark
+	createPark,
+	retrievePublishedParks
+
 } from 'sick-parks-logic'
 
 import {
@@ -25,6 +27,7 @@ import {
 	Profile,
 	ParkBuilder
 } from './src/components/'
+
 const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
 const buildImage = require('./assets/icon-pick-and-shovel.png')
@@ -37,12 +40,8 @@ logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.API_URL
 
 export default function App() {
-	const [error, setError] = useState()
+	const [error, setError] = useState(null)
 	const [user, setUser] = useState()
-
-	useEffect(() => {
-		setError(null)
-	}, [])
 
 	useEffect(() => {
 		(async () => {
@@ -52,9 +51,6 @@ export default function App() {
 
 					setUser(user)
 				}
-				// else {
-				// 	await logic.__context__.storage.clear()
-				// }
 			} catch ({ message }) {
 				if (message === 'jwt expired') {
 					__handleErrors__('Session has expired')
@@ -66,7 +62,7 @@ export default function App() {
 				}
 			}
 		})()
-	}, [user])
+	}, [])
 
 
 
@@ -76,6 +72,16 @@ export default function App() {
 		setTimeout(() => {
 			setError(null)
 		}, 3000)
+	}
+
+	const __handleUserUpdate__ = async () => {
+		try {
+			const updatedUser = await retrieveUser()
+
+			setUser(updatedUser)
+		} catch ({ message }) {
+			__handleErrors__(message)
+		}
 	}
 
 
@@ -111,14 +117,17 @@ export default function App() {
 	const handleNewPark = async (data) => {
 		try {
 			await createPark(data)
+
+			await __handleUserUpdate__()
+
 		} catch ({ message }) {
 			console.log(message)
 			__handleErrors__(message)
 		}
 	}
 
-	function LoginScreen(props) {
-		const { navigation } = props
+	function LoginScreen({ navigation }) {
+
 		const handleSubmit = async (email, password) => {
 			try {
 				await loginUser(email, password)
@@ -126,11 +135,9 @@ export default function App() {
 				const user = await retrieveUser()
 
 				user.notifications = await _getNotificationsPermissionsAsync()
-
 				user.allowLocation = await _getLocationPermissionsAsync()
 
 				setUser(user)
-
 				setError(null)
 			} catch ({ message }) {
 				__handleErrors__(message)
@@ -161,6 +168,30 @@ export default function App() {
 		return <Register onSubmit={handleSubmit} onToLogin={handleGoToLogin} error={error} />
 	}
 
+	function ProfileScreen({ navigation }) {
+		const [publishedParks, setPublishedParks] = useState([])
+
+		useEffect(() => {
+			(async () => {
+				const parks = await retrievePublishedParks()
+
+				setPublishedParks(parks)
+
+			})()
+
+
+		}, [user])
+
+		const handleOnToLogin = () => navigation.navigate('Login')
+
+		return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
+	}
+
+	// function HomeScreen ({navigation}){
+
+
+	// 	return <>
+	// }
 
 	return (
 		<>
@@ -203,7 +234,7 @@ export default function App() {
 						{/* TODO check move screens that top if a lot of params asre passed  */}
 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
 						<Tab.Screen name="Build" component={ParkBuilder} initialParams={{ handleNewPark, error }} />
-						<Tab.Screen name="Profile" initialParams={{ user, handleLogout }} component={Profile} />
+						<Tab.Screen name="Profile" component={ProfileScreen} />
 					</Tab.Navigator>
 				</>}
 			</NavigationContainer>

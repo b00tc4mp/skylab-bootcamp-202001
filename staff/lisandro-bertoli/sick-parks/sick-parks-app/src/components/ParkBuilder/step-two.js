@@ -57,7 +57,7 @@ export default function StepOne({ navigation, route }) {
         setPipes(pipesArray)
 
         const othersArray = new Array(others).fill({
-            name: 'transition',
+            name: 'other',
             size: 's',
             description: ''
         })

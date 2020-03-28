@@ -2,11 +2,11 @@ const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
 
-module.exports = (query, location) => {
-    validate.stringFrontend(query, 'query')
+module.exports = (query = '', location) => {
+    validate.stringFrontend(query, 'query', false)
     validate.type(location, 'location', Array)
     location.forEach(coordinate => validate.type(coordinate, 'coordinate', Number))
-
+    debugger
     return (async () => {
 
 

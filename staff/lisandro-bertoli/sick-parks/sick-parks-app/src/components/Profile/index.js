@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { retrievePublishedParks } from 'sick-parks-logic'
-import { ScrollView, Button, KeyboardAvoidingView, TextInput, View, Text, Modal } from 'react-native'
+import { ScrollView, KeyboardAvoidingView, TextInput, View, Text, Modal } from 'react-native'
 import MyButton from '../Button'
 import Results from '../Results'
 
@@ -8,54 +8,18 @@ import styles from './styles'
 
 
 
-export default function Profile({ navigation, route }) {
-    const { handleLogout, user: _user } = route.params
-
+export default function Profile({ onLogout, user, onToLogin, userParks }) {
     const [showModal, setShowModal] = useState(false)
-    const [publishedParks, setPublishedParks] = useState()
     const [editProfile, setEditProfile] = useState()
-    const [user, setUser] = useState()
-
-
-    useEffect(() => {
-        (async () => {
-
-            const myParks = await retrievePublishedParks()
-            _user.parks = myParks.length
-            _user.name = _user.name.charAt(0).toUpperCase() + _user.name.slice(1)
-            _user.surname = _user.surname.charAt(0).toUpperCase() + _user.surname.slice(1)
-            setUser(_user)
-
-        })()
-    }, [_user.parks])
-
-
-    const handleOnToDetails = () => { }
-
-    const handleSettingsChange = async () => {
-        //await updateUser()
-
-    }
-
-
-    const handleGoToMyParks = async () => {
-        const myParks = await retrievePublishedParks()
-
-        setPublishedParks(myParks)
-
-        setShowModal(true)
-    }
 
 
     const handleGoToSettings = () => {
-        const { email, notifications, allowLocation } = user
-        setEditProfile({ email, notifications, allowLocation })
+        setEditProfile(true)
         setShowModal(true)
     }
 
     const handleHideModal = () => {
         setShowModal(false)
-        setPublishedParks()
         setEditProfile()
     }
 
@@ -66,7 +30,7 @@ export default function Profile({ navigation, route }) {
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{`${user.name}'s Profile`}</Text>
                         <MyButton
-                            onPress={handleLogout}
+                            onPress={onLogout}
                             text='Logout'
                             style={styles.logoutButtonContainer}
                             textStyle={styles.logoutButton} />
@@ -78,10 +42,10 @@ export default function Profile({ navigation, route }) {
                         visible={showModal}>
                         <View style={styles.modalHeader}>
                             <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.modalButton} style={styles.modalButtonContainer} />
-                            {publishedParks && <Text style={styles.modalHeaderText} >My Parks</Text>}
+                            {!editProfile && <Text style={styles.modalHeaderText} >My Parks</Text>}
                             {editProfile && <Text style={styles.modalHeaderText} >Settings</Text>}
                         </View>
-                        {publishedParks && <Results onToDetails={handleOnToDetails} results={publishedParks} />}
+                        {!editProfile && <Results onToDetails={() => { }} results={userParks} />}
 
 
                         {editProfile &&
@@ -137,7 +101,7 @@ export default function Profile({ navigation, route }) {
                             <View style={styles.topDataContainer}>
                                 <View style={styles.topData}>
                                     <Text style={styles.dataType}>Parks</Text>
-                                    <Text style={styles.data}>{user.parks}</Text>
+                                    <Text style={styles.data}>{userParks.length}</Text>
                                 </View>
                                 <View style={styles.topData}>
                                     <Text style={styles.dataType}>Contributions</Text>
@@ -159,7 +123,7 @@ export default function Profile({ navigation, route }) {
                                 textStyle={styles.buttonText} />
 
                             <MyButton
-                                onPress={handleGoToMyParks}
+                                onPress={() => setShowModal(true)}
                                 style={styles.actionButton}
                                 text='My Parks'
                                 textStyle={styles.buttonText} />
@@ -187,7 +151,7 @@ export default function Profile({ navigation, route }) {
                         </View>
                         <View style={styles.bottom}>
                             <MyButton
-                                onPress={() => navigation.navigate('Login')}
+                                onPress={onToLogin}
                                 style={styles.actionButton}
                                 text='Login'
                                 textStyle={styles.buttonText} />
