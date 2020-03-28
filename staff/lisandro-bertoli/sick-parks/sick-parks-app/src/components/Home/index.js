@@ -12,7 +12,8 @@ import {
     votePark,
     approvePark,
     reportPark,
-    updatePark
+    updatePark,
+    deletePark
 } from 'sick-parks-logic'
 
 const Stack = createStackNavigator()
@@ -43,7 +44,8 @@ export default function Home({ navigation, route }) {
             setDetailedPark(item)
             setError(null)
         } catch (error) {
-            console.log(error)
+            if (error instanceof NotFoundError) Alert.alert(error.message)
+            console.log(error.message)
         }
     }
 
@@ -111,14 +113,24 @@ export default function Home({ navigation, route }) {
         return <TopSearch onSubmit={handleSearch} query={currentQuery} />
     }
 
-    function ParkDetailsScreen(props) {
+    function ParkDetailsScreen({ navigation }) {
+
+        const handleDeletePark = async () => {
+            try {
+                await deletePark(detailedPark.id, user.id)
+                Alert.alert('Park deleted')
+                navigation.popToTop()
+            } catch ({ message }) {
+                Alert.alert(message)
+            }
+        }
 
         const handleUpdate = async (update) => {
             try {
                 await updatePark(user.id, detailedPark.id, update)
                 await __handleParkUpdate__(detailedPark.id)
-            } catch (error) {
-                Alert.alert(error.message)
+            } catch ({ message }) {
+                Alert.alert(message)
             }
         }
 
@@ -168,6 +180,7 @@ export default function Home({ navigation, route }) {
             park={detailedPark}
             user={user}
             onVote={handleVote}
+            onDeletePark={handleDeletePark}
             onUpdate={handleUpdate}
             onCommentSubmit={handleCommentSubmit}
             onContribution={handleContribution}

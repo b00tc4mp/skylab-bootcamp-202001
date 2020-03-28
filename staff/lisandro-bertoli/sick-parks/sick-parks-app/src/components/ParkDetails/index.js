@@ -5,7 +5,7 @@ import MapView from 'react-native-maps'
 import styles from './styles'
 import { TextInput } from 'react-native-gesture-handler'
 
-function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUpdate }) {
+function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
     const [comments, setComments] = useState(park.comments)
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
@@ -29,6 +29,15 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
         const updated = park.features.filter(feature => feature.id !== id)
 
         onUpdate({ features: [...updated] })
+    }
+    const handleDeletePark = () => {
+        Alert.alert(
+            'Delete Park',
+            `Are you sure you want to delete ${park.name}?`,
+            [{ text: `Yes, I'm sure`, onPress: onDeletePark },
+            { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+            ],
+        )
     }
     const handleUpVote = () => onVote(true)
     const handleDownVote = () => onVote(false)
@@ -177,10 +186,9 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                         <Text style={styles.actionText}>Verified Park</Text>
                     </View>
                     )}
-                    {!park.verified && (
+                    {!park.verified && user.id !== park.creator.id && (
 
                         <View style={styles.actionsContainer}>
-
                             <TouchableOpacity style={styles.approve} onPress={() => onContribution('approve')}>
                                 <Text style={styles.actionText}>✅ Approve </Text>
                             </TouchableOpacity>
@@ -188,11 +196,12 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                             <TouchableOpacity style={styles.report} onPress={handleReport}>
                                 <Text style={styles.actionText}>❕Report </Text>
                             </TouchableOpacity>
-
-
                         </View>
 
                     )}
+                    {user.id === park.creator.id ? (<View style={styles.delete}>
+                        <MyButton text='Delete park' style={styles.report} textStyle={styles.actionText} onPress={handleDeletePark} />
+                    </View>) : null}
                     <View style={styles.featuresContainer}>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                             <Text style={styles.sectionHeader}>Park features ({park.features.length})</Text>
