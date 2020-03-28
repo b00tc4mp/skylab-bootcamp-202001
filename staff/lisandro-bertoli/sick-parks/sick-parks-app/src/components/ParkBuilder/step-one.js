@@ -111,7 +111,7 @@ export default function StepOne({ navigation, error: _error }) {
                             <Text style={styles.modalText}>Pick a location</Text>
                         </View>
                         <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinate) => {
-                            console.log(location)
+
                             setLocation([coordinate])
 
                             setTimeout(() => {

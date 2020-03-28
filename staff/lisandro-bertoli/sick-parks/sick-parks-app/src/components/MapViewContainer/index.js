@@ -30,7 +30,6 @@ export default function MapViewContainer({ style, parkLocation, userLocation, _m
                 sendMakers(e.nativeEvent.coordinate)
             }} >
                 {markers && markers.map((marker, index) => {
-                    console.log('marker', marker)
                     return <Marker
                         coordinate={marker}
                         key={index}

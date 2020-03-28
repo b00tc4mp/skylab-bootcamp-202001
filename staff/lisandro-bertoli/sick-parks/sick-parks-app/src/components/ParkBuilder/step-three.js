@@ -46,6 +46,8 @@ export default function StepThree({ navigation, route }) {
 
         Alert.alert('Park created!')
         const parent = navigation.dangerouslyGetParent()
+
+
         parent.navigate('Home')
     }
 

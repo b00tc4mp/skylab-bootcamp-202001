@@ -19,13 +19,12 @@ import {
 const Stack = createStackNavigator()
 
 
-export default function Home({ navigation, route }) {
+export default function Home({ user, updateUser }) {
     const [detailedPark, setDetailedPark] = useState()
     const [results, setResults] = useState(false)
     const [location, setLocation] = useState()
     const [currentQuery, setCurrentQuery] = useState()
     const [error, setError] = useState()
-    const { params: user } = route
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function ({ coords }) {
@@ -113,9 +112,10 @@ export default function Home({ navigation, route }) {
 
         const handleDeletePark = async () => {
             try {
-                await deletePark(detailedPark.id, user.id)
-                Alert.alert('Park deleted')
                 navigation.popToTop()
+                await deletePark(detailedPark.id, user.id)
+                await updateUser()
+                Alert.alert('Park deleted')
             } catch ({ message }) {
                 Alert.alert(message)
             }
@@ -123,6 +123,7 @@ export default function Home({ navigation, route }) {
 
         const handleUpdate = async (update) => {
             try {
+
                 await updatePark(user.id, detailedPark.id, update)
                 await __handleParkUpdate__(detailedPark.id)
             } catch ({ message }) {
@@ -137,6 +138,7 @@ export default function Home({ navigation, route }) {
                 await votePark(user.id, detailedPark.id, vote)
 
                 await __handleParkUpdate__(detailedPark.id)
+                // updateUser()
             } catch ({ message }) {
                 Alert.alert('This action cannot be performed twice by the same user')
             }

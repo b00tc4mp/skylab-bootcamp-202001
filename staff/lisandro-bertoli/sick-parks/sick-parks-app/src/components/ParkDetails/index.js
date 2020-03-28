@@ -20,16 +20,18 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
     }, [park.rating, park.features])
 
     const handleHideModal = () => setShowComments(false)
+
     const handleNewFeature = () => {
         !updateSection && setUpdateSection(true)
         updateSection && onUpdate({ features: [...park.features, feature] })
     }
-    const handleDeleteFeature = (id) => {
 
+    const handleDeleteFeature = (id) => {
         const updated = park.features.filter(feature => feature.id !== id)
 
         onUpdate({ features: [...updated] })
     }
+
     const handleDeletePark = () => {
         Alert.alert(
             'Delete Park',
@@ -39,9 +41,13 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
             ],
         )
     }
+
     const handleUpVote = () => onVote(true)
+
     const handleDownVote = () => onVote(false)
+
     const handleNewComment = () => onCommentSubmit(value)
+
     const handleReport = () => {
         Alert.alert(
             "Report a problem",

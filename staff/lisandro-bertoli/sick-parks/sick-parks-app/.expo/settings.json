@@ -1,7 +1,7 @@
 {
   "dev": true,
   "minify": false,
-  "urlRandomness": "mj-mfe",
+  "urlRandomness": "ic-yee",
   "hostType": "lan",
   "lanType": "ip",
   "https": false

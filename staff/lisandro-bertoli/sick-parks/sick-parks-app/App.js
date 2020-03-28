@@ -187,11 +187,11 @@ export default function App() {
 		return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
 	}
 
-	// function HomeScreen ({navigation}){
+	function HomeScreen({ navigation }) {
 
 
-	// 	return <>
-	// }
+		return <Home user={user} updateUser={__handleUserUpdate__} />
+	}
 
 	return (
 		<>
@@ -230,7 +230,7 @@ export default function App() {
 							}
 						}}
 					>
-						<Tab.Screen name="Home" component={Home} initialParams={user} />
+						<Tab.Screen name="Home" component={HomeScreen} />
 						{/* TODO check move screens that top if a lot of params asre passed  */}
 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
 						<Tab.Screen name="Build" component={ParkBuilder} initialParams={{ handleNewPark, error }} />

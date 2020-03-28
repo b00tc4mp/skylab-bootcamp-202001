@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import { retrievePublishedParks } from 'sick-parks-logic'
-import { ScrollView, KeyboardAvoidingView, TextInput, View, Text, Modal } from 'react-native'
+import React, { useState } from 'react'
+import { ScrollView, KeyboardAvoidingView, TextInput, View, Text, Modal, Image } from 'react-native'
 import MyButton from '../Button'
 import Results from '../Results'
 
 import styles from './styles'
-
+const logoutImg = require('../../../assets/sign-out.png')
 
 
 export default function Profile({ onLogout, user, onToLogin, userParks }) {
@@ -29,11 +28,13 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{`${user.name}'s Profile`}</Text>
+
                         <MyButton
                             onPress={onLogout}
-                            text='Logout'
                             style={styles.logoutButtonContainer}
-                            textStyle={styles.logoutButton} />
+                            textStyle={styles.logoutButton} >
+                            <Image source={logoutImg} style={styles.logoutImage} />
+                        </MyButton>
                     </View>
                     <Modal
                         animationType="slide"

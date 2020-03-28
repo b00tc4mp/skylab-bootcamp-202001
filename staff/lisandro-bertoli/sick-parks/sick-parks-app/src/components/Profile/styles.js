@@ -109,6 +109,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
 
+    logoutImage: {
+        height: 22,
+        width: 22,
+        tintColor: '#EFEBDA'
+    },
+
     dataType: {
         alignSelf: 'center',
         fontWeight: 'bold',

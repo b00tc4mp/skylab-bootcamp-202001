@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 114413,
-  "expoServerNgrokUrl": "https://mj-mfe.anonymous.sick-parks-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.mj-mfe.anonymous.sick-parks-app.exp.direct",
-  "ngrokPid": 114522
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
