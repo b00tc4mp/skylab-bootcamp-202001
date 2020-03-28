@@ -12,7 +12,7 @@ describe('searchParks', () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Park.deleteMany()
     })
-    let name, size, level, location, resort
+    let name, size, level, location, resort, verified
     let name2, size2, level2, location2, resort2
     let first
     let _location
@@ -23,6 +23,7 @@ describe('searchParks', () => {
         level = `begginer`
         resort = `Grindelwald`
         location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+        verified = true
 
         _location = [random() * 15 + 1, random() * 15 + 1]
 
@@ -55,7 +56,7 @@ describe('searchParks', () => {
         let park1, park2
         beforeEach(async () => {
 
-            park1 = await Park.create({ name, size, level, resort, location })
+            park1 = await Park.create({ name, size, level, resort, location, verified })
             park2 = await Park.create({ name: name2, size: size2, level: level2, resort: resort2, location: location2 })
         })
 
@@ -95,6 +96,38 @@ describe('searchParks', () => {
                 expect(result.id).to.equal(park1.id.toString())
 
             })
+        })
+
+        it('should succeed on retrieving all parks on empty query', async () => {
+            let q = ''
+            let results = await searchParks({ q, _location })
+
+            results.forEach(result => {
+                expect(result.name).to.be.oneOf([park1.name, park2.name])
+                expect(result.resort).to.be.oneOf([park1.resort, park2.resort])
+                expect(result.size).to.be.oneOf([park1.size, park2.size])
+                expect(result.verified).to.be.oneOf([park1.verified, park2.verified])
+                expect(result.id).to.be.oneOf([park1.id.toString(), park2.id.toString()])
+
+            })
+        })
+
+        it('on "latest" query, should order the results by creation date', async () => {
+            let q = 'latest'
+            let results = await searchParks({ q, _location })
+            debugger
+
+            expect(results[0].name).to.equal(park2.name)
+            expect(results[1].name).to.equal(park1.name)
+        })
+
+        it('on "verified" query, should return only verified parks', async () => {
+            let q = 'verified'
+            let results = await searchParks({ q, _location })
+            debugger
+
+            expect(results[0].name).to.equal(park1.name)
+            expect(results[1]).to.be.undefined
         })
 
         afterEach(async () => {

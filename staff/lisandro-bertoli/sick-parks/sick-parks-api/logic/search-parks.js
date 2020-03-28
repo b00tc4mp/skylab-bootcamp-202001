@@ -3,57 +3,51 @@ const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 
 module.exports = ({ q, _location }) => {
-    if (q) {
-        validate.string(q, 'query')
-        q = q.toLowerCase()
-    }
+    validate.string(q, 'query', false)
 
-    return (async () => {
-        let results
-        if (!q) {
-            results = await Park.find().lean()
-        } else if (q === 'verified') {
-            results = await Park.find({ verified: true }).lean()
-
-        } else if (q === 'latest') {
-
-            results = await Park.find().sort({ created: -1 }).lean()
-
-        } else if (_location) {
-
-            results = await Park.find({
-                $and: [
-                    {
-                        $or: [
-                            { name: { $regex: q } },
-                            { resort: { $regex: q } },
-                            { level: { $regex: q } },
-                            { size: { $regex: q } }
-                        ]
-                    },
-                    {
-                        location: {
-                            $near: {
-                                $geometry: {
-                                    type: 'Point',
-                                    coordinates: _location
-                                }
-                            }
+    let filter = {
+        $and: [
+            {
+                location: {
+                    $near: {
+                        $geometry: {
+                            type: 'Point',
+                            coordinates: _location
                         }
                     }
+                }
+            }
+        ]
+    }
 
-                ]
-            }).lean()
-
-        } else {
-            results = await Park.find({
+    switch (true) {
+        case q === 'latest':
+            filter = 'latest'
+            break
+        case q === 'verified':
+            filter.$and.unshift({ verified: true })
+            break
+        case q !== '':
+            filter.$and.unshift({
                 $or: [
                     { name: { $regex: q } },
                     { resort: { $regex: q } },
                     { level: { $regex: q } },
-                    { size: { $regex: q } }]
+                    { size: { $regex: q } }
+                ]
             })
-        }
+            break
+        default:
+            break
+    }
+
+    return (async () => {
+        let results
+
+
+        if (filter === 'latest') results = await Park.find().sort({ created: -1 }).lean()
+        else results = await Park.find(filter).lean()
+
 
         if (!results.length) return results
 
