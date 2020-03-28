@@ -45,7 +45,7 @@ import logic, {
 
 import config from './config'
 
-logic.__context__.API_URL = config.API_URL
+logic.__context__.API_URL = config.REACT_APP_API_URL
 
 logic.__context__.storage = AsyncStorage
 //logic.__context__.API_URL = 'http://192.168.1.85:8085/api'
@@ -97,6 +97,7 @@ function App() {
     //if(user) {
     const interval = setInterval(async () => {
       let alarms = await AsyncStorage.getItem('alarms')
+      console.log(alarms)
 
       if (alarms) {
         alarms = JSON.parse(alarms)
@@ -165,6 +166,7 @@ function App() {
   }
 
   async function handleToLogin() {
+    await logic.__context__.storage.clear()
     setError(null)
     setGoLanding(false)
     setView('login')
@@ -215,10 +217,11 @@ function App() {
 
         medication.times.forEach(hour => {
           newAlarms[hour] = currAlarms[hour] || false
-        });
+        })
 
         alarms[medication.drug._id] = newAlarms
       })
+      console.log(alarms+ ' when retrieve medic')
 
       await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
 

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     error : {
         marginTop : 20,
         padding : 10,
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Sensei-Medium.ttf'
     },
 
     logo : {
