@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
     title2 : {
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
-        fontSize : 30,
+        fontSize : 50,
         marginLeft : 20,
-        marginTop : 30,
+        marginTop : 10,
         
     },
 
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     text : {
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#4CBBC2',
-        fontSize : 20,
+        fontSize : 30,
         marginLeft : 50,
         marginTop : 10
     },
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     title : {
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
-        fontSize : 40,
+        fontSize : 60,
         //marginLeft : 20,
         textDecorationLine: 'underline',
         //flex : 3,

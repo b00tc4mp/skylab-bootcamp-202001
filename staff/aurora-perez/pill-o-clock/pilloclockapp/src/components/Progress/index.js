@@ -24,14 +24,16 @@ function Progress ({progress, user}) {
     async function calendar() {
         let _markedDates = {}
 
-        let dateDay = AsyncStorage.getItem('dateDay')
+        let dateDay = await AsyncStorage.getItem('dateDay')
+
+        console.log(dateDay+ ' date day')
 
         dateDay && (dateDay = moment(dateDay).format('YYYY-MM-DD'))
 
         !dateDay && (await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD'))))
 
-       
-        let today = moment(new Date).format('YYYY-MM-DD')
+        let today = '2020-03-30'
+        //let today = moment(new Date).format('YYYY-MM-DD')
 
         if (today > dateDay) {
 
@@ -44,9 +46,13 @@ function Progress ({progress, user}) {
             recordDaily.date = dateDay
             recordDaily.record = index
 
+            console.log('recordDayli '+ recordDaily)
+
             await updateProgress(progress)
 
             await addProgressRecord(recordDaily)
+
+            await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
         } else {
             let checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
             

@@ -5,13 +5,13 @@ const styles = StyleSheet.create({
     text : {
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
-        fontSize : 40,
+        fontSize : 60,
         alignSelf : 'center'
     },
 
     container : {
         flex : 1,
-        marginTop : 50,
+        marginTop : 30,
         backgroundColor : '#fffdf9',
         borderRadius : 30,
         padding : 30
@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
 
     button : {
         marginTop : 40,
-        fontSize : 40,
+        fontSize : 60,
         color : '#fffdf9',
         alignSelf : 'center',
         backgroundColor : '#297885',
-        padding : 25,
+        padding : 20,
         borderRadius : 10,
         overflow: 'hidden'
     },

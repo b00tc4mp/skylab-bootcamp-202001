@@ -5,29 +5,29 @@ const styles = StyleSheet.create({
 
     container : {
         flex : 1,
-        marginTop : 100,
+        marginTop : 50,
         backgroundColor : '#fffdf9',
         borderRadius : 30,
-        padding : 30
+        padding : 30,
+        width: '95%'
     },
     
     input : {
-        marginTop : 30,
-        fontSize : 17,
+        marginTop : 20,
+        fontSize : 30,
         color:'#4CBBC2',
         fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     title : {
-        fontSize : 50,
+        fontSize : 60,
         color : '#297885',
-        fontWeight: '600',
         fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     button : {
         //marginTop : 35,
-        fontSize : 25,
+        fontSize : 35,
         color : '#fffdf9',
         alignSelf : 'center',
         backgroundColor : '#297885',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 
     toLogin : {
         marginTop : 20,
-        fontSize : 15,
+        fontSize : 25,
         alignItems : 'center',
         color : '#79BABF',
         fontFamily : 'Chocolate_DRINK_DEMO'

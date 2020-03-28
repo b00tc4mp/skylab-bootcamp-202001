@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         flex : 1,
         width : '90%',
         marginHorizontal: '5%',
-        marginTop : 100,
+        marginTop : 50,
         backgroundColor : '#fffdf9',
         borderRadius : 30,
         padding : 0
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         flex : 1,
         width : '100%',
         flexDirection : 'row',
-        marginHorizontal: '10%'
+        marginHorizontal: '4%'
     },
 
     titleLeft : {
@@ -26,30 +26,18 @@ const styles = StyleSheet.create({
         flex : 1
     },
 
-    titleStyle : {
-        marginTop : 20,
-        fontSize : 25,
-        color : '#fffdf9',
-        alignSelf : 'center',
-        backgroundColor : '#297885',
-        padding : 15,
-        borderRadius : 10,
-        overflow: 'hidden',
-        fontFamily : 'Chocolate_DRINK_DEMO'
-    },
-
     text : {
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
         padding: 10,
-        fontSize: 20
+        fontSize: 30
     },
 
     title : {
-        fontSize : 30,
+        fontSize : 60,
         color : '#297885',
         fontFamily : 'Chocolate_DRINK_DEMO' ,
-        alignSelf : 'center',
+        //alignSelf : 'center',
         textDecorationLine: 'underline',
     },
 

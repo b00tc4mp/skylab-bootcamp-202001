@@ -10,24 +10,24 @@ const styles = StyleSheet.create({
     },
     
     input : {
-        marginTop : 30,
-        fontSize : 17,
+        marginTop : 10,
+        fontSize : 30,
+        //justifyContent: 'center',
         alignSelf : 'center',
         color:'#4CBBC2',
         fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     title : {
-        fontSize : 50,
+        fontSize : 60,
         color : '#297885',
         alignSelf : 'center',
-        fontWeight: '200',
         fontFamily : 'Chocolate_DRINK_DEMO'
     },
     
     button : {
-        marginTop : 35,
-        fontSize : 25,
+        marginTop : 15,
+        fontSize : 35,
         color : '#fffdf9',
         alignSelf : 'center',
         backgroundColor : '#297885',
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
 
     toRegister : {
         marginTop : 20,
-        fontSize : 15,
+        fontSize : 25,
         alignSelf : 'center',
         color : '#79BABF',
         fontFamily : 'Chocolate_DRINK_DEMO'
@@ -48,15 +48,14 @@ const styles = StyleSheet.create({
     error : {
         marginTop : 20,
         padding : 10,
+        fontSize : 25,
         fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     logo : {
-        marginTop : 50,
         width: 350,
         height: 350,
         alignSelf : 'center'
-        
     }
 })
 
