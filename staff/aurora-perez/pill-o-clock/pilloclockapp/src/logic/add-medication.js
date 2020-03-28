@@ -6,6 +6,7 @@ const context= require('./context')
 module.exports = function (drugId, time) {
    
     validate.string(drugId, 'drugId')
+    validate.type(time, 'times', Array)
     time.forEach(alarm =>{
         validate.stringOfNumbers(alarm)
     })

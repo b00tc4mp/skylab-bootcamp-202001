@@ -2,12 +2,15 @@ const { random, floor } = Math
 const { mongoose, models: { User } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
 require('dotenv').config() 
-const API_URL = process.env.REACT_APP_API_URL
-
-import login from './login'
 
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
+
+import logic from '.'
+import config from '../config'
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.API_URL
 
 
 describe('login', () => {
@@ -17,7 +20,7 @@ describe('login', () => {
     const GENDERS = ['male', 'female','non-binary']
 
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(config.TEST_MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
 

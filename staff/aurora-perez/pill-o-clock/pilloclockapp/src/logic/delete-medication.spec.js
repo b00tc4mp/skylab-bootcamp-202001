@@ -8,6 +8,11 @@ const { NotAllowedError, NotFoundError } = require('../errors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
+import logic from '.'
+import config from '../config'
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.API_URL
 
 describe('deleteMedication', () => { 
 
@@ -17,7 +22,7 @@ describe('deleteMedication', () => {
     
     
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(config.TEST_MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
         await Drug.deleteMany()
         await Guideline.deleteMany()

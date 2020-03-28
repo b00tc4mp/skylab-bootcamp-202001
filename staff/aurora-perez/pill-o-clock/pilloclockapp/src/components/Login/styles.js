@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         fontSize : 15,
         alignSelf : 'center',
         color : '#79BABF',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Sensei-Medium.ttf'
     },
 
     error : {

@@ -3,8 +3,8 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
-module.exports = function (id) {
-    validate.string(id, 'id')
+module.exports = function (id2) {
+    validate.string(id2, 'id')
 
     return (async() => {
         const token = await this.storage.getItem('token')
@@ -15,7 +15,7 @@ module.exports = function (id) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,  
             },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ id2 })
         })
     
         const { status } = response
