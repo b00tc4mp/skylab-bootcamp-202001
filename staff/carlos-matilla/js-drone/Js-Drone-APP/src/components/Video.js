@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import JMuxer from 'jmuxer';
+import JMuxer from 'jmuxer'
 import './Video.sass'
-import { socket, httpPort, resetHttpPort } from '../socket';
+import { socket } from '../socket'
 import { startDrone } from './../logic'
-import io from 'socket.io-client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
+
 
 
 
@@ -58,7 +60,7 @@ async function handleStartDrone() {
 
 
 export default function () {
-    const [status, updateStatus] = useState('-');
+    const [status, updateStatus] = useState(' - ');
     const [battery, setBattery] = useState()
     const [height, setHeight] = useState('-')
 
@@ -84,8 +86,12 @@ export default function () {
             <div className="aspect-ratio--16x9">
                 <div className="aspect-ratio__inner-wrapper">
                     <div className="drone-status">
-                        <div className="status">{`TELLO dice: ${status}`}</div>
+                        <div className="status">{`TELLO : ${status}`}</div>
                         <div className="drone-height"><p>{`${height} cm`}</p></div>
+                        <div className="power-off">
+                            <FontAwesomeIcon icon={faPowerOff} onClick={handleStopDrone} size="1x" />
+                        </div>
+                        
                         <div className="drone-battery">
                             <div className="battery">
                                 <div style={batStyle}></div>
@@ -95,7 +101,6 @@ export default function () {
                     </div>
                     <div className="start_button_wrapper" >
                         <button className="start-button" onClick={handleStartDrone}>Connect to TELLO</button>
-                        <button className="start-button" onClick={handleStopDrone}>Disconnect to TELLO</button>
                     </div>
 
                     <video className="video" id='player' autoPlay muted />

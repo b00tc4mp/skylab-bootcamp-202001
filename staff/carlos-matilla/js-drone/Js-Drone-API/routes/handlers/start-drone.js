@@ -12,8 +12,8 @@ module.exports = (req, res) => {
    
     
     const ps = fork('./pc.js', [port, httpPort])
-    ps.on('message', message =>{
-        console.log(`Received from Child: ${message}`)
+    ps.on('message', (message )=>{
+        res.status(200).json({ message })
     })
 
     ps.on('close', (exitCode, signal)=>{

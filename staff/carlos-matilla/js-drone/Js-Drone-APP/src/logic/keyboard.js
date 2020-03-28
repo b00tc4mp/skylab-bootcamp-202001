@@ -9,36 +9,36 @@ export { takeOffK, landK, v, negV }
 export function keyUp(e) {
 
     if (e.code === "KeyW") {
-        // console.log('Forward')
+        console.log('Forward')
         socket.emit('control', `rc 0 0 0 0`)
     }
 
     if (e.code === "KeyA") {
-        //    console.log('Left')
+           console.log('Left')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "KeyD") {
-        //    console.log('Right')
+           console.log('Right')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "KeyS") {
-        //    console.log('Backward')
+           console.log('Backward')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowUp") {
-        //    console.log('Up')
+           console.log('Up')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowLeft") {
-        //    console.log('Turn Left')
+           console.log('Turn Left')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowDown") {
-        //    console.log('Down')
+           console.log('Down')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowRight") {
-        //    console.log('Turn Right')
+           console.log('Turn Right')
         socket.emit('control', `rc 0 0 0 0`)
     }
 }
@@ -48,16 +48,14 @@ export function keyDown(e) {
 
     if (e.code === "Enter") {
         console.log('Take Off')
-        // socket.emit('control', `takeoff`)
-        // ws.send(`takeoff`)
+        socket.emit('control', `takeoff`)
         landK = false
         takeOffK = true
     }
 
     if (e.code === "Escape") {
         console.log('Land')
-        // socket.emit('control', `land`)
-        // ws.send(`land`)
+        socket.emit('control', `land`)
         takeOffK = false
         landK = true
     }
@@ -79,19 +77,19 @@ export function keyDown(e) {
         socket.emit('control', `rc 0 ${negV} 0 0`)
     }
     if (e.code === "ArrowUp") {
-        // console.log('Up')
+        console.log('Up')
         socket.emit('control', `rc 0 0 ${v} 0`)
     }
     if (e.code === "ArrowLeft") {
-        // console.log('Turn Left')
+        console.log('Turn Left')
         socket.emit('control', `rc 0 0 0 ${negV}`)
     }
     if (e.code === "ArrowDown") {
-        // console.log('Down')
+        console.log('Down')
         socket.emit('control', `rc 0 0 ${negV} 0`)
     }
     if (e.code === "ArrowRight") {
-        // console.log('Turn Right')
+        console.log('Turn Right')
         socket.emit('control', `rc 0 0 0 ${v}`)
     }
     if (e.code === "KeyO") {

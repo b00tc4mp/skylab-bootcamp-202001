@@ -2,9 +2,21 @@ import React, { useRef, useEffect, useState } from 'react'
 import { channelA, channelB, channelC, channelD } from "../logic/gamepad"
 
 
-export default function () {
+export default function ({homePadding}) {
 
     const [joy, setJoy] = useState([])
+    
+    let paddingLeft, paddingRight
+    
+    if(homePadding) {
+        paddingLeft = {left: `140px`} 
+        paddingRight = {right: `140px`}
+
+    }else{
+        paddingLeft = {left: `0px`} 
+        paddingRight = {right: `0px`}
+    }
+        
 
     function useInterval(callback, delay) {
         const savedCallback = useRef()
@@ -35,12 +47,12 @@ export default function () {
 
     return <>
 
-        <section className="roller">
+        <section className="roller" style={paddingLeft}>
             <section className="stick" style={joy[0]}>
                 <section className="inner"></section>
             </section>
         </section>
-        <section className="roller2">
+        <section className="roller2" style={paddingRight}>
             <section className="stick" style={joy[1]}>
                 <section className="inner"></section>
             </section>

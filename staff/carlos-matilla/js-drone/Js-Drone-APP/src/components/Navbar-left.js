@@ -13,49 +13,47 @@ export default function ({ toggleLiveChart, toggleEstadistics, toggleHomeView, t
   return <nav className="navbar-left">
     <ul className="lnav">
       <li className="lnav_logo">
-        <a href="#" className="lnav-logo_link" onClick={event => {
-          event.preventDefault()
-          toggleHomeView()
-        }}>
-          <span className="lnav_linktext lnav_logo-text">No c</span>
-          <img src={logo} className="react-logo" alt="logo" />
-        </a>
+          <img src={logo} className="lnav-logo_link" alt="logo" onClick={event => {
+            event.preventDefault()
+            toggleHomeView()
+          }}/>
+        
       </li>
 
-      <li className="lnav_item">
-        <a href="#" className={chosen === 'g' ? "lnav_link active" : "lnav_link"} onClick={event => {
+      <li className={chosen === 'g' ? "lnav_item active" : "lnav_item"} onClick={event => {
           event.preventDefault()
           setChosen('g')
           toggleControls()
         }}>
-          <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x" />
-          <span className="lnav_linktext">Controls</span>
-        </a>
+        
+          <FontAwesomeIcon  icon={faGamepad} size="2x"/>
+          
+        
       </li>
 
 
-      <li className="lnav_item">
-        <a href="#" className={chosen === 'c' ? "lnav_link active" : "lnav_link"} onClick={event => {
+      <li className={chosen === 'c' ? "lnav_item active" : "lnav_item"} onClick={event => {
           event.preventDefault()
           setChosen('c')
           toggleLiveChart()
         }}>
-          <FontAwesomeIcon className="lnav_svg" icon={faChartLine} size="2x" />
-          <span className="lnav_linktext">Charts</span>
-        </a>
-      </li>
+        
+        <FontAwesomeIcon icon={faChartLine} size="2x"/>
+        
+      
+    </li>
 
 
-      <li className="lnav_item">
-        <a href="#" className={chosen === 'e' ? "lnav_link active" : "lnav_link"} onClick={event => {
+    <li className={chosen === 'e' ? "lnav_item active" : "lnav_item"} onClick={event => {
           event.preventDefault()
           setChosen('e')
           toggleEstadistics()
-        }}>
-          <FontAwesomeIcon className="lnav_svg" icon={faChartBar} size="2x" />
-          <span className="lnav_linktext">Estadistics</span>
-        </a>
-      </li>
+        }} >
+        
+        <FontAwesomeIcon icon={faChartBar} size="2x"/>
+        
+      
+    </li>
 
     </ul>
   </nav>

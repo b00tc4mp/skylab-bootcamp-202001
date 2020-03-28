@@ -1,23 +1,31 @@
 import React, { useState } from 'react'
-import './Navbar-right.sass';
+import './Navbar-right.sass'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
 
 
-export default function ({ mySessions, handleLogout, handleSession, leftMenuView, name }) {
+export default function ({ mySessions, handleLogout, handleSession, leftMenuView, name, handleHomePadding, estadisticsView, liveChartView}) {
 
   const [hoverName, setHoverName] = useState(false)
   const [hoverMenu, setHoverMenu] = useState(false)
 
-  let style
+  let styleMenu
+  let styleArrow
 
-  if (hoverMenu) style = { width: `20rem` }
+  if (hoverMenu){
+    styleMenu = { width: `18rem` }
+    styleArrow = {transform: `rotate(180deg)`}
+  }
 
-  function dateParser(date) {
-    const fullDate = date.split("T")[0]
-    const day = fullDate.split("-")[2]
-    const month = fullDate.split("-")[1]
-    const year2 = fullDate.split("-")[0]
+  if(liveChartView || estadisticsView) styleArrow = {display: `none`}
+
+  function hourParser(date) {
+    // const fullDate = date.split("T")[0]
+    // const day = fullDate.split("-")[2]
+    // const month = fullDate.split("-")[1]
+    // const year2 = fullDate.split("-")[0]
     const hour = (date.split("T")[1]).split(".")[0]
-    return `${hour}  ${day}-${month}-${year2}`
+    return `${hour}`
   }
 
   function dayParser(date) {
@@ -44,31 +52,37 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     setHoverMenu(false)
   }
 
-  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} onMouseEnter={() => setHoverMenu(true)} onMouseLeave={() => setHoverMenu(false)} style={style}>
+  function handleMenuHover(){
+    hoverMenu ? setHoverMenu(false) : setHoverMenu(true)
+    handleHomePadding()
+  }
+
+  return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} style={styleMenu}>
     <li className="rnav_logo">
-      <a href="#" className="rnav-logo_link">
-        <button className="rnav_button" onMouseEnter={() => setHoverName(true)} onMouseLeave={() => setHoverName(false)} onClick={handleLogout}>{hoverName ? "Logout" : nameParser(name)}</button>
-      </a>
+      <button className="rnav_button" onMouseEnter={() => setHoverName(true)} onMouseLeave={() => setHoverName(false)} onClick={handleLogout}>{hoverName ? "Logout" : nameParser(name)}</button>
     </li>
+    <li className="rnav_left"><FontAwesomeIcon icon={faChevronLeft} size="2x" onClick={handleMenuHover} style={styleArrow}/></li>
     <ul className="rnav">
       {mySessions.map((session => <>
-        <li className="rnav_item" key={session}>
-          <a href="" className="rnav_link" onClick={event => {
+        <li className="rnav_item" key={session}onClick={event => {
             event.preventDefault()
             handleSession(session)
             handleHover()
           }}>
-            <div className="rnav_svg">
+          
+            <div className="rnav_icon">
               <spam>{dayParser(session.date)}</spam>
               <em>{monthParser(session.date)}</em>
             </div>
 
-            <span className="rnav_linktext">{dateParser(session.date)}</span>
-          </a>
+            <span className="rnav_itemtext">{hourParser(session.date)}</span>
+          
         </li>
 
       </>))}
+      
     </ul>
+    <li className="rnav_down"><FontAwesomeIcon  icon={faChevronDown} size="2x"/></li>
   </nav>
 }
 

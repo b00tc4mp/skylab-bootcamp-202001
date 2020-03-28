@@ -44,12 +44,16 @@ export default function ({ mySession }) {
     const temperatureData = {
         labels: lowTempP,
         datasets: [
+
+           
+
+
             {
                 label: 'Low Temp',
-                fill: false,
+                fill: true,
                 lineTension: 0.1,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: 'rgba(75,192,192,1)',
+                backgroundColor: 'rgba(0,204,227, 0.8)',
+                borderColor: 'rgba(0,204,227, 0.8)',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
@@ -67,15 +71,15 @@ export default function ({ mySession }) {
             },
             {
                 label: 'High Temp',
-                fill: false,
+                fill: true,
                 lineTension: 0.1,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: 'rgba(255,0,0,0.4)',
+                backgroundColor: 'rgba(255,28,70, 0.6)',
+                borderColor: 'rgba(255,28,70, 0.8)',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBorderColor: 'rgba(255,28,70, 1)',
                 pointBackgroundColor: '#fff',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
@@ -85,7 +89,8 @@ export default function ({ mySession }) {
                 pointRadius: 1,
                 pointHitRadius: 10,
                 data: hightTempP
-            }
+            },
+            
         ]
     }
 
@@ -97,19 +102,19 @@ export default function ({ mySession }) {
             {
                 label: 'Height',
                 fill: false,
-                lineTension: 0.1,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: 'rgba(75,192,192,1)',
+                lineTension: 0.4,
+                backgroundColor: 'rgba(70,85,230, 0.1)',
+                borderColor: 'rgba(250,160,5, 0.8)',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBorderColor: 'rgba(250,160,5, 0.8)',
                 pointBackgroundColor: '#fff',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
-                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBackgroundColor: 'rgba(83,102,207, 0.9)',
+                pointHoverBorderColor: 'rgba(83,102,207, 1)',
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
@@ -126,22 +131,22 @@ export default function ({ mySession }) {
                 label: 'Speed',
                 fill: false,
                 lineTension: 0.1,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: 'rgba(75,192,192,1)',
+                backgroundColor: 'rgba(83,102,207, 0.1)',
+                borderColor: 'rgb(70,85,230)',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'rgba(75,192,192,1)',
+                pointBorderColor: 'rgb(70,85,230)',
                 pointBackgroundColor: '#fff',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
-                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBackgroundColor: 'gba(83,102,207, 0.9)',
+                pointHoverBorderColor: 'rgba(83,102,207, 1)',
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: speedP
+                data: heightP
             }
         ]
     }
@@ -152,20 +157,20 @@ export default function ({ mySession }) {
         datasets: [
             {
                 label: 'Atmospheric Pressure',
-                fill: false,
-                lineTension: 0.1,
-                backgroundColor: 'rgba(75,192,192,0.4)',
-                borderColor: 'rgba(75,192,192,1)',
+                fill: true,
+                lineTension: 0.4,
+                backgroundColor: 'rgba(130,130,130, 0.3)',
+                borderColor: 'rgb(28,220,0)',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'rgba(75,192,192,1)',
-                pointBackgroundColor: '#fff',
+                pointBorderColor: '#fff',
+                pointBackgroundColor: 'rgb(28,220,0)',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
-                pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                pointHoverBorderColor: 'rgba(220,220,220,1)',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(229,255,0)',
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
@@ -175,7 +180,7 @@ export default function ({ mySession }) {
     }
     const opt = {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         scales: {
             xAxes: [{
                 ticks: {
@@ -188,10 +193,6 @@ export default function ({ mySession }) {
 
 
     return <section className="charts">
-
-        <div className="chart-title">
-            <h1>{dateParser(date)}</h1>
-        </div>
 
         <div className="chart-estadistics">
             <div>
@@ -212,13 +213,15 @@ export default function ({ mySession }) {
                 <p className="est-num"><CountUp delay={1} end={time} /></p>
             </div>
             <div>
-                <p>Speed Average</p>
-                <br />
+              
                 <CircularProgressbar value={speedAve} circleRatio={0.75}
                     styles={buildStyles({
                         rotation: 1 / 2 + 1 / 8,
                         strokeLinecap: "butt",
-                        trailColor: "#eee"
+                        trailColor: "#e6e6e6",
+                        pathColor: "rgb(51,186,210)",
+                        textColor: "#373737"
+
                     })} text={`${speedAve} m/s`} />
             </div>
         </div>

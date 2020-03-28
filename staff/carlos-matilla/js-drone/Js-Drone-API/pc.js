@@ -28,7 +28,10 @@ let counter = 0
 
 if (semaforo) throw new NotAllowedError(`PORT ${port} already in use`)
 
-const websocket = new ws.Server({ port: 2212 })
+const websocket = new ws.Server({ port: 2212 }, ()=>{
+    let res = 'Websocket connected'
+    process.send(res)
+})
 
 semaforo = true
 
@@ -67,8 +70,7 @@ websocket.on('connection', function connection(websocket) {
 
             } else {
 
-                console.log('seeking Wifi enpoints, searching for TELLO')
-
+                // console.log('seeking Wifi enpoints, searching for TELLO')
                 wifi.scan(function (err, response) {
                     if (err) console.log(error)
                     for (var i = response.length - 1; i >= 0; i--) {
@@ -102,8 +104,8 @@ websocket.on('connection', function connection(websocket) {
                 callDrone()
             }
         }, 1500)
+    
     }
-
 
     function callDrone() {
 
@@ -151,6 +153,7 @@ io.on('connection', socket => {
     console.log('socket io connected')
 
     socket.on('control', function (msg) {
+        console.log(msg)
         drone.send(msg, 0, msg.length, 8889, '192.168.10.1', handleError)
     })
 

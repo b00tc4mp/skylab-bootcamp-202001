@@ -14,6 +14,8 @@
     "chartjs-plugin-streaming": "^1.8.0",
     "drone-errors": "file:../Js-Drone-ERRORS",
     "drone-utils": "file:../Js-Drone-UTILS",
+    "electron": "^8.2.0",
+    "electron-builder": "^22.4.1",
     "express": "^4.17.1",
     "jmuxer": "^1.1.1",
     "lodash": "^4.17.15",

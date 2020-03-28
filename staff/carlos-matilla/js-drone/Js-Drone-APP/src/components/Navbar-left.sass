@@ -3,8 +3,10 @@
   position: fixed
   background-color:#fff
   // border-right: 1px solid #fff
-  transition: width 600ms ease
   z-index: 4
+  top: 0
+  width: 4rem
+  height: 100vh
  
 
 .lnav
@@ -15,85 +17,58 @@
   flex-direction: column
   align-items: center
   height: 100%
-
-.lnav_item
-  width: 100%
-
-
-
-
-
-
-.lnav-logo_link
-  display: flex
-  align-items: center
-  height: 5rem
-  color: #1f1f1f
-  text-decoration: none
-  transition: 600ms
-
-.lnav_link
-  display: flex
-  align-items: center
-  height: 5rem
-  color: #1f1f1f
-  text-decoration: none
-  filter: opacity(0.7)
-  transition: 600ms
-  margin: 1.25rem 0
-
-  &:hover
-    
-    filter: grayscale(0%) opacity(1)
-    background: #e4e4e4
-    color: #000000
-
-.active
-    background: #5A5A5A
-    color: #fff
-
-.lnav_svg 
   
- 
-  margin: 0 1.25rem
-
-
-
-.lnav_linktext
-  display: none
-  margin-left: 1rem
-
-
-.fa-primary
-  color: #ff7eee
-
-.fa-secondary
-  color: #df49a6
-
-.fa-primary, .fa-secondary
-  transition: 600ms
 
 .lnav_logo
   font-weight: bold
   text-transform: uppercase
   margin-bottom: 3rem
   text-align: center
-  
   background: #282c34
   font-size: 1.1rem
   letter-spacing: 0.2ch
   width: 100%
 
-  img
-    transform: rotate(0deg)
-    transition: 600ms
+.lnav_item
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 100%
+  display: flex
+  justify-content: center
+  height: 4rem
+  color: #1f1f1f
+  text-decoration: none
+  // filter: opacity(0.7)
+  transition: 600ms
+  cursor: pointer
+  margin: 3.75rem 0
+  &:hover
+    background: #203246
+    color: #fff
 
-.react-logo 
-  max-width: 5rem
-  pointer-events: none
+
+.lnav-logo_link
+  display: flex
+  align-items: center
+  height: 4rem
+  color: #1f1f1f
+  text-decoration: none
+  transition: 600ms
+  max-width: 4rem
+  cursor: pointer
+  transform: rotate(0deg)
+  transition: 600ms
+
+
+.active
+    background: #203246
+    color: #fff
+
+
 
 @media (prefers-reduced-motion: no-preference) 
-  .react-logo 
+  .lnav-logo_link 
     animation: React-logo-spin infinite 20s linear
 
 @keyframes React-logo-spin 
@@ -102,38 +77,5 @@
   
   to 
     transform: rotate(360deg)
-
-.icong
-
-
-.lnav_logo-text
-  display: inline
-  position: absolute
-  left: -999px
-  color: #fff
-  transition: 600ms
-
-.navbar-left:hover .lnav_logo img
-  transform: rotate(-180deg)
-
-/* Large screens
-@media only screen and (min-width: 600px)
-  .navbar-left
-    top: 0
-    width: 5rem
-    height: 100vh
-
-    &:hover
-      width: 18rem
-
-      .lnav_linktext
-        display: inline
-
-      .lnav_logo img
-        margin-left: 11rem
-
-      .lnav_logo-text
-        left: 0px
-
 
 

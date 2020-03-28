@@ -101,6 +101,10 @@ export default withRouter(function ({ history }) {
     history.push('/login')
   }
 
+  function handleHomePadding(){
+    homePadding? setHomePadding(false) : setHomePadding(true)
+  }
+
   function handleSession(session) {
     setHomePadding(false)
     setMySession(session)
@@ -186,7 +190,7 @@ export default withRouter(function ({ history }) {
       {mySession && chartsView && <Charts mySession={mySession} />}
 
 
-      {controlsView && <Controls toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} />}
+      {controlsView && <Controls toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} homePadding={homePadding}/>}
 
       {!controlsView &&
         <div className="on-live">
@@ -196,6 +200,6 @@ export default withRouter(function ({ history }) {
 
     </div>
 
-    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView} name={name} homePadding={homePadding} />
+    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView} name={name} homePadding={homePadding} handleHomePadding={handleHomePadding} estadisticsView={estadisticsView} liveChartView={liveChartView}/>
   </>
 })
