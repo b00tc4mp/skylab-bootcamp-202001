@@ -22,6 +22,7 @@ export default ({ goTo, gameId }) => {
   //const [combinationLaunched, setCombinationLaunched] = useState();
   const [color, setColor] = useState("");
   const [combinationPlayer, setCombinationPlayer] = useState([])
+  let _combinationPlayer = []
   let playersName;
   let status;
   let combinationLaunched = false;
@@ -85,8 +86,7 @@ export default ({ goTo, gameId }) => {
                 setCurrentPlayerName(undefined);
                 setPlayersRemain(undefined);
                 clearInterval(interval);
-                // TODO do not delete games (keep them in db for later consultation)
-                setTimeout(()=> goTo('multiplayer'), 5000)
+                setTimeout(() => goTo('multiplayer'), 5000)
               }
             } catch (error) {
               setError(error.message);
@@ -111,17 +111,17 @@ export default ({ goTo, gameId }) => {
       })(0);
     });
   }
-
-  async function send() {
-    debugger
-    t = setTimeout(await playCombination(combinationPlayer), 4000)
+  
+  function send(comb) {
+    return new Promise(resolve => {
+      t = setTimeout(() => playCombination(comb), 3000);
+      resolve()
+    })
   }
 
   function stop() {
     clearTimeout(t)
   }
-
-  //match current player & userId to active logic onclick
 
   return (
     <div className="p1 game">
@@ -146,14 +146,13 @@ export default ({ goTo, gameId }) => {
             onClick={ e  => {
                 e.preventDefault()
                 if (userId === currentPlayerId) {
-                  setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
+                  _combinationPlayer.push(0)
+                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
                   if (t) {
-                    debugger
                     stop()
-                    send()
-                  } else{
-                    debugger
-                    send()
+                    send(_combinationPlayer)
+                  } else {
+                    send(_combinationPlayer)
                   }
                 }
             }}
@@ -166,7 +165,16 @@ export default ({ goTo, gameId }) => {
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId) setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
+                if (userId === currentPlayerId) {
+                  _combinationPlayer.push(1)
+                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
+                  if (t) {
+                    stop()
+                    send(_combinationPlayer)
+                  } else {
+                    send(_combinationPlayer)
+                  }
+                }
             }}
           ></div>
           <div
@@ -177,8 +185,17 @@ export default ({ goTo, gameId }) => {
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId) setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
-            }}
+                if (userId === currentPlayerId) {
+                  _combinationPlayer.push(2)
+                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
+                  if (t) {
+                    stop()
+                    send(_combinationPlayer)
+                  } else {
+                    send(_combinationPlayer)
+                  }
+                }            
+              }}
           ></div>
           <div
             className={
@@ -188,8 +205,16 @@ export default ({ goTo, gameId }) => {
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId) combinationPlayer.push(3)
-                //setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
+                if (userId === currentPlayerId) {
+                  _combinationPlayer.push(3)
+                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
+                  if (t) {
+                    stop()
+                    send(_combinationPlayer)
+                  } else {
+                    send(_combinationPlayer)
+                  }
+                }
             }}
           ></div>
           <div className="game__board__container__gray"></div>

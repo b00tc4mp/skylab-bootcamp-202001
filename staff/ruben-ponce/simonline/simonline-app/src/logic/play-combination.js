@@ -8,19 +8,22 @@ export default (function (combination) {
 
     return (async () => {
         const play = await fetch(`${API_URL}/users/games/playcombination`, {
-            method: 'POST',
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` },
             body: JSON.stringify({ combination })
         })
 
         const { status } = await play
 
+        if (status === 200) {
+            const gameStatus = await play.json()
+            return gameStatus
+        }
+
         if (status === 409 || status === 406 || status === 403) {
             const { error } = await play
             throw new Error(error)
         }
-
-        else if (status === 201) return
 
         else return new Error('Unknown error')
     })()
