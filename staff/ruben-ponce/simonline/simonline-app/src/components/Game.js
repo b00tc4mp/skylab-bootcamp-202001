@@ -10,21 +10,20 @@ import {
 import Feedback from "./Feedback";
 
 export default ({ goTo, gameId }) => {
-  const [error, setError] = useState(undefined);
+  let [error, setError] = useState(undefined);
   const [userId, setUserId] = useState();
-  const [currentPlayerName, setCurrentPlayerName] = useState();
-  const [currentPlayerId, setCurrentPlayerId] = useState();
-  const [lastPlayerOut, setLastPlayerOut] = useState();
-  const [playersRemain, setPlayersRemain] = useState();
+  let [currentPlayerName, setCurrentPlayerName] = useState();
+  let [currentPlayerId, setCurrentPlayerId] = useState();
+  let [lastPlayerOut, setLastPlayerOut] = useState();
+  let [playersRemain, setPlayersRemain] = useState();
   const [winner, setWinner] = useState();
-  const [countdown, setCountdown] = useState();
-  const [_status, setStatus] = useState();
+  let [countdown, setCountdown] = useState();
+  let [status, setStatus] = useState();
   //const [combinationLaunched, setCombinationLaunched] = useState();
-  const [color, setColor] = useState("");
-  const [combinationPlayer, setCombinationPlayer] = useState([])
+  let [color, setColor] = useState("");
+  let [combinationPlayer, setCombinationPlayer] = useState([])
   let _combinationPlayer = []
   let playersName;
-  let status;
   let combinationLaunched = false;
   let t;
 
@@ -37,7 +36,7 @@ export default ({ goTo, gameId }) => {
           (async () => {
             try {
               setUserId(retrieveUserId(sessionStorage.token));
-              status = await retrieveGameStatus(gameId);
+              let status = await retrieveGameStatus(gameId);
               setStatus(status)
               if (status.status === "started") {
                 //current player
@@ -111,13 +110,19 @@ export default ({ goTo, gameId }) => {
       })(0);
     });
   }
-  
-  function send(comb) {
-    return new Promise(resolve => {
-      t = setTimeout(() => playCombination(comb), 3000);
-      resolve()
-    })
-  }
+
+  const delay = (duration) =>
+    new Promise(resolve => {
+      t = setTimeout(resolve, duration)
+  });
+
+  const send = async (comb) => {
+    await delay(3000);
+    let status = await playCombination(comb);
+    setStatus(status)
+    console.log(status)
+    combinationLaunched = false
+  };
 
   function stop() {
     clearTimeout(t)
@@ -125,9 +130,10 @@ export default ({ goTo, gameId }) => {
 
   return (
     <div className="p1 game">
+      {console.log(status)}
       {console.log(combinationLaunched)}
       {console.log(combinationPlayer)}
-      {_status && console.log(_status.pushCombination)}
+      {status && console.log(status.pushCombination)}
       {/* {status.pushCombination && console.log(status.pushCombination)} */}
 
       {/* Block__Element--Modifier */}

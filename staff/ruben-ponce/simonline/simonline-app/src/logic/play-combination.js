@@ -8,7 +8,7 @@ export default (function (combination) {
 
     return (async () => {
         const play = await fetch(`${API_URL}/users/games/playcombination`, {
-            method: 'PATCH',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` },
             body: JSON.stringify({ combination })
         })

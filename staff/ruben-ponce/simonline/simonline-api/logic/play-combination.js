@@ -16,7 +16,6 @@ module.exports = (playerId, combination) => {
 
     return Game.findOne({players: playerId}).lean()
     .then(game => {
-        const { status, pushCombination } = game
 
         const playersStr = []
         game.players.forEach(player => playersStr.push(player.toString()))
@@ -32,21 +31,29 @@ module.exports = (playerId, combination) => {
 
         let matched = true
 
-        for (var i = 0; i < pushCombination.length; i++) {
-            if(pushCombination[i] !== combination[i]) matched = false
+        for (let i = 0; i < game.pushCombination.length; i++) {
+            if(game.pushCombination[i] !== combination[i]) matched = false
+        }
+
+        const j = playersStr.indexOf(currentPlayerStr)
+
+        let start;
+
+        if(!playersStr[j+1]) {
+            start = 0
+        } else {
+            start = j+1
         }
         
         /** when player before timeout matches the combination */
         if (elapsedTime < game.turnTimeout && matched) {
-            const j = playersStr.indexOf(currentPlayerStr)
-    
-            for (var i = j; i < playersStr.length; i++) {
-                if(!playersStr[j+1]) i = 0
+            /** [a,b,c] */
+            for (let i = start; i < playersStr.length; i++) {
                 if(!watchingStr.includes(playersStr[i])) {
                     const combination = Math.floor(Math.random() * 4)
-                    pushCombination.push(combination)
+                    game.pushCombination.push(combination)
                     game.combinationViewed = []
-                    game.turnTimeout = ((pushCombination.length) * 4)
+                    game.turnTimeout = (40 + (game.pushCombination.length * 4))
                     game.turnStart = new Date()
                     game.currentPlayer = game.players[i]
                     return game
@@ -57,14 +64,14 @@ module.exports = (playerId, combination) => {
             game.watching.push(game.currentPlayer)
             watchingStr.push(currentPlayerStr)
 
-            if(game.players.length === (game.watching.length -1)) return status = 'finished'
+            if(game.players.length === (game.watching.length -1)) return game.status = 'finished'
 
-            var j = playersStr.indexOf(currentPlayerStr)
+            let j = playersStr.indexOf(currentPlayerStr)
     
-            for (var i = j; i < playersStr.length; i++) {
-                if(!playersStr[j+1]) i = 0
+            for (let i = start; i < playersStr.length; i++) {
                 if(!watchingStr.includes(playersStr[i])) {
                     game.currentPlayer = game.players[i]
+                    game.turnTimeout = (40 + (game.pushCombination.length * 4))
                     game.combinationViewed = []
                     game.turnStart = new Date()
                     return game
