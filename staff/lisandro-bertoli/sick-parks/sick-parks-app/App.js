@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import * as Permissions from 'expo-permissions'
 
+import config from './config'
 import logic, {
 	registerUser,
 	retrieveUser,
@@ -24,7 +25,6 @@ import {
 	Profile,
 	ParkBuilder
 } from './src/components/'
-
 const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
 const buildImage = require('./assets/icon-pick-and-shovel.png')
@@ -34,7 +34,7 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
 
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.1.101:8085/api'
+logic.__context__.API_URL = config.API_URL
 
 export default function App() {
 	const [error, setError] = useState()
