@@ -13,7 +13,7 @@ const AddPatient: () => React$Node = ({user}) => {
       <Text style={styles.text}>{user.name} {user.surname}, Pharmacist</Text>
      
       <QRCode
-      value= {user.id}
+      value= {`${user.id.toString()}`}
       size={200}
     />
     </View>

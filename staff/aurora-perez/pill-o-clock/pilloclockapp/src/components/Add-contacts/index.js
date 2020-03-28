@@ -1,22 +1,35 @@
 
 import React, { Component } from 'react'
 import styles from './styles'
+import logic, { addContact } from '../../logic';
 
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, Linking} from 'react-native'
+import { AppRegistry, StyleSheet, Text, TouchableOpacity, Alert} from 'react-native'
 
 import QRCodeScanner from 'react-native-qrcode-scanner'
 
 export default class ScanScreen extends Component {
-  onSuccess(e) {
-    Linking
-      .openURL(e.data)
-      .catch(err => console.error('An error occured', err))
+
+  onSuccess (id) {
+    (async () => {
+      console.log(id)
+      try{
+        await addContact(id)
+        Alert.alert('Contact added!')
+      }catch({message}){
+        console.log(message)
+      }
+    })()
+
+    
+    // Linking
+    //   .openURL(e.data)
+    //   .catch(err => console.error('An error occured', err))
   }
 
   render() {
     return (
       <QRCodeScanner
-        onRead={this.onSuccess.bind(this)}
+        onRead={(e) => this.onSuccess(e.data)}
         topContent={
           <Text style={styles.centerText}>
             Scan your pharmacist's QR code!

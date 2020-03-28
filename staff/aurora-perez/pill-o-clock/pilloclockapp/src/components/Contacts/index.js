@@ -4,6 +4,7 @@ import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
 function Contacts ({toAdd, onContact, contacts}) {
+    console.log(contacts)
 
     return (<>
         

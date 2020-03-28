@@ -76,7 +76,7 @@ function App() {
               setGoLanding(true)
 
               setView('landingPharmacist')
-            } else if (user.profile === 'patient') {
+          } else if (user.profile === 'patient') {
               setUser(user)
               setGoLanding(true)
               setView('landingPatient')
@@ -97,7 +97,7 @@ function App() {
     //if(user) {
     const interval = setInterval(async () => {
       let alarms = await AsyncStorage.getItem('alarms')
-      console.log(alarms)
+      //console.log(alarms)
 
       if (alarms) {
         alarms = JSON.parse(alarms)
@@ -132,7 +132,7 @@ function App() {
             const sounded = alarms[drug][time]
 
             if (!sounded && nowHour >= time) {
-              console.log('alarma')
+              //console.log('alarma')
               alarms[drug][time] = true
 
               await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
@@ -221,7 +221,7 @@ function App() {
 
         alarms[medication.drug._id] = newAlarms
       })
-      console.log(alarms+ ' when retrieve medic')
+     // console.log(alarms+ ' when retrieve medic')
 
       await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
 
@@ -306,7 +306,7 @@ function App() {
     try {
       const _progress = await retrieveProgress()
 
-      console.log(progress)
+      //console.log(progress)
       setProgress(_progress)
 
       setView('progress')
