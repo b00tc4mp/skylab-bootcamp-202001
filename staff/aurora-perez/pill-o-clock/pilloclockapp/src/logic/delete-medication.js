@@ -9,7 +9,7 @@ module.exports = function (idDrug) {
     return (async() => {
         const token = await this.storage.getItem('token')
    
-        const response = await fetch(`${this.API_URL}/api/users/prescription/${idDrug}`, {
+        const response = await fetch(`${this.API_URL}/users/prescription/${idDrug}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

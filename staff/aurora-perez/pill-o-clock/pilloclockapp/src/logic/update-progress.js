@@ -18,11 +18,8 @@ module.exports = function () {
     
         const { status } = response
         
-        if (status === 200) {
-            const medication = await response.json()
-            
-            return medication
-        }
+        if (status === 200) return 
+        
 
         if (status >= 400 && status < 500) {
             const { error } = await response.json()

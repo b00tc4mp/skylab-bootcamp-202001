@@ -7,6 +7,7 @@ import moment from 'moment'
 
 function Progress ({progress, user}) {
     const [ markedDates, setMarketDates] = useState()
+    console.log('progress '+progress)
 
     function colorCheck (check) {
         let index
@@ -28,22 +29,26 @@ function Progress ({progress, user}) {
 
         !date && (await AsyncStorage.setItem('date', (date = moment().format('YYYY-MM-DD'))))
 
-        console.log(date)
        
         let today = moment(new Date).format('YYYY-MM-DD')
 
-        if (today > date) {
-            await updateProgress(progress); //vaciar array 
+  
 
-            
+        if (today > date) {
+
             let check = (progress.reduce((accum, value) => accum + value, 0))/progress.length
 
             let index = colorCheck(check)
+
+            console.log('index '+index)
 
             const recordDaily ={}
 
             recordDaily.date = date
             recordDaily.record = index
+            console.log(recordDaily)
+
+            await updateProgress(progress)
 
             await addProgressRecord(recordDaily)
         } else {
@@ -65,8 +70,6 @@ function Progress ({progress, user}) {
             _markedDates[day.date] = { customStyles: { container: {backgroundColor: day.record }, text: {color: 'black', fontWeight: 'bold'}}}
         })
    
-
-        console.log(_markedDates)
         setMarketDates(_markedDates);
     }
 

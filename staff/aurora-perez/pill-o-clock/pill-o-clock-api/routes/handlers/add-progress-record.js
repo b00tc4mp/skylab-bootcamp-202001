@@ -3,7 +3,7 @@ const { ContentError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     const { payload: { sub: id }, body } = req
-    debugger
+    
     try {
         addProgressRecord(id, body) 
             .then(() => res.status(201).end())

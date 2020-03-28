@@ -87,14 +87,13 @@ function App() {
     }catch({message}){
       console.log(message)
     }
-  })
+  }, [])
 
   useEffect(() => {
     //if(user) {
     const interval = setInterval(async () => {
       let alarms = await AsyncStorage.getItem('alarms')
 
-      console.log(alarms)
       if (alarms) {
         alarms = JSON.parse(alarms)
 
@@ -122,8 +121,6 @@ function App() {
             let nowHour = moment.utc(new Date).local().format('HHmm')
 
             const drugInfo = await retrieveDrug(drug)
-
-            //console.log(drugInfo)
 
             const {drugName} = drugInfo
 
@@ -235,7 +232,6 @@ function App() {
   }
 
   async function handleAddMedication(info) {
-    console.log(info)
     const {drug} = info
 
     try {
@@ -302,6 +298,8 @@ function App() {
   async function handleToProgress() {
     try {
       const _progress = await retrieveProgress()
+
+      console.log(progress)
       setProgress(_progress)
 
       setView('progress')

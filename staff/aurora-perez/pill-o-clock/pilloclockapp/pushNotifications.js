@@ -5,17 +5,19 @@ import logic, {addProgress} from './src/logic'
 
 logic.__context__.storage =AsyncStorage 
 
-const configure = (token) => {
+const configure = () => {
  PushNotification.configure({
 
-   onNotification: function(notification) {
+   onNotification: async function(notification) {
      notification.finish(PushNotificationIOS.FetchResult.NoData)
      
      if (notification.action == "Take pill") {
-        addProgress(token, true)
+       debugger
+        console.log('taked')
+        await addProgress(true)
       }
-      else if (notification.action == "Reject") {
-        addProgress(token, false)
+      else if (notification.action == "Did not take pill") {
+        await addProgress(false)
       }
   },
 
@@ -37,7 +39,7 @@ const configure = (token) => {
 const localNotification = (drugName) => {
  PushNotification.localNotification({
    autoCancel: true,
-   actions: `["Took ${drugName}", "Did not take pill"]`,
+   actions: `["Take pill", "Did not take pill"]`,
    largeIcon: "ic_launcher",
    smallIcon: "ic_notification",
    bigText: "Hey! You have to take take your medicine",
