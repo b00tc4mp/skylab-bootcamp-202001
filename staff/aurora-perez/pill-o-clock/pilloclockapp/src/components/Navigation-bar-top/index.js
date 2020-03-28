@@ -27,10 +27,11 @@ function NavigationBarTop({ toLogin, toMedication, toProgress, toContacts, toPat
                 </>)
         }       
         {       user.profile === 'pharmacist' && (<>
-
-                <ImageBackground imageStyle={styles.image} style={styles.patientContainer} source={require('../../../assets/images/receipt.png')}>
-                        <Button title= '' onPress={toPatients} />
+                <ImageBackground imageStyle={styles.image} style={styles.contactsContainer} source={require('../../../assets/images/receipt.png')}>
+                        <Text onPress={toPatients}></Text>
                 </ImageBackground>
+
+              
 
                 </>)
         }
