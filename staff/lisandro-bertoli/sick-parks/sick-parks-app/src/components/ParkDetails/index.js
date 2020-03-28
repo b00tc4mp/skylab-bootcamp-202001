@@ -17,13 +17,18 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
     useEffect(() => {
         setComments(park.comments)
         setVotes(park.rating)
-    }, [park.rating])
+    }, [park.rating, park.features])
 
-    console.log(feature)
     const handleHideModal = () => setShowComments(false)
     const handleNewFeature = () => {
         !updateSection && setUpdateSection(true)
-        updateSection && onUpdate({ features: [feature] })
+        updateSection && onUpdate({ features: [...park.features, feature] })
+    }
+    const handleDeleteFeature = (id) => {
+
+        const updated = park.features.filter(feature => feature.id !== id)
+
+        onUpdate({ features: [...updated] })
     }
     const handleUpVote = () => onVote(true)
     const handleDownVote = () => onVote(false)
@@ -177,11 +182,11 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                         <View style={styles.actionsContainer}>
 
                             <TouchableOpacity style={styles.approve} onPress={() => onContribution('approve')}>
-                                <Text style={styles.actionText}>Approve</Text>
+                                <Text style={styles.actionText}>✅ Approve </Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.report} onPress={handleReport}>
-                                <Text style={styles.actionText}>Report</Text>
+                                <Text style={styles.actionText}>❕Report </Text>
                             </TouchableOpacity>
 
 
@@ -236,6 +241,9 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                         </View>
                         {park.features.length ?
                             (park.features.map((feature, index) => (<>
+                                {user.id === park.creator.id ? (<View style={{ alignSelf: 'flex-start', marginLeft: 10, marginTop: 15 }}>
+                                    <MyButton text='✖' onPress={() => handleDeleteFeature(feature.id)} />
+                                </View>) : null}
                                 <View key={index} style={styles.featureContainer}>
                                     <View style={styles.propContainer}>
                                         <Text style={styles.featureProp}>Type</Text>
@@ -249,6 +257,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                                         <Text style={styles.featureProp}>Description</Text>
                                         <Text>{feature.description}</Text>
                                     </View>
+
                                 </View>
                             </>)))
                             :

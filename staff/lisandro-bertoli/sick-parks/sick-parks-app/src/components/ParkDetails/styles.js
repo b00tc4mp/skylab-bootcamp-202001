@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderRadius: 5,
         flex: 0.4,
-        backgroundColor: 'green'
+        backgroundColor: '#18BC0F'
     },
     actionText: {
         fontWeight: 'bold',
@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'green',
+        color: '#18BC0F',
     },
     downVote: {
         backgroundColor: 'white',

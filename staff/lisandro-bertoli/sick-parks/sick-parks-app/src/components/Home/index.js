@@ -117,7 +117,6 @@ export default function Home({ navigation, route }) {
             try {
                 await updatePark(user.id, detailedPark.id, update)
                 await __handleParkUpdate__(detailedPark.id)
-                console.log('update finished')
             } catch (error) {
                 Alert.alert(error.message)
             }
