@@ -8,7 +8,7 @@ module.exports = (id, drugId) => {
 
     let _user
 
-    return Promise.all([User.findById(id), Drug.findById({drugId}) ])
+    return Promise.all([User.findById(id), Drug.findById(drugId) ])
         .then(([user, drug]) => {
             if (!drug) throw new NotFoundError(`drug with id ${drugId} not found`)
             if (!user) throw new NotFoundError(`user with id ${id} not found`)

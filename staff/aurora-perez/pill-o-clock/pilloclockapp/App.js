@@ -43,8 +43,12 @@ import logic, {
   isLoggedIn
 } from './src/logic'
 
+import config from './config'
+
+logic.__context__.API_URL = config.API_URL
+
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.1.85:8085/api'
+//logic.__context__.API_URL = 'http://192.168.1.85:8085/api'
 console.disableYellowBox = true
 
 function App() {

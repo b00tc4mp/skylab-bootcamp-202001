@@ -16,7 +16,6 @@ module.exports = id => {
             });
 
             return user.contacts
-
         })
         
 }

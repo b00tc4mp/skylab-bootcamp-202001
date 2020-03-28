@@ -1,6 +1,5 @@
-const { random, floor } = Math
+.const { random, floor } = Math
 
-import addMedication from './add-medication'
 
 const { mongoose, models: { User, Drug, Guideline } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
@@ -8,6 +7,11 @@ const { NotAllowedError, NotFoundError } = require('../errors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
+import logic from '.'
+import config from '../config'
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.API_URL
 
 describe('addMedication', () => {
     
@@ -17,7 +21,7 @@ describe('addMedication', () => {
     
     
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(config.TEST_MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
 
@@ -51,6 +55,7 @@ describe('addMedication', () => {
             _idDrug = drug.id
            
             token = jwt.sign({ sub: _id }, 'my cat is a demon', { expiresIn: '1d' })
+            await logic.__context__.storage.setItem('token', _token)
                     
             return token
               

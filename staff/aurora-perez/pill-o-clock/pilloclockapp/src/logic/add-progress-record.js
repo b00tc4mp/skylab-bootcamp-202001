@@ -15,7 +15,7 @@ module.exports = function (record) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,  
             },
-            body: JSON.stringify({ record })
+            body: JSON.stringify(record)
         })
     
         const { status } = response

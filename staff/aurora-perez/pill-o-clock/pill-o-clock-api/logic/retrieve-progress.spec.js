@@ -5,6 +5,7 @@ const { expect } = require('chai')
 const { random } = Math
 const retrieveProgress = require('./retrieve-progress')
 const { mongoose, models: { User } } = require('pill-o-clock-data')
+const { NotFoundError } = require('pill-o-clock-errors')
 
 describe('retrieveProgress', () => {
     before(() =>
@@ -49,6 +50,17 @@ describe('retrieveProgress', () => {
                     
                 })
         )
+
+        it('should fail if the user does not exist', () => {
+            retrieveProgress(`${_id}-wrong`)
+                .then(()=> {throw new Error ('should not reach this point')})
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`user with id ${_id}-wrong not found`)
+                    
+                })
+        })
     })
 
     it('should fail on a non-string id', () => {

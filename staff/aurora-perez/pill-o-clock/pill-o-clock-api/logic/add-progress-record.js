@@ -3,14 +3,14 @@ const { NotFoundError } = require('pill-o-clock-errors')
 const { models: { User }} = require('pill-o-clock-data')
 
 module.exports = (userId, records) => {
+    debugger
     validate.string(userId, 'userId')
     validate.type(records, 'records', Object)
-
     return User.findById(userId)
     .then(user => {
         if (!user) throw new NotFoundError(`user with id ${userId} does not exist`)
 
-        return User.findByIdAndUpdate(userId, {$push: { progressRecord: records}})
+        return User.findByIdAndUpdate(userId, {$push: {progressRecord: records}})
     })
     .then(() => {})
 }

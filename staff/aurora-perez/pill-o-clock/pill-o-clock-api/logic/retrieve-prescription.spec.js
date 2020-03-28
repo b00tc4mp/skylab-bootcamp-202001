@@ -55,6 +55,17 @@ describe('retrievePrescription', ()=> {
                 })
         )
 
+        it('should fail if the user does not exist', () => {
+            retrievePrescription(`${_id}-wrong`)
+                .then(()=> {throw new Error ('should not reach this point')})
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`user with id ${_id}-wrong not found`)
+                    
+                })
+        })
+
     })
 
 

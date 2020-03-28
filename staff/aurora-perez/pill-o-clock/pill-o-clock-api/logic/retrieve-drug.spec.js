@@ -46,6 +46,16 @@ describe('retrieveDrug', () => {
                 expect(error.message).to.equal(`drug with id ${_drugId} does not exist`)
             })
         )
+
+        it('should fail to retrieve if the user does not exist', () => {
+            retrieveDrug(`${_drugId}-wrong`)
+            .then(() => { throw new Error ('should not reach this point') })
+            .catch(error => {
+                expect(error).to.exist
+                expect(error).to.be.instanceof(NotFoundError)
+                expect(error.message).to.equal(`drug with id ${_drugId}-wrong does not exist`)
+            })
+        })
     })
 
     it('should fail on a non-string drugName', () => {

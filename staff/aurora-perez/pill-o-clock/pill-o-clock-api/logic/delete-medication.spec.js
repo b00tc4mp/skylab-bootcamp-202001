@@ -5,6 +5,7 @@ const { mongoose, models: { User, Drug } } = require('pill-o-clock-data')
 const { expect } = require('chai')
 const { random } = Math
 const deleteMedication = require('./delete-medication')
+const { NotFoundError } = require('pill-o-clock-errors')
 
 describe('deleteMedication', () => {
     before(() =>
@@ -50,6 +51,16 @@ describe('deleteMedication', () => {
                     expect(message).to.equal(`drug with name ${drugName} not found`)
                     
                 })
+        })
+
+        it('should fail to delete if the user does not exist', () => {
+            deleteMedication(`${_id}-wrong`, drugName)
+            .then(() => { throw new Error ('should not reach this point') })
+            .catch(error => {
+                expect(error).to.exist
+                expect(error).to.be.instanceof(NotFoundError)
+                expect(error.message).to.equal(`user with id ${_id}-wrong does not exist`)
+            })
         })
 
         it('should succeed on correct and valid and right data', () =>

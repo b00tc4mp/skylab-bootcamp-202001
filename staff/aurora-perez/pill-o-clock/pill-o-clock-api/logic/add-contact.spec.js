@@ -50,7 +50,7 @@ describe('addContact', () => {
         it('should succeed on correct and valid and right data', () => {
             
             addContact(idUser, idUserToAdd)
-                .then(Promise.all([User.findById(idUser).lean(), User.findById(idSecondUser).lean()]) )
+                .then(Promise.all([User.findById(idUser).lean(), User.findById(idUserToAdd).lean()]) )
                 .then(([user, user2]) => {
                     expect(user).to.exist
                     expect(user.contact).to.include(idUserToAdd)
@@ -92,13 +92,13 @@ describe('addContact', () => {
         it('should fail on a non-string idUserToAdd', () => {
             let idWrong
             idWrong = 9328743289
-            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idUserToAdd ${idWrong} is not a string`)
+            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idSecondUser ${idWrong} is not a string`)
             idWrong = false
-            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idUserToAdd ${idWrong} is not a string`)
+            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idSecondUser ${idWrong} is not a string`)
             idWrong = undefined
-            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idUserToAdd ${idWrong} is not a string`)
+            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idSecondUser ${idWrong} is not a string`)
             idWrong = []
-            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idUserToAdd ${idWrong} is not a string`)
+            expect(() => addContact(idUser, idWrong)).to.throw(TypeError, `idSecondUser ${idWrong} is not a string`)
 
         })
 

@@ -5,6 +5,7 @@ import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calenda
 import styles from './styles'
 import moment from 'moment'
 
+
 function Progress ({progress, user}) {
     const [ markedDates, setMarketDates] = useState()
     console.log('progress '+progress)
@@ -32,7 +33,7 @@ function Progress ({progress, user}) {
        
         let today = moment(new Date).format('YYYY-MM-DD')
 
-  
+        //let today = '2020-03-30'
 
         if (today > date) {
 
@@ -40,23 +41,18 @@ function Progress ({progress, user}) {
 
             let index = colorCheck(check)
 
-            console.log('index '+index)
-
             const recordDaily ={}
 
             recordDaily.date = date
             recordDaily.record = index
-            console.log(recordDaily)
 
             await updateProgress(progress)
 
             await addProgressRecord(recordDaily)
         } else {
-            let checkToday
-
-            checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
+            let checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
             
-            let indexToday = colorCheck(checkToday, indexToday)
+            let indexToday = colorCheck(checkToday)
 
             _markedDates[today] = { customStyles: { container: {backgroundColor: indexToday}, text: {color: 'black', fontWeight: 'bold'}}}
         }

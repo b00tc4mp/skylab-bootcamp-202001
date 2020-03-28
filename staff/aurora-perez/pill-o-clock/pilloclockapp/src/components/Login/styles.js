@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         padding : 10,
         borderRadius : 10,
         overflow: 'hidden',
-        fontFamily : 'Sensei-Medium'
+        fontFamily : 'Sensei-Medium.ttf'
     },
 
     toRegister : {

@@ -60,6 +60,17 @@ describe('retrieveContacts', () => {
                     expect(contacts[0].surname).to.equal(surname2)
                 })
         )
+
+        it('should fail if the user does not exist', () => {
+            retrieveContacts(`${idUser}-wrong`)
+                .then(()=> {throw new Error ('should not reach this point')})
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`user with id ${idUser}-wrong not found`)
+                    
+                })
+        })
     })
 
     it('should fail on a non-string id', () => {

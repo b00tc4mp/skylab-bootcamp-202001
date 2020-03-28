@@ -12,7 +12,7 @@ module.exports = (name, surname, gender, age, phone, profile, email, password) =
     validate.string(phone, 'phone')
     validate.string(profile, 'profile')
     validate.string(email, 'email')
-    //validate.email(email)
+    validate.email(email)
     validate.string(password, 'password')
 
     return User.findOne({ email })

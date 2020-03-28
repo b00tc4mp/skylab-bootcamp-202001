@@ -7,13 +7,13 @@ const { random } = Math
 const deletePrescription = require('./delete-prescription')
 
 
-describe('deletePrescritpion', ()=> {
+describe('deletePrescription', ()=> {
     before(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Drug.deleteMany()]))
     )
 
-    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id
+    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, times, userId, drugId
 
 
     beforeEach(() => {
@@ -27,7 +27,7 @@ describe('deletePrescritpion', ()=> {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = `${[random()]}`
+        times = [`${random()}`]
 
     })
 
@@ -39,9 +39,9 @@ describe('deletePrescritpion', ()=> {
                     userId = user.id
                     drugId= drug.id
 
-                    const prescription = new Guideline({prescribed: userId, drug: drugId, times: time})
+                    const prescription = new Guideline({prescribed: userId, drug: drugId, times})
                     user.prescription.push(prescription)
-                    return user.save()
+                    return Promise.all([user.save(), prescription.save()])
                 })
             .then(() => {})
         )
@@ -55,28 +55,80 @@ describe('deletePrescritpion', ()=> {
                     expect(user.prescription[0].prescribed.toString()).to.equal(userId)
                 })
 
-            .then( () => deletePrescription(userId, drugId)
+                .then(() => deletePrescription(userId, drugId))
                 .then(() => User.findById(userId).lean() )
                 .then((user) => {
                     expect(user).to.exist
                     expect(user.prescription[0]).to.be.undefined
                 })
-            )
         )
         
+        
         it('should fail if the drug does not exist', () => {
-            drugName = `${drugName}-wrong`
+            deletePrescription(userId, `${drugId}-wrong`)
+                .then(()=> {throw new Error ('should not reach this point')})
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`drug with id ${drugId}-wrong not found`)
+                    
+                })
+        })
+
+        it('should fail if the user does not exist', () => {
+            deletePrescription(`${userId}-wrong`, drugId)
+                .then(()=> {throw new Error ('should not reach this point')})
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`user with id ${userId}-wrong not found`)
+                    
+                })
+        })
+
+        it('should fail if the prescription does not exist', () => {
+            beforeEach(() => 
+                Guideline.deleteMany().then(() => {})
+            )
+
             deletePrescription(userId, drugId)
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist
                     
-                    expect(message).to.equal(`drug with name ${drugName} not found`)
+                    expect(message).to.equal(`prescript within user with id ${userId} not found`)
                     
                 })
         })
 
     })
+
+    describe('unhappy paths', () => {
+        it('should fail on a non-string user ID', () => {
+            userId = 9328743289
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `id ${userId} is not a string`)
+            userId = false
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `id ${userId} is not a string`)
+            userId = undefined
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `id ${userId} is not a string`)
+            userId = []
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `id ${userId} is not a string`)
+        })
+
+        it('should fail on a non-string drug ID', () => {
+            userId = 'some id'
+            drugId = 9328743289
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `drugId ${drugId} is not a string`)
+            drugId = false
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `drugId ${drugId} is not a string`)
+            drugId = undefined
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `drugId ${drugId} is not a string`)
+            drugId = []
+            expect(() => deletePrescription(userId, drugId)).to.throw(TypeError, `drugId ${drugId} is not a string`)
+        })
+    })
+
+
     after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
 
 })

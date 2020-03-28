@@ -47,6 +47,17 @@ describe('retrieveUser', () => {
                     expect(user.password).to.be.undefined
                 })
         )
+
+        it('should fail if the user does not exist', () => {
+            retrieveUser(`${_id}-wrong`)
+                .then(()=> {throw new Error ('should not reach this point')})
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`user with id ${_id}-wrong not found`)
+                    
+                })
+        })
     })
 
     it('should fail on a non-string id', () => {

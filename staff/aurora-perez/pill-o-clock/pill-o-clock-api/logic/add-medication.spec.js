@@ -12,7 +12,7 @@ describe('addMedication', () => {
             .then(() => Promise.all([User.deleteMany(), Drug.deleteMany()]))
     )
 
-    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, __id
+    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, __id, _drugId
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -36,11 +36,11 @@ describe('addMedication', () => {
                     _id = id
                 })
             .then(()=> Drug.create({drugName, description}))
-            .then(() => {})
+            .then(({ id }) => _drugId = id)
         )
 
         it('should succeed on correct and valid and right data', () =>
-            addMedication(_id, drugName)
+            addMedication(_id, _drugId)
                 .then(() => User.findById(_id).lean() )
                 .then((user) => {
                     expect(user).to.exist
@@ -50,16 +50,15 @@ describe('addMedication', () => {
 
         it('should fail if the drug does not exist', () => {
             drugName = `${drugName}-wrong`
-            addMedication(_id, drugName)
+            addMedication(_id, _drugId)
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist
                     
-                    expect(message).to.equal(`drug with name ${drugName} not found`)
+                    expect(message).to.equal(`drug with id ${_drugId}-wrong not found`)
                     
                 })
         })
-
     })
 
     describe('unhuppy path syncronous', () => {
@@ -84,13 +83,13 @@ describe('addMedication', () => {
 
         it('should fail on a non-string drugName', () => {
             drugName = 9328743289
-            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugId ${drugName} is not a string`)
             drugName = false
-            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugId ${drugName} is not a string`)
             drugName = undefined
-            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugId ${drugName} is not a string`)
             drugName = []
-            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugName ${drugName} is not a string`)
+            expect(() => addMedication(__id, drugName)).to.throw(TypeError, `drugId ${drugName} is not a string`)
         })
     })
         

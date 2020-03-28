@@ -10,7 +10,7 @@ module.exports = async (id, drugId, time) => {
     let user = await User.findById(id).lean()
     let drug = await Drug.findById(drugId).lean()
 
-    if (!drug) throw new NotFoundError(`drug with name ${drugId} not found`)
+    if (!drug) throw new NotFoundError(`drug with id ${drugId} not found`)
     if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
     for (let i = 0; i < user.prescription.length; i++) {
