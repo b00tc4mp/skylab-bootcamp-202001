@@ -2,8 +2,9 @@ const { models: { Park } } = require('sick-parks-data')
 const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 
-module.exports = ({ q, _location }) => {
+module.exports = ({ q, location }) => {
     validate.string(q, 'query', false)
+    const _location = location.map(coordinate => parseFloat(coordinate))
 
     let filter = {
         $and: [

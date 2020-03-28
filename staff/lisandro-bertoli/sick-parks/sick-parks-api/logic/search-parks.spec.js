@@ -15,7 +15,7 @@ describe('searchParks', () => {
     let name, size, level, location, resort, verified
     let name2, size2, level2, location2, resort2
     let first
-    let _location
+    let location
 
     beforeEach(() => {
         name = `ParkName-${random()}`
@@ -25,7 +25,7 @@ describe('searchParks', () => {
         location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
         verified = true
 
-        _location = [random() * 15 + 1, random() * 15 + 1]
+        location = [random() * 15 + 1, random() * 15 + 1]
 
         name2 = `ParkName-${random()}`
         size2 = `l`
@@ -41,8 +41,8 @@ describe('searchParks', () => {
             return result
         }
 
-        const parkOneToPointDistance = distance(location.coordinates[0], _location[0], location.coordinates[1], _location[1])
-        const parkTwoToPointDistance = distance(location2.coordinates[0], _location[0], location2.coordinates[1], _location[1])
+        const parkOneToPointDistance = distance(location.coordinates[0], location[0], location.coordinates[1], location[1])
+        const parkTwoToPointDistance = distance(location2.coordinates[0], location[0], location2.coordinates[1], location[1])
 
         if (parkOneToPointDistance > parkTwoToPointDistance) {
             first = resort2
@@ -64,7 +64,7 @@ describe('searchParks', () => {
 
             let q = 'begg'
 
-            let results = await searchParks({ q, _location })
+            let results = await searchParks({ q, location })
 
             expect(results.length).to.be.greaterThan(0)
             expect(results[0].resort).to.equal(first)
@@ -73,7 +73,7 @@ describe('searchParks', () => {
 
         it('should suceed on finding parks', async () => {
             let q = 'begg'
-            let results = await searchParks({ q, _location })
+            let results = await searchParks({ q, location })
 
             results.forEach(result => {
                 expect(result.name).to.be.oneOf([park1.name, park2.name])
@@ -86,7 +86,7 @@ describe('searchParks', () => {
 
             q = 'Grin'
 
-            results = await searchParks({ q, _location })
+            results = await searchParks({ q, location })
 
             results.forEach(result => {
                 expect(result.name).to.equal(park1.name)
@@ -100,7 +100,7 @@ describe('searchParks', () => {
 
         it('should succeed on retrieving all parks on empty query', async () => {
             let q = ''
-            let results = await searchParks({ q, _location })
+            let results = await searchParks({ q, location })
 
             results.forEach(result => {
                 expect(result.name).to.be.oneOf([park1.name, park2.name])
@@ -114,7 +114,7 @@ describe('searchParks', () => {
 
         it('on "latest" query, should order the results by creation date', async () => {
             let q = 'latest'
-            let results = await searchParks({ q, _location })
+            let results = await searchParks({ q, location })
             debugger
 
             expect(results[0].name).to.equal(park2.name)
@@ -123,7 +123,7 @@ describe('searchParks', () => {
 
         it('on "verified" query, should return only verified parks', async () => {
             let q = 'verified'
-            let results = await searchParks({ q, _location })
+            let results = await searchParks({ q, location })
             debugger
 
             expect(results[0].name).to.equal(park1.name)
@@ -140,7 +140,7 @@ describe('searchParks', () => {
     it('should return empty array when no results', async () => {
         let q = 'Random'
 
-        const result = await searchParks({ q, _location })
+        const result = await searchParks({ q, location })
         expect(result).to.be.an('array')
         expect(result).to.have.length(0)
     })

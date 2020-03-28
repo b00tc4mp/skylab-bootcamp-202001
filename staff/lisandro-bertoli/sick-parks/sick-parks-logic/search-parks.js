@@ -8,15 +8,14 @@ module.exports = (query, location) => {
     location.forEach(coordinate => validate.type(coordinate, 'coordinate', Number))
 
     return (async () => {
-        let response
-        if (location) {
-            response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&location=${location}`)
-        } else response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}`)
+
+
+        const response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&location[]=${location[0]}&location[]=${location[1]}`)
 
         const data = await response.json()
 
         const { error, results } = data
-
+        debugger
         if (error) throw new Error(error)
 
         return results
