@@ -16,5 +16,6 @@ module.exports = {
     publishComment: require('./publish-comment'),
     updateUser: require('./update-user'),
     votePark: require('./vote-park'),
-    deletePark: require('./delete-park')
+    deletePark: require('./delete-park'),
+    updatePark: require('./update-park')
 }
