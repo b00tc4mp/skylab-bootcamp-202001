@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert, Picker } from 'react-native'
 import MyButton from '../Button'
 import MapView from 'react-native-maps'
 import styles from './styles'
 import { TextInput } from 'react-native-gesture-handler'
 
-function ParkDetails({ park, onVote, onCommentSubmit, onContribution }) {
+function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUpdate }) {
     const [comments, setComments] = useState(park.comments)
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
     const [createComment, setCreateComment] = useState(false)
     const [value, onChangeText] = useState('')
+    const [feature, setFeature] = useState({ name: 'rail', size: 's', description: '' })
+    const [updateSection, setUpdateSection] = useState(false)
 
     useEffect(() => {
         setComments(park.comments)
         setVotes(park.rating)
     }, [park.rating])
 
+    console.log(feature)
     const handleHideModal = () => setShowComments(false)
+    const handleNewFeature = () => {
+        !updateSection && setUpdateSection(true)
+        updateSection && onUpdate({ features: [feature] })
+    }
     const handleUpVote = () => onVote(true)
     const handleDownVote = () => onVote(false)
     const handleNewComment = () => onCommentSubmit(value)
@@ -33,7 +40,6 @@ function ParkDetails({ park, onVote, onCommentSubmit, onContribution }) {
         )
 
     }
-
 
     return (<>
         <ScrollView >
@@ -183,7 +189,51 @@ function ParkDetails({ park, onVote, onCommentSubmit, onContribution }) {
 
                     )}
                     <View style={styles.featuresContainer}>
-                        <Text style={styles.sectionHeader}>Park features ({park.features.length}):</Text>
+                        <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                            <Text style={styles.sectionHeader}>Park features ({park.features.length})</Text>
+                            {user.id === park.creator.id ? (
+                                <MyButton text='+Add feature' style={styles.buttonContainer} textStyle={styles.commentButton} onPress={handleNewFeature} />) : null}
+                            {updateSection && (<View style={{ justifyContent: "space-around" }}>
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.featureProp} >Type: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => setFeature({ ...feature, name: value })}
+                                    >
+                                        <Picker.Item label="Rail" value="rail" />
+                                        <Picker.Item label="Kicker" value="kicker" />
+                                        <Picker.Item label="Box" value="box" />
+                                        <Picker.Item label="Pipe" value="pipe" />
+                                        <Picker.Item label="Other" value="other" />
+
+                                    </Picker>
+                                </View>
+                                <View style={styles.pickerContainer}>
+                                    <Text style={styles.featureProp} >Size: </Text>
+                                    <Picker
+                                        style={styles.picker}
+                                        itemStyle={{ height: 40 }}
+                                        onValueChange={(value) => setFeature({ ...feature, size: value })}
+                                    >
+                                        <Picker.Item label="Small" value="s" />
+                                        <Picker.Item label="Medium" value="m" />
+                                        <Picker.Item label="Large" value="l" />
+                                        <Picker.Item label="XL" value="xl" />
+                                    </Picker>
+                                </View>
+
+                                <View style={styles.inputsContainer}>
+                                    <Text style={styles.featureProp}>Description:</Text>
+                                    <TextInput
+                                        selectionColor='#EDF4F9'
+                                        placeholder='Eg: Gnarly kinked rail'
+                                        style={styles.textInput}
+                                        onChangeText={(text) => setFeature({ ...feature, description: text })}
+                                    />
+                                </View>
+                            </View>)}
+                        </View>
                         {park.features.length ?
                             (park.features.map((feature, index) => (<>
                                 <View key={index} style={styles.featureContainer}>

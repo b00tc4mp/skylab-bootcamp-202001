@@ -11,7 +11,8 @@ import {
     publishComment,
     votePark,
     approvePark,
-    reportPark
+    reportPark,
+    updatePark
 } from 'sick-parks-logic'
 
 const Stack = createStackNavigator()
@@ -112,6 +113,16 @@ export default function Home({ navigation, route }) {
 
     function ParkDetailsScreen(props) {
 
+        const handleUpdate = async (update) => {
+            try {
+                await updatePark(user.id, detailedPark.id, update)
+                await __handleParkUpdate__(detailedPark.id)
+                console.log('update finished')
+            } catch (error) {
+                Alert.alert(error.message)
+            }
+        }
+
         const handleVote = async (vote) => {
             if (!user) return Alert.alert('this action needs you to be registered')
 
@@ -156,7 +167,9 @@ export default function Home({ navigation, route }) {
 
         return <ParkDetails
             park={detailedPark}
+            user={user}
             onVote={handleVote}
+            onUpdate={handleUpdate}
             onCommentSubmit={handleCommentSubmit}
             onContribution={handleContribution}
             error={error} />

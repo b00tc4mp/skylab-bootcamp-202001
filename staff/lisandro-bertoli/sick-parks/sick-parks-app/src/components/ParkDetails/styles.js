@@ -54,6 +54,40 @@ const styles = StyleSheet.create({
         height: 50,
     },
 
+    pickerContainer: {
+        flex: 0.2,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10,
+        alignItems: 'center'
+    },
+    picker: {
+        height: 35,
+        color: '#EFEBDA',
+        width: '60%',
+        backgroundColor: '#82A4B3',
+        borderColor: '#EFEBDA',
+        borderWidth: 2
+    },
+
+    inputsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginVertical: 10,
+        flex: 1,
+    },
+
+    textInput: {
+        height: '100%',
+        backgroundColor: '#82A4B3',
+        width: '60%',
+        alignSelf: 'flex-end',
+        paddingHorizontal: 10,
+        borderColor: '#EFEBDA',
+        borderWidth: 2
+
+    },
+
     noComments: {
         alignItems: 'center'
     },
@@ -191,7 +225,7 @@ const styles = StyleSheet.create({
     },
 
     sectionHeader: {
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold'
     },
 
