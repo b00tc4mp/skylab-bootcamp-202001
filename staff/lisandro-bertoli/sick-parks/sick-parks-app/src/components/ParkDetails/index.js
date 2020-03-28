@@ -186,7 +186,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                         <Text style={styles.actionText}>Verified Park</Text>
                     </View>
                     )}
-                    {!park.verified && (
+                    {!park.verified && user.id !== park.creator.id && (
 
                         <View style={styles.actionsContainer}>
                             <TouchableOpacity style={styles.approve} onPress={() => onContribution('approve')}>
@@ -200,7 +200,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
 
                     )}
                     {user.id === park.creator.id ? (<View style={styles.delete}>
-                        <MyButton text='❎ Delete park' style={styles.report} textStyles={styles.actionText} onPress={handleDeletePark} />
+                        <MyButton text='Delete park' style={styles.report} textStyle={styles.actionText} onPress={handleDeletePark} />
                     </View>) : null}
                     <View style={styles.featuresContainer}>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
