@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import './Login.sass'
 import Feedback from './Feedback'
+import drone from './drone.svg'
 
 export default function ({ onSubmit, onGoToRegister, error, onMount }) {
     useEffect(() => {
@@ -26,11 +27,12 @@ export default function ({ onSubmit, onGoToRegister, error, onMount }) {
 
     return <>
         <form className="login" onSubmit={handleSubmit}>
-            <input type="text" name="username" placeholder="username" />
-            <input type="password" name="password" placeholder="password" />
+            <img src={drone} className="form_logo" alt="logo" />
+            <input type="text" name="username" placeholder="Username" />
+            <input type="password" name="password" placeholder="Password" />
             <button>Login</button>
             {error && <Feedback message={error} level="warn" />}
-            <p>Go to <a href="" onClick={handleGoToRegister}>register</a></p>
+            <p className="to-register">Go to <a href="" onClick={handleGoToRegister}>Register</a></p>
         </form>
     </>
 }

@@ -9,12 +9,12 @@ export default function ({homePadding}) {
     let paddingLeft, paddingRight
     
     if(homePadding) {
-        paddingLeft = {left: `140px`} 
-        paddingRight = {right: `140px`}
+        paddingLeft = {left: `300px`} 
+        paddingRight = {right: `300px`}
 
     }else{
-        paddingLeft = {left: `0px`} 
-        paddingRight = {right: `0px`}
+        paddingLeft = {left: `150px`} 
+        paddingRight = {right: `150px`}
     }
         
 

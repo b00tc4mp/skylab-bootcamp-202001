@@ -4,10 +4,10 @@ const { NotAllowedError } = require('./../../Js-Drone-ERRORS')
 const bcrypt = require('bcryptjs')
 
 module.exports = (name, surname, username, password) => {
-    // validate.string(name, 'name')
-    // validate.string(surname, 'surname')
-    // validate.string(username, 'username')
-    // validate.string(password, 'password')
+    validate.string(name, 'name')
+    validate.string(surname, 'surname')
+    validate.string(username, 'username')
+    validate.string(password, 'password')
 
     return User.findOne({ username })
         .then(user => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './Navbar-left.sass'
-import logo from './logo.svg'
+import drone from './drone.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGamepad, faChartLine, faChartBar } from '@fortawesome/free-solid-svg-icons'
 
@@ -11,15 +11,17 @@ export default function ({ toggleLiveChart, toggleEstadistics, toggleHomeView, t
   const [chosen, setChosen] = useState('g');
 
   return <nav className="navbar-left">
+    {/* <li className="lnav_border"></li> */}
     <ul className="lnav">
       <li className="lnav_logo">
-          <img src={logo} className="lnav-logo_link" alt="logo" onClick={event => {
+          <img src={drone} className="lnav-logo_link" alt="logo" onClick={event => {
             event.preventDefault()
             toggleHomeView()
           }}/>
+          
         
       </li>
-
+      <div className="lnav_icons">
       <li className={chosen === 'g' ? "lnav_item active" : "lnav_item"} onClick={event => {
           event.preventDefault()
           setChosen('g')
@@ -54,7 +56,7 @@ export default function ({ toggleLiveChart, toggleEstadistics, toggleHomeView, t
         
       
     </li>
-
+    </div>
     </ul>
   </nav>
 

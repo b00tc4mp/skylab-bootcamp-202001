@@ -8,12 +8,19 @@ module.exports = id => {
     return User.findById(id)
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
-            let sortedSessions = []
-           
-            for(let i = user.sessions.length - 1; i >=0; i--){
-                sortedSessions.push(user.sessions[i])
-            }
-            user.sessions = sortedSessions
+            user.sessions.forEach(session => {
+                session.id = session._id.toString()
+                delete session._id
+            })
+            
+            // let sortedSessions = []
+            // for(let i = user.sessions.length - 1; i >=0; i--){
+            //     sortedSessions.push(user.sessions[i])
+            // }
+            // user.sessions = sortedSessions
+
+            user.id = user._id.toString()
+            delete user._id
             
             return user.save()
         })

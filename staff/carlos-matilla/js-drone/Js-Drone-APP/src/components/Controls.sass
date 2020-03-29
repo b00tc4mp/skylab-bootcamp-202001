@@ -1,16 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
   
 .controls-wrapper
-  height: 30vh
-  position: fixed
+  height: 30%
+  position: absolute
   bottom: 0
   display: flex
-  width: 80%
+  width: 90%
   flex-wrap: wrap
   align-items: flex-end
   justify-content: center
   color: white
   transition: 0.6s
+  overflow: hidden
+  animation-name: fadeInUp
+  animation-duration: 2s
+  animation-delay: 0s
+  animation-iteration-count: 1
 
 .roller 
   position: absolute
@@ -18,7 +23,7 @@
   width: 120px
   border-radius: 50%
   top: 100px
-  left: 0px
+  left: 100px
   background: rgba(19, 19, 19, 0.6)
   background: radial-gradient(ellipse at center, rgba(49, 49, 49, 0.6) 0%,rgba(19, 19, 19, 0.6) 100%)
   box-shadow: inset 0 0 20px rgba(#000, .7), 0 1px 1px rgba(#fff, .1)
@@ -31,7 +36,7 @@
   border-radius: 50%
   direction: rtl
   top: 100px
-  right: 0px
+  right: 100px
   background: rgba(19, 19, 19, 0.6)
   background: radial-gradient(ellipse at center, rgba(49, 49, 49, 0.6) 0%,rgba(19, 19, 19, 0.6) 100%)
   box-shadow: inset 0 0 20px rgba(#000, .7), 0 1px 1px rgba(#fff, .7)
@@ -73,7 +78,7 @@
 
 .controls-menu
     width: 50%
-    height: 38%
+    height: 40%
     display: flex
     transition: .4s
     justify-content: center
@@ -86,7 +91,7 @@
     padding: 1rem
     transition: .4s
     svg
-      color: #5A5A5A
+      color: #334E5C
       
       font-size: 2.2rem
       transition: .4s
@@ -102,7 +107,7 @@
     
     svg 
         transition: .4s
-        color: #203246
+        color: #47B29E
         font-size: 4rem
 
 
@@ -174,7 +179,7 @@
     width: 30%
     height: 50%
     top: 100px
-    left: -100px
+    left: 100px
     transition: .4s
 
 .arrow-keys
@@ -185,7 +190,7 @@
     height: 50%
     direction: rtl
     top: 100px
-    right: -100px
+    right: 100px
     transition: .4s
 
 
@@ -210,3 +215,14 @@
     li 
         display: flex
         align-items: flex-start
+
+@keyframes fadeInUp 
+  from 
+    opacity: 0
+    transform: translate3d(0, 200%, 0)
+  
+
+  to 
+    opacity: 1
+    transform: translate3d(0, 0, 0)
+  

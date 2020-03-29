@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node .",
     "watch": "nodemon .",
-    "test": "npx mocha logic utils",
+    "test": "npx mocha logic",
     "test-debug": "npx mocha debug logic utils"
   },
   "author": "",

@@ -20,8 +20,6 @@ router.post('/users/auth', jsonBodyParser, authenticateUser)
 
 router.get('/users', jwtVerifierMidWare, retrieveUser)
 
-router.get('/users/sessions', jwtVerifierMidWare, retrieveUserAndSession)
-
 router.post('/sessions', [jwtVerifierMidWare, jsonBodyParser], saveSession)
 
 router.post('/', jsonBodyParser, startDrone)

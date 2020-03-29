@@ -180,7 +180,7 @@ export default function ({ mySession }) {
     }
     const opt = {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         scales: {
             xAxes: [{
                 ticks: {

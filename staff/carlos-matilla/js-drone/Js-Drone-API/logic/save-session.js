@@ -5,11 +5,6 @@ const { NotFoundError } = require('./../../Js-Drone-ERRORS')
 
 module.exports = (sub, time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP, date) => {
     
-    // validate.type(height, 'height', Number)
-    // validate.type(speed, 'speed', Number)
-    // validate.type(time, 'time', Number)
-    // validate.type(temperature, 'temperature', Number)
-    // validate.type(date, 'date', Date)
 
     return User.findById(sub)
         .then(async (user) => {

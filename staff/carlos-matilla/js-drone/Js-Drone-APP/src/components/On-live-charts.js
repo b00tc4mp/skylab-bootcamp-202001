@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "chartjs-plugin-streaming";
-import {socket} from '../socket';
+import { socket } from '../socket';
 import { Line } from 'react-chartjs-2';
 
 
@@ -230,9 +230,11 @@ export default function () {
 
 
   return <>
-    <Line data={height} options={heightOpt} />
-    {/* <Line data={temperature} options={temperatureOpt}  />
+    
+      <Line data={height} options={heightOpt} />
+      {/* <Line data={temperature} options={temperatureOpt}  />
       <Line data={speed} options={speedOpt} />
       <Line data={aceleration} options={acelerationOpt}/> */}
+   
   </>
 }

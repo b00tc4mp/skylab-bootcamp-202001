@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('./retrieve-user')
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('js-drone-data')
 
 describe('retrieveUser', () => {
     before(() =>
@@ -12,20 +12,30 @@ describe('retrieveUser', () => {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password, users
+    let name, surname, email, password, sessions, time, control, hightTempP, batteryP, heightP, speedP, atmosPressureP, date
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        username = `username-${random()}`
         password = `password-${random()}`
+        control  = `control-${random()}`
+        heightP = [`heightP-${random()}`, `heightP-${random()}`]
+        speedP = [`speedP-${random()}`, `speedP-${random()}`]
+        lowTempP=[`lowTempP-${random()}`, `lowTempP-${random()}`]
+        hightTempP = [`hightTempP-${random()}`, `hightTempP-${random()}`]
+        date = new Date
+        batteryP = [`batteryp-${random()}`, `batteryp-${random()}`]
+        atmosPressureP = [`atmosPressureP-${random()}`, `atmosPressureP-${random()}`]
+        time = random()
+        sessions = [{ time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP, date }]
     })
 
     describe('when user already exists', () => {
         let _id
 
         beforeEach(() =>
-            User.create({ name, surname, email, password })
+            User.create({ name, surname, username, password, sessions })
                 .then(({ id }) => _id = id)
         )
 
@@ -37,11 +47,18 @@ describe('retrieveUser', () => {
                     expect(user.surname).to.equal(surname)
                     expect(user.email).to.equal(email)
                     expect(user.password).to.be.undefined
+                    expect(user.sessions.time).to.equal(sessions.time)
+                    expect(user.sessions.control).to.equal(sessions.control)
+                    expect(user.sessions.lowTempP).to.equal(sessions.lowTempP)
+                    expect(user.sessions.hightTempP).to.equal(sessions.hightTempP)
+                    expect(user.sessions.batteryP).to.equal(sessions.batteryP)
+                    expect(user.sessions.heightP).to.equal(sessions.heightP)
+                    expect(user.sessions.speedP).to.equal(sessions.speedP)
+                    expect(user.sessions.atmosPressureP).to.equal(sessions.atmosPressureP)
+                    expect(user.sessions.date).to.equal(sessions.date)
                 })
         )
     })
-
-    // TODO more happies and unhappies
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

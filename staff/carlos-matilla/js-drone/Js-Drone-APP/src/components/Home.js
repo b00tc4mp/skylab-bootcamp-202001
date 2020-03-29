@@ -43,6 +43,7 @@ export default withRouter(function ({ history }) {
 
     let droneState
     let semaforo = false
+    
 
     socket.on('dronestate', data => {
       return droneState = data
@@ -139,24 +140,24 @@ export default withRouter(function ({ history }) {
   }
 
   function toggleLiveChart() {
-    setHomePadding(true)
+    setHomePadding(false)
     setChartsView(false)
     setControlsView(false)
     setVideoView(true)
     setEstadisticsView(false)
-    setLeftMenuView(true)
+    setLeftMenuView(false)
     setLiveChartView(true)
 
   }
 
   function toggleEstadistics() {
+    setHomePadding(false)
     setChartsView(false)
-    setHomePadding(true)
     setControlsView(false)
     setVideoView(true)
-    setLiveChartView(false)
-    setLeftMenuView(true)
     setEstadisticsView(true)
+    setLeftMenuView(false)
+    setLiveChartView(false)
 
   }
 
@@ -186,6 +187,8 @@ export default withRouter(function ({ history }) {
     <div className={homePadding ? "home right-padding" : "home"}>
 
       {videoView && <Video />}
+
+      
 
       {mySession && chartsView && <Charts mySession={mySession} />}
 

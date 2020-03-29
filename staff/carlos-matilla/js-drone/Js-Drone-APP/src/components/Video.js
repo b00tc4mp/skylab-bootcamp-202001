@@ -4,7 +4,8 @@ import './Video.sass'
 import { socket } from '../socket'
 import { startDrone } from './../logic'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
+import { faPowerOff, faSpinner } from '@fortawesome/free-solid-svg-icons'
+
 
 
 
@@ -12,9 +13,11 @@ import { faPowerOff } from '@fortawesome/free-solid-svg-icons'
 
 async function handleStartDrone() {
 
-    let port = Math.floor(1000 + Math.random() * 9000)
+    // let port = Math.floor(1000 + Math.random() * 9000)
     // console.log('http 1 ',httpPort)
     // console.log(socket.io.opts)
+
+
 
 
 
@@ -48,8 +51,8 @@ async function handleStartDrone() {
             })
         }, 2000);
 
-        
-        
+
+
 
     } catch (error) {
         console.log(error)
@@ -59,10 +62,13 @@ async function handleStartDrone() {
 
 
 
+
+
 export default function () {
     const [status, updateStatus] = useState(' - ');
     const [battery, setBattery] = useState()
     const [height, setHeight] = useState('-')
+    const [loading, setLoading] = useState()
 
     socket.on('status', data => updateStatus(data))
     socket.on('dronestate', data => {
@@ -78,20 +84,47 @@ export default function () {
     function handleStopDrone() {
         socket.emit('stop')
     }
+    function handleLoading(){
+        setLoading(true)
+    }
 
-
-
+    // console.log(typeof battery, typeof status)
+    
+//     let animation
+//    useEffect(()=>{
+    
+//    return animation = {
+//         animationName: `fadeInDown`,
+//         animationDuration: `3s`,
+//         animationDelay: `0s`,
+//         animationIterationCount: `1`
+//     }
+//    }, [])
+   
     return <>
-        <section className="video-wrapper">
+        <div className="video-wrapper" >
+
             <div className="aspect-ratio--16x9">
+
+                {/* <p className="connect-text">Connect your Drone</p> */}
+                {/* <p className="press-text">Press the button</p>
+                <p className="enjoy-text">&#38;&#38; Enjoy</p> */}
                 <div className="aspect-ratio__inner-wrapper">
+
+                    <div className="start_button_wrapper" >
+                        {typeof battery !== 'string' && <button className="start-button" onClick={()=>{
+                            handleStartDrone()
+                            handleLoading()
+                        }}>{!loading? `Connect to Tello` : <FontAwesomeIcon icon={faSpinner} spin size="2x" />}</button>}
+                    </div>
+
                     <div className="drone-status">
-                        <div className="status">{`TELLO : ${status}`}</div>
-                        <div className="drone-height"><p>{`${height} cm`}</p></div>
+                        <div className="status"><p>{`TELLO: ${status}`}</p></div>
+                        <div className="drone-height"><p>{height} cm</p></div>
                         <div className="power-off">
                             <FontAwesomeIcon icon={faPowerOff} onClick={handleStopDrone} size="1x" />
                         </div>
-                        
+
                         <div className="drone-battery">
                             <div className="battery">
                                 <div style={batStyle}></div>
@@ -99,14 +132,10 @@ export default function () {
                             <div className="battery-2"></div>
                         </div>
                     </div>
-                    <div className="start_button_wrapper" >
-                        <button className="start-button" onClick={handleStartDrone}>Connect to TELLO</button>
-                    </div>
-
                     <video className="video" id='player' autoPlay muted />
                 </div>
             </div>
-        </section>
+        </div>
     </>
 
 }

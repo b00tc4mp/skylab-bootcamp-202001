@@ -17,7 +17,7 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     styleArrow = {transform: `rotate(180deg)`}
   }
 
-  if(liveChartView || estadisticsView) styleArrow = {display: `none`}
+  
 
   function hourParser(date) {
     // const fullDate = date.split("T")[0]

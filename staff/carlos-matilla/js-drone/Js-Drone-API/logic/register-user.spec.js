@@ -2,13 +2,13 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { random } = Math
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('Js-drone-DATA')
 const registerUser = require('./register-user')
 const bcrypt = require('bcryptjs')
 
 const { env: { TEST_MONGODB_URL } } = process
 
-describe.only('registerUser', () => {
+describe('registerUser', () => {
     let name, surname, email, password
 
     before(() =>
@@ -19,12 +19,12 @@ describe.only('registerUser', () => {
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        username = `username-${random()}`
         password = `password-${random()}`
     })
 
     it('should succeed on correct user data', () =>
-        registerUser(name, surname, email, password)
+        registerUser(name, surname, username, password)
             .then(result => {
                 expect(result).not.to.exist
                 expect(result).to.be.undefined
@@ -46,5 +46,5 @@ describe.only('registerUser', () => {
 
     // TODO unhappy paths and other happies if exist
 
-    //after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })
