@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderColor: '#EFEBDA',
         borderWidth: 2,
-        // borderRadius: 10
+        fontFamily: 'montserrat'
     },
     buttonContainer: {
         alignItems: 'center',
@@ -30,11 +30,12 @@ const styles = StyleSheet.create({
     },
     button: {
         color: '#82A4B3',
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi'
     },
 
     anchor: {
-        color: '#82A4B3'
+        color: '#82A4B3',
+        fontFamily: 'montserrat'
     },
 
     danger: {

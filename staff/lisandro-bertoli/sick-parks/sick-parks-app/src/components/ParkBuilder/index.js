@@ -1,11 +1,12 @@
 import React from 'react'
 
 import { createStackNavigator } from '@react-navigation/stack'
-import StepOne from './step-one'
-import StepTwo from './step-two'
-import StepThree from './step-three'
-import { View, Text, StyleSheet } from 'react-native'
+import StepOne from './StepOne/step-one'
+import StepTwo from './StepTwo/step-two'
+import StepThree from './StepThree/step-three'
+import { View, Text } from 'react-native'
 import MyButton from '../Button'
+import styles from './styles'
 
 const Stack = createStackNavigator()
 
@@ -20,7 +21,7 @@ export default function ParkBuilder({ onNewPark, error, user, onToLogin }) {
                 </View>
                 <View style={styles.top}>
                     <Text
-                        style={{ textAlign: 'center' }}
+                        style={styles.text}
                     >Hey there, if you want full access you will need to create an account</Text>
                 </View>
                 <View style={styles.bottom}>
@@ -35,7 +36,19 @@ export default function ParkBuilder({ onNewPark, error, user, onToLogin }) {
     }
 
     return (
-        <Stack.Navigator initialRouteName='StepOne' >
+        <Stack.Navigator
+            screenOptions={{
+                headerBackTitleVisible: false,
+                headerStyle: {
+                    backgroundColor: '#82A4B3',
+
+                },
+                headerTitleStyle: {
+                    fontFamily: 'montserrat-semi'
+                },
+                headerTintColor: '#EFEBDA'
+            }}
+            initialRouteName='StepOne' >
 
             <Stack.Screen name="Park info" component={StepOne} />
             <Stack.Screen name="Featues info" component={StepTwo} />
@@ -49,62 +62,3 @@ export default function ParkBuilder({ onNewPark, error, user, onToLogin }) {
 }
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        height: '100%',
-        justifyContent: 'center',
-        backgroundColor: '#EDF4F9',
-    },
-    header: {
-        flex: 0.5,
-        flexDirection: 'row',
-        backgroundColor: '#82A4B3',
-        justifyContent: 'space-between',
-        padding: 15,
-
-    },
-    headerText: {
-        paddingTop: 10,
-        alignSelf: 'center',
-        color: '#EFEBDA',
-        fontWeight: 'bold',
-        fontSize: 18,
-        alignSelf: 'flex-end'
-    },
-
-    top: {
-        height: '30%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        paddingHorizontal: 15
-
-    },
-    bottom: {
-        flex: 0.4,
-        flexDirection: 'row',
-        paddingHorizontal: 10,
-        paddingBottom: 40,
-        justifyContent: 'space-around'
-    },
-
-    actionButton: {
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: "#82A4B3",
-        height: 40,
-        width: 150,
-        alignSelf: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'white'
-    },
-    buttonText: {
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: '600',
-        letterSpacing: 1,
-        color: '#82A4B3'
-
-    },
-})

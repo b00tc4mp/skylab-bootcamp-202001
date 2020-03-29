@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        fontWeight: '500',
+        fontFamily: 'montserrat'
 
     },
 
     sectionHeader: {
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         alignSelf: 'center'
     },
 
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         paddingHorizontal: 10,
         borderColor: '#EFEBDA',
-        borderWidth: 2
-
+        borderWidth: 2,
+        color: '#EFEBDA',
     },
 
     bottomSettings: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignSelf: 'center',
         color: '#EFEBDA',
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         fontSize: 18,
         alignSelf: 'flex-end'
     },
@@ -88,18 +88,17 @@ const styles = StyleSheet.create({
         color: '#EFEBDA',
         fontWeight: 'bold',
         fontSize: 18,
-        alignSelf: 'center'
+        fontFamily: 'montserrat-semi',
     },
     noImage: {
         width: 100,
         height: 100,
         backgroundColor: '#EFEBDA',
-
         justifyContent: 'center',
         borderRadius: 10,
     },
     imageContainer: {
-
+        //Todo for when adding images
     },
     topDataContainer: {
         flex: 1,
@@ -117,14 +116,15 @@ const styles = StyleSheet.create({
 
     dataType: {
         alignSelf: 'center',
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         paddingBottom: 30,
     },
     data: {
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontFamily: 'montserrat'
     },
     topData: {
-
+        //Leave this here for extra styling later
     },
     top: {
         height: '30%',
@@ -135,9 +135,10 @@ const styles = StyleSheet.create({
 
     },
     userInfo: {
-        flex: 0.15,
-        justifyContent: 'space-between',
-        margin: 15
+        flex: 0.30,
+        justifyContent: 'space-around',
+        padding: 15,
+        alignSelf: 'flex-start'
     },
     bottom: {
         flex: 0.4,
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 16,
-        fontWeight: '600',
+        fontFamily: 'montserrat-semi',
         letterSpacing: 1,
         color: '#82A4B3'
 
@@ -182,6 +183,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         alignItems: 'center',
         paddingLeft: 5,
+        fontFamily: 'montserrat',
+    },
+
+    text: {
+        fontFamily: 'montserrat',
+        textAlign: 'center'
     },
 })
 

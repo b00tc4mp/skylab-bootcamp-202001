@@ -111,8 +111,8 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
                             </View>
                         </View>
                         <View style={styles.userInfo}>
-                            <Text>{`${user.name} ${user.surname}`}</Text>
-                            <Text>{user.email}</Text>
+                            <Text style={styles.data}>{`${user.name} ${user.surname}`}</Text>
+                            <Text style={styles.data}>{user.email}</Text>
                         </View>
                         <View style={styles.bottom}>
 
@@ -147,7 +147,7 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
                         </View>
                         <View style={styles.top}>
                             <Text
-                                style={{ textAlign: 'center' }}
+                                style={styles.text}
                             >Hey there, if you want full access you will need to create an account</Text>
                         </View>
                         <View style={styles.bottom}>

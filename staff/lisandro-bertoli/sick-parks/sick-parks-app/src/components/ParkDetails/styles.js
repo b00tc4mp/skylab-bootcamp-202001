@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     commentButton: {
         color: '#82A4B3',
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi'
 
     },
     newCommentContainer: {
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     newComment: {
         backgroundColor: '#EFEBDA',
         height: 50,
+        fontFamily: 'montserrat',
     },
 
     pickerContainer: {
@@ -84,12 +85,13 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         paddingHorizontal: 10,
         borderColor: '#EFEBDA',
-        borderWidth: 2
-
+        borderWidth: 2,
+        fontFamily: 'montserrat'
     },
 
     noComments: {
-        alignItems: 'center'
+        alignItems: 'center',
+
     },
 
     commentContainer: {
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     },
 
     commentPublisher: {
-        fontWeight: 'bold'
+        fontFamily: 'montserrat-semi'
     },
 
     commentHeader: {
@@ -112,6 +114,10 @@ const styles = StyleSheet.create({
     },
     commentBody: {
         paddingVertical: 15
+    },
+
+    commentBodyText: {
+        fontFamily: 'montserrat',
     },
     commentFooter: {
         width: '30%',
@@ -146,10 +152,19 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        fontSize: 20,
+        fontSize: 16,
         color: '#EFEBDA',
-        marginTop: 10
+        marginTop: 10,
+        fontFamily: 'montserrat'
     },
+    headerTextBold: {
+        fontSize: 18,
+        color: '#EFEBDA',
+        marginTop: 10,
+        paddingRight: 10,
+        fontFamily: 'montserrat-semi'
+    },
+
 
     modalHeader: {
         flex: 1,
@@ -166,6 +181,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: 'lightgreen',
         padding: 5,
+        fontFamily: 'montserrat'
     },
 
     isNotVerified: {
@@ -202,7 +218,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#18BC0F'
     },
     actionText: {
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         textAlign: 'center',
         color: 'white'
     },
@@ -226,12 +242,12 @@ const styles = StyleSheet.create({
 
     sectionHeader: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontFamily: 'montserrat-semi'
     },
 
     votes: {
         fontSize: 35,
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         color: '#82A4B3',
         textAlign: 'center',
     },
@@ -242,7 +258,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderColor: '#EFEBDA',
         borderWidth: 2,
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-bold',
         textAlign: 'center',
         color: '#EFEBDA',
     },
@@ -251,7 +267,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderColor: '#82A4B3',
         borderWidth: 2,
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         textAlign: 'center',
         color: '#18BC0F',
     },
@@ -260,7 +276,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderColor: '#82A4B3',
         borderWidth: 2,
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         textAlign: 'center',
         color: 'red',
     },
@@ -282,8 +298,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     featureProp: {
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
         paddingBottom: 10,
+    },
+
+    featureData: {
+        fontFamily: 'montserrat',
     },
     propContainer: {
         flex: 1,
@@ -291,7 +311,7 @@ const styles = StyleSheet.create({
     },
     commentsLink: {
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontFamily: 'montserrat-semi',
     }
 })
 

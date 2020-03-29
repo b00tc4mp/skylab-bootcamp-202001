@@ -119,7 +119,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
 
                                 <View style={styles.modalHeader}>
                                     <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.headerText} />
-                                    <Text style={styles.headerText}>Comments</Text>
+                                    <Text style={styles.headerTextBold}>Comments</Text>
                                     <TouchableOpacity onPress={() => setCreateComment(true)}>
                                         <Text style={styles.headerText}>Add</Text>
                                     </TouchableOpacity>
@@ -160,9 +160,9 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                                         </View>
                                     ))) :
                                         (<View style={styles.noComments}>
-                                            <Text>No comments yet...</Text>
+                                            <Text style={styles.commentBodyText}>No comments yet...</Text>
 
-                                            <Text>Be the firs one!</Text>
+                                            <Text style={styles.commentBodyText}>Be the firs one!</Text>
 
                                         </View>
                                         )
@@ -262,15 +262,15 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                                 <View key={index} style={styles.featureContainer}>
                                     <View style={styles.propContainer}>
                                         <Text style={styles.featureProp}>Type</Text>
-                                        <Text >{feature.name}</Text>
+                                        <Text style={styles.featureData}>{feature.name}</Text>
                                     </View>
                                     <View style={styles.propContainer}>
                                         <Text style={styles.featureProp}>Size</Text>
-                                        <Text>{feature.size.toUpperCase()}</Text>
+                                        <Text style={styles.featureData}>{feature.size.toUpperCase()}</Text>
                                     </View>
                                     <View style={styles.propContainer}>
                                         <Text style={styles.featureProp}>Description</Text>
-                                        <Text>{feature.description}</Text>
+                                        <Text style={styles.featureData}>{feature.description}</Text>
                                     </View>
 
                                 </View>

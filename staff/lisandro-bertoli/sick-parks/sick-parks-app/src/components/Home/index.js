@@ -186,6 +186,10 @@ export default function Home({ user, updateUser }) {
                 headerBackTitleVisible: false,
                 headerStyle: {
                     backgroundColor: '#82A4B3',
+
+                },
+                headerTitleStyle: {
+                    fontFamily: 'montserrat-semi'
                 },
                 headerTintColor: '#EFEBDA'
             }}

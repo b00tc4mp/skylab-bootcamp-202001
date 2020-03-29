@@ -25,19 +25,19 @@ export default function ({ onSubmit }) {
 
         <View style={styles.optionsContainer}>
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={rightImage}>
-                <Button textStyle='bold' text='VERIFIED PARKS' type='filter' onPress={() => { onSubmit('verified') }} />
+                <Button textStyle={styles.buttonText} text='VERIFIED PARKS' style={styles.filterButton} onPress={() => { onSubmit('verified') }} />
             </ImageBackground>
 
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={rightImage}>
-                <Button textStyle='bold' text='XL PARKS' type='filter' onPress={() => { onSubmit('xl') }} />
+                <Button textStyle={styles.buttonText} text='XL PARKS' style={styles.filterButton} onPress={() => { onSubmit('xl') }} />
             </ImageBackground>
 
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={leftImage}>
-                <Button textStyle='bold' text='BEGGINER PARKS' type='filter' onPress={() => { onSubmit('begginer') }} />
+                <Button textStyle={styles.buttonText} text='BEGGINER PARKS' style={styles.filterButton} onPress={() => { onSubmit('begginer') }} />
             </ImageBackground>
 
             <ImageBackground imageStyle={styles.image} style={styles.imageContainer} source={leftImage}>
-                <Button textStyle='bold' text='LATEST PARKS' type='filter' onPress={() => { onSubmit('latest') }} />
+                <Button textStyle={styles.buttonText} text='LATEST PARKS' style={styles.filterButton} onPress={() => { onSubmit('latest') }} />
             </ImageBackground>
         </View>
     </>

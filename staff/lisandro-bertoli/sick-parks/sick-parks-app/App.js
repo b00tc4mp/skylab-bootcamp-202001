@@ -3,8 +3,9 @@ import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions, Alert } from 'r
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
+import * as Font from 'expo-font'
 import * as Permissions from 'expo-permissions'
+import { AppLoading } from 'expo'
 
 import config from './config'
 import logic, {
@@ -39,13 +40,25 @@ const Stack = createStackNavigator()
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.API_URL
 
+const getFonts = () => Font.loadAsync({
+	'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+	'montserrat-semi': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+	'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+})
+
+
 export default function App() {
 	const [error, setError] = useState(null)
 	const [user, setUser] = useState()
+	const [fontsLoaded, setFontsLoaded] = useState(false)
 
 	useEffect(() => {
+
 		(async () => {
 			try {
+
+				setFontLoaded(true)
+
 				if (await isUserLoggedIn()) {
 					const user = await retrieveUser()
 
@@ -221,12 +234,32 @@ export default function App() {
 		return <ParkBuilder user={user} onNewPark={handleNewPark} onToLogin={handleOnToLogin} error={error} />
 	}
 
-	return (
+	if (!fontsLoaded) return (
+		<AppLoading
+			startAsync={getFonts}
+			onFinish={() => setFontsLoaded(true)}
+		/>
+	)
+
+	if (fontsLoaded) return (
 		<>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
 			<NavigationContainer>
 				{!user && (
-					<Stack.Navigator initialRouteName='Landing' >
+					<Stack.Navigator
+						initialRouteName='Landing'
+						screenOptions={{
+							headerBackTitleVisible: false,
+							headerStyle: {
+								backgroundColor: '#82A4B3',
+
+							},
+							headerTitleStyle: {
+								fontFamily: 'montserrat-semi'
+							},
+							headerTintColor: '#EFEBDA'
+						}}
+					>
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={LandingScreen} />
 							<Stack.Screen name="Register" component={RegisterScreen} />

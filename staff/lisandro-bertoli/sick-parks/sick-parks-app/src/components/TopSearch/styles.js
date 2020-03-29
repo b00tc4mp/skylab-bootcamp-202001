@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         paddingLeft: 10,
         backgroundColor: '#EDF4F9',
+        fontFamily: 'montserrat'
     },
     queryIcon: {
         width: 15,

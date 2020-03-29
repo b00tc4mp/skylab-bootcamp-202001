@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         backgroundColor: 'white',
         shadowColor: 'white',
-        shadowOpacity: 100
+        shadowOpacity: 100,
+        fontFamily: 'montserrat'
 
     },
     optionsContainer: {
@@ -56,6 +57,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         shadowColor: 'white',
         shadowOpacity: 100
+    },
+    buttonText: {
+        fontFamily: 'montserrat-semi',
+        alignSelf: 'center'
+    },
+
+    filterButton: {
+        height: '100%',
+        justifyContent: 'center'
     }
 })
 

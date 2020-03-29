@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     button: {
         color: '#82A4B3',
-        fontWeight: 'bold',
+        fontFamily: 'montserrat-semi',
     },
 
 

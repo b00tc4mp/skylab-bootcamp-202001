@@ -16,8 +16,8 @@ export default function ResultsItem({ park, onToPark }) {
                 <View style={styles.colOne}>
                     <Text style={styles.textBold}>{name}</Text>
                     <Text> </Text>
-                    <Text style={styles.text}>Resort: {resort}</Text>
-                    <Text style={styles.text}>Size: {size.toUpperCase()}</Text>
+                    <Text style={styles.text}>{resort}</Text>
+                    <Text style={styles.text}>{size.toUpperCase()}</Text>
                 </View>
                 <View style={styles.colTwo}>
                     {verified && <Text style={styles.true}>Verified</Text>}
