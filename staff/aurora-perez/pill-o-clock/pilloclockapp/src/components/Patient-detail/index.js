@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import logic, { retrievePatientInfo} from '../../logic';
-import { View, Text, ScrollView, Image, Button, TouchableOpacity, AsyncStorage} from 'react-native'
+import { View, Text, ScrollView, Image, Linking, TouchableOpacity, AsyncStorage} from 'react-native'
 import {Calendar, CalendarList, Agenda, LocaleConfig} from 'react-native-calendars'
 import styles from './styles'
 import moment from 'moment'
@@ -8,6 +8,16 @@ import moment from 'moment'
 
 function Progress ({patient}) {
     const [ markedDates, setMarketDates] = useState()
+
+    function makeCall(){
+        let phoneNumber =''
+        if(Platform.OS === 'android'){
+            phoneNumber =`tel:(+34)${patient.phone}`
+        }else{
+            phoneNumber= `telprompt:(+34)${patient.phone}`
+        }
+        Linking.openURL(phoneNumber)
+    }
 
 
     function colorCheck (check) {
@@ -32,7 +42,6 @@ function Progress ({patient}) {
         let _markedDates = {}
 
         //today info
-        console.log(progressPatient)
         let today = moment(new Date).format('YYYY-MM-DD')
 
         let checkToday = (progressPatient.reduce((accum, value) => accum + value, 0))/progressPatient.length
@@ -42,8 +51,6 @@ function Progress ({patient}) {
         _markedDates[today] = { customStyles: { container: {backgroundColor: indexToday}, text: {color: 'black', fontWeight: 'bold'}}}
        
         //other days info
-
-        console.log(progressRecordPatient)
 
         progressRecordPatient.forEach(day => {
             _markedDates[day.date] = { customStyles: { container: {backgroundColor: day.record }, text: {color: 'black', fontWeight: 'bold'}}}
@@ -62,14 +69,23 @@ function Progress ({patient}) {
         
         <ScrollView >
             <View style={styles.container}>
-                <View style ={styles.titleContainer}>
-                    <View style={styles.titleLeft}>
-                        <Text style={styles.titleText}>Progress of {patient.name} {patient.surname}</Text>
-                    </View>
-                    <View style={styles.titleRight}>
-                        <Image style={styles.logo} source={require('../../../assets/images/calendar.png')}/>
-                    </View>
+                <View style={styles.textContainer}>
+                    <Text style={[styles.subtitle]}>Name: </Text>
+                    <Text style={styles.text}>{patient.name}</Text>
                 </View>
+                
+                <View style={styles.textContainer}>
+                    <Text style={[styles.subtitle]}>Surname: </Text>
+                    <Text style={styles.text}>{patient.surname}</Text>
+                </View>
+
+                <View style={styles.textContainer}>
+                    <Text style={[styles.subtitle]} >Phone: </Text>
+                    <Text style={styles.text} onPress={() => makeCall()}>{patient.phone}</Text>
+                </View>
+
+                <Text style={styles.subtitle}>Progress:</Text>
+
                     <Calendar
                         // style={{
                         //     flex: 1,

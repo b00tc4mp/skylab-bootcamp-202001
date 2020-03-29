@@ -8,9 +8,9 @@ function ContactDetail ({contactData}){
     makeCall=()=>{
         let phoneNumber =''
         if(Platform.OS === 'android'){
-            phoneNumber =`tel:${phone}`
+            phoneNumber =`tel:(+34)${phone}`
         }else{
-            phoneNumber= `telprompt:${phone}`
+            phoneNumber= `telprompt:(+34)${phone}`
         }
         Linking.openURL(phoneNumber)
     }

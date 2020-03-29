@@ -26,13 +26,6 @@ const styles = StyleSheet.create({
         flex : 1
     },
 
-    text : {
-        fontFamily : 'Chocolate_DRINK_DEMO',
-        color : '#297885',
-        padding: 10,
-        fontSize: 30
-    },
-
     title : {
         fontSize : 60,
         color : '#297885',

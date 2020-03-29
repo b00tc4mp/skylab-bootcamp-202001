@@ -4,10 +4,6 @@ import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
 function Medication ({medication, toAdd, onDrug}) {
-    //console.log(medication)
-    //console.log(medication[0].drug.drugName)
-    //{`${item.drug.drugName}`}
-    //{medication.length ? bablabla : <Text>You don't have medication yet! Do you want to add one?</Text>
 
     return (
         <View style={{width : '100%'}}>
@@ -35,8 +31,7 @@ function Medication ({medication, toAdd, onDrug}) {
                                 }}
                                 title ={item.drug.drugName.toString()}
                                 titleStyle = {{
-                                    marginTop : 20,
-                                    fontSize : 25,
+                                    fontSize : 35,
                                     color : '#fffdf9',
                                     alignSelf : 'center',
                                     backgroundColor : '#297885',
