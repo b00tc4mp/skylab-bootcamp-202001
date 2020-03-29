@@ -4,8 +4,9 @@ import MyButton from '../Button'
 import MapView from 'react-native-maps'
 import styles from './styles'
 import { TextInput } from 'react-native-gesture-handler'
+import Feedback from '../Feedback'
 
-function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
+function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
     const [comments, setComments] = useState(park.comments)
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
@@ -60,6 +61,13 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
         )
 
     }
+
+    if (error) return (
+        <View style={{ justifyContent: "center", width: '100%', height: 200 }}>
+            <Feedback message={error} level='error' />
+
+        </View>
+    )
 
     return (
         <ScrollView >

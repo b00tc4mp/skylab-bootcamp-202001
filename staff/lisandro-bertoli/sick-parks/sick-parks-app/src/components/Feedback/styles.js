@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         color: 'orange'
     },
     error: {
-        backgroundColor: 'red'
+        color: 'red'
     }
 })
 

@@ -42,9 +42,9 @@ export default function Home({ user, updateUser }) {
             setDetailedPark(item)
 
             setError(null)
-        } catch (error) {
-            if (error.name === 'NotFoundError') Alert.alert(error.message)
-            console.log(error.message)
+        } catch ({ message }) {
+            Alert.alert(message)
+            setError(message)
         }
     }
 
@@ -73,11 +73,13 @@ export default function Home({ user, updateUser }) {
     function ResultsScreen({ navigation }) {
         const handleGoToDetails = async (id) => {
             try {
-                await __handleParkUpdate__(id)
+                const item = await retrievePark(id)
+                setDetailedPark(item)
 
                 navigation.navigate('ParkDetails')
-            } catch ({ message }) {
-                setError(message)
+            } catch (error) {
+                if (error.name === 'NotFoundError') Alert.alert(error.message)
+                else setError(error.message)
             }
         }
         return <Results results={results} error={error} onToDetails={handleGoToDetails} />
@@ -126,7 +128,7 @@ export default function Home({ user, updateUser }) {
         }
 
         const handleVote = async (vote) => {
-            if (user === 'guest') return Alert.alert('this action needs you to be registered')
+            if (user === 'guest') return Alert.alert('This action needs you to be registered')
 
             try {
                 await votePark(user.id, detailedPark.id, vote)
@@ -138,7 +140,7 @@ export default function Home({ user, updateUser }) {
         }
 
         const handleCommentSubmit = async (body) => {
-            if (user === 'guest') return Alert.alert('this action needs you to be registered')
+            if (user === 'guest') return Alert.alert('This action needs you to be registered')
 
             try {
                 await publishComment(user.id, detailedPark.id, body)
@@ -150,7 +152,7 @@ export default function Home({ user, updateUser }) {
         }
 
         const handleContribution = async (action) => {
-            if (user === 'guest') return Alert.alert('this action needs you to be registered')
+            if (user === 'guest') return Alert.alert('This action needs you to be registered')
 
             try {
                 if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
@@ -175,6 +177,7 @@ export default function Home({ user, updateUser }) {
             onUpdate={handleUpdate}
             onCommentSubmit={handleCommentSubmit}
             onContribution={handleContribution}
+            goBack={navigation.goBack}
             error={error} />
 
     }

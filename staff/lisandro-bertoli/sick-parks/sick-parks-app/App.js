@@ -56,9 +56,6 @@ export default function App() {
 
 		(async () => {
 			try {
-
-				setFontLoaded(true)
-
 				if (await isUserLoggedIn()) {
 					const user = await retrieveUser()
 

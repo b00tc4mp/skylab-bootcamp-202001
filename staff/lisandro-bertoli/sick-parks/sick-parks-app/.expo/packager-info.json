@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://ic-yee.anonymous.sick-parks-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.ic-yee.anonymous.sick-parks-app.exp.direct",
+  "ngrokPid": 54305
 }
