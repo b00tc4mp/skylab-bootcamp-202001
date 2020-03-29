@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions, PickerIOSBase } from 'react-native'
+import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions, Alert } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -114,16 +114,16 @@ export default function App() {
 
 	}
 
-	const handleNewPark = async (data) => {
-		try {
-			await createPark(data)
 
-			await __handleUserUpdate__()
 
-		} catch ({ message }) {
-			console.log(message)
-			__handleErrors__(message)
-		}
+	function LandingScreen({ navigation }) {
+
+		const handleOnToLogin = () => navigation.navigate('Login')
+		const handleOnToRegister = () => navigation.navigate('Register')
+		const handleOnToHome = () => setUser('guest')
+
+
+		return <Landing onToLogin={handleOnToLogin} onToRegister={handleOnToRegister} onToHome={handleOnToHome} />
 	}
 
 	function LoginScreen({ navigation }) {
@@ -168,21 +168,28 @@ export default function App() {
 		return <Register onSubmit={handleSubmit} onToLogin={handleGoToLogin} error={error} />
 	}
 
-	function ProfileScreen({ navigation }) {
+	function ProfileScreen() {
 		const [publishedParks, setPublishedParks] = useState([])
 
 		useEffect(() => {
 			(async () => {
-				const parks = await retrievePublishedParks()
 
-				setPublishedParks(parks)
+				if (isUserLoggedIn()) {
+					try {
+						const parks = await retrievePublishedParks()
 
+						setPublishedParks(parks)
+
+					} catch (error) {
+						console.log(error)
+					}
+				}
 			})()
 
 
 		}, [user])
 
-		const handleOnToLogin = () => navigation.navigate('Login')
+		const handleOnToLogin = () => setUser(null)
 
 		return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
 	}
@@ -193,6 +200,27 @@ export default function App() {
 		return <Home user={user} updateUser={__handleUserUpdate__} />
 	}
 
+	function BuilderScreen({ navigation }) {
+
+
+		const handleOnToLogin = () => setUser(null)
+
+
+		const handleNewPark = async (data) => {
+			try {
+				await createPark(data)
+
+				await __handleUserUpdate__()
+
+			} catch ({ message }) {
+				console.log(message)
+				__handleErrors__(message)
+			}
+		}
+
+		return <ParkBuilder user={user} onNewPark={handleNewPark} onToLogin={handleOnToLogin} error={error} />
+	}
+
 	return (
 		<>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
@@ -200,13 +228,12 @@ export default function App() {
 				{!user && (
 					<Stack.Navigator initialRouteName='Landing' >
 						<>
-							<Stack.Screen options={{ headerShown: false }} name="Landing" component={Landing} />
+							<Stack.Screen options={{ headerShown: false }} name="Landing" component={LandingScreen} />
 							<Stack.Screen name="Register" component={RegisterScreen} />
 							<Stack.Screen name="Login" component={LoginScreen} />
 						</>
 					</Stack.Navigator>
 				)}
-
 				{user && <>
 					<Tab.Navigator
 						screenOptions={({ route }) => ({
@@ -233,7 +260,7 @@ export default function App() {
 						<Tab.Screen name="Home" component={HomeScreen} />
 						{/* TODO check move screens that top if a lot of params asre passed  */}
 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
-						<Tab.Screen name="Build" component={ParkBuilder} initialParams={{ handleNewPark, error }} />
+						<Tab.Screen name="Build" component={BuilderScreen} />
 						<Tab.Screen name="Profile" component={ProfileScreen} />
 					</Tab.Navigator>
 				</>}

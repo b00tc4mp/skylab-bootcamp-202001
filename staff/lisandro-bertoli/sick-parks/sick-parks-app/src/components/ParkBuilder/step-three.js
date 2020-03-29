@@ -8,9 +8,8 @@ const screenWidth = Dimensions.get('window').width
 
 
 export default function StepThree({ navigation, route }) {
-    const { features, park, handleNewPark } = route.params
+    const { features, park, onNewPark } = route.params
     let numberOfFeatures = 0
-
     for (let key in features) numberOfFeatures += features[key].length
 
     for (let key in park) {
@@ -42,7 +41,8 @@ export default function StepThree({ navigation, route }) {
             type: 'Point',
             coordinates: [location[0].longitude, location[0].latitude]
         }
-        handleNewPark({ features: _features, park })
+
+        onNewPark({ features: _features, park })
 
         Alert.alert('Park created!')
         const parent = navigation.dangerouslyGetParent()
@@ -73,7 +73,7 @@ export default function StepThree({ navigation, route }) {
 
                 </View>
                 <View style={styles.mapContainer}>
-                    <MapViewContainer parkLocation={park.location[0].coordinate} _markers={[park.location[0]]} style={styles.map} />
+                    <MapViewContainer parkLocation={park.location[0]} _markers={[park.location[0]]} style={styles.map} />
                 </View>
 
                 <Button

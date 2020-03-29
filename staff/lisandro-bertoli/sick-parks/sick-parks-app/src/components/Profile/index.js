@@ -24,7 +24,7 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
 
     return (
         <>
-            {user && (
+            {user !== 'guest' && (
                 <View style={styles.container}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>{`${user.name}'s Profile`}</Text>
@@ -139,7 +139,7 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
             )
             }
             {
-                !user && (
+                user === 'guest' && (
                     <View style={styles.container}>
                         <View style={styles.header}>
                             <Text style={styles.headerText}>Hey stranger!</Text>

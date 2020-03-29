@@ -61,9 +61,9 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
 
     }
 
-    return (<>
+    return (
         <ScrollView >
-            <View style={styles.container}>
+            <View key={0} style={styles.container}>
                 {park.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
                     :
                     (<Image style={styles.image} source={require('../../../assets/default-details.jpg')} />)}
@@ -146,7 +146,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                                     </View>)}
                                 <View style={styles.commentsContainer}>
 
-                                    {comments.length > 0 ? (comments.map((comment, index) => (<>
+                                    {comments.length > 0 ? (comments.map((comment, index) => (
                                         <View key={index} style={styles.commentContainer}>
                                             <View style={styles.commentHeader}>
                                                 <Text style={styles.commentPublisher}>{comment.postedBy.name}</Text>
@@ -158,7 +158,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                                                 <Text style={styles.commentDate}>{comment.date.toString().slice(0, 10)}</Text>
                                             </View>
                                         </View>
-                                    </>))) :
+                                    ))) :
                                         (<View style={styles.noComments}>
                                             <Text>No comments yet...</Text>
 
@@ -282,7 +282,7 @@ function ParkDetails({ user, park, onVote, onCommentSubmit, onContribution, onUp
                 </View>
             </View>
         </ScrollView>
-    </>)
+    )
 }
 
 export default ParkDetails
