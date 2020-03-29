@@ -1,6 +1,5 @@
 const { validate } = require('poopinion-utils')
-const fetch = require('node-fetch')
-const { NotFoundError } = require('poopinion-errors')
+const fetch = require('./fetch')
 const context = require('./context')
 
 /**
@@ -16,26 +15,5 @@ const context = require('./context')
 module.exports = function (toiletId) {
     validate.stringFrontend(toiletId, 'toiletId')
 
-    return (async () => {
-        const response = await fetch(`${this.API_URL}/toilets/${toiletId}`)
-
-        const { status } = response
-
-        if (status === 200) {
-            const toilet = await response.json()
-            return toilet
-        }
-
-        if (status >= 400 && status < 500) {
-            const { error } = await response.json()
-
-            if (status === 404) {
-                throw new NotFoundError(error)
-            }
-
-            throw new Error(error)
-        }
-
-        throw new Error('server error')
-    })()
+    return (async() => await fetch.get(`${this.API_URL}/toilets/${toiletId}`))()
 }.bind(context)

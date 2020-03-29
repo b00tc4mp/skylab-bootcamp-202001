@@ -1,4 +1,4 @@
-const fetch = require('node-fetch')
+const fetch = require('./fetch')
 const context = require('./context')
 
 /**
@@ -9,17 +9,5 @@ const context = require('./context')
  */
 
 module.exports = function () {
-    return (async () => {
-        const response = await fetch(`${this.API_URL}/top-toilets`)
-
-        const { status } = response
-
-        if (status === 200) {
-            const toilets = await response.json()
-
-            return toilets
-        }
-
-        return response.json()
-    })()
+    return (async() =>  await fetch.get(`${this.API_URL}/top-toilets`))()
 }.bind(context)

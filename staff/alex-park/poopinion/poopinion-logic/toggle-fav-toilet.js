@@ -1,6 +1,5 @@
 const { validate } = require('poopinion-utils')
-const fetch = require('node-fetch')
-const { NotAllowedError, NotFoundError } = require('poopinion-errors')
+const fetch = require('./fetch')
 const context = require('./context')
 
 /**
@@ -17,34 +16,8 @@ const context = require('./context')
 module.exports = function (toiletId) {
     validate.stringFrontend(toiletId, 'toiletId')
 
-    return (async () => {
+    return (async() => {
         const token = await this.storage.getItem('token')
-        const response = await fetch(`${this.API_URL}/users/toilet/${toiletId}/favorite`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-
-        const { status } = response
-
-        if (status === 200) return
-
-        if (status >= 400 && status < 500) {
-            const { error } = await response.json()
-
-            if (status === 401) {
-                throw new NotAllowedError(error)
-            }
-
-            if (status === 404) {
-                throw new NotFoundError(error)
-            }
-
-            throw new Error(error)
-        }
-
-        throw new Error('server error')
+        return await fetch.patch(`${this.API_URL}/users/toilet/${toiletId}/favorite`, undefined, token)
     })()
 }.bind(context)

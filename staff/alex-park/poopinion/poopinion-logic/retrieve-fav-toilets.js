@@ -1,5 +1,4 @@
-const fetch = require('node-fetch')
-const { NotAllowedError, NotFoundError } = require('poopinion-errors')
+const fetch = require('./fetch')
 const context = require('./context')
 
 /**
@@ -12,37 +11,8 @@ const context = require('./context')
  */
 
 module.exports = function () {
-    return (async () => {
+    return (async() => {
         const token = await this.storage.getItem('token')
-        const response = await fetch(`${this.API_URL}/users/favorites`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-
-        const { status } = response
-
-        if (status === 200) {
-            const toilets = await response.json()
-            return toilets
-        }
-
-        if (status >= 400 && status < 500) {
-            const { error } = await response.json()
-
-            if (status === 401) {
-                throw new NotAllowedError(error)
-            }
-
-            if (status === 404) {
-                throw new NotFoundError(error)
-            }
-
-            throw new Error(error)
-        }
-
-        throw new Error('server error')
+        return await fetch.get(`${this.API_URL}/users/favorites`, token)
     })()
 }.bind(context)

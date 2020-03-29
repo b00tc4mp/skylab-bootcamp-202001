@@ -37,6 +37,7 @@ import logic, {
 
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = 'http://192.168.1.253:8085/api'
+console.disableYellowBox = true;
 
 export default function App() {
   const [coordinates, setCoordinates] = useState({

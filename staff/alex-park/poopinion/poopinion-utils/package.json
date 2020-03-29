@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@babel/runtime": "^7.9.2",
+    "node-fetch": "^2.6.0",
     "poopinion-errors": "file:../poopinion-errors"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
 const { validate } = require ('poopinion-utils')
-const fetch = require('node-fetch')
+const fetch = require('./fetch')
 const context = require('./context')
 
 /**
@@ -26,26 +26,7 @@ module.exports = function(name, surname, email, password, age, gender) {
     validate.gender(gender, 'gender')
     validate.stringFrontend(password, 'password')
 
-    return (async () => {
-        const response = await fetch(`${this.API_URL}/users`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, surname, email, password, age, gender })
-        })
-        const { status } = response
-
-        if (status === 201) return
-
-        if (status >= 400 && status < 500) {
-            const { error } = await response.json()
-
-            if (status === 409) {
-                throw new Error(error)
-            }
-
-            throw new Error(error)
-        }
-
-        throw new Error('server error')
+    return (async() => {
+        await fetch.post(`${this.API_URL}/users`, {name, surname, email, password, age, gender})
     })()
 }.bind(context)

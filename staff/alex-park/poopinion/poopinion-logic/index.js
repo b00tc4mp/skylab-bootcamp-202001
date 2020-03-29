@@ -18,5 +18,6 @@ module.exports = {
     deleteComment: require('./delete-comment'),
     updateUser: require('./update-user'),
     deleteToilet: require('./delete-toilet'),
-    isLoggedIn: require('./is-logged-in')
+    isLoggedIn: require('./is-logged-in'),
+    fetch: require('./fetch')
 }
