@@ -187,9 +187,9 @@ export default function App() {
     }
   }
 
-  async function handlePublishToilet(place, image) {
+  async function handlePublishToilet(place, image, disabledToilet) {
     try {
-      await publishToilet(place, image, coordinates)
+      await publishToilet(place, image, disabledToilet, coordinates)
       Alert.alert('Toilet posted! Thank you! 🚽❤️')
       setView('landing')
 

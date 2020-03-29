@@ -80,6 +80,6 @@ export default class NewToilet extends React.Component {
     };
 
     _onSubmit = () => {
-        this.props.onSubmit(this.state.place, this.state.image)
+        this.props.onSubmit(this.state.place, this.state.image, this.state.wheelchair)
     };
 }

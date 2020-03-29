@@ -8,6 +8,7 @@ const context = require('./context')
  * 
  * @param {string} place the place's name of the toilet
  * @param {string} image URI of the toilet's image
+ * @param {boolean} disabledToilet if the place have a disabled toilet available
  * @param {Object} coordinates google maps coordinates
  * 
  * @returns {undefined} on a successful publish
@@ -16,8 +17,9 @@ const context = require('./context')
  * @throws {NotFoundError} on non-existent user
  */
 
-module.exports = function (place='(No place defined)', image, coordinates) {
+module.exports = function (place='(No place defined)', image, disabledToilet, coordinates) {
     validate.stringFrontend(place, 'place')
+    validate.type(disabledToilet, 'disabledToilet', Boolean)
     validate.type(coordinates, 'coordinates', Object)
 
     return (async () => {
@@ -25,7 +27,7 @@ module.exports = function (place='(No place defined)', image, coordinates) {
         const response = await fetch(`${this.API_URL}/users/toilet`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ place, coordinates })
+            body: JSON.stringify({ place, disabledToilet, coordinates })
         })
 
         const { status } = response
