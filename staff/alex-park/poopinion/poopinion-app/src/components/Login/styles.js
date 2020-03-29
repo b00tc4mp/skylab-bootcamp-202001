@@ -5,20 +5,22 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         flexDirection: 'column',
-        height: Dimensions.get('window').height,
-        justifyContent: 'space-around'
+        height: Dimensions.get('window').height
     },
     formContainer: {
         flex: 1.5,
         width: '90%',
         marginHorizontal: '5%',
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
     },
     image: {
         flex: 0.5,
         width: '100%',
         resizeMode: 'contain',
         alignSelf: 'flex-start'
+    },
+    feedback: {
+        backgroundColor: 'red'
     },
     header: {
         fontSize: 40,

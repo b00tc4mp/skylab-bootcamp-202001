@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
     },
     topHeader: {
         fontWeight: 'bold',
-        width: '95%'
+        width: '95%',
+        textAlign: 'center'
     },
     bold: {
         fontSize: 25,
