@@ -17,11 +17,12 @@ export default (function (body) {
     
     if (phone) {
         validate.type(phone, 'phone', Number)
-        if (!phone.trim().length) throw new Error(`phone is empty or blank`)
     }
 
-    if (password) {
+    if (password && !oldPassword) {
         validate.string(password, 'password')
+        validate.string(oldPassword, 'oldPassword')
+        if (!oldPassword.trim().length) throw new Error(`oldPassword is empty or blank`)
         if (!password.trim().length) throw new Error(`password is empty or blank`)
     }
 

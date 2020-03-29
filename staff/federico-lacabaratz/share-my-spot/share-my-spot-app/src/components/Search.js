@@ -9,7 +9,7 @@ import imgBack from '../images/homeBckgrnd.png'
 import {useParams} from "react-router-dom";
 
 export default withRouter(({ history, onSearch, error }) => {
-    let { spotId } = useParams();
+    let { spotId } = useParams()
 
     const [set, setState] = useContext(Context)
 

@@ -5,6 +5,6 @@ import './Results.sass'
 export default function ({results, onItemClick}) {
     
     return <ul className="results">
-        {results.map(item => <Item key={item._id} item={item} onClick={onItemClick} />)}
+        {results.map(item => <Item key={item.id} item={item} onClick={onItemClick} />)}
     </ul>
 }

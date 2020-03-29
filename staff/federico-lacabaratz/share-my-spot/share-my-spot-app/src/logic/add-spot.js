@@ -21,7 +21,7 @@ export default (function (title, addressLocation, addressStNumber, addressOther,
 
         response = await response.json()
 
-        if (status === 200) {
+        if (status === 201) {
             const { id } = response
             
             return id

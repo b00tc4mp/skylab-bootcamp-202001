@@ -7,7 +7,7 @@ module.exports = (req, res) => {
     try {
         declineBooking(publisherId, candidateId, spotId)
             .then(() =>
-                res.status(200).json({ message: "You've successfully deleted this booking request from database" })
+                res.status(200).json()
             )
             .catch(({ message }) =>
                 res

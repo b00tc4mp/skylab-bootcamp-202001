@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import './Item.sass'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ item: { _id, title, price, publisherId }, onClick }) {
+export default function ({ item: { id, title, price, publisherId }, onClick }) {
     const [phoneB, setPhoneB] = useState(false)
     const [emailB, setEmailB] = useState(false)
 
     return <li className="item">
         <div className="item__container" >
             <main>
-                <img className="item__photo" src={`${API_URL}/load/${_id}`} onClick={() => onClick(_id.toString())} />
+                <img className="item__photo" src={`${API_URL}/load/${id}`} onClick={() => onClick(id)} />
                 <h4 className="item__h4">{title}</h4>
                 <h2 className="item__h2">{price} €/per hour</h2><span>(*) See Conditions</span>
                 <div className="item__bottom">

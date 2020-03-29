@@ -1,7 +1,7 @@
 @import config
 @import base-components
 
-.yourBookings
+.myBookings
     display: flex
     flex-direction: column
     justify-content: flex-start
@@ -42,7 +42,7 @@
         width: 100%
         margin: 1.5em
 
-    &__buttons-call, &__buttons-envelope
+    &__bottom-call, &__bottom-envelope
         @extend %flexRowCenter
         justify-content: space-around
         align-items: center
@@ -54,3 +54,15 @@
         font-size: 1.2em
         border-radius: 0.5em
         margin: 0.25em
+
+    &__bottom-phone
+        display: none
+
+    &__bottom-call:hover + &__bottom-phone
+        display: block
+    
+    &__bottom-email
+        display: none
+
+    &__bottom-envelope:hover + &__bottom-email
+        display: block

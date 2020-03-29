@@ -42,36 +42,6 @@ describe('registerUser', () => {
         expect(validPassword).toBeTruthy()
     })
 
-    describe('when user already exists', () => {
-
-        beforeEach(async () => {
-            try {
-                return await fetch(`${TEST_MONGODB_URL}/users`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ name, surname, email, phone, password })
-                })
-
-            } catch (error) {
-                throw new Error(error)
-
-            }
-        })
-
-        it('should fail on already registered user', async () => {
-            try {
-                await registerUser(name, surname, email, phone, password)
-
-                throw new Error('You should not reach this point')
-
-            } catch (error) {
-                expect(error).toBeDefined()
-                expect(error.message).toBe(`user with email ${email} already exists`)
-
-            }
-        })
-    })
-
     it('should fail on non-string name', () => {
         name = 1
         expect(() =>

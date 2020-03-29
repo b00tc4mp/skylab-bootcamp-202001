@@ -6,7 +6,7 @@ module.exports = (req, res) => {
     
     try {
         createSpot(publisherId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun)
-            .then(id => res.status(200).json({ id }))
+            .then(id => res.status(201).json({ id }))
             .catch(error => {
                 let status = 400
 

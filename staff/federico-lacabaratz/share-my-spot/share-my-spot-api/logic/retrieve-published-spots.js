@@ -8,20 +8,18 @@ module.exports = id => {
     return User.findById(id)
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            
-            return Spot.find({ publisherId: id, created: { $lte: new Date } })
+            return Spot.find({ publisherId: id, created: { $lte: new Date } }).populate("publisherId", "name surname email phone")
                 .lean()
                 .then(spots => {
                     spots.forEach(spot => {
                         spot.id = spot._id.toString()
+                        spot.publisherId.id = spot.publisherId._id.toString()
 
                         delete spot._id
-
-                        spot.publisherId = spot.publisherId.toString()
+                        delete spot.__v
+                        
                     })
-
                     return spots
                 })
-        })
-        
+        }) 
 }

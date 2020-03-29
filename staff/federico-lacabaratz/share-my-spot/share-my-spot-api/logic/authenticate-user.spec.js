@@ -21,7 +21,7 @@ describe('authenticateUser', () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        phone = 666555444
+        phone = 666555444 + `${random()}`
         password = `password-${random()}`
     })
 

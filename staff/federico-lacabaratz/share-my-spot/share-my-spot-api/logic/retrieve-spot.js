@@ -12,6 +12,13 @@ module.exports = spotId => {
 
         if (!spot) throw new NotFoundError(`spot with id ${spotId} doesn't exists`)
 
+        spot.id = spot._id.toString()
+        spot.publisherId.id = spot.publisherId._id.toString()
+
+        delete spot._id
+        delete spot.__v
+        delete spot.publisherId._id
+
         return spot
 
     })()

@@ -1,16 +1,15 @@
 @import config
 @import base-components
 
-.yourBookings
+.yourRequest
     display: flex
     flex-direction: column
     justify-content: flex-start
     align-items: center
     text-align: center
     background-color: $genbg-color
-    height: 100vh
+    height: auto
     width: 100%
-    margin-bottom: 1.5em
 
     &__container
         display: flex
@@ -18,7 +17,7 @@
         justify-content: flex-start
         background-color: $color-white
         align-items: center
-        height: 65vh
+        height: 50vh
         border: 1px solid black
         margin: 1.5em
 
@@ -28,7 +27,6 @@
         font-weight: bold
     &__p
         margin: 1.5em
-        padding: 1.5em
         text-align: center
         font-size: 1em
         color: $color-gray    
@@ -42,7 +40,7 @@
         width: 100%
         margin: 1.5em
 
-    &__buttons-call, &__buttons-envelope
+    &__buttons
         @extend %flexRowCenter
         justify-content: space-around
         align-items: center
@@ -50,7 +48,7 @@
         border: 1px solid black
         outline-color: #2c5043
         height: 1.75em
-        width: 35%
+        width: 50%
         font-size: 1.2em
         border-radius: 0.5em
         margin: 0.25em

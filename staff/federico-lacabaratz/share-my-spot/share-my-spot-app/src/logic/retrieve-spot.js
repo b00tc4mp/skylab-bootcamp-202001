@@ -31,4 +31,4 @@ export default (function (spotId) {
         throw new Error('server error')
 
     })()
-}).bind(context)
+})
