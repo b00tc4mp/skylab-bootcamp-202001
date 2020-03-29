@@ -1,0 +1,8 @@
+extends app
+block body
+    form.search(action='/search', method='GET')
+    h2 Search
+    input(type='text', name='query', placeholder='criteria', value='')
+    button(type='submit') Search
+    unless Results
+        include Results
