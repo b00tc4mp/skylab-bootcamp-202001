@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Image, Button, TouchableOpacity, FlatList} from
 import {List, ListItem } from 'react-native-elements'
 import styles from './styles'
 
-function Patients ({toAdd, onPatients, contacts}) {
+function Patients ({toAdd, onPatient, contacts}) {
 
     return (<>
         
@@ -27,7 +27,7 @@ function Patients ({toAdd, onPatients, contacts}) {
                                 onPress ={()=> {
                                     const patient = item
                                     
-                                    onPatients(patient)
+                                    onPatient(patient)
                                 }}
                                 title ={item.name.toString() }
                                 titleStyle = {{

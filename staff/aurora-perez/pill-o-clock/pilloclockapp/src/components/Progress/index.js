@@ -18,7 +18,7 @@ function Progress ({progress, user}) {
         else if (check < 0.75 && check > 0.5) return index = "#DBF186"
         else if (check === 0.5) return index ='#FFF881'
         else if (check < 0.5 && check >= 0.25) return index = "#FFBF84"
-        else check = 'F8764F'
+        else return check = 'F8764F'
     }
 
     async function calendar() {
@@ -32,8 +32,8 @@ function Progress ({progress, user}) {
 
         !dateDay && (await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD'))))
 
-        let today = '2020-03-30'
-        //let today = moment(new Date).format('YYYY-MM-DD')
+        //let today = '2020-03-30'
+        let today = moment(new Date).format('YYYY-MM-DD')
 
         if (today > dateDay) {
 
@@ -52,9 +52,9 @@ function Progress ({progress, user}) {
 
             await addProgressRecord(recordDaily)
 
-            await AsyncStorage.setItem('dateDay', (dateDay = today))
+            //await AsyncStorage.setItem('dateDay', (dateDay = today))
 
-           // await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
+           await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
         } else {
             let checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
             
