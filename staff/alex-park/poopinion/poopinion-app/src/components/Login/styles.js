@@ -1,22 +1,24 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
         flexDirection: 'column',
-        marginTop: 20
+        height: Dimensions.get('window').height,
+        justifyContent: 'space-around'
     },
     formContainer: {
-        flex: 1,
+        flex: 1.5,
         width: '90%',
-        marginHorizontal: '5%'
+        marginHorizontal: '5%',
+        alignSelf: 'flex-start'
     },
     image: {
-        flex: 1,
+        flex: 0.5,
         width: '100%',
         resizeMode: 'contain',
-        alignSelf: 'center'
+        alignSelf: 'flex-start'
     },
     header: {
         fontSize: 40,
@@ -47,7 +49,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     navButtons: {
-        flex: 1,
+        flex: 0.2,
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -76,6 +78,37 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: 'white'
+    },
+    bottomRow: {
+        justifyContent: 'flex-end',
+        alignItems: 'flex-end',
+        flexDirection: 'row',
+        width: '95%',
+        marginHorizontal: '2.5%'
+    },
+    bottomLeft: {
+        flex: 1.25,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+    },
+    contactLogo: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+        marginHorizontal: 10
+    },
+    bottomRight: {
+        flex: 0.75,
+        alignItems: 'flex-end'
+    },
+    bottomRightButton: {
+        backgroundColor: 'brown',
+        fontSize: 20,
+        color: 'white',
+        padding: 10,
+        borderRadius: 10,
+        fontWeight: 'bold'
     }
 })
 

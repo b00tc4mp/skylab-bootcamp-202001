@@ -20,7 +20,7 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 <Text style={styles.header}>New rating/comment for: <Text style={styles.italic}>{toilet.place}</Text></Text>
 
                 <View style={styles.questionContainer}>
-                    <Text style={styles.question}>Level of cleanness?: <Text style={styles.value}>{cleanness}</Text></Text>
+                    <Text style={styles.question}>How clean did you find it?: <Text style={styles.value}>{cleanness}</Text></Text>
                     <View style={styles.sliderContainer}>
                         <Text>0</Text>
                         <Slider
@@ -34,7 +34,7 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 </View>
 
                 <View style={styles.questionContainer}>
-                    <Text style={styles.question}>How beautiful does it look?: <Text style={styles.value}>{looks}</Text></Text>
+                    <Text style={styles.question}>How good does it look?: <Text style={styles.value}>{looks}</Text></Text>
                     <View style={styles.sliderContainer}>
                         <Text>0</Text>
                         <Slider
@@ -48,7 +48,7 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 </View>
 
                 <View style={styles.questionContainer}>
-                    <Text style={styles.question}>Need to pay to use the toilet?:</Text>
+                    <Text style={styles.question}>Do you have to pay in order to use the toilet?:</Text>
                     <View style={styles.picker}>
                         <Picker
                             selectedValue={paymentRequired}

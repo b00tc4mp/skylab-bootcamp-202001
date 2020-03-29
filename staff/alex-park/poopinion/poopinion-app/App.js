@@ -12,7 +12,8 @@ import {
   NewToilet,
   ToiletDetails,
   NewComment,
-  UpdateUser
+  UpdateUser,
+  Readme
 } from './src/components'
 
 import logic, {
@@ -422,6 +423,10 @@ export default function App() {
     }
   }
 
+  function handleGoToFAQs() {
+    setView('readme')
+  }
+
   // THE RENDER ITSELF
   return (<View style={styles.container}>
     <ImageBackground style={styles.image} source={require('./assets/background.png')}>
@@ -429,7 +434,8 @@ export default function App() {
       {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
 
       <ScrollView style={styles.content}>
-        {view === 'login' && <Login onSubmit={handleLogin} error={error} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+        {view === 'login' && <Login onSubmit={handleLogin} error={error} goToFAQs={handleGoToFAQs} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+        {view === 'readme' && <Readme goBack={handleGoToLogin}/>}
         {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
         {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav} />}
         {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
