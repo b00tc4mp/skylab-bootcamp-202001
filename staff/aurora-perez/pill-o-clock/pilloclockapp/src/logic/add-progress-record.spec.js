@@ -89,6 +89,16 @@ describe('addProgressRecord', () => {
             expect(user.progressRecord[1].record).toMatch(moreRecords.record)
             expect(user.progressRecord[1].date).toMatch(moreRecords.date)
         })
+        it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await addProgressRecord(records)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} does not exist`)
+            }
+        })
     })
 
     describe('unhappy paths syncronous errors', () => {

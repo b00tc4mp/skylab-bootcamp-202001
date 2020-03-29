@@ -69,6 +69,40 @@ describe('addMedication', () => {
             expect(presc.times).toBeInstanceOf(Array)
             expect(presc.times[0]).toBe(time[0])
         })
+
+        it('should fail when the user does have this drug on this prescription', async () =>{
+            try{
+                await addMedication(_idDrug, time)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} already have drug with id ${_idDrug} in his prescription`)
+            }
+        })
+        it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await addMedication(_idDrug, time)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} not found`)
+            }
+        })
+
+        it('should fail when the drug does not exist', async () =>{
+            const __password = await bcrypt.hash(password, 10)
+            user = await User.create({name, surname, gender, age, phone, profile, email, password: __password})
+            await Drug.deleteMany()
+            try{
+                await addMedication(_idDrug, time)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`drug with id ${_idDrug} not found`)
+            }
+        })
+        
     })
 
     describe('unhappy paths syncronous errors', () => {

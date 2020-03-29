@@ -28,13 +28,15 @@ module.exports = (req, res )=> {
     } catch (error) {
         let status = 400
 
-        switch (true) {
-            case error instanceof NotFoundError:
-                status = 404 // not found
-                break
-            case error instanceof NotAllowedError:
-                status = 403 // forbidden
-        }   
+        if (error instanceof TypeError || error instanceof ContentError)
+            status = 406 // not acceptable
+
+        if (error instanceof NotFoundError)
+            status = 404
+
+        if (error instanceof NotAllowedError)
+            status = 401
+            
         const { message } = error
         res
             .status(status)

@@ -81,6 +81,16 @@ describe('addProgress', () => {
             expect(typeof user.progress[1]).toMatch('boolean')
             expect(user.progress[1]).toBe(_moreProgress)
         })
+        it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await addProgress(_progress)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} not found`)
+            }
+        })
     })
 
     describe('unhappy paths syncronous errors', () => {

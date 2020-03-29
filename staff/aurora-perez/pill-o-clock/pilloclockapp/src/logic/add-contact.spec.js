@@ -78,6 +78,27 @@ describe('addContact', () => {
             expect(user2.contacts[0].surname).toMatch(surname)
             expect(user2.contacts[0].phone).toMatch(phone)
         }) 
+        it('should fail when the user does not exist', async () =>{
+            User.findByIdAndRemove(_id)
+            try{
+                await addContact(_id2)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(NotFoundError)
+                expect(error.message).toBe(`user with id ${_id} not found`)
+            }
+        })
+
+        it('should fail when the user does not exist', async () =>{
+            User.findByIdAndRemove(_id2)
+            try{
+                await addContact(_id2)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(NotFoundError)
+                expect(error.message).toBe(`user with id ${_id2} not found`)
+            }
+        })
     })
 
     describe('unhappy paths syncronous errors', () => {

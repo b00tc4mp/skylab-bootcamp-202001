@@ -24,6 +24,9 @@ module.exports = (req, res) => {
         if (error instanceof TypeError || error instanceof ContentError)
             status = 406 // not acceptable
 
+        if (error instanceof NotFoundError)
+            status = 404
+
         const { message } = error
 
         res

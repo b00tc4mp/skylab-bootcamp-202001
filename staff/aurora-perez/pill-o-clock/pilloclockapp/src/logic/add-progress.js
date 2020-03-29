@@ -25,10 +25,6 @@ module.exports = function (check) {
         if (status >= 400 && status < 500) {
             const { error } = await response.json()
 
-            if (status === 401) {
-                throw new NotAllowedError(error)
-            }
-
             if (status === 404) {
                 throw new NotFoundError(error)
             }

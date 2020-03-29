@@ -38,7 +38,6 @@ module.exports = function (drugId, time) {
                 throw new NotFoundError(error)
             }
 
-
             throw new Error(error)
         }
 

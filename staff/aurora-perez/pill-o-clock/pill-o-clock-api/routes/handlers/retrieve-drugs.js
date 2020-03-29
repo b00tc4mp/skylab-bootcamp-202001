@@ -1,5 +1,5 @@
 const { retrieveDrugs } = require('../../logic')
-const { NotAllowedError } = require('pill-o-clock-errors')
+const { NotAllowedError, ContentError, NotFoundError  } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     try {
@@ -26,6 +26,12 @@ module.exports = (req, res) => {
 
         if (error instanceof TypeError || error instanceof ContentError)
             status = 406 // not acceptable
+
+        if (error instanceof NotFoundError)
+            status = 404
+
+        if (error instanceof NotAllowedError)
+            status = 401
 
         const { message } = error
 

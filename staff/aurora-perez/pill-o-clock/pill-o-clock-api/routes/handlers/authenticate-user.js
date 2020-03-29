@@ -1,7 +1,7 @@
 const { authenticateUser } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { JWT_SECRET, JWT_EXP } } = process
-const { NotAllowedError, ContentError } = require('pill-o-clock-errors')
+const { NotAllowedError, ContentError, NotFoundError } = require('pill-o-clock-errors')
 
 module.exports = (req, res) => {
     const { body: { email, password } } = req
@@ -32,6 +32,12 @@ module.exports = (req, res) => {
 
         if (error instanceof TypeError || error instanceof ContentError)
             status = 406 // not acceptable
+
+        if (error instanceof NotFoundError)
+            status = 404
+
+        if (error instanceof NotAllowedError)
+            status = 401
 
         const { message } = error
 

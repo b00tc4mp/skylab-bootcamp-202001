@@ -14,7 +14,7 @@ module.exports = async (id, drugId, time) => {
     if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
     for (let i = 0; i < user.prescription.length; i++) {
-        if (user.prescription[i].drug.toString() === drugId) throw new NotAllowedError (`user ${user.name} already have ${drug.drugName} in his prescription`)
+        if (user.prescription[i].drug.toString() === drugId) throw new NotAllowedError (`user with id ${id} already have drug with id ${drugId} in his prescription`)
     } 
 
     const guideline = new Guideline({created: new Date, prescribed: user._id.toString(), drug: drugId, times: time})

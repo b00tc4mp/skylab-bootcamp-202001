@@ -55,6 +55,7 @@ describe('deleteMedication', () => {
             await logic.__context__.storage.setItem('token', token)
             
             guideline = await Guideline.create({times: [time], prescribed: _id, drug})
+            _guidelineId = guideline.id.toString()
             
             await User.findByIdAndUpdate(_id, {$push: {prescription: guideline}})
             
@@ -73,6 +74,56 @@ describe('deleteMedication', () => {
 
             expect(user.prescription.length).toBe(0)
             expect(_guideline).toBeNull()
+        })
+
+        it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await deleteMedication(_drugId)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} not found`)
+            }
+        })
+
+        it('should fail when the drug does not exist', async () =>{
+            let __password = await bcrypt.hash(password, 10)
+            user = await User.create({name, surname, gender, age, phone, profile, email, password: __password})
+            _id = user.id.toString()
+            token = jwt.sign({ sub: _id }, 'my cat is a demon', { expiresIn: '1d' })
+            await logic.__context__.storage.setItem('token', token)
+            
+            await Drug.deleteMany()
+            try{
+                await deleteMedication(_drugId)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`drug with id ${_drugId} not found`)
+            }
+        })
+
+        it('should fail when the prescription does not exist in user', async () =>{
+            let __password = await bcrypt.hash(password, 10)
+            user = await User.create({name, surname, gender, age, phone, profile, email, password: __password})
+            _id = user.id.toString()
+            token = jwt.sign({ sub: _id }, 'my cat is a demon', { expiresIn: '1d' })
+            await logic.__context__.storage.setItem('token', token)
+            
+            drug = await Drug.create({drugName, description})
+
+            _drugId = drug.id.toString()
+
+            await Guideline.deleteMany()
+
+            try{
+                await deleteMedication(_drugId)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`prescript within user with id ${_id} not found`)
+            }
         })
     })
      describe('unhappy paths syncronous errors', () => {
