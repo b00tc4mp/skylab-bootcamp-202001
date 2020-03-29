@@ -21,7 +21,7 @@ export default (function (spotId, photo) {
                 headers: { 'Authorization': 'Bearer ' + this.token, },
                 body: formData
             })
-            if (response.status === 200) return   
+            if (response.status === 201) return   
 
     })()
 }).bind(context)

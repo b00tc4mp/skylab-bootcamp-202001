@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { logout } from '../logic'
-import { withRouter } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import './Header.sass'
 import logo from '../images/logo.png'
 
-export default withRouter(({ history }) => {
+export default ({ onLogout }) => {
     // const [state, setState] = useContext(Context)
+    const history = useHistory()
     const [menu, setMenu] = useState(false)
 
     const handleOpenNav = (event) => {
@@ -16,8 +17,11 @@ export default withRouter(({ history }) => {
     const handleLogout = (event) => {
         event.preventDefault()
         logout()
+        if (onLogout && typeof onLogout === "function") {
+            onLogout()
+        }
 
-        history.push('/')
+        history.push('/login')
     }
 
     const handleAccount = (event) => {
@@ -78,4 +82,4 @@ export default withRouter(({ history }) => {
         </nav>
     </header>
     </>
-})
+}

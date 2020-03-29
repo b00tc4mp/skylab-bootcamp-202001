@@ -11,6 +11,10 @@ import saveSpotPhoto from './save-spot-photo'
 import retrieveMySpots from './retrieve-my-spots'
 import spotUpdate from './spot-update'
 import spotDelete from './spot-delete'
+import bookSpot from './book-spot'
+import acceptBooking from './accept-booking'
+import declineBooking from './decline-booking'
+import context from './context'
 
 export {
     registerUser,
@@ -25,5 +29,9 @@ export {
     saveSpotPhoto,
     retrieveMySpots,
     spotUpdate,
-    spotDelete
+    spotDelete,
+    bookSpot,
+    acceptBooking,
+    declineBooking,
+    context
 }

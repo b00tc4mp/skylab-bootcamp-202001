@@ -11,9 +11,13 @@ module.exports = id => {
 
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
-            user.retrieved = new Date
+            user.retrieved = new Date()
+
+            user.id = user._id.toString()
+            delete user._id
+            delete user.__v
 
             return user.save()
         })
-        .then(({ name, surname, email, phone }) => ({ name, surname, email, phone }))
+        .then(({ id, name, surname, email, phone }) => ({ id, name, surname, email, phone }))
 }

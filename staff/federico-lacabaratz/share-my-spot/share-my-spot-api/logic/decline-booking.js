@@ -25,7 +25,6 @@ module.exports = (publisherId, candidateId, spotId) => {
        
         spot.bookingCandidates.splice(index, 1)
 
-
         return spot.save()
         .then(() => { })
     })()

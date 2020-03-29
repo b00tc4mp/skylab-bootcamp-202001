@@ -19,7 +19,7 @@ module.exports = (name, surname, email, phone, password) => {
         })
         .then(password => {
             user = new User({ name, surname, email, phone, password, created: new Date })
-
+            
             return user.save()
         })
         .then(() => { })

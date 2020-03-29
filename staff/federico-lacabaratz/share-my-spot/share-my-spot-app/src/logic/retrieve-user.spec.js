@@ -2,44 +2,46 @@ const { random } = Math
 const { retrieveUser } = require('.')
 const { mongoose, models: { User } } = require('share-my-spot-data')
 const jwt = require('jsonwebtoken')
+import context from './context'
 
-const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
-
-const TEST_JWT_SECRET = process.env.REACT_APP_TEST_JWT_SECRET
+const { env: {
+    REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL,
+    REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET
+} } = process
 
 describe('retrieveUser', () => {
-    beforeAll(async() => {
-        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        return await Promise.resolve(User.deleteMany())
-    })
+    beforeAll(() =>
+        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+            .then(() => User.deleteMany())
+    )
 
-    let name, surname, email, password
+    let name, surname, email, phone, password
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
+        phone = 24234234
         password = `password-${random()}`
     })
 
     describe('when user already exists', () => {
-        let token
-        beforeEach(async() => {
-            const result = await User.create({ name, surname, email, password })
-            const id = await result._id
-            token = await jwt.sign({ sub: id }, TEST_JWT_SECRET)
-        })
+        beforeEach(() =>
+            User.create({ name, surname, email, phone, password })
+                .then(({ id }) => context.token = jwt.sign({ sub: id }, TEST_JWT_SECRET))
+        )
 
-        it('should succeed on correct data', async () => {
-            
-            const user = await retrieveUser(token)
-            expect(user).toBeDefined()
-            expect(user.name).toEqual(name)
-            expect(user.surname).toEqual(surname)
-            expect(user.email).toEqual(email)
-            expect(user.password).toBeUndefined()
-            
-        })
+        it('should succeed on correct and valid and right data', () =>
+            retrieveUser()
+                .then(user => {
+                    expect(user).toBeDefined()
+                    expect(user.name).toBe(name)
+                    expect(user.surname).toBe(surname)
+                    expect(user.email).toBe(email)
+                    expect(user.phone).toBe(phone)
+                    expect(user.password).toBeUndefined()
+                })
+        )
 
         it('should fail on invalid token', async () => {
             try {
@@ -48,34 +50,9 @@ describe('retrieveUser', () => {
                 throw new Error('you should not reach this point')
             } catch (error) {
                 expect(error).toBeDefined()
-                expect(error.message).toBe(`invalid signature`)
+                expect(error.message).toBe(`token is not defined`)
             }
         })
-    })
-    
-    it('should fail on non-string token', () => {
-        let token = 1
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(TypeError, `token ${token} is not a string`)
-
-        token = true
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(TypeError, `token ${token} is not a string`)
-
-        token = undefined
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(TypeError, `token ${token} is not a string`)
-    })
-
-    it('should fail on invalid token format', () => {
-        let token = 'abc'
-
-        expect(() =>
-            retrieveUser(token)
-        ).toThrowError(Error, 'invalid token')
     })
 
     afterAll(async () => {

@@ -2,7 +2,7 @@ import React from 'react'
 import './MySpotItem.sass'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ mySpotItem: { id, title, price }, onToUpdateMySpot, onToDeleteMySpot }) {
+export default function ({ mySpotItem: { id, title, price }, onToUpdateMySpot, onToDeleteMySpot, onClick }) {
     const handleOnSpotUpdate = (event) => {
         event.preventDefault()
         onToUpdateMySpot(id)
@@ -16,7 +16,7 @@ export default function ({ mySpotItem: { id, title, price }, onToUpdateMySpot, o
     return <li className="mySpotItem">
         <div className="mySpotItem__container" >
             <main>
-                <img className="mySpotItem__photo" src={`${API_URL}/load/${id}?v=${Math.floor(Math.random() * 99999)}`} />
+                <img className="mySpotItem__photo" src={`${API_URL}/load/${id}?v=${Math.floor(Math.random() * 99999)}`} onClick={() => onClick(id)}/>
                 <h4 className="mySpotItem__h4">{title}</h4>
                 <h2 className="mySpotItem__h2">{price} €/per hour</h2><span>(*) See Conditions</span>
                 <div className="mySpotItem__bottom">

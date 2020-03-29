@@ -1,5 +1,4 @@
 require('dotenv').config()
-
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Spot } } = require('share-my-spot-data')
 const { expect } = require('chai')
@@ -19,7 +18,7 @@ describe('deleteSpot', () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        phone = 666555 + Math.random()
+        phone = 666555
         password = `password-${random()}`
 
         title = `title-${random()}`
@@ -35,8 +34,8 @@ describe('deleteSpot', () => {
         acceptsBarker = 'yes'
         surveillance = false
         isCovered = 'yes'
-        hourStarts = 9
-        hourEnds = 18
+        hourStarts = '9'
+        hourEnds = '18'
         mon = 'yes'
         tue = 'yes'
         wed = 'yes'
@@ -61,6 +60,7 @@ describe('deleteSpot', () => {
         )
                 
         it('should succeed on correct and valid and right data', () =>
+            Spot.findById(_spotId),
             User.findById(_id)
                 .then((user) => {
                     expect(user.id).to.exist

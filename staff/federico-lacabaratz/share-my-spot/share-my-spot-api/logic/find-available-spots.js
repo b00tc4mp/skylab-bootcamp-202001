@@ -5,7 +5,6 @@ module.exports = (filter = {}) => {
     let { addressLocation, length, height, width, price, acceptsBarker } = filter
     let _filter = {  status: 'available' }
     
-    
     if (typeof addressLocation !== 'undefined') {
         validate.string(addressLocation, 'location')
         _filter.addressLocation = { $regex: addressLocation }
@@ -42,7 +41,16 @@ module.exports = (filter = {}) => {
     }
     
     return Spot.find(_filter).populate("publisherId", "name surname email phone").sort({ created: -1 })
+        .lean()
         .then(spots => {
+
+            spots.forEach(spot => {
+                spot.id = spot._id.toString()
+                spot.publisherId.id = spot.publisherId._id.toString()
+
+                delete spot._id
+                delete spot.__v
+            })
             return spots
         })
 }
