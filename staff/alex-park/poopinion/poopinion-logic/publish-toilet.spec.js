@@ -14,8 +14,9 @@ logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = API_URL
 
 describe('publishToilet', () => {
-    let name, surname, email, password, token, _id, age, gender, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates, image
+    let name, surname, email, password, token, _id, age, gender, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates, image, disabledToilet
     const GENDERS = ['male', 'female', 'non-binary']
+    const BOOLEANS = [true, false]
 
     beforeAll(async () => {
         await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -38,6 +39,7 @@ describe('publishToilet', () => {
         longitude = random()
         coordinates = { latitude, longitude, latitudeDelta, longitudeDelta }
         image = `image-${random()}`
+        disabledToilet = BOOLEANS[floor(random() * BOOLEANS.length)]
     })
 
     describe('happy paths', () => {
@@ -49,12 +51,36 @@ describe('publishToilet', () => {
             token = await jwt.sign({ sub: _id }, JWT_SECRET, { expiresIn: '1d' })
             await logic.__context__.storage.setItem('token', token)
 
-            const result = await publishToilet(place, null, coordinates)
+            const result = await publishToilet(place, null, disabledToilet, coordinates)
             expect(result).toBeUndefined()
 
             const toilet = await Toilet.findOne({ publisher: _id })
             expect(toilet).toBeDefined()
             expect(toilet.place).toBe(place)
+            expect(toilet.disabledToilet).toBe(disabledToilet)
+            expect(toilet.publisher.toString()).toBe(_id)
+            expect(toilet.geolocation).toBeInstanceOf(Object)
+            expect(toilet.geolocation.latitude).toBe(latitude)
+            expect(toilet.geolocation.longitude).toBe(longitude)
+            expect(toilet.geolocation.latitudeDelta).toBe(latitudeDelta)
+            expect(toilet.geolocation.longitudeDelta).toBe(longitudeDelta)
+        })
+
+        it('should succeed to publish a new toilet even if no place name has been provided', async () => {
+            const _password = await bcrypt.hash(password, 10)
+            let user = await User.create({ name, surname, email, password: _password, age, gender })
+            _id = user.id
+
+            token = await jwt.sign({ sub: _id }, JWT_SECRET, { expiresIn: '1d' })
+            await logic.__context__.storage.setItem('token', token)
+
+            const result = await publishToilet(undefined, null, disabledToilet, coordinates)
+            expect(result).toBeUndefined()
+
+            const toilet = await Toilet.findOne({ publisher: _id })
+            expect(toilet).toBeDefined()
+            expect(toilet.place).toBe('(No place defined)')
+            expect(toilet.disabledToilet).toBe(disabledToilet)
             expect(toilet.publisher.toString()).toBe(_id)
             expect(toilet.geolocation).toBeInstanceOf(Object)
             expect(toilet.geolocation.latitude).toBe(latitude)
@@ -68,7 +94,7 @@ describe('publishToilet', () => {
             let _error
 
             try {
-                await publishToilet(place, image, coordinates)
+                await publishToilet(place, image, disabledToilet, coordinates)
             } catch (error) {
                 _error = error
             }
@@ -81,7 +107,7 @@ describe('publishToilet', () => {
             await User.deleteMany()
             let _error
             try {
-                await publishToilet(place, image, coordinates)
+                await publishToilet(place, image, disabledToilet, coordinates)
             } catch (error) {
                 _error = error
             }
@@ -92,19 +118,37 @@ describe('publishToilet', () => {
     })
 
     describe('unhappy paths', () => {
+        it('should fail on a non boolean disabledToilet', () => {
+            place = 'someplace'
+            
+            disabledToilet = 45438
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`disabledToilet ${disabledToilet} is not a boolean`)
+           
+            disabledToilet = 'sasasas'
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`disabledToilet ${disabledToilet} is not a boolean`)
+            
+            disabledToilet = []
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`disabledToilet ${disabledToilet} is not a boolean`)
+            
+            disabledToilet = undefined
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`disabledToilet ${disabledToilet} is not a boolean`)
+        })
+
         it('should fail on a non object coordinates', () => {
             place = 'someplace'
+            disabledToilet = true
+
             coordinates = 45438
-            expect(() => publishToilet(place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
            
             coordinates = 'sasasas'
-            expect(() => publishToilet(place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
             
             coordinates = false
-            expect(() => publishToilet(place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
             
             coordinates = undefined
-            expect(() => publishToilet(place, image, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(place, image, disabledToilet, coordinates)).toThrow(`coordinates ${coordinates} is not a Object`)
         })
     })
 

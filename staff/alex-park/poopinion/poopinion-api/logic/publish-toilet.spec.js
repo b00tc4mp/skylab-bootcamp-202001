@@ -13,8 +13,9 @@ describe('publishToilet', () => {
             .then(() => { })
     )
 
-    let name, surname, email, password, age, gender, _id, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates
+    let name, surname, email, password, age, gender, _id, place, latitude, longitude, latitudeDelta, longitudeDelta, coordinates, disabledToilet
     const GENDERS = ['male', 'female', 'non-binary']
+    const BOOLEANS = [true, false]
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -29,6 +30,7 @@ describe('publishToilet', () => {
         longitude = random()
         longitudeDelta = random()
         coordinates = { latitude, longitude, latitudeDelta, longitudeDelta }
+        disabledToilet = BOOLEANS[floor(random() * BOOLEANS.length)]
     })
 
     describe('when user already exists', () => {
@@ -40,12 +42,12 @@ describe('publishToilet', () => {
         )
 
         it('should successfully publish a toilet post', () =>
-            publishToilet(_id, place, coordinates)
+            publishToilet(_id, place, disabledToilet, coordinates)
                 .then(() => Toilet.findOne({ publisher: _id }))
                 .then(toilet => {
-
                     expect(toilet.publisher.toString()).to.equal(_id)
                     expect(toilet.place).to.equal(place)
+                    expect(toilet.disabledToilet).to.equal(disabledToilet)
                     expect(toilet.comments instanceof Array).to.equal(true)
                     expect(toilet.geolocation instanceof Object).to.equal(true)
                     expect(toilet.geolocation.latitude).to.equal(latitude)
@@ -60,6 +62,7 @@ describe('publishToilet', () => {
                     expect(user.publishedToilets[0]).not.to.be.undefined
                     expect(user.publishedToilets[0].publisher.toString()).to.equal(_id)
                     expect(user.publishedToilets[0].place).to.equal(place)
+                    expect(user.publishedToilets[0].disabledToilet).to.equal(disabledToilet)
                     expect(user.publishedToilets[0].comments instanceof Array).to.equal(true)
                     expect(user.publishedToilets[0].geolocation instanceof Object).to.equal(true)
                     expect(user.publishedToilets[0].geolocation.latitude).to.equal(latitude)
@@ -75,7 +78,7 @@ describe('publishToilet', () => {
         beforeEach(() => User.deleteMany().then(() => { }))
 
         it('should fail to post a toilet if the user does not exist', () =>
-            publishToilet(_id, place, coordinates)
+            publishToilet(_id, place, disabledToilet, coordinates)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
@@ -93,7 +96,7 @@ describe('publishToilet', () => {
                 .then(() => { })
         )
         it('should fail to post a toilet if the user is deactivated', () =>
-            publishToilet(_id, place, coordinates)
+            publishToilet(_id, place, disabledToilet, coordinates)
                 .then(() => { throw new Error('should not reach this point') })
                 .catch(({ message }) => {
                     expect(message).not.to.be.undefined
@@ -111,16 +114,32 @@ describe('publishToilet', () => {
 
         it('should fail on a non-string place', () => {
             place = 9328743289
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
 
             place = false
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
 
             place = undefined
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
 
             place = []
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `place ${place} is not a string`)
+        })
+
+        it('should fail on a non-boolean disabledToilet', () => {
+            place = 'some place'
+
+            disabledToilet = 'sdhfbsdhfb'
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `disabledToilet ${disabledToilet} is not a boolean`)
+
+            disabledToilet = 834758
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `disabledToilet ${disabledToilet} is not a boolean`)
+
+            disabledToilet = undefined
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `disabledToilet ${disabledToilet} is not a boolean`)
+
+            disabledToilet = []
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `disabledToilet ${disabledToilet} is not a boolean`)
         })
 
         it('should fail on a non-string id', () => {
@@ -139,17 +158,19 @@ describe('publishToilet', () => {
 
         it('should fail on a non-object coordinates', () => {
             place = 'somewhere'
+            disabledToilet = true
+
             coordinates = 9328743289
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
 
             coordinates = false
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
 
             coordinates = undefined
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
 
             coordinates = 'asasa'
-            expect(() => publishToilet(_id, place, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
+            expect(() => publishToilet(_id, place, disabledToilet, coordinates)).to.throw(TypeError, `coordinates ${coordinates} is not a Object`)
         })
     })
 
