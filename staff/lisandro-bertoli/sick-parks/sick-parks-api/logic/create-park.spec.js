@@ -2,7 +2,8 @@ require('dotenv').config()
 
 const { expect } = require('chai')
 const { env: { TEST_MONGODB_URL } } = process
-const { mongoose, models: { Park, User, Location } } = require('sick-parks-data')
+const { mongoose, models: { Park, User } } = require('sick-parks-data')
+const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const { random } = Math
 const createPark = require('./create-park')
 
@@ -66,6 +67,36 @@ describe('createPark', () => {
             const user = await User.findById(userId)
 
             expect(user.parks).to.include(_id)
+        })
+
+        it('should fail when park already exists', async () => {
+            await Park.create(park)
+
+            try {
+                await createPark(userId, { park, features })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.an.instanceOf(NotAllowedError)
+                expect(error.message).to.equal(`park '${park.name}' already exists`)
+            }
+
+        })
+
+        it('should fail and throw', async () => {
+            await User.deleteMany()
+            try {
+                await createPark(userId, { park, features })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.an.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`user ${userId} does not exist`)
+            }
+
+        })
+
+        afterEach(async () => {
+            await User.deleteMany()
+
         })
     })
 

@@ -12,7 +12,7 @@ describe('searchParks', () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Park.deleteMany()
     })
-    let name, size, level, location, resort, verified
+    let name, size, level, location1, resort, verified
     let name2, size2, level2, location2, resort2
     let first
     let location
@@ -22,7 +22,7 @@ describe('searchParks', () => {
         size = `l`
         level = `begginer`
         resort = `Grindelwald`
-        location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+        location1 = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
         verified = true
 
         location = [random() * 15 + 1, random() * 15 + 1]
@@ -41,7 +41,7 @@ describe('searchParks', () => {
             return result
         }
 
-        const parkOneToPointDistance = distance(location.coordinates[0], location[0], location.coordinates[1], location[1])
+        const parkOneToPointDistance = distance(location1.coordinates[0], location[0], location1.coordinates[1], location[1])
         const parkTwoToPointDistance = distance(location2.coordinates[0], location[0], location2.coordinates[1], location[1])
 
         if (parkOneToPointDistance > parkTwoToPointDistance) {
@@ -56,7 +56,7 @@ describe('searchParks', () => {
         let park1, park2
         beforeEach(async () => {
 
-            park1 = await Park.create({ name, size, level, resort, location, verified })
+            park1 = await Park.create({ name, size, level, resort, location: location1, verified })
             park2 = await Park.create({ name: name2, size: size2, level: level2, resort: resort2, location: location2 })
         })
 
