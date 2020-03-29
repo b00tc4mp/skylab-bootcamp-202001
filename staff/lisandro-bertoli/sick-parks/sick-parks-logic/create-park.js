@@ -33,15 +33,14 @@ module.exports = function (data) {
         if (response.status === 201) return
 
         if (response.status >= 400 || response.status < 500) {
-            return response.json()
-                .then(response => {
-                    const { error } = response
-                    if (response.status === 404) throw new NotFoundError('It seems you are not logged in or you deleted your account')
-                    if (response.status === 403) throw new NotAllowedError(error)
+            const { error } = await response.json()
 
-                    throw new Error(error)
+            if (response.status === 404) throw new NotFoundError('It seems you are not logged in or you deleted your account')
+            if (response.status === 403) throw new NotAllowedError(error)
 
-                })
+            throw new Error(error)
+
+
         } else throw new Error('Server error')
     })()
 }.bind(context)

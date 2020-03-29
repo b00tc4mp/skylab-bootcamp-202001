@@ -11,8 +11,6 @@ const { mongoose, models: { User } } = require('sick-parks-data');
     await User.deleteMany()
 
     await User.create({ name: 'name', email: 'name@mail.com', surname: 'surname', password: '123' })
-
-    debugger
 })()
     .catch(console.error)
     .finally(mongoose.disconnect)

@@ -24,7 +24,7 @@ describe('retrievePark', () => {
 
     beforeEach(() => {
 
-        feature.name = "transition"
+        feature.name = "other"
         feature.size = "xl"
         feature.level = "advanced"
         feature.location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })

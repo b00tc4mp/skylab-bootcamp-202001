@@ -64,7 +64,7 @@ describe('searchParks', () => {
         it('should order the results by distance', async () => {
 
             let query = 'begg'
-            debugger
+
             let results = await searchParks(query, location)
 
             expect(results.length).to.be.greaterThan(0)
@@ -104,7 +104,7 @@ describe('searchParks', () => {
         it('on "latest" query, should order the results by creation date', async () => {
             let q = 'latest'
             let results = await searchParks(q, location)
-            debugger
+
 
             expect(results[0].name).to.equal(park2.name)
             expect(results[1].name).to.equal(park1.name)
@@ -113,7 +113,7 @@ describe('searchParks', () => {
         it('on "verified" query, should return only verified parks', async () => {
             let q = 'verified'
             let results = await searchParks(q, location)
-            debugger
+
 
             expect(results[0].name).to.equal(park1.name)
             expect(results[1]).to.be.undefined

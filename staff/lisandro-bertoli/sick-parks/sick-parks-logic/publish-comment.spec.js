@@ -56,7 +56,7 @@ describe('publishComment', () => {
         it('should succeed on creating a new comment in the park', async () => {
             await publishComment(userId, parkId, body)
             const park = await Park.findOne({ _id: parkId }).lean()
-            debugger
+
 
             expect(park).to.have.property("comments")
             expect(park.comments[0].body).to.equal(body)

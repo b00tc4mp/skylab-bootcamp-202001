@@ -44,7 +44,7 @@ describe('retrieveUser', () => {
             it('should succeed on valid id, returning the user', async () => {
                 const user = await retrieveUser()
 
-                debugger
+
                 expect(user.constructor).to.equal(Object)
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)

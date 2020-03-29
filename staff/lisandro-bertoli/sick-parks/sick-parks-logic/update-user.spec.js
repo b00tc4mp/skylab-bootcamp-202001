@@ -74,7 +74,7 @@ describe('updateUser', () => {
                 await updateUser(userId, { name, email, password, oldPassword })
                 throw new Error('should not reach this point')
             } catch (error) {
-                debugger
+
                 expect(error).to.be.an.instanceOf(NotAllowedError)
                 expect(error.message).to.equal('wrong credentials')
             }

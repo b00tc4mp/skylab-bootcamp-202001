@@ -7,6 +7,7 @@ const { expect } = require('chai')
 
 const { TEST_JWT_SECRET: JWT_SECRET, TEST_API_URL: API_URL, TEST_MONGODB_URL: MONGODB_URL } = process.env
 const { mongoose, models: { Park, User } } = require('sick-parks-data')
+const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const { random } = Math
 const jwt = require('jsonwebtoken')
 
@@ -78,7 +79,81 @@ describe('createPark', () => {
 
             expect(user.parks).to.include(_park._id)
         })
+
+        it('should succeed on undefined flow', async () => {
+            park.flow = undefined
+
+            await createPark({ park, features })
+            const _park = await Park.findOne({ name: park.name }).lean()
+            expect(_park).to.exist
+            expect(_park.flow).to.equal('N/A')
+
+        })
+
+        it('should succeed when no features are provided', async () => {
+            features = []
+
+            await createPark({ park, features })
+            const _park = await Park.findOne({ name: park.name }).lean()
+            expect(_park).to.exist
+            expect(_park.features).to.be.an.instanceOf(Array)
+            expect(_park.features).to.have.lengthOf(0)
+
+        })
+
+        it('should fail when park already exists', async () => {
+            await Park.create(park)
+
+            try {
+                await createPark({ park, features })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.an.instanceOf(NotAllowedError)
+                expect(error.message).to.equal(`park '${park.name}' already exists`)
+            }
+
+        })
+
+        afterEach(async () => {
+            await User.deleteMany()
+
+        })
+
     })
+
+    describe('when user does not exist', () => {
+        it('should fail and throw', async () => {
+            try {
+                await createPark({ park, features })
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.an.instanceOf(NotFoundError)
+                expect(error.message).to.equal('It seems you are not logged in or you deleted your account')
+            }
+
+        })
+    })
+
+
+
+
+
+
+    it('should fail on non string flow', () => {
+        park.flow = true
+        expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+
+        park.flow = 1
+        expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+
+        park.flow = []
+        expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+    })
+
+
+
+
+
 
     after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
 })

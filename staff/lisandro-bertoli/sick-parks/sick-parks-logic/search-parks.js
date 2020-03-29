@@ -6,7 +6,7 @@ module.exports = (query = '', location) => {
     validate.stringFrontend(query, 'query', false)
     validate.type(location, 'location', Array)
     location.forEach(coordinate => validate.type(coordinate, 'coordinate', Number))
-    debugger
+
     return (async () => {
 
 
@@ -15,7 +15,7 @@ module.exports = (query = '', location) => {
         const data = await response.json()
 
         const { error, results } = data
-        debugger
+
         if (error) throw new Error(error)
 
         return results

@@ -9,7 +9,7 @@ module.exports = function (parkId) {
     return (async () => {
 
         const token = await this.storage.getItem('token')
-        debugger
+
         const response = await fetch(`${this.API_URL}/users/asdf23/parks/${parkId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
