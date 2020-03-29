@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexGrow: 1,
         paddingLeft: 10,
-        backgroundColor: '#EDF4F9',
+        backgroundColor: 'white',
         fontFamily: 'montserrat'
     },
     queryIcon: {

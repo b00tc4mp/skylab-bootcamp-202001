@@ -8,11 +8,41 @@ The users will have the posibility of finding snowparks around the world. The pa
 
 ## Functional Description
 
+- App can be used by registered and non-registered users.
+
+- Non-registered users can search, and see the details page of a park.
+
+- The search can be done by the direct search options(latest parks, verified, begginer and xl) or by entering a query which can be empty or partially written.
+
+- The details page of a park gives users information about the location of the park the features it has and the votes and if the park is verified or not.
+
+- Registered users can:
+    - Create new parks with location and features.
+    - Comment them.
+    - Vote and approve or report the parks.
 
 ### Use Cases
 
+![](./images/use-cases.png)
+
+### Flow
+
+![](./images/flow.png)
+
 ## Technical Description
+
+### Blocks
+
+![](./images/block.png)
 
 ### Data Model
 
-![](/images/data-model.png)
+![](./images/data-model.png)
+
+### API Code Coverage
+
+![](./images/code-coverage-api.png)
+
+### Client Code Coverage
+
+![](./images/code-coverage-client.png)
