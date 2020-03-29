@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-errors')
+const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { mongoose, models: { User, Park, Location } } = require('sick-parks-data')
 const votePark = require('./vote-park')
 const { expect } = require('chai')

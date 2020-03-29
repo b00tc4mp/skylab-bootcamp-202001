@@ -3,6 +3,25 @@ const { models: { User } } = require('sick-parks-data')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Updates the user with the new given data.
+ * 
+ * @param {string} id the user's unique id
+ * @param {Object} data the modifications to be made
+ * 
+ * 
+ * @returns {undefined} 
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if userId or data and data keys do not have the correct type
+ * @throws {Error} if the oldPassword or password are not given when required
+ * @throws {NotFoundError} if the provided user id does not match any user in storage
+ * @throws {NotAllowedError} if any of the keys in data are not valid
+ * @throws {NotAllowedError} if the oldPassword does not match the password in storage
+ * 
+ */
+
+
 module.exports = function (id, data) {
     validate.string(id, 'userId')
     validate.type(data, 'updates', Object)

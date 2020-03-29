@@ -1,6 +1,20 @@
 const { models: { Park } } = require('sick-parks-data')
-const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
+
+/**
+ * Search for the parks in storage that match the given query. 
+ * Ordering them by distance.
+ * 
+ * @param {Object} query the requests query
+ * @param {string} query.q the query itself provided by the user
+ * @param {Array} query.location the location of the user
+ * 
+ * @returns {Array} list of matching results. Empty if no matches
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if query does not have the correct type
+ */
+
 
 module.exports = ({ q, location }) => {
     validate.string(q, 'query', false)
@@ -57,7 +71,7 @@ module.exports = ({ q, location }) => {
             result.name = result.name.charAt(0).toUpperCase() + result.name.slice(1)
             result.resort = result.resort.charAt(0).toUpperCase() + result.resort.slice(1)
 
-            const { id, name, resort, size, verified, rating } = result //TODO send location
+            const { id, name, resort, size, verified, rating } = result
 
             return { id, name, resort, size, verified, rating }
         })

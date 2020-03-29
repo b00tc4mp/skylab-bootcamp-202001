@@ -1,6 +1,21 @@
 const { models: { Park } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
-const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { NotFoundError } = require('sick-parks-errors')
+
+/**
+ * Retrieves the requested park from the storage
+ * 
+ * @param {object} params the request params
+ * @param {string} params.id the park's unique id
+ 
+ * 
+ * @returns {object} park data
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if parkId does not have the correct type
+ * @throws {NotFoundError} when the provided parkId does not match any park
+ */
+
 
 module.exports = ({ id: parkId }) => {
     validate.string(parkId, 'parkId')

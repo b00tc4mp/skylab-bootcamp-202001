@@ -2,6 +2,25 @@ const { validate } = require('sick-parks-utils')
 const { models: { Park, Location, Feature } } = require('sick-parks-data')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
+/**
+ * Updates the park with the new given property values.
+ * 
+ * @param {string} userId the user's unique id
+ * @param {string} parkid the park's unique id
+ * @param {Object} updates the modifications to be made
+ * 
+ * 
+ * @returns {undefined} 
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if userId, parkId or updates does not have the correct type
+ * @throws {NotFoundError} if the provided parkId does not match any park in storage
+ * @throws {NotAllowedError} if the provided userId does not match the parks creator id
+ * @throws {NotAllowedError} if the keys in updates are not valid
+ * 
+ */
+
+
 
 module.exports = (userId, parkId, updates) => {
     validate.string(userId, 'userId')

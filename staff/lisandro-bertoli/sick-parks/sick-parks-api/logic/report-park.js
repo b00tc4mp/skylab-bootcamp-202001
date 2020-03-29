@@ -2,6 +2,29 @@ const { validate } = require('sick-parks-utils')
 const { models: { Park, User } } = require('sick-parks-data')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
+/**
+ * Registers a user's report for a fake or duplicate park. If requirements are met,
+ * it will place the park's underReview property to true
+ * 
+ * 
+ * @param {object} params the parameters of the request with the park id
+ * @param {string} params.pid the park unique id
+ * @param {object} body the body of the request
+ * @param {string} body.problem the reported problem, can be wither 'unreal' or 'duplicate'
+ * @param {object} payload token payload
+ * @param {string} payload.sub the user's unique id
+ * 
+ * @returns {boolean} will underReview property of the park
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if user id, park id or problem do not have the correct type
+ * @throws {NotFoundError} when the provided id's don't match any document on the DB
+ * @throws {NotAllowedError} when the park has already been verified
+ * @throws {NotAllowedError} when the user provided already filed the report
+ * 
+ */
+
+
 module.exports = (params, body, payload) => {
     const { pid: parkId } = params
     const { problem } = body

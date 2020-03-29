@@ -49,7 +49,7 @@ describe('searchParks', () => {
         } else {
             first = resort
         }
-        // })
+
 
     })
     describe('when parks exists', () => {

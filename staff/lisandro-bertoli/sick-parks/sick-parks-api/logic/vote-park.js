@@ -2,6 +2,25 @@ const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { models: { Park, User } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 
+
+/**
+ * Adds a user's vote to the park. Sets the park rating to the difference
+ * between upVotes and downVotes
+ * 
+ * @param {string} userId user's unique id
+ * @param {string} parkId park's unique id
+ * @param {Boolean} vote the up or down vote from the user
+ * 
+ * @returns {undefined}
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if user data, park data or vote does not have the correct type
+ * @throws {NotFoundError} when the provided id's don't match any document in storage
+ * @throws {NotAllowedError} when the user has already upVoted
+ * @throws {NotAllowedError} when the user has already downVoted
+ */
+
+
 module.exports = (userId, parkId, vote) => {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
