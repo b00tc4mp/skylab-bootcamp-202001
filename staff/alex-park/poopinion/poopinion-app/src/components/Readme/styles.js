@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     pageNumber: {
         fontSize: 20,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        padding: 10
     },
     navButtonImage: {
         width: 35,
@@ -48,6 +49,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#df7861',
         textAlign: 'center'
     },
+    navButton: {
+        padding: 10
+    },  
     mainContainer: {
         flex: 1,
         padding: 10

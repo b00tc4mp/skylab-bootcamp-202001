@@ -14,5 +14,6 @@ module.exports = new Schema({
             longitudeDelta: { type: Number }
         }
     },
-    image: { type: String }
+    image: { type: String },
+    disabledToilet: { type: Boolean, default: false }
 })

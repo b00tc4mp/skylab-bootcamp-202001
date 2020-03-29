@@ -3,7 +3,6 @@ import styles from './styles'
 import { View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button } from 'react-native'
 import MapView from 'react-native-maps'
 import * as ImagePicker from 'expo-image-picker'
-import * as FileSystem from 'expo-file-system'
 
 export default class NewToilet extends React.Component {
     constructor(props) {
@@ -11,13 +10,14 @@ export default class NewToilet extends React.Component {
 
         this.state = {
             image: null,
-            place: undefined
+            place: undefined,
+            wheelchair: false
         }
     }
 
     render() {
-        let { image } = this.state
-        
+        let { image, wheelchair } = this.state
+
         return (<>
             <ScrollView style={styles.container}>
 
@@ -50,6 +50,13 @@ export default class NewToilet extends React.Component {
                     </View>
 
                     {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200 }} />}
+
+                    <View style={styles.disabledInfo}>
+                        {wheelchair ? (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogo} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)
+                            :
+                            (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogoOpacity} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)}
+                        <Text style={styles.disabledTextContent}>Disabled toilet availability</Text>
+                    </View>
                 </View>
 
                 <TouchableOpacity >

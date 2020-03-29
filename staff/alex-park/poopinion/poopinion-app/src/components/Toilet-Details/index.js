@@ -116,6 +116,12 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 <Text>Payment required: {globalRating.paymentMean >= 0.5 ? (<Text style={styles.smallScore}>Yes</Text>) : (<Text style={styles.smallScore}>No</Text>)}</Text>
                                 <Text>Multiple toilets: {globalRating.multipleMean >= 0.5 ? (<Text style={styles.smallScore}>Yes</Text>) : (<Text style={styles.smallScore}>No</Text>)}</Text>
                                 <Text>Paper provision: {globalRating.paperMean >= 0.5 ? (<Text style={styles.smallScore}>Yes</Text>) : (<Text style={styles.smallScore}>No</Text>)}</Text>
+                                <View style={styles.disabledContent}>
+                                    <Text>Disabled toilet: </Text>
+                                    {toilet.disabledToilet ? (<Image source={require('../../../assets/wheelchair.png')} style={styles.disabledLogo} />)
+                                        :
+                                        (<Image source={require('../../../assets/wheelchair.png')} style={styles.disabledLogoOpacity} />)}
+                                </View>
                             </View>
                         </View>
                     </View>

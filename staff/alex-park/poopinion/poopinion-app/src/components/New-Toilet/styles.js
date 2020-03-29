@@ -50,7 +50,32 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginVertical: 25
     },
-
+    disabledInfo: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    disabledLogo: {
+        flex: 0.25,
+        width: 60,
+        height: 60,
+        resizeMode: 'contain'
+    },
+    disabledLogoOpacity: {
+        flex: 0.25,
+        width: 60,
+        height: 60,
+        resizeMode: 'contain',
+        opacity: 0.2
+    },
+    disabledText: {
+        flex: 0.75,
+        justifyContent: 'center',
+    },
+    disabledTextContent: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginHorizontal: 10
+    }
 })
 
 export default styles

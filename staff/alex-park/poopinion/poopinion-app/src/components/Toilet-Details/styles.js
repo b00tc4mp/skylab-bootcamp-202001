@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     },
     scoreLeft: {
         margin: 15,
-        justifyContent:'center',
+        justifyContent: 'center',
         flexDirection: 'column',
         flex: 0.8
     },
@@ -200,6 +200,21 @@ const styles = StyleSheet.create({
         height: 40,
         resizeMode: 'contain',
 
+    },
+    disabledContent: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    disabledLogo: { 
+        width: 30, 
+        height: 30, 
+        resizeMode: 'contain' 
+    },
+    disabledLogoOpacity: { 
+        width: 30, 
+        height: 30, 
+        resizeMode: 'contain',
+        opacity: 0.2
     },
     deleteButton: {
         backgroundColor: 'red',

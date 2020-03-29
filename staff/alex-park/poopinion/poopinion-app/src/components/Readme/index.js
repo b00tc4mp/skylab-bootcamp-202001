@@ -6,12 +6,12 @@ function Readme({ goBack }) {
     const [page, setPage] = useState(1)
 
     function pageUp() {
-        if (page === 3) return
+        if (page === 3) setPage(1)
         else setPage(page + 1)
     }
 
     function pageDown() {
-        if (page === 1) return
+        if (page === 1) setPage(3)
         else setPage(page - 1)
     }
 
@@ -41,7 +41,7 @@ function Readme({ goBack }) {
                 {page === 3 && (<>
                     <View>
                         <Text style={styles.textHeader}>Additional Info:</Text>
-                        <Text style={styles.textContent}>{`Please keep in mind that I am a very rookie developer but I am doing my best to keep this app as polished as possible, and I'll work hard to make it better in the future!\n\nAs said before, the purpose of this app is to make places cleaner on standards so I beg you all to avoid using this app in a wrong manner: no racist, sexist, and other offensive messages and images.\n\nFeatures I am planning to add in the future:\n\n\t\t- A "check" if the place have a toilet for disabled people\n\t\t-Multiple image uploading\n\t\t-Faster loadings and refreshments\n\t\t-Better user interface\n\t\t-Better map-based services\n\nIf you have any feedback or suggestions, please feel free to contact me through the contact buttons in the Login screen. Thank you very much!\n\nÀlex Park Viñas`}</Text>
+                        <Text style={styles.textContent}>{`Please keep in mind that I am a very rookie developer but I am doing my best to keep this app as polished as possible, and I'll work hard to make it better in the future!\n\nAs said before, the purpose of this app is to make places cleaner on standards so I beg you all to avoid using this app in a wrong manner: no racist, sexist, and other offensive messages and images.\n\nFeatures I am planning to add in the future:\n\n\t\t-Multiple image uploading\n\t\t-Faster loadings and refreshments\n\t\t-Better user interface\n\t\t-Better map-based services\n\nIf you have any feedback or suggestions, please feel free to contact me through the contact buttons in the Login screen. Thank you very much!\n\nÀlex Park Viñas`}</Text>
                     </View>
                 </>)}
             </ScrollView>
