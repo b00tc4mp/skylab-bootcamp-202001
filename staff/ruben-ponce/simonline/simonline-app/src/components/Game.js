@@ -81,6 +81,7 @@ export default ({ goTo, gameId }) => {
                   x => x.id === status.currentPlayer
                 );
                 setWinner(playerWin.username);
+                setLastPlayerOut(undefined)
                 setCountdown(undefined);
                 setCurrentPlayerName(undefined);
                 setPlayersRemain(undefined);
@@ -111,29 +112,44 @@ export default ({ goTo, gameId }) => {
     });
   }
 
-  const delay = (duration) =>
-    new Promise(resolve => {
-      t = setTimeout(resolve, duration)
-  });
+  async function delay(ms) {
+    return await new Promise(resolve => {
+      t = setTimeout(resolve, ms)
+    });
+  }
 
-  const send = async (comb) => {
-    await delay(3000);
-    let status = await playCombination(comb);
-    setStatus(status)
-    console.log(status)
-    combinationLaunched = false
+  async function send(comb) {
+      let newStatus = await playCombination(gameId, comb);
+      setStatus(newStatus)
+      console.log(newStatus)
+      combinationLaunched = false
   };
 
+  async function startCount(){
+    if(t) stop()
+    if(!t){
+      try {
+        console.log('here')
+        await delay(3000)
+        console.log('there')
+        return send(_combinationPlayer)
+        console.log('combination sent')
+      }catch(error){
+        console.log(error)
+      }
+    }
+  }
+  
   function stop() {
     clearTimeout(t)
   }
 
   return (
     <div className="p1 game">
-      {console.log(status)}
+      {/* {console.log(status)}
       {console.log(combinationLaunched)}
       {console.log(combinationPlayer)}
-      {status && console.log(status.pushCombination)}
+      {status && console.log(status.pushCombination)} */}
       {/* {status.pushCombination && console.log(status.pushCombination)} */}
 
       {/* Block__Element--Modifier */}
@@ -154,12 +170,12 @@ export default ({ goTo, gameId }) => {
                 if (userId === currentPlayerId) {
                   _combinationPlayer.push(0)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
-                  if (t) {
-                    stop()
-                    send(_combinationPlayer)
-                  } else {
-                    send(_combinationPlayer)
-                  }
+                  
+                  // if(_combinationPlayer.length === status.pushCombination.length) {
+                  //   send(_combinationPlayer)
+                  // }
+                  
+                  return startCount()
                 }
             }}
           ></div>
@@ -174,12 +190,12 @@ export default ({ goTo, gameId }) => {
                 if (userId === currentPlayerId) {
                   _combinationPlayer.push(1)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
-                  if (t) {
-                    stop()
-                    send(_combinationPlayer)
-                  } else {
-                    send(_combinationPlayer)
-                  }
+
+                  // if(_combinationPlayer.length === status.pushCombination.length) {
+                  //   send(_combinationPlayer)
+                  // }
+
+                  return startCount()
                 }
             }}
           ></div>
@@ -194,12 +210,12 @@ export default ({ goTo, gameId }) => {
                 if (userId === currentPlayerId) {
                   _combinationPlayer.push(2)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
-                  if (t) {
-                    stop()
-                    send(_combinationPlayer)
-                  } else {
-                    send(_combinationPlayer)
-                  }
+
+                  // if(_combinationPlayer.length === status.pushCombination.length) {
+                  //   send(_combinationPlayer)
+                  // }
+
+                  return startCount()
                 }            
               }}
           ></div>
@@ -214,12 +230,12 @@ export default ({ goTo, gameId }) => {
                 if (userId === currentPlayerId) {
                   _combinationPlayer.push(3)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
-                  if (t) {
-                    stop()
-                    send(_combinationPlayer)
-                  } else {
-                    send(_combinationPlayer)
-                  }
+
+                  // if(_combinationPlayer.length === status.pushCombination.length) {
+                  //   send(_combinationPlayer)
+                  // }
+
+                  return startCount()
                 }
             }}
           ></div>

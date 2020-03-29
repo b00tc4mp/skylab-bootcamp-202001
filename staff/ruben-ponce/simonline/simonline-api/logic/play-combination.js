@@ -4,24 +4,26 @@ const { models: { Game } } = require("simonline-data")
 /**
  * Play combination from flayer in game and match with game combination
  * 
- * @param {string} playerId unique user id
+ * @param {string} gameId unique game id
  * @param {Object} combination array sent of player in game
  * 
  * @returns {Promise<Object>} status game
  */
 
-module.exports = (playerId, combination) => {
-    validate.string(playerId, 'playerId')
+module.exports = (gameId, combination) => {
+    validate.string(gameId, 'gameId')
     validate.type(combination, 'combination', Object)
-
-    return Game.findOne({players: playerId}).lean()
+    
+    return Game.findById(gameId).lean()
     .then(game => {
-
+        console.log('after find game by id==>', game)
         const playersStr = []
         game.players.forEach(player => playersStr.push(player.toString()))
 
         const watchingStr = []
-        game.watching.forEach(watcher => watching.push(watcher.toString()))
+        if (game.watching) {
+            game.watching.forEach(watcher => watchingStr.push(watcher.toString()))
+        }
 
         const currentPlayerStr = game.currentPlayer.toString()
     
@@ -36,31 +38,29 @@ module.exports = (playerId, combination) => {
         }
 
         const j = playersStr.indexOf(currentPlayerStr)
-
-        let start;
-
-        if(!playersStr[j+1]) {
-            start = 0
-        } else {
-            start = j+1
-        }
         
         /** when player before timeout matches the combination */
         if (elapsedTime < game.turnTimeout && matched) {
+            console.log('first conditional ===>', game)
             /** [a,b,c] */
-            for (let i = start; i < playersStr.length; i++) {
-                if(!watchingStr.includes(playersStr[i])) {
-                    const combination = Math.floor(Math.random() * 4)
-                    game.pushCombination.push(combination)
+            for (let i = j; i < playersStr.length; i++) {
+                if(!playersStr[i+1]) i = 0
+                debugger
+                if(!watchingStr.includes(playersStr[i]) && currentPlayerStr !== playersStr[i]) {
+                    const newPushCombination = Math.floor(Math.random() * 4)
+                    game.pushCombination.push(newPushCombination)
                     game.combinationViewed = []
-                    game.turnTimeout = (40 + (game.pushCombination.length * 4))
+                    game.turnTimeout = (20 + (game.pushCombination.length * 4))
                     game.turnStart = new Date()
                     game.currentPlayer = game.players[i]
-                    return game
+
+                    return Game.findByIdAndUpdate(gameId, game)
+                    .then(()=> game)
                 }
             }
             /** when the player before timeout no match combination */
         } else if (elapsedTime < game.turnTimeout && !matched ) {
+            console.log('second conditional===>', game)
             game.watching.push(game.currentPlayer)
             watchingStr.push(currentPlayerStr)
 
@@ -68,16 +68,20 @@ module.exports = (playerId, combination) => {
 
             let j = playersStr.indexOf(currentPlayerStr)
     
-            for (let i = start; i < playersStr.length; i++) {
-                if(!watchingStr.includes(playersStr[i])) {
+            for (let i = j; i < playersStr.length; i++) {
+                if(!playersStr[i+1]) i = 0
+                if(!watchingStr.includes(playersStr[i+1]) && currentPlayerStr !== playersStr[i]) {
                     game.currentPlayer = game.players[i]
                     game.turnTimeout = (40 + (game.pushCombination.length * 4))
                     game.combinationViewed = []
                     game.turnStart = new Date()
-                    return game
+
+                    return Game.findByIdAndUpdate(gameId, game)
+                    .then(()=> game)
                 }
             }
         } else {
+            console.log('else===>', game)
             return game
         }
     })

@@ -3,12 +3,13 @@ const { validate } = require('simonline-utils')
 
 const API_URL = process.env.REACT_APP_API_URL
 
-export default (function (combination) {
+export default (function (gameId, combination) {
+    validate.string(gameId, 'gameId')
     validate.type(combination, 'combination', Object)
 
     return (async () => {
-        const play = await fetch(`${API_URL}/users/games/playcombination`, {
-            method: 'POST',
+        const play = await fetch(`${API_URL}/users/games/${gameId}/playcombination`, {
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${this.token}` },
             body: JSON.stringify({ combination })
         })
@@ -20,7 +21,7 @@ export default (function (combination) {
             return gameStatus
         }
 
-        if (status === 409 || status === 406 || status === 403) {
+        if (status === 409 || status === 406 || status === 403 || status === 404) {
             const { error } = await play
             throw new Error(error)
         }

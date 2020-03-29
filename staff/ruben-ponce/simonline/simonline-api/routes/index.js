@@ -41,7 +41,7 @@ router.patch('/users/games/:gameId/start', [jwtVerifierMidWare, jsonBodyParser],
 
 router.patch('/users/games/:gameId/retrieve', [jwtVerifierMidWare, jsonBodyParser], retrieveGameStatus)
 
-router.post('/users/games/playcombination', [jwtVerifierMidWare, jsonBodyParser], playCombination)
+router.patch('/users/games/:gameId/playcombination', [jwtVerifierMidWare, jsonBodyParser], playCombination)
 
 router.get('/users/games/:gameId/players', jwtVerifierMidWare, retrievePlayersName)
 
