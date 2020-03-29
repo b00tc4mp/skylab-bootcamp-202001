@@ -71,22 +71,17 @@ describe('retrieveUser', () => {
             expect(user.password).toBeUndefined()
         })
 
-        // it('should fail to retrieve a non-existant user', async () => {
-        //     await User.deleteMany().then(() => { })
-        //     let _error
-            
-        //     try {
-        //         await retrieveUser(token)
-        //     } catch (error) {
-        //         _error = error
-        //     }
-        //     console.log(_error)
-        //     expect(_error).toBeDefined()
-        //     expect(_error).toBeInstanceOf(NotFoundError)
+          it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await retrieveUser()
 
-        //     const userId = JSON.parse(atob(token.split('.')[1])).sub
-        //     expect(_error.message).toBe(`user with id ${userId} does not exist`)
-        // })
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} does not exist`)
+            }
+        })
+
     })
     
     afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))

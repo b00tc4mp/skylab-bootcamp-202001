@@ -78,6 +78,7 @@ describe('addContact', () => {
             expect(user2.contacts[0].surname).toMatch(surname)
             expect(user2.contacts[0].phone).toMatch(phone)
         }) 
+        
         it('should fail when the user does not exist', async () =>{
             User.findByIdAndRemove(_id)
             try{

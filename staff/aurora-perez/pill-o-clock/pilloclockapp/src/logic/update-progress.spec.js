@@ -72,6 +72,17 @@ describe('updateProgress', () => {
             expect(user.progress[0]).toBeUndefined()
             
         })
+
+          it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await updateProgress()
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} does not exist`)
+            }
+        })
  
     })
     

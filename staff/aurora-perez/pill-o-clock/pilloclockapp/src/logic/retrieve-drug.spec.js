@@ -43,6 +43,16 @@ describe('retrieveDrug', () => {
             expect(_drug.description).toBe(description)
     
         })
+        it('should fail when the drug does not exist', async () =>{
+            await Drug.deleteMany()
+            try{
+                await retrieveDrug(_drugId)
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`drug with id ${_drugId} does not exist`)
+            }
+        })
 
     })
     

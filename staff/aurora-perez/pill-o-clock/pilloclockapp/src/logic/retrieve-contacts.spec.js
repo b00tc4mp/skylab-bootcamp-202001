@@ -77,6 +77,17 @@ describe('retrieveContacts', () => {
             expect(contacts[0].name).toMatch(name2)
             expect(contacts[0].surname).toMatch(surname2)
         })
+
+        it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await retrieveContacts()
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} does not exist`)
+            }
+        })
  
     })
     

@@ -72,6 +72,16 @@ describe('retrieveProgress', () => {
             expect(typeof progress[0]).toMatch('boolean')
             
         })
+        it('should fail when the user does not exist', async () =>{
+            await User.deleteMany()
+            try{
+                await retrieveProgress()
+
+            }catch(error){
+                expect(error).toBeInstanceOf(Error)
+                expect(error.message).toBe(`user with id ${_id} does not exist`)
+            }
+        })
  
     })
     
