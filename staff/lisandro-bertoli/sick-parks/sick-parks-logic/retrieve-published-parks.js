@@ -24,7 +24,7 @@ module.exports = function () {
             const data = await response.json()
 
             const { error } = data
-            if (response.status === 406) throw new ContentError(error)
+            if (response.status === 406) throw new ContentError('invalid user id in token')
 
             throw new Error(error)
 

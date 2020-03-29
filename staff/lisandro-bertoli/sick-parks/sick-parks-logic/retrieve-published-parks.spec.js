@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const { mongoose, models: { Park, User, Location } } = require('sick-parks-data')
+const { ContentError } = require('sick-parks-errors')
 const logic = require('.')
 const { retrievePublishedParks } = logic
 const AsyncStorage = require('not-async-storage')
@@ -56,6 +57,22 @@ describe('retrievePublishedParks', () => {
 
             const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
+        })
+
+        it('should fail on invalid id in token', async () => {
+            await logic.__context__.storage.clear()
+            const _token = jwt.sign({ sub: ' ' }, JWT_SECRET)
+            await logic.__context__.storage.setItem('token', _token)
+
+
+            try {
+                await retrievePublishedParks()
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.an.instanceOf(ContentError)
+
+                expect(error.message).to.equal('invalid user id in token')
+            }
         })
 
         it('should succeed on correct credentials', async () => {
