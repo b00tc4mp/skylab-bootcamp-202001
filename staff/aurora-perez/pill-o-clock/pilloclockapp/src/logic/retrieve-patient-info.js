@@ -4,7 +4,7 @@ const fetch = require('node-fetch')
 const context = require('./context')
 
 module.exports = function (patientId) {
-
+    validate.string(patientId, 'patientId')
     return (async() => {
         const token = await this.storage.getItem('token')
    

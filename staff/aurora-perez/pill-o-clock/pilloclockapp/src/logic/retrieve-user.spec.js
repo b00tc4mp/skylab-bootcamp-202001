@@ -1,13 +1,19 @@
 const { random, floor } = Math
 
-import retrieveUser from './retrieve-user'
-
 const { mongoose, models: { User } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
+const logic = require('.')
+import config from '../../config'
+const AsyncStorage = require('not-async-storage')
+const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { retrieveUser } = logic
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.REACT_APP_API_URL
 
 describe('retrieveUser', () => {
     
@@ -17,7 +23,7 @@ describe('retrieveUser', () => {
     
     
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
 
@@ -44,10 +50,10 @@ describe('retrieveUser', () => {
                     _id = user.id
                     return user.id
                 })
-                .then(id => {
+                .then(async id => {
                     token = jwt.sign({ sub: id }, 'my cat is a demon', { expiresIn: '1d' })
                     
-                    return token
+                    token = await logic.__context__.storage.setItem('token', token)
                 })
                 .then(() => { })
         })
@@ -65,17 +71,6 @@ describe('retrieveUser', () => {
             expect(user.password).toBeUndefined()
         })
 
-        it('should fail to retrieve the user on an invalid token', async () => {
-            let _error
-            try {
-                await retrieveUser(`${token}-wrong`)
-            } catch (error) {
-                _error = error
-            }
-            expect(_error).toBeDefined()
-            expect(_error).toBeInstanceOf(NotAllowedError)
-            expect(_error.message).toBe('invalid signature')
-        })
         // it('should fail to retrieve a non-existant user', async () => {
         //     await User.deleteMany().then(() => { })
         //     let _error
@@ -94,36 +89,5 @@ describe('retrieveUser', () => {
         // })
     })
     
-    
-
-    describe('unhappy paths', () => {
-        it('should fail on a non-string token', async () => {
-            let _error
-            token = 45438
-            try {
-                await retrieveUser(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-            token = false
-            try {
-                await retrieveUser(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-            token = undefined
-            try {
-                await retrieveUser(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token is empty`)
-            token = []
-            try {
-                await retrieveUser(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-        })
-    })
     afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

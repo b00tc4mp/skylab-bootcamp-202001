@@ -1,17 +1,26 @@
-const { random, floor } = Math
-
-import retrieveDrug from './retrieve-drug'
+const { random } = Math
 
 const { mongoose, models: { Drug } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
 
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+const atob = require('atob')
+const logic = require('.')
+import config from '../../config'
+const AsyncStorage = require('not-async-storage')
+const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { retrieveDrug} = logic
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.REACT_APP_API_URL
 
 describe('retrieveDrug', () => {
     
     let drugName, description, _drugId
     
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect( MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await Drug.deleteMany()
     })
 
@@ -21,7 +30,6 @@ describe('retrieveDrug', () => {
         
     })
 
-
     describe('when drug already exists', () => {
 
 
@@ -30,7 +38,6 @@ describe('retrieveDrug', () => {
             _drugId = drug.id
 
             const _drug = await retrieveDrug(_drugId)
-            console.log(_drug)
             expect(_drug).toBeDefined()
             expect(_drug.drugName).toBe(drugName)
             expect(_drug.description).toBe(description)
@@ -56,13 +63,6 @@ describe('retrieveDrug', () => {
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`id ${_drugId} is not a string`)
-            
-            _drugId = undefined
-            try {
-                await retrieveDrug(_drugId)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`id is empty`)
             
             _drugId = []
             try {

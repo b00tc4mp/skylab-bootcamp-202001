@@ -1,17 +1,23 @@
 const { random, floor } = Math
 
-import retrieveContacts from './retrieve-contacts'
-
-const { mongoose, models: { User, Drug, Guideline } } = require('../data')
+const { mongoose, models: { User } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
+const logic = require('.')
+import config from '../../config'
+const AsyncStorage = require('not-async-storage')
+const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { retrieveContacts } = logic
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.REACT_APP_API_URL
 
 describe('retrieveContacts', () => {
     
-    let name, surname, gender, age, phone, profile, email, password, token, name2, surname2, gender2, age2, phone2, profile2, email2, password2, idUser, idUserToAdd
+    let name, surname, gender, age, phone, profile, email, password, token, name2, surname2, gender2, age2, phone2, profile2, email2, password2, _id, _id2
     
     const GENDERS = ['male', 'female','non-binary']
     
@@ -49,69 +55,30 @@ describe('retrieveContacts', () => {
         beforeEach( async () => {
             const user = await User.create({ name, surname, gender, age, phone, profile, email, password })
             const user2 = await User.create({ name: name2, surname: surname2, gender: gender2, age: age2, phone: phone2, profile: profile2, email: email2, password: password2 })
-                
-            token = jwt.sign({ sub: user._id }, 'my cat is a demon', { expiresIn: '1d' })
+            
+            _id = user.id.toString()
+            _id2 = user2.id.toString()
 
-            _id = user2._id
+            token = jwt.sign({ sub: _id }, JWT_SECRET, { expiresIn: '1d' })
 
-            user.contacts.push(_id)
+            token = await logic.__context__.storage.setItem('token', token)
+
+
+            user.contacts.push(_id2)
             return await user.save()
         })
 
         it('should succeed on correct and valid and right data', async () => {
             
-            const contacts = await retrieveContacts(token)
+            const contacts = await retrieveContacts()
             
             expect(contacts).toBeInstanceOf(Array)
-            expect(contacts[0].id.toString()).toMatch(_id.toString())
+            expect(contacts[0].id.toString()).toMatch(_id2.toString())
             expect(contacts[0].name).toMatch(name2)
             expect(contacts[0].surname).toMatch(surname2)
-        })
-
-        it('should fail to retrieve the user on an invalid token', async () => {
-            let _error
-            try {
-                await retrieveContacts(`${token}-wrong`)
-            } catch (error) {
-                _error = error
-            }
-            expect(_error).toBeDefined()
-            expect(_error).toBeInstanceOf(NotAllowedError)
-            expect(_error.message).toBe('invalid signature')
         })
  
     })
     
-    
-
-    describe('unhappy paths', () => {
-        it('should fail on a non-string token', async () => {
-            let _error
-            token = 45438
-            try {
-                await retrieveContacts(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-            token = false
-            try {
-                await retrieveContacts(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-            token = undefined
-            try {
-                await retrieveContacts(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token is empty`)
-            token = []
-            try {
-                await retrieveContacts(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-        })
-    })
     afterAll(() => User.deleteMany().then(() => mongoose.disconnect()))
 })

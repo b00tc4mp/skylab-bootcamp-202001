@@ -7,10 +7,10 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
 const logic = require('.')
-const { addMedication } = logic
 import config from '../../config'
 const AsyncStorage = require('not-async-storage')
 const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { addMedication } = logic
 
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.REACT_APP_API_URL
@@ -121,6 +121,32 @@ describe('addMedication', () => {
                 _error = error
             } expect(_error.message).toBe(`times ${time} is not a Array`)
         })
+
+        it('should fail on a string of numbers values for times', async () => {
+            let _error
+            time = []
+
+            time.push('jbsdjfb')
+            try {
+                await addMedication(_idDrug, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${time[0]} is not a valid time`)
+            
+            time.push(false)
+            try {
+                await addMedication(_idDrug, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${time[0]} is not a valid time`)
+            
+            time.push(undefined)
+            try {
+                await addMedication(_idDrug, time)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${time[0]} is not a valid time`)
+        })
     })
-    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
+    afterAll(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
 })

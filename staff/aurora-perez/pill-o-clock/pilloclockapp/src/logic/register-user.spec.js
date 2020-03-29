@@ -1,9 +1,19 @@
-import registerUser from './register-user'
-
-const { mongoose, models: { User } } = require('../data')
 const { random, floor } = Math
 
+const { mongoose, models: { User} } = require('../data')
+const { NotAllowedError, NotFoundError } = require('../errors')
+
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const atob = require('atob')
+const logic = require('.')
+import config from '../../config'
+const AsyncStorage = require('not-async-storage')
+const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { registerUser } = logic
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.REACT_APP_API_URL
 
 describe('registerUser', () => {
     
@@ -13,7 +23,7 @@ describe('registerUser', () => {
     
     
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
 
@@ -75,13 +85,6 @@ describe('registerUser', () => {
                 _error = error
             } expect(_error.message).toBe(`name ${name} is not a string`)
             
-            name = undefined
-            try {
-                await registerUser(name, surname, gender, age, phone, profile, email, password)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`name is empty`)
-            
             name = []
             try {
                 await registerUser(name, surname, gender, age, phone, profile, email, password)
@@ -107,13 +110,6 @@ describe('registerUser', () => {
                 _error = error
             } expect(_error.message).toBe(`surname ${surname} is not a string`)
 
-            surname = undefined
-            try {
-                await registerUser(name, surname, gender, age, phone, profile, email, password)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`surname is empty`)
-
             surname = []
             try {
                 await registerUser(name, surname, gender, age, phone, profile, email, password)
@@ -137,14 +133,7 @@ describe('registerUser', () => {
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`email ${email} is not a string`)
-           
-            email = undefined
-            try {
-                await registerUser(name, surname, gender, age, phone, profile, email, password)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`email is empty`)
-            
+
             email = []
             try {
                 await registerUser(name, surname, gender, age, phone, profile, email, password)
@@ -184,13 +173,6 @@ describe('registerUser', () => {
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`password ${password} is not a string`)
-            
-            password = undefined
-            try {
-                await registerUser(name, surname, gender, age, phone, profile, email, password)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`password is empty`)
             
             password = []
             try {

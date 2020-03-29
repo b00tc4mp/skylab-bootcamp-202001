@@ -5,7 +5,6 @@ const context= require('./context')
 
 module.exports = function (check) {
     validate.type(check, 'check', Boolean)
-    console.log('hola '+ check)
 
     return (async() => {
         const token = await this.storage.getItem('token')
@@ -34,11 +33,9 @@ module.exports = function (check) {
                 throw new NotFoundError(error)
             }
 
-
             throw new Error(error)
         }
 
         throw new Error('server error')
     })()
-    
 }.bind(context)

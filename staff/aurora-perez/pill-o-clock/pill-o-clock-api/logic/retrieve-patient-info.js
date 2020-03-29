@@ -15,7 +15,7 @@ module.exports = (id, patientId) => {
             if(!user.profile === 'pharmacist') throw new NotAllowedError (`user with id ${id} is not a pharmacist`)
 
             if (typeof user.contacts.find(contact => contact.toString() === patientId) === 'undefined') throw new NotFoundError(`user with id ${id} does not have contact with id ${patientId}`)
-            if (typeof user.contacts.find(contact => contact.toString() === patientId) === 'undefined') throw new NotFoundError(`user with id ${id} does not have contact with id ${patientId}`)
+            if (typeof patient.contacts.find(contact => contact.toString() === id) === 'undefined') throw new NotFoundError(`user with id ${patientId} does not have contact with id ${id}`)
 
             return {progressRecordPatient: patient.progressRecord, progressPatient: patient.progress}
         })

@@ -1,13 +1,19 @@
 const { random, floor } = Math
 
-import retrieveMedication from './retrieve-medication'
-
 const { mongoose, models: { User, Drug, Guideline } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
 
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
+const logic = require('.')
+import config from '../../config'
+const AsyncStorage = require('not-async-storage')
+const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { retrieveMedication } = logic
+
+logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = config.REACT_APP_API_URL
 
 describe('retrieveMedication', () => {
     
@@ -17,7 +23,7 @@ describe('retrieveMedication', () => {
     
     
     beforeAll(async () => {
-        await mongoose.connect('mongodb://localhost:27017/test-pill-o-clock', { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
 
@@ -33,7 +39,7 @@ describe('retrieveMedication', () => {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = random()
+        time = `${random()}`
     })
 
 
@@ -46,7 +52,9 @@ describe('retrieveMedication', () => {
                
             _id = user.id
    
-            token = jwt.sign({ sub: user.id }, 'my cat is a demon', { expiresIn: '1d' })
+            token = jwt.sign({ sub: _id }, JWT_SECRET, { expiresIn: '1d' })
+
+            token = await logic.__context__.storage.setItem('token', token)
                 
             const _drug = await Drug.create({drugName, description})
 
@@ -57,7 +65,7 @@ describe('retrieveMedication', () => {
 
         it('should succeed on correct and valid and right data', async () => {
             
-            const medication = await retrieveMedication(token)
+            const medication = await retrieveMedication()
 
             expect(medication).toBeInstanceOf(Array)
             expect(medication[0].drug.drugName).toBe(drugName)
@@ -66,52 +74,9 @@ describe('retrieveMedication', () => {
             expect(medication[0].times[0]).toBe(time)
             
         })
-
-        it('should fail to retrieve the user on an invalid token', async () => {
-            let _error
-            try {
-                await retrieveMedication(`${token}-wrong`)
-            } catch (error) {
-                _error = error
-            }
-            expect(_error).toBeDefined()
-            expect(_error).toBeInstanceOf(NotAllowedError)
-            expect(_error.message).toBe('invalid signature')
-        })
  
     })
     
-    
-
-    describe('unhappy paths', () => {
-        it('should fail on a non-string token', async () => {
-            let _error
-            token = 45438
-            try {
-                await retrieveMedication(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-            token = false
-            try {
-                await retrieveMedication(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-            token = undefined
-            try {
-                await retrieveMedication(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token is empty`)
-            token = []
-            try {
-                await retrieveMedication(token)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`token ${token} is not a string`)
-        })
-    })
-    after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
+    afterAll(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))
 
 })

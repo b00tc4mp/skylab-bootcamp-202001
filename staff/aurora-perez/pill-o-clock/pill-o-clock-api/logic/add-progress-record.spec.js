@@ -31,7 +31,6 @@ describe('addProgressRecord', () => {
             record: COLORS[floor(random() * COLORS.length)],
             date: `${2000 + floor(random() * 20)}-${floor(random() * 11) + 1}-${floor(random() * 30) + 1}`
         }
-
     })
 
     describe('when user already exists', () => {

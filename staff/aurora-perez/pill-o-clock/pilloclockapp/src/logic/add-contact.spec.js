@@ -48,7 +48,8 @@ describe('addContact', () => {
         it('should succeed on correct and valid and right data', async () => {     
             const _password = await bcrypt.hash(password, 10)
             user = await User.create({name, surname, gender, age, phone, profile, email, password: _password})
-            token = jwt.sign({sub: user.id}, JWT_SECRET, {expiresIn: '1d'})
+            _id = user.id.toString()
+            token = jwt.sign({sub: _id}, JWT_SECRET, {expiresIn: '1d'})
             await logic.__context__.storage.setItem('token', token)
             
             const _password2 = await bcrypt.hash(password2, 10)
@@ -57,7 +58,7 @@ describe('addContact', () => {
             
             await addContact(_id2)
 
-            user = await User.findById(user.id).populate('contacts').lean()
+            user = await User.findById(_id).populate('contacts').lean()
             user2 = await User.findById(_id2).populate('contacts').lean()
 
             expect(user).toBeDefined()

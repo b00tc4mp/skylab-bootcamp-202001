@@ -1,13 +1,16 @@
 const { random, floor } = Math
+
 const { mongoose, models: { User } } = require('../data')
 const { NotAllowedError, NotFoundError } = require('../errors')
-require('dotenv').config() 
 
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const atob = require('atob')
-
-import logic from '.'
-import config from '../config'
+const logic = require('.')
+import config from '../../config'
+const AsyncStorage = require('not-async-storage')
+const { REACT_APP_TEST_MONGODB_URL: MONGODB_URL, REACT_APP_TEST_JWT_SECRET: JWT_SECRET } = config
+const { login } = logic
 
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.API_URL
@@ -15,12 +18,12 @@ logic.__context__.API_URL = config.API_URL
 
 describe('login', () => {
 
-    let name, surname, gender, age, phone, profile, email, password
+    let name, surname, gender, age, phone, profile, email, password, _id
     
     const GENDERS = ['male', 'female','non-binary']
 
-    beforeAll(async () => {
-        await mongoose.connect(config.TEST_MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+     beforeAll(async () => {
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         await User.deleteMany()
     })
 
@@ -37,15 +40,14 @@ describe('login', () => {
     })
 
     describe('when user already exists', () => {
-        let _id
-        beforeEach(async () => {
+
+        it('should succeed on correct and valid and right credentials', async () => {
             const _password = await bcrypt.hash(password, 10)
             await User.create({name, surname, gender, age, phone, profile, email, password: _password})
                 .then(user => _id = user.id)
-        })
 
-        it('should succeed on correct and valid and right credentials', async () => {
-            const token = await login(email, password)
+            await login(email, password)
+            const token = await logic.__context__.storage.getItem('token')
             expect(token).toBeDefined()
             expect(token.length).toBeGreaterThan(0)
             expect(typeof token).toEqual('string')
@@ -99,14 +101,6 @@ describe('login', () => {
                 _error = error
             } expect(_error.message).toBe(`email ${email} is not a string`)
 
-
-            email = undefined
-            try {
-                await login(email, password)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`email is empty`)
-
             email = []
             try {
                 await login(email, password)
@@ -148,12 +142,6 @@ describe('login', () => {
             } catch (error) {
                 _error = error
             } expect(_error.message).toBe(`password ${password} is not a string`)
-            password = undefined
-            try {
-                await login(email, password)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`password is empty`)
             password = []
             try {
                 await login(email, password)
