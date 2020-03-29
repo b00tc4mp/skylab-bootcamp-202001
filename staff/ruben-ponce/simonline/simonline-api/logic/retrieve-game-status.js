@@ -40,30 +40,36 @@ module.exports = (playerId, gameId) => {
               
               /* 40sec countdown on turn */
               if (elapsedTime > turnTimeout) {
-                game.watching.push(game.currentPlayer)
-                const j = game.players.indexOf(game.currentPlayer)
+                if (game.watching.includes(game.currentPlayer)) {
+                  return game
+                } else {
+                  game.watching.push(game.currentPlayer)
+                  console.log(game.currentPlayer)
+                }
+                let j = game.players.indexOf(game.currentPlayer)
       
                 if (game.players.length === (game.watching.length + 1)) {
                   //change winner player to current player
+                  debugger
                   for (let i = j; i < game.players.length; i++) {
-                    if(!game.players[j+1]) i = 0
-                    if(!game.watching.includes(game.players[i])) {
+                    if(!game.watching.includes(game.players[i] && game.currentPlayer !== game.players[i])) {
                       game.currentPlayer = game.players[i]
                       game.status = 'finished'
                       game.save()
                       return game
                     }
+                    if(!game.players[i+1]) i = -1
                   }
                 }
 
                 for (let i = j; i < game.players.length; i++) {
-                    if(!game.players[j+1]) i = 0
-                    if(!game.watching.includes(game.players[i])) {
-                      game.currentPlayer = game.players[i]
-                      game.turnStart = new Date()
-                      game.save()
-                      return game
-                    }
+                  if(!game.watching.includes(game.players[i]) && game.currentPlayer !== game.players[i]) {
+                    game.currentPlayer = game.players[i]
+                    game.turnStart = new Date()
+                    game.save()
+                    return game
+                  }
+                  if(!game.players[i+1]) i = -1
                 }
                 /* Matching betwen combinationPlayer and combinationGame */
               }

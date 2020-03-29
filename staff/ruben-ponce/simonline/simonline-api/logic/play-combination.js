@@ -37,15 +37,13 @@ module.exports = (gameId, combination) => {
             if(game.pushCombination[i] !== combination[i]) matched = false
         }
 
-        const j = playersStr.indexOf(currentPlayerStr)
+        let j = playersStr.indexOf(currentPlayerStr)
         
         /** when player before timeout matches the combination */
         if (elapsedTime < game.turnTimeout && matched) {
             console.log('first conditional ===>', game)
             /** [a,b,c] */
             for (let i = j; i < playersStr.length; i++) {
-                if(!playersStr[i+1]) i = 0
-                debugger
                 if(!watchingStr.includes(playersStr[i]) && currentPlayerStr !== playersStr[i]) {
                     const newPushCombination = Math.floor(Math.random() * 4)
                     game.pushCombination.push(newPushCombination)
@@ -57,28 +55,41 @@ module.exports = (gameId, combination) => {
                     return Game.findByIdAndUpdate(gameId, game)
                     .then(()=> game)
                 }
+
+                if(!playersStr[i+1]) i = -1
             }
             /** when the player before timeout no match combination */
         } else if (elapsedTime < game.turnTimeout && !matched ) {
             console.log('second conditional===>', game)
             game.watching.push(game.currentPlayer)
             watchingStr.push(currentPlayerStr)
+            
+            if(game.players.length === (game.watching.length + 1)) {
+                 //change winner player to current player
+                 for (let i = j; i < game.players.length; i++) {
+                    if(!watchingStr.includes(playersStr[i])) {
+                        game.currentPlayer = game.players[i]
+                        game.status = 'finished'
 
-            if(game.players.length === (game.watching.length -1)) return game.status = 'finished'
+                        return Game.findByIdAndUpdate(gameId, game)
+                            .then(()=> game)
+                    }
 
-            let j = playersStr.indexOf(currentPlayerStr)
-    
+                    if(!playersStr[i+1]) i = -1
+                }
+            }
+                    
             for (let i = j; i < playersStr.length; i++) {
-                if(!playersStr[i+1]) i = 0
-                if(!watchingStr.includes(playersStr[i+1]) && currentPlayerStr !== playersStr[i]) {
+                if(!watchingStr.includes(playersStr[i]) && currentPlayerStr !== playersStr[i]) {
                     game.currentPlayer = game.players[i]
-                    game.turnTimeout = (40 + (game.pushCombination.length * 4))
+                    game.turnTimeout = (20 + (game.pushCombination.length * 4))
                     game.combinationViewed = []
                     game.turnStart = new Date()
 
                     return Game.findByIdAndUpdate(gameId, game)
                     .then(()=> game)
                 }
+                if(!playersStr[i+1]) i = -1
             }
         } else {
             console.log('else===>', game)
