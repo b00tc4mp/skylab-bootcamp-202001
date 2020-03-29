@@ -21,6 +21,7 @@ module.exports = function (data) {
 
     return (async() => {
         const token = await this.storage.getItem('token')
+       
         return await fetch.patch(`${this.API_URL}/users/`, data, token)
     })()
 }.bind(context)

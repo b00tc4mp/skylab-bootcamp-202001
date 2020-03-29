@@ -20,6 +20,7 @@ module.exports = function (commentId, rating) {
 
     return (async() => {
         const token = await this.storage.getItem('token')
+        
         return await fetch.patch(`${this.API_URL}/users/comment/${commentId}`, rating, token)
     })()
 }.bind(context)

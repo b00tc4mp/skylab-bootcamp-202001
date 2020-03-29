@@ -13,5 +13,6 @@ const context = require('./context')
 
 module.exports = function (query='') {
     validate.stringFrontend(query, 'query')
+    
     return (async() => await fetch.get(`${this.API_URL}/toilets?q=${query}`))()
 }.bind(context)

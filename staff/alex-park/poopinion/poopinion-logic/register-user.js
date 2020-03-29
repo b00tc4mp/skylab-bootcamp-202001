@@ -26,7 +26,5 @@ module.exports = function(name, surname, email, password, age, gender) {
     validate.gender(gender, 'gender')
     validate.stringFrontend(password, 'password')
 
-    return (async() => {
-        await fetch.post(`${this.API_URL}/users`, {name, surname, email, password, age, gender})
-    })()
+    return (async() => await fetch.post(`${this.API_URL}/users`, {name, surname, email, password, age, gender}))()
 }.bind(context)

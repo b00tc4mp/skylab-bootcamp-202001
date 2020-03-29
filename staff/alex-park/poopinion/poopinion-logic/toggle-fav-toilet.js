@@ -18,6 +18,7 @@ module.exports = function (toiletId) {
 
     return (async() => {
         const token = await this.storage.getItem('token')
+       
         return await fetch.patch(`${this.API_URL}/users/toilet/${toiletId}/favorite`, undefined, token)
     })()
 }.bind(context)

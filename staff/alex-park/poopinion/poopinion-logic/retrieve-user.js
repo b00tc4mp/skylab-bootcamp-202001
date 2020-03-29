@@ -13,6 +13,7 @@ const context = require('./context')
 module.exports = function () {
     return (async() => {
         const token = await this.storage.getItem('token')
+        
         return await fetch.get(`${this.API_URL}/users`, token)
     })()
 }.bind(context)
