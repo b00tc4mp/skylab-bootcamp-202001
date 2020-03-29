@@ -15,5 +15,5 @@ module.exports = new Schema({
         }
     },
     image: { type: String },
-    disabledToilet: { type: Boolean, default: false }
+    disabledToilet: { type: Boolean, required: true, default: false }
 })
