@@ -42,14 +42,14 @@ module.exports = (playerId, gameId) => {
               /* when has passed countdown on turn */
               if (elapsedTime > turnTimeout) {
                 let pause = util.promisify((a, f) => setTimeout(f, a))
-
-                let delay = Math.floor(Math.random() * 300) + 250;
+                let delay = Math.floor(Math.random() * (300 - 250 + 1) + 250)
                 console.log(delay)
                 pause(delay)
 
                 if (game.watching.includes(game.currentPlayer)) {
                   return game
                 } else {
+                  debugger
                   game.watching.push(game.currentPlayer)
                   console.log(timeNow)
                   console.log(game.currentPlayer)
@@ -58,7 +58,6 @@ module.exports = (playerId, gameId) => {
       
                 if (game.players.length === (game.watching.length + 1)) {
                   //change winner player to current player
-                  debugger
                   for (let i = j; i < game.players.length; i++) {
                     if(!game.watching.includes(game.players[i]) && game.currentPlayer !== game.players[i]) {
                       game.currentPlayer = game.players[i]

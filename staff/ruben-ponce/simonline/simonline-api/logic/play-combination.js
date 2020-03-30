@@ -33,6 +33,7 @@ module.exports = (gameId, combination) => {
         let matched = true
 
         for (let i = 0; i < game.pushCombination.length; i++) {
+            debugger
             if(game.pushCombination[i] !== combination[i]) matched = false
         }
 

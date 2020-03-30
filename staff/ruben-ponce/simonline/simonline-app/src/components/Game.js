@@ -123,24 +123,27 @@ export default ({ goTo, gameId }) => {
       setStatus(newStatus)
       console.log(newStatus)
       combinationLaunched = false
+      _combinationPlayer = []
   };
 
-  async function startCount(){
-    if(t) stop()
-    if(!t){
-      try {
+  async function startCount(t){
+    if(t) await delay(3000)
+
+    try {
+      (async () => {
         console.log('here')
         await delay(3000)
         console.log('there')
-        return send(_combinationPlayer)
-        console.log('combination sent')
-      }catch(error){
-        console.log(error)
-      }
+        console.log(`combination sended => ${_combinationPlayer}`)
+        return await send(_combinationPlayer)
+      })()
+    }catch(error){
+      console.log(error)
     }
   }
   
   function stop() {
+    console.log('STOP')
     clearTimeout(t)
   }
 
@@ -175,7 +178,7 @@ export default ({ goTo, gameId }) => {
                   //   send(_combinationPlayer)
                   // }
                   
-                  return startCount()
+                  return startCount(t)
                 }
             }}
           ></div>
@@ -195,7 +198,7 @@ export default ({ goTo, gameId }) => {
                   //   send(_combinationPlayer)
                   // }
 
-                  return startCount()
+                  return startCount(t)
                 }
             }}
           ></div>
@@ -215,7 +218,7 @@ export default ({ goTo, gameId }) => {
                   //   send(_combinationPlayer)
                   // }
 
-                  return startCount()
+                  return startCount(t)
                 }            
               }}
           ></div>
@@ -235,7 +238,7 @@ export default ({ goTo, gameId }) => {
                   //   send(_combinationPlayer)
                   // }
 
-                  return startCount()
+                  return startCount(t)
                 }
             }}
           ></div>
