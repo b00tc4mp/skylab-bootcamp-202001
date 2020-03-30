@@ -75,7 +75,41 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginHorizontal: 10
-    }
+    },
+    questionContainer: {
+        width: '100%',
+        marginVertical: 15
+    },
+    sliderContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    question: {
+        fontSize: 20
+    },
+    value: {
+        fontWeight: 'bold',
+        color: 'brown'
+    },
+    picker: {
+        width: '40%',
+        borderWidth: 1,
+        borderColor: 'grey',
+        borderRadius: 10,
+    },
+    input: {
+        fontSize: 15,
+        borderWidth: 1,
+        borderColor: 'grey',
+        borderRadius: 10,
+        width: '100%',
+        padding: 10,
+        marginVertical: 15
+    },
+    slider: {
+        width: '50%', 
+        height: 40,
+    },
 })
 
 export default styles

@@ -6,7 +6,7 @@ module.exports = (req, res) => {
 
     try {
         publishToilet(id, place, disabledToilet, coordinates)
-            .then(() => res.status(201).end())
+            .then(toiletId => res.status(201).json({ toiletId }))
             .catch(error => {
                 let status = 400
 

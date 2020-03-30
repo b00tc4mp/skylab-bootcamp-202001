@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         borderColor: 'grey',
         borderRadius: 10,
         width: '100%',
-        height: 100,
+        padding: 10,
         marginVertical: 15
     },
     submit: {

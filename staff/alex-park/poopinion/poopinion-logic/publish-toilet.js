@@ -17,7 +17,7 @@ const context = require('./context')
  * @throws {NotFoundError} on non-existent user
  */
 
-module.exports = function (place='(No place defined)', image, disabledToilet, coordinates) {
+module.exports = function (place = '(No place defined)', image, disabledToilet, coordinates) {
     validate.stringFrontend(place, 'place')
     validate.type(disabledToilet, 'disabledToilet', Boolean)
     validate.type(coordinates, 'coordinates', Object)
@@ -33,6 +33,8 @@ module.exports = function (place='(No place defined)', image, disabledToilet, co
         const { status } = response
 
         if (status === 201) {
+            const { toiletId } = await response.json()
+
             const userResponse = await fetch(`${this.API_URL}/users`, {
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
             })
@@ -67,8 +69,8 @@ module.exports = function (place='(No place defined)', image, disabledToilet, co
                     })
 
                     const { status } = updateImage
-
-                    if (status === 200) return
+                    
+                    if (status === 200) return toiletId
                 }
 
                 if (status >= 400 && status < 500) {
@@ -84,7 +86,7 @@ module.exports = function (place='(No place defined)', image, disabledToilet, co
 
                     throw new Error(error)
                 }
-            } else return
+            } else return toiletId
         }
 
         if (status >= 400 && status < 500) {

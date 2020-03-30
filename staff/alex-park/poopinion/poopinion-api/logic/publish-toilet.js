@@ -21,6 +21,7 @@ module.exports = (id, place, disabledToilet, coordinates) => {
     validate.string(place, 'place')
     validate.type(disabledToilet, 'disabledToilet', Boolean)
     validate.type(coordinates, 'coordinates', Object)
+    let toiletId
 
     return User.findById(id)
         .then(user => {
@@ -28,15 +29,10 @@ module.exports = (id, place, disabledToilet, coordinates) => {
             if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
 
             const toilet = new Toilet({ place, created: new Date, publisher: id, geolocation: coordinates, disabledToilet })
+            toiletId = toilet.id.toString()
 
             user.publishedToilets.push(toilet)
             return Promise.all([user.save(), toilet.save()])
         })
-        .then(([, toilet]) => {
-            toilet.id = toilet._id.toString()
-            delete toilet._id
-
-            return toilet.save()
-        })
-        .then(() => { })
+        .then(() => { return toiletId })
 }

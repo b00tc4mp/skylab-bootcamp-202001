@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styles from './styles'
-import { View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button } from 'react-native'
+import { View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button, Slider, Picker, KeyboardAvoidingView } from 'react-native'
 import MapView from 'react-native-maps'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -11,7 +11,14 @@ export default class NewToilet extends React.Component {
         this.state = {
             image: null,
             place: undefined,
-            wheelchair: false
+            wheelchair: false,
+            cleanness: 0,
+            looks: 0,
+            paymentRequired: 0,
+            paperDeployment: 0,
+            multipleToilets: 0,
+            overallRating: 0,
+            textArea: ''
         }
     }
 
@@ -59,6 +66,99 @@ export default class NewToilet extends React.Component {
                     </View>
                 </View>
 
+                <View style={styles.questionContainer}>
+                    <Text style={styles.question}>How clean did you find it?: <Text style={styles.value}>{this.state.cleanness}</Text></Text>
+                    <View style={styles.sliderContainer}>
+                        <Text>0</Text>
+                        <Slider
+                            style={styles.slider}
+                            minimumValue={0}
+                            maximumValue={5}
+                            onValueChange={(value) => this.setState({ cleanness: parseInt(value) })}
+                        />
+                        <Text>5</Text>
+                    </View>
+                </View>
+
+                <View style={styles.questionContainer}>
+                    <Text style={styles.question}>How good does it look?: <Text style={styles.value}>{this.state.looks}</Text></Text>
+                    <View style={styles.sliderContainer}>
+                        <Text>0</Text>
+                        <Slider
+                            style={styles.slider}
+                            minimumValue={0}
+                            maximumValue={5}
+                            onValueChange={(value) => this.setState({ looks: parseInt(value) })}
+                        />
+                        <Text>5</Text>
+                    </View>
+                </View>
+
+                <View style={styles.questionContainer}>
+                    <Text style={styles.question}>Do you have to pay in order to use the toilet?:</Text>
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={this.state.paymentRequired}
+                            onValueChange={(itemValue) =>
+                                this.setState({ paymentRequired: itemValue })
+                            }>
+                            <Picker.Item style={styles.form} label="Yes" value={1} />
+                            <Picker.Item style={styles.form} label="No" value={0} />
+                        </Picker>
+                    </View>
+                </View>
+
+                <View style={styles.questionContainer}>
+                    <Text style={styles.question}>Does it have multiple toilets?:</Text>
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={this.state.multipleToilets}
+                            onValueChange={(itemValue) =>
+                                this.setState({ multipleToilets: itemValue })
+                            }>
+                            <Picker.Item style={styles.form} label="Yes" value={1} />
+                            <Picker.Item style={styles.form} label="No" value={0} />
+                        </Picker>
+                    </View>
+                </View>
+
+                <View style={styles.questionContainer}>
+                    <Text style={styles.question}>Is the toilet paper provision good?:</Text>
+                    <View style={styles.picker}>
+                        <Picker
+                            selectedValue={this.state.paperDeployment}
+                            onValueChange={(itemValue) =>
+                                this.setState({ paperDeployment: itemValue })
+                            }>
+                            <Picker.Item style={styles.form} label="Yes" value={1} />
+                            <Picker.Item style={styles.form} label="No" value={0} />
+                        </Picker>
+                    </View>
+                </View>
+
+                <View style={styles.questionContainer}>
+                    <Text style={[styles.question, styles.value]}>OVERALL RATING: <Text style={styles.value}>{this.state.overallRating}</Text></Text>
+                    <View style={styles.sliderContainer}>
+                        <Text>0</Text>
+                        <Slider
+                            style={styles.slider}
+                            minimumValue={0}
+                            maximumValue={5}
+                            onValueChange={(value) => this.setState({ overallRating: parseInt(value) })}
+                        />
+                        <Text>5</Text>
+                    </View>
+                </View>
+
+                <View style={styles.questionContainer}>
+                    <KeyboardAvoidingView behavior='position'>
+                        <Text style={styles.question}>(Optional) Add a comment here:</Text>
+                        <View style={styles.sliderContainer}>
+                            <TextInput style={styles.input} placeholder='Start writing here' onChangeText={(text) => this.setState({ textArea: text })} />
+                        </View>
+                    </KeyboardAvoidingView>
+                </View>
+
                 <TouchableOpacity >
                     <Text style={styles.submitButton} onPress={this._onSubmit}>💩 Submit! 💩</Text>
                 </TouchableOpacity>
@@ -80,6 +180,16 @@ export default class NewToilet extends React.Component {
     };
 
     _onSubmit = () => {
-        this.props.onSubmit(this.state.place, this.state.image, this.state.wheelchair)
+        this.props.onSubmit(this.state.place, this.state.image, this.state.wheelchair, {
+            rating: {
+                cleanness: this.state.cleanness,
+                looks: this.state.looks,
+                paymentRequired: this.state.paymentRequired,
+                paperDeployment: this.state.paperDeployment,
+                multipleToilets: this.state.multipleToilets,
+                overallRating: this.state.overallRating,
+                textArea: this.state.textArea
+            }
+        })
     };
 }
