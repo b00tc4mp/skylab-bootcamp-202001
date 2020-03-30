@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: 40,
+    fontSize: 60,
     color: '#297885',
     fontFamily: 'Chocolate_DRINK_DEMO',
     alignSelf: 'center',
