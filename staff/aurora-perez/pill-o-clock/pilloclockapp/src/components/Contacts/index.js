@@ -15,7 +15,7 @@ function Contacts ({toAdd, onContact, contacts}) {
                         <Text style={styles.titleText}>My Contacts</Text>
                     </View>
                     <View style={styles.titleRight}>
-                        <Image style={styles.logo} source={require('../../../assets/images/contacts.png')}/>
+                        <Image style={styles.logo} source={require('../../../assets/images/contacts-color.png')}/>
                     </View>
                 </View>
                 {
@@ -26,14 +26,15 @@ function Contacts ({toAdd, onContact, contacts}) {
                         renderItem={({item})=>(
                             <ListItem 
                                 onPress ={()=> {
-                                    const {name, surname, phone} = item
+                                    console.log(item)
+                                    const {name, surname, phone, email} = item
                                     
-                                    onContact({name, surname, phone})
+                                    onContact({name, surname, phone, email})
                                 }}
                                 title ={item.name.toString() }
                                 titleStyle = {{
                                     marginTop : 20,
-                                    fontSize : 25,
+                                    fontSize : 35,
                                     color : '#fffdf9',
                                     alignSelf : 'center',
                                     backgroundColor : '#297885',

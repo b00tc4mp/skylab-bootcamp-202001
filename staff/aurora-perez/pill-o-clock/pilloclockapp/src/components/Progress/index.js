@@ -28,12 +28,10 @@ function Progress ({progress, user}) {
 
         dateDay && (dateDay = moment(dateDay).format('YYYY-MM-DD'))
 
-        console.log('date day '+dateDay)
-
         !dateDay && (await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD'))))
 
-        let today = '2020-04-06'
-        //let today = moment(new Date).format('YYYY-MM-DD')
+        //let today = '2020-04-06'
+        let today = moment(new Date).format('YYYY-MM-DD')
 
         if (today > dateDay) {
 
@@ -50,9 +48,9 @@ function Progress ({progress, user}) {
 
             await addProgressRecord(recordDaily)
 
-            await AsyncStorage.setItem('dateDay', (dateDay = today))
-           //await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
-        } //else {
+            //await AsyncStorage.setItem('dateDay', (dateDay = today))
+            await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
+        } 
         
         if( progress.length ){
             let checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
@@ -61,7 +59,6 @@ function Progress ({progress, user}) {
 
             _markedDates[today] = { customStyles: { container: {backgroundColor: indexToday}, text: {color: 'black', fontWeight: 'bold'}}}
         }
-       // }
             
        
         const allProgress = await retrieveProgressRecord()

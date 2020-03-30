@@ -3,7 +3,8 @@ import styles from './styles'
 import { Platform, View, Text, Linking, TextInput, ScrollView, Image, Button, TouchableOpacity} from 'react-native'
 
 function ContactDetail ({contactData}){
-    let {name, surname, phone} = contactData
+    console.log(contactData)
+    let {name, surname, phone, email} = contactData
 
     makeCall=()=>{
         let phoneNumber =''
@@ -25,6 +26,9 @@ function ContactDetail ({contactData}){
 
             <Text style ={styles.header}>Number phone: </Text> 
             <Text style={styles.text} onPress={makeCall}>{phone}</Text>
+
+            <Text style ={styles.header}>Email: </Text> 
+            <Text style ={styles.text}>{email}</Text>
             
         </View>
     )

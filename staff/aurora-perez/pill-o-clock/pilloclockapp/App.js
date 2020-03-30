@@ -99,7 +99,6 @@ function App() {
     //if(user) {
     const interval = setInterval(async () => {
       let alarms = await AsyncStorage.getItem('alarms')
-      console.log(alarms)
 
       if (alarms) {
         alarms = JSON.parse(alarms)
@@ -134,7 +133,6 @@ function App() {
             const sounded = alarms[drug][time]
 
             if (!sounded && nowHour >= time) {
-              //console.log('alarma')
               alarms[drug][time] = true
 
               await AsyncStorage.setItem('alarms', JSON.stringify(alarms))
@@ -308,7 +306,6 @@ function App() {
     try {
       const _progress = await retrieveProgress()
 
-      //console.log(progress)
       setProgress(_progress)
 
       setView('progress')
@@ -346,8 +343,8 @@ function App() {
   function handleToAddPatients() {
     setView('addPatients')
   }
-  function handleToContactDetail({name, surname, phone}) {
-    setContactData({name, surname, phone});
+  function handleToContactDetail({name, surname, phone, email}) {
+    setContactData({name, surname, phone, email})
     setView('contactDetail')
   }
 

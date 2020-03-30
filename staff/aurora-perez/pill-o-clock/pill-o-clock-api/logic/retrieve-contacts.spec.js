@@ -58,6 +58,7 @@ describe('retrieveContacts', () => {
                     expect(contacts[0].id).to.equal(idUserToAdd)
                     expect(contacts[0].name).to.equal(name2)
                     expect(contacts[0].surname).to.equal(surname2)
+                    expect(contacts[0].email).to.equal(email)
                 })
         )
 

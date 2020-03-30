@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     },
     text : {
         color : '#297885',
-        //color : '#FC94AD',
         fontFamily : 'Chocolate_DRINK_DEMO' , 
         fontSize: 35,
         marginLeft: 7
@@ -36,8 +35,7 @@ const styles = StyleSheet.create({
     title : {
         fontSize : 63,
         color : '#297885',
-        fontFamily : 'Chocolate_DRINK_DEMO' ,
-        //alignSelf : 'center',
+        fontFamily : 'Chocolate_DRINK_DEMO',
         textDecorationLine: 'underline',
     },
 

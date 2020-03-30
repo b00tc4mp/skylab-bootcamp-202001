@@ -5,7 +5,7 @@ const { NotAllowedError, NotFoundError } = require('pill-o-clock-errors')
 module.exports = id => {
     validate.string(id, 'id')
 
-    return User.findById(id).populate('contacts', 'name surname phone').lean()
+    return User.findById(id).populate('contacts', 'name surname phone email').lean()
         .then(user => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 

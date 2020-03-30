@@ -10,11 +10,11 @@ const styles = StyleSheet.create({
   },
 
   titleText: {
-    fontSize: 40,
+    fontSize: 60,
     color: '#297885',
     fontFamily: 'Chocolate_DRINK_DEMO',
     alignSelf: 'center',
-    padding: 40,
+    padding: 30,
     textDecorationLine: 'underline',
   },
 
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     fontFamily : 'Chocolate_DRINK_DEMO',
     color : '#297885',
     padding: 10,
-    fontSize: 20
+    fontSize: 30
   },
   
   plus : {
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
   },
 
   logo : {
-    width: 40,
-    height: 40
+    width: 60,
+    height: 60
   },
 
   titleContainer: {
