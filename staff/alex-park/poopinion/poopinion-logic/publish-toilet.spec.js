@@ -52,7 +52,7 @@ describe('publishToilet', () => {
             await logic.__context__.storage.setItem('token', token)
 
             const result = await publishToilet(place, null, disabledToilet, coordinates)
-            expect(result).toBeUndefined()
+            expect(result).toBeDefined()
 
             const toilet = await Toilet.findOne({ publisher: _id })
             expect(toilet).toBeDefined()
@@ -75,7 +75,7 @@ describe('publishToilet', () => {
             await logic.__context__.storage.setItem('token', token)
 
             const result = await publishToilet(undefined, null, disabledToilet, coordinates)
-            expect(result).toBeUndefined()
+            expect(result).toBeDefined()
 
             const toilet = await Toilet.findOne({ publisher: _id })
             expect(toilet).toBeDefined()

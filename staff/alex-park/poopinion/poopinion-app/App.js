@@ -190,7 +190,6 @@ export default function App() {
   async function handlePublishToilet(place, image, disabledToilet, rating) {
     try {
       const toiletId = await publishToilet(place, image, disabledToilet, coordinates)
-      console.log(toiletId)
       await publishComment(toiletId, rating)
 
       Alert.alert('Toilet posted! Thank you! 🚽❤️')
