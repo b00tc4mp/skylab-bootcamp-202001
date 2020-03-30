@@ -1,5 +1,5 @@
 # Sick Parks
-
+![](https://media.giphy.com/media/1woAI0jMjzFhd5YhGz/giphy.gif)
 ## Introduction
 
 Sick Parks was thought taking into account that there are no apps to find detailed information about snowparks around the globe. To solve this, the approach is for the community of snowboarders to be the one that provides the information. In this way the app tries to bring some aspects of the open source into the snwoboard world.
