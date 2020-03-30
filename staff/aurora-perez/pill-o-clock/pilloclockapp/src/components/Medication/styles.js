@@ -25,9 +25,16 @@ const styles = StyleSheet.create({
     list : {
         flex : 1
     },
+    text : {
+        color : '#297885',
+        //color : '#FC94AD',
+        fontFamily : 'Chocolate_DRINK_DEMO' , 
+        fontSize: 35,
+        marginLeft: 7
+    },
 
     title : {
-        fontSize : 60,
+        fontSize : 63,
         color : '#297885',
         fontFamily : 'Chocolate_DRINK_DEMO' ,
         //alignSelf : 'center',

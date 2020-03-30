@@ -9,7 +9,8 @@
     "test": "npx mocha logic",
     "test-debug": "npx mocha debug logic",
     "debug": "npx node debug .",
-    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js"
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js",
+    "add-drugs": "node demos-scripts/script-drugs.js"
   },
   "keywords": [],
   "author": "",

@@ -32,8 +32,8 @@ function Progress ({progress, user}) {
 
         !dateDay && (await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD'))))
 
-        //let today = '2020-03-30'
-        let today = moment(new Date).format('YYYY-MM-DD')
+        let today = '2020-04-01'
+        //let today = moment(new Date).format('YYYY-MM-DD')
 
         if (today > dateDay) {
 
@@ -46,15 +46,12 @@ function Progress ({progress, user}) {
             recordDaily.date = dateDay
             recordDaily.record = index
 
-            console.log('recordDayli '+ recordDaily)
-
             await updateProgress(progress)
 
             await addProgressRecord(recordDaily)
 
-            //await AsyncStorage.setItem('dateDay', (dateDay = today))
-
-           await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
+            await AsyncStorage.setItem('dateDay', (dateDay = today))
+           //await AsyncStorage.setItem('dateDay', (dateDay = moment().format('YYYY-MM-DD')))
         } else {
             let checkToday = (progress.reduce((accum, value) => accum + value, 0))/progress.length
             
@@ -64,9 +61,6 @@ function Progress ({progress, user}) {
         }
        
         const allProgress = await retrieveProgressRecord()
-
-        console.log('all progress '+allProgress)
-
         
         allProgress.forEach(day => {
             _markedDates[day.date] = { customStyles: { container: {backgroundColor: day.record }, text: {color: 'black', fontWeight: 'bold'}}}
@@ -83,8 +77,8 @@ function Progress ({progress, user}) {
 
     return (<>
         
-        <ScrollView >
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <ScrollView >
                 <View style ={styles.titleContainer}>
                     <View style={styles.titleLeft}>
                         <Text style={styles.titleText}>My Progress</Text>
@@ -93,13 +87,9 @@ function Progress ({progress, user}) {
                         <Image style={styles.logo} source={require('../../../assets/images/calendar.png')}/>
                     </View>
                 </View>
+                <View style={styles.calendar}>
                     <Calendar
-                        // style={{
-                        //     flex: 1,
-                        //     borderWidth: 1,
-                        //     borderColor: 'gray',
-                        //     height: 350
-                        // }}
+                        
                         // Specify theme properties to override specific styles for calendar parts. Default = {}
                         theme={{
                             backgroundColor: '#ffffff',
@@ -122,8 +112,8 @@ function Progress ({progress, user}) {
                             textDayFontWeight: '300',
                             textMonthFontWeight: 'bold',
                             textDayHeaderFontWeight: '300',
-                            textDayFontSize: 15,
-                            textMonthFontSize: 20,
+                            textDayFontSize: 18,
+                            textMonthFontSize: 25,
                             textDayHeaderFontSize: 15
                         }}
                         onDayPress={(day) => {console.log('selected day', day)}}
@@ -151,9 +141,9 @@ function Progress ({progress, user}) {
                         markingType={'custom'}
          
                     />
-            </View>
-        </ScrollView>
-        
+                </View>
+            </ScrollView>
+        </View>
         
     </>)
 }

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     text : {
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
-        fontSize : 20,
+        fontSize : 35,
         marginLeft : 20,
         color: '#4CBBC2'
     },
@@ -25,16 +25,21 @@ const styles = StyleSheet.create({
         
     },
 
+    add : {
+        fontFamily : 'Chocolate_DRINK_DEMO',
+        fontSize : 30,
+        color: '#4CBBC2'
+    },
+
     hour : {
-        //fontFamily : 'Chocolate_DRINK_DEMO',
-        paddingHorizontal : 20,
-        fontSize: 20
+        fontFamily : 'Chocolate_DRINK_DEMO',
+        fontSize: 35
     },
 
 
     title : {
         fontFamily : 'Chocolate_DRINK_DEMO',
-        fontSize : 50,
+        fontSize : 60,
         color : '#297885',
         alignSelf : 'center',
         marginBottom : 20

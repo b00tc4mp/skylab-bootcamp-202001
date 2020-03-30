@@ -37,7 +37,7 @@ function AddMedication ({onSubmit, error, drugs}) {
                     <TextInput style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min1) => setMin1(min1)}/>
 
-                    <Text style = {styles.text} onPress={() => setSecondTime(!secondTime)}>+/-</Text>
+                    <Text style = {styles.add} onPress={() => setSecondTime(!secondTime)}>+/-</Text>
                 </View>
 
                 
@@ -48,9 +48,9 @@ function AddMedication ({onSubmit, error, drugs}) {
                     <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
                         onChangeText={(hour2) => setHour2(hour2)}/>
 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='minutes'
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min2) => setMin2(min2)}/>
-                    <Text style = {styles.text} onPress={() => setThirdTime(!thirdTime)}>+/-</Text>
+                    <Text style = {styles.add} onPress={() => setThirdTime(!thirdTime)}>+/-</Text>
                 </View>}
 
                 {thirdTime && 
@@ -59,7 +59,7 @@ function AddMedication ({onSubmit, error, drugs}) {
                     <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
                         onChangeText={(hour3) => setHour3(hour3)}/>
 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='minutes'
+                    <TextInput style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min3) => setMin3(min3)}/>
                     
                 </View>}

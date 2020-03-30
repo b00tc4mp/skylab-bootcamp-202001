@@ -44,9 +44,7 @@ const styles = StyleSheet.create({
         fontFamily : 'Chocolate_DRINK_DEMO',
         color : '#297885',
         fontSize : 60,
-        //marginLeft : 20,
         textDecorationLine: 'underline',
-        //flex : 3,
         alignSelf: 'center',
         
     },
@@ -59,13 +57,11 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         width: 40,
         height: 40,
-        //flex: 1,
-        alignSelf: 'center'
+        alignSelf: 'flex-end'
     },
     headerContainer : {
         alignItems:'center',
         flexDirection : 'row'
-        
     }
 
 })

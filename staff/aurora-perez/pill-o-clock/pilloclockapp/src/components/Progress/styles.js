@@ -2,13 +2,10 @@ import {StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
-    marginTop: 100,
+    marginVertical: 50,
     backgroundColor: '#fffdf9',
     borderRadius: 30,
-    textDecorationLine: 'underline',
     alignSelf: 'center',
-    //marginBottom: 50
   },
 
   titleText: {
@@ -23,6 +20,10 @@ const styles = StyleSheet.create({
   logo : {
     width: 80,
     height: 80
+  },
+
+  calendar: {
+    paddingBottom: 30
   },
 
   titleContainer: {
