@@ -1,6 +1,7 @@
 const validate = require("simonline-utils/validate")
 const { models: { User, Game } } = require("simonline-data")
 const { NotFoundError } = require("simonline-errors")
+let util = require('util')
 
 /**
  * Retrieve game status from database
@@ -38,12 +39,19 @@ module.exports = (playerId, gameId) => {
       
               const elapsedTime = (timeNow - game.turnStart) / 1000
               
-              /* 40sec countdown on turn */
+              /* when has passed countdown on turn */
               if (elapsedTime > turnTimeout) {
+                let pause = util.promisify((a, f) => setTimeout(f, a))
+
+                let delay = Math.floor(Math.random() * 300) + 250;
+                console.log(delay)
+                pause(delay)
+
                 if (game.watching.includes(game.currentPlayer)) {
                   return game
                 } else {
                   game.watching.push(game.currentPlayer)
+                  console.log(timeNow)
                   console.log(game.currentPlayer)
                 }
                 let j = game.players.indexOf(game.currentPlayer)
@@ -52,7 +60,7 @@ module.exports = (playerId, gameId) => {
                   //change winner player to current player
                   debugger
                   for (let i = j; i < game.players.length; i++) {
-                    if(!game.watching.includes(game.players[i] && game.currentPlayer !== game.players[i])) {
+                    if(!game.watching.includes(game.players[i]) && game.currentPlayer !== game.players[i]) {
                       game.currentPlayer = game.players[i]
                       game.status = 'finished'
                       game.save()

@@ -16,7 +16,6 @@ module.exports = (gameId, combination) => {
     
     return Game.findById(gameId).lean()
     .then(game => {
-        console.log('after find game by id==>', game)
         const playersStr = []
         game.players.forEach(player => playersStr.push(player.toString()))
 
@@ -39,10 +38,7 @@ module.exports = (gameId, combination) => {
 
         let j = playersStr.indexOf(currentPlayerStr)
         
-        /** when player before timeout matches the combination */
         if (elapsedTime < game.turnTimeout && matched) {
-            console.log('first conditional ===>', game)
-            /** [a,b,c] */
             for (let i = j; i < playersStr.length; i++) {
                 if(!watchingStr.includes(playersStr[i]) && currentPlayerStr !== playersStr[i]) {
                     const newPushCombination = Math.floor(Math.random() * 4)
@@ -55,17 +51,14 @@ module.exports = (gameId, combination) => {
                     return Game.findByIdAndUpdate(gameId, game)
                     .then(()=> game)
                 }
-
                 if(!playersStr[i+1]) i = -1
             }
-            /** when the player before timeout no match combination */
         } else if (elapsedTime < game.turnTimeout && !matched ) {
-            console.log('second conditional===>', game)
             game.watching.push(game.currentPlayer)
             watchingStr.push(currentPlayerStr)
             
             if(game.players.length === (game.watching.length + 1)) {
-                 //change winner player to current player
+                 /* change winner player to current player */
                  for (let i = j; i < game.players.length; i++) {
                     if(!watchingStr.includes(playersStr[i])) {
                         game.currentPlayer = game.players[i]
@@ -74,7 +67,6 @@ module.exports = (gameId, combination) => {
                         return Game.findByIdAndUpdate(gameId, game)
                             .then(()=> game)
                     }
-
                     if(!playersStr[i+1]) i = -1
                 }
             }
