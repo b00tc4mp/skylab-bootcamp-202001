@@ -15,6 +15,7 @@ const bcrypt = require('bcryptjs')
  * @throws {TypeError} if user data does not have the correct type
  * @throws {NotAllowedError} on wrong credentials
  */
+ 
 module.exports = (email, password) => {
     validate.string(email, 'email')
     validate.email(email)

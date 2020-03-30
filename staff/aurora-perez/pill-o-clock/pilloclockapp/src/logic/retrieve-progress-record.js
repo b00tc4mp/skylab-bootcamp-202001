@@ -3,6 +3,17 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
+/**
+ * Finds and receives all user's progress record
+ * 
+ * @param {string} id the unique user
+ *
+ * @returns {<object>} the user daily progress record (with the level of succes and the day date)
+ * 
+ * @throws {NotFoundError} if the user does not exist
+ * @throws {Error} if there are unkown error from the api or server's error
+ */
+
 module.exports = function () {
 
     return (async() => {

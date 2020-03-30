@@ -2,6 +2,16 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { User } } = require('pill-o-clock-data')
 const { NotAllowedError, NotFoundError } = require('pill-o-clock-errors')
 
+/**
+ * Finds and receives contacts from the user
+ * 
+ * @param {string} id user's unique id
+ * 
+ * @returns {Promise<array>} user's contacts
+ * 
+ * @throws {NotFoundError} if the user does not exist
+ */
+
 module.exports = id => {
     validate.string(id, 'id')
 

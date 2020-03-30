@@ -3,6 +3,17 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context = require('./context')
 
+/**
+ * Finds and receives contacts from the user
+ * 
+ * @param {string} id user's unique id
+ * 
+ * @returns {<array>} user's contacts
+ * 
+ * @throws {NotFoundError} if the user does not exist
+ * @throws {Error} if there are unkown error from the api or server's error
+ */
+
 module.exports = function () {
 
     return (async() => {

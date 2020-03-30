@@ -2,6 +2,18 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { User, Drug } } = require('pill-o-clock-data')
 const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 
+/**
+ * Add new medication to medication array
+ * 
+ * @param {string} id user's unique id
+ * 
+ * @param {string} drugId the id of the drug to add
+ *
+ * @returns {Promise<undefined>} an empty Promise on a successful addition
+ * 
+ * @throws {NotFoundError} if the user or drug does not exist
+ */
+
 module.exports = (id, drugId) => { 
     validate.string(id, 'id')
     validate.string(drugId, 'drugId')

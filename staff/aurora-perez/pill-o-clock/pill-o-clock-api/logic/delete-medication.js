@@ -2,6 +2,18 @@ const { validate } = require('pill-o-clock-utils')
 const { models: { User, Drug } } = require('pill-o-clock-data')
 const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
 
+/**
+ * Delete medication from the user's medication
+ * 
+ * @param {string} id user's unique id
+ * 
+ * @param {string} drugName drug's name
+ *
+ * @returns {Promise<undefined>} an empty Promise on a successful deletion
+ * 
+ * @throws {NotFoundError} if the user or the drug does not exist
+ */
+
 module.exports = (id, drugName) => {
     validate.string(id, 'id')
     validate.string(drugName, 'drugName')

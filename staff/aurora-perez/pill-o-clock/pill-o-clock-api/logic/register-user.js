@@ -3,6 +3,24 @@ const { models: { User } } = require('pill-o-clock-data')
 const { NotAllowedError } = require('pill-o-clock-errors')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Registers a new user on the database
+ * 
+ * @param {string} name user's name
+ * @param {string} surname user's surname
+ * @param {string} email user's unique e-mail
+ * @param {string} gender user's gender, with a three-choice
+ * @param {number} age user's age
+ * @param {number} phone user's phone number
+ * @param {number} profile user's profile: patient or pharmacist
+ * @param {number} email user's email
+ * @param {string} password user's password, with further encryptation
+ * 
+ * @returns {Promise<string>} an empty Promise on a successful registration
+ * 
+ * @throws {NotAllowedError} if a user with that same email already exists on the database
+ */
+
 module.exports = (name, surname, gender, age, phone, profile, email, password) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')

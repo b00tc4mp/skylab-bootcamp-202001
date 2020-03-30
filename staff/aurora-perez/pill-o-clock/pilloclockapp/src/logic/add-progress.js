@@ -3,6 +3,21 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
+/**
+ * Add a boolean if the user hace taked the drug or not to an daily array of progress
+ * 
+ * @param {string} id user's unique id
+ * 
+ * @param {boolean} progress determine if the user have taked the drug (tue) or not (false)
+ *
+ * @returns {<undefined>} an undefined on a successful addition
+ * 
+ * @throws {NotFoundError} if the user does not exist
+ *
+ * @throws {Error} if there are unkown error from the api or server's error
+ */
+
+
 module.exports = function (check) {
     validate.type(check, 'check', Boolean)
 

@@ -3,6 +3,18 @@ const { validate } = require('../utils')
 const fetch = require('node-fetch') 
 const context= require('./context')
 
+/**
+ * Finds and receives the drug desired
+ * 
+ * @param {string} id drug's unique id
+ * 
+ * @returns {<object>} drug with all its properties
+ * 
+ * @throws {NotFoundError} if the drug does not exist
+ * @throws {Error} if there are unkown error from the api or server's error
+ */
+
+
 module.exports = function (id) {
     validate.string(id, 'id')
 
