@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom'
 import {Header} from '.'
 import { isLoggedIn, retrieveParking } from '../logic'
 import './style/Config.sass'
-import { ReactComponent as Add } from './icons/add.svg'
-import { ReactComponent as User } from './icons/user.svg'
+import { ReactComponent as Add } from '../img/add.svg'
+import { ReactComponent as User } from '../img/user.svg'
 
 export default withRouter (function({history}) {
 

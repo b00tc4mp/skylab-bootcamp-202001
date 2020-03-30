@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { withRouter } from 'react-router-dom'
 import './style/Login.sass'
 import Feedback from './Feedback'
-import parking from './icons/pk-parking.png'
+import parking from '../img/pk-parking.png'
 
 export default withRouter (function ({ onSubmit, error, history }) {
   

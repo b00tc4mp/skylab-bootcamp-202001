@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { logout } from '../logic'
 import './style/Header.sass'
 
-import parking from './icons/pk-parking.png'
+import parking from '../img/pk-parking.png'
 
 
 export default withRouter (function({user, history}) {

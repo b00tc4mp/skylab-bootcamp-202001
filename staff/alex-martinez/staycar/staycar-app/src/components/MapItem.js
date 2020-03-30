@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as Car } from './icons/car.svg'
+import { ReactComponent as Car } from '../img/car.svg'
 
 export default ({lot}) => {
 
