@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styles from './styles'
-import { View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button, Slider, Picker, KeyboardAvoidingView } from 'react-native'
+import { ActivityIndicator, View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button, Slider, Picker, KeyboardAvoidingView } from 'react-native'
 import MapView from 'react-native-maps'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -18,7 +18,8 @@ export default class NewToilet extends React.Component {
             paperDeployment: 0,
             multipleToilets: 0,
             overallRating: 0,
-            textArea: ''
+            textArea: '',
+            loading: false
         }
     }
 
@@ -56,7 +57,7 @@ export default class NewToilet extends React.Component {
                         <Button title='Upload image' onPress={this._pickImage} />
                     </View>
 
-                    {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200 }} />}
+                    {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200, marginBottom: 20 }} />}
 
                     <View style={styles.disabledInfo}>
                         {wheelchair ? (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogo} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)
@@ -158,6 +159,11 @@ export default class NewToilet extends React.Component {
                         </View>
                     </KeyboardAvoidingView>
                 </View>
+                
+                {this.state.loading && (<>
+                    <Text style={{textAlign: 'center', fontStyle: 'italic'}}>Submit loading, please don't press anything...</Text>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </>)}
 
                 <TouchableOpacity >
                     <Text style={styles.submitButton} onPress={this._onSubmit}>💩 Submit! 💩</Text>
@@ -180,6 +186,7 @@ export default class NewToilet extends React.Component {
     };
 
     _onSubmit = () => {
+        this.setState({ loading: true })
         this.props.onSubmit(this.state.place, this.state.image, this.state.wheelchair, {
             rating: {
                 cleanness: this.state.cleanness,
