@@ -56,7 +56,8 @@ describe('retrievePrescription', ()=> {
         )
 
         it('should fail if the user does not exist', () => {
-            retrievePrescription(`${_id}-wrong`)
+            User.deleteMany()
+            .then(() => retrievePrescription(_id))
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist

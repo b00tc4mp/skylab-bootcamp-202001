@@ -5,6 +5,7 @@ const { expect } = require('chai')
 const { random } = Math
 const retrieveContacts = require('./retrieve-contacts')
 const { mongoose, models: { User } } = require('pill-o-clock-data')
+const { NotFoundError } = require('pill-o-clock-errors')
 
 describe('retrieveContacts', () => {
     before(() =>
@@ -30,7 +31,7 @@ describe('retrieveContacts', () => {
         age2 = random()
         phone2 = `00000-${random()}`
         profile2 = `profile-${random()}`
-        email2 = `email--${random()}@mail.com`
+        email2 = `email-${random()}@mail.com`
         password2 = `password-${random()}`
     })
 
@@ -58,16 +59,16 @@ describe('retrieveContacts', () => {
                     expect(contacts[0].id).to.equal(idUserToAdd)
                     expect(contacts[0].name).to.equal(name2)
                     expect(contacts[0].surname).to.equal(surname2)
-                    expect(contacts[0].email).to.equal(email)
+                    expect(contacts[0].email).to.equal(email2)
                 })
         )
 
         it('should fail if the user does not exist', () => {
-            retrieveContacts(`${idUser}-wrong`)
-                .then(()=> {throw new Error ('should not reach this point')})
-                .catch(({message })=> {
-                    expect(message).to.exist
-                    
+            User.deleteMany()
+            .then(() => retrieveContacts(idUser))
+                .catch((error)=> {
+                    expect(error).to.exist
+                    expect(error).to.be.instanceof(NotFoundError)
                     expect(message).to.equal(`user with id ${idUser}-wrong not found`)
                     
                 })

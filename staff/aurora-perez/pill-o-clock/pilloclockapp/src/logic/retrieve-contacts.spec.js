@@ -44,7 +44,7 @@ describe('retrieveContacts', () => {
         age2 = random()
         phone2 = `00000-${random()}`
         profile2 = `profile-${random()}`
-        email2 = `email--${random()}@mail.com`
+        email2 = `email-${random()}@mail.com`
         password2 = `password-${random()}`
         
     })

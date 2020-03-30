@@ -5,6 +5,7 @@ const { mongoose, models: { User, Drug, Guideline } } = require('pill-o-clock-da
 const { expect } = require('chai')
 const { random } = Math
 const deletePrescription = require('./delete-prescription')
+const { NotFoundError } = require('pill-o-clock-errors')
 
 
 describe('deletePrescription', ()=> {
@@ -63,40 +64,38 @@ describe('deletePrescription', ()=> {
                 })
         )
         
-        
-        it('should fail if the drug does not exist', () => {
-            deletePrescription(userId, `${drugId}-wrong`)
+        it('should fail if the prescription does not exist', () => {
+            Guideline.deleteMany()
+            .then(() => deletePrescription(userId, drugId))
                 .then(()=> {throw new Error ('should not reach this point')})
-                .catch(({message })=> {
-                    expect(message).to.exist
-                    
-                    expect(message).to.equal(`drug with id ${drugId}-wrong not found`)
+                .catch((error)=> {
+                    expect(error).to.exist
+                    expect(error).to.be.instanceof(NotFoundError)
+                    expect(error.message).to.equal(`prescript within user with id ${userId} not found`)
                     
                 })
         })
 
         it('should fail if the user does not exist', () => {
-            deletePrescription(`${userId}-wrong`, drugId)
+            User.deleteMany()
+            .then(() => deletePrescription(userId, drugId))
                 .then(()=> {throw new Error ('should not reach this point')})
-                .catch(({message })=> {
-                    expect(message).to.exist
-                    
-                    expect(message).to.equal(`user with id ${userId}-wrong not found`)
+                .catch((error)=> {
+                    expect(error).to.exist
+                    expect(error).to.be.instanceof(NotFoundError)
+                    expect(error.message).to.equal(`user with id ${userId} not found`)
                     
                 })
         })
 
-        it('should fail if the prescription does not exist', () => {
-            beforeEach(() => 
-                Guideline.deleteMany().then(() => {})
-            )
-
-            deletePrescription(userId, drugId)
+        it('should fail if the drug does not exist', () => {
+            Drug.deleteMany()
+            .then(() => deletePrescription(userId, drugId))
                 .then(()=> {throw new Error ('should not reach this point')})
-                .catch(({message })=> {
-                    expect(message).to.exist
-                    
-                    expect(message).to.equal(`prescript within user with id ${userId} not found`)
+                .catch((error)=> {
+                    expect(error).to.exist
+                    expect(error).to.be.instanceof(NotFoundError)
+                    expect(error.message).to.equal(`drug with id ${drugId} not found`)
                     
                 })
         })

@@ -17,13 +17,14 @@ module.exports = id => {
 
     return User.findById(id)
         .then(user => {
-            
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
 
             return Guideline.find({prescribed: id}).populate('drug').lean()
             .then(guideline => {
+                if (!guideline) throw new NotFoundError(`guideline not found`)
+
                 guideline.forEach(element => {
-                    element.id = element._id
+                    element.id = element._id.toString()
                     delete element._id
                     delete element.__v
                 })
@@ -31,5 +32,4 @@ module.exports = id => {
                 return guideline
             })
         })
-
 }

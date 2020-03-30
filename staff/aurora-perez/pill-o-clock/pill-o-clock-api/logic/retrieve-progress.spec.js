@@ -52,7 +52,8 @@ describe('retrieveProgress', () => {
         )
 
         it('should fail if the user does not exist', () => {
-            retrieveProgress(`${_id}-wrong`)
+            User.deleteMany()
+            .then(() => retrieveProgress(_id))
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist

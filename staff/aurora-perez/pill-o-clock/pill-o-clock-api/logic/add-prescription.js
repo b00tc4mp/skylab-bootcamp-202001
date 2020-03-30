@@ -16,26 +16,30 @@ const { NotFoundError, NotAllowedError } = require('pill-o-clock-errors')
  * @throws {NotFoundError} if the user or the drug does not exist
  */
 
-module.exports = async (id, drugId, time) => {  
+module.exports = (id, drugId, time) => {  
     validate.string(id, 'id')
     validate.string(drugId, 'drugId')
-    //validate.type(time, 'times', Array)
-    // time.forEach(alarm =>{
-    //     validate.stringOfNumbers(alarm)
-    // })
+    validate.type(time, 'times', Array)
+    time.forEach(alarm =>{
+        validate.stringOfNumbers(alarm)
+    })
 
-    let user = await User.findById(id).lean()
-    let drug = await Drug.findById(drugId).lean()
-
-    if (!drug) throw new NotFoundError(`drug with id ${drugId} not found`)
-    if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    for (let i = 0; i < user.prescription.length; i++) {
-        if (user.prescription[i].drug.toString() === drugId) throw new NotAllowedError (`user with id ${id} already have drug with id ${drugId} in his prescription`)
-    } 
-
-    const guideline = new Guideline({created: new Date, prescribed: user._id.toString(), drug: drugId, times: time})
-
-    const updateUser= await User.findByIdAndUpdate(user._id, { $push: { prescription: guideline } })
-    const updateGuideline = await guideline.save()   
+    return (async () => {
+        let user = await User.findById(id).lean()
+        let drug = await Drug.findById(drugId).lean()
+    
+        if (!drug) throw new NotFoundError(`drug with id ${drugId} not found`)
+        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    
+        if (user.prescription.find(drug => drug.drug.toString() === drugId)) throw new NotAllowedError (`user with id ${id} already have drug with id ${drugId} in his prescription`)
+    
+        // for (let i = 0; i < user.prescription.length; i++) {
+        //     if (user.prescription[i].drug.toString() === drugId) throw new NotAllowedError (`user with id ${id} already have drug with id ${drugId} in his prescription`)
+        // } 
+    
+        const guideline = new Guideline({created: new Date, prescribed: user._id.toString(), drug: drugId, times: time})
+    
+        await User.findByIdAndUpdate(user._id, { $push: { prescription: guideline } })
+        return await guideline.save()   
+    })()
 }

@@ -51,7 +51,8 @@ describe('addProgress', () => {
     describe('when user does not exist', ()=>{
 
         it('should fail if user does not exist', () => {
-            addProgress(_id, check)
+            User.deleteMany()
+            .then(() => addProgress(_id, check))
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist

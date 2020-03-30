@@ -5,6 +5,8 @@ const { mongoose, models: { User } } = require('pill-o-clock-data')
 const { expect } = require('chai')
 const { random } = Math
 const addContact = require('./add-contact')
+const { NotFoundError } = require('pill-o-clock-errors')
+
 
 describe('addContact', () => {
     before(() =>
@@ -62,13 +64,24 @@ describe('addContact', () => {
     })
     describe('when user does not exist', ()=>{
 
-        it('should fail if user does not exist', () => {
-            addContact(idUser, idUserToAdd)
-                .then(()=> {throw new Error ('should not reach this point')})
-                .catch(({message })=> {
-                    expect(message).to.exist
+        it('should fail if the second user does not exist', () => {
+            User.findByIdAndRemove(idUserToAdd)
+            .then(() => addContact(idUser, idUserToAdd))
+                .catch((error)=> {
+                    expect(error).to.exist
+                    expect(error).to.be.instanceof(NotFoundError)
+                    expect(error.message).to.equal(`user with id ${idUserToAdd} not found`)
                     
-                    expect(message).to.equal(`user with id ${idUser} not found`)
+                })
+        })
+
+        it('should fail if the second user does not exist', () => {
+            User.deleteMany()
+            .then(() => addContact(idUser, idUserToAdd))
+                .catch((error)=> {
+                    expect(error).to.exist
+                    expect(error).to.be.instanceof(NotFoundError)
+                    expect(error.message).to.equal(`user with id ${idUser} not found`)
                     
                 })
         })

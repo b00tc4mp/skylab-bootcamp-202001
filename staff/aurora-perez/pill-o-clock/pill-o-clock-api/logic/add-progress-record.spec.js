@@ -58,7 +58,8 @@ describe('addProgressRecord', () => {
         )
 
         it('should fail if the user does not exist', () => {
-            addProgressRecord(`${_id}-wrong`, records)
+            User.deleteMany()
+            .then(() => addProgressRecord(_id, records))
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist

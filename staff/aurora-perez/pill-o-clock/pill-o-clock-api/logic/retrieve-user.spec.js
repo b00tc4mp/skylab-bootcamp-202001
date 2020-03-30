@@ -49,7 +49,8 @@ describe('retrieveUser', () => {
         )
 
         it('should fail if the user does not exist', () => {
-            retrieveUser(`${_id}-wrong`)
+            User.deleteMany()
+            .then(() => retrieveUser(_id))
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist

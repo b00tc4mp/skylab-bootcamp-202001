@@ -3,8 +3,9 @@ require('dotenv').config()
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User, Drug, Guideline } } = require('pill-o-clock-data')
 const { expect } = require('chai')
-const { random } = Math
+const { floor, random } = Math
 const addPrescription = require('./add-prescription')
+const { ContentError, NotAllowedError } = require('pill-o-clock-errors')
 
 describe('addPrescription', () => {
     before(() =>
@@ -25,7 +26,7 @@ describe('addPrescription', () => {
         password = `password-${random()}`
         drugName = `drugName-${random()}`
         description = `description-${random()}`
-        time = [`${random()}`]
+        time = [`${floor(random() * 23)}${floor(random() * 59)}`]
 
     })
 
@@ -50,11 +51,29 @@ describe('addPrescription', () => {
                     expect(user.prescription[0].times[0]).to.equal(time[0])
                 })
         )
+        
+        it('should fail to add the prescription if it has already been added before', () => {
+            addPrescription(_id, _drugId, time)
+            .catch(error => {
+                expect(error).to.exist
+                expect(error).to.be.instanceof(NotAllowedError)
+                expect(error.message).to.equal(`user with id ${_id} already have drug with id ${_drugId} in his prescription`)
+            })
+        })
+
+        it('should fail if the user does not exist', () => {
+            User.deleteMany()
+            .then(() => addPrescription(_id, _drugId, time))
+                .catch(({message })=> {
+                    expect(message).to.exist
+                    
+                    expect(message).to.equal(`user with id ${_id} not found`)
+                })
+        })
 
         it('should fail if the drug does not exist', () => {
-            _drugId = `${_drugId}-wrong`
-            addPrescription(_id, _drugId, time)
-                .then(()=> {throw new Error ('should not reach this point')})
+            Drug.deleteMany()
+            .then(() => addPrescription(_id, _drugId, time))
                 .catch(({message })=> {
                     expect(message).to.exist
                     
@@ -72,69 +91,64 @@ describe('addPrescription', () => {
         })
         )
 
-        it('should fail on a non string id', async () => {
-            let idWrong
-            idWrong = 9328743289
-            try {
-                await addPrescription(idWrong, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+        it('should fail on a non string id', () => {
+            _id = 9328743289
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `id ${_id} is not a string`)
 
-            idWrong = false
-            try {
-                await addPrescription(idWrong, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+            _id = []
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `id ${_id} is not a string`)
 
-            idWrong = undefined
-            try {
-                await addPrescription(idWrong, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+            _id = false
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `id ${_id} is not a string`)
 
-            idWrong = []
-            try {
-                await addPrescription(idWrong, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`id ${idWrong} is not a string`)
+            _id = undefined
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `id ${_id} is not a string`)
         })
 
-        it('should fail on a non string id', async () => {
-            let drugName
+        it('should fail on a non string drugName', () => {
+            _id = 'some id'
             drugName = 9328743289
-            try {
-                await addPrescription(__id, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`drugId ${drugName} is not a string`)
-
-            drugName = false
-            try {
-                await addPrescription(__id, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`drugId ${drugName} is not a string`)
-
-            drugName = undefined
-            try {
-                await addPrescription(__id, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`drugId ${drugName} is not a string`)
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `drugId ${drugName} is not a string`)
 
             drugName = []
-            try {
-                await addPrescription(__id, drugName, time)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).to.equal(`drugId ${drugName} is not a string`)
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `drugId ${drugName} is not a string`)
+
+            drugName = false
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `drugId ${drugName} is not a string`)
+
+            drugName = undefined
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `drugId ${drugName} is not a string`)
         })
 
+        it('should fail on a non-array times', () => {
+            drugName = 'some drugId'
+            time = 9328743289
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `times ${time} is not a Array`)
 
+            time = 'ddhbsdkjfdsk'
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `times ${time} is not a Array`)
+
+            time = false
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `times ${time} is not a Array`)
+
+            time = undefined
+            expect(() => addPrescription(_id, drugName, time)).to.throw(TypeError, `times ${time} is not a Array`)
+        })
+
+        it('should fail on a non-stringOfNumbers value for times', () => {
+            
+            time = [[]]
+            expect(() => addPrescription(_id, drugName, time)).to.throw(ContentError, `${time[0]} is not a valid time`)
+
+            time = ['ddhbsdkjfdsk']
+            expect(() => addPrescription(_id, drugName, time)).to.throw(ContentError, `${time[0]} is not a valid time`)
+
+            time = [false]
+            expect(() => addPrescription(_id, drugName, time)).to.throw(ContentError, `${time[0]} is not a valid time`)
+
+            time = [undefined]
+            expect(() => addPrescription(_id, drugName, time)).to.throw(ContentError, `${time[0]} is not a valid time`)
+        })
     })
 
 after(() => Promise.all([User.deleteMany(), Drug.deleteMany(), Guideline.deleteMany()]).then(() => mongoose.disconnect()))

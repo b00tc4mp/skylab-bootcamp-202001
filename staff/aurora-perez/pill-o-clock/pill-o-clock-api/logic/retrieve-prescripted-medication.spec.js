@@ -13,7 +13,7 @@ describe('retrievePrescriptedMedication', ()=> {
             .then(() => User.deleteMany())
     )
 
-    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, time
+    let name, surname, gender, age, phone, profile, email, password, drugName, description, _id, time, prescId
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -33,10 +33,11 @@ describe('retrievePrescriptedMedication', ()=> {
         beforeEach(() => 
             Promise.all([User.create({ name, surname, gender, age, phone, profile, email, password }), Drug.create({drugName, description}) ])
                 .then(([user, drug]) => {
-                    userId = user.id
-                    drugId= drug.id
+                    userId = user.id.toString()
+                    drugId= drug.id.toString()
 
                     const prescription = new Guideline({prescribed: userId, drug: drugId, times: time})
+                    prescId = prescription.id.toString()
                     user.prescription.push(prescription)
                     return user.save()
                 })
@@ -46,15 +47,38 @@ describe('retrievePrescriptedMedication', ()=> {
             Promise.all([retrievePrescriptedMedication(userId), User.findById(userId)])
                 .then(([prescription, user ])=> { 
                     expect(prescription instanceof Array).to.equal(true)
+                    expect(user.prescription instanceof Array).to.equal(true)
                     expect(user.prescription).to.exist
-                    expect(user.prescription[0]).to.exist
-                    expect(user.prescription[0].drug.toString()).to.equal(drugId)
+                    prescription.forEach(element => {
+                        expect(element).to.exist
+                        expect(element._id).to.be.undefined
+                        expect(element.__v).to.be.undefined
+                        expect(element.id.toString()).to.equal(prescId)
+                        expect(element.drug.toString()).to.equal(drugId)
+                        expect(element.prescribed.toString()).to.equal(userId)
+                    })
+
                     expect(user.prescription[0].prescribed.toString()).to.equal(userId)
+                    expect(user.prescription[0].drug._id.toString()).to.equal(drugId)
                 })
         )
 
+        it('should fail if the prescription does not exist', () => {
+            Guideline.deleteMany()
+            .then(() => 
+            retrievePrescriptedMedication(userId)
+            )
+            .then(()=> {throw new Error ('should not reach this point')})
+            .catch(({message })=> {
+                expect(message).to.exist
+                
+                expect(message).to.equal(`guideline not found`)
+            })
+        })
+
         it('should fail if the user does not exist', () => {
-            retrievePrescriptedMedication(`${userId}-wrong`)
+            User.deleteMany()
+            .then(() => retrievePrescriptedMedication(userId))
                 .then(()=> {throw new Error ('should not reach this point')})
                 .catch(({message })=> {
                     expect(message).to.exist

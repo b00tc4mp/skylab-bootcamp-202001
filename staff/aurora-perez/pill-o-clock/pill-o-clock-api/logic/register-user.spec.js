@@ -5,6 +5,7 @@ const { random } = Math
 const { mongoose, models: { User } } = require('pill-o-clock-data')
 const registerUser = require('./register-user')
 const bcrypt = require('bcryptjs')
+const { NotAllowedError } = require('pill-o-clock-errors')
 
 const { env: { TEST_MONGODB_URL } } = process
 
@@ -54,9 +55,11 @@ describe('registerUser', () => {
 
     it('should fail to register if the user email already exists', () =>
         registerUser(name, surname, gender, age, phone, profile, email, password)
-        .catch(({message}) => {
-            expect(message).not.to.be.undefined
-            expect(message).to.equal(`user with email ${email} already exists`)
+        .catch((error) => {
+            expect(error).to.exist
+            expect(error).to.be.instanceof(NotAllowedError)
+            expect(error.message).not.to.be.undefined
+            expect(error.message).to.equal(`user with email ${email} already exists`)
         })
     )
 

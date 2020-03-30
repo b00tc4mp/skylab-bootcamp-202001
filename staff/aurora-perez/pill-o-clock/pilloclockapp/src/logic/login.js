@@ -2,7 +2,6 @@ const { validate } = require ('../utils')
 const { NotAllowedError } = require('../errors')
 const fetch = require ('node-fetch')
 const context = require('./context')
-const context= require('./context')
 
 /**
  * Checks user credentials against the storage, and gives the token
