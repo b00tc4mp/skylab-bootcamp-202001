@@ -75,7 +75,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 </View>
                             </>)}
 
-                            {globalRating.scoreMean < 0.5 && (<>
+                            {toilet.score < 0.5 && (<>
                                 <View style={styles.poopRating}>
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
                                     <Image style={styles.smallPoop} source={require('../../../assets/poopRatingNot.png')} />
@@ -163,7 +163,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                         <View style={styles.thumbs}>
                                             <View style={styles.thumbUpContainer}>
                                                 <TouchableOpacity onPress={() => onThumbUp(comment.id.toString())}>
-                                                    {user.thumbsUp.includes(comment.id.toString()) ? (
+                                                    {user && user.thumbsUp.includes(comment.id.toString()) ? (
                                                         <Image style={styles.thumbUp} source={require('../../../assets/thumb-up.png')} />
                                                     )
                                                         :
@@ -178,7 +178,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
 
                                             <View style={styles.thumbDownContainer}>
                                                 <TouchableOpacity onPress={() => onThumbDown(comment.id.toString())}>
-                                                    {user.thumbsDown.includes(comment.id.toString()) ? (
+                                                    {user && user.thumbsDown.includes(comment.id.toString()) ? (
                                                         <Image style={styles.thumbDown} source={require('../../../assets/thumb-down.png')} />
                                                     )
                                                         :
@@ -192,7 +192,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                             </View>
 
                                             <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(toilet.id.toString(), comment.id.toString())}>
-                                                {comment.publisher._id.toString() === user.id.toString() && <Image style={styles.trash} source={require('../../../assets/delete.png')} />}
+                                                {user && comment.publisher._id.toString() === user.id.toString() && <Image style={styles.trash} source={require('../../../assets/delete.png')} />}
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -203,7 +203,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                             (<Text>No comments to display...</Text>)}
                     </View>
 
-                    {toilet.publisher.id.toString() === user.id.toString() && (<>
+                    {user && toilet.publisher.id.toString() === user.id.toString() && (<>
                         <TouchableOpacity onPress={() => onDeleteToilet(toilet.id.toString())} style={styles.deleteContainer}>
                             <Text style={styles.deleteButton}>🗑️ Delete this toilet</Text>
                         </TouchableOpacity>
