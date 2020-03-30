@@ -134,6 +134,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15
 
     },
+
+    topNotUser: {
+        paddingTop: 15,
+
+        alignItems: 'center'
+    },
     userInfo: {
         flex: 0.30,
         justifyContent: 'space-around',

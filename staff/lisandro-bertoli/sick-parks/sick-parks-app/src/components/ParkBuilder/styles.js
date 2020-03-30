@@ -29,11 +29,9 @@ const styles = StyleSheet.create({
     },
 
     top: {
-        height: '30%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        paddingHorizontal: 15
+        paddingTop: 15,
+
+        alignItems: 'center'
 
     },
     bottom: {

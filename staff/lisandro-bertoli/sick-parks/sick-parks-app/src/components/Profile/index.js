@@ -145,10 +145,9 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
                             <Text style={styles.headerText}>Hey stranger!</Text>
 
                         </View>
-                        <View style={styles.top}>
-                            <Text
-                                style={styles.text}
-                            >Hey there, if you want full access you will need to create an account</Text>
+                        <View style={styles.topNotUser}>
+                            <Text style={styles.text}>Hey there,</Text>
+                            <Text style={styles.text}>if you want full access you will need to create an account</Text>
                         </View>
                         <View style={styles.bottom}>
                             <MyButton

@@ -33,6 +33,7 @@ const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
 const buildImage = require('./assets/icon-pick-and-shovel.png')
 const profileImage = require('./assets/icon-profile.png')
+console.disableYellowBox = true
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()

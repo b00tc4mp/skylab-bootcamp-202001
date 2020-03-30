@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         fontFamily: 'montserrat-semi'
 
     },
+
     newCommentContainer: {
         margin: 15,
         borderWidth: 2,
@@ -190,6 +191,9 @@ const styles = StyleSheet.create({
         padding: 5,
     },
 
+    delete: {
+        marginVertical: 10,
+    },
 
     votesContainer: {
         margin: 10,
