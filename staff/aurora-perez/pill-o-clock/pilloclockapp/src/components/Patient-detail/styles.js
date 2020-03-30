@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     marginTop : 10,
     
   },
+  calendar: {
+    paddingBottom: 30
+  },
 
   textContainer: {
     flexDirection: 'row',

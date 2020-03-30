@@ -3,9 +3,9 @@ import { StyleSheet, Dimensions } from 'react-native'
 const styles = StyleSheet.create({
 
     top: {
-        flex: 0.08,
+        flex: 0.09,
         height: Dimensions.get('window').height,
-        paddingTop: 40,
+        paddingTop: 20,
         flexDirection: 'row',
         paddingBottom: 5,
         backgroundColor: '#297885',

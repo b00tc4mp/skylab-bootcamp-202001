@@ -14,7 +14,7 @@ const AddPatient: () => React$Node = ({user}) => {
      
       <QRCode
       value= {`${user.id.toString()}`}
-      size={200}
+      size={300}
     />
     </View>
   )

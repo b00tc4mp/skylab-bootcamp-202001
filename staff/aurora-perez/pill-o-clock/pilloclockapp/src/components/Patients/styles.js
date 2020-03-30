@@ -3,26 +3,19 @@ import {StyleSheet} from 'react-native'
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    marginTop: 100,
+    marginTop: 50,
     backgroundColor: '#fffdf9',
     borderRadius: 30,
     alignSelf: 'center',
   },
 
   titleText: {
-    fontSize: 40,
+    fontSize: 60,
     color: '#297885',
     fontFamily: 'Chocolate_DRINK_DEMO',
     alignSelf: 'center',
     padding: 30,
     textDecorationLine: 'underline',
-  },
-  
-  text : {
-    fontFamily : 'Chocolate_DRINK_DEMO',
-    color : '#297885',
-    padding: 10,
-    fontSize: 20
   },
   
   plus : {
@@ -36,7 +29,6 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
     marginLeft : 0,
-   // marginRight: 100
     paddingTop: 10
   },
 

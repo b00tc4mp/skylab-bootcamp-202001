@@ -32,7 +32,7 @@ function Patients ({toAdd, onPatient, contacts}) {
                                 title ={item.name.toString() }
                                 titleStyle = {{
                                     marginTop : 20,
-                                    fontSize : 25,
+                                    fontSize : 35,
                                     color : '#fffdf9',
                                     alignSelf : 'center',
                                     backgroundColor : '#297885',

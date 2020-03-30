@@ -2,8 +2,8 @@ import {StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    width: '90%',
-    marginTop: 100,
+    width: '100%',
+    marginTop: 50,
     backgroundColor: '#fffdf9',
     borderRadius: 30,
     alignSelf: 'center',
@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     color: '#297885',
     fontFamily: 'Chocolate_DRINK_DEMO',
     alignSelf: 'center',
-    padding: 30,
     textDecorationLine: 'underline',
   },
 

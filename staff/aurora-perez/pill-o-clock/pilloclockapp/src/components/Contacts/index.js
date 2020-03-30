@@ -8,8 +8,8 @@ function Contacts ({toAdd, onContact, contacts}) {
 
     return (<>
         
-        <ScrollView >
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <ScrollView >
                 <View style ={styles.titleContainer}>
                     <View style={styles.titleLeft}>
                         <Text style={styles.titleText}>My Contacts</Text>
@@ -54,8 +54,8 @@ function Contacts ({toAdd, onContact, contacts}) {
                 <TouchableOpacity onPress={()=>toAdd()}>
                     <Image style={styles.plus} source={require('../../../assets/images/plus.png')}/>
                 </TouchableOpacity>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
         
         
     </>)

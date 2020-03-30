@@ -7,14 +7,15 @@ import moment from 'moment'
 
 
 function Progress ({patient}) {
+    const { name, surname, phone, email } = patient
     const [ markedDates, setMarketDates] = useState()
 
     function makeCall(){
         let phoneNumber =''
         if(Platform.OS === 'android'){
-            phoneNumber =`tel:(+34)${patient.phone}`
+            phoneNumber =`tel:(+34)${phone}`
         }else{
-            phoneNumber= `telprompt:(+34)${patient.phone}`
+            phoneNumber= `telprompt:(+34)${phone}`
         }
         Linking.openURL(phoneNumber)
     }
@@ -34,8 +35,6 @@ function Progress ({patient}) {
         const patientId = patient.id
 
         let patientInfo = await retrievePatientInfo(patientId)
-
-        console.log(patientInfo)
 
         const {progressPatient, progressRecordPatient } = patientInfo 
 
@@ -67,26 +66,31 @@ function Progress ({patient}) {
 
     return (<>
         
-        <ScrollView >
-            <View style={styles.container}>
+        <View style={styles.container}>
+            <ScrollView >
                 <View style={styles.textContainer}>
                     <Text style={[styles.subtitle]}>Name: </Text>
-                    <Text style={styles.text}>{patient.name}</Text>
+                    <Text style={styles.text}>{name}</Text>
                 </View>
                 
                 <View style={styles.textContainer}>
                     <Text style={[styles.subtitle]}>Surname: </Text>
-                    <Text style={styles.text}>{patient.surname}</Text>
+                    <Text style={styles.text}>{surname}</Text>
                 </View>
 
                 <View style={styles.textContainer}>
                     <Text style={[styles.subtitle]} >Phone: </Text>
-                    <Text style={styles.text} onPress={() => makeCall()}>{patient.phone}</Text>
+                    <Text style={styles.text} onPress={() => makeCall()}>{phone}</Text>
+                </View>
+
+                <View style={styles.textContainer}>
+                    <Text style={[styles.subtitle]}>Email: </Text>
+                    <Text style={styles.text}>{email}</Text>
                 </View>
 
                 <Text style={styles.subtitle}>Progress:</Text>
 
-                    <Calendar
+                    <Calendar style= {styles.calendar}
                         // style={{
                         //     flex: 1,
                         //     borderWidth: 1,
@@ -144,8 +148,8 @@ function Progress ({patient}) {
                         markingType={'custom'}
          
                     />
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
         
         
     </>)
