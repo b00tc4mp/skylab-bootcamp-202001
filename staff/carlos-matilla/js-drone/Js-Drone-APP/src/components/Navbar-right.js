@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Navbar-right.sass'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faChevronLeft} from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faChevronLeft, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 
 
 export default function ({ mySessions, handleLogout, handleSession, leftMenuView, name, handleHomePadding, estadisticsView, liveChartView}) {
@@ -59,7 +59,7 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
 
   return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} style={styleMenu}>
     <li className="rnav_logo">
-      <button className="rnav_button" onMouseEnter={() => setHoverName(true)} onMouseLeave={() => setHoverName(false)} onClick={handleLogout}>{hoverName ? "Logout" : nameParser(name)}</button>
+      <button className="rnav_button" onMouseEnter={() => setHoverName(true)} onMouseLeave={() => setHoverName(false)} onClick={handleLogout}>{hoverName ? <FontAwesomeIcon icon={faSignOutAlt} size="1x" /> : nameParser(name)}</button>
     </li>
     <li className="rnav_left"><FontAwesomeIcon icon={faChevronLeft} size="2x" onClick={handleMenuHover} style={styleArrow}/></li>
     <ul className="rnav">

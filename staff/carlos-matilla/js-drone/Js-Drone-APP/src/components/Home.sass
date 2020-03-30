@@ -25,6 +25,10 @@
   align-items: center
   justify-content: center
   color: white
+  animation-name: fadeInUp
+  animation-duration: .8s
+  animation-delay: 0s
+  animation-iteration-count: 1
 
 
 
@@ -36,3 +40,12 @@ canvas
 
   
 
+@keyframes fadeInUp 
+  from 
+    opacity: 0
+    transform: translate3d(0, 200%, 0)
+  
+
+  to 
+    opacity: 1
+    transform: translate3d(0, 0, 0)

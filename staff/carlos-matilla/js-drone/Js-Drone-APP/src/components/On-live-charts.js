@@ -230,11 +230,12 @@ export default function () {
 
 
   return <>
-    
+    <div className="on-live">
+
       <Line data={height} options={heightOpt} />
       {/* <Line data={temperature} options={temperatureOpt}  />
       <Line data={speed} options={speedOpt} />
       <Line data={aceleration} options={acelerationOpt}/> */}
-   
+    </div>
   </>
 }

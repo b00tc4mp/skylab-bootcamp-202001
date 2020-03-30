@@ -4,10 +4,11 @@
 .video-wrapper
   margin: 3rem 3rem 1.5rem 3rem
   width: 85%
-  box-shadow: 12px 8px 100px #5f5e5e
+  box-shadow: 12px 8px 100px rgb(15,171,188)
   border-radius: 0.5rem
   font-family: 'Montserrat', sans-serif
-  background: linear-gradient(0deg, rgba(51,78,92,0.9) 0%, rgba(71,178,158,0.9)  100%,)
+  background: linear-gradient(0deg, rgb(15,171,188) 0%, rgb(250,22,63)  100%,)
+  animation: opaci .35s
 
   
 .aspect-ratio--16x9 
@@ -85,7 +86,7 @@
   border-radius: 0.5rem
 
 .start_button_wrapper
-  z-index: 929292929292929929229292992299229
+  // z-index: 92929292
   position: absolute
   display: flex
   justify-content: center
@@ -156,7 +157,7 @@
   justify-content: center
   align-items: center
   
-  z-index: 1919191919199191919191919191919199191919191919191919191919191919191991919191991199191919191919
+  z-index: 1919
   svg
     max-width: 1.25rem
     color: #fff
@@ -203,4 +204,14 @@
   
 
 
+  
+@keyframes opaci
+  from 
+    opacity: 0
+   
+  
 
+  to 
+    opacity: 0.3
+    
+  

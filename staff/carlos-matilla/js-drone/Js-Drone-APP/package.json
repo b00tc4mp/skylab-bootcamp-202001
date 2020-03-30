@@ -45,9 +45,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "react-scripts test --runInBand --no-cache",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
+    "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "test": "nyc mocha"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,5 +63,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nyc": "^15.0.0"
   }
 }

@@ -20,7 +20,7 @@ export default async function () {
 
     for (var i = 0; i < data.length; i++) {
         for (var j = x; j < time + 1; j += x) {
-            dataParsed[i].push(data[i][j])
+            dataParsed[i].push(parseFloat(data[i][j]))
         }
     }
     await saveSession(time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP)

@@ -25,10 +25,11 @@ export default function ({ toggleLiveChart, toggleEstadistics, toggleHomeView, t
       <li className={chosen === 'g' ? "lnav_item active" : "lnav_item"} onClick={event => {
           event.preventDefault()
           setChosen('g')
+          
           toggleControls()
         }}>
         
-          <FontAwesomeIcon  icon={faGamepad} size="2x"/>
+          <FontAwesomeIcon  icon={faGamepad} size="2x" />
           
         
       </li>

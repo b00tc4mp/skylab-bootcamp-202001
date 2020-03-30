@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { Line } from 'react-chartjs-2'
 import './Charts.sass';
 import CountUp from 'react-countup';
@@ -7,7 +7,11 @@ import 'react-circular-progressbar/dist/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGamepad, faKeyboard } from '@fortawesome/free-solid-svg-icons'
 
-export default function ({ mySession }) {
+export default function ({ mySession, homePadding }) {
+
+    // const [chartPadding, setChartPadding] = useState()
+let style
+    if(homePadding) style = {width: `75%`}
 
     console.log(mySession)
 
@@ -146,7 +150,7 @@ export default function ({ mySession }) {
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
                 pointHitRadius: 10,
-                data: heightP
+                data: speedP
             }
         ]
     }
@@ -192,7 +196,7 @@ export default function ({ mySession }) {
 
 
 
-    return <section className="charts">
+    return <section className="charts" style={style}>
 
         <div className="chart-estadistics">
             <div>

@@ -38,8 +38,8 @@ export default function ({ toggleKeyboard, toggleGamepad, homePadding }) {
     let paddingLeft, paddingRight
     
     if(homePadding) {
-        paddingLeft = {left: `150px`} 
-        paddingRight = {right: `150px`}
+        paddingLeft = {left: `150px`, top: `50px`} 
+        paddingRight = {right: `150px`, top: `50px`}
 
     }else{
         paddingLeft = {left: `50px`} 

@@ -10,6 +10,7 @@ module.exports = id => {
             if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
             user.sessions.forEach(session => {
                 session.id = session._id.toString()
+               
                 delete session._id
             })
             

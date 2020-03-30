@@ -22,7 +22,6 @@ telemetria.bind(8890)
 
 let semaforo
 let videoBuffer = []
-let telloMsg = []
 let counter = 0
 
 
@@ -60,7 +59,7 @@ websocket.on('connection', function connection(websocket) {
                         console.log('tello connected')
                         clearInterval(seekingTello)
                         callDrone()
-                        connect()
+                        
                     }, 3000);
 
                 } catch (error) {
@@ -70,7 +69,7 @@ websocket.on('connection', function connection(websocket) {
 
             } else {
 
-                // console.log('seeking Wifi enpoints, searching for TELLO')
+                console.log('seeking Wifi enpoints, searching for TELLO')
                 wifi.scan(function (err, response) {
                     if (err) console.log(error)
                     for (var i = response.length - 1; i >= 0; i--) {
@@ -94,24 +93,12 @@ websocket.on('connection', function connection(websocket) {
     const seekingTello = setInterval(() => {
         seekWifi()
     }, 6000)
-    function connect() {
-        const connectingTello = setInterval(() => {
-            if (telloMsg.includes('ok')) {
-                clearInterval(connectingTello)
-                return
-            } else {
-                console.log('Conectando Tello')
-                callDrone()
-            }
-        }, 1500)
-    
-    }
+  
 
     function callDrone() {
 
         drone.on('message', message => {
             console.log(`Tello DICE: ${message}`)
-            telloMsg.push(message.toString())
             io.sockets.emit('status', message.toString())
         })
 

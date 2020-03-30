@@ -107,6 +107,7 @@ export default withRouter(function ({ history }) {
   }
 
   function handleSession(session) {
+    console.log(session)
     setHomePadding(false)
     setMySession(session)
     setKeyboard(false)
@@ -115,7 +116,7 @@ export default withRouter(function ({ history }) {
     setLiveChartView(false)
     setEstadisticsView(false)
     setLeftMenuView(false)
-    setVideoView(false)
+    // setVideoView(false)
     setControlsView(false)
   }
 
@@ -181,25 +182,27 @@ export default withRouter(function ({ history }) {
     setControlsView(true)
   }
 
+
+ 
+
+
   return <>
     <NavbarLeft toggleLiveChart={toggleLiveChart} toggleEstadistics={toggleEstadistics} toggleControls={toggleControls} toggleHomeView={toggleHomeView} />
 
     <div className={homePadding ? "home right-padding" : "home"}>
 
-      {videoView && <Video />}
+      {videoView && <Video  />}
 
       
 
-      {mySession && chartsView && <Charts mySession={mySession} />}
+      {mySession && chartsView && <Charts mySession={mySession} homePadding={homePadding}/>}
 
 
       {controlsView && <Controls toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} homePadding={homePadding}/>}
 
-      {!controlsView &&
-        <div className="on-live">
-          {estadisticsView && <Telemetry />}
-          {liveChartView && <OnLiveCharts />}
-        </div>}
+      {!controlsView && estadisticsView && <Telemetry />}
+      {!controlsView &&liveChartView && <OnLiveCharts />}
+       
 
     </div>
 

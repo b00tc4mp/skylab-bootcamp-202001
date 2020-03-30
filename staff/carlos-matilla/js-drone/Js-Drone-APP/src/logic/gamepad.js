@@ -61,14 +61,14 @@ export const gameLoop = () => {
         socket.emit('gamepad', `flip b`)
       }
       // 1 is a
-      if (buttonPressed(gp.buttons[1])) {
-        console.log('a')
-        socket.emit('gamepad', `flip r`)
+      if (buttonPressed(gp.buttons[6])) {
+        
+        socket.emit('control', `flip r`)
       }
       // 2 is y
-      if (buttonPressed(gp.buttons[2])) {
-        console.log('y')
-        socket.emit('gamepad', `flip l`)
+      if (buttonPressed(gp.buttons[7])) {
+        
+        socket.emit('control', `flip l`)
       }
       // 3 is x
       if (buttonPressed(gp.buttons[3])) {
