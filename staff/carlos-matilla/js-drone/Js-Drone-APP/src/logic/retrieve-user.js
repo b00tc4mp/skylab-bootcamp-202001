@@ -3,8 +3,10 @@ import context from './context'
 
 
 const API_URL = process.env.REACT_APP_API_URL
+console.log(API_URL)
 
 export default (function () {
+    console.log('logic token', this.token)
     return (async () => {
         const response = await fetch(`${API_URL}/users`, {
             headers: {
@@ -12,12 +14,14 @@ export default (function () {
                 Authorization: `Bearer ${this.token}`
             }
         })
-
+        
+        
         const { status } = response
+        console.log(status)
 
         if (status === 200) {
             const user = await response.json()
-
+            console.log(user)
             return user
         }
 

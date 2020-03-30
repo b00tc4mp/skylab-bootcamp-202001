@@ -85,4 +85,3 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     <li className="rnav_down"><FontAwesomeIcon  icon={faChevronDown} size="2x"/></li>
   </nav>
 }
-

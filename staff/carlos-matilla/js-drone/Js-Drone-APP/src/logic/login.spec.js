@@ -1,24 +1,24 @@
 const { random } = Math
-const { mongoose, models: { User } } = require('events-data')
+const { mongoose, models: { User } } = require('./../../../Js-Drone-DATA')
 const { login } = require('.')
 const bcrypt = require('bcryptjs')
-//const context = require('./context').default
 import context from './context'
 
 const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
-
+console.log(TEST_MONGODB_URL)
 describe('login', () => {
     beforeAll(() =>
+    
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => User.deleteMany())
     )
 
-    let name, surname, email, password
+    let name, surname, username, password
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
-        email = `email-${random()}@mail.com`
+        username = `username-${random()}`
         password = `password-${random()}`
     })
 
@@ -28,12 +28,12 @@ describe('login', () => {
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
 
-            await User.create({ name, surname, email, password: _password })
+            await User.create({ name, surname, username, password: _password })
                 .then(user => _id = user.id)
         })
 
         it('should succeed on correct and valid and right credentials', () =>
-            login(email, password)
+            login(username, password)
                 .then(() => {
                     const { token } = context
 

@@ -3,7 +3,7 @@ const { NotAllowedError, ContentError } = require('./../../../Js-Drone-ERRORS')
 
 module.exports = (req, res) => {
     const { body: { name, surname, username, password } } = req
-
+    
     try {
         registerUser(name, surname, username, password)
             .then(() => res.status(201).end())

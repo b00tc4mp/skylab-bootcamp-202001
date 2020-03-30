@@ -13,16 +13,10 @@ module.exports = id => {
                 delete session._id
             })
             
-            // let sortedSessions = []
-            // for(let i = user.sessions.length - 1; i >=0; i--){
-            //     sortedSessions.push(user.sessions[i])
-            // }
-            // user.sessions = sortedSessions
-
-            user.id = user._id.toString()
-            delete user._id
             
             return user.save()
         })
-        .then(({ name, surname, username, sessions}) => ({ name, surname, username, sessions}))
+        .then(({ name, surname, username, sessions}) => 
+            ({ name, surname, username, sessions: sessions.reverse()})
+        )
 }

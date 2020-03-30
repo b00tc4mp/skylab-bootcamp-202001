@@ -10,9 +10,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "chart.js": "^2.9.3",
     "chartjs-plugin-streaming": "^1.8.0",
     "concurrently": "^5.1.0",
+    "drone-data": "file:../Js-Drone-DATA",
     "drone-errors": "file:../Js-Drone-ERRORS",
     "drone-utils": "file:../Js-Drone-UTILS",
     "electron": "^8.2.0",
@@ -20,6 +23,7 @@
     "electron-is-dev": "^1.1.0",
     "express": "^4.17.1",
     "jmuxer": "^1.1.1",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
@@ -40,8 +44,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "test": "react-scripts test --runInBand --no-cache",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "electron-dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {

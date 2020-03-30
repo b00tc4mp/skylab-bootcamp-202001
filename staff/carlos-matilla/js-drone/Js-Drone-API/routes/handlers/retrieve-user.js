@@ -2,18 +2,22 @@ const { retrieveUser } = require('../../logic')
 const { NotAllowedError } = require('./../../../Js-Drone-ERRORS')
 
 module.exports = (req, res) => {
+    
     const { payload: { sub: id } } = req
-
+    
     try {
         retrieveUser(id)
-            .then(user =>
+            .then(user =>{
                 res.status(200).json(user)
-            )
+                // console.log(user.sessions[0].heightP.length)
+            })
             .catch(error => {
-                let status = 400
+                
+                let status = 401
 
                 if (error instanceof NotAllowedError)
-                    status = 401 // not authorized
+                    
+                    status = 402 // not authorized
 
                 const { message } = error
 
