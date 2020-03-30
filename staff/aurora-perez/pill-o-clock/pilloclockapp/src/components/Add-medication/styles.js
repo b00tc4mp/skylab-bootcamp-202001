@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         fontFamily : 'Chocolate_DRINK_DEMO',
         marginTop : 20,
         padding : 10,
-        fontSize: 20
+        fontSize: 30
     },
     
     button : {

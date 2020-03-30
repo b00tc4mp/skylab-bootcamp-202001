@@ -39,13 +39,14 @@ const styles = StyleSheet.create({
 
     toLogin : {
         marginTop : 20,
-        fontSize : 25,
+        fontSize : 30,
         alignItems : 'center',
         color : '#79BABF',
         fontFamily : 'Chocolate_DRINK_DEMO'
     },
 
     error : {
+        fontSize: 25,
         marginTop : 20,
         padding : 10,
         fontFamily : 'Chocolate_DRINK_DEMO'

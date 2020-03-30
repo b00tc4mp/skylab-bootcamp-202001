@@ -31,10 +31,10 @@ function AddMedication ({onSubmit, error, drugs}) {
 
                 <View style={styles.hourContainer}>                
                     <Text style = {styles.text}>Select hour: </Text> 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
+                    <TextInput keyboardType={'numeric'} style = {styles.hour} maxLength={2} placeholder='hour'
                         onChangeText={(hour1) => setHour1(hour1)}/>
 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='min'
+                    <TextInput keyboardType={'numeric'}  style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min1) => setMin1(min1)}/>
 
                     <Text style = {styles.add} onPress={() => setSecondTime(!secondTime)}>+/-</Text>
@@ -45,10 +45,10 @@ function AddMedication ({onSubmit, error, drugs}) {
                 {secondTime && 
                 <View style={styles.hourContainer}>                
                     <Text style = {styles.text}>Select hour: </Text> 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
+                    <TextInput keyboardType={'numeric'} style = {styles.hour} maxLength={2} placeholder='hour'
                         onChangeText={(hour2) => setHour2(hour2)}/>
 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='min'
+                    <TextInput keyboardType={'numeric'} style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min2) => setMin2(min2)}/>
                     <Text style = {styles.add} onPress={() => setThirdTime(!thirdTime)}>+/-</Text>
                 </View>}
@@ -56,10 +56,10 @@ function AddMedication ({onSubmit, error, drugs}) {
                 {thirdTime && 
                 <View style={styles.hourContainer}>                
                     <Text style = {styles.text}>Select hour: </Text> 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='hour'
+                    <TextInput keyboardType={'numeric'} style = {styles.hour} maxLength={2} placeholder='hour'
                         onChangeText={(hour3) => setHour3(hour3)}/>
 
-                    <TextInput style = {styles.hour} maxLength={2} placeholder='min'
+                    <TextInput keyboardType={'numeric'} style = {styles.hour} maxLength={2} placeholder='min'
                         onChangeText={(min3) => setMin3(min3)}/>
                     
                 </View>}

@@ -12,8 +12,6 @@ const configure = () => {
      notification.finish(PushNotificationIOS.FetchResult.NoData)
      
      if (notification.action == "Take pill") {
-       debugger
-        console.log('taked')
         await addProgress(true)
       }
       else if (notification.action == "Did not take pill") {

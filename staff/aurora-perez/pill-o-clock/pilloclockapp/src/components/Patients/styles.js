@@ -41,7 +41,14 @@ const styles = StyleSheet.create({
   titleRight: {
     alignSelf: 'center',
     marginRight: 100
-  }
+  },
+  text: {
+    fontFamily: 'Chocolate_DRINK_DEMO',
+    fontSize: 30,
+    color: '#297885',
+    padding: 20
+
+  },
 })
 
 export default styles

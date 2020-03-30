@@ -8,12 +8,16 @@ const styles = StyleSheet.create({
         borderRadius : 30,
         padding : 10
     },
+    text : {
+        textAlign: 'center'
+    },
     
     input : {
         marginTop : 10,
         fontSize : 30,
-        //justifyContent: 'center',
+       // justifyContent: 'center',
         alignSelf : 'center',
+        alignItems: 'center',
         color:'#4CBBC2',
         fontFamily : 'Chocolate_DRINK_DEMO'
     },

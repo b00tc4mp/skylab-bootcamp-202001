@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '90%',
     marginTop: 50,
     backgroundColor: '#fffdf9',
     borderRadius: 30,
@@ -14,14 +14,8 @@ const styles = StyleSheet.create({
     color: '#297885',
     fontFamily: 'Chocolate_DRINK_DEMO',
     alignSelf: 'center',
+    padding: 30,
     textDecorationLine: 'underline',
-  },
-
-  text : {
-    fontFamily : 'Chocolate_DRINK_DEMO',
-    color : '#297885',
-    padding: 10,
-    fontSize: 30
   },
   
   plus : {
@@ -32,18 +26,29 @@ const styles = StyleSheet.create({
   },
 
   logo : {
-    width: 60,
-    height: 60
+    width: 50,
+    height: 50,
+    marginLeft : 0,
+    paddingTop: 10
   },
 
   titleContainer: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignContent : 'flex-start'
+  },
+
+  text: {
+    fontFamily: 'Chocolate_DRINK_DEMO',
+    fontSize: 30,
+    color: '#297885',
+    padding: 20
+
   },
 
   titleRight: {
     alignSelf: 'center',
-    marginRight: 60
+    marginRight: 100
   }
 })
 
