@@ -36,13 +36,7 @@ module.exports = function (spotId) {
             const imageIndex = files.findIndex((file) => file.includes('spot01'));
             if (imageIndex !== -1) {
                    return fs.createReadStream(`${goTo}/${files[imageIndex]}`)
-            }/* else {
-                for (var i in files) {
-                    if (path.extname(files[i]) === ".jpg") {
-                    return fs.createReadStream(`${goTo}/${files[i]}`)
-                    }
-                }
-            } */
+            }
         } catch ({message}) {
             console.log(message)
         }

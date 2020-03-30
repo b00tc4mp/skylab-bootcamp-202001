@@ -15,7 +15,8 @@ const {
     bookSpot,
     acceptBooking,
     declineBooking,
-    retrieveMyBooking
+    retrieveMyBookings,
+    retrieveSpotsForBookingManagement
     
 } = require('./handlers')
 
@@ -55,7 +56,9 @@ router.patch('/spots/:spotId/candidate/:candidateId/accept', [jwtVerifierMidWare
 
 router.patch('/spots/:spotId/candidate/:candidateId/decline', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
 
-router.get('/my-booking', jwtVerifierMidWare, retrieveMyBooking)
+router.get('/users/my-bookings', jwtVerifierMidWare, retrieveMyBookings)
+
+router.get('/spots/manage-requests', jwtVerifierMidWare, retrieveSpotsForBookingManagement)
 
 module.exports = router
 

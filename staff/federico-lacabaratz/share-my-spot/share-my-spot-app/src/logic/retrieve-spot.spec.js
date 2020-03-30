@@ -52,7 +52,7 @@ describe('retrieveSpot', () => {
 
     describe('when both user and spot exist', () => {
         let id
-        beforeEach(() =>
+        beforeEach(() => {
             Promise.all([User.create({ name, surname, email, phone, password }),
             Spot.create({ id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun })])
                 .then(([user, spot]) => {
@@ -63,7 +63,7 @@ describe('retrieveSpot', () => {
                     return spot.save()
                 })
                 .then(() => { })
-        )
+        })
 
         it('should successfully retrieve the specific spot', () => {
             retrieveSpot(_spotId)

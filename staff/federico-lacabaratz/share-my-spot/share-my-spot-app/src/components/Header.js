@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { logout } from '../logic'
 import { useHistory } from 'react-router-dom'
 import './Header.sass'
@@ -55,7 +55,7 @@ export default ({ onLogout }) => {
 
     const handleMyBookings = (event) => {
         event.preventDefault()
-
+        
         history.push('/my-bookings')
     }
 

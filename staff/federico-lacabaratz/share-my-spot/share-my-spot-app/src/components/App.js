@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Register, Login, Search, Header, Results, Detail, UserUpdate, AddSpot, MySpots, SpotUpdate, MyBookings } from '../components'
-import { registerUser, login, isLoggedIn, retrieveUser, search, retrieveSpot, userUpdate, addSpot, saveSpotPhoto, retrieveMySpots, spotUpdate, spotDelete, bookSpot, acceptBooking, declineBooking } from '../logic'
+import { registerUser, login, isLoggedIn, retrieveUser, search, retrieveSpot, userUpdate, addSpot, saveSpotPhoto, retrieveMySpots, spotUpdate, spotDelete, bookSpot, acceptBooking, declineBooking, retrieveMyBookings } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -11,9 +11,10 @@ export default withRouter(function ({ history }) {
   const [results, setResults] = useState([])
   const [detail, setDetail] = useState({})
   const [spot, setSpot] = useState()
-  const [managedSpots, setManagedSpots] = useState([])
   const [spotId, setSpotId] = useState([])
   const [mySpots, setMySpots] = useState([])
+  const [myBookingSpots, setMyBookingSpots] = useState([])
+  const [yourRequests, setYourRequests] = useState([])
 
   useEffect(() => {
     if (isLoggedIn()) {
@@ -51,6 +52,8 @@ export default withRouter(function ({ history }) {
     setSpot(undefined)
     setSpotId([])
     setMySpots([])
+    setMyBookingSpots([])
+    setYourRequests([])
   }
 
   const handleRegister = (name, surname, email, phone, password) => {
@@ -245,9 +248,8 @@ export default withRouter(function ({ history }) {
 
         history.push(`/my-spots`)
 
-      } catch (error) {
-        console.error(error.stack)
-        setState({ ...state, error: error.message })
+      } catch ({ message }) {
+        setState({ ...state, error: message })
 
         setTimeout(() => {
           setState({ error: undefined })
@@ -292,11 +294,32 @@ export default withRouter(function ({ history }) {
     (async () => {
       try {
         await bookSpot(candidateId, spotDetail.id)
-        setSpot(spotDetail)
+
+        const spots = await retrieveMyBookings()
+        setMyBookingSpots(spots)
+
         history.push('/my-bookings')
 
       } catch (error) {
-        console.error(error.stack)
+        setState({ ...state, error: error.message })
+
+        setTimeout(() => {
+          setState({ error: undefined })
+        }, 3000)
+      }
+    })()
+  }
+
+  const handleMyBookings = () => {
+    (async () => {
+      try {
+
+        const spots = await retrieveMyBookings()
+        setMyBookingSpots(spots)
+
+        history.push('/my-bookings')
+
+      } catch (error) {
         setState({ ...state, error: error.message })
 
         setTimeout(() => {
@@ -319,7 +342,7 @@ export default withRouter(function ({ history }) {
     <Route path='/add-a-spot' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><AddSpot onAddSpot={handleAddSpot} error={error} /></> : <Redirect to='/login' />} />
     <Route path='/my-spots' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MySpots handleMySpots={handleMySpots} allMySpots={mySpots} updateMySpot={handleToUpdateMySpot} deleteMySpot={handleDeleteMySpot} onItemClick={handleDetail} error={error} /> </> : <Redirect to='/login' />} />
     <Route path='/update/:spotId' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><SpotUpdate spot={spot} onUpdateMySpot={handleOnUpdateMySpot} /></> : <Redirect to='/login' />} />
-    <Route path='/my-bookings' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MyBookings spot={spot} /></> : <Redirect to='/login' />} />
+    <Route path='/my-bookings' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MyBookings myBookingSpots={myBookingSpots} handleMyBookings={handleMyBookings} /></> : <Redirect to='/login' />} />
     {/* <Route path='/manage-requests' render={() => isLoggedIn() ? <><Header onLogout={handleLogout}/><ManageYourRequests user={user} spots={spots} onAccept={handleOnAccept} onDecline={handleOnDecline}/></> : <Redirect to='/login' />} /> */}
   </div>
 })

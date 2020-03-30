@@ -1,14 +1,13 @@
-const { retrieveMyBooking } = require('../../logic')
+const { retrieveSpotsForBookingManagement } = require('../../logic')
 const {  NotFoundError } = require('share-my-spot-errors')
 
 module.exports = (req, res) => {
-    debugger
     const { payload: { sub: id } } = req
 
     try {
-        retrieveMyBooking(id)
-            .then(spot =>
-                res.status(200).json(spot)
+        retrieveSpotsForBookingManagement(id)
+            .then(spots =>
+                res.status(200).json(spots)
             )
             .catch(({ message }) =>
                 res
