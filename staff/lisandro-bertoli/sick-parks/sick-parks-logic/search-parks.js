@@ -1,6 +1,19 @@
-const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
+
+/**
+ * Search for the parks in storage that match the given query. 
+ * Ordering them by distance.
+ * 
+ * @param {string} [query= ''] - the query for the search
+ * @param {Array} location the location of the user
+ *  
+ * @returns {Array} list of matching results. Empty if no matches
+ * 
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if query or location do not have the correct type
+ */
 
 module.exports = (query = '', location) => {
     validate.stringFrontend(query, 'query', false)

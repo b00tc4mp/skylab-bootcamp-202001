@@ -3,6 +3,20 @@ const { validate } = require('sick-parks-utils')
 const { NotFoundError } = require('sick-parks-errors')
 const fetch = require('node-fetch')
 
+/**
+ * Publishes a new comment into the park, on the user's behalf.
+ * 
+ * @param {string} userId user's unique id
+ * @param {string} parkId park's unique id
+ * @param {string} body the comment body itself
+ * 
+ * @returns {undefined}
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if userId, parkId or body do not have the correct type
+ * @throws {NotFoundError} when the API does not recognize the provided id's
+ */
+
 module.exports = function (userId, parkId, body) {
     validate.stringFrontend(userId, 'userId')
     validate.stringFrontend(parkId, 'parkId')

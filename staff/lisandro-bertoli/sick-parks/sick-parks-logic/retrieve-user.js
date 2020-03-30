@@ -2,6 +2,14 @@ const context = require('./context')
 const fetch = require('node-fetch')
 const { NotFoundError } = require('sick-parks-errors')
 
+/**
+ * Retrieves the the requested user
+ * 
+ * @returns {Object} user data
+ * 
+ * @throws {NotFoundError} when the provided user id in token does not match any user
+ */
+
 module.exports = function retrieveUser() {
     //TODO add userId as arg fro retrieveing user other than the current user
     return (async () => {

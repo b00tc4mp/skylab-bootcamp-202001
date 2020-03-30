@@ -1,6 +1,16 @@
 const fetch = require('node-fetch')
-const { ContentError, NotFoundError, NotAllowedError } = require('sick-parks-errors')
+const { ContentError } = require('sick-parks-errors')
 const context = require('./context')
+
+
+/**
+ * Retrieves the parks created by a specific user
+ * 
+ * @returns {Array} list of al parks data. Empty if user has no created parks
+ * 
+ * @throws {ContentError} if id in token is not valid
+ */
+
 
 
 

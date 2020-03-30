@@ -3,6 +3,19 @@ const { validate } = require('sick-parks-utils')
 const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const fetch = require('node-fetch')
 
+/**
+ * Sends reques to delte the park from storage. 
+ * 
+ * @param {string} parkId park's unique id
+ * 
+ * @returns {undefined}
+ * 
+ * @throws {ContentError} if park id doesn't follow the format and content rules
+ * @throws {TypeError} if parkId does not have the correct type
+ * @throws {NotFoundError} when the provided parkId to the API does not match any park
+ * @throws {NotAllowedError} when the user trying to delete the park is not the creator
+ */
+
 module.exports = function (parkId) {
     validate.string(parkId, 'parkId')
 
