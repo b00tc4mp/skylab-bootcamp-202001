@@ -10,7 +10,7 @@ export default withRouter(function ({ history }) {
   const [user, setUser] = useState({})
   const [results, setResults] = useState([])
   const [detail, setDetail] = useState({})
-  const [spot, setSpot] = useState(undefined)
+  const [spot, setSpot] = useState()
   const [managedSpots, setManagedSpots] = useState([])
   const [spotId, setSpotId] = useState([])
   const [mySpots, setMySpots] = useState([])
@@ -288,11 +288,11 @@ export default withRouter(function ({ history }) {
     })()
   }
 
-  const handleBooking = (candidateId, spot) => {
+  const handleBooking = (candidateId, spotDetail) => {
     (async () => {
       try {
-        await bookSpot(candidateId, spot._id)
-
+        await bookSpot(candidateId, spotDetail.id)
+        setSpot(spotDetail)
         history.push('/my-bookings')
 
       } catch (error) {
@@ -315,7 +315,7 @@ export default withRouter(function ({ history }) {
     <Route path='/account' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><UserUpdate onUserUpdate={handleUserUpdate} error={error} /></> : <Redirect to='/login' />} />
     <Route path='/search' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><Search onSearch={handleSearch} error={error} /></> : <Redirect to='/login' />} />
     <Route path='/results' render={() => isLoggedIn() ? <> <Header onLogout={handleLogout} /> <Results results={results} onItemClick={handleDetail} /> </> : <Redirect to='/login' />} />
-    <Route path='/detail/:spotId' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><Detail user={user} spotDetail={detail} handleDetail={handleDetail} handleOnBooking={handleBooking} /></> : <Redirect to='/login' />} />
+    <Route path='/detail/:spotId' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><Detail spotDetail={detail} handleDetail={handleDetail} handleOnBooking={handleBooking} /></> : <Redirect to='/login' />} />
     <Route path='/add-a-spot' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><AddSpot onAddSpot={handleAddSpot} error={error} /></> : <Redirect to='/login' />} />
     <Route path='/my-spots' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MySpots handleMySpots={handleMySpots} allMySpots={mySpots} updateMySpot={handleToUpdateMySpot} deleteMySpot={handleDeleteMySpot} onItemClick={handleDetail} error={error} /> </> : <Redirect to='/login' />} />
     <Route path='/update/:spotId' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><SpotUpdate spot={spot} onUpdateMySpot={handleOnUpdateMySpot} /></> : <Redirect to='/login' />} />
