@@ -3,6 +3,24 @@ const { NotFoundError, NotAllowedError, ContentError } = require('sick-parks-err
 const context = require('./context')
 const fetch = require('node-fetch')
 
+/**
+ * Creates a new Park on parks collection, adding it to the user parks property
+ * 
+ 
+ * @param {object} data all the park data
+ * @param {object} data.park all the park specific properties
+ * @param {Array} data.features all the features from the park
+ * 
+ * 
+ * @returns {undefined} 
+ * 
+ * @throws {ContentError} if data inside data.park or data.features don't follow the format and content rules
+ * @throws {TypeError} if data.park and data.features props do not have the correct type
+ * @throws {NotFoundError} when the API can't match the user id in token with data in storage
+ * @throws {NotAllowedError} when the park name already exists
+ */
+
+
 module.exports = function (data) {
     const { features, park } = data
     if (park.flow) validate.stringFrontend(park.flow, 'flow')

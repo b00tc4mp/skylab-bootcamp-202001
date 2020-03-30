@@ -3,6 +3,24 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const context = require('./context')
 const fetch = require('node-fetch')
 
+/**
+ * Registers a user's report for a fake or duplicate park. Only if user is not the creator
+ * 
+ * 
+
+ * @param {string} userId the user's unique id
+ * @param {string} parkId the park unique id
+ * @param {string} problem the reported problem
+ * 
+ * @returns {undefined} 
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if user id, park id or problem do not have the correct type
+ * @throws {NotFoundError} when the provided id's don't match any records by the API
+ * @throws {NotAllowedError} when the user already filed the report
+ * 
+ */
+
 module.exports = function (userId, parkId, problem) {
     validate.stringFrontend(userId, 'userId')
     validate.stringFrontend(parkId, 'parkId')

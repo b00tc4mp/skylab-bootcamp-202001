@@ -3,6 +3,22 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const context = require('./context')
 const fetch = require('node-fetch')
 
+
+/**
+ * Adds user aproval to the park.
+ * 
+ * @param {string} userId user's unique id
+ * @param {string} parkID the park unique id
+ * 
+ * @returns {undefined}
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if user data and park does not have the correct type
+ * @throws {NotFoundError} when the provided id's trigger a 404 response from API
+ * @throws {NotAllowedError} when the userId already approved and the API responds with a 403
+ */
+
+
 module.exports = function (userId, parkId) {
     validate.stringFrontend(userId, 'userId')
     validate.stringFrontend(parkId, 'parkId')

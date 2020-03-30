@@ -3,9 +3,28 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const fetch = require('node-fetch')
 
+/**
+ * Updates the park with the new given property values.
+ * 
+ * @param {string} userId the user's unique id
+ * @param {string} parkid the park's unique id
+ * @param {Object} updates the modifications to be made
+ * 
+ * 
+ * @returns {undefined} 
+ * 
+ * @throws {ContentError} if params don't follow the format and content rules
+ * @throws {TypeError} if userId, parkId or updates does not have the correct type
+ * @throws {NotFoundError} if the provided parkId or id in token do not match any park or user on the API side
+ * @throws {NotAllowedError} if the provided userId does not match the parks creator id
+ * @throws {NotAllowedError} if the keys in updates are not valid
+ * 
+ */
+
 module.exports = function (userId, parkId, updates) {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
+    validate.type(updates, 'updates', Object)
 
     return (async () => {
 
