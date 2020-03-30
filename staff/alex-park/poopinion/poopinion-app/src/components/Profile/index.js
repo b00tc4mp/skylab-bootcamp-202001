@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
-import { Text, ScrollView, TouchableOpacity, View, Image, Alert } from 'react-native'
+import { Text, ScrollView, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native'
 
 function Profile({ user, onDetails, onToUpdateUser }) {
     const [lastPosts, setLastPosts] = useState(user.publishedToilets.slice(0, 5))
     const [lastComments, setLastComments] = useState(user.comments.slice(0, 5))
+    const [toiletLoading, setToiletLoading] = useState(false)
+    const [commentLoading, setCommentLoading] = useState(false)
 
     useEffect(() => {
         setLastPosts(user.publishedToilets.slice(0, 5))
@@ -16,14 +18,14 @@ function Profile({ user, onDetails, onToUpdateUser }) {
             <View style={styles.nameContainer}>
                 <View style={styles.nameHeader}>
                     <TouchableOpacity style={styles.picture} onPress={() => onToUpdateUser(user.id.toString())}>
-                        {user.publishedToilets.length < 5 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')}/>}
-                        {user.publishedToilets.length < 5 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')}/>}
+                        {user.publishedToilets.length < 5 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')} />}
+                        {user.publishedToilets.length < 5 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')} />}
 
-                        {user.publishedToilets.length >= 5 && user.publishedToilets.length < 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver.png')}/>}
-                        {user.publishedToilets.length >= 5 && user.publishedToilets.length < 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver_pro.png')}/>}
+                        {user.publishedToilets.length >= 5 && user.publishedToilets.length < 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver.png')} />}
+                        {user.publishedToilets.length >= 5 && user.publishedToilets.length < 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver_pro.png')} />}
 
-                        {user.publishedToilets.length >= 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold.png')}/>}
-                        {user.publishedToilets.length >= 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold_pro.png')}/>}
+                        {user.publishedToilets.length >= 10 && user.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold.png')} />}
+                        {user.publishedToilets.length >= 10 && user.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold_pro.png')} />}
                     </TouchableOpacity>
                     <View style={styles.nameInfo}>
                         <Text style={[styles.font, styles.bold]}>Name: {user.name} {user.surname}</Text>
@@ -37,8 +39,11 @@ function Profile({ user, onDetails, onToUpdateUser }) {
             <View style={styles.posts}>
                 <Text style={styles.bigText}>{user.publishedToilets.length} Post(s). Last five toilets:</Text>
                 {user.publishedToilets.length > 0 &&
-                    lastPosts.map((toilet, index) => (
-                        <TouchableOpacity key={index} onPress={() => onDetails(toilet.id.toString())} style={styles.postsContainer}>
+                    lastPosts.map((toilet, index) => (<>
+                        <TouchableOpacity key={index} onPress={() => {
+                            setToiletLoading(true)
+                            onDetails(toilet.id.toString())
+                        }} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeft}>
                                     <Text style={styles.postTitle}>{toilet.place}</Text>
@@ -51,8 +56,12 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                                 </View>
                             </View>
                         </TouchableOpacity>
-                    ))
+                    </>))
                 }
+                {toiletLoading && (<>
+                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </>)}
                 {!user.publishedToilets.length && (<>
                     <Text>No toilets to display...</Text>
                 </>)}
@@ -62,7 +71,10 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                 <Text style={styles.bigText}>{user.comments.length} Comment(s). Last five comments: </Text>
                 {user.comments.length > 0 &&
                     lastComments.map((comment, index) => (
-                        <TouchableOpacity key={index} onPress={() => onDetails(comment.commentedAt.toString())} style={styles.postsContainer}>
+                        <TouchableOpacity key={index} onPress={() => {
+                            setCommentLoading(true)
+                            onDetails(comment.commentedAt.toString())
+                            }} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeftComment}>
                                     <Text>"{comment.rating.textArea.length > 0 ? (<Text style={styles.commentText}>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
@@ -94,6 +106,10 @@ function Profile({ user, onDetails, onToUpdateUser }) {
 
                     ))
                 }
+                {commentLoading && (<>
+                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </>)}
                 {!user.comments.length && (<>
                     <Text>No comments to display...</Text>
                 </>)}

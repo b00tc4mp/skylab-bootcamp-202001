@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
-import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, Alert, Linking } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, Alert, ActivityIndicator, Linking } from 'react-native'
 
 function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (error) setLoading(false)
+    }, [error])
 
     return (<>
         <ScrollView>
@@ -17,11 +22,19 @@ function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@mail.com' onChangeText={(text) => setEmail(text.toLowerCase().trim())} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                     </View>
-                    {error && (<View style={{flex: 0.20}}>
+                    {error && (<View style={{ flex: 0.20 }}>
                         <Feedback style={styles.feedback} level='warn' message={error} />
                     </View>)}
+                    {!error && loading && (<>
+                        <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </>)}
                     <TouchableOpacity>
-                        <Text style={styles.button} onPress={() => onSubmit(email, password)}>💩 Log in! 💩</Text>
+                        <Text style={styles.button} onPress={() => {
+                            setLoading(true)
+                            if (error) setLoading(false)
+                            onSubmit(email, password)
+                        }}>💩 Log in! 💩</Text>
                     </TouchableOpacity>
                     <View style={styles.navButtons}>
                         <TouchableOpacity style={styles.left}>
@@ -29,7 +42,10 @@ function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.right}>
-                            <Text style={styles.rightButton} onPress={goToLanding} >Continue as Guest</Text>
+                            <Text style={styles.rightButton} onPress={() => {
+                                setLoading(true)
+                                goToLanding()
+                            }} >Continue as Guest</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

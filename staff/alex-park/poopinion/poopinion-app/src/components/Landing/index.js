@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text, Image, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import MapView from 'react-native-maps'
 import styles from './styles'
 
 function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     const [topTen, setTopTen] = useState(topToilets.slice(0, 10))
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setTopTen(topToilets.slice(0, 10))
@@ -38,13 +39,19 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                     <View style={styles.posts} key={index}>
                         <View style={styles.post} key={index}>
                             {toilet.image ? (<>
-                                <TouchableOpacity onPress={() => onDetails(toilet.id)}>
+                                <TouchableOpacity onPress={() => {
+                                    setLoading(true)
+                                    onDetails(toilet.id)
+                                }}>
                                     <Image style={styles.image} source={{ uri: toilet.image }} />
                                 </TouchableOpacity>
                             </>)
                                 :
                                 (<>
-                                    <TouchableOpacity onPress={() => onDetails(toilet.id)}>
+                                    <TouchableOpacity onPress={() => {
+                                        setLoading(true)
+                                        onDetails(toilet.id)
+                                    }}>
                                         <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
                                     </TouchableOpacity>
                                 </>)}
@@ -131,6 +138,10 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                             </View>
                         </View>
                     </View>
+                    {loading && (<>
+                        <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </>)}
                 </>))}
 
             </View>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
-import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 
 function Register({ onSubmit, error, goToLogin, goToLanding }) {
     const [name, setName] = useState()
@@ -10,6 +10,11 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
     const [age, setAge] = useState()
     const [gender, setGender] = useState('male')
     const [password, setPassword] = useState()
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (error) setLoading(false)
+    }, [error])
 
     return (<>
         <ScrollView>
@@ -35,8 +40,18 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
                         </View>
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                     </View>
+
                     {error && <Feedback level='warn' message={error} />}
-                    <Text style={styles.button} onPress={() => onSubmit(name, surname, email, password, age, gender)}>💩 Submit! 💩</Text>
+                    {!error && loading && (<>
+                        <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </>)}
+
+                    <Text style={styles.button} onPress={() => {
+                        setLoading(true)
+                        if (error) setLoading(false)
+                        onSubmit(name, surname, email, password, age, gender)
+                    }}>💩 Submit! 💩</Text>
                     <View style={styles.navButtons}>
                         <TouchableOpacity style={styles.left}>
                             <Text style={styles.leftButton} onPress={goToLogin}>Go to Login</Text>

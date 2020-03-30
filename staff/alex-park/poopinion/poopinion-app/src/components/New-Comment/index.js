@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Picker, Slider, KeyboardAvoidingView } from 'react-native'
+import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Picker, Slider, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 import styles from './styles'
 
 function NewComment({ toilet, onSubmit, user, onUpdate }) {
@@ -10,6 +10,7 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
     const [paperDeployment, setPaperDeployment] = useState(0)
     const [overallRating, setOverallRating] = useState(0)
     const [textArea, setTextArea] = useState('')
+    const [loading, setLoading] = useState(false)
 
     return (<>
         <ScrollView>
@@ -113,19 +114,27 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 </View>
             </View>
 
+            {loading && (<>
+                <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </>)}
+
             <View>
                 {user.comments.length && typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) !== 'undefined' ? (<>
-                    <TouchableOpacity onPress={() => onUpdate({
-                        rating: {
-                            cleanness,
-                            looks,
-                            paymentRequired,
-                            multipleToilets,
-                            paperDeployment,
-                            overallRating,
-                            textArea
-                        }
-                    }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })}>
+                    <TouchableOpacity onPress={() => {
+                        setLoading(true)
+                        onUpdate({
+                            rating: {
+                                cleanness,
+                                looks,
+                                paymentRequired,
+                                multipleToilets,
+                                paperDeployment,
+                                overallRating,
+                                textArea
+                            }
+                        }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })
+                    }}>
                         <Text style={styles.submit}>💩 SUBMIT 💩</Text>
                     </TouchableOpacity>
                 </>)
