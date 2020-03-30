@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
         backgroundColor : '#fffdf9',
         borderRadius : 30,
         padding : 30,
-        width: '95%'
+        width: '95%',
+        marginHorizontal: '2.5%'
     },
     
     input : {
@@ -50,8 +51,63 @@ const styles = StyleSheet.create({
         marginTop : 20,
         padding : 10,
         fontFamily : 'Chocolate_DRINK_DEMO'
-    }
-
+    },
+    genderContainer: {
+        width: '100%',
+        flexDirection: 'column',
+        marginBottom: 20 
+    },
+    profileContainer: {
+        width: '100%',
+        flexDirection: 'column',
+        marginBottom: 20 
+    },
+    genderTop: {
+        flex: 1
+    },
+    profileTop: {
+        flex: 1
+    },
+    genderOptions: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    profileOptions: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    genderOption: {
+        fontSize : 30,
+        alignItems : 'center',
+        color: 'white',
+        backgroundColor : '#79BABF',
+        fontFamily : 'Chocolate_DRINK_DEMO',
+        padding: 10,
+        borderRadius: 10
+    },
+    genderOptionLow: {
+        fontSize : 30,
+        alignItems : 'center',
+        color: 'white',
+        backgroundColor : '#79BABF',
+        fontFamily : 'Chocolate_DRINK_DEMO',
+        padding: 10,
+        borderRadius: 10,
+        opacity: 0.4
+    },
+    profileImage: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain'
+    },
+    profileImageLow: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
+        opacity: 0.3
+    },
 })
 
 export default styles
