@@ -3,10 +3,12 @@ import { StyleSheet, Dimensions } from 'react-native'
 const styles = StyleSheet.create({
 
     top: {
+        width: '100%',
         flex: 0.09,
         height: Dimensions.get('window').height,
         paddingTop: 20,
         flexDirection: 'row',
+        justifyContent: 'space-around',
         paddingBottom: 5,
         backgroundColor: '#297885',
         shadowColor: "#000",
@@ -40,7 +42,13 @@ const styles = StyleSheet.create({
     },
 
     image : {
+        width: '100%',
+        height: '100%',
         resizeMode: 'contain',
+        alignSelf: 'center'
+    },
+    buttonTop: {
+        flex: 0.25
     }
 
     // pills: {

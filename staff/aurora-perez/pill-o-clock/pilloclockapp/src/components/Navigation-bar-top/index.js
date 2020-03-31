@@ -6,40 +6,40 @@ import { View, Text, Image, TouchableOpacity, Button, Alert, ImageBackground } f
 function NavigationBarTop({ toLogin, toMedication, toProgress, toContacts, toPatients, user }) {
     return (
         <View style={styles.top}>
-
-        <ImageBackground imageStyle={styles.image} style={styles.logoutContainer} source={require('../../../assets/images/logout.png')}>
-                <Text onPress={toLogin}></Text>
-        </ImageBackground>
-        {
+            <View style={styles.buttonTop}>
+                <TouchableOpacity onPress={toLogin}>
+                    <Image  style={styles.image} source={require('../../../assets/images/logout.png')}/>
+                </TouchableOpacity>
+            </View>
+            {
                 user.profile === 'patient' && (<>
-                <ImageBackground imageStyle={styles.image} style={styles.pillsContainer} source={require('../../../assets/images/pills.png')}>
-                        <Text onPress={toMedication}></Text>
-                </ImageBackground>
-
-                <ImageBackground imageStyle={styles.image} style={styles.calendarContainer} source={require('../../../assets/images/calendar.png')}>
-                        <Text onPress={toProgress}></Text>
-                </ImageBackground>
-
-                <ImageBackground imageStyle={styles.image} style={styles.contactsContainer} source={require('../../../assets/images/contacts.png')}>
-                        <Text onPress={toContacts}></Text>
-                </ImageBackground>
-
+                <View style={styles.buttonTop}>
+                <TouchableOpacity onPress={toMedication}>
+                    <Image  style={styles.image} source={require('../../../assets/images/pills.png')}/>
+                </TouchableOpacity>
+                </View>
+                <View style={styles.buttonTop}>
+                        <TouchableOpacity onPress={toProgress}>
+                        <Image  style={styles.image} source={require('../../../assets/images/calendar.png')}/>
+                        </TouchableOpacity>
+                </View>
+                <View style={styles.buttonTop}>
+                        <TouchableOpacity onPress={toContacts}>
+                        <Image  style={styles.image} source={require('../../../assets/images/contacts.png')}/>
+                        </TouchableOpacity>
+                </View>
                 </>)
-        }       
-        {       user.profile === 'pharmacist' && (<>
-                <ImageBackground imageStyle={styles.image} style={styles.contactsContainer} source={require('../../../assets/images/receipt.png')}>
-                        <Text onPress={toPatients}></Text>
-                </ImageBackground>
-
-              
-
+            }
+            
+            {
+                user.profile === 'pharmacist' && (<>
+                <View style={styles.buttonTop}>
+                        <TouchableOpacity onPress={toPatients}>
+                        <Image  style={styles.image} source={require('../../../assets/images/receipt.png')}/>
+                        </TouchableOpacity>
+                </View>
                 </>)
-        }
-        
-
-        
-
-
+            }
         </View>
     )
 
