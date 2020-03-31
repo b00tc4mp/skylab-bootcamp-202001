@@ -9,12 +9,6 @@ import { faGamepad, faKeyboard } from '@fortawesome/free-solid-svg-icons'
 
 export default function ({ mySession, homePadding }) {
 
-    // const [chartPadding, setChartPadding] = useState()
-let style
-    if(homePadding) style = {width: `75%`}
-
-    console.log(mySession)
-
     const {
         lowTempP,
         hightTempP,
@@ -27,17 +21,10 @@ let style
         control
     } = mySession
 
-    function dateParser(date) {
-        const fullDate = date.split("T")[0]
-        const day = fullDate.split("-")[2]
-        const month = fullDate.split("-")[1]
-        const year2 = fullDate.split("-")[0]
-        const hour = (date.split("T")[1]).split(".")[0]
-        return `${hour}  ${day}-${month}-${year2}`
-    }
+    let style
+    if (homePadding) style = { width: `75%` }
 
     const consumedBat = batteryP[0] - batteryP[batteryP.length - 2]
-
     let speedAdd = 0
     speedP.forEach(element => {
         speedAdd += element
@@ -48,10 +35,6 @@ let style
     const temperatureData = {
         labels: lowTempP,
         datasets: [
-
-           
-
-
             {
                 label: 'Low Temp',
                 fill: true,
@@ -93,12 +76,9 @@ let style
                 pointRadius: 1,
                 pointHitRadius: 10,
                 data: hightTempP
-            },
-            
+            }
         ]
     }
-
-
 
     const heightData = {
         labels: heightP,
@@ -108,12 +88,12 @@ let style
                 fill: false,
                 lineTension: 0.4,
                 backgroundColor: 'rgba(70,85,230, 0.1)',
-                borderColor: 'rgba(250,160,5, 0.8)',
+                borderColor: '#E27B46',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'rgba(250,160,5, 0.8)',
+                pointBorderColor: '#E27B46',
                 pointBackgroundColor: '#fff',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
@@ -136,12 +116,12 @@ let style
                 fill: false,
                 lineTension: 0.1,
                 backgroundColor: 'rgba(83,102,207, 0.1)',
-                borderColor: 'rgb(70,85,230)',
+                borderColor: '#334E5C',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
-                pointBorderColor: 'rgb(70,85,230)',
+                pointBorderColor: '#334E5C',
                 pointBackgroundColor: '#fff',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
@@ -163,17 +143,17 @@ let style
                 label: 'Atmospheric Pressure',
                 fill: true,
                 lineTension: 0.4,
-                backgroundColor: 'rgba(130,130,130, 0.3)',
-                borderColor: 'rgb(28,220,0)',
+                backgroundColor: 'rgba(130,130,130, 0.2)',
+                borderColor: '#47B29E',
                 borderCapStyle: 'butt',
                 borderDash: [],
                 borderDashOffset: 0.0,
                 borderJoinStyle: 'miter',
                 pointBorderColor: '#fff',
-                pointBackgroundColor: 'rgb(28,220,0)',
+                pointBackgroundColor: '#47B29E',
                 pointBorderWidth: 1,
                 pointHoverRadius: 5,
-                pointHoverBackgroundColor: '#fff',
+                pointHoverBackgroundColor: '#47B29E',
                 pointHoverBorderColor: 'rgb(229,255,0)',
                 pointHoverBorderWidth: 2,
                 pointRadius: 1,
@@ -194,8 +174,6 @@ let style
         }
     }
 
-
-
     return <section className="charts" style={style}>
 
         <div className="chart-estadistics">
@@ -204,7 +182,6 @@ let style
                 <br />
                 {control === 'gp' && <FontAwesomeIcon className="lnav_svg" icon={faGamepad} size="2x" />}
                 {control === 'kb' && <FontAwesomeIcon className="lnav_svg" icon={faKeyboard} size="2x" />}
-
             </div>
             <div>
                 <p>Baterry consumed</p>
@@ -217,16 +194,16 @@ let style
                 <p className="est-num"><CountUp delay={1} end={time} /></p>
             </div>
             <div>
-              
                 <CircularProgressbar value={speedAve} circleRatio={0.75}
                     styles={buildStyles({
                         rotation: 1 / 2 + 1 / 8,
                         strokeLinecap: "butt",
                         trailColor: "#e6e6e6",
                         pathColor: "rgb(51,186,210)",
-                        textColor: "#373737"
-
-                    })} text={`${speedAve} m/s`} />
+                        textColor: "#373737",
+                    })}
+                    className="circle"
+                    text={`${speedAve} m/s`} />
             </div>
         </div>
 
@@ -244,5 +221,6 @@ let style
                 <Line data={speedData} options={opt} />
             </div>
         </div>
+
     </section>
 }

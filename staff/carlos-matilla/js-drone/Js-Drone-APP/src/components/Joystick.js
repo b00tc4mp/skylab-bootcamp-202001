@@ -2,21 +2,18 @@ import React, { useRef, useEffect, useState } from 'react'
 import { channelA, channelB, channelC, channelD } from "../logic/gamepad"
 
 
-export default function ({homePadding}) {
+export default function ({ homePadding }) {
 
     const [joy, setJoy] = useState([])
-    
-    let paddingLeft, paddingRight
-    
-    if(homePadding) {
-        paddingLeft = {left: `300px`, top:`50px`} 
-        paddingRight = {right: `300px`, top: `50px`}
 
-    }else{
-        paddingLeft = {left: `150px`} 
-        paddingRight = {right: `150px`}
+    let paddingLeft, paddingRight
+    if (homePadding) {
+        paddingLeft = { left: `300px`, top: `50px` }
+        paddingRight = { right: `300px`, top: `50px` }
+    } else {
+        paddingLeft = { left: `150px` }
+        paddingRight = { right: `150px` }
     }
-        
 
     function useInterval(callback, delay) {
         const savedCallback = useRef()
@@ -35,7 +32,6 @@ export default function ({homePadding}) {
             }
         }, [delay])
     }
-
 
     useInterval(() => {
         const a = (channelA * 0.25) + 20

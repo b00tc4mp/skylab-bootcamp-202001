@@ -1,29 +1,22 @@
 import React, { useState } from 'react'
 import './Navbar-right.sass'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronDown, faChevronLeft, faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
+import { faChevronDown, faChevronLeft, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 
-export default function ({ mySessions, handleLogout, handleSession, leftMenuView, name, handleHomePadding, estadisticsView, liveChartView}) {
+export default function ({ mySessions, handleLogout, handleSession, leftMenuView, name, handleHomePadding, estadisticsView, liveChartView }) {
 
   const [hoverName, setHoverName] = useState(false)
   const [hoverMenu, setHoverMenu] = useState(false)
 
   let styleMenu
   let styleArrow
-
-  if (hoverMenu){
+  if (hoverMenu) {
     styleMenu = { width: `18rem` }
-    styleArrow = {transform: `rotate(180deg)`}
+    styleArrow = { transform: `rotate(180deg)` }
   }
 
-  
-
   function hourParser(date) {
-    // const fullDate = date.split("T")[0]
-    // const day = fullDate.split("-")[2]
-    // const month = fullDate.split("-")[1]
-    // const year2 = fullDate.split("-")[0]
     const hour = (date.split("T")[1]).split(".")[0]
     return `${hour}`
   }
@@ -52,36 +45,38 @@ export default function ({ mySessions, handleLogout, handleSession, leftMenuView
     setHoverMenu(false)
   }
 
-  function handleMenuHover(){
+  function handleMenuHover() {
     hoverMenu ? setHoverMenu(false) : setHoverMenu(true)
     handleHomePadding()
   }
 
   return <nav className={leftMenuView ? "navbar-right" : "navbar-right little"} style={styleMenu}>
+
     <li className="rnav_logo">
       <button className="rnav_button" onMouseEnter={() => setHoverName(true)} onMouseLeave={() => setHoverName(false)} onClick={handleLogout}>{hoverName ? <FontAwesomeIcon icon={faSignOutAlt} size="1x" /> : nameParser(name)}</button>
     </li>
-    <li className="rnav_left"><FontAwesomeIcon icon={faChevronLeft} size="2x" onClick={handleMenuHover} style={styleArrow}/></li>
+
+    <li className="rnav_left"><FontAwesomeIcon icon={faChevronLeft} size="2x" onClick={handleMenuHover} style={styleArrow} /></li>
+
     <ul className="rnav">
+
       {mySessions.map((session => <>
-        <li className="rnav_item" key={session}onClick={event => {
-            event.preventDefault()
-            handleSession(session)
-            handleHover()
-          }}>
-          
-            <div className="rnav_icon">
-              <spam>{dayParser(session.date)}</spam>
-              <em>{monthParser(session.date)}</em>
-            </div>
-
-            <span className="rnav_itemtext">{hourParser(session.date)}</span>
-          
+        <li className="rnav_item" key={session} onClick={event => {
+          event.preventDefault()
+          handleSession(session)
+          handleHover()
+        }}>
+          <div className="rnav_icon">
+            <spam>{dayParser(session.date)}</spam>
+            <em>{monthParser(session.date)}</em>
+          </div>
+          <span className="rnav_itemtext">{hourParser(session.date)}</span>
         </li>
-
       </>))}
-      
+
     </ul>
-    <li className="rnav_down"><FontAwesomeIcon  icon={faChevronDown} size="2x"/></li>
+
+    <li className="rnav_down"><FontAwesomeIcon icon={faChevronDown} size="2x" /></li>
+    
   </nav>
 }

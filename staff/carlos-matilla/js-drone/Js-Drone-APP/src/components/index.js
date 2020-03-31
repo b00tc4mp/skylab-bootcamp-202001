@@ -11,7 +11,7 @@ import NavbarRight from './Navbar-right'
 import Video from './Video'
 import Joystick from './Joystick'
 import Controls from './Controls'
-import Keys from './Keys'
+
 
 
 export {
@@ -27,7 +27,5 @@ export {
     Charts, 
     Video, 
     Joystick, 
-    Controls,
-    Keys
-
+    Controls
 }

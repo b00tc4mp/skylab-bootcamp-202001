@@ -1,8 +1,7 @@
-import {socket} from "../socket"
+import { socket } from "../socket"
 
 let takeOffK = false, landK = false
 const v = 70, negV = -70
-
 
 export { takeOffK, landK, v, negV }
 
@@ -14,35 +13,34 @@ export function keyUp(e) {
     }
 
     if (e.code === "KeyA") {
-           console.log('Left')
+        console.log('Left')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "KeyD") {
-           console.log('Right')
+        console.log('Right')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "KeyS") {
-           console.log('Backward')
+        console.log('Backward')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowUp") {
-           console.log('Up')
+        console.log('Up')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowLeft") {
-           console.log('Turn Left')
+        console.log('Turn Left')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowDown") {
-           console.log('Down')
+        console.log('Down')
         socket.emit('control', `rc 0 0 0 0`)
     }
     if (e.code === "ArrowRight") {
-           console.log('Turn Right')
+        console.log('Turn Right')
         socket.emit('control', `rc 0 0 0 0`)
     }
 }
-
 
 export function keyDown(e) {
 

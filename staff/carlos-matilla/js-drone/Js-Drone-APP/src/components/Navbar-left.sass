@@ -1,9 +1,7 @@
 
 .navbar-left
   position: absolute
-  // background-color:#203246
   background-color: #fff 
-  // border-right: 1px solid #fff
   z-index: 4
   top: 0
   left: 0
@@ -12,7 +10,7 @@
   align-items: center
   height: 100vh
   box-shadow: 0.3px 1px 15px #c4c4c4
-  z-index: 3939393939393939393939393939393939939393932222222222
+  z-index: 39393939393939393939
  
 
 .lnav
@@ -24,7 +22,7 @@
   flex-direction: column
   align-items: center
   height: 100%
-  z-index: 393939393939393939393939393939393993939393222222222222
+  z-index: 393939393939393939393
   
 
 .lnav_logo
@@ -35,7 +33,6 @@
   display: flex
   justify-content: center
   align-items: center
-  // background: #1B2A3D
   font-size: 0.8rem
   letter-spacing: 0.2ch
   width: 100%
@@ -47,22 +44,18 @@
   justify-content: center
   width: 100%
   height: 5rem
-  // color: #334E5C
-  color: #0fabbc
+  color: #334E5C
   text-decoration: none
   // filter: opacity(0.7)
   transition: 600ms
   cursor: pointer
   margin: 4rem 0
-    z-index: 3939393939393939393939393939393939939393932222222222949494949
+  z-index: 393939393939393939393939393939393
   &:hover
-    // filter:  opacity(1)
     background: #e4e4e4
-    
     svg
       transition: .3s
       transform: scale(1.2)
-
 
 .lnav-logo_link
   display: flex
@@ -80,13 +73,9 @@
   width: 100%
 
 .active
-    // background: #203246
-    color: #fa163f
-    border-left: 4px solid #fa163f
+    color: #334E5C
+    border-left: 5px solid 
     
-
-
-
 @media (prefers-reduced-motion: no-preference) 
   .lnav-logo_link 
     animation: React-logo-spin infinite 20s linear
@@ -98,11 +87,3 @@
   to 
     transform: rotate(360deg)
 
-
-// .lnav_border
-//   position: absolute
-//   height: 90vh
-//   border: 0.025rem solid #868686
-//   border-radius: 50%
-//   left: 95px
-//   list-style: none

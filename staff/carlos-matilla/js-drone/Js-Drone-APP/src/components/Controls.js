@@ -5,15 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGamepad, faKeyboard, faChevronUp, faChevronDown, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 
-
 export default function ({ toggleKeyboard, toggleGamepad, homePadding }) {
 
     const [active, setActive] = useState('g')
     const [key, setKey] = useState()
 
     function handleKeyDown(event) {
-        console.log(event.key)
-       
         if (event.key === 'w') setKey('w')
         if (event.key === 'a') setKey('a')
         if (event.key === 's') setKey('s')
@@ -36,19 +33,18 @@ export default function ({ toggleKeyboard, toggleGamepad, homePadding }) {
     }
 
     let paddingLeft, paddingRight
-    
-    if(homePadding) {
-        paddingLeft = {left: `150px`, top: `50px`} 
-        paddingRight = {right: `150px`, top: `50px`}
+    if (homePadding) {
+        paddingLeft = { left: `150px`, top: `50px` }
+        paddingRight = { right: `150px`, top: `50px` }
 
-    }else{
-        paddingLeft = {left: `50px`} 
-        paddingRight = {right: `50px`}
+    } else {
+        paddingLeft = { left: `50px` }
+        paddingRight = { right: `50px` }
     }
+
     return <>
 
         <div className="controls-wrapper" onKeyDown={handleKeyDown} onKeyUp={handleKeyUp}>
-        {/*  */}
             <nav className="controls-menu">
 
                 <li className={active === "g" ? "control-icon active-down" : "control-icon"}>
@@ -73,7 +69,6 @@ export default function ({ toggleKeyboard, toggleGamepad, homePadding }) {
 
             </nav>
 
-
             {active === 'k' && <div><div className="letter-keys" style={paddingLeft}>
                 <div className="w">
                     <li><a href="#" className={key === 'w' ? "key key-active" : "key"} ><span>w</span></a></li>
@@ -96,10 +91,9 @@ export default function ({ toggleKeyboard, toggleGamepad, homePadding }) {
                         <li><a href="#" className={key === 'ArrowLeft' ? "key key-active" : "key"}><span><FontAwesomeIcon icon={faChevronLeft} size="1x" /></span></a></li>
                     </div>
                 </div> </div>
-            } 
+            }
 
-            {active === 'g' && <Joystick homePadding={homePadding}/>}
+            {active === 'g' && <Joystick homePadding={homePadding} />}
         </div>
-
     </>
 }

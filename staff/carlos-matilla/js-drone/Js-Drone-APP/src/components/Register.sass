@@ -9,9 +9,11 @@
     background-color: #fff
     box-shadow: 12px 8px 100px #cac8c8
     color: #646464
+    min-width: 20rem
+    min-height: 30rem
 
     input
-        
+
         border: 1px solid
         padding: .5rem
         width: 80%
@@ -29,6 +31,9 @@
         width: 35%
         border-radius: 2rem
         outline: none
+        transition: .2s
+        &:hover
+            transform: scale(1.15)
 
 .form_logo
     margin: 2rem 0
@@ -42,14 +47,13 @@
     cursor: pointer
     transform: rotate(0deg)
     transition: 600ms
-  
+
 .to-register
     margin: 1.5rem 0
     a
-     text-decoration: none
-     color: #203246
+        text-decoration: none
+        color: #203246
 
-
-@media (prefers-reduced-motion: no-preference) 
-  .form_logo
-    animation: React-logo-spin infinite 20s linear
+@media (prefers-reduced-motion: no-preference)
+    .form_logo
+        animation: React-logo-spin infinite 20s linear

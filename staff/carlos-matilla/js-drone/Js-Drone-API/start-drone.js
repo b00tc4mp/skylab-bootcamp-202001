@@ -7,8 +7,8 @@ const throttle = require('lodash/throttle')
 var wifi = require("node-wifi")
 
 
-const { parseState, handleError } = require("./../Js-Drone-UTILS")
-const { WifiError, NotAllowedError } = require('./../Js-Drone-ERRORS')
+const { parseState, handleError } = require("../Js-Drone-UTILS")
+const { WifiError, NotAllowedError } = require('../Js-Drone-ERRORS')
 
 
 const HOST = '192.168.10.1'
@@ -27,7 +27,7 @@ let counter = 0
 
 if (semaforo) throw new NotAllowedError(`PORT ${port} already in use`)
 
-const websocket = new ws.Server({ port: 2212 }, ()=>{
+const websocket = new ws.Server({ port: 2212 }, () => {
     let res = 'Websocket connected'
     process.send(res)
 })
@@ -59,7 +59,7 @@ websocket.on('connection', function connection(websocket) {
                         console.log('tello connected')
                         clearInterval(seekingTello)
                         callDrone()
-                        
+
                     }, 3000);
 
                 } catch (error) {
@@ -85,15 +85,14 @@ websocket.on('connection', function connection(websocket) {
                     }
                 })
             }
-        }
-        )
+        })
     }
 
 
     const seekingTello = setInterval(() => {
         seekWifi()
     }, 6000)
-  
+
 
     function callDrone() {
 
@@ -123,7 +122,6 @@ websocket.on('connection', function connection(websocket) {
         telemetria.on('close', function () {
             console.log('Telemetria connection is closed !')
         })
-
     }
 
 
@@ -131,7 +129,6 @@ websocket.on('connection', function connection(websocket) {
         console.log('web socket disconnected', message)
         clearInterval(seekingTello)
     })
-
 })
 
 
@@ -140,7 +137,6 @@ io.on('connection', socket => {
     console.log('socket io connected')
 
     socket.on('control', function (msg) {
-        console.log(msg)
         drone.send(msg, 0, msg.length, 8889, '192.168.10.1', handleError)
     })
 

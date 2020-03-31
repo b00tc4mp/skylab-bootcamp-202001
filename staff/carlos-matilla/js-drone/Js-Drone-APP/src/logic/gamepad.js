@@ -1,18 +1,15 @@
-import {socket} from "../socket"
+import { socket } from "../socket"
 import { NotAllowedError } from 'drone-errors'
 
 let semaforo2 = true,
-channelA,
-channelB,
-channelC,
-channelD,
-start,
-fps = 30,
-landG = false,
-takeOffG = false
-
-// var socketURL = 'ws://localhost:8080'
-// var ws = new WebSocket(socketURL)
+  channelA,
+  channelB,
+  channelC,
+  channelD,
+  start,
+  fps = 30,
+  landG = false,
+  takeOffG = false
 
 export { channelA, channelB, channelC, channelD, takeOffG, landG }
 
@@ -33,24 +30,14 @@ const parse = (x => {
   return Math.round(x * 100)
 })
 
-//// CONTADOR FPS
-// let counter = 0
-// setInterval(() => {
-//   console.log(counter)
-//   counter = 0
-// }, 1000);
-
-
 export const gameLoop = () => {
 
   if (semaforo2) {
-
     var gamepads = navigator.getGamepads
       ? navigator.getGamepads()
       : navigator.webkitGetGamepads
         ? navigator.webkitGetGamepads
         : []
-
     try {
       var gp = gamepads[0]
       if (gp === null) throw new NotAllowedError('No gamepad connected')
@@ -62,12 +49,10 @@ export const gameLoop = () => {
       }
       // 1 is a
       if (buttonPressed(gp.buttons[6])) {
-        
         socket.emit('control', `flip r`)
       }
       // 2 is y
       if (buttonPressed(gp.buttons[7])) {
-        
         socket.emit('control', `flip l`)
       }
       // 3 is x
@@ -91,16 +76,13 @@ export const gameLoop = () => {
         landG = false
         takeOffG = true
       }
-
       if (gp.axes) {
         channelA = parse(gp.axes[0])
         channelB = invert(parse(gp.axes[1]))
         channelC = parse(gp.axes[3])
         channelD = parse(gp.axes[2])
-
-        console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
+        // console.log(`rc ${parse(gp.axes[0])} ${invert(parse(gp.axes[1]))} ${parse(gp.axes[3])} ${parse(gp.axes[2])}`)
         socket.emit('control', `rc ${channelA} ${channelB} ${channelC} ${channelD}`)
-        // ws.send(`rc ${channelA} ${channelB} ${channelC} ${channelD}`)
       }
 
       setTimeout(function () {
@@ -109,7 +91,6 @@ export const gameLoop = () => {
     } catch (error) {
       return
     }
-
   }
 }
 

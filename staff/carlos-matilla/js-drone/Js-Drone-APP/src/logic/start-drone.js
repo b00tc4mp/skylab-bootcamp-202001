@@ -23,8 +23,6 @@ export default (function (port, httpPort) {
         if (status === 200) {
             
             const { port } = await response.json()
-
-            
             return port
         }
 

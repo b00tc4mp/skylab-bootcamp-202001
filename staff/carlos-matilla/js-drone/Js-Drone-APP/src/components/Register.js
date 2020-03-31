@@ -28,7 +28,7 @@ export default function ({ onSubmit, onGoToLogin, error, onMount }) {
     }
 
     return <>
-    <form className="register" onSubmit={handleSubmit}>
+        <form className="register" onSubmit={handleSubmit}>
             <img src={drone} className="form_logo" alt="logo" />
             <input type="text" name="name" placeholder="Name" />
             <input type="text" name="surname" placeholder="Surname" />
@@ -38,6 +38,6 @@ export default function ({ onSubmit, onGoToLogin, error, onMount }) {
             {error && <Feedback message={error} level="warn" />}
             <p className="to-register">Go to <a href="" onClick={handleGoToLogin}>Login</a></p>
         </form>
-        
-        </>
+
+    </>
 }

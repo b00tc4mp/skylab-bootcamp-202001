@@ -7,11 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPowerOff, faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 
-
-
-var jmuxer
-
-
 export default function () {
     const [status, updateStatus] = useState(' - ');
     const [battery, setBattery] = useState()
@@ -19,20 +14,15 @@ export default function () {
     const [loading, setLoading] = useState()
     const [videoOn, setVideoOn] = useState(false)
 
-    async function handleStartDrone() {
-    
-      
-    
+    function handleStartDrone() {
+
         try {
-    
             startDrone()
-           
             setVideoOn(true)
-    
             setTimeout(() => {
                 var socketURL = `ws://localhost:2212`
                 const ws = new WebSocket(socketURL)
-                jmuxer = new JMuxer({
+                const jmuxer = new JMuxer({
                     node: 'player',
                     mode: 'video',
                     flushingTime: 1,
@@ -43,23 +33,17 @@ export default function () {
                     jmuxer.feed({
                         video: new Uint8Array(event.data)
                     })
-    
-    
                 })
-    
+
                 ws.addEventListener('error', function (e) {
                     console.log('Socket Error');
                 })
             }, 1000);
-    
-    
+
         } catch (error) {
             console.log(error)
         }
-    
     }
-   
-    
 
     socket.on('status', data => updateStatus(data))
     socket.on('dronestate', data => {
@@ -78,25 +62,23 @@ export default function () {
         setLoading(false)
         setVideoOn(false)
     }
-    function handleLoading(){
+
+    function handleLoading() {
         setLoading(true)
     }
 
-    
+    const animation = useRef({})
+    useEffect(() => {
+        animation.current = {
+            animationName: `fadeInDown`,
+            animationDuration: `4s`,
+            animationDelay: `0s`,
+            animationIterationCount: `1`
+        }
+        return () => animation.current = {};
+    }, [])
 
 
-const animation = useRef({})
-useEffect(() => {
-    animation.current = {
-        animationName: `fadeInDown`,
-        animationDuration: `3.8s`,
-        animationDelay: `0s`,
-        animationIterationCount: `1`
-    }
-    return () => animation.current={};
-  }, [])
-  
-  
     return <>
         <div className="video-wrapper" style={animation.current}>
 
@@ -104,10 +86,10 @@ useEffect(() => {
                 <div className="aspect-ratio__inner-wrapper">
 
                     <div className="start_button_wrapper" >
-                        {battery === undefined && <button className="start-button" onClick={()=>{
+                        {battery === undefined && <button className="start-button" onClick={() => {
                             handleStartDrone()
                             handleLoading()
-                        }}>{!loading? `Connect to Tello` : <FontAwesomeIcon icon={faSpinner} spin size="2x" />}</button>}
+                        }}>{!loading ? `Connect to Tello` : <FontAwesomeIcon icon={faSpinner} spin size="2x" />}</button>}
                     </div>
 
                     <div className="drone-status">

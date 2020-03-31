@@ -1,12 +1,10 @@
 import context from './context'
 const { NotAllowedError } = require('drone-errors')
 
-
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (time, control, lowTempP, hightTempP, batteryP, heightP, speedP, atmosPressureP) {
  
-
     return (async () => {
         const response = await fetch(`${API_URL}/sessions`, {
             method: 'POST',
@@ -30,7 +28,6 @@ export default (function (time, control, lowTempP, hightTempP, batteryP, heightP
 
             throw new Error(error)
         }
-
         throw new Error('server error')
     })()
 }).bind(context)

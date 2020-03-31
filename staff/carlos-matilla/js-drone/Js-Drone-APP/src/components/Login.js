@@ -4,24 +4,22 @@ import Feedback from './Feedback'
 import drone from './drone.svg'
 
 export default function ({ onSubmit, onGoToRegister, error, onMount }) {
+
     useEffect(() => {
         onMount()
     }, [])
 
     function handleSubmit(event) {
         event.preventDefault()
-
         const { target: {
             username: { value: username },
             password: { value: password }
         } } = event
-
         onSubmit(username, password)
     }
 
     function handleGoToRegister(event) {
         event.preventDefault()
-
         onGoToRegister()
     }
 

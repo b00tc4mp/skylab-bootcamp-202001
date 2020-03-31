@@ -1,8 +1,6 @@
 import { validate } from 'drone-utils'
 const { NotAllowedError } = require('drone-errors')
 
-
-
 const API_URL = process.env.REACT_APP_API_URL
 
 export default function (name, surname, username, password) {

@@ -1,5 +1,5 @@
 let time = 0
-let control 
+let control
 let lowTemp = []
 let hightTemp = []
 let battery = []
@@ -7,7 +7,7 @@ let height = []
 let speed = []
 let atmosPressure = []
 
-export{
+export {
     time,
     control,
     lowTemp,
@@ -18,32 +18,32 @@ export{
     atmosPressure
 }
 
-export function saveData (channelA, channelB, channelC, channelD, v, negV, temph, templ, bat, baro, tof){
+export function saveData(channelA, channelB, channelC, channelD, v, negV, temph, templ, bat, baro, tof) {
 
-    if(tof === undefined){
+    if (tof === undefined) {
         time = 0
-    }else{
+    } else {
         time++
     }
 
     // Speed
-    if(channelA !== null){  
-        
-        if(channelA === undefined){
+    if (channelA !== null) {
+
+        if (channelA === undefined) {
             speed = []
-        }else{
+        } else {
             control = 'gp'
             let maxSpeed = Math.max(channelA, channelB, channelC, channelD)
-            if(!isNaN(maxSpeed)) speed.push(maxSpeed)
+            if (!isNaN(maxSpeed)) speed.push(maxSpeed)
         }
 
-    } 
+    }
 
-    if(v && negV !== null){
+    if (v && negV !== null) {
 
-        if(v && negV === undefined){
+        if (v && negV === undefined) {
             speed = []
-        }else{
+        } else {
             control = 'kb'
             switch (!isNaN(v) || !isNaN(negV)) {
                 case !isNaN(v):
@@ -53,47 +53,45 @@ export function saveData (channelA, channelB, channelC, channelD, v, negV, temph
                 case !isNaN(negV):
                     speed.push(negV)
                     break;
-            
+
                 default:
                     break;
             }
         }
     }
 
-
-
     // hightTemp
-    if(temph === undefined){
+    if (temph === undefined) {
         hightTemp = []
-    }else{
+    } else {
         hightTemp.push(temph)
     }
 
     // lowTemp
-    if(temph === undefined){
+    if (temph === undefined) {
         lowTemp = []
-    }else{
+    } else {
         lowTemp.push(templ)
     }
 
     // battery
-    if(bat === undefined){
+    if (bat === undefined) {
         battery = []
-    }else{
+    } else {
         battery.push(bat)
     }
 
     // atmosPressure
-    if(baro === undefined){
+    if (baro === undefined) {
         atmosPressure = []
-    }else{
+    } else {
         atmosPressure.push(baro)
     }
 
     // height
-    if(tof === undefined){
+    if (tof === undefined) {
         height = []
-    }else{
+    } else {
         height.push(tof)
     }
 

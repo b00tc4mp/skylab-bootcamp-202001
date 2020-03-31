@@ -6,7 +6,7 @@ import { logout, isLoggedIn, retrieveUser, saveData, parseData } from './../logi
 import { Telemetry, OnLiveCharts, NavbarLeft, NavbarRight, Charts, Video, Controls } from './'
 import { Context } from './ContextProvider'
 import { withRouter } from 'react-router-dom'
-import {socket} from '../socket'
+import { socket } from '../socket'
 
 
 
@@ -32,8 +32,6 @@ export default withRouter(function ({ history }) {
 
   useEffect(() => {
 
-    
-
     window.addEventListener("gamepadconnected", gamepadConnect)
     window.addEventListener("gamepaddisconnected", gamepadDisconnect)
 
@@ -43,14 +41,12 @@ export default withRouter(function ({ history }) {
 
     let droneState
     let semaforo = false
-    
 
     socket.on('dronestate', data => {
       return droneState = data
     })
 
     const interval = setInterval(() => {
-
       if (droneState && (takeOffG || takeOffK)) {
         let { templ, temph, tof, bat, baro } = droneState
         if (takeOffG) saveData(channelA, channelB, channelC, channelD, null, null, temph, templ, bat, baro, tof)
@@ -81,7 +77,6 @@ export default withRouter(function ({ history }) {
       })()
     else setState({ page: 'login' })
 
-
       ; (async () => {
         try {
           const { sessions } = await retrieveUser()
@@ -90,7 +85,6 @@ export default withRouter(function ({ history }) {
           // TODO do something with this error (feedback?)
         }
       })()
-
 
     return () => clearInterval(interval)
   }, [])
@@ -102,8 +96,8 @@ export default withRouter(function ({ history }) {
     history.push('/login')
   }
 
-  function handleHomePadding(){
-    homePadding? setHomePadding(false) : setHomePadding(true)
+  function handleHomePadding() {
+    homePadding ? setHomePadding(false) : setHomePadding(true)
   }
 
   function handleSession(session) {
@@ -116,7 +110,6 @@ export default withRouter(function ({ history }) {
     setLiveChartView(false)
     setEstadisticsView(false)
     setLeftMenuView(false)
-    // setVideoView(false)
     setControlsView(false)
   }
 
@@ -148,7 +141,6 @@ export default withRouter(function ({ history }) {
     setEstadisticsView(false)
     setLeftMenuView(false)
     setLiveChartView(true)
-
   }
 
   function toggleEstadistics() {
@@ -159,7 +151,6 @@ export default withRouter(function ({ history }) {
     setEstadisticsView(true)
     setLeftMenuView(false)
     setLiveChartView(false)
-
   }
 
   function toggleControls() {
@@ -183,7 +174,7 @@ export default withRouter(function ({ history }) {
   }
 
 
- 
+
 
 
   return <>
@@ -191,21 +182,18 @@ export default withRouter(function ({ history }) {
 
     <div className={homePadding ? "home right-padding" : "home"}>
 
-      {videoView && <Video  />}
+      {videoView && <Video />}
 
-      
+      {mySession && chartsView && <Charts mySession={mySession} homePadding={homePadding} />}
 
-      {mySession && chartsView && <Charts mySession={mySession} homePadding={homePadding}/>}
-
-
-      {controlsView && <Controls toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} homePadding={homePadding}/>}
+      {controlsView && <Controls toggleGamepad={toggleGamepad} toggleKeyboard={toggleKeyboard} homePadding={homePadding} />}
 
       {!controlsView && estadisticsView && <Telemetry />}
-      {!controlsView &&liveChartView && <OnLiveCharts />}
-       
+
+      {!controlsView && liveChartView && <OnLiveCharts />}
 
     </div>
 
-    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView} name={name} homePadding={homePadding} handleHomePadding={handleHomePadding} estadisticsView={estadisticsView} liveChartView={liveChartView}/>
+    <NavbarRight handleLogout={handleLogout} handleSession={handleSession} mySessions={mySessions} leftMenuView={leftMenuView} name={name} homePadding={homePadding} handleHomePadding={handleHomePadding} estadisticsView={estadisticsView} liveChartView={liveChartView} />
   </>
 })

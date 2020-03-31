@@ -14,7 +14,6 @@ module.exports = id => {
                 delete session._id
             })
             
-            
             return user.save()
         })
         .then(({ name, surname, username, sessions}) => 
