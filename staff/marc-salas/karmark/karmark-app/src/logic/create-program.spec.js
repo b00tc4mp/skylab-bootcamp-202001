@@ -11,7 +11,7 @@ const { env: {
     REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET
 } } = process
 
-fdescribe('createProgram', () => {
+describe('createProgram', () => {
     let name, surname, username, password, programName, code, _id
 
     beforeAll( async () =>{
