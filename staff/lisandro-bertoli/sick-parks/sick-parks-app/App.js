@@ -75,8 +75,6 @@ export default function App() {
 		})()
 	}, [])
 
-
-
 	const __handleErrors__ = (error) => {
 		setError(error)
 
@@ -94,7 +92,6 @@ export default function App() {
 			__handleErrors__(message)
 		}
 	}
-
 
 	_getNotificationsPermissionsAsync = async () => {
 		const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
@@ -116,8 +113,6 @@ export default function App() {
 
 	}
 
-
-
 	const handleLogout = async () => {
 		setUser(null)
 		setError(null)
@@ -125,7 +120,44 @@ export default function App() {
 
 	}
 
+	const handleLogin = async (email, password) => {
+		try {
+			await loginUser(email, password)
 
+			const user = await retrieveUser()
+
+			user.notifications = await _getNotificationsPermissionsAsync()
+			user.allowLocation = await _getLocationPermissionsAsync()
+
+			setUser(user)
+			setError(null)
+		} catch ({ message }) {
+			__handleErrors__(message)
+		}
+	}
+
+	const handleRegister = (name, surname, email, password, navigation) => {
+		try {
+			await registerUser(name, surname, email, password)
+
+			setError(null)
+			navigation.navigate('Login')
+		} catch ({ message }) {
+			__handleErrors__(message)
+		}
+	}
+
+	const handleNewPark = async (data) => {
+		try {
+			await createPark(data)
+
+			await __handleUserUpdate__()
+
+		} catch ({ message }) {
+			console.log(message)
+			__handleErrors__(message)
+		}
+	}
 
 	function LandingScreen({ navigation }) {
 
@@ -133,47 +165,21 @@ export default function App() {
 		const handleOnToRegister = () => navigation.navigate('Register')
 		const handleOnToHome = () => setUser('guest')
 
-
 		return <Landing onToLogin={handleOnToLogin} onToRegister={handleOnToRegister} onToHome={handleOnToHome} />
 	}
 
+
+
 	function LoginScreen({ navigation }) {
-
-		const handleSubmit = async (email, password) => {
-			try {
-				await loginUser(email, password)
-
-				const user = await retrieveUser()
-
-				user.notifications = await _getNotificationsPermissionsAsync()
-				user.allowLocation = await _getLocationPermissionsAsync()
-
-				setUser(user)
-				setError(null)
-			} catch ({ message }) {
-				__handleErrors__(message)
-			}
-		}
 
 		const handleGoToRegister = () => navigation.navigate('Register')
 
-		return <Login onSubmit={handleSubmit} onToRegister={handleGoToRegister} error={error} />
+		return <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} error={error} />
 	}
 
-	function RegisterScreen(props) {
-		const { navigation } = props
+	function RegisterScreen({ navigation }) {
 
-		const handleSubmit = async (name, surname, email, password) => {
-			try {
-				await registerUser(name, surname, email, password)
-
-				setError(null)
-				navigation.navigate('Login')
-			} catch ({ message }) {
-				__handleErrors__(message)
-			}
-		}
-
+		const handleSubmit = async (name, surname, email, password) => handleRegister(name, surname, email, password, navigation)
 		const handleGoToLogin = () => navigation.navigate('Login')
 
 		return <Register onSubmit={handleSubmit} onToLogin={handleGoToLogin} error={error} />
@@ -205,29 +211,12 @@ export default function App() {
 		return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
 	}
 
-	function HomeScreen({ navigation }) {
+	function HomeScreen() { return <Home user={user} updateUser={__handleUserUpdate__} /> }
 
 
-		return <Home user={user} updateUser={__handleUserUpdate__} />
-	}
-
-	function BuilderScreen({ navigation }) {
-
+	function BuilderScreen() {
 
 		const handleOnToLogin = () => setUser(null)
-
-
-		const handleNewPark = async (data) => {
-			try {
-				await createPark(data)
-
-				await __handleUserUpdate__()
-
-			} catch ({ message }) {
-				console.log(message)
-				__handleErrors__(message)
-			}
-		}
 
 		return <ParkBuilder user={user} onNewPark={handleNewPark} onToLogin={handleOnToLogin} error={error} />
 	}
@@ -250,14 +239,12 @@ export default function App() {
 							headerBackTitleVisible: false,
 							headerStyle: {
 								backgroundColor: '#82A4B3',
-
 							},
 							headerTitleStyle: {
 								fontFamily: 'montserrat-semi'
 							},
 							headerTintColor: '#EFEBDA'
-						}}
-					>
+						}}>
 						<>
 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={LandingScreen} />
 							<Stack.Screen name="Register" component={RegisterScreen} />
@@ -269,13 +256,11 @@ export default function App() {
 					<Tab.Navigator
 						screenOptions={({ route }) => ({
 							tabBarIcon: ({ focused, color, size }) => {
-								let iconName;
-
+								let iconName
 								if (route.name === 'Home') iconName = homeImage
 								else if (route.name === 'Map') iconName = mapImage
 								else if (route.name === 'Build') iconName = buildImage
 								else if (route.name === 'Profile') iconName = profileImage
-
 
 								return <Image source={iconName} style={styles.icon} />
 							},
@@ -286,10 +271,9 @@ export default function App() {
 							style: {
 								backgroundColor: '#82A4B3'
 							}
-						}}
-					>
+						}}>
 						<Tab.Screen name="Home" component={HomeScreen} />
-						{/* TODO check move screens that top if a lot of params asre passed  */}
+
 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
 						<Tab.Screen name="Build" component={BuilderScreen} />
 						<Tab.Screen name="Profile" component={ProfileScreen} />

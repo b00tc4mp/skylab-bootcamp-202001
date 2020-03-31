@@ -48,133 +48,138 @@ export default function Home({ user, updateUser }) {
         }
     }
 
+    const search = async (query, navigation) => {
+        try {
+            setCurrentQuery(query)
+            const results = await searchParks(query, [location.longitude, location.latitude])
 
-    function SearchScreen({ navigation }) {
-        const handleSearch = async (query) => {
-            try {
-                setCurrentQuery(query)
-                const results = await searchParks(query, [location.longitude, location.latitude])
+            if (!results.length) setError(`No ${query} parks found`)
+            else setError(null)
 
-                if (!results.length) setError(`No ${query} parks found`)
-                else setError(null)
+            setResults(results)
 
-                setResults(results)
-                navigation.navigate('Results')
-            } catch ({ message }) {
-                setError(message)
+            navigation && navigation.navigate('Results')
+        } catch ({ message }) {
+            setError(message)
 
-                navigation.navigate('Results')
+            navigation.navigate('Results')
 
-            }
         }
-        return <Search onSubmit={handleSearch} />
     }
 
-    function ResultsScreen({ navigation }) {
-        const handleGoToDetails = async (id) => {
-            try {
-                const item = await retrievePark(id)
-                setDetailedPark(item)
+    const goToDetails = async (id, navigation) => {
+        try {
+            const item = await retrievePark(id)
+            setDetailedPark(item)
 
-                navigation.navigate('ParkDetails')
-            } catch (error) {
-                if (error.name === 'NotFoundError') Alert.alert(error.message)
-                else setError(error.message)
-            }
+            navigation.navigate('ParkDetails')
+        } catch (error) {
+            if (error.name === 'NotFoundError') Alert.alert(error.message)
+            else setError(error.message)
         }
-        return <Results results={results} error={error} onToDetails={handleGoToDetails} />
+    }
+
+    const handleOnDelete = async (navigation) => {
+        try {
+            await deletePark(detailedPark.id, user.id)
+            await updateUser()
+
+            Alert.alert('Park deleted')
+
+            navigation.popToTop()
+        } catch ({ message }) {
+            Alert.alert(message)
+        }
+    }
+
+    const handleUpdate = async (update) => {
+
+        try {
+            await updatePark(user.id, detailedPark.id, update)
+
+            __handleParkUpdate__(detailedPark.id)
+        } catch ({ message }) {
+            Alert.alert(message)
+        }
+
+    }
+
+    const handleParkVote = async (vote) => {
+        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+
+        try {
+            await votePark(user.id, detailedPark.id, vote)
+
+            __handleParkUpdate__(detailedPark.id)
+        } catch ({ message }) {
+            Alert.alert('This action cannot be performed twice by the same user')
+        }
+    }
+
+    const submitComment = async (body) => {
+        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+
+        try {
+            await publishComment(user.id, detailedPark.id, body)
+
+            __handleParkUpdate__(detailedPark.id)
+        } catch ({ message }) {
+            Alert.alert(message)
+        }
+    }
+
+    const handleParkContribution = async (action) => {
+        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+
+        try {
+            if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
+
+            else if (action === 'approve') await approvePark(user.id, detailedPark.id)
+
+            __handleParkUpdate__(detailedPark.id)
+
+            Alert.alert('Thanks for contributing!')
+        } catch ({ message }) {
+
+            Alert.alert(message)
+        }
+    }
+
+    function SearchScreen({ navigation }) {
+        const handleOnSubmit = (query) => search(query, navigation)
+
+        return <Search onSubmit={handleOnSubmit} />
     }
 
     function TopSearchHeader() {
-        const handleSearch = async (query) => {
-            try {
-                setCurrentQuery(query)
+        const handleOnSubmit = (query) => search(query)
 
-                const results = await searchParks(query, [location.longitude, location.latitude])
+        return <TopSearch onSubmit={handleOnSubmit} query={currentQuery} />
+    }
 
-                if (!results.length) setError(`No ${query} parks found`)
-                else setError(null)
+    function ResultsScreen({ navigation }) {
+        const handleGoToDetails = (id) => goToDetails(id, navigation)
 
-                setResults(results)
-            } catch ({ message }) {
-                setError(message)
-            }
-        }
-        return <TopSearch onSubmit={handleSearch} query={currentQuery} />
+        return <Results results={results} error={error} onToDetails={handleGoToDetails} />
     }
 
     function ParkDetailsScreen({ navigation }) {
-        const handleDeletePark = async () => {
-            try {
-                navigation.popToTop()
+        const onDelete = () => handleOnDelete(navigation)
 
-                await deletePark(detailedPark.id, user.id)
-                await updateUser()
+        const onParkUpdate = update => handleUpdate(update)
 
-                Alert.alert('Park deleted')
-            } catch ({ message }) {
-                Alert.alert(message)
-            }
-        }
+        const handleVote = vote => handleParkVote(vote)
 
-        const handleUpdate = async (update) => {
-            try {
-                await updatePark(user.id, detailedPark.id, update)
+        const handleCommentSubmit = body => submitComment(body)
 
-                __handleParkUpdate__(detailedPark.id)
-            } catch ({ message }) {
-                Alert.alert(message)
-            }
-        }
-
-        const handleVote = async (vote) => {
-            if (user === 'guest') return Alert.alert('This action needs you to be registered')
-
-            try {
-                await votePark(user.id, detailedPark.id, vote)
-
-                __handleParkUpdate__(detailedPark.id)
-            } catch ({ message }) {
-                Alert.alert('This action cannot be performed twice by the same user')
-            }
-        }
-
-        const handleCommentSubmit = async (body) => {
-            if (user === 'guest') return Alert.alert('This action needs you to be registered')
-
-            try {
-                await publishComment(user.id, detailedPark.id, body)
-
-                __handleParkUpdate__(detailedPark.id)
-            } catch ({ message }) {
-                Alert.alert(message)
-            }
-        }
-
-        const handleContribution = async (action) => {
-            if (user === 'guest') return Alert.alert('This action needs you to be registered')
-
-            try {
-                if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
-
-                else if (action === 'approve') await approvePark(user.id, detailedPark.id)
-
-                __handleParkUpdate__(detailedPark.id)
-
-                Alert.alert('Thanks for contributing!')
-            } catch ({ message }) {
-
-                Alert.alert(message)
-            }
-        }
-
+        const handleContribution = action => handleParkContribution(action)
 
         return <ParkDetails
             park={detailedPark}
             user={user}
             onVote={handleVote}
-            onDeletePark={handleDeletePark}
-            onUpdate={handleUpdate}
+            onDeletePark={onDelete}
+            onUpdate={onParkUpdate}
             onCommentSubmit={handleCommentSubmit}
             onContribution={handleContribution}
             goBack={navigation.goBack}
@@ -183,30 +188,12 @@ export default function Home({ user, updateUser }) {
     }
 
     return (
-
-        <Stack.Navigator
+        <Stack.Navigator mode='modal' headerMode='screen' initialRouteName='Search'
             screenOptions={{
-                headerBackTitleVisible: false,
-                headerStyle: {
-                    backgroundColor: '#82A4B3',
-
-                },
-                headerTitleStyle: {
-                    fontFamily: 'montserrat-semi'
-                },
-                headerTintColor: '#EFEBDA'
-            }}
-            mode='modal'
-            headerMode='screen'
-            initialRouteName='Search'
-
-        >
+                headerBackTitleVisible: false, headerStyle: { backgroundColor: '#82A4B3' }, headerTitleStyle: { fontFamily: 'montserrat-semi' }, headerTintColor: '#EFEBDA'
+            }}>
             <Stack.Screen name="Search" options={{ headerShown: false }} component={SearchScreen} />
-            <Stack.Screen name="Results"
-                component={ResultsScreen}
-                options={{
-                    headerTitle: TopSearchHeader
-                }} />
+            <Stack.Screen name="Results" component={ResultsScreen} options={{ headerTitle: TopSearchHeader }} />
             <Stack.Screen name="ParkDetails" component={ParkDetailsScreen} />
         </Stack.Navigator >
 

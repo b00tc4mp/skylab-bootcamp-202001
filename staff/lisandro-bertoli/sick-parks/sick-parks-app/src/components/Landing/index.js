@@ -3,7 +3,7 @@ import { View, Image } from 'react-native'
 import Button from '../Button'
 import styles from './styles'
 
-export default function Login({ onToHome, onToRegister, onToLogin }) {
+export default function Landing({ onToHome, onToRegister, onToLogin }) {
 
 
 
