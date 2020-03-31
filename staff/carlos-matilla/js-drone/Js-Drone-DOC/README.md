@@ -1,5 +1,5 @@
 # Js-Drone
-![](https://media.giphy.com/media/8JTmHivPA0mvTBd5yL/giphy.gif) 
+![Drone](https://media.giphy.com/media/8JTmHivPA0mvTBd5yL/giphy.gif) 
 
 ## Funcional Description
 
@@ -33,7 +33,7 @@ Js-Drome is an application, developed using React Js and Electron Js, that allow
 
 ## Api coverage
 
-![coverage](./Coverage.PNG)
+![coverage](./Coverage.png)
 
 # Futures versions
 

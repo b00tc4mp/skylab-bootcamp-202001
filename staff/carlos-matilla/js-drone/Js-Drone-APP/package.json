@@ -17,7 +17,7 @@
     "concurrently": "^5.1.0",
     "drone-data": "file:../Js-Drone-DATA",
     "drone-errors": "file:../Js-Drone-ERRORS",
-    "drone-utils": "file:../Js-Drone-UTILS",
+    "drone-utils": "file: ./drone-utils",
     "electron": "^8.2.0",
     "electron-builder": "^22.4.1",
     "electron-is-dev": "^1.1.0",
