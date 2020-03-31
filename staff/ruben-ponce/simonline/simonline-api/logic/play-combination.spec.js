@@ -53,7 +53,7 @@ describe('play combination', () => {
         })
 
         it('should succeed matching correct combination, change current player and push new combination', async () => {
-            await playCombination(playerId, combinationPlayer)
+            await playCombination(gameId, combinationPlayer)
                 .then(game => { 
                     expect(game).to.exist
                     expect(game.pushCombination.length).to.equal(2)
@@ -69,7 +69,7 @@ describe('play combination', () => {
             
             combinationPlayer = [1]
 
-            await playCombination(playerId, combinationPlayer)
+            await playCombination(gameId, combinationPlayer)
                 .then(game => {                   
                     expect(game).to.exist
                     expect(game.pushCombination).to.have.lengthOf(1)
@@ -81,32 +81,32 @@ describe('play combination', () => {
                 })
         })
 
-        it('should fail on a non-string playerId', () => {
-            let playerId = 1
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+        it('should fail on a non-string gameId', () => {
+            let gameId = 1
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `gameId ${gameId} is not a string`)
 
-            playerId = false
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+            gameId = false
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `gameId ${gameId} is not a string`)
 
-            playerId = undefined
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+            gameId = undefined
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `gameId ${gameId} is not a string`)
 
-            playerId = []
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `playerId ${playerId} is not a string`)
+            gameId = []
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `gameId ${gameId} is not a string`)
         })
 
         it('should fail on a non-object combinationPlayer', () => {
             let combinationPlayer = 1
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
 
             combinationPlayer = false
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
 
             combinationPlayer = undefined
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
 
             combinationPlayer = 'a'
-            expect(() => playCombination(playerId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
+            expect(() => playCombination(gameId, combinationPlayer)).to.throw(TypeError, `combination ${combinationPlayer} is not a object`)
         })
 
     })

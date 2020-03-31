@@ -17,7 +17,10 @@ The game randomly illuminates the colored quadrants. After waiting, the user mus
 ## Tecnical description
 
 ### Workflow
-![titulo](url)
+![titulo](img/workflow.jpg)
 
 ## Blocks
-![titulo](url)
+![titulo](img/blocs.jpg)
+
+## Data model
+![titulo](img/data-model.jpg)

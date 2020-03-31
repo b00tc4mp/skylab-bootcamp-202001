@@ -15,21 +15,18 @@ describe('retrieveGameStatus', () => {
     )
 
     let name, owner, username, password
-
-    beforeEach(() => {
+    
+    describe('when user and game already exists', () => {
+        let gameId, playerId, player1
         username = `username-${random()}`
         password = `password-${random()}`
         name = `name-${random()}`
-    })
-
-    describe('when user and game already exists', () => {
-        let gameId, playerId, player1
         
-        beforeEach(async() => {
+        it('Create game with 10 players', async () => {
             let users = []
             let combination = Math.floor(random() * 4)
 
-            for (let i = 0; i < 10; i++)
+            for (let i = 0; i < 4; i++)
                 await User.create({ username, password })
                     .then(user => {
                         owner = user.id
@@ -52,7 +49,7 @@ describe('retrieveGameStatus', () => {
                     })
         })
 
-        it('should succeed on valid first retrieved data', async () => {
+        it('should succeed on valid first retrieved data with 3 players in start game', async () => {
 
             await retrieveGameStatus(playerId, gameId)
                 .then(game => { 
@@ -61,7 +58,7 @@ describe('retrieveGameStatus', () => {
                     expect(game.name).to.be.a("string")
                     expect(game.owner).to.be.an.instanceOf(Object)
                     expect(game.status).to.equal("started")
-                    expect(game.players.length).to.equal(10)
+                    expect(game.players.length).to.equal(4)
                     expect(game.players).to.be.an.instanceOf(Array)
                     expect(game.date).to.exist
                     expect(game.date).to.be.an.instanceOf(Date)
@@ -74,7 +71,7 @@ describe('retrieveGameStatus', () => {
                 })
         })
 
-        it('should current player change to watching when the player has passed his turn 1sec', function() {
+        it('should first player change to watching when the player has passed his turn 1sec', function() {
             this.timeout(2000);
             return wait(1500)
             .then(() => {
@@ -84,6 +81,131 @@ describe('retrieveGameStatus', () => {
                         expect(game.watching.length).to.equal(1)
                     })
             })  
+        })
+
+        it('should succeed on next retrieved data when first player has pushed to watching', async () => {
+            
+            await retrieveGameStatus(playerId, gameId)
+                .then(game => { 
+                    expect(game).to.exist
+                    expect(game.name).to.equal(name)
+                    expect(game.name).to.be.a("string")
+                    expect(game.owner).to.be.an.instanceOf(Object)
+                    expect(game.status).to.equal("started")
+                    expect(game.players.length).to.equal(4)
+                    expect(game.players).to.be.an.instanceOf(Array)
+                    expect(game.date).to.exist
+                    expect(game.date).to.be.an.instanceOf(Date)
+                    expect(game.pushCombination.length).to.equal(1)
+                    expect(game.pushCombination).to.be.an.instanceOf(Array)
+                    expect(game.watching.length).to.equal(1)
+                    expect(game.watching).to.be.an.instanceOf(Array)
+                    expect(game.combinationViewed).to.be.empty
+                    expect(game.combinationViewed).to.be.an.instanceOf(Array)
+                })
+        })
+
+        it('should second player change to watching when the player has passed his turn 1sec', function() {
+            this.timeout(2000);
+            return wait(1500)
+            .then(() => {
+                return retrieveGameStatus(playerId, gameId)
+                    .then(game => {
+                        expect(game.currentPlayer).to.not.equal(player1)
+                        expect(game.watching.length).to.equal(2)
+                    })
+            })  
+        })
+
+        it('should succeed on next retrieved data when first and second player has pushed to watching', async () => {
+            
+            await retrieveGameStatus(playerId, gameId)
+                .then(game => { 
+                    expect(game).to.exist
+                    expect(game.name).to.equal(name)
+                    expect(game.name).to.be.a("string")
+                    expect(game.owner).to.be.an.instanceOf(Object)
+                    expect(game.status).to.equal("started")
+                    expect(game.players.length).to.equal(4)
+                    expect(game.players).to.be.an.instanceOf(Array)
+                    expect(game.date).to.exist
+                    expect(game.date).to.be.an.instanceOf(Date)
+                    expect(game.pushCombination.length).to.equal(1)
+                    expect(game.pushCombination).to.be.an.instanceOf(Array)
+                    expect(game.watching.length).to.equal(2)
+                    expect(game.watching).to.be.an.instanceOf(Array)
+                    expect(game.combinationViewed).to.be.empty
+                    expect(game.combinationViewed).to.be.an.instanceOf(Array)
+                })
+        })
+
+        it('should third player change to watching when the player has passed his turn 1sec', function() {
+            this.timeout(2000);
+            return wait(1500)
+            .then(() => {
+                return retrieveGameStatus(playerId, gameId)
+                    .then(game => {
+                        expect(game.currentPlayer).to.not.equal(player1)
+                        expect(game.watching.length).to.equal(3)
+                    })
+            })  
+        })
+
+        it('should succeed on next retrieved data when first, second and third player has pushed to watching', async () => {
+            
+            await retrieveGameStatus(playerId, gameId)
+                .then(game => { 
+                    expect(game).to.exist
+                    expect(game.name).to.equal(name)
+                    expect(game.name).to.be.a("string")
+                    expect(game.owner).to.be.an.instanceOf(Object)
+                    expect(game.watching.length).to.equal(3)
+                    expect(game.watching).to.be.an.instanceOf(Array)
+                    expect(game.status).to.equal("started")
+                    expect(game.players.length).to.equal(4)
+                    expect(game.players).to.be.an.instanceOf(Array)
+                    expect(game.date).to.exist
+                    expect(game.date).to.be.an.instanceOf(Date)
+                    expect(game.pushCombination.length).to.equal(1)
+                    expect(game.pushCombination).to.be.an.instanceOf(Array)
+                    expect(game.combinationViewed).to.be.empty
+                    expect(game.combinationViewed).to.be.an.instanceOf(Array)
+                })
+        })
+
+        it('should third player change to watching when the player has passed his turn 1sec', function() {
+            this.timeout(2000);
+            return wait(1500)
+            .then(() => {
+                return retrieveGameStatus(playerId, gameId)
+                    .then(game => {
+                        expect(game.currentPlayer).to.not.equal(player1)
+                        expect(game.watching.length).to.equal(4)
+                    })
+            })  
+        })
+
+
+        it('should succeed on next retrieved data when all players has pushed to watching and game stay finished', async () => {
+            
+            await retrieveGameStatus(playerId, gameId)
+                .then(game => { 
+                    expect(game).to.exist
+                    expect(game.name).to.equal(name)
+                    expect(game.name).to.be.a("string")
+                    expect(game.owner).to.be.an.instanceOf(Object)
+                    expect(game.watching.length).to.equal(4)
+                    expect(game.watching).to.be.an.instanceOf(Array)
+                    expect(game.status).to.equal("finished")
+                    expect(game.players.length).to.equal(4)
+                    expect(game.players).to.be.an.instanceOf(Array)
+                    expect(game.date).to.exist
+                    expect(game.date).to.be.an.instanceOf(Date)
+                    expect(game.pushCombination.length).to.equal(1)
+                    expect(game.pushCombination).to.be.an.instanceOf(Array)
+                    expect(game.combinationViewed).to.be.empty
+                    expect(game.combinationViewed).to.be.an.instanceOf(Array)
+                })
         })
 
         it('should fail on a non-string playerId', () => {

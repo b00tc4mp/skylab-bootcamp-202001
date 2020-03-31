@@ -35,7 +35,6 @@ module.exports = (playerId, gameId) => {
         throw new NotFoundError(`player ${playerId}, not joined on game`);
         
         if (status === "started") {
-          debugger
 
           const timeNow = new Date();
 
