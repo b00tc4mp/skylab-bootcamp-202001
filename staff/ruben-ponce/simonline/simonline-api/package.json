@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node .",
     "watch": "nodemon .",
-    "test": "npx mocha logic utils",
+    "test": "npx mocha --timeout 5000 logic utils",
     "test-debug": "npx mocha debug logic utils",
     "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js"
   },

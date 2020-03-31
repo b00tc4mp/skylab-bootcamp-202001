@@ -51,6 +51,15 @@ describe('delete-game', () => {
                 })
         })
 
+        it('should fail on deleted game', () => {
+            return deleteGame(gameId)
+                .then(() => { throw new Error('should not reach this point') })
+                .catch((error) => {
+                    expect(error).to.exist
+                    expect(error).to.be.an('error')
+                })
+        })
+
         it('should fail on a non-string game id', () => {
             let gameId = 1
             expect(() => deleteGame(gameId)).to.throw(TypeError, `gameId ${gameId} is not a string`)

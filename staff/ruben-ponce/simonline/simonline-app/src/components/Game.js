@@ -32,7 +32,7 @@ export default ({ goTo, gameId }) => {
       playersName = await retrievePlayersBasicData(gameId); 
 
       const interval = setInterval(() => {
-        if (isLoggedIn()) {
+        if (isLoggedIn() || !gameId) {
           (async () => {
             try {
               setUserId(retrieveUserId(sessionStorage.token));

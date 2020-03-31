@@ -7,6 +7,7 @@ module.exports = () => {
             this[i] = this[randomIndex]
             this[randomIndex] = currentValue
         }
+        return this
     }
 }
 
