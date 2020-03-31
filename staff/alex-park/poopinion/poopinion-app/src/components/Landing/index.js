@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator, TouchableWithoutFeedback } from 'react-native'
 import MapView from 'react-native-maps'
 import styles from './styles'
 
@@ -39,21 +39,21 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                     <View style={styles.posts} key={index}>
                         <View style={styles.post} key={index}>
                             {toilet.image ? (<>
-                                <TouchableOpacity onPress={() => {
+                                <TouchableWithoutFeedback onPress={() => {
                                     setLoading(true)
                                     onDetails(toilet.id)
                                 }}>
                                     <Image style={styles.image} source={{ uri: toilet.image }} />
-                                </TouchableOpacity>
+                                </TouchableWithoutFeedback>
                             </>)
                                 :
                                 (<>
-                                    <TouchableOpacity onPress={() => {
+                                    <TouchableWithoutFeedback onPress={() => {
                                         setLoading(true)
                                         onDetails(toilet.id)
                                     }}>
                                         <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
-                                    </TouchableOpacity>
+                                    </TouchableWithoutFeedback>
                                 </>)}
                             <View style={styles.postContent}>
                                 <View style={styles.header}>
