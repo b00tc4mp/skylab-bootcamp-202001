@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
         marginTop : 10,
         width: 300,
         height: 300,
-        alignSelf : 'center'
+        alignSelf : 'center',
+        resizeMode: 'contain'
         
     }
     

@@ -28,7 +28,7 @@ function ContactDetail ({contactData}){
             <Text style={styles.text} onPress={makeCall}>{phone}</Text>
 
             <Text style ={styles.header}>Email: </Text> 
-            <Text style ={styles.text}>{email}</Text>
+            <Text style ={styles.text} onPress={() => Linking.openURL(`mailto:${email}`)}>{email}</Text>
             
         </View>
     )
