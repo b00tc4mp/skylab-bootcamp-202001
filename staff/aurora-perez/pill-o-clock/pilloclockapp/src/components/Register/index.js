@@ -77,13 +77,12 @@ function Register ({onSubmit, onToLogin, error}) {
                  
                 </View>
 
-                {/* <TextInput style = {[styles.text, styles.input]} placeholder= 'Profile (Patient / Pharmacist)' onChangeText = {text => setProfile(text.toLowerCase())}/> */}
+                {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
                 
                 <Text style = {[styles.text, styles.button]} onPress={()=> onSubmit({name, surname, gender, age, phone, profile, email, password})}>Submit</Text>
             
                 <Text style = {[styles.text, styles.toLogin]} onPress={()=>onToLogin()}>Are you already registered? Go to Login!</Text>
            
-                {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
             
             </View>
             

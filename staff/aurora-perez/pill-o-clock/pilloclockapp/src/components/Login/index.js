@@ -15,10 +15,10 @@ function Login ({onSubmit, toRegister, error}) {
                 <Text style = {[styles.text, styles.title]}>Login</Text>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Email' onChangeText = {text => setEmail(text)}/>
                 <TextInput style = {[styles.text, styles.input]} placeholder= 'Password' secureTextEntry={true} onChangeText= {text => setPassword(text)}/>
+                {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
                 <Text style = {[styles.text, styles.button]} onPress={()=> onSubmit({email, password})}>Submit</Text>
                 <Text style = {[styles.text, styles.toRegister]} onPress={()=>toRegister()}>Are you not registered yet? Go to Register!</Text>
            
-                {error && <Text style={[styles.text, styles.error]}>{error}</Text>}
             
             </View>
         </ScrollView>
