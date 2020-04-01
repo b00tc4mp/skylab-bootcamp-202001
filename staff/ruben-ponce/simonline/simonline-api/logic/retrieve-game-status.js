@@ -1,4 +1,4 @@
-const { validate } = require("simonline-utils");
+const { validate, semaphore } = require("simonline-utils");
 const { models: { User, Game } } = require("simonline-data");
 const { NotFoundError } = require("simonline-errors");
 
@@ -21,77 +21,87 @@ module.exports = (playerId, gameId) => {
 
   console.log('retrieve game status', 1)
 
-  return User.findById(playerId)
-    .then(user => {
-      if (!user)
-        throw new NotFoundError(`player with id ${playerId} not found`);
+  return new Promise((resolve, reject) => {
+    semaphore(gameId, semaphore => {
+      semaphore.setRed()
 
-      console.log('retrieve game status', 2)
-    })
-    .then(() => {
-      return Game.findById(gameId)
-    })
-    .then(game => {
-      if (!game) throw new NotFoundError(`game with id ${gameId} not found`);
+      User.findById(playerId)
+        .then(user => {
+          if (!user)
+            throw new NotFoundError(`player with id ${playerId} not found`);
 
-      console.log('retrieve game status', 3)
+          console.log('retrieve game status', 2)
+        })
+        .then(() => Game.findById(gameId))
+        .then(game => {
+          if (!game) throw new NotFoundError(`game with id ${gameId} not found`);
 
-      const { status, turnTimeout } = game;
-      if (game.players.every(player => player.toString() !== playerId))
-        throw new NotFoundError(`player ${playerId}, not joined on game`);
+          console.log('retrieve game status', 3)
 
-      console.log('retrieve game status', 4)
+          const { status, turnTimeout } = game;
+          if (game.players.every(player => player.toString() !== playerId))
+            throw new NotFoundError(`player ${playerId}, not joined on game`);
 
-      if (status === "started") {
+          console.log('retrieve game status', 4)
 
-        console.log('retrieve game status', 5)
+          if (status === "started") {
 
-        const { turnStart } = game
+            console.log('retrieve game status', 5)
 
-        const timeNow = new Date();
+            const { turnStart } = game
 
-        const elapsedTime = (timeNow - turnStart) / 1000;
+            const timeNow = new Date();
 
-        console.log(playerId, gameId, timeNow, turnStart, elapsedTime, turnTimeout)
+            const elapsedTime = (timeNow - turnStart) / 1000;
 
-        /* when has passed countdown on turn */
-        if (elapsedTime > turnTimeout) {
-          game.turnStart = timeNow;
+            console.log(playerId, gameId, timeNow, turnStart, elapsedTime, turnTimeout)
 
-          console.log('retrieve game status', 6)
+            /* when has passed countdown on turn */
+            if (elapsedTime > turnTimeout) {
+              game.turnStart = timeNow;
 
-          const playerNotWatching = playerId =>
-            game.watching.every( player => player.toString() !== playerId.toString());
+              console.log('retrieve game status', 6)
 
-          const { currentPlayer } = game;
+              const playerNotWatching = playerId =>
+                game.watching.every(player => player.toString() !== playerId.toString());
 
-          game.watching.push(currentPlayer);
+              const { currentPlayer } = game;
 
-          const currentPlayerIndex = game.players.indexOf(currentPlayer);
+              game.watching.push(currentPlayer);
 
-          for ( let i = currentPlayerIndex + 1; i < game.players.length && game.currentPlayer.toString() === currentPlayer.toString(); i++ ) {
-            const potentialNextPlayer = game.players[i];
+              const currentPlayerIndex = game.players.indexOf(currentPlayer);
 
-            if (playerNotWatching(potentialNextPlayer)) {
-              game.currentPlayer = potentialNextPlayer;
+              for (let i = currentPlayerIndex + 1; i < game.players.length && game.currentPlayer.toString() === currentPlayer.toString(); i++) {
+                const potentialNextPlayer = game.players[i];
+
+                if (playerNotWatching(potentialNextPlayer)) {
+                  game.currentPlayer = potentialNextPlayer;
+                }
+              }
+
+              for (let i = 0; i < currentPlayerIndex && game.currentPlayer.toString() === currentPlayer.toString(); i++) {
+                const potentialNextPlayer = game.players[i];
+
+                if (playerNotWatching(potentialNextPlayer)) {
+                  game.currentPlayer = potentialNextPlayer;
+                }
+              }
+
+              if (game.currentPlayer.toString() === currentPlayer.toString())
+                game.status = "finished";
+
+              return game.save();
             }
           }
+          return game;
+        })
+        .then(game => {
+          semaphore.setGreen()
 
-          for (let i = 0; i < currentPlayerIndex && game.currentPlayer.toString() === currentPlayer.toString(); i++) {
-            const potentialNextPlayer = game.players[i];
-
-            if (playerNotWatching(potentialNextPlayer)) {
-              game.currentPlayer = potentialNextPlayer;
-            }
-          }
-
-          if (game.currentPlayer.toString() === currentPlayer.toString())
-            game.status = "finished";
-
-          return game.save();
-        }
-      }
-      return game;
-    });
+          resolve(game)
+        })
+        .catch(reject)
+    })
+  })
 }
 

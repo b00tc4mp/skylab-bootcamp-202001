@@ -8,6 +8,7 @@ import {
   playCombination
 } from "../logic";
 import Feedback from "./Feedback";
+const { wait, timeout } = require('simonline-utils')
 
 export default ({ goTo, gameId }) => {
   let [error, setError] = useState(undefined);
