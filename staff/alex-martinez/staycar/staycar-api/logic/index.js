@@ -12,5 +12,8 @@ module.exports = {
     deleteParking: require('./delete-parking'),
     deleteUser: require('./delete-user'),
     retrieveTickets: require('./retrieve-tickets'),
-    updateParking: require('./update-parking')
+    updateParking: require('./update-parking'),
+    ocuppyParkingLot: require('./occupy-parking-lot'),
+    freeParkingLot: require('./free-parking-lot'),
+    recoverTicket: require('./recover-ticket')
 }

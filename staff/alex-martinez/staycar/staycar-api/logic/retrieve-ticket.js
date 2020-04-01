@@ -1,6 +1,6 @@
 const { validate } = require('staycar-utils')
 const { models: { Ticket, Parking } } = require('staycar-data')
-const { NotFoundError, NotAllowedError } = require('staycar-errors')
+const { NotFoundError } = require('staycar-errors')
 
 /**
  * Retrieve ticket

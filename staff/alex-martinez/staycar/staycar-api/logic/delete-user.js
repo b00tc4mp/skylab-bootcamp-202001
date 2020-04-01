@@ -20,7 +20,7 @@ module.exports = (id, username, password) => {
     validate.string(password, 'password')
 
     return (async() => {
-        debugger
+        
         const user = await User.findOne({username})
         if(!user) throw new NotAllowedError(`username ${username} is not exist`)
 

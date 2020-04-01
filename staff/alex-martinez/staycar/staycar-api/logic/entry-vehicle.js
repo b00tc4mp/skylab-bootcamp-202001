@@ -34,7 +34,7 @@ module.exports =  (carPlate, ticketId, parkingName) => {
     if (freeLots === 0)
       throw new NotAllowedError("parking full. Entry not allowed")
   
-    parking.occupiedLots++
+    /* parking.occupiedLots++
   
     let condition = true
   
@@ -49,7 +49,7 @@ module.exports =  (carPlate, ticketId, parkingName) => {
       
     } while (condition);
   
-    parking.lots = lots
+    parking.lots = lots */
   
     await Ticket.create({ carPlate, entryHour: new Date(), ticketId, parkingName })
     

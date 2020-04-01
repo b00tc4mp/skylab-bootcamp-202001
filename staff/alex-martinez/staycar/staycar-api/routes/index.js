@@ -13,7 +13,10 @@ const { registerUser,
     deleteParking,
     deleteUser,
     retrieveTickets,
-    updateParking} = require('./handlers')
+    updateParking,
+    occupyParkingLot,
+    freeParkingLot,
+    recoverTicket} = require('./handlers')
 //
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -28,22 +31,19 @@ const router = new Router()
 router.post('/users', jsonBodyParser, registerUser)
 router.post('/users/auth', jsonBodyParser, authenticateUser)
 router.get('/users', jwtVerifierMidWare, retrieveUser)
-
 router.post('/:name/ticket', jsonBodyParser, entryVehicle)
-
 router.post('/parking/create', jwtVerifierMidWare, jsonBodyParser, createParking)
 router.get('/parking', retrieveParking)
 router.delete('/parking/:parking', jwtVerifierMidWare, deleteParking)
 router.delete('/users', jwtVerifierMidWare, jsonBodyParser, deleteUser)
 router.get('/ticket/:id/:parkingname', retrieveTicket)
 router.get('/tickets', retrieveTickets)
-
 router.patch('/ticket/:id/validated', jsonBodyParser, validateTicket)
 router.get('/ticket/:ticketId/:parkingname/exit', exitVehicle)
-
-//router.patch('/parking/:id/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
-//router.patch('/parking/:name/update', jsonBodyParser, jwtVerifierMidWare, addLotsAmount)
 router.patch('/parking/:name/update', jsonBodyParser, jwtVerifierMidWare, updateParking)
+router.post('/parking/:parking/occupy', jsonBodyParser, occupyParkingLot)
+router.post('/parking/:parking/free', jsonBodyParser, freeParkingLot)
+router.post('/ticket/recover', jwtVerifierMidWare ,jsonBodyParser, recoverTicket)
 //
 
 
