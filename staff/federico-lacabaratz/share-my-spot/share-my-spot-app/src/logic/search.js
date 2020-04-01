@@ -2,6 +2,17 @@ import context from './context'
 const { NotAllowedError } = require('share-my-spot-errors')
 require('dotenv').config()
 
+/**
+ * Searches through the data base for spots
+ * 
+ * @param {object} query spot's query that contains the properties mentioned down below
+ * 
+ * @returns {Promise<string>} returns an an array of spots
+ * 
+ * @throws {NotFoundError} if the user does not exist
+ * @throws {Error} on network connection issues (or unrelated error)
+ */
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (query) {

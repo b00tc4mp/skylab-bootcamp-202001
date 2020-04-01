@@ -2,6 +2,15 @@ import { validate } from 'share-my-spot-utils'
 import context from './context'
 require('dotenv').config()
 
+/**
+* Saves spot image
+* 
+* @param {ObjectuserI} spotId id of spot
+* @param {Stream} photo data of the image
+*
+* @returns {Promise} - empty Promise that confirms uploading of the photo.  
+*/
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (spotId, photo) {

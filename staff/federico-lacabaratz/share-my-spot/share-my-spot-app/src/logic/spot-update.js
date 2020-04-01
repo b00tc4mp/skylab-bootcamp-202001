@@ -3,6 +3,18 @@ import { NotAllowedError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()
 
+/**
+ * Updates the spot info
+ * 
+ * @param {object} body which contains the elements that will be updated
+ * @param {string} spotId spot's unique id
+ * 
+ * @returns {Promise<string>} an empty Promise on a successful update
+ * @throws {NotFoundError} on not found user id or spots created with this user id
+ * @throws {Error} on network connection issues (or unrelated error)
+ * 
+ */
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (body, spotId) {

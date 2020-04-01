@@ -76,7 +76,7 @@ describe('retrievePublishedSpots', () => {
         describe('when the user does not exist', () => {
             beforeEach(() => User.deleteMany().then(() => { }))
 
-            it('should fail to post a comment if the user does not exist', () =>
+            it('should fail if the user does not exist', () =>
                 retrievePublishedSpots(_id)
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(({ message }) => {

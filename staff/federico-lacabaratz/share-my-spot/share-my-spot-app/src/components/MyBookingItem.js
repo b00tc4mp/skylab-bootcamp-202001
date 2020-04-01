@@ -31,8 +31,9 @@ export default function ({ myBookingItem }) {
                     <div className="myBookingItem__bottom-email" >
                         {emailB && publisherId.email}
                     </div>
-                    <br></br>{bookingCandidates.includes(bookedTo) ? <h3>YOUR REQUEST HAS BEEN ACCEPTED!</h3> : null}
+                    
                 </div>
+                {bookingCandidates.includes(bookedTo) ? <h3>YOUR REQUEST HAS BEEN ACCEPTED!</h3> : null}
             </div>
         </main>
     </li > : <li className="myBookingItem" >

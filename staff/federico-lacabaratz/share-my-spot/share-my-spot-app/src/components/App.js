@@ -22,10 +22,10 @@ export default withRouter(function ({ history }) {
         try {
 
           const user = await retrieveUser()
-          
+
           setUser(user)
           history.push('/search')
-          
+
         } catch (error) {
           setState({ ...state, error: error.message })
 
@@ -39,10 +39,6 @@ export default withRouter(function ({ history }) {
     } else {
       history.push('/login')
     }
-  }, [])
-
-  useEffect(() => {
-    history.push('/my-spots')
   }, [])
 
   const handleLogout = () => {
@@ -187,19 +183,11 @@ export default withRouter(function ({ history }) {
   const handleMySpots = () => {
     (async () => {
       try {
-        
+
         const allMySpots = await retrieveMySpots()
-        
-        if (!allMySpots.length) {
-          setState({ ...state, error: 'We could not find any spots related you your user' })
 
-          setTimeout(() => {
-            setState({ error: undefined })
-          }, 3000)
-
-        } else {
-          setMySpots(allMySpots)
-        }
+        setMySpots(allMySpots)
+        history.push('/my-spots')
 
       } catch ({ message }) {
         setState({ ...state, error: message })
@@ -237,7 +225,7 @@ export default withRouter(function ({ history }) {
     (async () => {
       try {
         await spotUpdate({ title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun }, spotId)
-        
+
         if (photo) {
           await saveSpotPhoto(spotId, photo)
         }
@@ -265,20 +253,9 @@ export default withRouter(function ({ history }) {
 
         await spotDelete(spotId)
 
-        const allMySpots = await retrieveMySpots(mySpots)
+        await retrieveMySpots(mySpots)
 
-        if (!allMySpots.length) {
-          setState({ ...state, error: 'We could not find any spots related you your user' })
-
-          setTimeout(() => {
-            setState({ error: undefined })
-          }, 3000)
-
-        } else {
-          setMySpots(allMySpots)
-          history.push('/my-spots')
-
-        }
+        handleMySpots()
 
       } catch ({ message }) {
         setState({ ...state, error: message })
@@ -332,9 +309,9 @@ export default withRouter(function ({ history }) {
   const handleMyRequests = () => {
     (async () => {
       try {
-        
+
         const yourRequests = await retrieveSpotsForBookingManagement()
-        
+
         setYourRequests(yourRequests)
 
         history.push('/manage-requests')
@@ -350,12 +327,13 @@ export default withRouter(function ({ history }) {
   }
 
   const handleOnAccept = (publisherId, candidateId, spotId) => {
-    (async() => {
+    (async () => {
       try {
-        
+
         await acceptBooking(publisherId, candidateId, spotId)
+
         handleMyRequests()
-        // history.push('/manage-requests')
+
 
       } catch ({ message }) {
         setState({ ...state, error: message })
@@ -368,13 +346,13 @@ export default withRouter(function ({ history }) {
   }
 
   const handleOnDecline = (publisherId, candidateId, spotId) => {
-    (async() => {
+    (async () => {
       try {
-        
+
         await declineBooking(publisherId, candidateId, spotId)
 
         handleMyRequests()
-        // history.push('/manage-requests')
+
 
       } catch ({ message }) {
         setState({ ...state, error: message })
@@ -401,6 +379,6 @@ export default withRouter(function ({ history }) {
     <Route path='/my-spots' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MySpots handleMySpots={handleMySpots} allMySpots={mySpots} updateMySpot={handleToUpdateMySpot} deleteMySpot={handleDeleteMySpot} onItemClick={handleDetail} error={error} /> </> : <Redirect to='/login' />} />
     <Route path='/update/:spotId' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><SpotUpdate spot={spot} onUpdateMySpot={handleOnUpdateMySpot} /></> : <Redirect to='/login' />} />
     <Route path='/my-bookings' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MyBookings myBookingSpots={myBookingSpots} handleMyBookings={handleMyBookings} /></> : <Redirect to='/login' />} />
-    <Route path='/manage-requests' render={() => isLoggedIn() ? <><Header onLogout={handleLogout}/><ManageYourRequests yourRequests={yourRequests} handleMyRequests={handleMyRequests} onAccept={handleOnAccept} onDecline={handleOnDecline}/></> : <Redirect to='/login' />} />
+    <Route path='/manage-requests' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><ManageYourRequests yourRequests={yourRequests} handleMyRequests={handleMyRequests} onAccept={handleOnAccept} onDecline={handleOnDecline} /></> : <Redirect to='/login' />} />
   </div>
 })
