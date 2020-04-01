@@ -12,6 +12,7 @@ import exitVehicle from './exit-vehicle'
 import modifyParking from './modify-parking'
 import deleteParking from './delete-parking'
 import deleteUser from './delete-user'
+import occupyParkingLot from './occupy-parking-lot'
 
 export {
     login,
@@ -27,5 +28,6 @@ export {
     exitVehicle,
     modifyParking,
     deleteParking,
-    deleteUser
+    deleteUser,
+    occupyParkingLot
 }
