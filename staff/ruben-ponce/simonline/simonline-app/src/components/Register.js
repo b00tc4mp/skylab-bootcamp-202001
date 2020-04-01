@@ -10,7 +10,7 @@ export default ({goTo, onSubmit, error}) => {
             goTo('landing')
         }}>Simonline</h1>
         <h2>Register</h2>
-        <form className="form" onSubmit={event => {
+        <form onSubmit={event => {
             event.preventDefault()
     
             const username = event.target.username.value

@@ -2,89 +2,114 @@
     text-align: center
     display: grid
     grid-template: 15% 55% 40% / 1fr
-    &__top-menu
-        grid-area: 1 / 1
-        text-align: right
-        &__logout
+.top-menu
+    grid-area: 1 / 1
+    text-align: right
+    &__logout
+        cursor: pointer
+        margin: 1rem
+        font-size: 1rem
+        &:hover
+            color: white
+.board
+    width: 100%
+    grid-area: 2 / 1
+    margin: 0 auto
+.container
+    margin: 0 auto
+    width: 280px
+    height: 280px 
+    position: relative
+    &__red
+        cursor: pointer
+        background-color: #b02222
+        width: 140px
+        height: 140px
+        border-top-left-radius: 200px
+        border: 5px solid black
+        float: left
+        &--active
             cursor: pointer
-            margin: 1rem
-            font-size: 1rem
-            &:hover
-                color: white
-    &__board
-        width: 100%
-        grid-area: 2 / 1
-        margin: 0 auto
-        &__container
-            margin: 0 auto
-            width: 280px
-            height: 280px 
-            position: relative
-            &__red
-                cursor: pointer
-                background-color: #b02222
-                width: 140px
-                height: 140px
-                border-top-left-radius: 200px
-                border: 5px solid black
-                float: left
-                &:hover
-                   background-color: red
-            &__green
-                cursor: pointer
-                background-color: green
-                width: 140px
-                height: 140px
-                border-top-right-radius: 200px
-                border: 5px solid black
-                float: right
-                &:hover
-                   background-color: #04ee04
-            &__blue
-                cursor: pointer
-                background-color: #1f4db0
-                width: 140px
-                height: 140px
-                border-bottom-right-radius: 200px
-                border: 5px solid black
-                float: right
-                &:hover
-                    background-color:#0037ff
-            &__yellow
-                cursor: pointer
-                background-color: #c9c920
-                width: 140px
-                height: 140px
-                border-bottom-left-radius: 200px
-                border: 5px solid black
-                float: left
-                &:hover
-                   background-color: #f9f900
-            &__gray
-                width: 90px
-                height: 89px
-                background-color: gray
-                border-radius: 50%
-                border: 8px solid black
-                position: absolute
-                top: 34%
-                right: 33.5%
-                &:hover
-                    background-color: #cecccc
-                    cursor: pointer
-    &__footer
-        grid-area: 3 / 1
-        &__text
-            font-size: 1rem
+            background-color: red
+            width: 140px
+            height: 140px
+            border-top-left-radius: 200px
+            border: 5px solid black
+            float: left
+        &:hover
+            background-color: red
 
-.red_active
-    background-color: red
+    &__green
+        cursor: pointer
+        background-color: green
+        width: 140px
+        height: 140px
+        border-top-right-radius: 200px
+        border: 5px solid black
+        float: right
+        &--active
+            cursor: pointer
+            background-color: #04ee04
+            width: 140px
+            height: 140px
+            border-top-right-radius: 200px
+            border: 5px solid black
+            float: right
+        &:hover
+            background-color: #04ee04
 
-.green_active
-    background-color: #04ee04
+    &__blue
+        cursor: pointer
+        background-color: #1f4db0
+        width: 140px
+        height: 140px
+        border-bottom-right-radius: 200px
+        border: 5px solid black
+        float: right
+        &--active
+            cursor: pointer
+            background-color:#0037ff
+            width: 140px
+            height: 140px
+            border-bottom-right-radius: 200px
+            border: 5px solid black
+            float: right
+        &:hover
+            background-color:#0037ff
 
-.blue_active
-    background-color:#0037ff
+    &__yellow
+        cursor: pointer
+        background-color: #c9c920
+        width: 140px
+        height: 140px
+        border-bottom-left-radius: 200px
+        border: 5px solid black
+        float: left
+        &--active
+            cursor: pointer
+            background-color: #f9f900
+            width: 140px
+            height: 140px
+            border-bottom-left-radius: 200px
+            border: 5px solid black
+            float: left
+        &:hover
+            background-color: #f9f900
 
-.yellow_active
-    background-color: #f9f900
+    &__gray
+        width: 90px
+        height: 89px
+        background-color: gray
+        border-radius: 50%
+        border: 8px solid black
+        position: absolute
+        top: 34%
+        right: 33.5%
+        &:hover
+            background-color: #cecccc
+            cursor: pointer
+
+.footer
+    grid-area: 3 / 1
+    &__text
+        font-size: 1rem

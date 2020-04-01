@@ -1,7 +1,5 @@
 const { validate } = require("simonline-utils");
-const {
-  models: { User, Game }
-} = require("simonline-data");
+const { models: { User, Game } } = require("simonline-data");
 const { NotFoundError } = require("simonline-errors");
 
 /**
@@ -63,9 +61,7 @@ module.exports = (playerId, gameId) => {
           console.log('retrieve game status', 6)
 
           const playerNotWatching = playerId =>
-            game.watching.every(
-              player => player.toString() !== playerId.toString()
-            );
+            game.watching.every( player => player.toString() !== playerId.toString());
 
           const { currentPlayer } = game;
 
@@ -73,12 +69,7 @@ module.exports = (playerId, gameId) => {
 
           const currentPlayerIndex = game.players.indexOf(currentPlayer);
 
-          for (
-            let i = currentPlayerIndex + 1;
-            i < game.players.length &&
-            game.currentPlayer.toString() === currentPlayer.toString();
-            i++
-          ) {
+          for ( let i = currentPlayerIndex + 1; i < game.players.length && game.currentPlayer.toString() === currentPlayer.toString(); i++ ) {
             const potentialNextPlayer = game.players[i];
 
             if (playerNotWatching(potentialNextPlayer)) {
@@ -86,12 +77,7 @@ module.exports = (playerId, gameId) => {
             }
           }
 
-          for (
-            let i = 0;
-            i < currentPlayerIndex &&
-            game.currentPlayer.toString() === currentPlayer.toString();
-            i++
-          ) {
+          for (let i = 0; i < currentPlayerIndex && game.currentPlayer.toString() === currentPlayer.toString(); i++) {
             const potentialNextPlayer = game.players[i];
 
             if (playerNotWatching(potentialNextPlayer)) {
@@ -107,5 +93,5 @@ module.exports = (playerId, gameId) => {
       }
       return game;
     });
-});
-});
+}
+

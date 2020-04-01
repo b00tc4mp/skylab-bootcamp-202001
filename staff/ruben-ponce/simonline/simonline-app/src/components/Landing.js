@@ -1,9 +1,9 @@
 import React from 'react'
 import logo from './logo.svg';
 import'./Landing.sass'
-// import Feedback from './Feedback'
+import Feedback from './Feedback'
 
-export default ({goTo}) => {
+export default ({goTo, error}) => {
 
     return <div className="p1 landing">
     <p className="landing__title">Simonline</p>
@@ -14,5 +14,6 @@ export default ({goTo}) => {
     <p className="landing__register" onClick={event => {
             event.preventDefault()
             goTo('register')}}>Register</p>
+    {error && <Feedback error={error}/>}
     </div> 
 }

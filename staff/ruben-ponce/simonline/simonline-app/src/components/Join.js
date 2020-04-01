@@ -21,18 +21,23 @@ export default ({ handleJoin, goTo }) => {
     },[])
 
     return  <div className="p1 join-group">
-    <div className="join-group__top-menu">
-        <p className="join-group__top-menu__back" onClick={()=>goTo('multiplayer')}>Back</p>
-        <p className="join-group__top-menu__title">Join Game</p>
-        <p className="join-group__top-menu__logout" onClick={()=>goTo('logout')}>Logout</p>
+    <div className="top-menu">
+        <p className="top-menu__back" onClick={()=>goTo('multiplayer')}>Back</p>
+        <p className="top-menu__title">Join Game</p>
+        <p className="top-menu__logout" onClick={()=>goTo('logout')}>Logout</p>
     </div>
-    <div className="join-group__groups">
+    <div className="groups">
     {error && <Feedback error={error}/>}    
     {games && games.map(game => <p key={game._id} onClick={ event => {
         event.preventDefault()
         const gameId = event._targetInst.key
-        handleJoin(gameId)
-        
+
+        if (game.status === 'waiting') {
+            handleJoin(gameId) 
+        } else {
+            setError(`game is ${game.status}`)
+            setTimeout(()=> setError(undefined), 3000)  
+        }
     }}>{game.name}</p>)}
     </div>
 </div>

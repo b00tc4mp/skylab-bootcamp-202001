@@ -2,31 +2,31 @@
     text-align: center
     display: grid
     grid-template: repeat(3, auto) / 1fr
-    &__top-menu
-        display: flex
-        justify-content: space-between
-        margin: 1rem 1rem 0 1rem
-        grid-area: 1 / 1 / 1 / 1
-        &__back
-            cursor: pointer
-            font-size: 1rem
-            &:hover
-                color: white
-        &__logout
-            cursor: pointer
-            font-size: 1rem
-            &:hover
-                color: white
-        &__title
-            margin: 0
+.top-menu
+    display: flex
+    justify-content: space-between
+    margin: 1rem 1rem 0 1rem
+    grid-area: 1 / 1 / 1 / 1
+    &__back
+        cursor: pointer
+        font-size: 1rem
+        &:hover
+            color: white
+    &__logout
+        cursor: pointer
+        font-size: 1rem
+        &:hover
+            color: white
+    &__title
+        margin: 0
             padding: 0
-    &__create-game
-        grid-area: 2 / 1 / 2 / 1
-        cursor: pointer
-        &:hover
-            color: white
-    &__join-game
-        grid-area: 3 / 1
-        cursor: pointer
-        &:hover
-            color: white
+.create-game
+    grid-area: 2 / 1 / 2 / 1
+    cursor: pointer
+    &:hover
+        color: white
+.join-game
+    grid-area: 3 / 1
+    cursor: pointer
+    &:hover
+        color: white

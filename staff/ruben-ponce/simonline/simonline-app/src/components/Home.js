@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import'./Home.sass'
 import { isLoggedIn, retrieveUser } from '../logic'
-
-// import Feedback from './Feedback'
+import Feedback from './Feedback'
 
 export default ({ goTo }) => {
+    let [error, setError] = useState(undefined);
     const [username, setUsername] = useState()
 
     useEffect(() => {
@@ -13,10 +13,9 @@ export default ({ goTo }) => {
                 try {
                     const { username } = await retrieveUser()
                     setUsername(username)
-                    
-                    // setState({ page: 'home' })
-                } catch ({ message }) {
-                    // setState({ error: message, page: 'login' })
+                } catch (error) {
+                    setError(error.message);
+                    setTimeout(() => setError(undefined), 3000);
                 }
             })()
         else goTo('landing')
@@ -27,5 +26,6 @@ export default ({ goTo }) => {
         <p className="home__user">Welcome, {username}</p>
         <p className="home__multi-player" onClick={()=>goTo('multiplayer')}>Multiplayer</p>
         {/* <p className="home__options">Options</p> */}
+        {error && <Feedback error={error}/>}
     </div> 
 }

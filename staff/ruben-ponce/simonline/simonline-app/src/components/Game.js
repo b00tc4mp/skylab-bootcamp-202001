@@ -26,13 +26,14 @@ export default ({ goTo, gameId }) => {
   let playersName;
   let combinationLaunched = false;
   let t;
+  let activeClicks = false
 
   useEffect(() => {
     (async () => {
       playersName = await retrievePlayersBasicData(gameId); 
 
       const interval = setInterval(() => {
-        if (isLoggedIn() || !gameId) {
+        if (isLoggedIn() && gameId) {
           (async () => {
             try {
               setUserId(retrieveUserId(sessionStorage.token));
@@ -107,7 +108,10 @@ export default ({ goTo, gameId }) => {
           setColor(refColor[combination[i]]);
           setTimeout(() => setColor(''), 1000);
           setTimeout(() => showColor(i + 1), 2000);
-        } else resolve() //in this else activeClicks = true
+        } else {
+          // activeClicks = true
+          resolve()
+        } //in this else activeClicks = true
       })(0);
     });
   }
@@ -157,20 +161,20 @@ export default ({ goTo, gameId }) => {
 
       {/* Block__Element--Modifier */}
 
-      <div className="game__top-menu">
-        <p className="game__top-menu__logout">Leave</p>
+      <div className="top-menu">
+        {/* <p className="game__top-menu__logout">Leave</p> */}
       </div>
-      <div className="game__board">
-        <div className="game__board__container">
+      <div className="board">
+        <div className="container">
           <div
             className={
               color === "r"
-                ? "game__board__container__red red_active"
-                : "game__board__container__red"
+                ? "container__red--active"
+                : "container__red"
             }
             onClick={ e  => {
                 e.preventDefault()
-                if (userId === currentPlayerId) {
+                if (userId === currentPlayerId /*&& activeClicks*/) {
                   _combinationPlayer.push(0)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
                   
@@ -185,12 +189,12 @@ export default ({ goTo, gameId }) => {
           <div
             className={
               color === "g"
-                ? "game__board__container__green green_active"
-                : "game__board__container__green"
+                ? "container__green--active"
+                : "container__green"
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId) {
+                if (userId === currentPlayerId /*&& activeClicks*/) {
                   _combinationPlayer.push(1)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
 
@@ -205,12 +209,12 @@ export default ({ goTo, gameId }) => {
           <div
             className={
               color === "b"
-                ? "game__board__container__blue blue_active"
-                : "game__board__container__blue"
+                ? "container__blue--active"
+                : "container__blue"
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId) {
+                if (userId === currentPlayerId /*&& activeClicks*/) {
                   _combinationPlayer.push(2)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
 
@@ -225,12 +229,12 @@ export default ({ goTo, gameId }) => {
           <div
             className={
               color === "y"
-                ? "game__board__container__yellow yellow_active"
-                : "game__board__container__yellow"
+                ? "container__yellow--active"
+                : "container__yellow"
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId) {
+                if (userId === currentPlayerId /*&& activeClicks*/) {
                   _combinationPlayer.push(3)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
 
@@ -242,22 +246,22 @@ export default ({ goTo, gameId }) => {
                 }
             }}
           ></div>
-          <div className="game__board__container__gray"></div>
+          <div className="container__gray"></div>
         </div>
       </div>
-      <div className="game__footer">
-        {winner && <p className="game__footer__text">Player {winner} wins!</p>}
+      <div className="footer">
+        {winner && <p className="footer__text">Player {winner} wins!</p>}
         {currentPlayerName && (
-          <p className="game__footer__text">Turn of: {currentPlayerName}</p>
+          <p className="footer__text">Turn of: {currentPlayerName}</p>
         )}
         {countdown && (
-          <p className="game__footer__text">Remaining time: {countdown}sec.</p>
+          <p className="footer__text">Remaining time: {countdown}sec.</p>
         )}
         {lastPlayerOut && (
-          <p className="game__footer__text">Player {lastPlayerOut} out</p>
+          <p className="footer__text">Player {lastPlayerOut} out</p>
         )}
         {playersRemain && (
-          <p className="game__footer__text">
+          <p className="footer__text">
             Remaining players: {playersRemain}
           </p>
         )}
