@@ -136,7 +136,7 @@ export default function App() {
 		}
 	}
 
-	const handleRegister = (name, surname, email, password, navigation) => {
+	const handleRegister = async (name, surname, email, password, navigation) => {
 		try {
 			await registerUser(name, surname, email, password)
 

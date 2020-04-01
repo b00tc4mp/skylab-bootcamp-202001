@@ -77,17 +77,6 @@ const styles = StyleSheet.create({
         fontFamily: 'montserrat',
 
     },
-    buttonContainer: {
-        alignItems: 'center',
-        borderColor: '#82A4B3',
-        borderWidth: 2,
-        backgroundColor: 'white',
-        padding: 10,
-        width: '50%',
-        alignSelf: 'center'
-
-    },
-
     nextButton: {
         alignItems: 'center',
         borderColor: '#82A4B3',
@@ -97,11 +86,6 @@ const styles = StyleSheet.create({
         width: '75%',
         alignSelf: 'center',
         marginTop: 10
-    },
-
-    button: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi'
     },
     label: {
         fontFamily: 'montserrat-semi'

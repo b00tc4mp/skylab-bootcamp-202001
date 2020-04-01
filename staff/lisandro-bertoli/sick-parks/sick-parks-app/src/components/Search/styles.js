@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
         fontFamily: 'montserrat'
 
     },
+
     optionsContainer: {
         flex: 1,
         flexDirection: 'row',
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     topImageContainer: {
-        flex: 1.1,
+        flex: 1,
         backgroundColor: '#EFEBDA'
 
     },
@@ -40,7 +41,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '49.5%',
-        height: '48.9%',
+        height: '49%',
         marginBottom: 4
     },
     queryIcon: {

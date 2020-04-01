@@ -15,8 +15,6 @@ export default function StepThree({ navigation, route }) {
         if (park[key] === undefined) park[key] = 'N/A'
 
         if (key !== 'location') {
-
-
             park[key] = park[key].charAt(0).toUpperCase() + park[key].slice(1)
         }
     }
@@ -49,6 +47,7 @@ export default function StepThree({ navigation, route }) {
 
         parent.navigate('Home')
     }
+    console.log(navigation.state)
 
     return (
         <View style={styles.container}>

@@ -3,7 +3,7 @@ import { View, TextInput, ImageBackground, Image } from 'react-native'
 import Button from '../Button'
 import styles from './styles'
 
-const mainImg = require('../../../assets/home.jpg')
+const mainImg = require('../../../assets/home-1.png')
 const leftImage = require('../../../assets/left-side.png')
 const rightImage = require('../../../assets/right-side.png')
 

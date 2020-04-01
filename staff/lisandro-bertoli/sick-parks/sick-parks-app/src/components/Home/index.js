@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
+import { CommonActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import Search from '../Search'
 import TopSearch from '../TopSearch'
@@ -81,12 +82,18 @@ export default function Home({ user, updateUser }) {
 
     const handleOnDelete = async (navigation) => {
         try {
+
+            navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [{ name: 'Home' }]
+                }))
+
+
             await deletePark(detailedPark.id, user.id)
             await updateUser()
 
             Alert.alert('Park deleted')
-
-            navigation.popToTop()
         } catch ({ message }) {
             Alert.alert(message)
         }

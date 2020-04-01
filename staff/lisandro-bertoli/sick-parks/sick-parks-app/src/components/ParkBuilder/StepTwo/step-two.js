@@ -169,15 +169,6 @@ export default function StepOne({ navigation, route }) {
                                         onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['rail', index])}
                                     />
                                 </View>
-                                <Button
-                                    text='Set Location'
-                                    style={styles.buttonContainer}
-                                    textStyle={styles.button}
-                                    onPress={() => {
-                                        setCurrentIndex(['rail', index]);
-                                        setShowModal(true)
-                                    }}
-                                />
                             </View>
                         )
                     })}
@@ -210,15 +201,6 @@ export default function StepOne({ navigation, route }) {
                                         onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['box', index])}
                                     />
                                 </View>
-                                <Button
-                                    text='Set Location'
-                                    style={styles.buttonContainer}
-                                    textStyle={styles.button}
-                                    onPress={() => {
-                                        setCurrentIndex(['box', index]);
-                                        setShowModal(true)
-                                    }}
-                                />
                             </View>
                         )
                     })}
@@ -251,15 +233,6 @@ export default function StepOne({ navigation, route }) {
                                         onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['kicker', index])}
                                     />
                                 </View>
-                                <Button
-                                    text='Set Location'
-                                    style={styles.buttonContainer}
-                                    textStyle={styles.button}
-                                    onPress={() => {
-                                        setCurrentIndex(['kicker', index]);
-                                        setShowModal(true)
-                                    }}
-                                />
                             </View>
                         )
                     })}
@@ -292,15 +265,6 @@ export default function StepOne({ navigation, route }) {
                                         onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['pipe', index])}
                                     />
                                 </View>
-                                <Button
-                                    text='Set Location'
-                                    style={styles.buttonContainer}
-                                    textStyle={styles.button}
-                                    onPress={() => {
-                                        setCurrentIndex(['pipe', index]);
-                                        setShowModal(true)
-                                    }}
-                                />
                             </View>
                         )
                     })}
@@ -333,15 +297,6 @@ export default function StepOne({ navigation, route }) {
                                         onChangeText={(text) => handleEachValue(TYPES.DESCRIPTION, text, ['other', index])}
                                     />
                                 </View>
-                                <Button
-                                    text='Set Location'
-                                    style={styles.buttonContainer}
-                                    textStyle={styles.button}
-                                    onPress={() => {
-                                        setCurrentIndex(['other', index]);
-                                        setShowModal(true)
-                                    }}
-                                />
                             </View>
                         )
                     })}
