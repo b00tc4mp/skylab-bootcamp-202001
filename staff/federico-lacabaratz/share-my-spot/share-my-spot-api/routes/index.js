@@ -14,7 +14,10 @@ const {
     retrieveSpotPhoto,
     bookSpot,
     acceptBooking,
-    declineBooking
+    declineBooking,
+    retrieveMyBookings,
+    retrieveSpotsForBookingManagement
+    
 } = require('./handlers')
 
 const { jwtVerifierMidWare } = require('../mid-wares')
@@ -52,6 +55,10 @@ router.post('/:spotId/spots/:candidateId/book', [jwtVerifierMidWare, jsonBodyPar
 router.patch('/spots/:spotId/candidate/:candidateId/accept', [jwtVerifierMidWare, jsonBodyParser], acceptBooking)
 
 router.patch('/spots/:spotId/candidate/:candidateId/decline', [jwtVerifierMidWare, jsonBodyParser], declineBooking)
+
+router.get('/users/my-bookings', jwtVerifierMidWare, retrieveMyBookings)
+
+router.get('/spots/manage-requests', jwtVerifierMidWare, retrieveSpotsForBookingManagement)
 
 module.exports = router
 

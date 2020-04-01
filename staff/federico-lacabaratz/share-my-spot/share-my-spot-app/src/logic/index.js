@@ -15,6 +15,8 @@ import bookSpot from './book-spot'
 import acceptBooking from './accept-booking'
 import declineBooking from './decline-booking'
 import context from './context'
+import retrieveMyBookings from './retrieve-my-bookings'
+import retrieveSpotsForBookingManagement from './retrieve-spots-for-booking-management'
 
 export {
     registerUser,
@@ -33,5 +35,7 @@ export {
     bookSpot,
     acceptBooking,
     declineBooking,
-    context
+    context,
+    retrieveMyBookings,
+    retrieveSpotsForBookingManagement
 }

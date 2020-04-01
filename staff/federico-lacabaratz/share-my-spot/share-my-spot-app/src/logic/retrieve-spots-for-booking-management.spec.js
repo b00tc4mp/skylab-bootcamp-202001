@@ -1,6 +1,6 @@
 const { random } = Math
 const { mongoose, models: { User, Spot } } = require('share-my-spot-data')
-const { retrieveMySpots } = require('.')
+const { retrieveSpotsForBookingManagement } = require('.')
 const jwt = require('jsonwebtoken')
 import context from './context'
 
@@ -9,14 +9,14 @@ const { env: {
     REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET
 } } = process
 
-describe('retrieveMySpots', () => {
+describe('retrieveSpotsForBookingManagement', () => {
     beforeAll(() =>
         mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
             .then(() => Promise.all([User.deleteMany(), Spot.deleteMany()]))
             .then(() => { })
     )
 
-    let name, surname, email, phone, password, _spotId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun
+    let name, name2, surname, surname2, email, email2, phone, phone2, password, password2, _id, _id2, _spotId, publisherId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -24,6 +24,12 @@ describe('retrieveMySpots', () => {
         email = `email-${random()}@mail.com`
         phone = 123456 + `${random()}`
         password = `password-${random()}`
+
+        name2 = `name-${random()}`
+        surname2 = `surname-${random()}`
+        email2 = `email-${random()}@mail.com`
+        phone2 = 123456 + `${random()}`
+        password2 = `password-${random()}`
 
         title = `title-${random()}`
         addressLocation = `barcelona`
@@ -51,28 +57,30 @@ describe('retrieveMySpots', () => {
     })
 
     describe('when both user and spot exists', () => {
-        let id
         beforeEach(() =>
-            Promise.all([User.create({ name, surname, email, phone, password }),
-            Spot.create({ id, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun })])
+        Promise.all([User.create({ name, surname, email, phone, password }), User.create({ name: name2, surname: surname2, email: email2, phone: phone2, password: password2 })])
+        .then(([user, user2]) => {
+            _id = user.id.toString()
+            _id2 = user2.id.toString()
+        })
+        .then(() => Promise.resolve(Spot.create({ publisherId: _id, title: title, addressLocation: addressLocation, addressStNumber: addressStNumber, addressOther: addressOther, length: length, width: width, height: height, area: area, description: description, price: price, acceptsBarker: acceptsBarker, surveillance: surveillance, sCovered: isCovered, hourStarts: hourStarts, hourEnds: hourEnds, mon: mon, tue: tue, wed: wed, thu: thu, fri: fri, sat: sat, sun: sun, bookingCandidates: [ _id2] })))
+                .then(({ id }) => _spotId = id)
+                .then(() => Promise.all([User.findByIdAndUpdate(_id, { $push: { publishedSpots: _spotId } }), Spot.findByIdAndUpdate(_spotId)]))
                 .then(([user, spot]) => {
-                    id = user.id
-                    context.token = jwt.sign({ sub: id }, TEST_JWT_SECRET)
-                    _spotId = spot.id
-                    user.save()
-                    return spot.save()
+                    return Promise.all([user.save(), spot.save()])
                 })
                 .then(() => { })
         )
 
         it('should successfully retrieve the specific spot', () => {
-            retrieveMySpots(id)
+            retrieveSpotsForBookingManagement(_id)
                 .then(spots => {
-
+                    
                     expect(spots.length).toEqual(1)
                     expect(spots).toBeInstanceOf(Array)
                     expect(spots[0].id).toEqual(_spotId)
-                    expect(spots[0].publisherId.id).toEqual(id)
+                    expect(spots[0].publisherId.id).toEqual(_id)
+                    expect(spots[0].bookingCandidates[0]).toEqual(_id2)
                 })
                 .then(() => { })
         })
@@ -81,11 +89,11 @@ describe('retrieveMySpots', () => {
             beforeEach(() => User.deleteMany().then(() => { }))
 
             it('should fail if the user does not exist', () => {
-                retrieveMySpots(id)
+                retrieveSpotsForBookingManagement(_id)
                     .then(() => { throw new Error('should not reach this point') })
                     .catch(({ message }) => {
-                        expect(message).toBeDefined()
-                        expect(message).toEqual(`user with id ${id} not found`)
+                        expect(message).toBeUndefined()
+                        expect(message).toEqual(`user with id ${_id} not found`)
                     })
                     .then(() => { })
             })

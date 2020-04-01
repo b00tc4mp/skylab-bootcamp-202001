@@ -13,5 +13,7 @@ module.exports = {
     retrieveSpotPhoto: require('./retrieve-spot-photo'),
     bookSpot: require('./book-spot'),
     acceptBooking: require('./accept-booking'),
-    declineBooking: require('./decline-booking')
+    declineBooking: require('./decline-booking'),
+    retrieveMyBookings: require('./retrieve-my-bookings'),
+    retrieveSpotsForBookingManagement: require('./retrieve-spots-for-booking-management')
 }

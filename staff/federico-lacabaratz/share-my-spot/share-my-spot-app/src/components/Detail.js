@@ -39,8 +39,8 @@ export default function ({ handleDetail, spotDetail, handleOnBooking }) {
     return <div className="detail" >
         <form className="detail__container" onSubmit={handleToBooking} >
             <main>
-                <img className="detail__photo" src={`${API_URL}/load/${id}`} />
-                <h4 className="detail__h4">{title}</h4>
+                <img className="detail__photo" alt="spot detail" src={`${API_URL}/load/${id}`} />
+                <h3 className="detail__h4">{title}</h3>
                 <h2 className="detail__h2">{price}€/per hour</h2><span>(*) See conditions</span>
                 <h3 className="detail__h3">DESCRIPTION:</h3>
                 <p className="detail__p">{description}</p>

@@ -3,6 +3,17 @@ import { NotAllowedError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()
 
+/**
+ * Updates the user's info
+ * 
+ * @param {object} body the elements that will be updated
+ * 
+ * @returns {Promise<string>} an empty Promise on a successful update
+ * 
+ * @throws {NotAllowedError} if a user set a wrong password
+ * @throws {Error} on network connection issues (or unrelated error)
+ */
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (body) {

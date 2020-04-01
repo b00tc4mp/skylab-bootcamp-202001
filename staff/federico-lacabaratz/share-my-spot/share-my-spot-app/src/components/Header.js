@@ -50,12 +50,12 @@ export default ({ onLogout }) => {
     const handleYourRequests = (event) => {
         event.preventDefault()
 
-        history.push('/manage-your-requests')
+        history.push('/manage-requests')
     }
 
     const handleMyBookings = (event) => {
         event.preventDefault()
-
+        
         history.push('/my-bookings')
     }
 

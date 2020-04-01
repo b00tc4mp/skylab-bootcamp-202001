@@ -3,7 +3,10 @@ const { mongoose, models: { User } } = require('share-my-spot-data')
 const { registerUser } = require('.')
 const bcrypt = require('bcryptjs')
 
-const { env: { REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL } } = process
+const { env: {
+    REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL,
+    REACT_APP_TEST_JWT_SECRET: TEST_JWT_SECRET
+} } = process
 
 describe('registerUser', () => {
     let name, surname, email, phone, password

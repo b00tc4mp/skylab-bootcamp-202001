@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { YourRequest } from '../components'
 import './ManageYourRequests.sass'
-import YourRequest from './YourRequest'
 
-export default function ({spots, user, onAccept, onDecline}) {
+export default function ({ yourRequests, handleMyRequests, onAccept, onDecline }) {
+
+    useEffect(() => {
+        handleMyRequests()
+    }, [])
     
     return <ul className="manageRequests">
-        {spots.map(spot => <YourRequest key={spot._id} spot={spot} user={user} onToAccept={onAccept} onToDecline={onDecline} />)}
+        {yourRequests.map(yourRequestItem => <YourRequest key={yourRequestItem.id} yourRequestItem={yourRequestItem} onToAccept={onAccept} onToDecline={onDecline} />)}
     </ul>
 }

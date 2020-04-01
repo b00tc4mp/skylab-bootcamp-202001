@@ -3,11 +3,11 @@ const { NotAllowedError } = require('share-my-spot-errors')
 require('dotenv').config()
 
 /**
- * Retrieves the spots I have published
+ * Retrieves my bookings made to another spots as a candidate
  * 
- * @returns {Promise<string>} returns the spots that have created
+ * @returns {Promise<string>} returns the spots that have applied to as candidate or the ones that I have been accepted from
  * 
- * @throws {NotFoundError} on not found user id or spots created with this user id
+ * @throws {NotFoundError} on not found user id
  * @throws {Error} on network connection issues (or unrelated error)
  */
 
@@ -16,7 +16,7 @@ const API_URL = process.env.REACT_APP_API_URL
 export default (function () {
 
     return (async () => {
-        const response = await fetch(`${API_URL}/spots`, {
+        const response = await fetch(`${API_URL}/users/my-bookings`, {
             method: 'GET',
             headers: { Authorization: 'Bearer ' + this.token }
         })

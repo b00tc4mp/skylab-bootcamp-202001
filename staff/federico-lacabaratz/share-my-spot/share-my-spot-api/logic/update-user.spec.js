@@ -66,7 +66,7 @@ describe('updateUser', () => {
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.an.instanceOf(NotAllowedError)
-                expect(error.message).to.equal('wrong credentials')
+                expect(error.message).to.equal('This email is already in use.')
             }
 
         })
@@ -88,18 +88,6 @@ describe('updateUser', () => {
         expect(() =>
             updateUser(userId, {}, () => { })
         ).to.Throw(TypeError, `userId ${userId} is not a string`)
-    })
-
-    it('should fail on not-allowed field and (cannot be modified)', () => {
-        userId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
-
-        const property = 'hello'
-
-        data = { [property]: 'world' }
-
-        expect(() =>
-            updateUser(userId, data)
-        ).to.Throw(Error, `field ${property} cannot be modified`)
     })
 
     after(() => User.deleteMany().then(() => mongoose.disconnect()))

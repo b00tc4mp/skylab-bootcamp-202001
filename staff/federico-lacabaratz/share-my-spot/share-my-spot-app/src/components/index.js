@@ -11,9 +11,10 @@ import AddSpot from './AddSpot'
 import MySpotItem from './MySpotItem'
 import MySpots from './MySpots'
 import SpotUpdate from './SpotUpdate'
+import MyBookingItem from './MyBookingItem'
 import MyBookings from './MyBookings'
-// import YourRequests from './YourRequest'
-// import ManageYourRequests from './ManageYourRequest'
+import YourRequest from './YourRequest'
+import ManageYourRequests from './ManageYourRequests'
 
 export {
     App,
@@ -29,7 +30,8 @@ export {
     MySpotItem,
     MySpots,
     SpotUpdate,
+    MyBookingItem,
     MyBookings,
-    // YourRequest
-    // ManageYourRequest
+    YourRequest,
+    ManageYourRequests
 }

@@ -3,6 +3,20 @@ import { NotAllowedError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()
 
+/**
+ * Checks user credentials against the storage and saves the token within
+ * 
+ * @param {string} email user's unique e-mail
+ * @param {string} password user's password
+ * 
+ * @returns {Promise<string>} stores token within sessionStorage
+ * 
+ * @throws {ContentError} if user data does not follow the format and content rules
+ * @throws {TypeError} if user data does not have the correct type
+ * @throws {NotAllowedError} on wrong credentials
+ * @throws {Error} on network connection issues (or unrelated error)
+ */
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (email, password) {

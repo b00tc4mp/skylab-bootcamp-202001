@@ -2,6 +2,15 @@ import context from './context'
 const { NotAllowedError } = require('share-my-spot-errors')
 require('dotenv').config()
 
+/**
+ * Finds and receives data from a desired user
+ *
+ * @returns {Promise<Object>} user's id, name, surname, email and phone from storage
+ * 
+ * @throws {NotAllowedError} if the user does not exist
+ * @throws {Error} on network connection issues (or unrelated error)
+ */
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function () {

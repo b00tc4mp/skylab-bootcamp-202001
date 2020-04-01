@@ -3,6 +3,18 @@ import { NotAllowedError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()
 
+/**
+ * Deletes a spot from "My Spots" section
+ * 
+ * @param {string} userId user's unique id number (owner)
+ * @param {string} spotId spot's unique id number (spot)
+ * 
+ * @returns {Promise<string>} returns an empty Promise on a successful spot removal
+ * 
+ * @throws {NotAllowedError} when user can't delete the spot (not the owner)
+ * @throws {Error} on network connection issues (or unrelated error)
+ */
+
 const API_URL = process.env.REACT_APP_API_URL
 
 export default (function (spotId) {

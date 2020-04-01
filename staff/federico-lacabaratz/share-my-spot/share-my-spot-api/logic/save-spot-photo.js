@@ -20,7 +20,6 @@ const path = require('path')
 module.exports = function (userId, spotId, file, filename) {
     validate.string(userId, 'userId')
     validate.string(spotId, 'spotId')
-    // validate.type(file, 'file', Stream)
     validate.string(filename, 'filename')
 
     return (async () => {

@@ -4,7 +4,9 @@ const { login } = require('.')
 const bcrypt = require('bcryptjs')
 import context from './context'
 
-const TEST_MONGODB_URL = process.env.REACT_APP_TEST_MONGODB_URL
+const { env: {
+    REACT_APP_TEST_MONGODB_URL: TEST_MONGODB_URL,
+} } = process
 
 describe('login', () => {
 

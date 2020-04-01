@@ -2,6 +2,18 @@ const { validate } = require('../../share-my-spot-utils')
 const { models: { User, Spot } } = require('../../share-my-spot-data')
 const { NotFoundError, ConflictError } = require('../../share-my-spot-errors')
 
+/**
+ * Creates a request for booking on a specific spot
+ * 
+ * @param {string} candidateId user's unique id number (candidate)
+ * @param {string} spotId spot's unique id number (spot)
+ * 
+ * @returns {Promise<string>} returns an empty Promise on a successful booking request
+ * 
+ * @throws {NotFoundError} on not found data
+ * @throws {ConflictError} when conflicts exists contrasting provided data and existing data inside bookingCandidates array
+ */
+
 module.exports = (candidateId, spotId) => {
     validate.string(candidateId, 'candidateId')
     validate.string(spotId, 'spotId')

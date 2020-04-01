@@ -2,6 +2,16 @@ const { models: { Spot } } = require('share-my-spot-data')
 const { validate } = require('share-my-spot-utils')
 const { NotFoundError } = require('share-my-spot-errors')
 
+/**
+ * Retrieves a specific spot I have published
+ * 
+ * @param {string} spotId spot's unique id number
+ * 
+ * @returns {Promise<string>} returns the spot that I am requesting
+ * 
+ * @throws {NotFoundError} on not found spot id 
+ */
+
 module.exports = spotId => {
     validate.string(spotId, 'spotId')
     if (!spotId) throw new NotFoundError(`${spotId} is not a valid id`)

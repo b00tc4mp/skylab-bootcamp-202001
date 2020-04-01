@@ -3,6 +3,21 @@ const { models: { User } } = require('../../share-my-spot-data')
 const { NotFoundError, NotAllowedError } = require('../../share-my-spot-errors')
 const bcrypt = require('bcryptjs')
 
+/**
+ * Updates the user's info
+ * 
+ * @param {string} userId user's unique id
+ * @param {object} body the elements that will be updated
+ * @param {string} email user's unique e-mail
+ * @param {number} phone user's unique phone number
+ * @param {string} oldPassword user's oldPassword (required to update to a new one)
+ * @param {string} password user's password
+ * 
+ * @returns {Promise<string>} an empty Promise on a successful update
+ * 
+ * @throws {NotAllowedError} if a user set a wrong password
+ */
+
 module.exports = (userId, body) => {
     const {email, phone, oldPassword, password} =  body
 

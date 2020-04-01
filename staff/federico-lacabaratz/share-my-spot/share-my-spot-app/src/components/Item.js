@@ -9,8 +9,8 @@ export default function ({ item: { id, title, price, publisherId }, onClick }) {
     return <li className="item">
         <div className="item__container" >
             <main>
-                <img className="item__photo" src={`${API_URL}/load/${id}`} onClick={() => onClick(id)} />
-                <h4 className="item__h4">{title}</h4>
+                <img className="item__photo" alt="published spot" src={`${API_URL}/load/${id}`} onClick={() => onClick(id)} />
+                <h3 className="item__h4">{title}</h3>
                 <h2 className="item__h2">{price} €/per hour</h2><span>(*) See Conditions</span>
                 <div className="item__bottom">
                     <i className="item__bottom-call fas fa-phone" onClick={e => {
