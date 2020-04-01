@@ -9,7 +9,6 @@ export default (function (body, spotId) {
     let { title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun } = body
 
     validate.string(spotId, 'spotId')
-    //validate.string(publisherId, 'publisherId')
     validate.string(title, 'title')
     validate.string(addressLocation, 'addressLocation')
     validate.string(addressStNumber, 'addressStNumber')

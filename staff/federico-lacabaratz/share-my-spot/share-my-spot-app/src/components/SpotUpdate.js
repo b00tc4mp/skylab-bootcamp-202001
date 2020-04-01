@@ -7,8 +7,8 @@ const API_URL = process.env.REACT_APP_API_URL
 
 export default function ({ spot, onUpdateMySpot, error }) {
 
-    const { _id: spotId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price } = spot;
-
+    const { id: spotId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price } = spot;
+    
     function handleOnUpdateMySpot(event) {
         event.preventDefault()
         
@@ -35,7 +35,7 @@ export default function ({ spot, onUpdateMySpot, error }) {
         const sat = event.target.sat.checked ? 'yes' : 'no'
         const sun = event.target.sun.checked ? 'yes' : 'no'
         const [photo] = event.target.photo.files
-        onUpdateMySpot({spotId, photo, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun})
+        onUpdateMySpot({photo, spotId, title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun})
     }
 
     return <> <div className="spotUpdate">

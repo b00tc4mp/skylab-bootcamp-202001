@@ -22,9 +22,9 @@ module.exports = (publisherId, candidateId, spotId) => {
 
         if (!candidateAlreadyExists) throw new NotFoundError(`candidate with ${candidateId} ID doesn't exist`)
 
-        spot.status = 'unavailable' 
+        spot.status = 'unavailable'
         spot.bookedTo = candidateId
-        spot.bookingCandidates = []
+        spot.bookingCandidates = spot.bookingCandidates.filter(id => id.toString() === candidateId)
 
         return spot.save()
             .then(() => { })

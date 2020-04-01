@@ -1,4 +1,3 @@
-import { validate } from 'share-my-spot-utils'
 import { NotAllowedError, NotFoundError } from 'share-my-spot-errors'
 import context from './context'
 require('dotenv').config()

@@ -5,6 +5,6 @@ module.exports = (userId, body, spotId) => {
     validate.string(userId, 'userId')
     validate.string(spotId, 'spotId')
 
-    return Spot.findOneAndUpdate({ _id: spotId, publisherId: userId }, { $set: body })
+    return Spot.findOneAndUpdate({ _id: spotId, publisherId: userId }, { $set: body, bookingCandidates: [], status: 'available'}, {$unset: {bookedTo: 1}})
         .then(() => { })
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Register, Login, Search, Header, Results, Detail, UserUpdate, AddSpot, MySpots, SpotUpdate, MyBookings } from '../components'
-import { registerUser, login, isLoggedIn, retrieveUser, search, retrieveSpot, userUpdate, addSpot, saveSpotPhoto, retrieveMySpots, spotUpdate, spotDelete, bookSpot, acceptBooking, declineBooking, retrieveMyBookings } from '../logic'
+import { Register, Login, Search, Header, Results, Detail, UserUpdate, AddSpot, MySpots, SpotUpdate, MyBookings, ManageYourRequests } from '../components'
+import { registerUser, login, isLoggedIn, retrieveUser, search, retrieveSpot, userUpdate, addSpot, saveSpotPhoto, retrieveMySpots, spotUpdate, spotDelete, bookSpot, acceptBooking, declineBooking, retrieveMyBookings, retrieveSpotsForBookingManagement } from '../logic'
 import { Context } from './ContextProvider'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -43,7 +43,7 @@ export default withRouter(function ({ history }) {
 
   useEffect(() => {
     history.push('/my-spots')
-  }, [mySpots])
+  }, [])
 
   const handleLogout = () => {
     setUser({})
@@ -237,7 +237,7 @@ export default withRouter(function ({ history }) {
     (async () => {
       try {
         await spotUpdate({ title, addressLocation, addressStNumber, addressOther, length, width, height, area, description, price, acceptsBarker, surveillance, isCovered, hourStarts, hourEnds, mon, tue, wed, thu, fri, sat, sun }, spotId)
-
+        
         if (photo) {
           await saveSpotPhoto(spotId, photo)
         }
@@ -300,8 +300,8 @@ export default withRouter(function ({ history }) {
 
         history.push('/my-bookings')
 
-      } catch (error) {
-        setState({ ...state, error: error.message })
+      } catch ({ message }) {
+        setState({ ...state, error: message })
 
         setTimeout(() => {
           setState({ error: undefined })
@@ -319,8 +319,65 @@ export default withRouter(function ({ history }) {
 
         history.push('/my-bookings')
 
-      } catch (error) {
-        setState({ ...state, error: error.message })
+      } catch ({ message }) {
+        setState({ ...state, error: message })
+
+        setTimeout(() => {
+          setState({ error: undefined })
+        }, 3000)
+      }
+    })()
+  }
+
+  const handleMyRequests = () => {
+    (async () => {
+      try {
+        
+        const yourRequests = await retrieveSpotsForBookingManagement()
+        
+        setYourRequests(yourRequests)
+
+        history.push('/manage-requests')
+
+      } catch ({ message }) {
+        setState({ ...state, error: message })
+
+        setTimeout(() => {
+          setState({ error: undefined })
+        }, 3000)
+      }
+    })()
+  }
+
+  const handleOnAccept = (publisherId, candidateId, spotId) => {
+    (async() => {
+      try {
+        
+        await acceptBooking(publisherId, candidateId, spotId)
+        handleMyRequests()
+        // history.push('/manage-requests')
+
+      } catch ({ message }) {
+        setState({ ...state, error: message })
+
+        setTimeout(() => {
+          setState({ error: undefined })
+        }, 3000)
+      }
+    })()
+  }
+
+  const handleOnDecline = (publisherId, candidateId, spotId) => {
+    (async() => {
+      try {
+        
+        await declineBooking(publisherId, candidateId, spotId)
+
+        handleMyRequests()
+        // history.push('/manage-requests')
+
+      } catch ({ message }) {
+        setState({ ...state, error: message })
 
         setTimeout(() => {
           setState({ error: undefined })
@@ -330,6 +387,7 @@ export default withRouter(function ({ history }) {
   }
 
   const { error } = state
+  const { bookingCandidates } = yourRequests
 
   return <div className="App">
     <Route exact path='/' render={() => isLoggedIn() ? <Redirect to='/search' /> : <Redirect to='/login' />} />
@@ -343,6 +401,6 @@ export default withRouter(function ({ history }) {
     <Route path='/my-spots' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MySpots handleMySpots={handleMySpots} allMySpots={mySpots} updateMySpot={handleToUpdateMySpot} deleteMySpot={handleDeleteMySpot} onItemClick={handleDetail} error={error} /> </> : <Redirect to='/login' />} />
     <Route path='/update/:spotId' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><SpotUpdate spot={spot} onUpdateMySpot={handleOnUpdateMySpot} /></> : <Redirect to='/login' />} />
     <Route path='/my-bookings' render={() => isLoggedIn() ? <><Header onLogout={handleLogout} /><MyBookings myBookingSpots={myBookingSpots} handleMyBookings={handleMyBookings} /></> : <Redirect to='/login' />} />
-    {/* <Route path='/manage-requests' render={() => isLoggedIn() ? <><Header onLogout={handleLogout}/><ManageYourRequests user={user} spots={spots} onAccept={handleOnAccept} onDecline={handleOnDecline}/></> : <Redirect to='/login' />} /> */}
+    <Route path='/manage-requests' render={() => isLoggedIn() ? <><Header onLogout={handleLogout}/><ManageYourRequests yourRequests={yourRequests} handleMyRequests={handleMyRequests} onAccept={handleOnAccept} onDecline={handleOnDecline}/></> : <Redirect to='/login' />} />
   </div>
 })

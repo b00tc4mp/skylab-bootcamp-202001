@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from 'react'
-import {retrieveMyBooking} from '../logic'
+import React, { useState } from 'react'
 import './MyBookingItem.sass'
-const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ myBookingItem  }) {
+export default function ({ myBookingItem }) {
 
     const [phoneB, setPhoneB] = useState(false)
     const [emailB, setEmailB] = useState(false)
- 
-    const { title, hourStarts, hourEnds, price, publisherId } = myBookingItem
+
+    const { title, hourStarts, hourEnds, price, publisherId, bookedTo, bookingCandidates } = myBookingItem
 
     return myBookingItem ? <li className="myBookingItem" >
         <main>
@@ -33,8 +31,13 @@ export default function ({ myBookingItem  }) {
                     <div className="myBookingItem__bottom-email" >
                         {emailB && publisherId.email}
                     </div>
+                    <br></br>{bookingCandidates.includes(bookedTo) ? <h3>YOUR REQUEST HAS BEEN ACCEPTED!</h3> : null}
                 </div>
             </div>
         </main>
-    </li > : <h3 className="myBookingItem_h3">You haven't placed any bookings yet!</h3>
+    </li > : <li className="myBookingItem" >
+            <div className="myBookingItem__container">
+                <h3 className="myBookingItem__h3">You haven't placed any bookings yet!</h3>
+            </div>
+        </li>
 }
