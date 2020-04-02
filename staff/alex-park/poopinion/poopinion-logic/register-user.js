@@ -22,7 +22,6 @@ module.exports = function(name, surname, email, password, age, gender) {
     validate.stringFrontend(surname, 'surname')
     validate.stringFrontend(email, 'email')
     validate.email(email)
-    console.log(age + " validated")
     validate.age(age)
     validate.gender(gender, 'gender')
     validate.stringFrontend(password, 'password')

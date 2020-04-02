@@ -19,12 +19,8 @@ module.exports = {
     },
 
     age(target) {
-        if (!isValidDate(target)) throw new ContentError(`${target} is not a valid date of birth`)
         const [year, month, day] = target.split('-')
-        console.log(year, month, day)
-        if (Number(year) >= new Date().getFullYear()) throw new ContentError(`${target} is not a valid date of birth`)
-        if (Number(month) > 12) throw new ContentError(`${target} is not a valid date of birth`)
-        if (Number(day) > 31) throw new ContentError(`${target} is not a valid date of birth`)
+        if (!isValidDate(target) || Number(year) >= new Date().getFullYear() || Number(month) > 12 || Number(day) > 31) throw new ContentError(`${target} is not a valid date of birth`)
     },
 
     email(target) {
