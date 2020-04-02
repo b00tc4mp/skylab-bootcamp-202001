@@ -1,13 +1,13 @@
 import React from 'react'
-import { ScrollView, View, Text, Alert } from 'react-native'
+import { ScrollView, View, Text } from 'react-native'
 import Button from '../../Button'
 import MapViewContainer from '../../MapViewContainer'
 import styles from './styles'
 
 
 
-export default function StepThree({ navigation, route }) {
-    const { features, park, onNewPark } = route.params
+export default function StepThree({ route: { params: { features, park, onNewPark } } }) {
+
     let numberOfFeatures = 0
     for (let key in features) numberOfFeatures += features[key].length
 
@@ -24,15 +24,6 @@ export default function StepThree({ navigation, route }) {
         Object.values(features).forEach(value => value.forEach(element => _features.push(element)))
         const { location } = park
 
-        _features.forEach(feature => {
-            if (feature.coordinates) {
-                feature.location = {
-                    type: 'Point',
-                    coordinates: [feature.coordinates.longitude, feature.coordinates.latitude],
-                }
-                delete feature.coordinates
-            }
-        })
 
         park.location = {
             type: 'Point',
@@ -40,14 +31,7 @@ export default function StepThree({ navigation, route }) {
         }
 
         onNewPark({ features: _features, park })
-
-        Alert.alert('Park created!')
-        const parent = navigation.dangerouslyGetParent()
-
-
-        parent.navigate('Home')
     }
-    console.log(navigation.state)
 
     return (
         <View style={styles.container}>

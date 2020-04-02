@@ -3,7 +3,7 @@ import { View, TextInput, ImageBackground, Image } from 'react-native'
 import Button from '../Button'
 import styles from './styles'
 
-const mainImg = require('../../../assets/home-1.png')
+const mainImg = require('../../../assets/home-1.jpg')
 const leftImage = require('../../../assets/left-side.png')
 const rightImage = require('../../../assets/right-side.png')
 
@@ -15,7 +15,7 @@ export default function ({ onSubmit }) {
     return (<>
         <ImageBackground source={mainImg}
             style={styles.topImageContainer} imageStyle={styles.topImage} >
-            <View style={{ flexDirection: 'row', flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 10 }}>
+            <View style={styles.inputContainer}>
                 <View style={styles.queryButton} >
                     <Image style={styles.queryIcon} source={require('../../../assets/icon-search.png')} />
                 </View>

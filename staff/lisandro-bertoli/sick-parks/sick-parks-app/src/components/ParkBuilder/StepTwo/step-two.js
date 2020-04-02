@@ -6,13 +6,12 @@ import MapViewContainer from '../../MapViewContainer'
 import styles from './styles'
 
 const TYPES = {
-    COORDS: 'coordinates',
     SIZE: 'size',
     DESCRIPTION: 'description'
 }
 
 export default function StepOne({ navigation, route }) {
-    const { park } = route.params
+    const { park, features } = route.params
     const [error, setError] = useState()
     const [showModal, setShowModal] = useState(false)
     const [currentIndex, setCurrentIndex] = useState()
@@ -24,8 +23,8 @@ export default function StepOne({ navigation, route }) {
 
 
     useEffect(() => {
-        const { features: { rails = [], boxes = [], kickers = [], pipes = [], others = [] } } = route.params
-
+        const { rails = [], boxes = [], kickers = [], pipes = [], others = [] } = features
+        console.log(features)
         const railsArray = new Array(rails).fill({
             name: 'rail',
             size: 's',
@@ -115,11 +114,6 @@ export default function StepOne({ navigation, route }) {
                 break
 
         }
-
-        if (type === TYPES.COORDS) setTimeout(() => {
-            setShowModal(false)
-        }, 500)
-
     }
 
     return (

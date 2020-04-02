@@ -87,6 +87,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10
     },
+    button: {
+        color: '#82A4B3',
+        fontFamily: 'montserrat-semi'
+    },
     label: {
         fontFamily: 'montserrat-semi'
 

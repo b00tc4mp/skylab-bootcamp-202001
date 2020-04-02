@@ -33,7 +33,7 @@ const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')
 const buildImage = require('./assets/icon-pick-and-shovel.png')
 const profileImage = require('./assets/icon-profile.png')
-console.disableYellowBox = true
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
@@ -147,11 +147,15 @@ export default function App() {
 		}
 	}
 
-	const handleNewPark = async (data) => {
+	const handleCreatePark = async (data, navigation) => {
 		try {
 			await createPark(data)
 
 			await __handleUserUpdate__()
+
+			Alert.alert('Park created!')
+
+			navigation.dangerouslyGetParent().navigate('Home')
 
 		} catch ({ message }) {
 			console.log(message)
@@ -214,9 +218,10 @@ export default function App() {
 	function HomeScreen() { return <Home user={user} updateUser={__handleUserUpdate__} /> }
 
 
-	function BuilderScreen() {
+	function BuilderScreen({ navigation }) {
 
 		const handleOnToLogin = () => setUser(null)
+		const handleNewPark = data => handleCreatePark(data, navigation)
 
 		return <ParkBuilder user={user} onNewPark={handleNewPark} onToLogin={handleOnToLogin} error={error} />
 	}

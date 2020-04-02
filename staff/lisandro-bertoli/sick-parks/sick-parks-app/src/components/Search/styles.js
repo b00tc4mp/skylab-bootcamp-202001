@@ -6,6 +6,13 @@ const styles = StyleSheet.create({
         width: '100%',
         margin: 0
     },
+    inputContainer: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingBottom: 10
+    },
     input: {
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
