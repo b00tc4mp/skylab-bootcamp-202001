@@ -39,8 +39,6 @@ Once inside the user
     ![Search Flow Chart](./images/searchFlow.png)
     
     ![Menu Flow Chart](./images/menuFlow.png)
-    
-    ![User Account Flow Chart](./images/userAccountFlow.png)
 
 ## TECHNICAL DESCRIPTION
 
