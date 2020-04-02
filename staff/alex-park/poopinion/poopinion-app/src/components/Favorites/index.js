@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './styles'
-import { Text, ScrollView, View, TouchableOpacity, Image, Alert } from 'react-native'
+import moment from 'moment'
+import { Text, ScrollView, View, TouchableOpacity, Image, TouchableHighlight } from 'react-native'
 
 function Favorites({ user, favToilets, onFav, onDetails }) {
     return (<>
@@ -16,15 +17,15 @@ function Favorites({ user, favToilets, onFav, onDetails }) {
                     <View style={styles.resultsContainer}>
                         {favToilets.map((toilet, index) => (<>
                             <View style={styles.toiletContainer} key={index}>
-                                <TouchableOpacity key={index} onPress={() => onDetails(toilet.id.toString())}>
+                                <TouchableHighlight activeOpacity={0.5} key={index} onPress={() => onDetails(toilet.id.toString())}>
                                     {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
                                         :
                                         (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
-                                </TouchableOpacity>
+                                </TouchableHighlight >
                                 <View style={styles.infoContainer}>
                                     <TouchableOpacity style={styles.result}>
                                         <Text style={styles.postHeader}>{toilet.place}</Text>
-                                        <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
+                                        <Text style={styles.postedAt}>Posted {moment(toilet.created).fromNow()}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.favContainer} onPress={() => { onFav(toilet.id) }}>
                                         {toilet.isFavedBy.includes(user.id) &&

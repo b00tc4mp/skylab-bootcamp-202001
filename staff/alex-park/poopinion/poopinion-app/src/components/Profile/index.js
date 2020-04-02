@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
 import { Text, ScrollView, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native'
+import moment from 'moment'
 
 function Profile({ user, onDetails, onToUpdateUser }) {
     const [lastPosts, setLastPosts] = useState(user.publishedToilets.slice(0, 5))
@@ -47,7 +48,7 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeft}>
                                     <Text style={styles.postTitle}>{toilet.place}</Text>
-                                    <Text style={styles.postDate}>Posted at: {toilet.created.toString().slice(0, 10)}</Text>
+                                    <Text style={styles.postDate}>Posted {moment(toilet.created).fromNow()}</Text>
                                 </View>
                                 <View style={styles.postsRight}>
                                     {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
@@ -78,7 +79,7 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeftComment}>
                                     <Text>"{comment.rating.textArea.length > 0 ? (<Text style={styles.commentText}>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
-                                    <Text style={styles.postDate}>Posted at: {comment.created.toString().slice(0, 10)}</Text>
+                                    <Text style={styles.postDate}>Posted {moment(comment.created).fromNow()}</Text>
                                     <View style={styles.innerPost}>
                                         <View style={styles.innerPost}>
                                             <Image source={require('../../../assets/thumb-up.png')} style={styles.thumb} /><Text></Text>

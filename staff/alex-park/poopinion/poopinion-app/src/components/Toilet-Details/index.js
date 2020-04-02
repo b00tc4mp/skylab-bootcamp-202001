@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import MapView from 'react-native-maps'
 import styles from './styles'
+import moment from 'moment'
 
 function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete, onDeleteToilet }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
@@ -86,7 +87,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 </View>
                             </>)}
 
-                            <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
+                            <Text style={styles.postedAt}>Posted {moment(toilet.created).fromNow()}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                         </View>
                         <TouchableOpacity style={styles.headerRight} onPress={() => { onFav(toilet.id) }}>
                             {user && toilet.isFavedBy.includes(user.id) ?
@@ -150,7 +151,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                     <View style={styles.commentTop}>
                                         <View style={styles.commentTopLeft}>
                                             <Text>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>
-                                            <Text style={styles.commentCreated}>Posted at: {comment.created.toString().slice(0, 10)}</Text>
+                                            <Text style={styles.commentCreated}>Posted {moment(comment.created).fromNow()}</Text>
                                         </View>
                                         <View style={styles.commentTopRight}>
                                             <Text style={styles.commentTopRightText}>Rating: <Text style={{ color: '#df7861' }}>{comment.rating.overallRating}</Text><Text style={{ color: 'brown' }}>/5</Text></Text>

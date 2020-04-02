@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator, TouchableWithoutFeedback } from 'react-native'
+import { View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator, TouchableWithoutFeedback, TouchableHighlight } from 'react-native'
 import MapView from 'react-native-maps'
 import styles from './styles'
+import moment from 'moment'
 
 function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     const [topTen, setTopTen] = useState(topToilets.slice(0, 10))
@@ -39,21 +40,21 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                     <View style={styles.posts} key={index}>
                         <View style={styles.post} key={index}>
                             {toilet.image ? (<>
-                                <TouchableWithoutFeedback onPress={() => {
+                                <TouchableHighlight  activeOpacity={0.5} onPress={() => {
                                     setLoading(true)
                                     onDetails(toilet.id)
                                 }}>
                                     <Image style={styles.image} source={{ uri: toilet.image }} />
-                                </TouchableWithoutFeedback>
+                                </TouchableHighlight>
                             </>)
                                 :
                                 (<>
-                                    <TouchableWithoutFeedback onPress={() => {
+                                    <TouchableHighlight  activeOpacity={0.5} onPress={() => {
                                         setLoading(true)
                                         onDetails(toilet.id)
                                     }}>
                                         <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
-                                    </TouchableWithoutFeedback>
+                                    </TouchableHighlight>
                                 </>)}
                             <View style={styles.postContent}>
                                 <View style={styles.header}>
@@ -125,7 +126,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                                             </View>
                                         </>)}
 
-                                        <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
+                                        <Text style={styles.postedAt}>Posted {moment(toilet.created).fromNow()}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </View>
                                     <TouchableOpacity style={styles.headerRight} onPress={() => { onFav(toilet.id) }}>
                                         {user && toilet.isFavedBy.includes(user.id) ?

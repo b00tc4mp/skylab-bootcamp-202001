@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
-import { View, ScrollView, TouchableOpacity, Text, Image, Alert } from 'react-native'
-//user && user.favToilets.find(favToilet => favToilet.id === toilet.id) === toilet.id ?
+import { View, ScrollView, TouchableOpacity, Text, Image, TouchableHighlight } from 'react-native'
+import moment from 'moment'
+
 function QueryResults({ query, toilets, user, onFav, onDetails }) {
     return (<>
         <ScrollView>
@@ -14,15 +15,15 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                             <View style={styles.posts} key={index}>
                         <View style={styles.post} key={index}>
                             {toilet.image ? (<>
-                                <TouchableOpacity onPress={() => onDetails(toilet.id)}>
+                                <TouchableHighlight  activeOpacity={0.5} onPress={() => onDetails(toilet.id)}>
                                     <Image style={styles.image} source={{ uri: toilet.image }} />
-                                </TouchableOpacity>
+                                </TouchableHighlight>
                             </>)
                                 :
                                 (<>
-                                    <TouchableOpacity onPress={() => onDetails(toilet.id)}>
+                                    <TouchableHighlight activeOpacity={0.5} onPress={() => onDetails(toilet.id)}>
                                         <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
-                                    </TouchableOpacity>
+                                    </TouchableHighlight>
                                 </>)}
                             <View style={styles.postContent}>
                                 <View style={styles.header}>
@@ -94,7 +95,7 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                                             </View>
                                         </>)}
 
-                                        <Text style={styles.postedAt}>Posted at: {toilet.created.toString().slice(0, 10)}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
+                                        <Text style={styles.postedAt}>Posted {moment(toilet.created).fromNow()}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                                     </View>
                                     <TouchableOpacity style={styles.headerRight} onPress={() => { onFav(toilet.id) }}>
                                         {user && toilet.isFavedBy.includes(user.id) ?
