@@ -31,7 +31,7 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                     <View style={styles.nameInfo}>
                         <Text style={[styles.font, styles.bold]}>Name: {user.name} {user.surname}</Text>
                         <Text style={styles.font}>Gender: {user.gender}</Text>
-                        <Text style={styles.font}>Age: {user.age}</Text>
+                        <Text style={styles.font}>Age: {moment().diff(user.age, 'years')} years</Text>
                         <Text style={styles.font}>email: {user.email}</Text>
                     </View>
                 </View>

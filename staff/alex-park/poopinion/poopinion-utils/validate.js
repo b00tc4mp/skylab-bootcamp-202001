@@ -1,4 +1,5 @@
 const { ContentError } = require('poopinion-errors')
+const isValidDate = require('./is-valid-date')
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -11,10 +12,19 @@ module.exports = {
 
     stringFrontend(target, name, empty = true) {
         if (typeof target === 'undefined') throw new ContentError(`${name} is empty`)
-        
+
         this.type(target, name, String)
 
         if (empty && !target.trim()) throw new ContentError(`${name} is empty`)
+    },
+
+    age(target) {
+        if (!isValidDate(target)) throw new ContentError(`${target} is not a valid date of birth`)
+        const [year, month, day] = target.split('-')
+        console.log(year, month, day)
+        if (Number(year) >= new Date().getFullYear()) throw new ContentError(`${target} is not a valid date of birth`)
+        if (Number(month) > 12) throw new ContentError(`${target} is not a valid date of birth`)
+        if (Number(day) > 31) throw new ContentError(`${target} is not a valid date of birth`)
     },
 
     email(target) {

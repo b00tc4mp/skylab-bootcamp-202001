@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
+import { TextInputMask } from 'react-native-masked-text'
 import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 
 function Register({ onSubmit, error, goToLogin, goToLanding }) {
@@ -25,7 +26,19 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Name' onChangeText={(text) => setName(text)} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Surname' onChangeText={(text) => setSurame(text)} />
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='example@mail.com' onChangeText={(text) => setEmail(text.toLowerCase().trim())} />
-                        <TextInput placeholderTextColor='grey' keyboardType={'numeric'} style={styles.form} placeholder='Age' onChangeText={(text) => setAge(parseInt(text))} />
+
+                        <TextInputMask
+                            type={'datetime'}
+                            options={{
+                                format: 'YYYY-MM-DD'
+                            }}
+                            placeholderTextColor='grey'
+                            keyboardType={'numeric'}
+                            style={styles.form}
+                            value={age}
+                            placeholder='Date of birth (YYYY-MM-DD)'
+                            onChangeText={(ref) => setAge(ref)} />
+
                         <View style={styles.form}>
                             <Picker
                                 selectedValue={gender}
