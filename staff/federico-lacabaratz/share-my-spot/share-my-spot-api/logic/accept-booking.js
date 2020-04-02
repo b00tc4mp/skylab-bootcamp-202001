@@ -37,8 +37,10 @@ module.exports = (publisherId, candidateId, spotId) => {
         spot.bookedTo = candidateId
         spot.bookingCandidates = spot.bookingCandidates.filter(id => id.toString() === candidateId)
 
-        return spot.save()
-            .then(() => { })
+        await spot.save()
+
+        return
+        
     })()
 
 }

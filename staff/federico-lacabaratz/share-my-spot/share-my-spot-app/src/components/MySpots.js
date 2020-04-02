@@ -9,6 +9,6 @@ export default function ({allMySpots, updateMySpot, deleteMySpot, handleMySpots,
     }, [])
 
     return <ul className="mySpots">
-        {allMySpots.map(mySpotItem => <MySpotItem key={mySpotItem.id} mySpotItem={mySpotItem} onToUpdateMySpot={updateMySpot} onToDeleteMySpot={deleteMySpot} onClick={onItemClick} />)}
+        {allMySpots.length > 0 ? allMySpots.map(mySpotItem => <MySpotItem key={mySpotItem.id} mySpotItem={mySpotItem} onToUpdateMySpot={updateMySpot} onToDeleteMySpot={deleteMySpot} onClick={onItemClick} />) : <><br></br><br></br><h3>YOU HAVEN'T CREATED ANY SPOTS YET!</h3></>}
     </ul>
 }

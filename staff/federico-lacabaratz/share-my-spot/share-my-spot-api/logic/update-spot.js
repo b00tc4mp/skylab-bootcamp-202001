@@ -1,5 +1,6 @@
 const { validate } = require('share-my-spot-utils')
-const { models: { Spot } } = require('share-my-spot-data')
+const { models: { User, Spot } } = require('share-my-spot-data')
+const { NotFoundError } = require('share-my-spot-errors') 
 
 /**
  * Updates the spot info
@@ -17,6 +18,22 @@ module.exports = (userId, body, spotId) => {
     validate.type(body, 'body', Object)
     validate.string(spotId, 'spotId')
 
-    return Spot.findOneAndUpdate({ _id: spotId, publisherId: userId }, { $set: body, bookingCandidates: [], status: 'available'}, {$unset: {bookedTo: 1}})
-        .then(() => { })
+    return (async ()=> {
+
+        const user = await User.findById(userId)
+        if (!user) throw new NotFoundError(`user with id ${userId} not found`)
+
+        await Spot.findOneAndUpdate({ _id: spotId, publisherId: userId }, { $set: body, bookingCandidates: [], status: 'available'})
+
+        const spot = await Spot.findById(spotId)
+        if (!spot) throw new NotFoundError(`spot with id ${spotId} not found`)
+        
+        spot.bookedTo = undefined
+
+        await spot.save()
+
+        return spot
+    
+    })()
+
 }
