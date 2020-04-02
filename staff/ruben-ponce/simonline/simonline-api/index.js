@@ -11,6 +11,7 @@ const path = require('path')
 const cors = require('cors')
 const { mongoose } = require('simonline-data')
 const router = require('./routes')
+mongoose.set('useFindAndModify', false)
 
 mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {

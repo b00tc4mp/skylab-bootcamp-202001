@@ -19,8 +19,6 @@ module.exports = (playerId, gameId) => {
   validate.string(playerId, "playerId");
   validate.string(gameId, "gameId");
 
-  console.log('retrieve game status', 1)
-
   return new Promise((resolve, reject) => {
     semaphore(gameId, semaphore => {
       semaphore.setRed()
@@ -29,24 +27,16 @@ module.exports = (playerId, gameId) => {
         .then(user => {
           if (!user)
             throw new NotFoundError(`player with id ${playerId} not found`);
-
-          console.log('retrieve game status', 2)
         })
         .then(() => Game.findById(gameId))
         .then(game => {
           if (!game) throw new NotFoundError(`game with id ${gameId} not found`);
 
-          console.log('retrieve game status', 3)
-
           const { status, turnTimeout } = game;
           if (game.players.every(player => player.toString() !== playerId))
             throw new NotFoundError(`player ${playerId}, not joined on game`);
 
-          console.log('retrieve game status', 4)
-
           if (status === "started") {
-
-            console.log('retrieve game status', 5)
 
             const { turnStart } = game
 
@@ -54,13 +44,9 @@ module.exports = (playerId, gameId) => {
 
             const elapsedTime = (timeNow - turnStart) / 1000;
 
-            console.log(playerId, gameId, timeNow, turnStart, elapsedTime, turnTimeout)
-
             /* when has passed countdown on turn */
             if (elapsedTime > turnTimeout) {
               game.turnStart = timeNow;
-
-              console.log('retrieve game status', 6)
 
               const playerNotWatching = playerId =>
                 game.watching.every(player => player.toString() !== playerId.toString());
@@ -87,8 +73,9 @@ module.exports = (playerId, gameId) => {
                 }
               }
 
-              if (game.currentPlayer.toString() === currentPlayer.toString())
+              if (game.currentPlayer.toString() === currentPlayer.toString() || game.players.length === game.watching.length + 1) {
                 game.status = "finished";
+              }
 
               return game.save();
             }

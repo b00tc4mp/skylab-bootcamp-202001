@@ -8,7 +8,7 @@ import {
   playCombination
 } from "../logic";
 import Feedback from "./Feedback";
-const { wait, timeout } = require('simonline-utils')
+//const { wait, timeout } = require('simonline-utils')
 
 export default ({ goTo, gameId }) => {
   let [error, setError] = useState(undefined);
@@ -20,7 +20,7 @@ export default ({ goTo, gameId }) => {
   const [winner, setWinner] = useState();
   let [countdown, setCountdown] = useState();
   let [status, setStatus] = useState();
-  //const [combinationLaunched, setCombinationLaunched] = useState();
+  // let [combinationLaunched, setCombinationLaunched] = useState();
   let [color, setColor] = useState("");
   let [combinationPlayer, setCombinationPlayer] = useState([])
   let _combinationPlayer = []
@@ -117,53 +117,37 @@ export default ({ goTo, gameId }) => {
     });
   }
 
-  async function delay(ms) {
-    return await new Promise(resolve => {
-      t = setTimeout(resolve, ms)
-    });
-  }
-
-  async function send(comb) {
-      let newStatus = await playCombination(gameId, comb);
-      setStatus(newStatus)
-      console.log(newStatus)
-      combinationLaunched = false
-      _combinationPlayer = []
-  };
-
-  async function startCount(t){
-    if(t) await delay(3000)
-
-    try {
-      (async () => {
-        console.log('here')
-        await delay(3000)
-        console.log('there')
-        console.log(`combination sended => ${_combinationPlayer}`)
-        return await send(_combinationPlayer)
-      })()
-    }catch(error){
-      console.log(error)
+  function timeout(ms) {
+    let timeout, promise
+  
+    promise = new Promise((resolve, reject) => {
+      timeout = setTimeout(() => resolve('timeout done'), ms)
+    })
+  
+    return {
+      promise: promise, 
+      cancel: () => clearTimeout(timeout)
     }
   }
+  let clear = false
   
-  function stop() {
-    console.log('STOP')
-    clearTimeout(t)
-  }
+function send(comb) {
+  
+  let timeOutObj = timeout(3000)
+  if(clear) timeOutObj.cancel()
+  console.log('before ' + clear)
+  clear = true
+  console.log('after ' + clear)
+  timeOutObj.promise.then(async() => {
+    console.log('sended ' + comb)
+    const newState = await playCombination(gameId, comb)
+    console.log(newState)
+  })
+}
 
   return (
     <div className="p1 game">
-      {/* {console.log(status)}
-      {console.log(combinationLaunched)}
-      {console.log(combinationPlayer)}
-      {status && console.log(status.pushCombination)} */}
-      {/* {status.pushCombination && console.log(status.pushCombination)} */}
-
-      {/* Block__Element--Modifier */}
-
       <div className="top-menu">
-        {/* <p className="game__top-menu__logout">Leave</p> */}
       </div>
       <div className="board">
         <div className="container">
@@ -178,12 +162,8 @@ export default ({ goTo, gameId }) => {
                 if (userId === currentPlayerId /*&& activeClicks*/) {
                   _combinationPlayer.push(0)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
-                  
-                  // if(_combinationPlayer.length === status.pushCombination.length) {
-                  //   send(_combinationPlayer)
-                  // }
-                  
-                  return startCount(t)
+
+                    return send(_combinationPlayer)
                 }
             }}
           ></div>
@@ -199,11 +179,8 @@ export default ({ goTo, gameId }) => {
                   _combinationPlayer.push(1)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
 
-                  // if(_combinationPlayer.length === status.pushCombination.length) {
-                  //   send(_combinationPlayer)
-                  // }
-
-                  return startCount(t)
+                  // return startCount(t)
+                  return send(_combinationPlayer)
                 }
             }}
           ></div>
@@ -219,11 +196,8 @@ export default ({ goTo, gameId }) => {
                   _combinationPlayer.push(2)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
 
-                  // if(_combinationPlayer.length === status.pushCombination.length) {
-                  //   send(_combinationPlayer)
-                  // }
-
-                  return startCount(t)
+                  // return startCount(t)
+                  return send(_combinationPlayer)
                 }            
               }}
           ></div>
@@ -239,11 +213,8 @@ export default ({ goTo, gameId }) => {
                   _combinationPlayer.push(3)
                   // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
 
-                  // if(_combinationPlayer.length === status.pushCombination.length) {
-                  //   send(_combinationPlayer)
-                  // }
-
-                  return startCount(t)
+                  // return startCount(t)
+                  return send(_combinationPlayer)
                 }
             }}
           ></div>

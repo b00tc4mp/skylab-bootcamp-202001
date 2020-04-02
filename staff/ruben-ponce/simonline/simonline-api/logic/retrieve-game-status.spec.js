@@ -1,5 +1,4 @@
 require('dotenv').config()
-
 const { env: { TEST_MONGODB_URL } } = process
 const { models: { User, Game } } = require('simonline-data')
 const { expect } = require('chai')
@@ -8,6 +7,8 @@ const { wait } = require('simonline-utils')
 require('../../simonline-utils/shuffle')()
 const retrieveGameStatus = require('./retrieve-game-status')
 const { mongoose } = require('simonline-data')
+
+/** At least --timeout 5000 */
 
 describe('retrieveGameStatus', () => {
     before(() =>
