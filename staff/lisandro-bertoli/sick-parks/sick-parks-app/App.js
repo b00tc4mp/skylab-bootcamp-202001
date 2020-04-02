@@ -155,8 +155,6 @@ export default function App() {
 
 			Alert.alert('Park created!')
 
-			navigation.dangerouslyGetParent().navigate('Home')
-
 		} catch ({ message }) {
 			console.log(message)
 			__handleErrors__(message)

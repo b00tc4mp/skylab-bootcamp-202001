@@ -5,7 +5,7 @@ import Feedback from '../../Feedback'
 import MapViewContainer from '../../MapViewContainer'
 import styles from './styles'
 
-export default function StepOne({ navigation, error: _error }) {
+export default function StepOne({ onToStepTwo, error }) {
     const [name, setName] = useState()
     const [resort, setResort] = useState()
     const [showModal, setShowModal] = useState(false)
@@ -13,29 +13,8 @@ export default function StepOne({ navigation, error: _error }) {
     const [location, setLocation] = useState()
     const [size, setSize] = useState('m')
     const [level, setLevel] = useState('begginer')
-    const [rails, setRails] = useState(0)
-    const [kickers, setKickers] = useState(0)
-    const [boxes, setBoxes] = useState(0)
-    const [others, setOthers] = useState(0)
-    const [pipes, setPipes] = useState(0)
-    const [error, setError] = useState(_error)
 
-
-    const handleNextStep = () => {
-        switch (true) {
-            case name === undefined || name.trim() === '':
-                setError('Name is empty')
-                break
-            case resort === undefined || resort.trim() === '':
-                setError('Resort is empty')
-                break
-            case location === undefined:
-                setError('Location is required')
-                break
-            default:
-                navigation.navigate('Featues info', { features: { rails, boxes, kickers, pipes, others }, park: { name, resort, flow, size, level, location } })
-        }
-    }
+    const handleNextStep = () => onToStepTwo(name, resort, location, flow, level, size)
 
     return (
         <KeyboardAvoidingView behavior='padding'>
@@ -44,13 +23,13 @@ export default function StepOne({ navigation, error: _error }) {
                     <View style={styles.topContainer}>
                         <View style={styles.inputsContainer}>
                             <Text style={styles.label}>Name:</Text>
-                            <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
+                            <TextInput selectionColor='#EDF4F9' placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
                         </View>
 
                         <View style={styles.inputsContainer}>
                             <Text style={styles.label}>Resort:</Text>
 
-                            <TextInput onFocus={() => setError(null)} selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                            <TextInput selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
                         </View>
 
                         <View style={styles.inputsContainer}>
@@ -118,40 +97,10 @@ export default function StepOne({ navigation, error: _error }) {
                         }} />
                     </Modal>
 
-                    <View style={styles.bottomContainer}>
-
-                        <Text style={styles.sectionHeader}>Number of features</Text>
-
-                        <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>Rails:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setRails(Number(text))} />
-                        </View>
-
-                        <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>Boxes:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setBoxes(Number(text))} />
-                        </View >
-
-                        <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>Kickers:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setKickers(Number(text))} />
-                        </View >
-                        <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>Pipes:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setPipes(Number(text))} />
-                        </View >
-                        <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>Other:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='0' keyboardType='number-pad' maxLength={2} style={styles.numberInput} onChangeText={(text) => setOthers(Number(text))} />
-                        </View >
-
-
-                        {error && <Feedback level='warn' message={error} />}
-                    </View>
+                    {error && <Feedback level='warn' message={error} />}
                     <Button text='Next' style={styles.nextButton} textStyle={styles.button} onPress={handleNextStep} />
                 </View>
             </ScrollView>
-
         </KeyboardAvoidingView >
 
     )
