@@ -17,6 +17,7 @@ import ReportItem from './ReportItem'
 import ModifyParking from './ModifyParking'
 import DeleteParking from './DeleteParking'
 import DeleteUser from './DeleteUser'
+import OccupyParkingLot from './OccupyParkingLot'
 
 export {
     App,
@@ -37,5 +38,6 @@ export {
     ReportItem,
     ModifyParking,
     DeleteParking,
-    DeleteUser
+    DeleteUser,
+    OccupyParkingLot
 }

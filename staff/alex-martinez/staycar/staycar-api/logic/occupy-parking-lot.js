@@ -11,7 +11,7 @@ module.exports = (parkingName, lotNumber) => {
         const parking = await Parking.findOne({parkingName})
         if(!parking) throw new NotFoundError(`parking ${parkingName} does not exist`)
 
-        let { totalLots, occupiedLots } = parking
+        let { lots, totalLots, occupiedLots  } = parking
   
         let freeLots = totalLots - occupiedLots
   
@@ -19,7 +19,7 @@ module.exports = (parkingName, lotNumber) => {
 
         parking.occupiedLots ++
 
-        parking.lots.forEach((lot) => {
+        lots.forEach(lot => {
             if(lot.number === lotNumber){
                 lot.status = true
             }

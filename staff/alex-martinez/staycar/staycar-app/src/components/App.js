@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout } from '../logic'
+import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout, occupyParkingLot } from '../logic'
 import { Context } from './ContextProvider'
 
 import './style/App.sass'
 
-import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser } from '.'
+import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser, OccupyParkingLot } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -98,10 +98,22 @@ export default withRouter(function ({ history }) {
     try {
       await entryVehicle(carPlate, ticketId)
       setDataTicket(undefined)
+      
     
     }catch(error) {
       return __handleErrorRedirect__(error)
 
+    }
+  }
+
+  async function handleOccupyLot(lotNumber){
+    try{
+      
+      await occupyParkingLot(parseInt(lotNumber))
+      history.push('/home')
+
+    }catch(error){
+      __handleError__(error)
     }
   }
 
@@ -154,6 +166,7 @@ export default withRouter(function ({ history }) {
     <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Login onSubmit={handleLogin} error={error} /> }/>
     <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />}/>
     <Route path="/entrance" render={() => isLoggedIn() ? <> <Home error={error} /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
+    <Route path="/occupy" render={() => isLoggedIn() ? <> <Home /> <OccupyParkingLot onSubmit={handleOccupyLot} error={error} /> </> : <Redirect to="/login"/> } />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create-parking" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/modify-parking" render={() => isLoggedIn() ? <> <Config /> <ModifyParking onSubmit={handleModifyParking} error={error}/> </> : <Redirect to="/login" />}/>

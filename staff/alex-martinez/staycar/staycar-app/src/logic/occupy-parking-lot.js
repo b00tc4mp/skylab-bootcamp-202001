@@ -1,5 +1,6 @@
 import { validate } from 'staycar-utils'
 import { NotAllowedError, NotFoundError} from 'staycar-errors'
+import  retrieveParking  from './retrieve-parking'
 
 
 const API_URL = process.env.REACT_APP_API_URL
@@ -7,7 +8,6 @@ const API_URL = process.env.REACT_APP_API_URL
 
 export default (lotNumber) => {
     
-    validate.string(parkingName, 'parking name')
     if(!lotNumber) throw new Error('lot number is empty')
     validate.type(lotNumber, 'lot number', Number)
 

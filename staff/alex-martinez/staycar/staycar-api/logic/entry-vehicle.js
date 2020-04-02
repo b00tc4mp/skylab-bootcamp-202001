@@ -27,7 +27,7 @@ module.exports =  (carPlate, ticketId, parkingName) => {
     const parking = await Parking.findOne({ parkingName })
     if(!parking) throw new NotFoundError(`this parking ${parkingName} is not exist`)
     
-    let { totalLots, occupiedLots, lots } = parking
+    let { totalLots, occupiedLots } = parking
   
     let freeLots = totalLots - occupiedLots
   
@@ -53,6 +53,6 @@ module.exports =  (carPlate, ticketId, parkingName) => {
   
     await Ticket.create({ carPlate, entryHour: new Date(), ticketId, parkingName })
     
-    parking.save()
+    //parking.save()
   })()
 }
