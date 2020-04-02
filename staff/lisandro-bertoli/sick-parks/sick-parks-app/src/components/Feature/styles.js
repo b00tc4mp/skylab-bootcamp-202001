@@ -7,10 +7,23 @@ const styles = StyleSheet.create({
         marginBottom: 40
 
     },
-
+    featureContainer: {
+        marginVertical: 15,
+        borderWidth: 2,
+        borderColor: '#82A4B3',
+        borderRadius: 5,
+        padding: 15,
+        flexDirection: 'row',
+        backgroundColor: 'white'
+    },
     featureData: {
         fontFamily: 'montserrat',
     },
+    featureProp: {
+        fontFamily: 'montserrat-semi',
+        paddingBottom: 10,
+    },
+
     propContainer: {
         flex: 1,
         justifyContent: 'space-around'

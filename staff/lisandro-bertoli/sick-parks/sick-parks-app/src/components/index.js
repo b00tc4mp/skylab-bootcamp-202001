@@ -13,6 +13,7 @@ import Profile from './Profile'
 import ParkDetails from './ParkDetails'
 import Feedback from './Feedback'
 import Feature from './Feature'
+import FeatureInput from './FeatureInput'
 
 export {
     Login,
@@ -29,5 +30,6 @@ export {
     Profile,
     ParkDetails,
     Feedback,
-    Feature
+    Feature,
+    FeatureInput
 }
