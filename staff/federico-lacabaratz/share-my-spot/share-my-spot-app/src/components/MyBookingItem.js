@@ -7,8 +7,8 @@ export default function ({ myBookingItem }) {
     const [emailB, setEmailB] = useState(false)
 
     const { title, hourStarts, hourEnds, price, publisherId, bookedTo, bookingCandidates } = myBookingItem
-
-    return myBookingItem ? <li className="myBookingItem" >
+    
+    return <li className="myBookingItem" >
         <main>
             <div className="myBookingItem__container">
                 <h3 className="myBookingItem__h3">YOU HAVE MADE A RESERVATION:</h3>
@@ -36,9 +36,6 @@ export default function ({ myBookingItem }) {
                 {bookingCandidates.includes(bookedTo) ? <h3>YOUR REQUEST HAS BEEN ACCEPTED!</h3> : null}
             </div>
         </main>
-    </li > : <li className="myBookingItem" >
-            <div className="myBookingItem__container">
-                <h3 className="myBookingItem__h3">You haven't placed any bookings yet!</h3>
-            </div>
-        </li>
+    </li > 
+    
 }
