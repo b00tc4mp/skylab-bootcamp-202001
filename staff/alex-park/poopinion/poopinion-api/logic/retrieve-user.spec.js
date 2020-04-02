@@ -21,7 +21,7 @@ describe('retrieveUser', () => {
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        age = floor(random() * 120)
+        age = `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`
         gender = GENDERS[floor(random() * GENDERS.length)]
     })
 

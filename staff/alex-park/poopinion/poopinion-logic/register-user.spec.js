@@ -27,7 +27,7 @@ describe('registerUser', () => {
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        age = floor(random() * 100)
+        age = `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`
         gender = GENDERS[floor(random() * GENDERS.length)]
     })
 
@@ -190,32 +190,40 @@ describe('registerUser', () => {
             } expect(_error.message).toBe(`password ${password} is not a string`)
         })
 
-        it('should fail on a non-number age', async () => {
-            let _error
-            age = 'asdasd'
-            try {
-                await registerUser(name, surname, email, password, age, gender)
-            } catch (error) {
-                _error = error
-            } expect(_error.message).toBe(`age ${age} is not a number`)
+        it('should fail on a non-string age', async () => {
             age = false
             try {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`age ${age} is not a number`)
+            } expect(_error.message).toBe(`age ${age} is not a string`)
             age = undefined
             try {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`age ${age} is not a number`)
+            } expect(_error.message).toBe(`age ${age} is not a string`)
             age = []
             try {
                 await registerUser(name, surname, email, password, age, gender)
             } catch (error) {
                 _error = error
-            } expect(_error.message).toBe(`age ${age} is not a number`)
+            } expect(_error.message).toBe(`age ${age} is not a string`)
+        })
+
+        it('should fail on a non-valid date of birth', async () => {
+            age = '2020/99/00'
+            try {
+                await registerUser(name, surname, email, password, age, gender)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${age} is not a valid date of birth`)
+            age = '1992/03/35'
+            try {
+                await registerUser(name, surname, email, password, age, gender)
+            } catch (error) {
+                _error = error
+            } expect(_error.message).toBe(`${age} is not a valid date of birth`)
         })
 
         it('should fail on a non-valid gender type', async () => {

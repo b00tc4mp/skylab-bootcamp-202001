@@ -30,12 +30,12 @@ describe('updateUser', () => {
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        age = floor(random() * 100)
+        age = `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`
         gender = GENDERS[floor(random() * GENDERS.length)]
         dataUpdated = {
             name: `newName-${random()}`,
             surname: `newSurame-${random()}`,
-            age: floor(random() * 100),
+            age: `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`,
             password: password
         }
         place = `place-${random()}`
@@ -102,7 +102,7 @@ describe('updateUser', () => {
             dataUpdated = {
                 name: `newName-${random()}`,
                 surname: `newSurame-${random()}`,
-                age: floor(random() * 100),
+                age: `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`,
                 password: password,
                 newPassword: `newPassword-${random()}`
             }

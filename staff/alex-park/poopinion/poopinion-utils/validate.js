@@ -19,6 +19,7 @@ module.exports = {
     },
 
     age(target) {
+        if (!isValidDate(target)) throw new ContentError(`${target} is not a valid date of birth`)
         const [year, month, day] = target.split('-')
         if (!isValidDate(target) || Number(year) >= new Date().getFullYear() || Number(month) > 12 || Number(day) > 31) throw new ContentError(`${target} is not a valid date of birth`)
     },

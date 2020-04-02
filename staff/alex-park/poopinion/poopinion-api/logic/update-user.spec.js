@@ -22,7 +22,7 @@ describe('updateUser', () => {
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        age = floor(random() * 120)
+        age = `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`
         gender = GENDERS[floor(random() * GENDERS.length)]
     })
 
@@ -46,7 +46,7 @@ describe('updateUser', () => {
                     expect(user.gender).to.equal(gender)
                 })
                 .then(() =>
-                    updateUser(_id, { pendejada: 'maxima', name: `${name}-updated`, surname: `${surname}-updated`, email: `${email}-updated`, age: age + 1 }, password)
+                    updateUser(_id, { pendejada: 'maxima', name: `${name}-updated`, surname: `${surname}-updated`, email: `${email}-updated`, age: `2010-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}` }, password)
                 )
                 .then(() => User.findById(_id).lean())
                 .then(user => {
@@ -56,7 +56,6 @@ describe('updateUser', () => {
                     expect(user.surname).to.equal(`${surname}-updated`)
                     expect(user.email).to.equal(`${email}-updated`)
                     expect(user.gender).to.equal(gender)
-                    expect(user.age).to.equal(age + 1)
                     expect(user.pendejada).to.be.undefined
 
                     return bcrypt.compare(password, user.password)

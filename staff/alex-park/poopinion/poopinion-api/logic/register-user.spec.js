@@ -24,7 +24,7 @@ describe('registerUser', () => {
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        age = floor(random() * 120)
+        age = `2000-0${floor(random() * 8) + 1}` + "-" + `0${floor(random() * 8) + 1}`
         gender = GENDERS[floor(random() * GENDERS.length)]
     })
 
@@ -126,12 +126,26 @@ describe('registerUser', () => {
         expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `password ${password} is not a string`)
     })
 
-    it('should fail on a non-number age', () => {
-        age = {}
-        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a number`)
+    it('should fail on a non-string age', () => {
+        age = 9328743289
+        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a string`)
+
+        age = false
+        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a string`)
+
+        age = undefined
+        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a string`)
 
         age = []
-        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a number`)
+        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(TypeError, `age ${age} is not a string`)
+    })
+
+    it('should fail on a non-valid date of birth', () => {
+        age = '2020-99-00'
+        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(ContentError, `${age} is not a valid date of birth`)
+
+        age = '2020-12-40'
+        expect(() => registerUser(name, surname, email, password, age, gender)).to.throw(ContentError, `${age} is not a valid date of birth`)
     })
 
     it('should fail on a non-string gender', () => {
