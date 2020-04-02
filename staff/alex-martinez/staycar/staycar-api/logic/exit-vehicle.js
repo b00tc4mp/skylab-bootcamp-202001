@@ -35,7 +35,7 @@ module.exports =  (ticketId, parkingName) => {
   
     const parking = await Parking.findOne({ parkingName })
     
-    let { lots } = parking
+    /* let { lots } = parking
   
     parking.occupiedLots--
   
@@ -53,7 +53,7 @@ module.exports =  (ticketId, parkingName) => {
       
     } while (condition===false);
   
-    parking.lots = lots
+    parking.lots = lots */
   
 
     ticket.exit = true

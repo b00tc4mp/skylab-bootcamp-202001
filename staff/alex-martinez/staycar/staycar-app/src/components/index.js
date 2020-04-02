@@ -18,6 +18,7 @@ import ModifyParking from './ModifyParking'
 import DeleteParking from './DeleteParking'
 import DeleteUser from './DeleteUser'
 import OccupyParkingLot from './OccupyParkingLot'
+import FreeParkingLot from './FreeParkingLot'
 
 export {
     App,
@@ -39,5 +40,6 @@ export {
     ModifyParking,
     DeleteParking,
     DeleteUser,
-    OccupyParkingLot
+    OccupyParkingLot,
+    FreeParkingLot
 }

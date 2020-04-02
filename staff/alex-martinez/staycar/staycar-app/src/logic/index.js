@@ -13,6 +13,7 @@ import modifyParking from './modify-parking'
 import deleteParking from './delete-parking'
 import deleteUser from './delete-user'
 import occupyParkingLot from './occupy-parking-lot'
+import freeParkingLot from './free-parking-lot'
 
 export {
     login,
@@ -29,5 +30,6 @@ export {
     modifyParking,
     deleteParking,
     deleteUser,
-    occupyParkingLot
+    occupyParkingLot,
+    freeParkingLot
 }

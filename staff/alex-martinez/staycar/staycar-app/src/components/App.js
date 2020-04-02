@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout, occupyParkingLot } from '../logic'
+import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout, occupyParkingLot, freeParkingLot } from '../logic'
 import { Context } from './ContextProvider'
 
 import './style/App.sass'
 
-import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser, OccupyParkingLot } from '.'
+import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser, OccupyParkingLot, FreeParkingLot } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -152,9 +152,21 @@ export default withRouter(function ({ history }) {
     try{
       await exitVehicle(ticketId)
       setDataTicket(undefined)
-      history.push('/home')
+      history.push('/free-lot')
+      
     }catch(error){
       setDataTicket(undefined)
+      __handleError__(error)
+    }
+  }
+
+  async function handleFreeLot(lotNumber){
+    try{
+      
+      await freeParkingLot(parseInt(lotNumber))
+      history.push('/home')
+
+    }catch(error){
       __handleError__(error)
     }
   }
@@ -176,6 +188,7 @@ export default withRouter(function ({ history }) {
     <Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map error={error}/> </> : <Redirect to="/login" />}/>
     <Route path="/create-user" render={() => isLoggedIn() ? <> <Config /> <CreateUser onSubmit={handleCreateUser} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/exit-vehicle" render={() => isLoggedIn() ? <> <Home /> <ExitVehicle onSubmit={handleExitVehicle} error={error} /> </> : <Redirect to="/login" />}/>
+    <Route path="/free-lot" render={() => isLoggedIn() ? <> <Home /> <FreeParkingLot onSubmit={handleFreeLot} error={error} /> </> : <Redirect to="/login"/> } />
     <Route path="/report" render={() => isLoggedIn() ? <> <Home /> <Report /> </> : <Redirect to="/login" />}/>
     </div>
 
