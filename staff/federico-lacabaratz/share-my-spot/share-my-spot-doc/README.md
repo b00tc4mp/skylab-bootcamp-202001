@@ -58,8 +58,16 @@ Once inside the user
 
 ### Technologies
 
-Javascript, ReactJS, Node.js, Express, MongoDB, Mongoose, SASS. Testing: Jest & Mocha/Chai
+Javascript, ReactJS, Node.js, Express, MongoDB, Mongoose, SASS & BEM. Testing: Jest & Mocha/Chai
 
 ### Link to Trello
 
 [SHARE-MY-SPOT-Trello](https://trello.com/invite/b/T1biXFk4/6978107c189c0ea0306c12300d4b77c9/share-my-spot)
+
+### TODO
+
+<ul>
+    <li>Improve testing</li>
+    <li>Improve styles</li>
+    <li>Add more features</li>
+</ul>
