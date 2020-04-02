@@ -1,6 +1,6 @@
 # SHARE MY SPOT APP
 
-![SHARE-MY-SPOT!](https://media.giphy.com/media/14lnAY0ejMcsfK/giphy.gif)
+![SHARE-MY-SPOT!](https://media.giphy.com/media/jGEqdtehHEQ7K/giphy.gif)
 
 ## INTRODUCTION
 The application allows both owners and not-owners of parking spots, to be able to either switch spots with one another while they're away of their own parkings places, or to simply book an hourly-rated spot in a most convenient and fast way. This occurs in those hours of the day that the parking spot is free from its original tenant (either because the owner is at work, having some days off, or just on holidays). The idea is not only to optimize the already overpopulated parking situation of the cities, but also to get evey owner to be able to raise some money in the meantime while taking the most of their own parking spots.
