@@ -22,7 +22,7 @@ describe('registerUser', () => {
         expect(result).toBeUndefined()
 
         const user = await User.findOne({ username })
-
+        debugger
         expect(typeof user).toBe('object')
         expect(user.username).toBe(username)
         expect(user.password).toBe(password)

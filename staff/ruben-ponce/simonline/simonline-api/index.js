@@ -1,6 +1,10 @@
 require('dotenv').config()
 
+// On Production
 const { env: { PORT = 8080, NODE_ENV: env, MONGODB_URL }, argv: [, , port = PORT] } = process
+
+// Test with APP
+//const { env: { PORT = 8080, NODE_ENV: env, TEST_MONGODB_URL: MONGODB_URL }, argv: [, , port = PORT] } = process 
 
 const express = require('express')
 const winston = require('winston')

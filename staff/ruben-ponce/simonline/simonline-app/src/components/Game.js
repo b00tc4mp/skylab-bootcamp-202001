@@ -1,104 +1,87 @@
-import "./Game.sass";
-import React, { useState, useEffect } from "react";
+import "./Game.sass"
+import React, { useState, useEffect } from "react"
 import {
   isLoggedIn,
   retrieveUserId,
   retrieveGameStatus,
   retrievePlayersBasicData,
   playCombination
-} from "../logic";
-import Feedback from "./Feedback";
-//const { wait, timeout } = require('simonline-utils')
+} from "../logic"
+import Feedback from "./Feedback"
 
 export default ({ goTo, gameId }) => {
-  let [error, setError] = useState(undefined);
-  const [userId, setUserId] = useState();
-  let [currentPlayerName, setCurrentPlayerName] = useState();
-  let [currentPlayerId, setCurrentPlayerId] = useState();
-  let [lastPlayerOut, setLastPlayerOut] = useState();
-  let [playersRemain, setPlayersRemain] = useState();
-  const [winner, setWinner] = useState();
-  let [countdown, setCountdown] = useState();
-  let [status, setStatus] = useState();
-  // let [combinationLaunched, setCombinationLaunched] = useState();
-  let [color, setColor] = useState("");
+  let [error, setError] = useState(undefined)
+  const [userId, setUserId] = useState()
+  let [currentPlayerName, setCurrentPlayerName] = useState()
+  let [currentPlayerId, setCurrentPlayerId] = useState()
+  let [lastPlayerOut, setLastPlayerOut] = useState()
+  let [playersRemain, setPlayersRemain] = useState()
+  const [winner, setWinner] = useState()
+  let [countdown, setCountdown] = useState()
+  let [status, setStatus] = useState()
+  let [combinationLaunched, setCombinationLaunched] = useState()
+  let [color, setColor] = useState("")
   let [combinationPlayer, setCombinationPlayer] = useState([])
-  let _combinationPlayer = []
-  let playersName;
-  let combinationLaunched = false;
-  let t;
-  let activeClicks = false
+  let playersName
+  
 
   useEffect(() => {
     (async () => {
-      playersName = await retrievePlayersBasicData(gameId); 
+      playersName = await retrievePlayersBasicData(gameId) 
 
       const interval = setInterval(() => {
         if (isLoggedIn() && gameId) {
           (async () => {
             try {
-              setUserId(retrieveUserId(sessionStorage.token));
-              let status = await retrieveGameStatus(gameId);
+              setUserId(retrieveUserId(sessionStorage.token))
+              let status = await retrieveGameStatus(gameId)
               setStatus(status)
               if (status.status === "started") {
                 //current player
                 const currentPlayerData = playersName.find(
                   x => x.id === status.currentPlayer
-                );
-                
-                setCurrentPlayerName(currentPlayerData.username);
+                )
+                setCurrentPlayerName(currentPlayerData.username)
                 setCurrentPlayerId(currentPlayerData.id)
                 //countdown
                 let x = Math.floor(
                   (new Date() - new Date(status.turnStart)) / 1000
-                );
-                setCountdown(status.turnTimeout - x);
+                )
+                setCountdown(status.turnTimeout - x)
                 //players remain
                 if (status.watching.length > 0) {
                   setPlayersRemain(
                     status.players.length - status.watching.length
-                  );
-                } else setPlayersRemain(status.players.length);
+                  )
+                } else setPlayersRemain(status.players.length)
                 //last player out
                 if (status.watching.length > 0) {
                   const lastPlayerOutObj = playersName.find(
                     x => x.id === status.watching[status.watching.length - 1]
-                  );
-                  setLastPlayerOut(lastPlayerOutObj.username);
-                }
-                // await setCombinationViewed(gameId)
-                
-                if (!combinationLaunched) { 
-                    combinationLaunched = true
-                    //setCombinationLaunched(true); // state
-
-                    await showCombination(status.pushCombination);
-
-                    // TODO enable clicks
-
-                    // TODO after playing (sending a sequence) setCombinationLaunched(false)
+                  )
+                  setLastPlayerOut(lastPlayerOutObj.username)
                 }
               } else if (status.status === "finished") {
                 const playerWin = playersName.find(
                   x => x.id === status.currentPlayer
-                );
-                setWinner(playerWin.username);
+                )
+                setWinner(playerWin.username)
                 setLastPlayerOut(undefined)
-                setCountdown(undefined);
-                setCurrentPlayerName(undefined);
-                setPlayersRemain(undefined);
-                clearInterval(interval);
+                setCountdown(undefined)
+                setCurrentPlayerName(undefined)
+                setPlayersRemain(undefined)
+                clearInterval(interval)
                 setTimeout(() => goTo('multiplayer'), 5000)
               }
             } catch (error) {
-              setError(error.message);
-              setTimeout(() => setError(undefined), 3000);
+              setError(error.message)
+              setTimeout(() => setError(undefined), 3000)
             }
-          })();
-        } else goTo("landing");
-      }, 1000);
-    })();
-  }, []);
+          })()
+        } else goTo("landing")
+      }, 1000)
+    })()
+  }, [])
 
   function showCombination(combination) {
     return new Promise(resolve => {
@@ -106,44 +89,41 @@ export default ({ goTo, gameId }) => {
 
       (function showColor(i) {
         if (i < combination.length) {
-          setColor(refColor[combination[i]]);
-          setTimeout(() => setColor(''), 1000);
-          setTimeout(() => showColor(i + 1), 2000);
+          setColor(refColor[combination[i]])
+          setTimeout(() => setColor(''), 1000)
+          setTimeout(() => showColor(i + 1), 2000)
         } else {
-          // activeClicks = true
           resolve()
-        } //in this else activeClicks = true
-      })(0);
-    });
+        }
+      })(0)
+    })
   }
 
-  function timeout(ms) {
-    let timeout, promise
-  
-    promise = new Promise((resolve, reject) => {
-      timeout = setTimeout(() => resolve('timeout done'), ms)
-    })
-  
-    return {
-      promise: promise, 
-      cancel: () => clearTimeout(timeout)
+  useEffect(() => {
+    if (status && !combinationLaunched && status.status === 'started') {
+      (async() => {
+        setCombinationLaunched(true)
+        await showCombination(status.pushCombination)
+      })()
     }
-  }
-  let clear = false
+  }, [status])
+
+
+  useEffect(() => {
+    if (status && combinationPlayer.length) { 
+      (async() => {
+        const {pushCombination} = status
   
-function send(comb) {
-  
-  let timeOutObj = timeout(3000)
-  if(clear) timeOutObj.cancel()
-  console.log('before ' + clear)
-  clear = true
-  console.log('after ' + clear)
-  timeOutObj.promise.then(async() => {
-    console.log('sended ' + comb)
-    const newState = await playCombination(gameId, comb)
-    console.log(newState)
-  })
-}
+        if (pushCombination.length === combinationPlayer.length) {
+          await playCombination(gameId, combinationPlayer)
+          setCombinationPlayer([])
+          setCombinationLaunched(false)
+        }
+      })()
+    }
+  }, [combinationPlayer])
+
+  const send = (comb) => setCombinationPlayer([...combinationPlayer, comb])
 
   return (
     <div className="p1 game">
@@ -159,11 +139,8 @@ function send(comb) {
             }
             onClick={ e  => {
                 e.preventDefault()
-                if (userId === currentPlayerId /*&& activeClicks*/) {
-                  _combinationPlayer.push(0)
-                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 0])
-
-                    return send(_combinationPlayer)
+                if (userId === currentPlayerId) {
+                  send(0)
                 }
             }}
           ></div>
@@ -175,12 +152,8 @@ function send(comb) {
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId /*&& activeClicks*/) {
-                  _combinationPlayer.push(1)
-                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 1])
-
-                  // return startCount(t)
-                  return send(_combinationPlayer)
+                if (userId === currentPlayerId) {
+                  send(1)
                 }
             }}
           ></div>
@@ -192,12 +165,8 @@ function send(comb) {
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId /*&& activeClicks*/) {
-                  _combinationPlayer.push(2)
-                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 2])
-
-                  // return startCount(t)
-                  return send(_combinationPlayer)
+                if (userId === currentPlayerId) {
+                  send(2)
                 }            
               }}
           ></div>
@@ -209,12 +178,8 @@ function send(comb) {
             }
             onClick={ e => {
                 e.preventDefault()
-                if (userId === currentPlayerId /*&& activeClicks*/) {
-                  _combinationPlayer.push(3)
-                  // setCombinationPlayer(combinationPlayer => [...combinationPlayer, 3])
-
-                  // return startCount(t)
-                  return send(_combinationPlayer)
+                if (userId === currentPlayerId) {
+                  send(3)
                 }
             }}
           ></div>

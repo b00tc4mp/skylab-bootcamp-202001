@@ -15,6 +15,7 @@ class Semaphore {
 }
 
 module.exports = function(id, handle) {
+    
     const semaphore = semaphores[id] || (semaphores[id] = new Semaphore())
 
         ; (function check() {
