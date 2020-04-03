@@ -3,12 +3,14 @@ import { View, Text } from 'react-native'
 import MyButton from '../Button'
 import styles from './styles'
 
-export default function ({ position, feature, onDelete }) {
+export default function ({ removable, featureId, feature, onDelete }) {
 
     return (<View style={styles.container}>
-        <View style={{ alignSelf: 'flex-start', marginLeft: 10, marginTop: 15 }}>
-            <MyButton text='✖' onPress={() => onDelete(position)} />
-        </View>
+        {removable && (
+            <View style={{ alignSelf: 'flex-start', marginLeft: 10, marginTop: 15 }}>
+                <MyButton text='✖' onPress={() => onDelete(featureId)} />
+            </View>
+        )}
         <View style={styles.featureContainer} >
             <View style={styles.propContainer}>
                 <Text style={styles.featureProp}>Type</Text>

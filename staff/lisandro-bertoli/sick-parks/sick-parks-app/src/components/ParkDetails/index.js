@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert, Picker } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native'
 import MyButton from '../Button'
+import FeatureInput from '../FeatureInput'
 import MapView from 'react-native-maps'
 import styles from './styles'
 import { TextInput } from 'react-native-gesture-handler'
@@ -12,7 +13,6 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
     const [showComments, setShowComments] = useState(false)
     const [createComment, setCreateComment] = useState(false)
     const [value, onChangeText] = useState('')
-    const [feature, setFeature] = useState({ name: 'rail', size: 's', description: '' })
     const [updateSection, setUpdateSection] = useState(false)
 
     useEffect(() => {
@@ -22,15 +22,14 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
 
     const handleHideModal = () => setShowComments(false)
 
-    const handleNewFeature = () => {
-        !updateSection && setUpdateSection(true)
-        updateSection && onUpdate({ features: [...park.features, feature] })
-    }
+    const showFeatureInput = () => setUpdateSection(true)
+
+    const handleNewFeature = (feature) => onUpdate({ features: [...park.features, feature] })
 
     const handleDeleteFeature = (id) => {
-        const updated = park.features.filter(feature => feature.id !== id)
+        const update = features.filter(feature => feature.id !== id)
 
-        onUpdate({ features: [...updated] })
+        onUpdate({ features: [...update] })
     }
 
     const handleDeletePark = () => {
@@ -72,7 +71,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
     return (
         <ScrollView >
             <View key={0} style={styles.container}>
-                {park.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
+                {park.image ? (<Image style={styles.image} source={{ uri: park.image }} />)
                     :
                     (<Image style={styles.image} source={require('../../../assets/default-details.jpg')} />)}
                 <View style={styles.infoContainer}>
@@ -118,21 +117,16 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                     <Modal
                         animationType="slide"
                         transparent={false}
-
+                        //TODO maybe make modal compo??
                         visible={showComments}>
                         <View style={{ backgroundColor: '#EDF4F9', flex: 1 }}>
-
-
                             <ScrollView contentContainerStyle={{ backgroundColor: '#EDF4F9' }}>
-
                                 <View style={styles.modalHeader}>
                                     <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.headerText} />
                                     <Text style={styles.headerTextBold}>Comments</Text>
-                                    <TouchableOpacity onPress={() => setCreateComment(true)}>
-                                        <Text style={styles.headerText}>Add</Text>
-                                    </TouchableOpacity>
+                                    <MyButton onPress={() => setCreateComment(true)} text='Add' textStyle={styles.headerText} />
                                 </View>
-
+                                {/* TODO  make comment compo */}
                                 {createComment && (
                                     <View style={styles.newCommentContainer}>
                                         <TextInput
@@ -196,97 +190,54 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             }} />
                         </MapView>
                     </View>
+
                     {park.verified && (<View style={styles.approve}>
                         <Text style={styles.actionText}>Verified Park</Text>
                     </View>
                     )}
+
                     {!park.verified && user.id !== park.creator.id && (
-
                         <View style={styles.actionsContainer}>
-                            <TouchableOpacity style={styles.approve} onPress={() => onContribution('approve')}>
-                                <Text style={styles.actionText}>✅ Approve </Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.report} onPress={handleReport}>
-                                <Text style={styles.actionText}>❕Report </Text>
-                            </TouchableOpacity>
+                            <MyButton style={styles.approve} textStyle={styles.actionText} text='✅ Approve' onPress={() => onContribution('approve')} />
+                            <MyButton style={styles.report} textStyle={styles.actionText} text='❕ Report ' onPress={handleReport} />
                         </View>
-
                     )}
-                    {user.id === park.creator.id ? (<View style={styles.delete}>
-                        <MyButton text='Delete park' style={styles.report} textStyle={styles.actionText} onPress={handleDeletePark} />
-                    </View>) : null}
+
+                    {user.id === park.creator.id ?
+                        (<View style={styles.delete}>
+                            <MyButton
+                                text='Delete park'
+                                style={styles.report}
+                                textStyle={styles.actionText}
+                                onPress={handleDeletePark}
+                            />
+                        </View>) : null}
+
                     <View style={styles.featuresContainer}>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                             <Text style={styles.sectionHeader}>Park features ({park.features.length})</Text>
-                            {user.id === park.creator.id ? (
-                                <MyButton text='+Add feature' style={styles.buttonContainer} textStyle={styles.commentButton} onPress={handleNewFeature} />) : null}
-                            {updateSection && (<View style={{ justifyContent: "space-around" }}>
-                                <View style={styles.pickerContainer}>
-                                    <Text style={styles.featureProp} >Type: </Text>
-                                    <Picker
-                                        style={styles.picker}
-                                        itemStyle={{ height: 40 }}
-                                        onValueChange={(value) => setFeature({ ...feature, name: value })}
-                                    >
-                                        <Picker.Item label="Rail" value="rail" />
-                                        <Picker.Item label="Kicker" value="kicker" />
-                                        <Picker.Item label="Box" value="box" />
-                                        <Picker.Item label="Pipe" value="pipe" />
-                                        <Picker.Item label="Other" value="other" />
 
-                                    </Picker>
-                                </View>
-                                <View style={styles.pickerContainer}>
-                                    <Text style={styles.featureProp} >Size: </Text>
-                                    <Picker
-                                        style={styles.picker}
-                                        itemStyle={{ height: 40 }}
-                                        onValueChange={(value) => setFeature({ ...feature, size: value })}
-                                    >
-                                        <Picker.Item label="Small" value="s" />
-                                        <Picker.Item label="Medium" value="m" />
-                                        <Picker.Item label="Large" value="l" />
-                                        <Picker.Item label="XL" value="xl" />
-                                    </Picker>
-                                </View>
+                            {user.id === park.creator.id ?
+                                (<MyButton
+                                    text='➕ New feature'
+                                    style={styles.buttonContainer}
+                                    textStyle={styles.commentButton}
+                                    onPress={showFeatureInput}
+                                />) : null}
 
-                                <View style={styles.inputsContainer}>
-                                    <Text style={styles.featureProp}>Description:</Text>
-                                    <TextInput
-                                        selectionColor='#EDF4F9'
-                                        placeholder='Eg: Gnarly kinked rail'
-                                        style={styles.textInput}
-                                        onChangeText={(text) => setFeature({ ...feature, description: text })}
-                                    />
-                                </View>
-                            </View>)}
+                            {updateSection && (<FeatureInput onNewFeature={handleNewFeature} />)}
                         </View>
-                        {park.features.length ?
-                            (park.features.map((feature, index) => (<>
-                                {user.id === park.creator.id ? (<View style={{ alignSelf: 'flex-start', marginLeft: 10, marginTop: 15 }}>
-                                    <MyButton text='✖' onPress={() => handleDeleteFeature(feature.id)} />
-                                </View>) : null}
-                                <View key={index} style={styles.featureContainer}>
-                                    <View style={styles.propContainer}>
-                                        <Text style={styles.featureProp}>Type</Text>
-                                        <Text style={styles.featureData}>{feature.name}</Text>
-                                    </View>
-                                    <View style={styles.propContainer}>
-                                        <Text style={styles.featureProp}>Size</Text>
-                                        <Text style={styles.featureData}>{feature.size.toUpperCase()}</Text>
-                                    </View>
-                                    <View style={styles.propContainer}>
-                                        <Text style={styles.featureProp}>Description</Text>
-                                        <Text style={styles.featureData}>{feature.description}</Text>
-                                    </View>
+                        {park.features.length ? (park.features.map((feature, index) => (
 
-                                </View>
-                            </>)))
-                            :
-                            (<Text>No features were added to this</Text>)}
+                            <Feature
+                                key={index}
+                                featureId={feature.id}
+                                onDelete={handleDeleteFeature}
+                                removable={user.id === park.creator.id}
+                                feature={feature}
+
+                            />))) : (<Text>No features were added to this park</Text>)}
                     </View>
-
                 </View>
             </View>
         </ScrollView>

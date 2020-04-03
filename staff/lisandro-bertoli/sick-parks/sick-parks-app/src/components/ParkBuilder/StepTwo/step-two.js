@@ -23,7 +23,16 @@ export default function StepOne({ onToStepThree, error }) {
             <ScrollView scrollEnabled={true}>
                 <View style={styles.container}>
                     <FeatureInput onNewFeature={addFeature} />
-                    {features.length > 0 ? (features.map((feature, index) => <Feature position={index} key={index.toString()} feature={feature} onDelete={deleteFeature} />)) : null}
+                    {features.length > 0 ? (features.map((feature, index) =>
+                        <Feature
+                            removable={true}
+                            featureId={index}
+                            key={index.toString()}
+                            feature={feature}
+                            onDelete={deleteFeature}
+                        />))
+                        : null}
+
                     <Button style={styles.nextButton} text='Next' textStyle={styles.button}
                         onPress={handleNextStep}
                     />
