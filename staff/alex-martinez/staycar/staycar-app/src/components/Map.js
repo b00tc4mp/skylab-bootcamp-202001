@@ -12,19 +12,26 @@ export default function() {
         setErr(error.message)
     }
     
-    async function handleRetrieveLots() {
-        try{
-            const lots = await retrieveLots()
-            setLots(lots)
-        }catch(error){
-            __handleError__(error)
-        }
-    }
-
     useEffect(() => {
-        
-        handleRetrieveLots() 
-    }, [])
+
+        const interval = setInterval(() => {
+
+            (async() => {
+                try{
+                    const lots = await retrieveLots()
+                    setLots(lots)
+                }catch(error){
+                    __handleError__(error)
+                    
+                }
+            })()
+
+            return () => clearInterval(interval)
+            
+        }, 1000);
+
+    },[setLots])
+
 
     return <section className="map">
         <h1 className="map__title">Plates Map:</h1>

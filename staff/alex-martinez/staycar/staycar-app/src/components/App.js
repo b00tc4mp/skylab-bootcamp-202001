@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout, occupyParkingLot, freeParkingLot } from '../logic'
+import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout } from '../logic'
 import { Context } from './ContextProvider'
 
 import './style/App.sass'
 
-import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser, OccupyParkingLot, FreeParkingLot } from '.'
+import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -98,22 +98,11 @@ export default withRouter(function ({ history }) {
     try {
       await entryVehicle(carPlate, ticketId)
       setDataTicket(undefined)
-      
+  
     
     }catch(error) {
       return __handleErrorRedirect__(error)
 
-    }
-  }
-
-  async function handleOccupyLot(lotNumber){
-    try{
-      
-      await occupyParkingLot(parseInt(lotNumber))
-      history.push('/home')
-
-    }catch(error){
-      __handleError__(error)
     }
   }
 
@@ -152,21 +141,10 @@ export default withRouter(function ({ history }) {
     try{
       await exitVehicle(ticketId)
       setDataTicket(undefined)
-      history.push('/free-lot')
+      history.push('/home')
       
     }catch(error){
       setDataTicket(undefined)
-      __handleError__(error)
-    }
-  }
-
-  async function handleFreeLot(lotNumber){
-    try{
-      
-      await freeParkingLot(parseInt(lotNumber))
-      history.push('/home')
-
-    }catch(error){
       __handleError__(error)
     }
   }
@@ -178,7 +156,6 @@ export default withRouter(function ({ history }) {
     <Route path="/login" render={() => isLoggedIn() ? <Redirect to="/home"/> : <Login onSubmit={handleLogin} error={error} /> }/>
     <Route path="/home" render={() => isLoggedIn() ? <Home /> : <Redirect to="/login" />}/>
     <Route path="/entrance" render={() => isLoggedIn() ? <> <Home error={error} /> <EntryVehicle onSubmit={handleEntryVehicle} error={error}/> </> : <Redirect to="/login"/>} />
-    <Route path="/occupy" render={() => isLoggedIn() ? <> <Home /> <OccupyParkingLot onSubmit={handleOccupyLot} error={error} /> </> : <Redirect to="/login"/> } />
     <Route path="/config" render={() => isLoggedIn() ? <Config /> : <Redirect to="/login" /> } />
     <Route path="/create-parking" render={() => isLoggedIn() ? <> <Config /> <CreateParking onSubmit={handleCreateParking} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/modify-parking" render={() => isLoggedIn() ? <> <Config /> <ModifyParking onSubmit={handleModifyParking} error={error}/> </> : <Redirect to="/login" />}/>
@@ -188,7 +165,6 @@ export default withRouter(function ({ history }) {
     <Route path="/map" render= {() => isLoggedIn() ? <> <Home/> <Map error={error}/> </> : <Redirect to="/login" />}/>
     <Route path="/create-user" render={() => isLoggedIn() ? <> <Config /> <CreateUser onSubmit={handleCreateUser} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/exit-vehicle" render={() => isLoggedIn() ? <> <Home /> <ExitVehicle onSubmit={handleExitVehicle} error={error} /> </> : <Redirect to="/login" />}/>
-    <Route path="/free-lot" render={() => isLoggedIn() ? <> <Home /> <FreeParkingLot onSubmit={handleFreeLot} error={error} /> </> : <Redirect to="/login"/> } />
     <Route path="/report" render={() => isLoggedIn() ? <> <Home /> <Report /> </> : <Redirect to="/login" />}/>
     </div>
 

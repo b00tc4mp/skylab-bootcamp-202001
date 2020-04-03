@@ -26,9 +26,9 @@ export default withRouter (function({onSubmit, error, history}) {
         onSubmit(plateNumber, ticketId)
     }
 
-    const handleGoToSelectLot = (event) => {
+    const handleGoIn = (event) => {
         event.preventDefault()
-        history.push('/occupy')
+        history.push('/home')
     }
 
     const encoded = useQrEncode(id)
@@ -38,14 +38,13 @@ export default withRouter (function({onSubmit, error, history}) {
     {plate && id && !error ? 
     <> 
     <img src={encoded} className="qr" alt="qr-code"/> 
-    <button className="entry-plate__go-in" onClick={handleGoToSelectLot}>Go in</button> </>
+    <button className="entry-plate__go-in" onClick={handleGoIn}>Go in</button> </>
     : <>
     <h1 className="entry-plate__title">Entrance</h1>
     <form className="entry-plate__form" onSubmit={handleVehicle}>
         <input type="text" name="plateNumber" placeholder="car plate number" className="entry-plate__input" />
         <input type="hidden" name="ticketId" value={random()}/>
 
-        
         <button className="entry-plate__submit">Get ticket</button>
     </form>
     </>
