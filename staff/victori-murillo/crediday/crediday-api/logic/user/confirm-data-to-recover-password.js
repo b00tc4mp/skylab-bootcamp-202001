@@ -3,6 +3,13 @@ const { validate, randomNumber, sendMail } = require('crediday-utils')
 const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-data-to-recover-password-template')
 
+/**
+ * @function Function to confirm dta to recover password
+ * @param  {object} userId user's properties (username, password)
+ * @throws {Error} Wrond credential
+ * @return {Promise<string>} user id
+ */
+
 module.exports = ({ company, email }) => {
   validate.string(company, 'company')
   validate.string(email, 'email')

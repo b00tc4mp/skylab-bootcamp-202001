@@ -12,7 +12,7 @@ import Code from './Code'
 import NewData from './NewData'
 import Copyright from '../Copyright'
 import { confirmData, confirmVerificationCode, updatePassword } from '../../../logic'
-import { useSessionStorage } from '../../hooks'
+import { useLocalStorage } from '../../hooks'
 import { useHistory } from 'react-router-dom'
 
 const steps = ['Datos', 'Código', 'Contraseña']
@@ -25,10 +25,10 @@ export default () => {
   const [error, setError] = useState()
   const [feedback, setFeedback] = useState()
 
-  const [company, setCompany] = useSessionStorage('company')
-  const [email, setEmail] = useSessionStorage('email')
+  const [company, setCompany] = useLocalStorage('company')
+  const [email, setEmail] = useLocalStorage('email')
 
-  const [code, setCode] = useSessionStorage('code')
+  const [code, setCode] = useLocalStorage('code')
 
   const [password, setPassword] = useState()
   const [passwordAgain, setPasswordAgain] = useState()

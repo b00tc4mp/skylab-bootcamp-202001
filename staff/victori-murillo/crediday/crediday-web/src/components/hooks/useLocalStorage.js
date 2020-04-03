@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export default (initialState, key) => {
+export default (key, initialState) => {
   
   const get = () => {
     const storage = localStorage.getItem(key)

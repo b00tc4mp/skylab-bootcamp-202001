@@ -1,6 +1,13 @@
 const { Payment, Credit } = require('crediday-models')
 const { validate } = require('crediday-utils')
 
+/**
+ * @function Function to register a payment
+ * @param  {object} object credit id and payment's properties
+ * @throws {Error} if the credit not exits 
+ * @return {Promise<string>} id payment
+ */
+
 module.exports = async ({ creditId, body }) => {
   validate.string(creditId, 'creditId')
   validate.type(body, 'body', Object)

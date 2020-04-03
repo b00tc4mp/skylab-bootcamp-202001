@@ -1,5 +1,12 @@
 const { Company } = require('crediday-models')
 
+ /**
+ * @function Function to get companies
+ * @param  {object} query a query with company's properties to select the fields, resolved with graphql :D
+ * @throws {Error} if the company not found 
+ * @return {Promise<array>} companies
+ */
+
 module.exports = (query = {}) => {
 
   const fields = Object.keys(Company.schema.obj)

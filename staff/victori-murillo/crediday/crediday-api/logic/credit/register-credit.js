@@ -1,6 +1,14 @@
 const { Credit, Company, User } = require('crediday-models')
 const { validate } = require('crediday-utils')
 
+ /**
+ * @function Function to register company
+ * @param  {string} _id user's unique id
+ * @param  {object} body with credit's properties
+ * @throws {Error} if the (user || company) not exits 
+ * @return {Promise<string>} an credit id
+ */
+
 module.exports = (userId, body) => {
 
   validate.string(userId, 'userId')
