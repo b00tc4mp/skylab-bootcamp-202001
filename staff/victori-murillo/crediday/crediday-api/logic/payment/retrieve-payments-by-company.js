@@ -1,6 +1,13 @@
 const { User, Payment } = require('crediday-models')
 const { validate } = require('crediday-utils')
 
+/**
+ * @function Function to get a payment
+ * @param  {string} userId user id
+ * @throws {Error} if the user not found 
+ * @return {Promise<Array>} payments
+ */
+
 module.exports = userId => {
   validate.string(userId, 'userId')
 

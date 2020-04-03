@@ -1,6 +1,14 @@
 const { Company } = require('crediday-models')
 const { validate } = require('crediday-utils')
 
+ /**
+ * @function Function to get company
+ * @param  {string} _id company's unique id
+ * @param  {object} query with company's properties to select the fields
+ * @throws {Error} if the company not found 
+ * @return {Promise<object>} a company
+ */
+
 module.exports = (_id, query = {}) => {
   validate.string(_id, 'id');
 

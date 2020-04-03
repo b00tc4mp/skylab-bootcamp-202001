@@ -19,6 +19,9 @@ The user can create a company selecting the some plan. Also if the user lost the
 ## Components
 ![titulo](images/components.png)
 
+## Data Model
+![titulo](images/data--model.svg)
+
 ## Code coverage
 
 ### Server-side

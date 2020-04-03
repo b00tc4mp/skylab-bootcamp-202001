@@ -1,6 +1,13 @@
 const { User } = require('crediday-models')
 const { validate, bcrypt: { compare } } = require('crediday-utils')
 
+/**
+ * @function Function to authenticate a user
+ * @param  {Object} object user's properties (username, password)
+ * @throws {Error} Wrong credentials
+ * @return {Promise<string>} user id
+ */
+
 module.exports = ({ username, password }) => {
   validate.string(username, 'username')
   validate.string(password, 'password')

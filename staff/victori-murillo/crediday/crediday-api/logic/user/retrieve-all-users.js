@@ -1,6 +1,13 @@
 const { User } = require('crediday-models')
 const { validate } = require('crediday-utils')
 
+/**
+ * @function Function to retrieve users by company
+ * @param  {string} string user id
+ * @throws {Error} users not exist
+ * @return {Promise<Array>} users
+ */
+
 module.exports = (userId) => {
   validate.string(userId, 'userId')
 

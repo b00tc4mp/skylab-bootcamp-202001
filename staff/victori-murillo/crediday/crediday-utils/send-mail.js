@@ -14,7 +14,7 @@ module.exports = async ({ authMail, to, subject, html }) => {
         user: authMail.mail,
         pass: authMail.password
       }
-    });
+    })
 
     const mailOptions = {
       from: authMail.mail, // sender address
@@ -29,7 +29,7 @@ module.exports = async ({ authMail, to, subject, html }) => {
       //     contentType: 'application/pdf'
       //   }
       // ]
-    };
+    }
 
     let info = await transporter.sendMail(mailOptions)
 

@@ -1,6 +1,13 @@
 const { validate, fetch, handleError } = require('crediday-utils')
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * @function Function to confirm data
+ * @param  {Object} object {companyName, email}
+ * @throws {Error} if someone is wrong in the response
+ * @return {Promise<undefined>} undefined
+ */
+
 module.exports = ({ company, email }) => {
 
   validate.string(company, 'Nombre de Compañia')

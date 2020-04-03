@@ -1,6 +1,13 @@
 const { validate, fetch, handleError } = require('crediday-utils')
 const API_URL = process.env.REACT_APP_API_URL
 
+/**
+ * @function Function to register a payment
+ * @param  {Object} object {body, creditId, token} - body = payment's properties
+ * @throws {Error} if someone is wrong in the response
+ * @return {Promise}
+ */
+
 module.exports = ({ body, creditId, token }) => {
   let { interest, amortize, moratorium } = body
 

@@ -3,7 +3,14 @@ const { validate, sendMail, bcrypt: { hash } } = require('crediday-utils')
 const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-template')
 
-module.exports = async ({ companyName, username, email, password }) => {
+ /**
+ * @function Function to register company
+ * @param  {object} object company's properties (companyName, username, email, password)
+ * @throws {Error} if the (company || user || email )  already exists, 
+ * @returns {Promise<string>} an the email user
+ */
+
+module.exports = ({ companyName, username, email, password }) => {
 
   validate.string(companyName, 'Nombre de Compañia')
   validate.length(companyName, 'Nombre de Compañia', 3, 20)
@@ -12,7 +19,7 @@ module.exports = async ({ companyName, username, email, password }) => {
   validate.length(username, 'Nombre de Usuario', 3, 30)
 
   validate.string(password, 'password')
-  validate.length(password, 'password', 3, 30);
+  validate.length(password, 'password', 3, 30)
 
   return (async () => {
     const companyFound = await Company.findOne({ name: companyName.toLowerCase() })

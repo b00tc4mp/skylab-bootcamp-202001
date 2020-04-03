@@ -25,10 +25,10 @@ export default () => {
   const [error, setError] = useState()
   const [feedback, setFeedback] = useState()
 
-  const [company, setCompany] = useLocalStorage('', 'company')
-  const [email, setEmail] = useLocalStorage('', 'email')
+  const [company, setCompany] = useLocalStorage('company')
+  const [email, setEmail] = useLocalStorage('email')
 
-  const [code, setCode] = useLocalStorage('', 'code')
+  const [code, setCode] = useLocalStorage('code')
 
   const [password, setPassword] = useState()
   const [passwordAgain, setPasswordAgain] = useState()
