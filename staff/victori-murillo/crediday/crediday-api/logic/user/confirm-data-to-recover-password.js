@@ -4,10 +4,10 @@ const { env: { GMAIL, GMAIL_PASSWORD } } = process
 const template = require('./confirm-data-to-recover-password-template')
 
 /**
- * @function Function to confirm dta to recover password
- * @param  {object} userId user's properties (username, password)
- * @throws {Error} Wrond credential
- * @return {Promise<string>} user id
+ * @function Function to confirm data to recover password
+ * @param  {object} object (company, email)
+ * @throws {Error} (email || company) not exists
+ * @return {Promise<undefined>} undefined
  */
 
 module.exports = ({ company, email }) => {

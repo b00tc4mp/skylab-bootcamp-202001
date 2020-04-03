@@ -3,8 +3,8 @@ const { validate, bcrypt: { compare } } = require('crediday-utils')
 
 /**
  * @function Function to authenticate a user
- * @param  {object} userId user's properties (username, password)
- * @throws {Error} Wrond credential
+ * @param  {Object} object user's properties (username, password)
+ * @throws {Error} Wrong credentials
  * @return {Promise<string>} user id
  */
 

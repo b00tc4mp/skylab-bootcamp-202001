@@ -1,6 +1,14 @@
 const { User } = require('crediday-models')
 const { validate } = require('crediday-utils')
 
+/**
+ * @function Function to update user
+ * @param  {string} string user id
+ * @param  {Object} object user's properties
+ * @throws {Error} if the property is forbidden to modify it
+ * @return {Promise<undefined>} user
+ */
+
 module.exports = (_id, body) => {
   validate.string(_id, 'id')
   validate.type(body, 'body', Object)

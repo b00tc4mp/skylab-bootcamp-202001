@@ -1,6 +1,13 @@
 const { User } = require('crediday-models')
 const { validate, bcrypt: { hash } } = require('crediday-utils')
 
+/**
+ * @function Function to update user password
+ * @param  {Object} object user's properties (code, email, password)
+ * @throws {Error} email not exists || wrong code
+ * @return {Promise<undefined>} undefined
+ */
+
 module.exports = ({ code, email, password }) => {
   debugger
   validate.string(code, 'code')
