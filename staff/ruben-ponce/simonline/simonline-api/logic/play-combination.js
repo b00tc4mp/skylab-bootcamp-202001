@@ -33,19 +33,18 @@ module.exports = (gameId, combination) => {
         let matched = true
 
         for (let i = 0; i < game.pushCombination.length; i++) {
-            debugger
             if(game.pushCombination[i] !== combination[i]) matched = false
         }
 
         let j = playersStr.indexOf(currentPlayerStr)
-        
+
         if (elapsedTime < game.turnTimeout && matched) {
             for (let i = j; i < playersStr.length; i++) {
                 if(!watchingStr.includes(playersStr[i]) && currentPlayerStr !== playersStr[i]) {
                     const newPushCombination = Math.floor(Math.random() * 4)
                     game.pushCombination.push(newPushCombination)
-                    game.combinationViewed = []
-                    game.turnTimeout = (20 + (game.pushCombination.length * 4))
+                    // game.combinationViewed = []
+                    game.turnTimeout = (20 + (game.pushCombination.length * 3))
                     game.turnStart = new Date()
                     game.currentPlayer = game.players[i]
 
@@ -75,7 +74,7 @@ module.exports = (gameId, combination) => {
             for (let i = j; i < playersStr.length; i++) {
                 if(!watchingStr.includes(playersStr[i]) && currentPlayerStr !== playersStr[i]) {
                     game.currentPlayer = game.players[i]
-                    game.turnTimeout = (20 + (game.pushCombination.length * 4))
+                    game.turnTimeout = (20 + (game.pushCombination.length * 3))
                     game.combinationViewed = []
                     game.turnStart = new Date()
 
@@ -85,7 +84,6 @@ module.exports = (gameId, combination) => {
                 if(!playersStr[i+1]) i = -1
             }
         } else {
-            console.log('else===>', game)
             return game
         }
     })

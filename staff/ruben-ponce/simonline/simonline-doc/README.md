@@ -24,3 +24,11 @@ The game randomly illuminates the colored quadrants. After waiting, the user mus
 
 ## Data model
 ![titulo](img/data-model.jpg)
+
+###  TODO
+- Hall of fame with image upload
+- Retrieve data of game finished
+- Join with QR code
+- Options menu: theme, sound...etc
+- Confirm of all players before strart game, if not kick out player
+- Spiner before and after game

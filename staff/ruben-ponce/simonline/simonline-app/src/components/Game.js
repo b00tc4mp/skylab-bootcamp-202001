@@ -85,9 +85,9 @@ export default ({ goTo, gameId }) => {
 
   function showCombination(combination) {
     return new Promise(resolve => {
-      const refColor = ["r", "g", "b", "y"];
+      const refColor = ["r", "g", "b", "y"]
 
-      (function showColor(i) {
+      ;(function showColor(i) {
         if (i < combination.length) {
           setColor(refColor[combination[i]])
           setTimeout(() => setColor(''), 1000)
@@ -205,5 +205,5 @@ export default ({ goTo, gameId }) => {
         {error && <Feedback error={error} />}
       </div>
     </div>
-  );
-};
+  )
+}
