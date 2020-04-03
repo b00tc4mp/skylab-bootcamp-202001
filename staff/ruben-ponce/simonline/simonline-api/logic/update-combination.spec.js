@@ -80,5 +80,5 @@ describe('createGame', () => {
 
     })
 
-    after(() => mongoose.disconnect())
+    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(() => mongoose.disconnect()))
 })

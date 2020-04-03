@@ -88,5 +88,5 @@ describe('createGame', () => {
 
     })
 
-    after(() => mongoose.disconnect())
+    after(() => User.deleteMany().then(() => mongoose.disconnect()))
 })
