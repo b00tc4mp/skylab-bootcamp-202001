@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-
 import { createStackNavigator } from '@react-navigation/stack'
-import StepOne from './StepOne/step-one'
-import StepTwo from './StepTwo/step-two'
-import StepThree from './StepThree/step-three'
 import { View, Text } from 'react-native'
+import StepOne from './StepOne'
+import StepTwo from './StepTwo'
+import StepThree from './StepThree'
 import MyButton from '../Button'
 import styles from './styles'
 
@@ -42,7 +41,6 @@ export default function ParkBuilder({ onNewPark, error: _error, user, onToLogin 
     function StepTwoScreen({ navigation }) {
 
         const handleToStepThree = (_features) => {
-            debugger
             setFeatures(_features)
 
             navigation.navigate('Summary')

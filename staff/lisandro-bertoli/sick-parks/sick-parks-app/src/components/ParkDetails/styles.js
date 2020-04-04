@@ -21,40 +21,6 @@ const styles = StyleSheet.create({
         marginBottom: 40
 
     },
-    commentButton: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi'
-
-    },
-
-    newCommentContainer: {
-        margin: 15,
-        borderWidth: 2,
-        borderColor: '#82A4B3',
-        borderRadius: 5,
-        paddingBottom: 10,
-        justifyContent: 'space-between'
-    },
-
-    buttonsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'flex-end',
-
-        marginTop: 15
-    },
-    buttonContainer: {
-        borderColor: '#82A4B3',
-        borderWidth: 2,
-        backgroundColor: 'white',
-        padding: 5,
-
-    },
-    newComment: {
-        backgroundColor: '#EFEBDA',
-        height: 50,
-        fontFamily: 'montserrat',
-    },
 
     pickerContainer: {
         flex: 0.2,
@@ -89,47 +55,9 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         fontFamily: 'montserrat'
     },
-
-    noComments: {
-        alignItems: 'center',
-
-    },
-
-    commentContainer: {
-        marginVertical: 15,
-        borderWidth: 2,
-        borderColor: '#82A4B3',
-        borderRadius: 5,
-        padding: 15,
-
-        backgroundColor: '#EFEBDA',
-        justifyContent: 'space-between'
-    },
-
-    commentPublisher: {
-        fontFamily: 'montserrat-semi'
-    },
-
-    commentHeader: {
-        paddingBottom: 5,
-    },
-    commentBody: {
-        paddingVertical: 15
-    },
-
-    commentBodyText: {
-        fontFamily: 'montserrat',
-    },
-    commentFooter: {
-        width: '30%',
-        alignSelf: 'flex-end'
-    },
     image: {
         width: '100%',
         height: 200
-    },
-    commentsButton: {
-        alignSelf: 'flex-end'
     },
     header: {
         flex: 1,
@@ -165,14 +93,11 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         fontFamily: 'montserrat-semi'
     },
-
-
     modalHeader: {
-        flex: 1,
-        height: 60,
+        flex: 0.1,
         flexDirection: 'row',
         padding: 5,
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         backgroundColor: '#82A4B3',
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -283,13 +208,6 @@ const styles = StyleSheet.create({
         fontFamily: 'montserrat-semi',
         textAlign: 'center',
         color: 'red',
-    },
-
-
-    commentsContainer: {
-        marginVertical: 15,
-        padding: 15,
-        backgroundColor: '#EDF4F9'
     },
 
     featureContainer: {

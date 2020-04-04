@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native'
 import MyButton from '../Button'
 import FeatureInput from '../FeatureInput'
+import Feature from '../Feature'
+import Comments from '../Comments'
+import CommentInput from '../CommentInput'
 import MapView from 'react-native-maps'
 import styles from './styles'
-import { TextInput } from 'react-native-gesture-handler'
 import Feedback from '../Feedback'
 
 function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
@@ -12,22 +14,21 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
     const [votes, setVotes] = useState(park.rating)
     const [showComments, setShowComments] = useState(false)
     const [createComment, setCreateComment] = useState(false)
-    const [value, onChangeText] = useState('')
-    const [updateSection, setUpdateSection] = useState(false)
+    const [featureInput, setFeatureInput] = useState(false)
 
     useEffect(() => {
         setComments(park.comments)
         setVotes(park.rating)
     }, [park.rating, park.features])
 
-    const handleHideModal = () => setShowComments(false)
+    const toggleComments = () => setShowComments(!showComments)
 
-    const showFeatureInput = () => setUpdateSection(true)
+    const toggleFeatureInput = () => setFeatureInput(!featureInput)
 
     const handleNewFeature = (feature) => onUpdate({ features: [...park.features, feature] })
 
     const handleDeleteFeature = (id) => {
-        const update = features.filter(feature => feature.id !== id)
+        const update = park.features.filter(feature => feature.id !== id)
 
         onUpdate({ features: [...update] })
     }
@@ -42,11 +43,6 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
         )
     }
 
-    const handleUpVote = () => onVote(true)
-
-    const handleDownVote = () => onVote(false)
-
-    const handleNewComment = () => onCommentSubmit(value)
 
     const handleReport = () => {
         Alert.alert(
@@ -81,7 +77,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             <Text>Created by: {park.creator.name}</Text>
                         </View>
                         <View style={styles.headerRight}>
-                            <TouchableOpacity style={styles.commentsButton} onPress={() => setShowComments(true)}>
+                            <TouchableOpacity style={styles.commentsButton} onPress={toggleComments}>
                                 <Text style={styles.commentsLink}>See what people are saying</Text>
                             </TouchableOpacity>
                         </View>
@@ -100,81 +96,32 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             </View>
                         </View>
                         <View style={styles.votesContainer}>
-                            <TouchableOpacity onPress={handleUpVote}>
+                            <TouchableOpacity onPress={() => onVote(true)}>
                                 <Text style={styles.upVote}>+ Vote</Text>
                             </TouchableOpacity>
                             <View>
                                 <Text style={styles.votes}>{votes ? votes : 0}</Text>
                             </View>
-                            <TouchableOpacity onPress={handleDownVote}>
+                            <TouchableOpacity onPress={() => onVote(false)}>
                                 <Text style={styles.downVote}>- Vote</Text>
                             </TouchableOpacity>
 
                         </View>
                     </View>
-
-
                     <Modal
                         animationType="slide"
                         transparent={false}
-                        //TODO maybe make modal compo??
                         visible={showComments}>
-                        <View style={{ backgroundColor: '#EDF4F9', flex: 1 }}>
-                            <ScrollView contentContainerStyle={{ backgroundColor: '#EDF4F9' }}>
-                                <View style={styles.modalHeader}>
-                                    <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.headerText} />
-                                    <Text style={styles.headerTextBold}>Comments</Text>
-                                    <MyButton onPress={() => setCreateComment(true)} text='Add' textStyle={styles.headerText} />
-                                </View>
-                                {/* TODO  make comment compo */}
-                                {createComment && (
-                                    <View style={styles.newCommentContainer}>
-                                        <TextInput
-                                            style={styles.newComment}
-                                            multiline={true}
-                                            numberOfLines={4}
-                                            onChangeText={(text) => onChangeText(text)}
-                                            value={value}
-                                        />
-                                        <View style={styles.buttonsContainer}>
-                                            <TouchableOpacity style={styles.buttonContainer} onPress={() => setCreateComment(false)}>
-                                                <Text style={styles.commentButton}>Cancel</Text>
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={styles.buttonContainer} onPress={handleNewComment}>
-                                                <Text style={styles.commentButton}>Publish</Text>
-                                            </TouchableOpacity>
-
-                                        </View>
-                                    </View>)}
-                                <View style={styles.commentsContainer}>
-
-                                    {comments.length > 0 ? (comments.map((comment, index) => (
-                                        <View key={index} style={styles.commentContainer}>
-                                            <View style={styles.commentHeader}>
-                                                <Text style={styles.commentPublisher}>{comment.postedBy.name}</Text>
-                                            </View>
-                                            <View style={styles.commentBody}>
-                                                <Text style={styles.commentBodyText}>{comment.body}</Text>
-                                            </View>
-                                            <View style={styles.commentFooter}>
-                                                <Text style={styles.commentDate}>{comment.date.toString().slice(0, 10)}</Text>
-                                            </View>
-                                        </View>
-                                    ))) :
-                                        (<View style={styles.noComments}>
-                                            <Text style={styles.commentBodyText}>No comments yet...</Text>
-
-                                            <Text style={styles.commentBodyText}>Be the firs one!</Text>
-
-                                        </View>
-                                        )
-                                    }
-                                </View>
-                            </ScrollView>
+                        <View style={styles.modalHeader}>
+                            <MyButton onPress={toggleComments} text='Cancel' textStyle={styles.headerText} />
+                            <Text style={styles.headerTextBold}>Comments</Text>
+                            <MyButton onPress={() => setCreateComment(!createComment)} text='Add' textStyle={styles.headerText} />
                         </View>
+                        <Comments comments={comments}>
+                            {createComment && (<CommentInput onCancel={() => setCreateComment(false)} onSubmit={onCommentSubmit} />)}
+                        </Comments>
                     </Modal>
                     <View style={styles.mapContainer}>
-
                         <MapView style={styles.mapStyle}
                             region={{
                                 latitude: park.location.coordinates[1],
@@ -219,14 +166,13 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
 
                             {user.id === park.creator.id ?
                                 (<MyButton
-                                    text='➕ New feature'
-                                    style={styles.buttonContainer}
+                                    text='➕'
                                     textStyle={styles.commentButton}
-                                    onPress={showFeatureInput}
+                                    onPress={toggleFeatureInput}
                                 />) : null}
 
-                            {updateSection && (<FeatureInput onNewFeature={handleNewFeature} />)}
                         </View>
+                        {featureInput && (<FeatureInput onNewFeature={handleNewFeature} />)}
                         {park.features.length ? (park.features.map((feature, index) => (
 
                             <Feature
