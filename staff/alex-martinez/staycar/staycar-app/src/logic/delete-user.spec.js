@@ -49,10 +49,6 @@ describe('deleteUser', () => {
         })
     })
 
-    /* it('should fail on non string id', () => {
-        let id = 2
-        expect(() => deleteUser(id, 'username', 'password' )).toThrow(TypeError, `id ${id} is not a string`)
-    }) */
 
     it('should fail on non string username', () => {
         let username = true

@@ -43,7 +43,7 @@ router.get('/ticket/:ticketId/:parkingname/exit', exitVehicle)
 router.patch('/parking/:name/update', jsonBodyParser, jwtVerifierMidWare, updateParking)
 router.post('/parking/:parking/occupy', jsonBodyParser, occupyParkingLot)
 router.post('/parking/:parking/free', jsonBodyParser, freeParkingLot)
-router.post('/ticket/recover', jwtVerifierMidWare ,jsonBodyParser, recoverTicket)
+router.post('/ticket/:parking/recover', jsonBodyParser, jwtVerifierMidWare, recoverTicket)
 //
 
 

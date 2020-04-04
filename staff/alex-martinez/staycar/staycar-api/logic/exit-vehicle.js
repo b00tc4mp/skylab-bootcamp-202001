@@ -34,27 +34,6 @@ module.exports =  (ticketId, parkingName) => {
     } 
   
     const parking = await Parking.findOne({ parkingName })
-    
-    /* let { lots } = parking
-  
-    parking.occupiedLots--
-  
-    let condition = false
-  
-    do {
-    
-      let random = Math.floor(Math.random() * lots.length)
-  
-      if (lots[random].status === true) {
-        lots[random].status = false
-        
-        condition = true
-      }
-      
-    } while (condition===false);
-  
-    parking.lots = lots */
-  
 
     ticket.exit = true
     

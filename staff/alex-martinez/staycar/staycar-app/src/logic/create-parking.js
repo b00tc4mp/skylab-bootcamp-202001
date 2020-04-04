@@ -36,7 +36,6 @@ export default (function (parkingName, rate, totalLots) {
         
         if(status === 201) {
             
-            //this.parking = parkingName
             return
         }
 

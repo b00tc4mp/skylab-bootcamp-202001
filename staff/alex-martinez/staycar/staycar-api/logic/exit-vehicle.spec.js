@@ -112,9 +112,23 @@ describe('exitVehicle', () => {
                     expect(ticket).to.exist
                     expect(ticket.validated).to.be(false)
                     expect(ticket.exit).to.be(false)
-                    expect(ticket).to.throw(NotAllowedError, 'validation expired, please go to ATM')
                     
                 })
+                .catch((ticket)=>{
+                    expect(ticket).to.throw(NotAllowedError, 'validation expired, please go to ATM')
+                })
+        })
+        it('should fail if ticket exit true', () => {
+            
+            exitVehicle(ticketId, parkingName)
+            .then(() => {
+                const ticket = Ticket.findOne({ticketId})
+                ticket.exit = true
+                return ticket
+            })
+            .catch((ticket) => {
+                expect(ticket).to.throw(NotAllowedError, 'this ticket is not allowed')
+            })
         })
 
     })

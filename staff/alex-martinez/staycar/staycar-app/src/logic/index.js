@@ -12,8 +12,7 @@ import exitVehicle from './exit-vehicle'
 import modifyParking from './modify-parking'
 import deleteParking from './delete-parking'
 import deleteUser from './delete-user'
-import occupyParkingLot from './occupy-parking-lot'
-import freeParkingLot from './free-parking-lot'
+import recoverTicket from './recover-ticket'
 
 export {
     login,
@@ -30,6 +29,5 @@ export {
     modifyParking,
     deleteParking,
     deleteUser,
-    occupyParkingLot,
-    freeParkingLot
+    recoverTicket
 }

@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
-import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout } from '../logic'
+import { isLoggedIn, login, entryVehicle, createParking, retrieveTicket, registerUser, exitVehicle, modifyParking, deleteParking, deleteUser, logout, recoverTicket } from '../logic'
 import { Context } from './ContextProvider'
 
 import './style/App.sass'
 
-import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser } from '.'
+import { Home, Login, EntryVehicle, Config, CreateParking, Atm, Map, CreateUser, ExitVehicle, Report, ModifyParking, DeleteParking, DeleteUser, RecoverTicket } from '.'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
@@ -14,6 +14,7 @@ export default withRouter(function ({ history }) {
   const [state, setState] = useContext(Context)
 
   const [dataTicket, setDataTicket ] = useState()
+  const [ticket, setTicket ] = useState() 
 
   function __handleError__(error) {
       
@@ -148,6 +149,17 @@ export default withRouter(function ({ history }) {
       __handleError__(error)
     }
   }
+
+  async function handleRecoverTicket(carPlate) {
+    try{
+      debugger
+      const recover = await recoverTicket(carPlate)
+      setTicket(recover)
+    }catch(error){
+      __handleError__(error)
+    }
+  }
+
   
   const { error } = state
   
@@ -166,6 +178,7 @@ export default withRouter(function ({ history }) {
     <Route path="/create-user" render={() => isLoggedIn() ? <> <Config /> <CreateUser onSubmit={handleCreateUser} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/exit-vehicle" render={() => isLoggedIn() ? <> <Home /> <ExitVehicle onSubmit={handleExitVehicle} error={error} /> </> : <Redirect to="/login" />}/>
     <Route path="/report" render={() => isLoggedIn() ? <> <Home /> <Report /> </> : <Redirect to="/login" />}/>
+    <Route path="/recover-ticket" render={() => isLoggedIn() ? <> <Config /> <RecoverTicket onSubmit={handleRecoverTicket} ticket={ticket} error={error}/> </> : <Redirect to="/login" />} />
     </div>
 
 })

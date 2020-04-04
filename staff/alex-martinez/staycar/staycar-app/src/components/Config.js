@@ -5,6 +5,7 @@ import { isLoggedIn, retrieveParking } from '../logic'
 import './style/Config.sass'
 import { ReactComponent as Add } from '../img/add.svg'
 import { ReactComponent as User } from '../img/user.svg'
+import { ReactComponent as Ticket} from '../img/recibo.svg'
 
 export default withRouter (function({history}) {
 
@@ -39,7 +40,9 @@ export default withRouter (function({history}) {
         history.push('/modify-parking')
     }
 
-    debugger
+    const handleToRecoverTicket = () => {
+        history.push('/recover-ticket')
+    }
 
     return <> 
         <Header user={isLoggedIn() ? 'Login' : 'Logout'}/>
@@ -51,6 +54,10 @@ export default withRouter (function({history}) {
             <div class="config__action" onClick={handleToCreateUser}>
                 <User className="config__image"/>
                 <p class="config__text">Manage User</p>
+            </div>
+            <div class="config__action" onClick={handleToRecoverTicket}>
+                <Ticket className="config__image"/>
+                <p class="config__text">Recover ticket</p>
             </div>
         </section>
     </>
