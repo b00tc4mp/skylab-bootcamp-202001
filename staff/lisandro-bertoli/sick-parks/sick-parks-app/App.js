@@ -233,6 +233,20 @@ export default function App() {
 		/>
 	)
 
+	/*
+	
+		if(fontsLoaded) return(
+			<SafeAreaView>
+				<StatusBar hidden={false} barStyle={'dark-content'} />
+				<NavigationContainer>
+					<AppNAvigation/>
+				</NavigationContainer>
+			</SafeAreaView>
+
+		)
+
+	 */
+
 	if (fontsLoaded) return (
 		<>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
