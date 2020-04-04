@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Modal, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, Modal, Alert } from 'react-native'
 import MyButton from '../Button'
 import FeatureInput from '../FeatureInput'
 import Feature from '../Feature'
 import Comments from '../Comments'
 import CommentInput from '../CommentInput'
 import MapView from 'react-native-maps'
-import styles from './styles'
 import Feedback from '../Feedback'
+import styles from './styles'
 
 function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
     const [comments, setComments] = useState(park.comments)
@@ -20,10 +20,6 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
         setComments(park.comments)
         setVotes(park.rating)
     }, [park.rating, park.features])
-
-    const toggleComments = () => setShowComments(!showComments)
-
-    const toggleFeatureInput = () => setFeatureInput(!featureInput)
 
     const handleNewFeature = (feature) => onUpdate({ features: [...park.features, feature] })
 
@@ -60,7 +56,6 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
     if (error) return (
         <View style={{ justifyContent: "center", width: '100%', height: 200 }}>
             <Feedback message={error} level='error' />
-
         </View>
     )
 
@@ -76,10 +71,8 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             <Text style={styles.postedAt}>Creation date: {park.created.toString().slice(0, 10)}.</Text>
                             <Text>Created by: {park.creator.name}</Text>
                         </View>
-                        <View style={styles.headerRight}>
-                            <TouchableOpacity style={styles.commentsButton} onPress={toggleComments}>
-                                <Text style={styles.commentsLink}>See what people are saying</Text>
-                            </TouchableOpacity>
+                        <View style={styles.headerRight}>'
+                            <MyButton text='See what people are saying' style={styles.commentsButton} textStyle={styles.commentsLink} onPress={() => setShowComments(!showComments)} />
                         </View>
                     </View>
 
@@ -96,16 +89,11 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             </View>
                         </View>
                         <View style={styles.votesContainer}>
-                            <TouchableOpacity onPress={() => onVote(true)}>
-                                <Text style={styles.upVote}>+ Vote</Text>
-                            </TouchableOpacity>
+                            <MyButton text='+ Vote' textStyle={styles.upVote} onPress={() => onVote(true)} />
                             <View>
                                 <Text style={styles.votes}>{votes ? votes : 0}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => onVote(false)}>
-                                <Text style={styles.downVote}>- Vote</Text>
-                            </TouchableOpacity>
-
+                            <MyButton text='- Vote' textStyle={styles.downVore} onPress={() => onVote(false)} />
                         </View>
                     </View>
                     <Modal
@@ -113,7 +101,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                         transparent={false}
                         visible={showComments}>
                         <View style={styles.modalHeader}>
-                            <MyButton onPress={toggleComments} text='Cancel' textStyle={styles.headerText} />
+                            <MyButton onPress={() => setShowComments(!showComments)} text='Cancel' textStyle={styles.headerText} />
                             <Text style={styles.headerTextBold}>Comments</Text>
                             <MyButton onPress={() => setCreateComment(!createComment)} text='Add' textStyle={styles.headerText} />
                         </View>
@@ -168,7 +156,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                                 (<MyButton
                                     text='➕'
                                     textStyle={styles.commentButton}
-                                    onPress={toggleFeatureInput}
+                                    onPress={() => setFeatureInput(!featureInput)}
                                 />) : null}
 
                         </View>
