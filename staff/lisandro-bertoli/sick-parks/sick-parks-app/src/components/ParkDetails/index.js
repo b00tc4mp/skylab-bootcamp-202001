@@ -71,7 +71,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             <Text style={styles.postedAt}>Creation date: {park.created.toString().slice(0, 10)}.</Text>
                             <Text>Created by: {park.creator.name}</Text>
                         </View>
-                        <View style={styles.headerRight}>'
+                        <View style={styles.headerRight}>
                             <MyButton text='See what people are saying' style={styles.commentsButton} textStyle={styles.commentsLink} onPress={() => setShowComments(!showComments)} />
                         </View>
                     </View>
@@ -93,7 +93,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             <View>
                                 <Text style={styles.votes}>{votes ? votes : 0}</Text>
                             </View>
-                            <MyButton text='- Vote' textStyle={styles.downVore} onPress={() => onVote(false)} />
+                            <MyButton text='- Vote' textStyle={styles.downVote} onPress={() => onVote(false)} />
                         </View>
                     </View>
                     <Modal
