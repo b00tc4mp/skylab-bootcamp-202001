@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import { CommonActions } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import Search from '../Search'
-import TopSearch from '../TopSearch'
-import Results from '../Results'
+import Search from '../presentational/Search'
+import TopSearch from '../presentational/TopSearch'
+import Results from '../presentational/Results'
 import ParkDetails from '../ParkDetails'
 import {
     searchParks,
@@ -51,36 +51,36 @@ export default function Home({ user }) {
         }
     }
 
-    const search = async (query, navigation) => {
-        try {
-            setCurrentQuery(query)
-            const results = await searchParks(query, [location.longitude, location.latitude])
+    // const search = async (query, navigation) => {
+    //     try {
+    //         setCurrentQuery(query)
+    //         const results = await searchParks(query, [location.longitude, location.latitude])
 
-            if (!results.length) setError(`No ${query} parks found`)
-            else setError(null)
+    //         if (!results.length) setError(`No ${query} parks found`)
+    //         else setError(null)
 
-            setResults(results)
+    //         setResults(results)
 
-            navigation && navigation.navigate('Results')
-        } catch ({ message }) {
-            __handleErrors__(message, setError)
+    //         navigation && navigation.navigate('Results')
+    //     } catch ({ message }) {
+    //         __handleErrors__(message, setError)
 
-            navigation.navigate('Results')
+    //         navigation.navigate('Results')
 
-        }
-    }
+    //     }
+    // }
 
-    const goToDetails = async (id, navigation) => {
-        try {
-            const item = await retrievePark(id)
-            setDetailedPark(item)
+    // const goToDetails = async (id, navigation) => {
+    //     try {
+    //         const item = await retrievePark(id)
+    //         setDetailedPark(item)
 
-            navigation.navigate('ParkDetails')
-        } catch (error) {
-            if (error.name === 'NotFoundError') Alert.alert(error.message)
-            else __handleErrors__(error.message, setError)
-        }
-    }
+    //         navigation.navigate('ParkDetails')
+    //     } catch (error) {
+    //         if (error.name === 'NotFoundError') Alert.alert(error.message)
+    //         else __handleErrors__(error.message, setError)
+    //     }
+    // }
 
     const handleOnDelete = async (navigation) => {
         try {
@@ -154,11 +154,11 @@ export default function Home({ user }) {
         }
     }
 
-    function SearchScreen({ navigation }) {
-        const handleOnSubmit = (query) => search(query, navigation)
+    // function SearchScreen({ navigation }) {
+    //     const handleOnSubmit = (query) => search(query, navigation)
 
-        return <Search onSubmit={handleOnSubmit} />
-    }
+    //     return <Search onSubmit={handleOnSubmit} />
+    // }
 
     function TopSearchHeader() {
         const handleOnSubmit = (query) => search(query)
@@ -166,35 +166,35 @@ export default function Home({ user }) {
         return <TopSearch onSubmit={handleOnSubmit} query={currentQuery} />
     }
 
-    function ResultsScreen({ navigation }) {
-        const handleGoToDetails = (id) => goToDetails(id, navigation)
+    // function ResultsScreen({ navigation }) {
+    //     const handleGoToDetails = (id) => goToDetails(id, navigation)
 
-        return <Results results={results} error={error} onToDetails={handleGoToDetails} />
-    }
+    //     return <Results results={results} error={error} onToDetails={handleGoToDetails} />
+    // }
 
-    function ParkDetailsScreen({ navigation }) {
-        const onDelete = () => handleOnDelete(navigation)
+    // function ParkDetailsScreen({ navigation }) {
+    //     const onDelete = () => handleOnDelete(navigation)
 
-        const onParkUpdate = update => handleUpdate(update)
+    //     const onParkUpdate = update => handleUpdate(update)
 
-        const handleVote = vote => handleParkVote(vote)
+    //     const handleVote = vote => handleParkVote(vote)
 
-        const handleCommentSubmit = body => submitComment(body)
+    //     const handleCommentSubmit = body => submitComment(body)
 
-        const handleContribution = action => handleParkContribution(action)
+    //     const handleContribution = action => handleParkContribution(action)
 
-        return <ParkDetails
-            park={detailedPark}
-            user={user}
-            onVote={handleVote}
-            onDeletePark={onDelete}
-            onUpdate={onParkUpdate}
-            onCommentSubmit={handleCommentSubmit}
-            onContribution={handleContribution}
-            goBack={navigation.goBack}
-            error={error} />
+    //     return <ParkDetails
+    //         park={detailedPark}
+    //         user={user}
+    //         onVote={handleVote}
+    //         onDeletePark={onDelete}
+    //         onUpdate={onParkUpdate}
+    //         onCommentSubmit={handleCommentSubmit}
+    //         onContribution={handleContribution}
+    //         goBack={navigation.goBack}
+    //         error={error} />
 
-    }
+    // }
 
     return (
         <Stack.Navigator mode='modal' headerMode='screen' initialRouteName='Search'

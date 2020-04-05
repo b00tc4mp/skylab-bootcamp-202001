@@ -25,7 +25,7 @@ import {
 	MapViewContainer,
 	Profile,
 	ParkBuilder
-} from './src/components/'
+} from './src/components/presentational'
 
 const homeImage = require('./assets/icon-search.png')
 const mapImage = require('./assets/icon-location.png')

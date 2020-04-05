@@ -1,6 +1,6 @@
 import { loginUser, retrieveUser } from 'sick-parks-logic'
 import { __handleErrors__ } from '../../handlers'
-import { Login } from '../../components'
+import { Login } from '../presentational'
 import React, { useState } from 'react'
 
 export default function LoginContainer({ navigation }) {
