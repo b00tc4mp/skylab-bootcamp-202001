@@ -19,7 +19,8 @@ export default class NewToilet extends React.Component {
             multipleToilets: 0,
             overallRating: 0,
             textArea: '',
-            loading: false
+            loading: false,
+            height: 40
         }
     }
 
@@ -153,15 +154,15 @@ export default class NewToilet extends React.Component {
 
                 <View style={styles.questionContainer}>
                     <KeyboardAvoidingView behavior='position'>
-                        <Text style={styles.question}>(Optional) Add a comment here:</Text>
-                        <View style={styles.sliderContainer}>
-                            <TextInput style={styles.input} placeholder='Start writing here' onChangeText={(text) => this.setState({ textArea: text })} />
-                        </View>
+                    <Text style={styles.question}>(Optional) Add a comment here:</Text>
+                    <View style={styles.sliderContainer}>
+                        <TextInput multiline={true} onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)} style={styles.input} placeholder='Start writing here' onChangeText={(text) => this.setState({ textArea: text })} />
+                    </View>
                     </KeyboardAvoidingView>
                 </View>
-                
+
                 {this.state.loading && (<>
-                    <Text style={{textAlign: 'center', fontStyle: 'italic'}}>Submit loading, please don't press anything...</Text>
+                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
                     <ActivityIndicator size="large" color="#0000ff" />
                 </>)}
 
@@ -199,4 +200,10 @@ export default class NewToilet extends React.Component {
             }
         })
     };
+
+    updateSize = (height) => {
+        this.setState({
+            height
+        });
+    }
 }

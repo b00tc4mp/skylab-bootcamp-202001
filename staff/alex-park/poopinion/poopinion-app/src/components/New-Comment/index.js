@@ -11,6 +11,11 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
     const [overallRating, setOverallRating] = useState(0)
     const [textArea, setTextArea] = useState('')
     const [loading, setLoading] = useState(false)
+    const [height, setHeight] = useState(40)
+
+    function updateSize (height) {
+        setHeight(height)
+    }
 
     return (<>
         <ScrollView>
@@ -108,7 +113,7 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                     <KeyboardAvoidingView behavior='position'>
                         <Text style={styles.question}>(Optional) Add a comment here:</Text>
                         <View style={styles.sliderContainer}>
-                            <TextInput style={styles.input} placeholder='Start writing here' onChangeText={(text) => setTextArea(text)} />
+                            <TextInput multiline={true} onContentSizeChange={(e) => updateSize(e.nativeEvent.contentSize.height)} style={styles.input} placeholder='Start writing here' onChangeText={(text) => setTextArea(text)} />
                         </View>
                     </KeyboardAvoidingView>
                 </View>

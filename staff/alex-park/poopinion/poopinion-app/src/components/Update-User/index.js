@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
-import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView, Alert } from 'react-native'
+import { TextInputMask } from 'react-native-masked-text'
+import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 
 function UpdateUser({ onSubmit, error, goToLanding, user }) {
     const [name, setName] = useState(user.name)
@@ -10,6 +11,7 @@ function UpdateUser({ onSubmit, error, goToLanding, user }) {
     const [gender, setGender] = useState(user.gender)
     const [newPassword, setNewPassword] = useState('')
     const [password, setPassword] = useState()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         setName(user.name)
@@ -25,11 +27,24 @@ function UpdateUser({ onSubmit, error, goToLanding, user }) {
                     <View style={styles.formContainer}>
                         <Text>Hi {user.name}! You can update your profile here. Feel free to change your info but please stay away from putting anything offensive. Thank you! 💩</Text>
                         <Text style={styles.header}>Update</Text>
-                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder={`Name (current: ${user.name})`} onChangeText={(text) => setName(text)} />
-                        <TextInput placeholderTextColor='grey' style={styles.form} placeholder={`Surname (current: ${user.surname})`} onChangeText={(text) => setSurame(text)} />
-                        <TextInput placeholderTextColor='grey' keyboardType={'numeric'} style={styles.form} placeholder={`Age (current: ${user.age})`} onChangeText={(text) => setAge(parseInt(text))} />
+                        <TextInput placeholderTextColor='grey' value={name} style={styles.form} placeholder={`Name (current: ${user.name})`} onChangeText={(text) => setName(text)} />
+                        <TextInput placeholderTextColor='grey' value={surname} style={styles.form} placeholder={`Surname (current: ${user.surname})`} onChangeText={(text) => setSurame(text)} />
+
+                        <TextInputMask
+                            type={'datetime'}
+                            options={{
+                                format: 'YYYY-MM-DD'
+                            }}
+                            placeholderTextColor='grey'
+                            keyboardType={'numeric'}
+                            style={styles.form}
+                            value={age}
+                            placeholder={`D. of birth (current: ${user.age})`}
+                            onChangeText={(ref) => setAge(ref)} />
+
                         <View style={styles.form}>
                             <Picker
+                                value={gender}
                                 selectedValue={gender}
                                 onValueChange={(itemValue) =>
                                     setGender(itemValue)
@@ -44,7 +59,15 @@ function UpdateUser({ onSubmit, error, goToLanding, user }) {
                         <TextInput placeholderTextColor='grey' style={styles.form} placeholder='Password' secureTextEntry={true} onChangeText={(text) => setPassword(text)} />
                     </View>
                     {error && <Feedback level='warn' message={error} />}
-                    <Text style={styles.button} onPress={() => onSubmit({name, surname, age, newPassword, password, gender})}>💩 Submit! 💩</Text>
+                    {!error && loading && (<>
+                        <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </>)}
+                    <Text style={styles.button} onPress={() => {
+                        setLoading(true)
+                        if (error) setLoading(false)
+                        onSubmit({ name, surname, age, newPassword, password, gender })
+                    }}>💩 Submit! 💩</Text>
 
                     <TouchableOpacity style={styles.right}>
                         <Text style={styles.rightButton} onPress={goToLanding} >Go back</Text>

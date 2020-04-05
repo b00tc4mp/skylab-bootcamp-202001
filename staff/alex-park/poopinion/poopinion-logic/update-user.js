@@ -15,7 +15,9 @@ const context = require('./context')
 
 module.exports = function (data) {
     validate.type(data, 'data', Object)
-    const { password, newPassword } = data
+    const { password, newPassword, age } = data 
+    validate.string(age, 'age')
+    validate.age(age)
     validate.stringFrontend(password, 'password')
     if (!newPassword) delete data.newPassword
 
