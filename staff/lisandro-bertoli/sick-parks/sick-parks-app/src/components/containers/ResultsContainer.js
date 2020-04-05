@@ -1,21 +1,22 @@
 import React from 'react'
 import { retrievePark } from 'sick-parks-logic'
-// import { __handleUserUpdate__ } from '../../handlers'
+import { __handleErrors__ } from '../../handlers'
 import { Results } from '../presentational'
 
 
-export default function ResultsScreen({ navigation }) {
+export default function ResultsContainer({ navigation, route }) {
+    const [error, setError] = useState(route.error)
+
     const handleGoToDetails = (id) => {
         try {
-            const item = await retrievePark(id)
-            setDetailedPark(item)
+            const park = await retrievePark(id)
 
-            navigation.navigate('ParkDetails')
+            navigation.navigate('ParkDetails', { park }) // NEED TO PASS THE PARK
         } catch (error) {
             if (error.name === 'NotFoundError') Alert.alert(error.message)
             else __handleErrors__(error.message, setError)
         }
     }
 
-    return <Results results={results} error={error} onToDetails={handleGoToDetails} />
+    return <Results results={route.results} error={error} onToDetails={handleGoToDetails} />
 }

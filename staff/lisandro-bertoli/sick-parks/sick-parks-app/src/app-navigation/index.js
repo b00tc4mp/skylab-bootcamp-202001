@@ -9,6 +9,7 @@ export default () => (
         {!auth.loggedIn ? (
 
             <AuthNavigation />
+            //<NotLoggedNavigation/>
         ) : (
                 <LoggedNavigation />
             )

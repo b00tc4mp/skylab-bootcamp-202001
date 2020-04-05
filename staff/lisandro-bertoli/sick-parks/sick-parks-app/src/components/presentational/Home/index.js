@@ -39,17 +39,17 @@ export default function Home({ user }) {
         })
     }, [])
 
-    const __handleParkUpdate__ = async (id) => {
-        try {
-            const item = await retrievePark(id)
-            setDetailedPark(item)
+    // const __handleParkUpdate__ = async (id) => {
+    //     try {
+    //         const item = await retrievePark(id)
+    //         setDetailedPark(item)
 
-            setError(null)
-        } catch ({ message }) {
-            Alert.alert(message)
-            __handleErrors__(message, setError)
-        }
-    }
+    //         setError(null)
+    //     } catch ({ message }) {
+    //         Alert.alert(message)
+    //         __handleErrors__(message, setError)
+    //     }
+    // }
 
     // const search = async (query, navigation) => {
     //     try {
@@ -82,77 +82,77 @@ export default function Home({ user }) {
     //     }
     // }
 
-    const handleOnDelete = async (navigation) => {
-        try {
+    // const handleOnDelete = async (navigation) => {
+    //     try {
 
-            navigation.dispatch(
-                CommonActions.reset({
-                    index: 0,
-                    routes: [{ name: 'Home' }]
-                }))
+    //         navigation.dispatch(
+    //             CommonActions.reset({
+    //                 index: 0,
+    //                 routes: [{ name: 'Home' }]
+    //             }))
 
 
-            await deletePark(detailedPark.id, user.id)
-            await __handleUserUpdate__(setError)
+    //         await deletePark(detailedPark.id, user.id)
+    //         await __handleUserUpdate__(setError)
 
-            Alert.alert('Park deleted')
-        } catch ({ message }) {
-            Alert.alert(message)
-        }
-    }
+    //         Alert.alert('Park deleted')
+    //     } catch ({ message }) {
+    //         Alert.alert(message)
+    //     }
+    // }
 
-    const handleUpdate = async (update) => {
+    // const handleUpdate = async (update) => {
 
-        try {
-            await updatePark(user.id, detailedPark.id, update)
+    //     try {
+    //         await updatePark(user.id, detailedPark.id, update)
 
-            __handleParkUpdate__(detailedPark.id)
-        } catch ({ message }) {
-            Alert.alert(message)
-        }
+    //         __handleParkUpdate__(detailedPark.id)
+    //     } catch ({ message }) {
+    //         Alert.alert(message)
+    //     }
 
-    }
+    // }
 
-    const handleParkVote = async (vote) => {
-        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+    // const handleParkVote = async (vote) => {
+    //     if (user === 'guest') return Alert.alert('This action needs you to be registered')
 
-        try {
-            await votePark(user.id, detailedPark.id, vote)
+    //     try {
+    //         await votePark(user.id, detailedPark.id, vote)
 
-            __handleParkUpdate__(detailedPark.id)
-        } catch ({ message }) {
-            Alert.alert('This action cannot be performed twice by the same user')
-        }
-    }
+    //         __handleParkUpdate__(detailedPark.id)
+    //     } catch ({ message }) {
+    //         Alert.alert('This action cannot be performed twice by the same user')
+    //     }
+    // }
 
-    const submitComment = async (body) => {
-        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+    // const submitComment = async (body) => {
+    //     if (user === 'guest') return Alert.alert('This action needs you to be registered')
 
-        try {
-            await publishComment(user.id, detailedPark.id, body)
+    //     try {
+    //         await publishComment(user.id, detailedPark.id, body)
 
-            __handleParkUpdate__(detailedPark.id)
-        } catch ({ message }) {
-            Alert.alert(message)
-        }
-    }
+    //         __handleParkUpdate__(detailedPark.id)
+    //     } catch ({ message }) {
+    //         Alert.alert(message)
+    //     }
+    // }
 
-    const handleParkContribution = async (action) => {
-        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+    // const handleParkContribution = async (action) => {
+    //     if (user === 'guest') return Alert.alert('This action needs you to be registered')
 
-        try {
-            if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
+    //     try {
+    //         if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, detailedPark.id, action)
 
-            else if (action === 'approve') await approvePark(user.id, detailedPark.id)
+    //         else if (action === 'approve') await approvePark(user.id, detailedPark.id)
 
-            __handleParkUpdate__(detailedPark.id)
+    //         __handleParkUpdate__(detailedPark.id)
 
-            Alert.alert('Thanks for contributing!')
-        } catch ({ message }) {
+    //         Alert.alert('Thanks for contributing!')
+    //     } catch ({ message }) {
 
-            Alert.alert(message)
-        }
-    }
+    //         Alert.alert(message)
+    //     }
+    // }
 
     // function SearchScreen({ navigation }) {
     //     const handleOnSubmit = (query) => search(query, navigation)
@@ -160,11 +160,11 @@ export default function Home({ user }) {
     //     return <Search onSubmit={handleOnSubmit} />
     // }
 
-    function TopSearchHeader() {
-        const handleOnSubmit = (query) => search(query)
+    // function TopSearchHeader() {
+    //     const handleOnSubmit = (query) => search(query)
 
-        return <TopSearch onSubmit={handleOnSubmit} query={currentQuery} />
-    }
+    //     return <TopSearch onSubmit={handleOnSubmit} query={currentQuery} />
+    // }
 
     // function ResultsScreen({ navigation }) {
     //     const handleGoToDetails = (id) => goToDetails(id, navigation)
