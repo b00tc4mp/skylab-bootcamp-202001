@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 11396,
+  "expoServerNgrokUrl": "https://ic-yee.anonymous.sick-parks-app.exp.direct",
+  "packagerNgrokUrl": "https://packager.ic-yee.anonymous.sick-parks-app.exp.direct",
+  "ngrokPid": 11499
 }

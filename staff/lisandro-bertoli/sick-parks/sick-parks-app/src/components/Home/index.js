@@ -17,9 +17,11 @@ import {
     deletePark
 } from 'sick-parks-logic'
 
+import { __handleUserUpdate__, __handleErrors__ } from '../../handlers'
+
 const Stack = createStackNavigator()
 
-export default function Home({ user, updateUser }) {
+export default function Home({ user }) {
     const [detailedPark, setDetailedPark] = useState()
     const [results, setResults] = useState(false)
     const [location, setLocation] = useState()
@@ -45,7 +47,7 @@ export default function Home({ user, updateUser }) {
             setError(null)
         } catch ({ message }) {
             Alert.alert(message)
-            setError(message)
+            __handleErrors__(message, setError)
         }
     }
 
@@ -61,7 +63,7 @@ export default function Home({ user, updateUser }) {
 
             navigation && navigation.navigate('Results')
         } catch ({ message }) {
-            setError(message)
+            __handleErrors__(message, setError)
 
             navigation.navigate('Results')
 
@@ -76,7 +78,7 @@ export default function Home({ user, updateUser }) {
             navigation.navigate('ParkDetails')
         } catch (error) {
             if (error.name === 'NotFoundError') Alert.alert(error.message)
-            else setError(error.message)
+            else __handleErrors__(error.message, setError)
         }
     }
 
@@ -91,7 +93,7 @@ export default function Home({ user, updateUser }) {
 
 
             await deletePark(detailedPark.id, user.id)
-            await updateUser()
+            await __handleUserUpdate__(setError)
 
             Alert.alert('Park deleted')
         } catch ({ message }) {

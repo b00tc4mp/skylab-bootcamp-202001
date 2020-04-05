@@ -9,7 +9,7 @@ export default function Register({ onSubmit, error, onToLogin }) {
     const [surname, setSurname] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-
+    debugger
     const handleSubmit = () => onSubmit(name, surname, email, password)
 
     return (

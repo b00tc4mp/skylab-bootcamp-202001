@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, StatusBar, Image, AsyncStorage, Dimensions, Alert } from 'react-native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { StyleSheet, StatusBar, SafeAreaView, AsyncStorage, Dimensions, Alert } from 'react-native'
+
 import * as Font from 'expo-font'
 import * as Permissions from 'expo-permissions'
 import { AppLoading } from 'expo'
-
+import AppNavigation from './src/AppNavigation'
 import config from './config'
 import logic, {
 	registerUser,
@@ -34,9 +32,6 @@ const mapImage = require('./assets/icon-location.png')
 const buildImage = require('./assets/icon-pick-and-shovel.png')
 const profileImage = require('./assets/icon-profile.png')
 
-
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator()
 
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.API_URL
@@ -120,32 +115,32 @@ export default function App() {
 
 	}
 
-	const handleLogin = async (email, password) => {
-		try {
-			await loginUser(email, password)
+	// const handleLogin = async (email, password) => {
+	// 	try {
+	// 		await loginUser(email, password)
 
-			const user = await retrieveUser()
+	// 		const user = await retrieveUser()
 
-			user.notifications = await _getNotificationsPermissionsAsync()
-			user.allowLocation = await _getLocationPermissionsAsync()
+	// 		user.notifications = await _getNotificationsPermissionsAsync()
+	// 		user.allowLocation = await _getLocationPermissionsAsync()
 
-			setUser(user)
-			setError(null)
-		} catch ({ message }) {
-			__handleErrors__(message)
-		}
-	}
+	// 		setUser(user)
+	// 		setError(null)
+	// 	} catch ({ message }) {
+	// 		__handleErrors__(message)
+	// 	}
+	// }
 
-	const handleRegister = async (name, surname, email, password, navigation) => {
-		try {
-			await registerUser(name, surname, email, password)
+	// const handleRegister = async (name, surname, email, password, navigation) => {
+	// 	try {
+	// 		await registerUser(name, surname, email, password)
 
-			setError(null)
-			navigation.navigate('Login')
-		} catch ({ message }) {
-			__handleErrors__(message)
-		}
-	}
+	// 		setError(null)
+	// 		navigation.navigate('Login')
+	// 	} catch ({ message }) {
+	// 		__handleErrors__(message)
+	// 	}
+	// }
 
 	const handleCreatePark = async (data, navigation) => {
 		try {
@@ -163,31 +158,31 @@ export default function App() {
 		}
 	}
 
-	function LandingScreen({ navigation }) {
+	// function LandingScreen({ navigation }) {
 
-		const handleOnToLogin = () => navigation.navigate('Login')
-		const handleOnToRegister = () => navigation.navigate('Register')
-		const handleOnToHome = () => setUser('guest')
+	// 	const handleOnToLogin = () => navigation.navigate('Login')
+	// 	const handleOnToRegister = () => navigation.navigate('Register')
+	// 	const handleOnToHome = () => setUser('guest')
 
-		return <Landing onToLogin={handleOnToLogin} onToRegister={handleOnToRegister} onToHome={handleOnToHome} />
-	}
+	// 	return <Landing onToLogin={handleOnToLogin} onToRegister={handleOnToRegister} onToHome={handleOnToHome} />
+	// }
 
 
 
-	function LoginScreen({ navigation }) {
+	// function LoginScreen({ navigation }) {
 
-		const handleGoToRegister = () => navigation.navigate('Register')
+	// 	const handleGoToRegister = () => navigation.navigate('Register')
 
-		return <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} error={error} />
-	}
+	// 	return <Login onSubmit={handleLogin} onToRegister={handleGoToRegister} error={error} />
+	// }
 
-	function RegisterScreen({ navigation }) {
+	// function RegisterScreen({ navigation }) {
 
-		const handleSubmit = async (name, surname, email, password) => handleRegister(name, surname, email, password, navigation)
-		const handleGoToLogin = () => navigation.navigate('Login')
+	// 	const handleSubmit = async (name, surname, email, password) => handleRegister(name, surname, email, password, navigation)
+	// 	const handleGoToLogin = () => navigation.navigate('Login')
 
-		return <Register onSubmit={handleSubmit} onToLogin={handleGoToLogin} error={error} />
-	}
+	// 	return <Register onSubmit={handleSubmit} onToLogin={handleGoToLogin} error={error} />
+	// }
 
 	function ProfileScreen() {
 		const [publishedParks, setPublishedParks] = useState([])
@@ -233,75 +228,80 @@ export default function App() {
 		/>
 	)
 
-	/*
-	
-		if(fontsLoaded) return(
-			<SafeAreaView>
-				<StatusBar hidden={false} barStyle={'dark-content'} />
-				<NavigationContainer>
-					<AppNAvigation/>
-				</NavigationContainer>
-			</SafeAreaView>
 
-		)
-
-	 */
 
 	if (fontsLoaded) return (
 		<>
 			<StatusBar hidden={false} barStyle={'dark-content'} />
-			<NavigationContainer>
-				{!user && (
-					<Stack.Navigator
-						initialRouteName='Landing'
-						screenOptions={{
-							headerBackTitleVisible: false,
-							headerStyle: {
-								backgroundColor: '#82A4B3',
-							},
-							headerTitleStyle: {
-								fontFamily: 'montserrat-semi'
-							},
-							headerTintColor: '#EFEBDA'
-						}}>
-						<>
-							<Stack.Screen options={{ headerShown: false }} name="Landing" component={LandingScreen} />
-							<Stack.Screen name="Register" component={RegisterScreen} />
-							<Stack.Screen name="Login" component={LoginScreen} />
-						</>
-					</Stack.Navigator>
-				)}
-				{user && <>
-					<Tab.Navigator
-						screenOptions={({ route }) => ({
-							tabBarIcon: ({ focused, color, size }) => {
-								let iconName
-								if (route.name === 'Home') iconName = homeImage
-								else if (route.name === 'Map') iconName = mapImage
-								else if (route.name === 'Build') iconName = buildImage
-								else if (route.name === 'Profile') iconName = profileImage
-
-								return <Image source={iconName} style={styles.icon} />
-							},
-						})}
-						tabBarOptions={{
-							activeTintColor: '#EFEBDA',
-							inactiveTintColor: 'lightgrey',
-							style: {
-								backgroundColor: '#82A4B3'
-							}
-						}}>
-						<Tab.Screen name="Home" component={HomeScreen} />
-
-						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
-						<Tab.Screen name="Build" component={BuilderScreen} />
-						<Tab.Screen name="Profile" component={ProfileScreen} />
-					</Tab.Navigator>
-				</>}
-			</NavigationContainer>
+			<AppNavigation />
 		</>
 	)
+	// <>
+	// 	<SafeAreaView>
+	// 		<StatusBar hidden={false} barStyle={'dark-content'} />
+	// 		<AppNavigation />
+	// 	</SafeAreaView>
+	// </>
+
+
 }
+
+
+// 	if (fontsLoaded) return (
+// 		<>
+// 			<StatusBar hidden={false} barStyle={'dark-content'} />
+// 			<NavigationContainer>
+// 				{!user && (
+// 					<Stack.Navigator
+// 						initialRouteName='Landing'
+// 						screenOptions={{
+// 							headerBackTitleVisible: false,
+// 							headerStyle: {
+// 								backgroundColor: '#82A4B3',
+// 							},
+// 							headerTitleStyle: {
+// 								fontFamily: 'montserrat-semi'
+// 							},
+// 							headerTintColor: '#EFEBDA'
+// 						}}>
+// 						<>
+// 							<Stack.Screen options={{ headerShown: false }} name="Landing" component={LandingScreen} />
+// 							<Stack.Screen name="Register" component={RegisterScreen} />
+// 							<Stack.Screen name="Login" component={LoginScreen} />
+// 						</>
+// 					</Stack.Navigator>
+// 				)}
+// 				{user && <>
+// 					<Tab.Navigator
+// 						screenOptions={({ route }) => ({
+// 							tabBarIcon: ({ focused, color, size }) => {
+// 								let iconName
+// 								if (route.name === 'Home') iconName = homeImage
+// 								else if (route.name === 'Map') iconName = mapImage
+// 								else if (route.name === 'Build') iconName = buildImage
+// 								else if (route.name === 'Profile') iconName = profileImage
+
+// 								return <Image source={iconName} style={styles.icon} />
+// 							},
+// 						})}
+// 						tabBarOptions={{
+// 							activeTintColor: '#EFEBDA',
+// 							inactiveTintColor: 'lightgrey',
+// 							style: {
+// 								backgroundColor: '#82A4B3'
+// 							}
+// 						}}>
+// 						<Tab.Screen name="Home" component={HomeScreen} />
+
+// 						<Tab.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} />
+// 						<Tab.Screen name="Build" component={BuilderScreen} />
+// 						<Tab.Screen name="Profile" component={ProfileScreen} />
+// 					</Tab.Navigator>
+// 				</>}
+// 			</NavigationContainer>
+// 		</>
+// 	)
+// }
 
 const styles = StyleSheet.create({
 	container: {
