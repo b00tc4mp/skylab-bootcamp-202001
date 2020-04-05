@@ -10,21 +10,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingBottom: 10
     },
-    pickerContainer: {
-        flex: 0.2,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 5,
-        alignItems: 'center'
-    },
-    picker: {
-        height: 40,
-        color: '#EFEBDA',
-        width: '60%',
-        backgroundColor: '#82A4B3',
-        borderColor: '#EFEBDA',
-        borderWidth: 2
-    },
+
     modalHeader: {
         flex: 0.1,
         paddingHorizontal: 10,
@@ -45,12 +31,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'montserrat-semi',
     },
-    inputsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 25,
-        flex: 1,
-    },
+
 
     itemContainer: {
         flex: 1,
@@ -87,6 +68,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         marginTop: 10
     },
+
     button: {
         color: '#82A4B3',
         fontFamily: 'montserrat-semi'

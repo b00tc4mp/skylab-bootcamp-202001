@@ -12,6 +12,9 @@ import ParkBuilder from './ParkBuilder'
 import Profile from './Profile'
 import ParkDetails from './ParkDetails'
 import Feedback from './Feedback'
+import Feature from './Feature'
+import FeatureInput from './FeatureInput'
+
 export {
     Login,
     Register,
@@ -27,4 +30,6 @@ export {
     Profile,
     ParkDetails,
     Feedback,
+    Feature,
+    FeatureInput
 }

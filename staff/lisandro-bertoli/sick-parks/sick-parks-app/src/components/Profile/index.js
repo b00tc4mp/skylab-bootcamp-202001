@@ -115,8 +115,6 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
                             <Text style={styles.data}>{user.email}</Text>
                         </View>
                         <View style={styles.bottom}>
-
-
                             <MyButton
                                 onPress={handleGoToSettings}
                                 style={styles.actionButton}
@@ -128,12 +126,7 @@ export default function Profile({ onLogout, user, onToLogin, userParks }) {
                                 style={styles.actionButton}
                                 text='My Parks'
                                 textStyle={styles.buttonText} />
-
-
                         </View>
-
-
-
                     </ScrollView>
                 </View>
             )
