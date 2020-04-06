@@ -7,7 +7,7 @@ import { Results } from '../presentational'
 export default function ResultsContainer({ navigation, route }) {
     const [error, setError] = useState(route.error)
 
-    const handleGoToDetails = (id) => {
+    const handleGoToDetails = async (id) => {
         try {
             const park = await retrievePark(id)
 

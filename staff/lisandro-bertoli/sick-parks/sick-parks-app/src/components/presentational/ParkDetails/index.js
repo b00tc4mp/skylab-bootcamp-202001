@@ -10,8 +10,8 @@ import Feedback from '../Feedback'
 import styles from './styles'
 
 function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
-    const [comments, setComments] = useState(park.comments)
-    const [votes, setVotes] = useState(park.rating)
+    const [comments, setComments] = useState()
+    const [votes, setVotes] = useState()
     const [showComments, setShowComments] = useState(false)
     const [createComment, setCreateComment] = useState(false)
     const [featureInput, setFeatureInput] = useState(false)
@@ -64,7 +64,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
             <View key={0} style={styles.container}>
                 {park.image ? (<Image style={styles.image} source={{ uri: park.image }} />)
                     :
-                    (<Image style={styles.image} source={require('../../../assets/default-details.jpg')} />)}
+                    (<Image style={styles.image} source={require('../../../../assets/default-details.jpg')} />)}
                 <View style={styles.infoContainer}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>

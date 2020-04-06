@@ -18,12 +18,11 @@ const options = {
 export default () => (
     <BuilderStack.Navigator screenOptions={options} initialRouteName='StepOne' >
 
-        <BuilderStack.Screen name="Park info" component={StepOneContainer} />
-        <BuilderStack.Screen name="Featues info" component={StepTwoContainer} />
-        <BuilderStack.Screen name="Summary" component={StepThreeContainer} />
+        <BuilderStack.Screen name="StepOne" component={StepOneContainer} />
+        <BuilderStack.Screen name="StepTwo" component={StepTwoContainer} />
+        <BuilderStack.Screen name="StepThree" component={StepThreeContainer} />
 
 
     </BuilderStack.Navigator >
 )
 
-)

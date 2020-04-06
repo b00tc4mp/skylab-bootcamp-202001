@@ -16,7 +16,7 @@ export default function Register({ onSubmit, error, onToLogin }) {
 
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <KeyboardAwareScrollView contentContainerStyle={styles.container} >
-                < Image source={require('../../../assets/logo.png')} style={styles.logo}></Image>
+                < Image source={require('../../../../assets/logo.png')} style={styles.logo}></Image>
                 <TextInput style={styles.input} placeholder='Your name here' onChangeText={(text) => setName(text)} value={name} />
                 <TextInput style={styles.input} placeholder='Your surname here' onChangeText={(text) => setSurname(text)} value={surname} />
                 <TextInput textContentType='emailAddress' keyboardType='email-address' style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} value={email} />

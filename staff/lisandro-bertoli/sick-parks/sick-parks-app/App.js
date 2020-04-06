@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { StyleSheet, StatusBar, SafeAreaView, AsyncStorage, Dimensions, Alert } from 'react-native'
+import { StyleSheet, StatusBar, AsyncStorage, Dimensions, Alert } from 'react-native'
 
 import * as Font from 'expo-font'
 import * as Permissions from 'expo-permissions'
 import { AppLoading } from 'expo'
-import AppNavigation from './src/AppNavigation'
+import AppNavigation from './src/app-navigation'
 import config from './config'
 import logic, {
-	registerUser,
 	retrieveUser,
-	loginUser,
 	logoutUser,
 	isUserLoggedIn,
 	createPark,
@@ -18,11 +16,7 @@ import logic, {
 } from 'sick-parks-logic'
 
 import {
-	Login,
-	Register,
-	Landing,
 	Home,
-	MapViewContainer,
 	Profile,
 	ParkBuilder
 } from './src/components/presentational'
@@ -142,19 +136,19 @@ export default function App() {
 	// 	}
 	// }
 
-	const handleCreatePark = async (data, navigation) => {
-		try {
-			await createPark(data)
+	// const handleCreatePark = async (data, navigation) => {
+	// 	try {
+	// 		await createPark(data)
 
-			await __handleUserUpdate__()
+	// 		await __handleUserUpdate__()
 
-			Alert.alert('Park created!')
+	// 		Alert.alert('Park created!')
 
-		} catch ({ message }) {
-			console.log(message)
-			__handleErrors__(message)
-		}
-	}
+	// 	} catch ({ message }) {
+	// 		console.log(message)
+	// 		__handleErrors__(message)
+	// 	}
+	// }
 
 	// function LandingScreen({ navigation }) {
 

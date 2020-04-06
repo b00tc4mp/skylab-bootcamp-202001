@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { ScrollView, KeyboardAvoidingView, TextInput, Picker, View, Text } from 'react-native'
+import { ScrollView, KeyboardAvoidingView, View } from 'react-native'
 import Button from '../../Button'
 import FeatureInput from '../../FeatureInput'
 import Feature from '../../Feature'
 import styles from './styles'
 
 
-export default function StepOne({ onToStepThree, error }) {
+export default function StepOne({ onToStepThree }) {
     const [features, setFeatures] = useState([])
 
     const handleNextStep = () => onToStepThree(features)

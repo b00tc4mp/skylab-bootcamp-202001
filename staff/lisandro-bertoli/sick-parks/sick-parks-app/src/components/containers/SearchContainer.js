@@ -8,7 +8,7 @@ export default function SearchContainer({ navigation }) {
     const [error, setError] = useState(null)
     //Location needs to be handleled in context toghether with user and errors.
 
-    const handleOnSubmit = (query) => {
+    const handleOnSubmit = async (query) => {
         try {
             setCurrentQuery(query)
             const results = await searchParks(query, [location.longitude, location.latitude])

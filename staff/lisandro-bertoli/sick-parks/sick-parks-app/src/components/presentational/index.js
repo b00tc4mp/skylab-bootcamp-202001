@@ -14,6 +14,9 @@ import ParkDetails from './ParkDetails'
 import Feedback from './Feedback'
 import Feature from './Feature'
 import FeatureInput from './FeatureInput'
+import StepOne from './ParkBuilder/StepOne'
+import StepTwo from './ParkBuilder/StepTwo'
+import StepThree from './ParkBuilder/StepThree'
 
 export {
     Login,
@@ -31,5 +34,8 @@ export {
     ParkDetails,
     Feedback,
     Feature,
-    FeatureInput
+    FeatureInput,
+    StepOne,
+    StepTwo,
+    StepThree
 }

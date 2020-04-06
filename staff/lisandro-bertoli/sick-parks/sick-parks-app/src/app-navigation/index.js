@@ -2,11 +2,13 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthNavigation from '../components/stacks/AuthStack'
+import LoggedNavigation from './logged-navigation'
 
+let user = true
 
 export default () => (
     <NavigationContainer>
-        {!auth.loggedIn ? (
+        {!user ? (
 
             <AuthNavigation />
             //<NotLoggedNavigation/>

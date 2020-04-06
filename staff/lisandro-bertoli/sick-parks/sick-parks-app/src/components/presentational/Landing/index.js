@@ -9,7 +9,7 @@ export default function Landing({ onToHome, onToRegister, onToLogin }) {
 
     return (
         <View style={styles.container}>
-            < Image source={require('../../../assets/logo.png')} style={styles.logo}></Image>
+            < Image source={require('../../../../assets/logo.png')} style={styles.logo}></Image>
 
             <Button text='Sign in now' style={styles.buttonContainer} textStyle={styles.button} onPress={onToLogin} />
             <Button text='Sign up with an e-email' style={styles.buttonContainer} textStyle={styles.button} onPress={onToRegister} />
