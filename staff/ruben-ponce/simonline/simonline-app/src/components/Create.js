@@ -5,7 +5,6 @@ import Feedback from './Feedback'
 
 export default ({ handleCreateGame, goTo }) => {
     const [error, setError] = useState(undefined)
-
     let owner
 
     useEffect(() => {

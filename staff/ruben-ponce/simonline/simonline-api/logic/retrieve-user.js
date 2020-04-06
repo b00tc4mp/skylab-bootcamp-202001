@@ -1,6 +1,6 @@
 const { validate } = require('simonline-utils')
 const { models: { User } } = require('simonline-data')
-const { NotFoundError, NotAllowedError } = require('simonline-errors')
+const { NotFoundError } = require('simonline-errors')
 
 /**
  * Retrieve username from database with id

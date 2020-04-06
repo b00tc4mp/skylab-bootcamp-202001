@@ -5,9 +5,8 @@ import { register, login, isLoggedIn, createGame, retrieveUserId, join, logout }
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
-  const [gameId, setGameId] = useState()
-  // const [userId, setUserId] = useState()
   const [error, setError] = useState(undefined)
+  const [gameId, setGameId] = useState()
 
   async function handleRegister(username, password) {
     try {
@@ -41,7 +40,6 @@ export default withRouter(function ({ history }) {
   async function handleJoin(gameId) {
     try {
         const _userId = await retrieveUserId(sessionStorage.token)
-        // setUserId(_userId)
         await join(_userId, gameId)
         setGameId(gameId)
         history.push('/waiting')

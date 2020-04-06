@@ -4,7 +4,7 @@ import { isLoggedIn, retrieveUser } from '../logic'
 import Feedback from './Feedback'
 
 export default ({ goTo }) => {
-    let [error, setError] = useState(undefined);
+    const [error, setError] = useState(undefined);
     const [username, setUsername] = useState()
 
     useEffect(() => {
