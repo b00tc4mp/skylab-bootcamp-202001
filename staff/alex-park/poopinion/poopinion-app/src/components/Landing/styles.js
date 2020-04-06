@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 50
     },
     topToilets: {
         flex: 1,

@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 0.1,
         height: Dimensions.get('window').height,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
     },
     bottom: {
         flex: 1,

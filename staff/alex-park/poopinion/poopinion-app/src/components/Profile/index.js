@@ -6,8 +6,8 @@ import moment from 'moment'
 function Profile({ user, onDetails, onToUpdateUser }) {
     const [lastPosts, setLastPosts] = useState(user.publishedToilets.slice(0, 5))
     const [lastComments, setLastComments] = useState(user.comments.slice(0, 5))
-    const [toiletLoading, setToiletLoading] = useState(false)
-    const [commentLoading, setCommentLoading] = useState(false)
+    const [toiletLoading, setToiletLoading] = useState(undefined)
+    const [commentLoading, setCommentLoading] = useState(undefined)
 
     useEffect(() => {
         setLastPosts(user.publishedToilets.slice(0, 5))
@@ -42,7 +42,7 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                 {user.publishedToilets.length > 0 &&
                     lastPosts.map((toilet, index) => (<>
                         <TouchableOpacity key={index} onPress={() => {
-                            setToiletLoading(true)
+                            setToiletLoading(toilet.id)
                             onDetails(toilet.id.toString())
                         }} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
@@ -57,12 +57,12 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                                 </View>
                             </View>
                         </TouchableOpacity>
+                        {toiletLoading === toilet.id && (<>
+                            <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                        </>)}
                     </>))
                 }
-                {toiletLoading && (<>
-                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                </>)}
                 {!user.publishedToilets.length && (<>
                     <Text>No toilets to display...</Text>
                 </>)}
@@ -71,11 +71,11 @@ function Profile({ user, onDetails, onToUpdateUser }) {
             <View style={styles.comments}>
                 <Text style={styles.bigText}>{user.comments.length} Comment(s). Last five comments: </Text>
                 {user.comments.length > 0 &&
-                    lastComments.map((comment, index) => (
+                    lastComments.map((comment, index) => (<>
                         <TouchableOpacity key={index} onPress={() => {
-                            setCommentLoading(true)
+                            setCommentLoading(comment.id)
                             onDetails(comment.commentedAt.toString())
-                            }} style={styles.postsContainer}>
+                        }} style={styles.postsContainer}>
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeftComment}>
                                     <Text>"{comment.rating.textArea.length > 0 ? (<Text style={styles.commentText}>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
@@ -104,13 +104,13 @@ function Profile({ user, onDetails, onToUpdateUser }) {
 
                             </View>
                         </TouchableOpacity>
+                        {commentLoading === comment.id && (<>
+                            <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                            <ActivityIndicator size="large" color="#0000ff" />
+                        </>)}
 
-                    ))
+                    </>))
                 }
-                {commentLoading && (<>
-                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                </>)}
                 {!user.comments.length && (<>
                     <Text>No comments to display...</Text>
                 </>)}

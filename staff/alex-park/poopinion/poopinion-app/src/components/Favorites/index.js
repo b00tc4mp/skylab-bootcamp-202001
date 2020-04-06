@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './styles'
 import moment from 'moment'
-import { Text, ScrollView, View, TouchableOpacity, Image, TouchableHighlight } from 'react-native'
+import { Text, ScrollView, View, TouchableOpacity, Image, TouchableHighlight, ActivityIndicator } from 'react-native'
 
 function Favorites({ user, favToilets, onFav, onDetails }) {
+    const [loading, setLoading] = useState(undefined)
+
     return (<>
         <ScrollView style={styles.container}>
             <View style={styles.headerContainer}>
@@ -17,7 +19,10 @@ function Favorites({ user, favToilets, onFav, onDetails }) {
                     <View style={styles.resultsContainer}>
                         {favToilets.map((toilet, index) => (<>
                             <View style={styles.toiletContainer} key={index}>
-                                <TouchableHighlight activeOpacity={0.5} key={index} onPress={() => onDetails(toilet.id.toString())}>
+                                <TouchableHighlight activeOpacity={0.5} key={index} onPress={() => {
+                                    setLoading(toilet.id)
+                                    onDetails(toilet.id.toString())
+                                    }}>
                                     {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
                                         :
                                         (<Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />)}
@@ -33,6 +38,10 @@ function Favorites({ user, favToilets, onFav, onDetails }) {
                                         }
                                     </TouchableOpacity>
                                 </View>
+                                {loading === toilet.id && (<>
+                                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                                    <ActivityIndicator size="large" color="#0000ff" />
+                                </>)}
                             </View>
                         </>))}
                     </View>

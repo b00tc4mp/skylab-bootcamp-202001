@@ -6,7 +6,7 @@ import moment from 'moment'
 
 function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     const [topTen, setTopTen] = useState(topToilets.slice(0, 10))
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(undefined)
 
     useEffect(() => {
         setTopTen(topToilets.slice(0, 10))
@@ -41,7 +41,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                         <View style={styles.post} key={index}>
                             {toilet.image ? (<>
                                 <TouchableHighlight  activeOpacity={0.5} onPress={() => {
-                                    setLoading(true)
+                                    setLoading(toilet.id)
                                     onDetails(toilet.id)
                                 }}>
                                     <Image style={styles.image} source={{ uri: toilet.image }} />
@@ -50,7 +50,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                                 :
                                 (<>
                                     <TouchableHighlight  activeOpacity={0.5} onPress={() => {
-                                        setLoading(true)
+                                        setLoading(toilet.id)
                                         onDetails(toilet.id)
                                     }}>
                                         <Image style={styles.image} source={require('../../../assets/placeholder.jpg')} />
@@ -139,7 +139,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                             </View>
                         </View>
                     </View>
-                    {loading && (<>
+                    {loading === toilet.id && (<>
                         <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
                         <ActivityIndicator size="large" color="#0000ff" />
                     </>)}

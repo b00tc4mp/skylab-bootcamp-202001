@@ -153,12 +153,10 @@ export default class NewToilet extends React.Component {
                 </View>
 
                 <View style={styles.questionContainer}>
-                    <KeyboardAvoidingView behavior='position'>
                     <Text style={styles.question}>(Optional) Add a comment here:</Text>
                     <View style={styles.sliderContainer}>
                         <TextInput multiline={true} onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)} style={styles.input} placeholder='Start writing here' onChangeText={(text) => this.setState({ textArea: text })} />
                     </View>
-                    </KeyboardAvoidingView>
                 </View>
 
                 {this.state.loading && (<>

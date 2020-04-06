@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Alert, ImageBackground, ScrollView, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Alert, ImageBackground, ScrollView, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import {
   Register,
   Login,
@@ -432,27 +432,27 @@ export default function App() {
 
   // THE RENDER ITSELF
   return (<View style={styles.container}>
-    <ImageBackground style={styles.image} source={require('./assets/background.png')}>
+      <ImageBackground style={styles.image} source={require('./assets/background.png')}>
 
-      {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
+        {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
 
-      <ScrollView style={styles.content}>
-        {view === 'login' && <Login onSubmit={handleLogin} error={error} goToFAQs={handleGoToFAQs} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
-        {view === 'readme' && <Readme goBack={handleGoToLogin}/>}
-        {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
-        {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav} />}
-        {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
-        {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} onToUpdateUser={handleGoToUpdateUser} />}
-        {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
-        {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
-        {view === 'details' && detailedToilet && <ToiletDetails user={user} onDeleteToilet={handleDeleteToilet} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
-        {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
-        {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
-      </ScrollView>
+        <View style={styles.content}>
+          {view === 'login' && <Login onSubmit={handleLogin} error={error} goToFAQs={handleGoToFAQs} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
+          {view === 'readme' && <Readme goBack={handleGoToLogin} />}
+          {view === 'register' && <Register onSubmit={handleRegister} error={error} goToLogin={handleGoToLogin} goToLanding={handleGoToLanding} />}
+          {view === 'landing' && <Landing user={user} coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} onFav={handleToggleFav} />}
+          {view === 'queryResults' && <QueryResults query={query} toilets={toilets} user={user} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
+          {view === 'profilePage' && <Profile user={user} onDetails={handleRetrieveToilet} onToUpdateUser={handleGoToUpdateUser} />}
+          {view === 'favToilets' && <Favorites user={user} favToilets={favToilets} onFav={handleToggleFav} onDetails={handleRetrieveToilet} />}
+          {view === 'newToilet' && <NewToilet coordinates={coordinates} onSubmit={handlePublishToilet} />}
+          {view === 'details' && detailedToilet && <ToiletDetails user={user} onDeleteToilet={handleDeleteToilet} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
+          {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
+          {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
+        </View>
 
-      {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
+        {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
 
-    </ImageBackground>
+      </ImageBackground>
   </View>);
 }
 
@@ -469,6 +469,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   navbar: {
-    flex: 1
+    flex: 1,
+    position: 'absolute'
   }
 });

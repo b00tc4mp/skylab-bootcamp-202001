@@ -22,7 +22,6 @@ function UpdateUser({ onSubmit, error, goToLanding, user }) {
 
     return (<>
         <ScrollView>
-            <KeyboardAvoidingView behavior='position'>
                 <View style={styles.container}>
                     <View style={styles.formContainer}>
                         <Text>Hi {user.name}! You can update your profile here. Feel free to change your info but please stay away from putting anything offensive. Thank you! 💩</Text>
@@ -74,7 +73,6 @@ function UpdateUser({ onSubmit, error, goToLanding, user }) {
                     </TouchableOpacity>
 
                 </View>
-            </KeyboardAvoidingView>
         </ScrollView>
     </>)
 }

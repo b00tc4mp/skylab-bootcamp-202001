@@ -110,12 +110,10 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 </View>
 
                 <View style={styles.questionContainer}>
-                    <KeyboardAvoidingView behavior='position'>
                         <Text style={styles.question}>(Optional) Add a comment here:</Text>
                         <View style={styles.sliderContainer}>
                             <TextInput multiline={true} onContentSizeChange={(e) => updateSize(e.nativeEvent.contentSize.height)} style={styles.input} placeholder='Start writing here' onChangeText={(text) => setTextArea(text)} />
                         </View>
-                    </KeyboardAvoidingView>
                 </View>
             </View>
 
