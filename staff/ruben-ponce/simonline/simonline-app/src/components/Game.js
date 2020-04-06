@@ -22,13 +22,17 @@ export default ({ goTo, gameId }) => {
   const [combinationLaunched, setCombinationLaunched] = useState()
   const [color, setColor] = useState("")
   const [combinationPlayer, setCombinationPlayer] = useState([])
+  const [num, setNum] = useState(3)
   let playersName = {}
   
+  useEffect(() => {
+    if (!num) return
+    setTimeout(() => setNum(num -1), 1000)
+  },[num])
 
   useEffect(() => {
     (async () => {
       playersName = await retrievePlayersBasicData(gameId) 
-
       const interval = setInterval(() => {
         if (isLoggedIn() && gameId) {
           (async () => {
@@ -105,7 +109,7 @@ export default ({ goTo, gameId }) => {
   }
 
   useEffect(() => {
-    if (status && !combinationLaunched && status.status === 'started') {
+    if (status && !combinationLaunched && status.status === 'started' && !num) {
       (async() => {
         setCombinationLaunched(true)
         await showCombination(status.pushCombination)
@@ -192,7 +196,7 @@ export default ({ goTo, gameId }) => {
                 }
             }}
           ></div>
-          <div className="container__gray"></div>
+          {num ? <div className="container__gray">{num}</div> : <div className="container__gray"></div>}
         </div>
       </div>
       <div className="footer">
@@ -200,7 +204,7 @@ export default ({ goTo, gameId }) => {
         {currentPlayerName && (
           <p className="footer__text">Turn of: {currentPlayerName}</p>
         )}
-        {countdown && (
+        {countdown && !num &&(
           <p className="footer__text">Remaining time: {countdown}sec.</p>
         )}
         {lastPlayerOut && (
