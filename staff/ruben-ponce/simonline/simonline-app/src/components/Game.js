@@ -10,19 +10,19 @@ import {
 import Feedback from "./Feedback"
 
 export default ({ goTo, gameId }) => {
-  let [error, setError] = useState(undefined)
+  const [error, setError] = useState(undefined)
   const [userId, setUserId] = useState()
-  let [currentPlayerName, setCurrentPlayerName] = useState()
-  let [currentPlayerId, setCurrentPlayerId] = useState()
-  let [lastPlayerOut, setLastPlayerOut] = useState()
-  let [playersRemain, setPlayersRemain] = useState()
+  const [currentPlayerName, setCurrentPlayerName] = useState()
+  const [currentPlayerId, setCurrentPlayerId] = useState()
+  const [lastPlayerOut, setLastPlayerOut] = useState()
+  const [playersRemain, setPlayersRemain] = useState()
   const [winner, setWinner] = useState()
-  let [countdown, setCountdown] = useState()
-  let [status, setStatus] = useState()
-  let [combinationLaunched, setCombinationLaunched] = useState()
-  let [color, setColor] = useState("")
-  let [combinationPlayer, setCombinationPlayer] = useState([])
-  let playersName
+  const [countdown, setCountdown] = useState()
+  const [status, setStatus] = useState()
+  const [combinationLaunched, setCombinationLaunched] = useState()
+  const [color, setColor] = useState("")
+  const [combinationPlayer, setCombinationPlayer] = useState([])
+  let playersName = {}
   
 
   useEffect(() => {
@@ -99,6 +99,11 @@ export default ({ goTo, gameId }) => {
     })
   }
 
+  function showClick(comb) {
+    setColor(comb)
+    setTimeout(() => setColor(''), 350)
+  }
+
   useEffect(() => {
     if (status && !combinationLaunched && status.status === 'started') {
       (async() => {
@@ -112,7 +117,7 @@ export default ({ goTo, gameId }) => {
   useEffect(() => {
     if (status && combinationPlayer.length) { 
       (async() => {
-        const {pushCombination} = status
+        const { pushCombination } = status
   
         if (pushCombination.length === combinationPlayer.length) {
           await playCombination(gameId, combinationPlayer)
@@ -140,6 +145,7 @@ export default ({ goTo, gameId }) => {
             onClick={ e  => {
                 e.preventDefault()
                 if (userId === currentPlayerId) {
+                  showClick('r')
                   send(0)
                 }
             }}
@@ -153,6 +159,7 @@ export default ({ goTo, gameId }) => {
             onClick={ e => {
                 e.preventDefault()
                 if (userId === currentPlayerId) {
+                  showClick('g')
                   send(1)
                 }
             }}
@@ -166,6 +173,7 @@ export default ({ goTo, gameId }) => {
             onClick={ e => {
                 e.preventDefault()
                 if (userId === currentPlayerId) {
+                  showClick('b')
                   send(2)
                 }            
               }}
@@ -179,6 +187,7 @@ export default ({ goTo, gameId }) => {
             onClick={ e => {
                 e.preventDefault()
                 if (userId === currentPlayerId) {
+                  showClick('y')
                   send(3)
                 }
             }}
