@@ -1,5 +1,5 @@
 import React from 'react'
-import { SearchContainer, ResultsContainer, ParkDetailsContainer } from '../containers'
+import { SearchContainer, ResultsContainer, ParkDetailsContainer } from '../../components/containers'
 import { createStackNavigator } from "@react-navigation/stack"
 
 const HomeStack = createStackNavigator()

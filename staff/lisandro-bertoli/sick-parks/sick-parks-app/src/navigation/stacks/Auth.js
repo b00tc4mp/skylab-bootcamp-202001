@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack"
-import { LoginContainer, RegisterContainer, LandingContainer } from '../containers'
+import { LoginContainer, RegisterContainer, LandingContainer } from '../../components/containers'
 
 const options = {
     headerBackTitleVisible: false,

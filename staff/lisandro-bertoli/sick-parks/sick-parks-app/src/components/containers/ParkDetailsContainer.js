@@ -14,7 +14,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
         from async storage and retrieve id from there, but that 
         would expose that the token is in the async storage to
         react layer and should only be hadeled by logic,
-        Maybe logic from retrieving user id from context??
+        Maybe logic from retrieving user id from context?? //ask manu
     
     */
 

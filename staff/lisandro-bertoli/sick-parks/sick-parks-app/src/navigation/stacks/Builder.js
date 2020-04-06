@@ -1,5 +1,5 @@
 import React from 'react'
-import { StepOneContainer, StepTwoContainer, StepThreeContainer } from '../containers'
+import { StepOneContainer, StepTwoContainer, StepThreeContainer } from '../../components/containers'
 import { createStackNavigator } from "@react-navigation/stack"
 
 const BuilderStack = createStackNavigator()
@@ -21,7 +21,6 @@ export default () => (
         <BuilderStack.Screen name="StepOne" component={StepOneContainer} />
         <BuilderStack.Screen name="StepTwo" component={StepTwoContainer} />
         <BuilderStack.Screen name="StepThree" component={StepThreeContainer} />
-
 
     </BuilderStack.Navigator >
 )

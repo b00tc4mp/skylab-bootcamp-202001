@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { __handleUserUpdate__ } from '../../handlers'
+import { __handleUserUpdate__, __handleErrors__ } from '../../handlers'
 import { searchParks } from 'sick-parks-logic'
 import { Search } from '../presentational'
 
@@ -18,9 +18,7 @@ export default function SearchContainer({ navigation }) {
 
             navigation.navigate('Results', { results, error }) // NEED TO PASS THE QUERY
         } catch ({ message }) {
-            __handleErrors__(message, setError)
-
-            navigation.navigate('Results')
+            navigation.navigate('Results', { error: message })
 
         }
     }
