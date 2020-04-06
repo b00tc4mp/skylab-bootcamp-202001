@@ -8,7 +8,6 @@ function NavigationBarTop({ goToLogin, onSubmit }) {
     return (<>
         <View style={styles.container}>
             <View style={styles.top}>
-
                 <TouchableOpacity style={styles.logoutContainer} onPress={goToLogin}>
                     <Image source={require('../../../assets/logout.png')} style={styles.logout} />
                 </TouchableOpacity>

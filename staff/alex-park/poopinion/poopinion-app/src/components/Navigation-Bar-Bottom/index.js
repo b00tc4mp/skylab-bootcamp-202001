@@ -6,8 +6,6 @@ function NavigationBarBottom({ goToLanding, goToFavorites, goToProfile, goToNewT
     return (<>
         <View style={styles.container}>
             <View style={styles.bottom}>
-                {/* <Text style={styles.home} onPress={goToLanding}>💩 Home 💩</Text> */}
-                
                 <TouchableOpacity style={styles.homeContainer} onPress={goToLanding}>
                     <Image source={require('../../../assets/home.png')} style={styles.home}  />
                 </TouchableOpacity>
