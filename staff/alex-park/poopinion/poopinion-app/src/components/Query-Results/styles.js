@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row'
     },  
+    rating: {
+        alignSelf: 'center'
+    },
     header: {
         flex: 1,
         flexDirection: 'row',

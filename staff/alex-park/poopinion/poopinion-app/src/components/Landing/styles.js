@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
         width: '95%',
         textAlign: 'center'
     },
+    rating: {
+        alignSelf: 'center'
+    },
     bold: {
         fontSize: 25,
         fontWeight: 'bold'

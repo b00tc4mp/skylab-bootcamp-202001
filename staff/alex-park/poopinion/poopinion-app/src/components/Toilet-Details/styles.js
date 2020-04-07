@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 50,
         alignContent: 'center',
+        justifyContent: 'center'
     },
     scoreLeftDown: {
         flex: 1
