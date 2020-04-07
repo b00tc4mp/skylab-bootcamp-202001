@@ -154,7 +154,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                             <Text style={styles.commentCreated}>Posted {moment(comment.created).fromNow()}</Text>
                                         </View>
                                         <View style={styles.commentTopRight}>
-                                            <Text style={styles.commentTopRightText}>Rating: <Text style={{ color: '#df7861' }}>{comment.rating.overallRating}</Text><Text style={{ color: 'brown' }}>/5</Text></Text>
+                                            <Text style={styles.commentTopRightText}>Rating: <Text style={{ fontStyle: 'italic' }}>{parseFloat((comment.rating.overallRating * 0.5 + comment.rating.cleanness * 0.25 + comment.rating.looks * 0.25).toFixed(2))}</Text><Text style={{ fontStyle: 'italic' }}>/5</Text></Text>
 
                                         </View>
                                     </View>

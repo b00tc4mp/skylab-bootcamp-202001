@@ -6,18 +6,16 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     msg: {
-        fontSize: 25,
-        padding: 10,
-        color: 'white',
-        borderRadius: 10,
+        fontSize: 20,
+        padding: 5,
         textAlign: 'center',
         fontWeight: 'bold'
     },
     warning: {
-        backgroundColor: 'orange'
+        color: 'orange'
     },
     error: {
-        backgroundColor: 'red'
+        color: 'red'
     }
 })
 

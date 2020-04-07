@@ -18,7 +18,8 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
     }, [error])
 
     return (<>
-        <ScrollView>
+        <KeyboardAvoidingView behavior='height'>
+            <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.formContainer}>
                         <Text style={styles.header}>Register</Text>
@@ -74,7 +75,9 @@ function Register({ onSubmit, error, goToLogin, goToLanding }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-        </ScrollView>
+
+            </ScrollView>
+        </KeyboardAvoidingView>
     </>)
 }
 

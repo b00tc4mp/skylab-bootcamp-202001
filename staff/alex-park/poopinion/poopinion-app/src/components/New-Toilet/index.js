@@ -28,146 +28,147 @@ export default class NewToilet extends React.Component {
         let { image, wheelchair } = this.state
 
         return (<>
-            <ScrollView style={styles.container}>
+            <KeyboardAvoidingView behavior='height'>
+                <ScrollView style={styles.container}>
+                    <Text style={styles.header}>New Toilet Post</Text>
 
-                <Text style={styles.header}>New Toilet Post</Text>
-
-                <View style={styles.locationContainer}>
-                    <Text style={styles.locationHeader}>Location:</Text>
-                    {this.props.coordinates.latitude && this.props.coordinates.longitude &&
-                        <MapView style={styles.mapStyle}
-                            region={{
-                                latitude: this.props.coordinates.latitude,
-                                longitude: this.props.coordinates.longitude,
-                                latitudeDelta: this.props.coordinates.latitudeDelta,
-                                longitudeDelta: this.props.coordinates.longitudeDelta,
-                            }}>
-                            <MapView.Marker coordinate={{
-                                latitude: this.props.coordinates.latitude,
-                                longitude: this.props.coordinates.longitude
-                            }} />
-                        </MapView>}
-                </View>
-
-                <View style={styles.uploadInfo}>
-                    <View style={styles.place}>
-                        <Text style={styles.placeName}>Place: </Text>
-                        <TextInput style={styles.placeInput} placeholder='insert the place here' onChangeText={(text) => this.setState({ place: text.trim() })} />
-                    </View>
-                    <View style={styles.options}>
-                        <Button title='Upload image' onPress={this._pickImage} />
+                    <View style={styles.locationContainer}>
+                        <Text style={styles.locationHeader}>Location:</Text>
+                        {this.props.coordinates.latitude && this.props.coordinates.longitude &&
+                            <MapView style={styles.mapStyle}
+                                region={{
+                                    latitude: this.props.coordinates.latitude,
+                                    longitude: this.props.coordinates.longitude,
+                                    latitudeDelta: this.props.coordinates.latitudeDelta,
+                                    longitudeDelta: this.props.coordinates.longitudeDelta,
+                                }}>
+                                <MapView.Marker coordinate={{
+                                    latitude: this.props.coordinates.latitude,
+                                    longitude: this.props.coordinates.longitude
+                                }} />
+                            </MapView>}
                     </View>
 
-                    {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200, marginBottom: 20 }} />}
+                    <View style={styles.uploadInfo}>
+                        <View style={styles.place}>
+                            <Text style={styles.placeName}>Place: </Text>
+                            <TextInput style={styles.placeInput} placeholder='insert the place here' onChangeText={(text) => this.setState({ place: text.trim() })} />
+                        </View>
+                        <View style={styles.options}>
+                            <Button title='Upload image' onPress={this._pickImage} />
+                        </View>
 
-                    <View style={styles.disabledInfo}>
-                        {wheelchair ? (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogo} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)
-                            :
-                            (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogoOpacity} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)}
-                        <Text style={styles.disabledTextContent}>Disabled toilet availability</Text>
+                        {image && <Image source={{ uri: image }} style={{ width: '100%', height: 200, marginBottom: 20 }} />}
+
+                        <View style={styles.disabledInfo}>
+                            {wheelchair ? (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogo} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)
+                                :
+                                (<TouchableOpacity onPress={() => this.setState({ wheelchair: !wheelchair })}><Image style={styles.disabledLogoOpacity} source={require('../../../assets/wheelchair.png')} /></TouchableOpacity>)}
+                            <Text style={styles.disabledTextContent}>Disabled toilet availability</Text>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>How clean did you find it?: <Text style={styles.value}>{this.state.cleanness}</Text></Text>
-                    <View style={styles.sliderContainer}>
-                        <Text>0</Text>
-                        <Slider
-                            style={styles.slider}
-                            minimumValue={0}
-                            maximumValue={5}
-                            onValueChange={(value) => this.setState({ cleanness: parseInt(value) })}
-                        />
-                        <Text>5</Text>
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>How clean did you find it?: <Text style={styles.value}>{this.state.cleanness}</Text></Text>
+                        <View style={styles.sliderContainer}>
+                            <Text>0</Text>
+                            <Slider
+                                style={styles.slider}
+                                minimumValue={0}
+                                maximumValue={5}
+                                onValueChange={(value) => this.setState({ cleanness: parseInt(value) })}
+                            />
+                            <Text>5</Text>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>How good does it look?: <Text style={styles.value}>{this.state.looks}</Text></Text>
-                    <View style={styles.sliderContainer}>
-                        <Text>0</Text>
-                        <Slider
-                            style={styles.slider}
-                            minimumValue={0}
-                            maximumValue={5}
-                            onValueChange={(value) => this.setState({ looks: parseInt(value) })}
-                        />
-                        <Text>5</Text>
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>How good does it look?: <Text style={styles.value}>{this.state.looks}</Text></Text>
+                        <View style={styles.sliderContainer}>
+                            <Text>0</Text>
+                            <Slider
+                                style={styles.slider}
+                                minimumValue={0}
+                                maximumValue={5}
+                                onValueChange={(value) => this.setState({ looks: parseInt(value) })}
+                            />
+                            <Text>5</Text>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>Do you have to pay in order to use the toilet?:</Text>
-                    <View style={styles.picker}>
-                        <Picker
-                            selectedValue={this.state.paymentRequired}
-                            onValueChange={(itemValue) =>
-                                this.setState({ paymentRequired: itemValue })
-                            }>
-                            <Picker.Item style={styles.form} label="Yes" value={1} />
-                            <Picker.Item style={styles.form} label="No" value={0} />
-                        </Picker>
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>Do you have to pay in order to use the toilet?:</Text>
+                        <View style={styles.picker}>
+                            <Picker
+                                selectedValue={this.state.paymentRequired}
+                                onValueChange={(itemValue) =>
+                                    this.setState({ paymentRequired: itemValue })
+                                }>
+                                <Picker.Item style={styles.form} label="Yes" value={1} />
+                                <Picker.Item style={styles.form} label="No" value={0} />
+                            </Picker>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>Does it have multiple toilets?:</Text>
-                    <View style={styles.picker}>
-                        <Picker
-                            selectedValue={this.state.multipleToilets}
-                            onValueChange={(itemValue) =>
-                                this.setState({ multipleToilets: itemValue })
-                            }>
-                            <Picker.Item style={styles.form} label="Yes" value={1} />
-                            <Picker.Item style={styles.form} label="No" value={0} />
-                        </Picker>
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>Does it have multiple toilets?:</Text>
+                        <View style={styles.picker}>
+                            <Picker
+                                selectedValue={this.state.multipleToilets}
+                                onValueChange={(itemValue) =>
+                                    this.setState({ multipleToilets: itemValue })
+                                }>
+                                <Picker.Item style={styles.form} label="Yes" value={1} />
+                                <Picker.Item style={styles.form} label="No" value={0} />
+                            </Picker>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>Is the toilet paper provision good?:</Text>
-                    <View style={styles.picker}>
-                        <Picker
-                            selectedValue={this.state.paperDeployment}
-                            onValueChange={(itemValue) =>
-                                this.setState({ paperDeployment: itemValue })
-                            }>
-                            <Picker.Item style={styles.form} label="Yes" value={1} />
-                            <Picker.Item style={styles.form} label="No" value={0} />
-                        </Picker>
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>Is the toilet paper provision good?:</Text>
+                        <View style={styles.picker}>
+                            <Picker
+                                selectedValue={this.state.paperDeployment}
+                                onValueChange={(itemValue) =>
+                                    this.setState({ paperDeployment: itemValue })
+                                }>
+                                <Picker.Item style={styles.form} label="Yes" value={1} />
+                                <Picker.Item style={styles.form} label="No" value={0} />
+                            </Picker>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={[styles.question, styles.value]}>OVERALL RATING: <Text style={styles.value}>{this.state.overallRating}</Text></Text>
-                    <View style={styles.sliderContainer}>
-                        <Text>0</Text>
-                        <Slider
-                            style={styles.slider}
-                            minimumValue={0}
-                            maximumValue={5}
-                            onValueChange={(value) => this.setState({ overallRating: parseInt(value) })}
-                        />
-                        <Text>5</Text>
+                    <View style={styles.questionContainer}>
+                        <Text style={[styles.question, styles.value]}>OVERALL RATING: <Text style={styles.value}>{this.state.overallRating}</Text></Text>
+                        <View style={styles.sliderContainer}>
+                            <Text>0</Text>
+                            <Slider
+                                style={styles.slider}
+                                minimumValue={0}
+                                maximumValue={5}
+                                onValueChange={(value) => this.setState({ overallRating: parseInt(value) })}
+                            />
+                            <Text>5</Text>
+                        </View>
                     </View>
-                </View>
 
-                <View style={styles.questionContainer}>
-                    <Text style={styles.question}>(Optional) Add a comment here:</Text>
-                    <View style={styles.sliderContainer}>
-                        <TextInput multiline={true} onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)} style={styles.input} placeholder='Start writing here' onChangeText={(text) => this.setState({ textArea: text })} />
+                    <View style={styles.questionContainer}>
+                        <Text style={styles.question}>(Optional) Add a comment here:</Text>
+                        <View style={styles.sliderContainer}>
+                            <TextInput multiline={true} onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)} style={styles.input} placeholder='Start writing here' onChangeText={(text) => this.setState({ textArea: text })} />
+                        </View>
                     </View>
-                </View>
 
-                {this.state.loading && (<>
-                    <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                </>)}
+                    {this.state.loading && (<>
+                        <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    </>)}
 
-                <TouchableOpacity >
-                    <Text style={styles.submitButton} onPress={this._onSubmit}>💩 Submit! 💩</Text>
-                </TouchableOpacity>
-            </ScrollView>
+                    <TouchableOpacity >
+                        <Text style={styles.submitButton} onPress={this._onSubmit}>💩 Submit! 💩</Text>
+                    </TouchableOpacity>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </>)
     }
 
