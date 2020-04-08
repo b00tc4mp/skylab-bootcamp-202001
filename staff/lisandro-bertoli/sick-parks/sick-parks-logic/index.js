@@ -17,5 +17,7 @@ module.exports = {
     updateUser: require('./update-user'),
     votePark: require('./vote-park'),
     deletePark: require('./delete-park'),
-    updatePark: require('./update-park')
+    updatePark: require('./update-park'),
+    isAnonymousUser: require('./is-anonymous-user'),
+    setAnonymousUser: require('./set-anonymous-user')
 }

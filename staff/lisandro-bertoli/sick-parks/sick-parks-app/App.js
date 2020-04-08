@@ -5,70 +5,62 @@ import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 import AppNavigation from './src/navigation'
 import config from './config'
-import logic, { retrieveUser, isUserLoggedIn } from 'sick-parks-logic'
-
+import logic, { isAnonymousUser, isUserLoggedIn, logoutUser } from 'sick-parks-logic'
+import { __handleErrors__ } from './src/handlers'
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.API_URL
 
-const getFonts = () => Font.loadAsync({
-	'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
-	'montserrat-semi': require('./assets/fonts/Montserrat-SemiBold.ttf'),
-	'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
-})
-
 export default function App() {
 	const [error, setError] = useState(null)
-	const [isLogged, setIsLogged] = useState()
-	const [fontsLoaded, setFontsLoaded] = useState(false)
-
-	useEffect(() => {
-
-		(async () => {
-			try {
-				if (await isUserLoggedIn()) setIsLogged(true)
-				//const user = await retrieveUser() // maybe not necesary here.
-				// ask manu
-				//what the fuck to do here
-			} catch ({ message }) {
-				if (message === 'jwt expired') {
-					__handleErrors__('Session has expired')
-					await logic.__context__.storage.clear()
-				} else {
-
-					__handleErrors__(message)
-
-				}
-			}
-		})()
-	}, [])
+	const [isUser, setIsUser] = useState(false)
+	const [isAnonymous, setIsAnonymous] = useState()
+	const [isLoading, setIsLoading] = useState(true)
 
 
+	const getFonts = () => Font.loadAsync({
+		'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
+		'montserrat-semi': require('./assets/fonts/Montserrat-SemiBold.ttf'),
+		'montserrat-bold': require('./assets/fonts/Montserrat-Bold.ttf'),
+	})
 
-	{ !fontsLoaded && <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} /> }
+	const __isAllLoaded__ = async () => {
+		await getFonts()
 
-	{ fontsLoaded && <><StatusBar hidden={false} barStyle={'dark-content'} /><AppNavigation logged={isLogged} /></> }
+		if (await isUserLoggedIn())
+			setIsUser(true)
+		else if (await isAnonymousUser())
+			setIsAnonymous(true)
+	}
+
+
+	if (isLoading) return <AppLoading
+		startAsync={__isAllLoaded__}
+		onError={({ message }) => __handleErrors__(message, setError)}
+		onFinish={() => setIsLoading(false)}
+	/>
+
+
+
+	if (!isLoading) return (<>
+		<StatusBar hidden={false} barStyle={'dark-content'} />
+		<AppNavigation error={error} isUser={isUser} isAnonymous={isAnonymous} />
+	</>)
+
 
 }
 
 
-/* TODO SEE WHERE to ask for permissions */
+ // _getLocationPermissionsAsync = async () => {
+    // 	try {
+    // 		const { status } = await Permissions.askAsync(Permissions.LOCATION);
+    // 		if (status === 'granted') {
+    // 			return true
+    // 		}
+    // 		throw new Error('Location permission not granted');
 
-// _getNotificationsPermissionsAsync = async () => {
-// 	const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
-// 	if (status === 'granted') return true
-// }
+    // 	} catch ({ message }) {
+    // 		__handleErrors__(message)
+    // 		return false
+    // 	}
 
-// _getLocationPermissionsAsync = async () => {
-// 	try {
-// 		const { status } = await Permissions.askAsync(Permissions.LOCATION);
-// 		if (status === 'granted') {
-// 			return true
-// 		}
-// 		throw new Error('Location permission not granted');
-
-// 	} catch ({ message }) {
-// 		__handleErrors__(message)
-// 		return false
-// 	}
-
-// }
+    // }

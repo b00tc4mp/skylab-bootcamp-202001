@@ -4,15 +4,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import AuthNavigation from './stacks/Auth'
 import UserNavigation from './UserNav'
 
-
-export default ({ isLogged }) => (
+export default ({ isUser, isAnonymous }) => (
     <NavigationContainer>
 
-        {isLogged
-            ? (<UserNavigation />)
-            : (<AuthNavigation />)
-            //<NotUserNavigation/> ????
-        }
+        {!isUser && !isAnonymous && <AuthNavigation />}
+        {isAnonymous && <NotUserNavigation />}
+        {isUser && <UserNavigation />}
+
     </NavigationContainer>
 )
 
