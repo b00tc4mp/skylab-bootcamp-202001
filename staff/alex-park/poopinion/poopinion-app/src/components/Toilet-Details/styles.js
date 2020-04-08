@@ -240,9 +240,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     separator: {
-        borderBottomColor: 'grey',
+        borderBottomColor: 'lightgrey',
         borderBottomWidth: 2,
-        marginVertical: 5
+        marginVertical: 5,
     }
 })
 
