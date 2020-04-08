@@ -206,14 +206,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    disabledLogo: { 
-        width: 30, 
-        height: 30, 
-        resizeMode: 'contain' 
+    disabledLogo: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain'
     },
-    disabledLogoOpacity: { 
-        width: 30, 
-        height: 30, 
+    disabledLogoOpacity: {
+        width: 30,
+        height: 30,
         resizeMode: 'contain',
         opacity: 0.2
     },
@@ -232,6 +232,17 @@ const styles = StyleSheet.create({
         height: 25,
         resizeMode: 'contain',
         paddingHorizontal: 15,
+    },
+    userInfo: {
+        paddingVertical: 10
+    },
+    bold: {
+        fontWeight: 'bold'
+    },
+    separator: {
+        borderBottomColor: 'grey',
+        borderBottomWidth: 2,
+        marginVertical: 5
     }
 })
 

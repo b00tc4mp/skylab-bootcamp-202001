@@ -6,6 +6,7 @@ import moment from 'moment'
 
 function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete, onDeleteToilet }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
+    const [userInfo, setUserInfo] = useState()
 
     useEffect(() => {
         setComments(toilet.comments.slice(0, 5))
@@ -151,7 +152,9 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                     <View style={styles.commentTop}>
                                         <View style={styles.commentTopLeft}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                <Text>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>
+                                                <Text onPress={() => {
+                                                    userInfo === comment.publisher._id.toString() ? setUserInfo(undefined) : setUserInfo(comment.publisher._id.toString())
+                                                }}>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>
                                                 {comment.publisher.publishedToilets.length < 5 && comment.publisher.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')} />}
                                                 {comment.publisher.publishedToilets.length < 5 && comment.publisher.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')} />}
 
@@ -168,6 +171,23 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
 
                                         </View>
                                     </View>
+
+                                    {userInfo === comment.publisher._id.toString() && (<>
+                                        <View style={styles.userInfo}>
+                                            <View
+                                                style={styles.separator}
+                                            />
+                                            <Text><Text style={styles.bold}>Age</Text>: {moment().diff(comment.publisher.age, 'years')} years</Text>
+                                            <Text><Text style={styles.bold}>Gender</Text>: {comment.publisher.gender}</Text>
+                                            <Text><Text style={styles.bold}>Email</Text>: {comment.publisher.email}</Text>
+                                            <Text><Text style={styles.bold}>Total Posts</Text>: {comment.publisher.publishedToilets.length}</Text>
+                                            <Text><Text style={styles.bold}>Total Comments</Text>: {comment.publisher.comments.length}</Text>
+                                            <Text><Text style={styles.bold}>User since</Text>: {moment(comment.publisher.created).fromNow()}</Text>
+                                            <View
+                                                style={styles.separator}
+                                            />
+                                        </View>
+                                    </>)}
 
                                     <View style={styles.commentItself}>
                                         <Text style={styles.theComment}>"{comment.rating.textArea.length > 0 ? (<Text>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
