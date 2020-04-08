@@ -150,7 +150,17 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                 <View key={index} style={styles.commentContainer}>
                                     <View style={styles.commentTop}>
                                         <View style={styles.commentTopLeft}>
-                                            <Text>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Text>By: <Text style={styles.commentPublisher}>{comment.publisher.name} {comment.publisher.surname}</Text></Text>
+                                                {comment.publisher.publishedToilets.length < 5 && comment.publisher.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze.png')} />}
+                                                {comment.publisher.publishedToilets.length < 5 && comment.publisher.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_bronze_pro.png')} />}
+
+                                                {comment.publisher.publishedToilets.length >= 5 && comment.publisher.publishedToilets.length < 10 && comment.publisher.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver.png')} />}
+                                                {comment.publisher.publishedToilets.length >= 5 && comment.publisher.publishedToilets.length < 10 && comment.publisher.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_silver_pro.png')} />}
+
+                                                {comment.publisher.publishedToilets.length >= 10 && comment.publisher.comments.length < 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold.png')} />}
+                                                {comment.publisher.publishedToilets.length >= 10 && comment.publisher.comments.length >= 10 && <Image style={styles.profilePic} source={require('../../../assets/profile_gold_pro.png')} />}
+                                            </View>
                                             <Text style={styles.commentCreated}>Posted {moment(comment.created).fromNow()}</Text>
                                         </View>
                                         <View style={styles.commentTopRight}>

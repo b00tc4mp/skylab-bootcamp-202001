@@ -227,7 +227,12 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: 'center'
     },
-
+    profilePic: {
+        width: 25,
+        height: 25,
+        resizeMode: 'contain',
+        paddingHorizontal: 15,
+    }
 })
 
 export default styles
