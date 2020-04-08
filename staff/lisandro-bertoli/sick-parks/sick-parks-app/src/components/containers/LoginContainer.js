@@ -3,7 +3,7 @@ import { __handleErrors__ } from '../../handlers'
 import { Login } from '../presentational'
 import React, { useState, useEffect } from 'react'
 
-export default function LoginContainer({ navigation, login }) {
+export default function LoginContainer({ navigation }) {
     const [error, setError] = useState(null)
 
     // _getNotificationsPermissionsAsync = async () => {

@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
-import { updatePark, publishComment, reportPark, votePark, approvePark } from 'sick-parks-logic'
+import React, { useState, useEffect } from 'react'
+import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark } from 'sick-parks-logic'
 import { __handleUserUpdate__, __handleErrors__ } from '../../handlers'
 import { ParkDetails } from '../presentational'
+import { View, Text, Alert } from 'react-native'
 
 //See if replacing on full ParkDetail compo on return with 5 or 6 smaller compos helps with issue
 //of the whole compo being refreshed
 
 export default function ParkDetailsContainer({ navigation, route }) {
-    const [park, setPark] = useState(route.park) // maybe like this ==> useState(()=> route.park)
-    const [error, setError] = useState(route.error)
-    /*
+    const [park, setPark] = useState(route.params.park) // maybe like this ==> useState(()=> route.park)
+    const [error, setError] = useState(route.params.error)
+    const [user, setUser] = useState()
+
+    useEffect(() => {
+        (async () => {
+            const _user = await retrieveUser()
+            setUser(_user)
+
+        })()
+    }, [])
+
+    /*<<
         User should come from context?? or maybe just get the token
         from async storage and retrieve id from there, but that 
         would expose that the token is in the async storage to
@@ -62,8 +73,6 @@ export default function ParkDetailsContainer({ navigation, route }) {
     }
 
     const handleVote = async (vote) => {
-        if (user === 'guest') return Alert.alert('This action needs you to be registered')
-
         try {
             await votePark(user.id, park.id, vote)
 
@@ -74,9 +83,10 @@ export default function ParkDetailsContainer({ navigation, route }) {
     }
 
     const handleCommentSubmit = async (body) => {
-        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+        if (user.id === 'guest') return Alert.alert('This action needs you to be registered')
 
         try {
+
             await publishComment(user.id, park.id, body)
 
             __handleParkUpdate__(park.id)
@@ -101,6 +111,16 @@ export default function ParkDetailsContainer({ navigation, route }) {
             Alert.alert(message)
         }
     }
+
+    if (!user || !park) return (
+        <>
+            <View>
+                <Text>
+                    Loading...
+                </Text>
+            </View>
+        </>
+    )
 
     return <ParkDetails
         park={park}

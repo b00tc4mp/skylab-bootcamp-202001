@@ -6,7 +6,9 @@ import { Search } from '../presentational'
 export default function SearchContainer({ navigation }) {
     const [currentQuery, setCurrentQuery] = useState()
     const [error, setError] = useState(null)
+    const [location, setLocation] = useState({ longitude: 0, latitude: 0 })
     //Location needs to be handleled in context toghether with user and errors.
+
 
     const handleOnSubmit = async (query) => {
         try {

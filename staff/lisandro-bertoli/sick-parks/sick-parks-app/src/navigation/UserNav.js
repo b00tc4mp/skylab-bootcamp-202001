@@ -1,5 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+import { StyleSheet, Image } from 'react-native'
+
 import HomeStack from './stacks/Home'
 import BuilderStack from './stacks/Builder'
 import { ProfileContainer } from '../components/containers'
@@ -12,39 +14,30 @@ const buildImage = require('../../assets/icon-pick-and-shovel.png')
 const profileImage = require('../../assets/icon-profile.png')
 
 
-// const screenOptions = ({ route }) => ({
-//     tabBarIcon: ({ focused, color, size }) => {
-//         let iconName;
+const options = ({ route }) => ({
+    tabBarIcon: () => {
+        let iconName
+        if (route.name === 'Home') iconName = homeImage
+        else if (route.name === 'Map') iconName = mapImage
+        else if (route.name === 'Build') iconName = buildImage
+        else if (route.name === 'Profile') iconName = profileImage
 
-//         switch (route.name) {
-//             case 'Home':
-//                 iconName
-//                 break;
-
-//             default:
-//                 break;
-//         }
-
-//         if (route.name === 'Home') {
-//             iconName = focused
-//                 ? 'ios-information-circle'
-//                 : 'ios-information-circle-outline';
-//         } else if (route.name === 'Settings') {
-//             iconName = focused ? 'ios-list-box' : 'ios-list';
-//         }
-
-//         // You can return any component that you like here!
-//         return <Ionicons name={iconName} size={size} color={color} />;
-//     },
-// })
+        return <Image source={iconName} style={styles.icon} />
+    },
+})
 
 const tabOptions = {
-    activeTintColor: 'tomato',
-    inactiveTintColor: 'gray',
+    activeTintColor: '#EFEBDA',
+    inactiveTintColor: 'lightgrey',
+    style: {
+        backgroundColor: '#82A4B3'
+    }
 }
 
+
 export default () => (
-    <Tabs.Navigator tabBarOptions={tabOptions}>
+
+    <Tabs.Navigator tabBarOptions={tabOptions} screenOptions={options}>
         <Tabs.Screen name="Home" component={HomeStack} />
         {/* <Tabs.Screen name="Map" component={MapViewContainer} initialParams={{ style: styles.mapStyle }} /> */}
         <Tabs.Screen name="Build" component={BuilderStack} />
@@ -53,4 +46,9 @@ export default () => (
 )
 
 
-
+const styles = StyleSheet.create({
+    icon: {
+        height: 20,
+        width: 20
+    }
+})

@@ -15,11 +15,18 @@ const options = {
 
 const AuthStack = createStackNavigator()
 
-export default ({ handle }) => (
-    <AuthStack.Navigator screenOptions={options}>
-        <AuthStack.Screen options={{ headerShown: false }} name='Landing' component={LandingContainer} />
-        <AuthStack.Screen options={{ title: 'Sign up' }} name='Register' component={RegisterContainer} />
-        <AuthStack.Screen options={{ title: 'Sign in' }} name='Login' component={LoginScreen} />
-    </AuthStack.Navigator>
-)
+export default (props) => {
+
+    console.log(props)
+
+    return (
+        <AuthStack.Navigator screenOptions={options}>
+            <AuthStack.Screen options={{ headerShown: false }} name='Landing' component={LandingContainer} />
+            <AuthStack.Screen options={{ title: 'Sign up' }} name='Register' component={RegisterContainer} />
+            <AuthStack.Screen options={{ title: 'Sign in' }} name='Login' component={LoginContainer} />
+        </AuthStack.Navigator>
+
+    )
+
+}
 

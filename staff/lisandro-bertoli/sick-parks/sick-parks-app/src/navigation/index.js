@@ -5,6 +5,7 @@ import AuthNavigation from './stacks/Auth'
 import UserNavigation from './UserNav'
 
 export default ({ isUser, isAnonymous }) => (
+
     <NavigationContainer>
 
         {!isUser && !isAnonymous && <AuthNavigation />}

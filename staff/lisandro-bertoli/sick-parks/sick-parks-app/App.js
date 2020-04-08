@@ -7,12 +7,13 @@ import AppNavigation from './src/navigation'
 import config from './config'
 import logic, { isAnonymousUser, isUserLoggedIn, logoutUser } from 'sick-parks-logic'
 import { __handleErrors__ } from './src/handlers'
+
 logic.__context__.storage = AsyncStorage
 logic.__context__.API_URL = config.API_URL
 
 export default function App() {
 	const [error, setError] = useState(null)
-	const [isUser, setIsUser] = useState(false)
+	const [isUser, setIsUser] = useState()
 	const [isAnonymous, setIsAnonymous] = useState()
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -31,7 +32,6 @@ export default function App() {
 		else if (await isAnonymousUser())
 			setIsAnonymous(true)
 	}
-
 
 	if (isLoading) return <AppLoading
 		startAsync={__isAllLoaded__}
