@@ -1,4 +1,4 @@
-# 💩 Poopinion App 💩
+# 💩 Poopinion v.1.0.9 💩
 ![](./images/header.png)
 ## 🚽 Description 🚽
 Poopinion is a mobile-oriented app purposed on rating toilets on public spaces, such as restaurants, events or companies. The aim for this project is to increase the average quality of those places and keep then clean, hygienic and pretty. Toilet necessities are evident and society needs better ways to know the quality of toilets they might be end up using.
@@ -15,6 +15,25 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 - Use a query system to find the toilet from a certain place you want to go
 - Add toilets to favorites and check them later
 - User interface
+
+## 🚽 History of updates 🚽
+2020/04/09:
+- Fixed doc and diagrams
+
+2020/04/08:
+- Added poop ranking on user comments.
+- Usernames are now clickable and will display extra info about the user
+- Styling minor fixes
+
+2020/04/05:
+- Added disabled toilet availability option on New Toilet creation. This info will be displayed on the Toilet's detail page as well
+- Styling and performance fixes
+
+2020/04/03:
+- Added an auto-comment and rating when creating a New Toilet, since the previous double-step was unnecessarily tedious.
+
+2020/04/02:
+- Added a README on Login page and nav buttons to my personal Github, LinkedIn and Twitter.
 
 ### Use cases
 
@@ -43,3 +62,7 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 ### Client-side
 
 ![](./images/code-coverage-client-side.png)
+
+## Link to Trello
+
+[Poopinion - Trello](https://trello.com/b/SsFJFqfA/poopinion)
