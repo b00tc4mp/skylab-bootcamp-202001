@@ -7,7 +7,7 @@ const { models: { Game } } = require('simonline-data')
  */
 
 module.exports = () => {
-    return Game.find({})
+    return Game.find({'status' : 'waiting'})
         .then(game => {
             return game
         })
