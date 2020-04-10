@@ -48,7 +48,7 @@ export default ({ goTo, gameId }) => {
                 setCurrentPlayerName(currentPlayerData.username)
                 setCurrentPlayerId(currentPlayerData.id)
                 //countdown
-                let x = Math.floor(
+                const x = Math.floor(
                   (new Date() - new Date(status.turnStart)) / 1000
                 )
                 setCountdown(status.turnTimeout - x)
@@ -109,6 +109,10 @@ export default ({ goTo, gameId }) => {
   }
 
   useEffect(() => {
+    if (status) setCombinationLaunched(false)
+  }, [currentPlayerName])
+
+  useEffect(() => {
     if (status && !combinationLaunched && status.status === 'started' && !num) {
       (async() => {
         setCombinationLaunched(true)
@@ -116,7 +120,6 @@ export default ({ goTo, gameId }) => {
       })()
     }
   }, [status])
-
 
   useEffect(() => {
     if (status && combinationPlayer.length) { 

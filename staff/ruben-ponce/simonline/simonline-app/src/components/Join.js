@@ -15,7 +15,8 @@ export default ({ handleJoin, goTo }) => {
                     setGames(games)
                 } catch (error) {
                     setError(error.message)
-                    setTimeout(()=> setError(undefined), 3000)                  }
+                    setTimeout(()=> setError(undefined), 3000)                  
+                }
             })()
         else goTo('landing')
     },[])
