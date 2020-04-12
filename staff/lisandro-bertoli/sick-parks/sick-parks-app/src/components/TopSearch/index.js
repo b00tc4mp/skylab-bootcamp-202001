@@ -1,7 +1,7 @@
 // import React, { useState } from 'react'
 // import { View, TextInput, Image } from 'react-native'
 // import styles from './styles'
-// const searchIcon = require('../../../assets/icon-search.png')
+// const searchIcon = require(' ../../../assets/icon-search.png')
 
 // export default function ({ onSubmit, query }) {
 //     const [newQuery, setNewQuery] = useState()

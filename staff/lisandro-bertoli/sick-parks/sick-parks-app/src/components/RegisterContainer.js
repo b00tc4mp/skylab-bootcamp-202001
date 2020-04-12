@@ -1,6 +1,6 @@
 import { registerUser } from 'sick-parks-logic'
-import { __handleErrors__ } from '../../handlers'
-import { Register } from '../presentational'
+import { __handleErrors__ } from '../handlers'
+import Register from './Register'
 import React, { useState } from 'react'
 
 export default function RegisterScreen({ navigation }) {

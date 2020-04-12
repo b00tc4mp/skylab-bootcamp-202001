@@ -64,7 +64,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
             <View key={0} style={styles.container}>
                 {park.image ? (<Image style={styles.image} source={{ uri: park.image }} />)
                     :
-                    (<Image style={styles.image} source={require('../../../../assets/default-details.jpg')} />)}
+                    (<Image style={styles.image} source={require('../../../assets/default-details.jpg')} />)}
                 <View style={styles.infoContainer}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>

@@ -4,7 +4,7 @@ import { StyleSheet, Image } from 'react-native'
 
 import HomeStack from './stacks/Home'
 import BuilderStack from './stacks/Builder'
-import { ProfileContainer } from '../components/containers'
+import { ProfileContainer } from '../components'
 
 const Tabs = createBottomTabNavigator()
 

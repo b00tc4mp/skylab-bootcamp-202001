@@ -1,0 +1,44 @@
+import React, { useState } from "react"
+import { loginUser, logoutUser, isUserLoggedIn, isAnonymousUser } from 'sick-parks-logic'
+
+export const AuthContext = React.createContext()
+
+export const AuthProvider = ({ children }) => {
+    const [isUser, setIsUser] = useState()
+    const [isAnonymous, setIsAnonymous] = useState()
+
+    return (
+        <AuthContext.Provider
+            value={{
+                isUser,
+                isAnonymous,
+                login: async (email, password) => {
+                    await loginUser(email, password)
+                    setIsAnonymous(false)
+                    setIsUser(true)
+                },
+                isUserLogged: async () => {
+                    if (await isUserLoggedIn()) {
+
+                        setIsAnonymous(false)
+                        setIsUser(true)
+                    }
+                },
+                isUserAnonymous: async () => {
+                    if (await isAnonymousUser()) {
+
+                        setIsUser(false)
+                        setIsAnonymous(true)
+                    }
+                },
+                logout: async () => {
+                    await logoutUser()
+                    setIsUser(false)
+                    setIsAnonymous(false)
+                }
+
+            }}>
+            {children}
+        </AuthContext.Provider>
+    )
+}

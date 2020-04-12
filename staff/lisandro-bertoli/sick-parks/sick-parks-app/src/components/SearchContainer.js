@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { __handleUserUpdate__, __handleErrors__ } from '../../handlers'
+import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
 import { searchParks } from 'sick-parks-logic'
-import { Search } from '../presentational'
+import Search from './Search'
 
 export default function SearchContainer({ navigation }) {
     const [currentQuery, setCurrentQuery] = useState()

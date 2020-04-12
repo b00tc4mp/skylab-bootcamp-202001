@@ -1,5 +1,5 @@
 import React from 'react'
-import { StepOneContainer, StepTwoContainer, StepThreeContainer } from '../../components/containers'
+import { StepOneContainer, StepTwoContainer, StepThreeContainer } from '../../components'
 import { createStackNavigator } from "@react-navigation/stack"
 
 const BuilderStack = createStackNavigator()

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Landing } from '../presentational'
+import Landing from './Landing'
 import { setAnonymousUser } from 'sick-parks-logic'
 
 export default function LandingContainer({ navigation }) {

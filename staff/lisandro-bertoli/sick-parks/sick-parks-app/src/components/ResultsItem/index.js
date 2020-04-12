@@ -12,7 +12,7 @@ export default function ResultsItem({ park, onToPark }) {
 
         <TouchableOpacity style={styles.container} onPress={handleOnToPark}>
             <View style={styles.item}>
-                <Image style={styles.image} source={require('../../../../assets/logo.png')} />
+                <Image style={styles.image} source={require(' ../../../assets/logo.png')} />
                 <View style={styles.colOne}>
                     <Text style={styles.textBold}>{name}</Text>
                     <Text> </Text>

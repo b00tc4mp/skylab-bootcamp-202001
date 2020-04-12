@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { retrievePark } from 'sick-parks-logic'
-import { Results } from '../presentational'
+import Results from './Results'
 
 
 export default function ResultsContainer({ navigation, route }) {

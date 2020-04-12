@@ -1,9 +1,11 @@
-import { loginUser, retrieveUser } from 'sick-parks-logic'
-import { __handleErrors__ } from '../../handlers'
-import { Login } from '../presentational'
-import React, { useState, useEffect } from 'react'
+import { retrieveUser } from 'sick-parks-logic'
+import { __handleErrors__ } from '../handlers'
+import { AuthContext } from './AuthProvider';
+import Login from './Login'
+import React, { useState, useContext } from 'react'
 
 export default function LoginContainer({ navigation }) {
+    const { login } = useContext(AuthContext);
     const [error, setError] = useState(null)
 
     // _getNotificationsPermissionsAsync = async () => {
@@ -13,14 +15,12 @@ export default function LoginContainer({ navigation }) {
 
     const handleLogin = async (email, password) => {
         try {
-            await loginUser(email, password)
+            await login(email, password)
 
             await retrieveUser()
-
             // user.notifications = await _getNotificationsPermissionsAsync()
             // user.allowLocation = await _getLocationPermissionsAsync()
             setError(null)
-            login()
         } catch ({ message }) {
             __handleErrors__(message, setError)
         }

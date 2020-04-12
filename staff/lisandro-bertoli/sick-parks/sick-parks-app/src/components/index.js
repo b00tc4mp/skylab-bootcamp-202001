@@ -17,6 +17,16 @@ import FeatureInput from './FeatureInput'
 import StepOne from './ParkBuilder/StepOne'
 import StepTwo from './ParkBuilder/StepTwo'
 import StepThree from './ParkBuilder/StepThree'
+import LandingContainer from './LandingContainer'
+import RegisterContainer from './RegisterContainer'
+import LoginContainer from './LoginContainer'
+import SearchContainer from './SearchContainer'
+import ParkDetailsContainer from './ParkDetailsContainer'
+import ProfileContainer from './ProfileContainer'
+import ResultsContainer from './ResultsContainer'
+import StepOneContainer from './StepOneContainer'
+import StepTwoContainer from './StepTwoContainer'
+import StepThreeContainer from './StepThreeContainer'
 
 export {
     Login,
@@ -37,5 +47,15 @@ export {
     FeatureInput,
     StepOne,
     StepTwo,
-    StepThree
+    StepThree,
+    LandingContainer,
+    RegisterContainer,
+    LoginContainer,
+    SearchContainer,
+    ParkDetailsContainer,
+    ProfileContainer,
+    ResultsContainer,
+    StepOneContainer,
+    StepTwoContainer,
+    StepThreeContainer,
 }

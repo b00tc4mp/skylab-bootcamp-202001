@@ -4,7 +4,7 @@ import MyButton from '../Button'
 import Results from '../Results'
 
 import styles from './styles'
-const logoutImg = require('../../../../assets/sign-out.png')
+const logoutImg = require('../../../assets/sign-out.png')
 
 
 export default function Profile({ onLogout, user, onToLogin, userParks }) {

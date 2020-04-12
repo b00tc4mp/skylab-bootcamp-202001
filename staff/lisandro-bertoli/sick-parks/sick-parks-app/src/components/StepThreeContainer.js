@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { __handleUserUpdate__, __handleErrors__ } from '../../handlers'
+import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
 import { createPark } from 'sick-parks-logic'
-import { StepThree } from '../presentational'
+import StepThree from './ParkBuilder/StepThree'
 
 export default function StepThreeContainer({ navigation, route }) {
     const [error, setError] = useState(null)
@@ -21,7 +21,6 @@ export default function StepThreeContainer({ navigation, route }) {
             await createPark({ park, features })
 
             await __handleUserUpdate__(setError)
-            console.log(park, features)
             navigation.popToTop()
 
             Alert.alert('Park created!')

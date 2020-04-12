@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark } from 'sick-parks-logic'
-import { __handleUserUpdate__, __handleErrors__ } from '../../handlers'
-import { ParkDetails } from '../presentational'
+import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
+import ParkDetails from './ParkDetails'
 import { View, Text, Alert } from 'react-native'
 
 //See if replacing on full ParkDetail compo on return with 5 or 6 smaller compos helps with issue

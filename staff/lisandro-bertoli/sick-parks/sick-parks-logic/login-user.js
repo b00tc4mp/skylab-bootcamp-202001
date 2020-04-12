@@ -34,6 +34,7 @@ module.exports = function (email, password) {
         if (error) throw new Error(error)
 
         await this.storage.setItem('token', token)
+
         return
 
     })()

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { retrievePublishedParks, retrieveUser, isUserLoggedIn, logoutUser } from 'sick-parks-logic'
-import Profile from '../presentational/Profile'
+import Profile from './Profile'
 import { View, Text } from 'react-native'
 
 
