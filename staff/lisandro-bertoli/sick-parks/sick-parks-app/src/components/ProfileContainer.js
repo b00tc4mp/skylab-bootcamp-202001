@@ -1,47 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import { retrievePublishedParks, retrieveUser, isUserLoggedIn, logoutUser } from 'sick-parks-logic'
+import React, { useEffect, useState, useContext } from 'react'
+import { retrievePublishedParks, retrieveUser } from 'sick-parks-logic'
 import Profile from './Profile'
-import { View, Text } from 'react-native'
+import { View, ActivityIndicator } from 'react-native'
+import { AuthContext } from './AuthProvider'
 
 
 
 export default function PorfileContainer() {
+    const { logout } = useContext(AuthContext)
     const [publishedParks, setPublishedParks] = useState([])
     const [user, setUser] = useState()
 
     useEffect(() => {
         (async () => {
+            try {
+                const _user = await retrieveUser()
+                const parks = await retrievePublishedParks()
 
-            const _user = await retrieveUser()
-            setUser(_user)
-
-            if (isUserLoggedIn()) {
-                try {
-                    const parks = await retrievePublishedParks()
-
-                    setPublishedParks(parks)
-
-                } catch (error) {
-                    console.log(error)
-                }
+                setUser(_user)
+                setPublishedParks(parks)
+            } catch (error) {
+                console.log(error)
             }
         })()
-
-
     }, [])
 
-    const handleLogout = async () => await logoutUser()
+    const handleLogout = async () => await logout()
 
     const handleOnToLogin = () => { }
 
-    if (!user) return (<>
-        <View>
-            <Text>
-                Loading...
-             </Text>
+    if (!user) return (
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <ActivityIndicator size="large" />
         </View>
-
-    </>)
+    )
 
     return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
 }

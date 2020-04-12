@@ -15,14 +15,15 @@ export default function LoginContainer({ navigation }) {
 
     const handleLogin = async (email, password) => {
         try {
-            await login(email, password)
+            setError(null)
 
+            await login(email, password)
             await retrieveUser()
             // user.notifications = await _getNotificationsPermissionsAsync()
             // user.allowLocation = await _getLocationPermissionsAsync()
-            setError(null)
         } catch ({ message }) {
             __handleErrors__(message, setError)
+
         }
     }
 

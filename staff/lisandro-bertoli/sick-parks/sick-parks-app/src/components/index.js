@@ -27,6 +27,7 @@ import ResultsContainer from './ResultsContainer'
 import StepOneContainer from './StepOneContainer'
 import StepTwoContainer from './StepTwoContainer'
 import StepThreeContainer from './StepThreeContainer'
+import NotAllowedContainer from './NotAllowedContainer'
 
 export {
     Login,
@@ -58,4 +59,5 @@ export {
     StepOneContainer,
     StepTwoContainer,
     StepThreeContainer,
+    NotAllowedContainer
 }

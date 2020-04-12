@@ -10,5 +10,7 @@ const context = require('./context')
 
 
 module.exports = function () {
-    return this.storage.removeItem('token')
+    this.storage.removeItem('token')
+    delete this.user
+    return
 }.bind(context)

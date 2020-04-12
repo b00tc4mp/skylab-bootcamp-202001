@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react'
-import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark } from 'sick-parks-logic'
+import React, { useState, useEffect, useContext } from 'react'
+import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark, deletePark } from 'sick-parks-logic'
 import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
+import { CommonActions } from '@react-navigation/native'
 import ParkDetails from './ParkDetails'
 import { View, Text, Alert } from 'react-native'
+import { AuthContext } from './AuthProvider'
 
 //See if replacing on full ParkDetail compo on return with 5 or 6 smaller compos helps with issue
 //of the whole compo being refreshed
 
 export default function ParkDetailsContainer({ navigation, route }) {
+    const { isAnonymous, isUser } = useContext(AuthContext)
     const [park, setPark] = useState(route.params.park) // maybe like this ==> useState(()=> route.park)
     const [error, setError] = useState(route.params.error)
-    const [user, setUser] = useState()
+    const [user, setUser] = useState({})
 
     useEffect(() => {
         (async () => {
-            const _user = await retrieveUser()
-            setUser(_user)
+            if (isUser) {
+                const _user = await retrieveUser()
+                setUser(_user)
+            }
 
         })()
     }, [])
@@ -52,7 +57,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
 
 
             await deletePark(park.id, user.id)
-            await __handleUserUpdate__(setError)
+            //await __handleUserUpdate__(setError) // TODO modify retrieve user to stop using this handler
 
             Alert.alert('Park deleted')
         } catch ({ message }) {
@@ -73,6 +78,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
     }
 
     const handleVote = async (vote) => {
+        if (isAnonymous) return Alert.alert('This action needs you to be registered')
         try {
             await votePark(user.id, park.id, vote)
 
@@ -83,7 +89,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
     }
 
     const handleCommentSubmit = async (body) => {
-        if (user.id === 'guest') return Alert.alert('This action needs you to be registered')
+        if (isAnonymous) return Alert.alert('This action needs you to be registered')
 
         try {
 
@@ -96,7 +102,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
     }
 
     const handleContribution = async (action) => {
-        if (user === 'guest') return Alert.alert('This action needs you to be registered')
+        if (isAnonymous) return Alert.alert('This action needs you to be registered')
 
         try {
             if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, park.id, action)

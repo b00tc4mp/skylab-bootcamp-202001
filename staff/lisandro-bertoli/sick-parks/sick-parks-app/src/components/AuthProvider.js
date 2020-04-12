@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { loginUser, logoutUser, isUserLoggedIn, isAnonymousUser } from 'sick-parks-logic'
+import { loginUser, logoutUser, isUserLoggedIn, isAnonymousUser, setAnonymousUser } from 'sick-parks-logic'
 
 export const AuthContext = React.createContext()
 
@@ -19,17 +19,19 @@ export const AuthProvider = ({ children }) => {
                 },
                 isUserLogged: async () => {
                     if (await isUserLoggedIn()) {
-
                         setIsAnonymous(false)
                         setIsUser(true)
                     }
                 },
                 isUserAnonymous: async () => {
                     if (await isAnonymousUser()) {
-
                         setIsUser(false)
                         setIsAnonymous(true)
                     }
+                },
+                setAnonymous: async (condition) => {
+                    await setAnonymousUser(condition)
+                    setIsAnonymous(condition)
                 },
                 logout: async () => {
                     await logoutUser()

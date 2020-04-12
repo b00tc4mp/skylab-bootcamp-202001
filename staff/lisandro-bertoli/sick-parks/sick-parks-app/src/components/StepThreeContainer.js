@@ -20,7 +20,7 @@ export default function StepThreeContainer({ navigation, route }) {
 
             await createPark({ park, features })
 
-            await __handleUserUpdate__(setError)
+            // await __handleUserUpdate__(setError) // TODO modify retrieve user to replace this
             navigation.popToTop()
 
             Alert.alert('Park created!')
