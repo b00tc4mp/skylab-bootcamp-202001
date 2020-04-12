@@ -17,6 +17,7 @@ import FeatureInput from './FeatureInput'
 import StepOne from './ParkBuilder/StepOne'
 import StepTwo from './ParkBuilder/StepTwo'
 import StepThree from './ParkBuilder/StepThree'
+import Loading from './Loading'
 import LandingContainer from './LandingContainer'
 import RegisterContainer from './RegisterContainer'
 import LoginContainer from './LoginContainer'
@@ -49,6 +50,7 @@ export {
     StepOne,
     StepTwo,
     StepThree,
+    Loading,
     LandingContainer,
     RegisterContainer,
     LoginContainer,

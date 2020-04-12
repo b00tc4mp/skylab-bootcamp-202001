@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark, deletePark } from 'sick-parks-logic'
 import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
 import { CommonActions } from '@react-navigation/native'
+import Loading from './Loading'
 import ParkDetails from './ParkDetails'
-import { View, Text, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import { AuthContext } from './AuthProvider'
 
 //See if replacing on full ParkDetail compo on return with 5 or 6 smaller compos helps with issue
@@ -118,15 +119,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
         }
     }
 
-    if (!user || !park) return (
-        <>
-            <View>
-                <Text>
-                    Loading...
-                </Text>
-            </View>
-        </>
-    )
+    if (!user || !park) return <Loading />
 
     return <ParkDetails
         park={park}

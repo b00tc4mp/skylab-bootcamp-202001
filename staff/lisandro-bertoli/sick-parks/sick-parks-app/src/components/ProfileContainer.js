@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { retrievePublishedParks, retrieveUser } from 'sick-parks-logic'
 import Profile from './Profile'
+import Loading from './Loading'
 import { View, ActivityIndicator } from 'react-native'
 import { AuthContext } from './AuthProvider'
 
@@ -29,11 +30,7 @@ export default function PorfileContainer() {
 
     const handleOnToLogin = () => { }
 
-    if (!user) return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <ActivityIndicator size="large" />
-        </View>
-    )
+    if (!user) return <Loading />
 
     return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
 }

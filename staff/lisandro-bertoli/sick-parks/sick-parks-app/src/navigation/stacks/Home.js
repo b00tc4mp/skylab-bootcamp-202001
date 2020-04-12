@@ -1,14 +1,15 @@
 import React from 'react'
 import { SearchContainer, ResultsContainer, ParkDetailsContainer } from '../../components'
+import { COLORS, FONTS } from '../../constants'
 import { createStackNavigator } from "@react-navigation/stack"
 
 const HomeStack = createStackNavigator()
 
 const options = {
     headerBackTitleVisible: false,
-    headerStyle: { backgroundColor: '#82A4B3' },
-    headerTitleStyle: { fontFamily: 'montserrat-semi' },
-    headerTintColor: '#EFEBDA'
+    headerStyle: { backgroundColor: COLORS.main },
+    headerTitleStyle: { fontFamily: FONTS.semiBold },
+    headerTintColor: COLORS.secondary
 }
 
 // function TopSearchHeader() {

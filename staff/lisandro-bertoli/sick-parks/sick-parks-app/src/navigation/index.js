@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { ActivityIndicator, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import AuthNavigation from './stacks/Auth'
 import UserNavigation from './UserNav'
@@ -25,13 +24,7 @@ export default () => {
 
     }, [isUser, isAnonymous])
 
-    if (loading) {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" />
-            </View>
-        );
-    }
+    if (loading) return <Loading />
 
     return (
 
