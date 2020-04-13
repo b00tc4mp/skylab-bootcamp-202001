@@ -4,35 +4,40 @@ import AuthNavigation from './stacks/Auth'
 import UserNavigation from './UserNav'
 import AnonymousNavigation from './AnonymousNav'
 import { AuthContext } from '../components/AuthProvider'
+import { __handleErrors__ } from '../handlers'
+import { retrieveUser } from 'sick-parks-logic'
 
 export default () => {
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
     const { isUserLogged, isUserAnonymous, isUser, isAnonymous } = useContext(AuthContext)
+
 
     useEffect(() => {
         (async () => {
             try {
-                await isUserLogged()
-                await isUserAnonymous()
+                if (await isUserLogged()) return setLoading(false)
+                if (await isUserAnonymous()) return setLoading(false)
 
                 setLoading(false)
-            } catch (error) {
-                console.log(error)
+            } catch ({ message }) {
+                __handleErrors__(message, setError)
             }
 
         })()
 
     }, [isUser, isAnonymous])
 
-    if (loading) return <Loading />
+
+    if (loading) return <Loading error={error} />
 
     return (
 
         <NavigationContainer>
 
-            {!isUser && !isAnonymous && <AuthNavigation />}
-            {isAnonymous && <AnonymousNavigation />}
-            {isUser && <UserNavigation />}
+            {!isUser && !isAnonymous && <AuthNavigation error={error} />}
+            {isAnonymous && <AnonymousNavigation error={error} />}
+            {isUser && <UserNavigation error={error} />}
 
         </NavigationContainer>
     )

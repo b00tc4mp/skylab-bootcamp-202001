@@ -1,7 +1,7 @@
 {
   "dev": true,
   "minify": false,
-  "urlRandomness": "x7-uaq",
+  "urlRandomness": "37-448",
   "hostType": "lan",
   "lanType": "ip",
   "https": false

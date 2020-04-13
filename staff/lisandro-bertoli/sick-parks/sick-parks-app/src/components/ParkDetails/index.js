@@ -19,7 +19,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
     useEffect(() => {
         setComments(park.comments)
         setVotes(park.rating)
-    }, [park.rating, park.features])
+    }, [park])
 
     const handleNewFeature = (feature) => onUpdate({ features: [...park.features, feature] })
 
@@ -39,7 +39,6 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
         )
     }
 
-
     const handleReport = () => {
         Alert.alert(
             "Report a problem",
@@ -51,6 +50,12 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
             ],
         )
 
+    }
+
+    const handleSubmit = (body) => {
+        onCommentSubmit(body)
+
+        setCreateComment(false)
     }
 
     if (error) return (
@@ -106,7 +111,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             <MyButton onPress={() => setCreateComment(!createComment)} text='Add' textStyle={styles.headerText} />
                         </View>
                         <Comments comments={comments}>
-                            {createComment && (<CommentInput onCancel={() => setCreateComment(false)} onSubmit={onCommentSubmit} />)}
+                            {createComment && (<CommentInput onCancel={() => setCreateComment(false)} onSubmit={handleSubmit} />)}
                         </Comments>
                     </Modal>
                     <View style={styles.mapContainer}>

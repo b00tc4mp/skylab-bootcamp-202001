@@ -12,13 +12,6 @@ const options = {
     headerTintColor: COLORS.secondary
 }
 
-// function TopSearchHeader() {
-//     const handleOnSubmit = (query) => search(query)
-
-//     return <TopSearch onSubmit={handleOnSubmit} query={currentQuery} />
-// }
-
-// TODO see how to implement top search without making it a container component
 
 export default () => (
     <HomeStack.Navigator mode='modal' headerMode='screen' initialRouteName='Search' screenOptions={options}>

@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 export default function RegisterScreen({ navigation }) {
     const [error, setError] = useState(null)
-    debugger
+
     const handleSubmit = async (name, surname, email, password) => {
         try {
             await registerUser(name, surname, email, password)
@@ -16,7 +16,6 @@ export default function RegisterScreen({ navigation }) {
             __handleErrors__(message, setError)
         }
     }
-
 
     const handleGoToLogin = () => navigation.navigate('Login')
 

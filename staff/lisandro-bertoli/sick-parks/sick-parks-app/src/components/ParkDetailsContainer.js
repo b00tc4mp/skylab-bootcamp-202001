@@ -1,18 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { CommonActions } from '@react-navigation/native'
+import { Alert } from 'react-native'
 import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark, deletePark } from 'sick-parks-logic'
 import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
-import { CommonActions } from '@react-navigation/native'
 import Loading from './Loading'
 import ParkDetails from './ParkDetails'
-import { Alert } from 'react-native'
 import { AuthContext } from './AuthProvider'
-
-//See if replacing on full ParkDetail compo on return with 5 or 6 smaller compos helps with issue
-//of the whole compo being refreshed
 
 export default function ParkDetailsContainer({ navigation, route }) {
     const { isAnonymous, isUser } = useContext(AuthContext)
-    const [park, setPark] = useState(route.params.park) // maybe like this ==> useState(()=> route.park)
+    const [park, setPark] = useState(route.params.park) // maybe like this ==> useState(()=> route.params.park)
     const [error, setError] = useState(route.params.error)
     const [user, setUser] = useState({})
 
@@ -22,88 +19,80 @@ export default function ParkDetailsContainer({ navigation, route }) {
                 const _user = await retrieveUser()
                 setUser(_user)
             }
-
         })()
     }, [])
 
-    /*<<
-        User should come from context?? or maybe just get the token
-        from async storage and retrieve id from there, but that 
-        would expose that the token is in the async storage to
-        react layer and should only be hadeled by logic,
-        Maybe logic from retrieving user id from context?? //ask manu
-    
-    */
-
     const __handleParkUpdate__ = async (id) => {
         try {
+            setError(null)
+
             const _park = await retrievePark(id)
             setPark(_park)
-
-            setError(null)
         } catch ({ message }) {
-            Alert.alert(message)
             __handleErrors__(message, setError)
         }
     }
 
+    const __handleAnonymous__ = () => Alert.alert('This action needs you to be registered')
+
     const handleOnDelete = async () => {
         try {
+            await deletePark(park.id, user.id)
+            await retrieveUser(true) // TODO modify retrieve user to make it affect re render of profile
 
+            Alert.alert('Park deleted')
+
+        } catch ({ message }) {
+            __handleErrors__(message, setError)
+
+        } finally {
             navigation.dispatch(
                 CommonActions.reset({
                     index: 0,
                     routes: [{ name: 'Home' }]
                 }))
-
-
-            await deletePark(park.id, user.id)
-            //await __handleUserUpdate__(setError) // TODO modify retrieve user to stop using this handler
-
-            Alert.alert('Park deleted')
-        } catch ({ message }) {
-            Alert.alert(message)
         }
     }
 
     const handleUpdate = async (update) => {
-
         try {
             await updatePark(user.id, park.id, update)
 
             __handleParkUpdate__(park.id)
         } catch ({ message }) {
-            Alert.alert(message)
+            __handleErrors__(message, setError)
         }
 
     }
 
     const handleVote = async (vote) => {
-        if (isAnonymous) return Alert.alert('This action needs you to be registered')
+        if (isAnonymous) return __handleAnonymous__()
+
         try {
             await votePark(user.id, park.id, vote)
 
             __handleParkUpdate__(park.id)
-        } catch ({ message }) {
-            Alert.alert('This action cannot be performed twice by the same user')
+        } catch (error) {
+            if (error.name === 'NotAllowedError')
+                Alert.alert('This action cannot be performed twice by the same user')
+            else __handleErrors__(error.message, setError)
         }
     }
 
     const handleCommentSubmit = async (body) => {
-        if (isAnonymous) return Alert.alert('This action needs you to be registered')
+        if (isAnonymous) return __handleAnonymous__()
 
         try {
-
             await publishComment(user.id, park.id, body)
 
             __handleParkUpdate__(park.id)
         } catch ({ message }) {
-            Alert.alert(message)
+            __handleErrors__(message, setError)
         }
     }
 
     const handleContribution = async (action) => {
-        if (isAnonymous) return Alert.alert('This action needs you to be registered')
+        if (isAnonymous) return __handleAnonymous__()
 
         try {
             if (action === 'unreal' || action === 'duplicate') await reportPark(user.id, park.id, action)
@@ -112,10 +101,11 @@ export default function ParkDetailsContainer({ navigation, route }) {
 
             __handleParkUpdate__(park.id)
 
+            await retrieveUser(true) //TODO see how to refresh profile contrbutions whem navigating to it 
+
             Alert.alert('Thanks for contributing!')
         } catch ({ message }) {
-
-            Alert.alert(message)
+            __handleErrors__(message, setError)
         }
     }
 
@@ -130,5 +120,4 @@ export default function ParkDetailsContainer({ navigation, route }) {
         onCommentSubmit={handleCommentSubmit}
         onContribution={handleContribution}
         error={error} />
-
 }

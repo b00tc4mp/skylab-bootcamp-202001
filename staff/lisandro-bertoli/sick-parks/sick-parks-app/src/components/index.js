@@ -8,7 +8,6 @@ import Results from './Results'
 import Search from './Search'
 import TopSearch from './TopSearch'
 import MapViewContainer from './MapViewContainer'
-import ParkBuilder from './ParkBuilder'
 import Profile from './Profile'
 import ParkDetails from './ParkDetails'
 import Feedback from './Feedback'
@@ -41,7 +40,6 @@ export {
     Search,
     TopSearch,
     MapViewContainer,
-    ParkBuilder,
     Profile,
     ParkDetails,
     Feedback,

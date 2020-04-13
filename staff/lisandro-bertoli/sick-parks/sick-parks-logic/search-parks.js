@@ -29,7 +29,7 @@ module.exports = (query = '', location) => {
 
         const { error, results } = data
 
-        if (error) throw new Error(error)
+        if (error) throw new Error(error) // TODO should throw NotFoundError on no results
 
         return results
 

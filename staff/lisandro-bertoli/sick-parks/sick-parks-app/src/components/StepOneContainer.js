@@ -17,7 +17,6 @@ export default function StepOneContainer({ navigation }) {
                 break
             default:
                 const park = { name, resort, location, flow, level, size }
-                debugger
                 navigation.navigate('StepTwo', { park })
         }
     }

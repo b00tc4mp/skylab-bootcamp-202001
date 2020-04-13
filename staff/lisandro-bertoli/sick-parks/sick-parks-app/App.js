@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { AsyncStorage } from 'react-native'
-// import * as Permissions from 'expo-permissions'
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
 import { Providers } from './src/components/Providers'
@@ -14,7 +13,6 @@ logic.__context__.API_URL = config.API_URL
 export default function App() {
 	const [error, setError] = useState(null)
 	const [isLoading, setIsLoading] = useState(true)
-
 
 	const getFonts = () => Font.loadAsync({
 		'montserrat': require('./assets/fonts/Montserrat-Regular.ttf'),
@@ -31,19 +29,3 @@ export default function App() {
 	if (!isLoading) return <Providers />
 
 }
-
-
- // _getLocationPermissionsAsync = async () => {
-    // 	try {
-    // 		const { status } = await Permissions.askAsync(Permissions.LOCATION);
-    // 		if (status === 'granted') {
-    // 			return true
-    // 		}
-    // 		throw new Error('Location permission not granted');
-
-    // 	} catch ({ message }) {
-    // 		__handleErrors__(message)
-    // 		return false
-    // 	}
-
-    // }

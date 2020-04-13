@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { retrievePublishedParks, retrieveUser } from 'sick-parks-logic'
+import { retrievePublishedParks, retrieveUser, isUserLoggedIn } from 'sick-parks-logic'
 import Profile from './Profile'
 import Loading from './Loading'
-import { View, ActivityIndicator } from 'react-native'
 import { AuthContext } from './AuthProvider'
 
 
@@ -15,12 +14,18 @@ export default function PorfileContainer() {
     useEffect(() => {
         (async () => {
             try {
-                const _user = await retrieveUser()
-                const parks = await retrievePublishedParks()
 
-                setUser(_user)
-                setPublishedParks(parks)
+                if (isUserLoggedIn()) {
+                    const _user = await retrieveUser()
+                    const parks = await retrievePublishedParks()
+
+                    setUser(_user)
+                    setPublishedParks(parks)
+                }
+
+
             } catch (error) {
+                await logout()
                 console.log(error)
             }
         })()

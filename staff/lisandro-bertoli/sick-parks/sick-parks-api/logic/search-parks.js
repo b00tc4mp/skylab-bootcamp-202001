@@ -64,7 +64,7 @@ module.exports = ({ q, location }) => {
         else results = await Park.find(filter).lean()
 
 
-        if (!results.length) return results
+        if (!results.length) return results // Change it yo throw NotFoundError
 
         const sanitizedResults = results.map(result => {
             result.id = result._id.toString()

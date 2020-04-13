@@ -24,11 +24,11 @@ module.exports = function retrieveUser(fresh = false) {
             const data = await response.json()
             const { error: _error } = data
 
-            if (_error) throw new NotFoundError('This user does not exist anymore')
+            if (_error) throw new NotFoundError(_error)
 
-            const { id, name, surname, email, contributions, image, allowLocation, notifications } = data
-
-            this.user = { id, name, surname, email, contributions, image, allowLocation, notifications }
+            const { id, name, surname, email, contributions } = data
+            //TODO create logic to retrieve {contributions, image, allowLocation, notifications} separately
+            this.user = { id, name, surname, email, contributions }
         }
 
         return this.user
