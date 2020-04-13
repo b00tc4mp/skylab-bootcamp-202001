@@ -12,6 +12,8 @@ import ToiletDetails from './Toilet-Details'
 import NewComment from './New-Comment'
 import UpdateUser from './Update-User'
 import Readme from './Readme'
+import Yelp from './Yelp'
+import Map from './Map'
 
 export {
     Register,
@@ -27,5 +29,7 @@ export {
     ToiletDetails,
     NewComment,
     UpdateUser,
-    Readme
+    Readme,
+    Yelp,
+    Map
 }

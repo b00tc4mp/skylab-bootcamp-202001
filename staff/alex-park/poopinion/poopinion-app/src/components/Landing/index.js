@@ -36,7 +36,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                 {user && <Text style={styles.topHeader}>Welcome, {user.name} {user.surname}!! Enjoy your pooping 🚽</Text>}
                 {!user && <Text style={styles.topHeader}>🚽 Welcome, stranger!! Enjoy your pooping 🚽</Text>}
                 <Text>Your current position is: </Text>
-                
+
                 {coordinates.latitude && coordinates.longitude &&
                     <MapView style={styles.mapStyle}
                         region={{
@@ -45,10 +45,13 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                             latitudeDelta: coordinates.latitudeDelta,
                             longitudeDelta: coordinates.longitudeDelta,
                         }}>
-                        <MapView.Marker coordinate={{
-                            latitude: coordinates.latitude,
-                            longitude: coordinates.longitude
-                        }} />
+                        <MapView.Marker
+                            coordinate={{
+                                latitude: coordinates.latitude,
+                                longitude: coordinates.longitude
+                            }}
+                            title='This is you!'
+                        />
                     </MapView>
                 }
 

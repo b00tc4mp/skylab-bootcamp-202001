@@ -121,7 +121,7 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                     </View>
                 }
 
-                {!toilets.length && <Text>Still no toilets to display...</Text>}
+                {!toilets.length && <Text style={{marginHorizontal: '2.5%'}}>Still no toilets to display...</Text>}
 
             </View>
         </ScrollView>

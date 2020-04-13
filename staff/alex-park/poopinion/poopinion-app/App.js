@@ -13,7 +13,8 @@ import {
   ToiletDetails,
   NewComment,
   UpdateUser,
-  Readme
+  Readme,
+  Yelp
 } from './src/components'
 
 import logic, {
@@ -164,6 +165,15 @@ export default function App() {
       setUser(retrievedUser)
       setGoLanding(true)
       setView('landing')
+
+    } catch ({ message }) {
+      __handleError__(message)
+    }
+  }
+
+  async function handleEmergency() {
+    try {
+      await setView('map')
 
     } catch ({ message }) {
       __handleError__(message)
@@ -434,7 +444,7 @@ export default function App() {
   return (<View style={styles.container}>
 
     <ImageBackground style={styles.image} source={require('./assets/background.png')}>
-      {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onSubmit={handleQuerySearch} />}
+      {goLanding && <NavigationBarTop style={styles.navbar} goToLogin={handleGoToLogin} onEmergency={handleEmergency} onSubmit={handleQuerySearch} />}
 
       <ScrollView style={styles.content}>
         {view === 'login' && <Login onSubmit={handleLogin} error={error} goToFAQs={handleGoToFAQs} goToRegister={handleGoToRegister} goToLanding={handleGoToLanding} />}
@@ -448,6 +458,7 @@ export default function App() {
         {view === 'details' && detailedToilet && <ToiletDetails user={user} onDeleteToilet={handleDeleteToilet} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
         {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
+        {view === 'map' && <Yelp coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet}/>}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}
@@ -463,7 +474,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: Dimensions.get('window').width,
-    height: Dimensions.get('screen').height-48, //PROVISIONAL, THIS IS LIKE THIS DUE TO ANDROID NAVIGATION TOOLBAR
+    height: Dimensions.get('screen').height - 48, //PROVISIONAL, THIS IS LIKE THIS DUE TO ANDROID NAVIGATION TOOLBAR
   },
   content: {
     flex: 1

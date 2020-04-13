@@ -4,7 +4,7 @@ import { View, Image, TextInput, TouchableOpacity } from 'react-native'
 
 let query
 
-function NavigationBarTop({ goToLogin, onSubmit }) {
+function NavigationBarTop({ goToLogin, onSubmit, onEmergency }) {
     return (<>
         <View style={styles.container}>
             <View style={styles.top}>
@@ -18,6 +18,10 @@ function NavigationBarTop({ goToLogin, onSubmit }) {
                     onSubmit(query)
                 }}>
                     <Image source={require('../../../assets/search.png')} style={styles.search} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.searchContainer} onPress={onEmergency}>
+                    <Image source={require('../../../assets/emergency.png')} style={styles.search} />
                 </TouchableOpacity>
             </View>
         </View>
