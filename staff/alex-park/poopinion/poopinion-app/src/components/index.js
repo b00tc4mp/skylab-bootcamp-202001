@@ -12,7 +12,7 @@ import ToiletDetails from './Toilet-Details'
 import NewComment from './New-Comment'
 import UpdateUser from './Update-User'
 import Readme from './Readme'
-import Yelp from './Yelp'
+import EmergencyMap from './Emergency-Map'
 import Map from './Map'
 
 export {
@@ -30,6 +30,6 @@ export {
     NewComment,
     UpdateUser,
     Readme,
-    Yelp,
+    EmergencyMap,
     Map
 }

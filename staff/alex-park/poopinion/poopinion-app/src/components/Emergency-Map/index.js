@@ -6,12 +6,12 @@ import moment from 'moment'
 
 const newWidth = Dimensions.get('window').width
 
-function Yelp({ coordinates, topToilets, onDetails }) {
+function EmergencyMap({ coordinates, topToilets, onDetails, user }) {
     const [radius, setRadius] = useState(400)
     const [score, setScore] = useState(0)
 
-    useEffect(() => {}, [radius])
-    useEffect(() => {}, [score])
+    useEffect(() => { }, [radius])
+    useEffect(() => { }, [score])
 
     return (<>
         <ScrollView>
@@ -32,6 +32,15 @@ function Yelp({ coordinates, topToilets, onDetails }) {
                         strokeColor={'#1a66ff'}
                         fillColor={'rgba(230,238,255,0.6)'}
                     />
+
+                    <MapView.Marker
+                        coordinate={{
+                            latitude: coordinates.latitude,
+                            longitude: coordinates.longitude
+                        }}
+                        title={user ? `This is you, ${user.name}!` : 'This is you!'}
+                    />
+
                     {topToilets && topToilets.map(toilet => (<>
                         {toilet.score > score && (<>
                             <MapView.Marker
@@ -42,16 +51,16 @@ function Yelp({ coordinates, topToilets, onDetails }) {
                             >
                                 <MapView.Callout onPress={() => onDetails(toilet.id.toString())}>
                                     <View style={{ width: 200, height: 200 }}>
-                                        <Text>
+                                        <Text style={{ textAlign: 'center' }}>
                                             <Image
                                                 source={{ uri: toilet.image }}
-                                                style={{ flex: 1, width: newWidth * 0.28, height: newWidth * 0.18, resizeMode: 'cover', margin: 0 }}
+                                                style={{ flex: 1, width: newWidth * 0.18, height: newWidth * 0.18, margin: 0 }}
                                             />
                                         </Text>
-                                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{toilet.place}</Text>
-                                        <Text>Publisher: {toilet.publisher.name} {toilet.publisher.surname}</Text>
-                                        <Text>Published at: {moment(toilet.created).fromNow()}</Text>
-                                        <Text>Score: {toilet.score} ({toilet.comments.length})</Text>
+                                        <Text style={{ fontSize: 18, fontWeight: 'bold', fontStyle: 'italic' }}>{toilet.place}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Publisher</Text>: {toilet.publisher.name} {toilet.publisher.surname}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Published at</Text>: {moment(toilet.created).fromNow()}</Text>
+                                        <Text><Text style={{ fontWeight: 'bold' }}>Score</Text>: {toilet.score} ({toilet.comments.length})</Text>
                                     </View>
                                 </MapView.Callout>
                             </MapView.Marker>
@@ -60,29 +69,34 @@ function Yelp({ coordinates, topToilets, onDetails }) {
                 </MapView>
 
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity onPress={(event) => {
-                        event.preventDefault()
-                        setRadius(200)
-                    }}>
-                        <Text style={[styles.button, styles.danger]}>!!!</Text>
-                    </TouchableOpacity>
+                    <View style={{ flex: 1, flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={(event) => {
+                            event.preventDefault()
+                            setRadius(200)
+                        }}
+                            style={{ marginHorizontal: 5 }}>
+                            <Text style={[styles.button, styles.danger]}>S</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={(event) => {
-                        event.preventDefault()
-                        setRadius(400)
-                    }}>
-                        <Text style={[styles.button, styles.warning]}>!!</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={(event) => {
+                            event.preventDefault()
+                            setRadius(400)
+                        }}
+                            style={{ marginHorizontal: 5 }}>
+                            <Text style={[styles.button, styles.warning]}>M</Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity onPress={(event) => {
-                        event.preventDefault()
-                        setRadius(600)
-                    }}>
-                        <Text style={[styles.button, styles.safe]}>!</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={(event) => {
+                            event.preventDefault()
+                            setRadius(600)
+                        }}
+                            style={{ marginHorizontal: 5 }}>
+                            <Text style={[styles.button, styles.safe]}>L</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                    <View style={{flex: 1}}>
-                        <Text style={{fontWeight: 'bold'}}>Minimum Score</Text>
+                    <View style={{ flex: 1 }}>
+                        <Text style={{ fontWeight: 'bold' }}>Minimum Score</Text>
                         <View style={styles.sliderContainer}>
                             <Text>0</Text>
                             <Slider
@@ -100,4 +114,4 @@ function Yelp({ coordinates, topToilets, onDetails }) {
     </>)
 }
 
-export default Yelp
+export default EmergencyMap

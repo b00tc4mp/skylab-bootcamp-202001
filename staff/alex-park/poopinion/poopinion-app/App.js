@@ -14,7 +14,7 @@ import {
   NewComment,
   UpdateUser,
   Readme,
-  Yelp
+  EmergencyMap
 } from './src/components'
 
 import logic, {
@@ -458,7 +458,7 @@ export default function App() {
         {view === 'details' && detailedToilet && <ToiletDetails user={user} onDeleteToilet={handleDeleteToilet} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
         {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
-        {view === 'map' && <Yelp coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet}/>}
+        {view === 'map' && <EmergencyMap coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} user={user}/>}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

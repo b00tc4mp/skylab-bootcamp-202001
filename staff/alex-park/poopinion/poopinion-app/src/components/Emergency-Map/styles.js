@@ -19,23 +19,23 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        width: 60,
+        width: '100%',
         padding: 10,
-        margin: 10,
+        marginHorizontal: 10,
         fontWeight: 'bold',
         color: 'white',
         borderRadius: 10,
         textAlign: 'center',
-        opacity: 0.6
+        opacity: 0.7
     },
     danger: {
-        backgroundColor: 'red'
+        backgroundColor: '#df7861'
     },
     warning: {
-        backgroundColor: 'orange'
+        backgroundColor: '#df7861'
     },
     safe: {
-        backgroundColor: 'green'
+        backgroundColor: '#df7861'
     },
     sliderContainer: {
         flex: 1, 
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     slider: {
-        width: '65%',
+        width: '90%',
         alignSelf: 'center'
     }
 })

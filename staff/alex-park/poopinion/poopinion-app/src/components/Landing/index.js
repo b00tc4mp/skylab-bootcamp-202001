@@ -50,7 +50,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                                 latitude: coordinates.latitude,
                                 longitude: coordinates.longitude
                             }}
-                            title='This is you!'
+                            title={user ? `This is you, ${user.name}!` : 'This is you!'}
                         />
                     </MapView>
                 }
