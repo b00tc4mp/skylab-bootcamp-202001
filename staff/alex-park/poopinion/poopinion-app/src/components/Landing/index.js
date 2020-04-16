@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, Text, Image, TouchableOpacity, ActivityIndicator, TouchableHighlight } from 'react-native'
-import {
-    WebViewLeaflet, WebViewLeafletEvents, MapShapeType, Marker, Popup,
-    AnimationType, INFINITE_ANIMATION_ITERATIONS
-} from 'react-native-webview-leaflet'
 import MapView from 'react-native-maps'
 import styles from './styles'
 import moment from 'moment'
@@ -11,24 +7,10 @@ import moment from 'moment'
 function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     const [topTen, setTopTen] = useState(topToilets.slice(0, 10))
     const [loading, setLoading] = useState(undefined)
-    const [webViewLeaflet, setWebView] = useState()
 
     useEffect(() => {
         setTopTen(topToilets.slice(0, 10))
     }, [topToilets])
-
-    // var map = L.map('map').fitWorld();
-
-    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    //     maxZoom: 18,
-    //     tileSize: 512,
-    //     zoomOffset: -1
-    // }).addTo(map);
-
-    function onMessage() {
-        console.log('loaded')
-    }
 
     return (<>
         <ScrollView>
@@ -51,23 +33,10 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                                 longitude: coordinates.longitude
                             }}
                             title={user ? `This is you, ${user.name}!` : 'This is you!'}
+                            pinColor={'lightblue'}
                         />
                     </MapView>
                 }
-
-                {/* {coordinates.latitude && coordinates.longitude && (<>
-                    <View style={styles.mapStyle}>
-                        <WebViewLeaflet
-                            javaScriptEnabled={true}
-                            ref={component => (setWebView(component))}
-                            // The rest of your props, see the list below
-                            mapCenterPosition={{ lat: coordinates.latitude, lng: coordinates.longitude }}
-                            zoom={13}
-                            onMessageReceived={onMessage}
-                        />
-
-                    </View>
-                </>)} */}
 
                 <View style={styles.topToilets}>
                     <Text style={styles.bold}>Top Toilets</Text>

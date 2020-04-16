@@ -48,6 +48,7 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                             <View style={styles.innerPost}>
                                 <View style={styles.postsLeft}>
                                     <Text style={styles.postTitle}>{toilet.place}</Text>
+                                    <Text style={styles.postDate}>Total favorites: {toilet.isFavedBy.length}</Text>
                                     <Text style={styles.postDate}>Posted {moment(toilet.created).fromNow()}</Text>
                                 </View>
                                 <View style={styles.postsRight}>

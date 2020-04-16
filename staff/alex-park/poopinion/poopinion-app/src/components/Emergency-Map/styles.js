@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     mapStyle: {
         width: '100%',
-        height: (Dimensions.get('window').height) * 0.75,
+        height: (Dimensions.get('window').height) * 0.55,
         marginTop: '2.5%'
     },
     buttonContainer: {
@@ -26,25 +26,53 @@ const styles = StyleSheet.create({
         color: 'white',
         borderRadius: 10,
         textAlign: 'center',
-        opacity: 0.7
-    },
-    danger: {
-        backgroundColor: '#df7861'
-    },
-    warning: {
-        backgroundColor: '#df7861'
-    },
-    safe: {
+        opacity: 0.7,
         backgroundColor: '#df7861'
     },
     sliderContainer: {
-        flex: 1, 
-        flexDirection: 'row', 
+        flex: 1,
+        flexDirection: 'row',
         alignItems: 'center'
     },
     slider: {
         width: '90%',
         alignSelf: 'center'
+    },
+    radiusLength: { 
+        flex: 1, 
+        flexDirection: 'row' 
+    },
+    buttonMargin: { 
+        marginRight: 5 
+    },
+    bold: {
+        fontWeight: 'bold'
+    },
+    calloutContainer: {
+        width: 200, 
+        height: 200 
+    },
+    centerText: {
+        textAlign: 'center'
+    },
+    calloutImage: {
+        flex: 1, 
+        width: Dimensions.get('window').width * 0.18, 
+        height: Dimensions.get('window').width * 0.18, 
+        margin: 0
+    },
+    calloutTitle: { 
+        fontSize: 18, 
+        fontWeight: 'bold', 
+        fontStyle: 'italic' 
+    },
+    windowInfo: {
+        marginTop: 10,
+        width: '95%',
+        marginHorizontal: '2.5%'
+    },
+    textInfo: {
+        lineHeight: 20
     }
 })
 
