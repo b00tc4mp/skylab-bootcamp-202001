@@ -27,7 +27,7 @@ const options = ({ route }) => ({
 })
 
 const tabOptions = {
-    activeTintcolor: colors.SECONDARY,
+    activeTintColor: colors.BACKGROUND,
     inactiveTintColor: 'lightgrey',
     style: {
         backgroundColor: colors.MAIN
