@@ -1,16 +1,17 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
         justifyContent: 'center',
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
     },
     header: {
         flex: 0.5,
         flexDirection: 'row',
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         justifyContent: 'space-between',
         padding: 15,
 
@@ -18,20 +19,20 @@ const styles = StyleSheet.create({
     modalHeader: {
         height: 60,
         flexDirection: 'row',
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         alignItems: 'center',
         paddingHorizontal: 25,
         justifyContent: 'space-between'
     },
 
     modalButton: {
-        color: '#EFEBDA',
+        color: colors.SECONDARY,
         paddingTop: 10
     },
 
     settingsContainer: {
         flex: 1,
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         justifyContent: 'space-between',
         paddingHorizontal: 15,
         paddingVertical: 50
@@ -49,24 +50,24 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        fontFamily: 'montserrat'
+        fontFamily: fonts.REGULAR
 
     },
 
     sectionHeader: {
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         alignSelf: 'center'
     },
 
     textInput: {
         height: '160%',
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         width: '60%',
         alignSelf: 'flex-end',
         paddingHorizontal: 10,
-        borderColor: '#EFEBDA',
+        borderColor: colors.SECONDARY,
         borderWidth: 2,
-        color: '#EFEBDA',
+        color: colors.SECONDARY,
     },
 
     bottomSettings: {
@@ -77,23 +78,23 @@ const styles = StyleSheet.create({
     headerText: {
         paddingTop: 10,
         alignSelf: 'center',
-        color: '#EFEBDA',
-        fontFamily: 'montserrat-semi',
+        color: colors.SECONDARY,
+        fontFamily: fonts.SEMI,
         fontSize: 18,
         alignSelf: 'flex-end'
     },
     modalHeaderText: {
         paddingTop: 10,
         alignSelf: 'center',
-        color: '#EFEBDA',
+        color: colors.SECONDARY,
         fontWeight: 'bold',
         fontSize: 18,
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
     },
     noImage: {
         width: 100,
         height: 100,
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         justifyContent: 'center',
         borderRadius: 10,
     },
@@ -111,17 +112,17 @@ const styles = StyleSheet.create({
     logoutImage: {
         height: 22,
         width: 22,
-        tintColor: '#EFEBDA'
+        tintColor: colors.SECONDARY
     },
 
     dataType: {
         alignSelf: 'center',
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         paddingBottom: 30,
     },
     data: {
         alignSelf: 'center',
-        fontFamily: 'montserrat'
+        fontFamily: fonts.REGULAR
     },
     topData: {
         //Leave this here for extra styling later
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     actionButton: {
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: "#82A4B3",
+        borderColor: colors.MAIN,
         height: 40,
         width: 150,
         alignSelf: 'center',
@@ -172,23 +173,23 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         letterSpacing: 1,
-        color: '#82A4B3'
+        color: colors.MAIN
 
     },
     input: {
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         flex: 0.8,
-        color: '#EFEBDA',
+        color: colors.SECONDARY,
         borderRadius: 5,
         alignItems: 'center',
         paddingLeft: 5,
-        fontFamily: 'montserrat',
+        fontFamily: fonts.REGULAR,
     },
 
     text: {
-        fontFamily: 'montserrat',
+        fontFamily: fonts.REGULAR,
         textAlign: 'center'
     },
 })

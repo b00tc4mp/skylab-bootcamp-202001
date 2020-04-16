@@ -1,18 +1,18 @@
 import React from 'react'
 import { StepOneContainer, StepTwoContainer, StepThreeContainer } from '../../components'
 import { createStackNavigator } from "@react-navigation/stack"
-
+import { colors, fonts } from '../../constants'
 const BuilderStack = createStackNavigator()
 
 const options = {
     headerBackTitleVisible: false,
     headerStyle: {
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
     },
     headerTitleStyle: {
-        fontFamily: 'montserrat-semi'
+        fontFamily: fonts.SEMI
     },
-    headerTintColor: '#EFEBDA'
+    headerTintcolor: colors.SECONDARY
 }
 
 export default () => (

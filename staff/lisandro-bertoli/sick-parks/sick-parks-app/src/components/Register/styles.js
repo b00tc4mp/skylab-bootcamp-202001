@@ -1,44 +1,45 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: 350,
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
 
     },
     input: {
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         flex: 0.15,
         width: '75%',
-        color: '#EFEBDA',
+        color: colors.SECONDARY,
         alignItems: 'center',
         paddingHorizontal: 10,
-        borderColor: '#EFEBDA',
+        borderColor: colors.SECONDARY,
         borderWidth: 2,
-        fontFamily: 'montserrat'
+        fontFamily: fonts.REGULAR
     },
     buttonContainer: {
         alignItems: 'center',
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 2,
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         padding: 10,
         width: '75%',
         alignSelf: 'center',
         marginTop: 10
     },
     button: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi'
+        color: colors.MAIN,
+        fontFamily: fonts.SEMI
     },
 
     anchor: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat'
+        color: colors.MAIN,
+        fontFamily: fonts.REGULAR
     },
 
     danger: {

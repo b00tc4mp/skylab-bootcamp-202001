@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
@@ -15,10 +16,10 @@ const styles = StyleSheet.create({
     },
     picker: {
         height: 40,
-        color: '#EFEBDA',
+        color: colors.SECONDARY,
         width: '60%',
-        backgroundColor: '#82A4B3',
-        borderColor: '#EFEBDA',
+        backgroundColor: colors.MAIN,
+        borderColor: colors.SECONDARY,
         borderWidth: 2
     },
     inputsContainer: {
@@ -30,22 +31,22 @@ const styles = StyleSheet.create({
     },
 
     featureProp: {
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         paddingBottom: 10,
     },
 
     textInput: {
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         width: '60%',
         alignSelf: 'center',
         padding: 10,
-        borderColor: '#EFEBDA',
+        borderColor: colors.SECONDARY,
         borderWidth: 2,
-        fontFamily: 'montserrat'
+        fontFamily: fonts.REGULAR
     },
     secondaryButton: {
         alignItems: 'center',
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 2,
         backgroundColor: 'white',
         padding: 10,
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     button: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi'
+        color: colors.MAIN,
+        fontFamily: fonts.SEMI
     }
 
 })

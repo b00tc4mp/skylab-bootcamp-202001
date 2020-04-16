@@ -1,18 +1,18 @@
-export const COLORS = {
-    main: '#82A4B3',
-    secondary: '#EFEBDA',
-    background: '#EDF4F9'
+export const colors = {
+    MAIN: '#82A4B3',
+    SECONDARY: '#EFEBDA',
+    BACKGROUND: '#EDF4F9'
 }
 
-export const FONTS = {
-    regular: 'montserrat',
-    semiBold: 'montserrat-semi',
-    bold: 'montserrat-bold'
+export const fonts = {
+    REGULAR: 'montserrat',
+    SEMI: 'montserrat-semi',
+    BOLD: 'montserrat-bold'
 }
 
-export const IMAGES = {
-    home: require('../assets/home-1.jpg'),
-    filterLeft: require('../assets/left-side.png'),
-    filterRight: require('../assets/right-side.png'),
-    searchIcon: require('../assets/icon-search.png')
+export const images = {
+    HOME: require('../assets/home-1.jpg'),
+    FILTER_LEFT: require('../assets/left-side.png'),
+    FILTER_RIGHT: require('../assets/right-side.png'),
+    SEARCH: require('../assets/icon-search.png')
 }

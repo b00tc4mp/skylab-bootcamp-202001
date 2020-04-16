@@ -1,12 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native'
-
+import { colors, fonts } from '../../../constants'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         justifyContent: 'space-around',
-
         paddingHorizontal: 10,
         paddingBottom: 10
     },
@@ -15,54 +14,52 @@ const styles = StyleSheet.create({
         flex: 0.1,
         paddingHorizontal: 10,
         flexDirection: 'row',
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         alignItems: 'center',
         justifyContent: 'space-between'
     },
 
     mapStyle: {
-
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height * 0.855,
     },
 
     modalText: {
-        color: '#82A4B3',
+        color: colors.MAIN,
         fontSize: 16,
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
     },
-
 
     itemContainer: {
         flex: 1,
         marginVertical: 10,
         paddingBottom: 10,
         borderBottomWidth: 2,
-        borderBottomColor: '#EFEBDA',
+        borderBottomColor: colors.SECONDARY,
     },
     itemLabel: {
         alignSelf: 'center',
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         fontSize: 16,
         marginBottom: 5
     },
     textInput: {
         height: '170%',
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         width: '60%',
         alignSelf: 'flex-end',
         paddingHorizontal: 10,
-        borderColor: '#EFEBDA',
+        borderColor: colors.SECONDARY,
         borderWidth: 2,
-        color: '#EFEBDA',
-        fontFamily: 'montserrat',
+        color: colors.SECONDARY,
+        fontFamily: fonts.REGULAR,
 
     },
     nextButton: {
         alignItems: 'center',
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 2,
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         padding: 10,
         width: '75%',
         alignSelf: 'center',
@@ -70,12 +67,12 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi'
+        color: colors.MAIN,
+        fontFamily: fonts.SEMI
     },
-    label: {
-        fontFamily: 'montserrat-semi'
 
+    label: {
+        fontFamily: fonts.SEMI
     }
 
 })

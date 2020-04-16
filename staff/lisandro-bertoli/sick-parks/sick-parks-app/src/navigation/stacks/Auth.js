@@ -1,16 +1,17 @@
 import React from 'react'
 import { createStackNavigator } from "@react-navigation/stack"
 import { LoginContainer, RegisterContainer, LandingContainer } from '../../components'
+import { colors, fonts } from '../../constants'
 
 const options = {
     headerBackTitleVisible: false,
     headerStyle: {
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
     },
     headerTitleStyle: {
-        fontFamily: 'montserrat-semi'
+        fontFamily: fonts.SEMI
     },
-    headerTintColor: '#EFEBDA'
+    headerTintcolor: colors.SECONDARY
 }
 
 const AuthStack = createStackNavigator()

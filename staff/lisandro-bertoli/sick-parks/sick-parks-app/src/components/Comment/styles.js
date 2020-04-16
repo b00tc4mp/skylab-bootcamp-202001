@@ -1,19 +1,19 @@
 import { StyleSheet } from 'react-native';
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     commentContainer: {
         marginVertical: 15,
         borderWidth: 2,
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderRadius: 5,
         padding: 15,
-
-        backgroundColor: '#EFEBDA',
-        justifyContent: 'space-between'
+        backgroundColor: colors.SECONDARY,
+        justifyContent: 'space-between',
     },
 
     commentPublisher: {
-        fontFamily: 'montserrat-semi'
+        fontFamily: fonts.SEMI
     },
 
     commentHeader: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
 
     commentBodyText: {
-        fontFamily: 'montserrat',
+        fontFamily: fonts.REGULAR,
     },
     commentFooter: {
         width: '30%',

@@ -4,6 +4,7 @@ import { StyleSheet, Image } from 'react-native'
 
 import HomeStack from './stacks/Home'
 import { NotAllowedContainer } from '../components'
+import { colors } from '../constants'
 
 const Tabs = createBottomTabNavigator()
 
@@ -26,10 +27,10 @@ const options = ({ route }) => ({
 })
 
 const tabOptions = {
-    activeTintColor: '#EFEBDA',
+    activeTintcolor: colors.SECONDARY,
     inactiveTintColor: 'lightgrey',
     style: {
-        backgroundColor: '#82A4B3'
+        backgroundColor: colors.MAIN
     }
 }
 
@@ -49,6 +50,6 @@ const styles = StyleSheet.create({
     icon: {
         width: 25,
         height: 25,
-        tintColor: '#EFEBDA'
+        tintColor: colors.SECONDARY
     }
 })

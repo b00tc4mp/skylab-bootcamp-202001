@@ -1,20 +1,21 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         flex: 1,
         paddingHorizontal: 15
     },
     scroll: {
-        backgroundColor: '#EDF4F9'
+        backgroundColor: colors.BACKGROUND
     },
     noComments: {
         alignItems: 'center',
 
     },
     text: {
-        fontFamily: 'montserrat',
+        fontFamily: fonts.REGULAR,
     },
 })
 

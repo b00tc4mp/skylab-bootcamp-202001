@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     main: {
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         width: 250,
         flex: 0.11,
         borderRadius: 5,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
         letterSpacing: 1,
-        color: '#82A4B3'
+        color: colors.MAIN
 
     },
     anchor: {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         letterSpacing: 1,
-        color: '#82A4B3'
+        color: colors.MAIN
     }
 })
 

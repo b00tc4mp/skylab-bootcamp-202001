@@ -3,6 +3,7 @@ import { TextInput, Picker, View, Text } from 'react-native'
 import Button from '../Button'
 import Feedback from '../Feedback'
 import styles from "./styles";
+import { colors } from '../../constants';
 
 export default function ({ onNewFeature, error }) {
     const [feature, setFeature] = useState({ name: 'rail', size: 's', description: '' })
@@ -43,7 +44,7 @@ export default function ({ onNewFeature, error }) {
             <View style={styles.inputsContainer}>
                 <Text style={styles.featureProp}>Description:</Text>
                 <TextInput
-                    selectionColor='#EDF4F9'
+                    selectionColor={colors.BACKGROUND}
                     value={feature.description}
                     placeholder='Eg: Gnarly kinked rail'
                     style={styles.textInput}

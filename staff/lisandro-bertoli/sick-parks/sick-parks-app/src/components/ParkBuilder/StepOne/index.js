@@ -4,6 +4,7 @@ import Button from '../../Button'
 import Feedback from '../../Feedback'
 import MapViewContainer from '../../MapViewContainer'
 import styles from './styles'
+import { colors } from '../../../constants'
 
 export default function StepOne({ onToStepTwo, error }) {
     const [name, setName] = useState()
@@ -23,18 +24,18 @@ export default function StepOne({ onToStepTwo, error }) {
                     <View style={styles.topContainer}>
                         <View style={styles.inputsContainer}>
                             <Text style={styles.label}>Name:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
+                            <TextInput selectionColor={colors.BACKGROUND} placeholder='Eg: Oberjoch Park' style={styles.textInput} onChangeText={(text) => setName(text)} />
                         </View>
 
                         <View style={styles.inputsContainer}>
                             <Text style={styles.label}>Resort:</Text>
 
-                            <TextInput selectionColor='#EDF4F9' placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
+                            <TextInput selectionColor={colors.BACKGROUND} placeholder='Eg: Grindelwald' style={styles.textInput} onChangeText={(text) => setResort(text)} />
                         </View>
 
                         <View style={styles.inputsContainer}>
                             <Text style={styles.label}>Flow:</Text>
-                            <TextInput selectionColor='#EDF4F9' placeholder='Eg: Jib/Rail garden' style={styles.textInput} onChangeText={(text) => setFlow(text)} />
+                            <TextInput selectionColor={colors.BACKGROUND} placeholder='Eg: Jib/Rail garden' style={styles.textInput} onChangeText={(text) => setFlow(text)} />
                         </View>
 
 

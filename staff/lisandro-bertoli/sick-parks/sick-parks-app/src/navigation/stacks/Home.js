@@ -1,15 +1,15 @@
 import React from 'react'
 import { SearchContainer, ResultsContainer, ParkDetailsContainer } from '../../components'
-import { COLORS, FONTS } from '../../constants'
+import { colors, fonts } from '../../constants'
 import { createStackNavigator } from "@react-navigation/stack"
 
 const HomeStack = createStackNavigator()
 
 const options = {
     headerBackTitleVisible: false,
-    headerStyle: { backgroundColor: COLORS.main },
-    headerTitleStyle: { fontFamily: FONTS.semiBold },
-    headerTintColor: COLORS.secondary
+    headerStyle: { backgroundColor: colors.MAIN },
+    headerTitleStyle: { fontFamily: fonts.SEMI },
+    headerTintColor: colors.SECONDARY
 }
 
 

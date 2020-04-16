@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
@@ -22,8 +23,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         shadowColor: 'white',
         shadowOpacity: 100,
-        fontFamily: 'montserrat'
-
+        fontFamily: fonts.REGULAR
     },
 
     optionsContainer: {
@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         width: '100%',
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         justifyContent: 'space-between'
     },
     topImageContainer: {
         flex: 1,
-        backgroundColor: '#EFEBDA'
+        backgroundColor: colors.SECONDARY
 
     },
     topImage: {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     queryIcon: {
         width: 30,
         height: 30,
-        tintColor: '#82A4B3'
+        tintColor: colors.MAIN
     },
     queryButton: {
         paddingLeft: 10,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 100
     },
     buttonText: {
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         alignSelf: 'center'
     },
 

@@ -1,18 +1,20 @@
 import { StyleSheet } from 'react-native';
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     newCommentContainer: {
         marginVertical: 15,
         borderWidth: 2,
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderRadius: 5,
         paddingBottom: 10,
         justifyContent: 'space-between'
     },
+
     newComment: {
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         height: 80,
-        fontFamily: 'montserrat',
+        fontFamily: fonts.REGULAR,
     },
 
     buttonsContainer: {
@@ -23,7 +25,7 @@ const styles = StyleSheet.create({
     },
 
     secondaryButton: {
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 1,
         backgroundColor: 'white',
         padding: 5,
@@ -31,8 +33,8 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat'
+        color: colors.MAIN,
+        fontFamily: fonts.REGULAR
 
     },
 });

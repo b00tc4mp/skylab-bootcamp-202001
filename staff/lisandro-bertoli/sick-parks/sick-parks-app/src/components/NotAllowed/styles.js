@@ -1,16 +1,17 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: '100%',
         justifyContent: 'center',
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
     },
     header: {
         flex: 0.5,
         flexDirection: 'row',
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
         justifyContent: 'space-between',
         padding: 15,
 
@@ -18,8 +19,8 @@ const styles = StyleSheet.create({
     headerText: {
         paddingTop: 10,
         alignSelf: 'center',
-        color: '#EFEBDA',
-        fontFamily: 'montserrat-semi',
+        color: colors.SECONDARY,
+        fontFamily: fonts.SEMI,
         fontSize: 18,
         alignSelf: 'flex-end'
     },
@@ -37,13 +38,13 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        fontFamily: 'montserrat',
+        fontFamily: fonts.REGULAR,
         textAlign: 'center'
     },
     actionButton: {
         borderWidth: 1,
         borderStyle: 'solid',
-        borderColor: "#82A4B3",
+        borderColor: colors.MAIN,
         height: 40,
         width: 150,
         alignSelf: 'center',
@@ -53,10 +54,9 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontSize: 16,
-        fontFamily: 'montserrat-semi',
+        fontFamily: fonts.SEMI,
         letterSpacing: 1,
-        color: '#82A4B3'
-
+        color: colors.MAIN
     },
 
 })

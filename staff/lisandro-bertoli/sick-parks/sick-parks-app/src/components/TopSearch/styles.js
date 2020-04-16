@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
@@ -8,7 +9,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         alignItems: 'flex-start',
         justifyContent: 'center',
-        backgroundColor: '#82A4B3',
+        backgroundColor: colors.MAIN,
     },
     input: {
         borderTopRightRadius: 20,
@@ -18,12 +19,12 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         paddingLeft: 10,
         backgroundColor: 'white',
-        fontFamily: 'montserrat'
+        fontFamily: fonts.REGULAR
     },
     queryIcon: {
         width: 15,
         height: 15,
-        tintColor: '#82A4B3'
+        tintColor: colors.MAIN
     },
     iconContainer: {
         paddingLeft: 10,

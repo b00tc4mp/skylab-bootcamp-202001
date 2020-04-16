@@ -1,12 +1,12 @@
 import { StyleSheet, Dimensions } from 'react-native'
-
+import { colors, fonts } from '../../../constants'
 const screenHeight = Dimensions.get('window').height
 const screenWidth = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     container: {
         height: screenHeight,
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         paddingBottom: screenHeight * 0.2,
         width: screenWidth * 0.9,
         paddingTop: 10,
@@ -44,24 +44,24 @@ const styles = StyleSheet.create({
 
     nextButton: {
         alignItems: 'center',
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 2,
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         padding: 10,
         width: '75%',
         alignSelf: 'center',
         marginTop: 10
     },
     button: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi'
+        color: colors.MAIN,
+        fontFamily: fonts.SEMI
     },
     label: {
-        fontFamily: 'montserrat-semi'
+        fontFamily: fonts.SEMI
 
     },
     text: {
-        fontFamily: 'montserrat'
+        fontFamily: fonts.REGULAR
     }
 
 })

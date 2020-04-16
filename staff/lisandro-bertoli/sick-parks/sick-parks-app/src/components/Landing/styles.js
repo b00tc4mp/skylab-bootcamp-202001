@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native'
+import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#EDF4F9',
+        backgroundColor: colors.BACKGROUND,
         width: '100%',
     },
     logo: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     },
     skipButton: {
         alignItems: 'center',
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 2,
         backgroundColor: 'white',
         padding: 10,
@@ -26,20 +27,18 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         alignItems: 'center',
-        borderColor: '#82A4B3',
+        borderColor: colors.MAIN,
         borderWidth: 2,
-        backgroundColor: '#EFEBDA',
+        backgroundColor: colors.SECONDARY,
         padding: 15,
         width: '80%',
         alignSelf: 'center',
         marginTop: 10
     },
     button: {
-        color: '#82A4B3',
-        fontFamily: 'montserrat-semi',
+        color: colors.MAIN,
+        fontFamily: fonts.SEMI,
     },
-
-
 })
 
 export default styles
