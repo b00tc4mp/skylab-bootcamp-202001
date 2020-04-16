@@ -183,7 +183,7 @@ export default function App() {
   async function handleQuerySearch(_query) {
     try {
       if (!_query || typeof _query === 'undefined') {
-        await Alert.alert('You have not added any text 🚽...')
+        await Alert.alert('You have not added any text 🚽...', 'Try typing something on the text box!')
 
       } else {
         await setQuery(_query)
@@ -202,7 +202,7 @@ export default function App() {
       const toiletId = await publishToilet(place, image, disabledToilet, coordinates)
       await publishComment(toiletId, rating)
 
-      Alert.alert('Toilet posted! Thank you! 🚽❤️')
+      Alert.alert('Toilet posted! Thank you! 🚽❤️', 'You can now see it from your profile.')
       __handleUser__() // 
       setView('landing')
 
@@ -229,8 +229,11 @@ export default function App() {
 
   async function handleToggleFav(toiletId) {
     if (!user) {
-      Alert.alert('You are not logged in yet!')
-      handleGoToLogin();
+      Alert.alert('You are not logged in yet!', 'This feature is only available for logged users. Do you want to go to the Login site or stay here?',
+        [
+          { text: 'Stay here', onPress: () => { }, style: 'cancel' },
+          { text: 'Go to Login', onPress: () => handleGoToLogin() }
+        ], { cancelable: false })
     } else {
       try {
         await toggleFavToilet(toiletId)
@@ -291,7 +294,7 @@ export default function App() {
         await publishComment(detailedToilet.id.toString(), data)
         __handleToiletScore__()
         __handleTopToilets__()
-        Alert.alert('Thank you for your rating! 🚽❤️')
+        Alert.alert('Rating successfully added! 🚽❤️', 'Remember that you can update the comment again at any time.')
         setView('landing')
       })()
     } catch ({ message }) {
@@ -305,7 +308,7 @@ export default function App() {
         await updateComment(commentId, data)
         __handleToiletScore__()
         __handleTopToilets__()
-        Alert.alert('Comment updated, thank you! 🚽❤️')
+        Alert.alert('Rating updated, thank you! 🚽❤️', 'Remember that you can update the comment again at any time.')
         setView('landing')
       })()
     } catch ({ message }) {
@@ -317,7 +320,7 @@ export default function App() {
     try {
       (async () => {
         await deleteComment(toiletId, commentId)
-        Alert.alert('Comment successfully deleted! 💩')
+        Alert.alert('Comment successfully deleted! 💩', 'Remember that you can add a new comment to the toilet post at any time.')
         // __handleTopToilets__() //AFFECTS PERFORMANCE!!! CONSIDER REMOVING
         setView('landing')
       })()
@@ -330,7 +333,7 @@ export default function App() {
     try {
       await updateUser(data)
 
-      Alert.alert('Personal info updated!')
+      Alert.alert('Personal info updated!', 'Remember that you can update your info again at any time.')
       __handleUser__()
       setView('landing')
 
@@ -343,7 +346,7 @@ export default function App() {
     try {
       await deleteToilet(toiletId)
 
-      Alert.alert('Toilet successfully deleted! 🚽')
+      Alert.alert('Toilet successfully deleted! 🚽', 'The toilet will no longer appear on the database nor your profile.')
       setView('landing')
 
     } catch ({ message }) {
@@ -364,8 +367,11 @@ export default function App() {
 
   function handleGoToUpdateUser() {
     if (!user) {
-      Alert.alert('You are not logged in yet!')
-      handleGoToLogin();
+      Alert.alert('You are not logged in yet!', 'This feature is only available for logged users. Do you want to go to the Login site or stay here?',
+        [
+          { text: 'Stay here', onPress: () => { }, style: 'cancel' },
+          { text: 'Go to Login', onPress: () => handleGoToLogin() }
+        ], { cancelable: false })
     } else {
       __handleUser__()
       setView('update')
@@ -391,8 +397,11 @@ export default function App() {
 
   function handleGoToFavorites() {
     if (!user) {
-      Alert.alert('You are not logged in yet!')
-      handleGoToLogin();
+      Alert.alert('You are not logged in yet!', 'This feature is only available for logged users. Do you want to go to the Login site or stay here?',
+        [
+          { text: 'Stay here', onPress: () => { }, style: 'cancel' },
+          { text: 'Go to Login', onPress: () => handleGoToLogin() }
+        ], { cancelable: false })
     } else {
       try {
         (async () => {
@@ -410,8 +419,11 @@ export default function App() {
 
   function handleGoToProfile() {
     if (!user) {
-      Alert.alert('You are not logged in yet!')
-      handleGoToLogin();
+      Alert.alert('You are not logged in yet!', 'This feature is only available for logged users. Do you want to go to the Login site or stay here?',
+        [
+          { text: 'Stay here', onPress: () => { }, style: 'cancel' },
+          { text: 'Go to Login', onPress: () => handleGoToLogin() }
+        ], { cancelable: false })
     } else {
       __handleUser__()
       setView('profilePage')
@@ -420,8 +432,11 @@ export default function App() {
 
   function handleGoToPublishToilet() {
     if (!user) {
-      Alert.alert('You are not logged in yet!')
-      handleGoToLogin();
+      Alert.alert('You are not logged in yet!', 'This feature is only available for logged users. Do you want to go to the Login site or stay here?',
+        [
+          { text: 'Stay here', onPress: () => { }, style: 'cancel' },
+          { text: 'Go to Login', onPress: () => handleGoToLogin() }
+        ], { cancelable: false })
     } else {
       setView('newToilet')
     }
@@ -429,8 +444,11 @@ export default function App() {
 
   function handleGoToPublishComment() {
     if (!user) {
-      Alert.alert('You are not logged in yet!')
-      handleGoToLogin();
+      Alert.alert('You are not logged in yet!', 'This feature is only available for logged users. Do you want to go to the Login site or stay here?',
+        [
+          { text: 'Stay here', onPress: () => { }, style: 'cancel' },
+          { text: 'Go to Login', onPress: () => handleGoToLogin() }
+        ], { cancelable: false })
     } else {
       setView('newComment')
     }
@@ -458,7 +476,7 @@ export default function App() {
         {view === 'details' && detailedToilet && <ToiletDetails user={user} onDeleteToilet={handleDeleteToilet} onDelete={handleDeleteComment} globalRating={globalRating} toilet={detailedToilet} onComment={handleGoToPublishComment} onFav={handleToggleFav} onThumbUp={handleToggleThumbUp} onThumbDown={handleToggleThumbDown} />}
         {view === 'newComment' && <NewComment toilet={detailedToilet} onUpdate={handleUpdateComment} onSubmit={handlePublishComment} user={user} />}
         {view === 'update' && <UpdateUser user={user} error={error} goToLanding={handleGoToLanding} onSubmit={handleUpdateUser} />}
-        {view === 'map' && <EmergencyMap coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} user={user}/>}
+        {view === 'map' && <EmergencyMap coordinates={coordinates} topToilets={topToilets} onDetails={handleRetrieveToilet} user={user} />}
       </ScrollView>
 
       {goLanding && <NavigationBarBottom style={styles.navbar} goToNewToilet={handleGoToPublishToilet} goToLanding={handleGoToLanding} goToFavorites={handleGoToFavorites} goToProfile={handleGoToProfile} />}

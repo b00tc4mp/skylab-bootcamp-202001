@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Picker, Slider, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
+import { View, ScrollView, Text, TextInput, TouchableOpacity, Image, Alert, Picker, Slider, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 import styles from './styles'
 
 function NewComment({ toilet, onSubmit, user, onUpdate }) {
@@ -126,35 +126,51 @@ function NewComment({ toilet, onSubmit, user, onUpdate }) {
                 <View>
                     {user.comments.length && typeof user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()) !== 'undefined' ? (<>
                         <TouchableOpacity onPress={() => {
-                            setLoading(true)
-                            onUpdate({
-                                rating: {
-                                    cleanness,
-                                    looks,
-                                    paymentRequired,
-                                    multipleToilets,
-                                    paperDeployment,
-                                    overallRating,
-                                    textArea
+                            Alert.alert(undefined, `Are you sure you want to update your rating for ${toilet.place}?`, [
+                                { text: 'Cancel', onPress: () => { } },
+                                {
+                                    text: 'I do!', onPress: () => {
+                                        setLoading(true)
+                                        onUpdate({
+                                            rating: {
+                                                cleanness,
+                                                looks,
+                                                paymentRequired,
+                                                multipleToilets,
+                                                paperDeployment,
+                                                overallRating,
+                                                textArea
+                                            }
+                                        }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })
+                                    }
                                 }
-                            }, { commentId: user.comments.find(comment => comment.commentedAt.toString() === toilet.id.toString()).id.toString() })
+                            ], { cancelable: false })
                         }}>
                             <Text style={styles.submit}>💩 SUBMIT 💩</Text>
                         </TouchableOpacity>
                     </>)
                         :
                         (<>
-                            <TouchableOpacity onPress={() => onSubmit({
-                                rating: {
-                                    cleanness,
-                                    looks,
-                                    paymentRequired,
-                                    multipleToilets,
-                                    paperDeployment,
-                                    overallRating,
-                                    textArea
-                                }
-                            })}>
+                            <TouchableOpacity onPress={() => {
+                                Alert.alert(undefined, `Are you sure you want to publish this rating on ${toilet.place}?`, [
+                                    { text: 'Cancel', onPress: () => { } },
+                                    {
+                                        text: 'I do!', onPress: () => {
+                                            onSubmit({
+                                                rating: {
+                                                    cleanness,
+                                                    looks,
+                                                    paymentRequired,
+                                                    multipleToilets,
+                                                    paperDeployment,
+                                                    overallRating,
+                                                    textArea
+                                                }
+                                            })
+                                        }
+                                    }
+                                ], { cancelable: false })
+                            }}>
                                 <Text style={styles.submit}>💩 SUBMIT 💩</Text>
                             </TouchableOpacity>
                         </>)}

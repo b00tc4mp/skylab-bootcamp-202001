@@ -222,7 +222,14 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                                                 <Text>{comment.thumbsDown.length}</Text>
                                             </View>
 
-                                            <TouchableOpacity style={styles.trashContainer} onPress={() => onDelete(toilet.id.toString(), comment.id.toString())}>
+                                            <TouchableOpacity style={styles.trashContainer} onPress={() => {
+                                                Alert.alert('Warning!', `You are about to delete your rating for '${toilet.place}'. Are you sure you want to proceed?`, [
+                                                    { text: 'Cancel', onPress: () => { } },
+                                                    {
+                                                        text: 'I do!', onPress: () => onDelete(toilet.id.toString(), comment.id.toString())
+                                                    }
+                                                ], { cancelable: false })
+                                                }}>
                                                 {user && comment.publisher._id.toString() === user.id.toString() && <Image style={styles.trash} source={require('../../../assets/delete.png')} />}
                                             </TouchableOpacity>
                                         </View>
@@ -235,7 +242,14 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                     </View>
 
                     {user && toilet.publisher.id.toString() === user.id.toString() && (<>
-                        <TouchableOpacity onPress={() => onDeleteToilet(toilet.id.toString())} style={styles.deleteContainer}>
+                        <TouchableOpacity onPress={() => {
+                            Alert.alert('Warning!', `You are about to delete the toilet '${toilet.place}'. This will delete all info about the toilet as well as its ratings and comments. Are you sure you want to proceed?`, [
+                                { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+                                {
+                                    text: 'I do!', onPress: () => onDeleteToilet(toilet.id.toString())
+                                }
+                            ], { cancelable: false })
+                        }} style={styles.deleteContainer}>
                             <Text style={styles.deleteButton}>🗑️ Delete this toilet</Text>
                         </TouchableOpacity>
                     </>)}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
 import { TextInputMask } from 'react-native-masked-text'
-import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Picker, Alert, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
 
 function UpdateUser({ onSubmit, error, goToLanding, user }) {
     const [name, setName] = useState(user.name)
@@ -64,9 +64,17 @@ function UpdateUser({ onSubmit, error, goToLanding, user }) {
                         <ActivityIndicator size="large" color="#0000ff" />
                     </>)}
                     <Text style={styles.button} onPress={() => {
-                        setLoading(true)
-                        if (error) setLoading(false)
-                        onSubmit({ name, surname, age, newPassword, password, gender })
+                        Alert.alert(undefined, 'Are you sure you want to update this info?', [
+                            { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+                            {
+                                text: 'I do!', onPress: () => {
+                                    setLoading(true)
+                                    if (error) setLoading(false)
+                                    onSubmit({ name, surname, age, newPassword, password, gender })
+                                }
+                            }
+                        ], { cancelable: false })
+
                     }}>💩 Submit! 💩</Text>
 
                     <TouchableOpacity style={styles.right}>
