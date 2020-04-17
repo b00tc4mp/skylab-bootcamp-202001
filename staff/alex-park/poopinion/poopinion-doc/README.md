@@ -17,6 +17,11 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 - User interface
 
 ## 🚽 History of updates 🚽
+2020/04/17:
+- Added the Emergency Map: you can now find toilets based on a map proximity radius and an specific toilet rating.
+- Upgraded all Alert messages, with option verifications for sensible buttons (e.g. Delete Toilet/Comments)
+- Minor fixes
+
 2020/04/09:
 - Fixed doc and diagrams
 
