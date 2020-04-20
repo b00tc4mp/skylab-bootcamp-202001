@@ -1,4 +1,4 @@
-# 💩 Poopinion v.1.0.12 💩
+# 💩 Poopinion v.1.0.13 💩
 ![](./images/header.png)
 ## 🚽 Description 🚽
 Poopinion is a mobile-oriented app purposed on rating toilets on public spaces, such as restaurants, events or companies. The aim for this project is to increase the average quality of those places and keep then clean, hygienic and pretty. Toilet necessities are evident and society needs better ways to know the quality of toilets they might be end up using.
@@ -17,6 +17,11 @@ The application is inspired by other rating apps such as TripAdvisor, where you 
 - User interface
 
 ## 🚽 History of updates 🚽
+2020/04/20:
+- Fixed component structure: All files are now into a more semantic folder system, as well as a deep componetization of all iterable and reusable items
+- Added a more flexible Profile option system, where you can switch between posts and comments
+- Minor styling and performance fixes
+
 2020/04/17:
 - Added the Emergency Map: you can now find toilets based on a map proximity radius and an specific toilet rating.
 - Upgraded all Alert messages, with option verifications for sensible buttons (e.g. Delete Toilet/Comments)
