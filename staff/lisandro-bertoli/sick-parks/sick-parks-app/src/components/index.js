@@ -6,6 +6,7 @@ import ResultsItem from './ResultsItem'
 import Results from './Results'
 import Search from './Search'
 import TopSearch from './TopSearch'
+import Map from './Map'
 import MapViewContainer from './MapViewContainer'
 import Profile from './Profile'
 import ParkDetails from './ParkDetails'
@@ -37,6 +38,7 @@ export {
     Results,
     Search,
     TopSearch,
+    Map,
     MapViewContainer,
     Profile,
     ParkDetails,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Image, ScrollView, Modal, Alert } from 'react-native'
 import MyButton from '../Button'
+import Map from '../Map'
 import FeatureInput from '../FeatureInput'
 import Feature from '../Feature'
 import Comments from '../Comments'
@@ -115,21 +116,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                         </Comments>
                     </Modal>
                     <View style={styles.mapContainer}>
-                        <MapView style={styles.mapStyle}
-                            provider={PROVIDER_GOOGLE}
-                            region={{
-                                latitude: park.location.coordinates[1],
-                                longitude: park.location.coordinates[0],
-                                latitudeDelta: 1,
-                                longitudeDelta: 1,
-                            }}>
-                            <MapView.Marker coordinate={{
-                                latitude: park.location.coordinates[1],
-                                longitude: park.location.coordinates[0],
-                                latitudeDelta: 1,
-                                longitudeDelta: 1,
-                            }} />
-                        </MapView>
+                        <Map coordinates={park.location.coordinates} />
                     </View>
 
                     {park.verified && (<View style={styles.approve}>
