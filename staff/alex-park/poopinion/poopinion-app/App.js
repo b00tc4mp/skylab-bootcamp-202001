@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Alert, ImageBackground, ScrollView, AsyncStorage, KeyboardAvoidingView, Dimensions } from 'react-native';
-import {
-  Register,
-  Login,
-  Landing,
-  NavigationBarTop,
-  NavigationBarBottom,
-  QueryResults,
-  Profile,
-  Favorites,
-  NewToilet,
-  ToiletDetails,
-  NewComment,
-  UpdateUser,
-  Readme,
-  EmergencyMap
-} from './src/components'
+import { StyleSheet, View, Alert, ImageBackground, ScrollView, AsyncStorage, Dimensions } from 'react-native';
+
+import { NavigationBarTop, NavigationBarBottom, Readme } from'./src/components'
+import { Register, Login, UpdateUser, Profile } from'./src/components/User'
+import { Landing, QueryResults, Favorites, NewComment, NewToilet, ToiletDetails } from'./src/components/Toilet'
+import { EmergencyMap } from'./src/components/Geolocation'
 
 import logic, {
   registerUser,
