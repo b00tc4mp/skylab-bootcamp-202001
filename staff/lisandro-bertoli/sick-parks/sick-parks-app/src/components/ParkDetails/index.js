@@ -5,7 +5,7 @@ import FeatureInput from '../FeatureInput'
 import Feature from '../Feature'
 import Comments from '../Comments'
 import CommentInput from '../CommentInput'
-import MapView from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import Feedback from '../Feedback'
 import styles from './styles'
 
@@ -116,17 +116,18 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                     </Modal>
                     <View style={styles.mapContainer}>
                         <MapView style={styles.mapStyle}
+                            provider={PROVIDER_GOOGLE}
                             region={{
                                 latitude: park.location.coordinates[1],
                                 longitude: park.location.coordinates[0],
-                                latitudeDelta: 0.1422,
-                                longitudeDelta: 0.121,
+                                latitudeDelta: 1,
+                                longitudeDelta: 1,
                             }}>
                             <MapView.Marker coordinate={{
                                 latitude: park.location.coordinates[1],
                                 longitude: park.location.coordinates[0],
-                                latitudeDelta: 0.1422,
-                                longitudeDelta: 0.121,
+                                latitudeDelta: 1,
+                                longitudeDelta: 1,
                             }} />
                         </MapView>
                     </View>

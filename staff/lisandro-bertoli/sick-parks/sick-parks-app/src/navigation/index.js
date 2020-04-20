@@ -5,7 +5,6 @@ import UserNavigation from './UserNav'
 import AnonymousNavigation from './AnonymousNav'
 import { AuthContext } from '../components/AuthProvider'
 import { __handleErrors__ } from '../handlers'
-import { retrieveUser } from 'sick-parks-logic'
 
 export default () => {
     const [loading, setLoading] = useState(true)

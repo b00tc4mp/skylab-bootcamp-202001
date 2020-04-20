@@ -1,11 +1,8 @@
 import React from 'react'
 import { ScrollView, View, Text } from 'react-native'
 import Button from '../../Button'
-import Feedback from '../../Feedback'
 import MapViewContainer from '../../MapViewContainer'
 import styles from './styles'
-
-
 
 export default function StepThree({ features, park, onConfirmation }) {
 
