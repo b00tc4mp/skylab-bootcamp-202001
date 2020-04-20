@@ -6,6 +6,7 @@ import PostComment from '../Post-Comment'
 import PostScore from '../Post-Score'
 import styles from './styles'
 import moment from 'moment'
+import FavButton from '../Fav-Button'
 
 function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete, onDeleteToilet }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))
@@ -31,11 +32,7 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                             <Text style={styles.postedAt}>Posted {moment(toilet.created).fromNow()}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                         </View>
                         <TouchableOpacity style={styles.headerRight} onPress={() => { onFav(toilet.id) }}>
-                            {user && toilet.isFavedBy.includes(user.id) ?
-                                (<Image style={styles.favButton} source={require('../../../assets/faved.png')} />)
-                                :
-                                (<Image style={styles.favButton} source={require('../../../assets/fav.png')} />)
-                            }
+                            <FavButton user={user} toilet={toilet} />
                         </TouchableOpacity>
                     </View>
 

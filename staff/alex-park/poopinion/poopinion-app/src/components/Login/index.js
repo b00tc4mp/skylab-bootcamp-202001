@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Feedback from '../Feedback'
 import styles from './styles'
-import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, Alert, ActivityIndicator, Linking } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, ActivityIndicator, Linking } from 'react-native'
 
 function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
     const [email, setEmail] = useState()

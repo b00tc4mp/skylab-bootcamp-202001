@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
-import { View, ScrollView, Slider, Text, SafeAreaView, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { View, ScrollView, Slider, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import MapView from 'react-native-maps'
 import moment from 'moment'
 import { isPointWithinRadius } from 'geolib'
@@ -15,7 +15,6 @@ function EmergencyMap({ coordinates, topToilets, onDetails, user }) {
 
     return (<>
         <ScrollView>
-
             <SafeAreaView style={styles.container}>
                 <MapView style={styles.mapStyle}
                     region={{

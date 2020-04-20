@@ -47,16 +47,10 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     headerRight: {
-        flex: 0.25,
+        flex: 0.25
     },
     postedAt: {
         fontStyle: 'italic'
-    },
-    favButton: {
-        resizeMode: 'contain',
-        width: '60%',
-        height: '60%',
-        alignSelf: 'center'
     },
     place: {
         fontSize: 25,

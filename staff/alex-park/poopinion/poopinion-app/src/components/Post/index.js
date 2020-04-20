@@ -3,6 +3,7 @@ import moment from 'moment'
 import { View, TouchableHighlight, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from './styles'
 import PoopRating from '../Poop-Rating'
+import FavButton from '../Fav-Button'
 
 function Post({ toilet, onDetails, onFav, user }) {
     const [loading, setLoading] = useState(undefined)
@@ -36,11 +37,7 @@ function Post({ toilet, onDetails, onFav, user }) {
                             <Text style={styles.postedAt}>Posted {moment(toilet.created).fromNow()}, by {toilet.publisher.name} {toilet.publisher.surname}</Text>
                         </View>
                         <TouchableOpacity style={styles.headerRight} onPress={() => { onFav(toilet.id) }}>
-                            {user && toilet.isFavedBy.includes(user.id) ?
-                                (<Image style={styles.favButton} source={require('../../../assets/faved.png')} />)
-                                :
-                                (<Image style={styles.favButton} source={require('../../../assets/fav.png')} />)
-                            }
+                            <FavButton user={user} toilet={toilet} />
                         </TouchableOpacity>
                     </View>
                 </View>
