@@ -6,12 +6,6 @@ import { PoopRating, PostComment, PostScore, FavButton } from '../'
 import styles from './styles'
 
 function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete, onDeleteToilet }) {
-    const [comments, setComments] = useState(toilet.comments.slice(0, 5))
-
-    useEffect(() => {
-        setComments(toilet.comments.slice(0, 5))
-    }, [toilet.comments])
-
     return (<>
         <ScrollView >
             <View style={styles.container}>
@@ -67,7 +61,6 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                             <Text style={styles.deleteButton}>🗑️ Delete this toilet</Text>
                         </TouchableOpacity>
                     </>)}
-
                 </View>
             </View>
         </ScrollView>

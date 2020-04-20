@@ -6,13 +6,6 @@ import moment from 'moment'
 
 function Profile({ user, onDetails, onToUpdateUser }) {
     const [view, setView] = useState('posts')
-    const [posts, setPosts] = useState(user.publishedToilets.slice(0, 5))
-    const [comments, setComments] = useState(user.comments.slice(0, 5))
-
-    useEffect(() => {
-        setPosts(user.publishedToilets.slice(0, 5))
-        setComments(user.comments.slice(0, 5))
-    }, [])
 
     return (<>
         <ScrollView style={styles.container}>
