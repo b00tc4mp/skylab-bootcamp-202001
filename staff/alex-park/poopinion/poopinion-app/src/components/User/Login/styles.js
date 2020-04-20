@@ -88,18 +88,6 @@ const styles = StyleSheet.create({
         width: '95%',
         marginHorizontal: '2.5%'
     },
-    bottomLeft: {
-        flex: 1.25,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start'
-    },
-    contactLogo: {
-        width: 40,
-        height: 40,
-        resizeMode: 'contain',
-        marginHorizontal: 10
-    },
     bottomRight: {
         flex: 0.75,
         alignItems: 'flex-end'

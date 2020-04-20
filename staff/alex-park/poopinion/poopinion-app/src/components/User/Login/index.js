@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Feedback } from '../../index'
+import { Feedback, Contact } from '../../'
 import styles from './styles'
 import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, ActivityIndicator, Linking } from 'react-native'
 
@@ -52,22 +52,10 @@ function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
                     </View>
 
                     <View style={styles.bottomRow}>
-                        <View style={styles.bottomLeft}>
-                            <TouchableOpacity onPress={() => { Linking.openURL('https://twitter.com/Krauvando_Park') }}>
-                                <Image style={styles.contactLogo} source={require('../../../../assets/twitter.png')} />
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => { Linking.openURL('https://github.com/alexiparkhio/skylab-bootcamp-202001/tree/develop-poopinion/staff/alex-park/poopinion') }}>
-                                <Image style={styles.contactLogo} source={require('../../../../assets/github.png')} />
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => { Linking.openURL('https://www.linkedin.com/in/%C3%A0lex-park-vi%C3%B1as-69a5a5a6/') }}>
-                                <Image style={styles.contactLogo} source={require('../../../../assets/linkedin.png')} />
-                            </TouchableOpacity>
-                        </View>
+                        <Contact />
 
                         <TouchableOpacity style={styles.bottomRight}>
-                            <Text style={styles.bottomRightButton} onPress={goToFAQs} >Read me!</Text>
+                            <Text style={styles.bottomRightButton} onPress={goToFAQs}>Read me!</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

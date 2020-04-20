@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { View, ScrollView, Text } from 'react-native'
 import styles from './styles'
-import Post from '../Post'
+import { Post } from '../'
 import { LocationMap } from '../../Geolocation'
+import { Contact } from '../../'
 
 function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     const [topTen, setTopTen] = useState(topToilets.slice(0, 10))
@@ -33,6 +34,10 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                     <Post user={user} toilet={toilet} onDetails={onDetails} onFav={onFav} />
                 </>))}
 
+            </View>
+
+            <View>
+                <Contact />
             </View>
         </ScrollView>
     </>)
