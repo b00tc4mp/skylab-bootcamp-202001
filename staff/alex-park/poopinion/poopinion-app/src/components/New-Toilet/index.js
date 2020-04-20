@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styles from './styles'
-import { ActivityIndicator, View, ScrollView, TouchableOpacity, Text, TextInput, Image, Button, Slider, Picker, KeyboardAvoidingView } from 'react-native'
+import { ActivityIndicator, View, ScrollView, TouchableOpacity, Text, Alert, TextInput, Image, Button, Slider, Picker, KeyboardAvoidingView } from 'react-native'
 import MapView from 'react-native-maps'
 import * as ImagePicker from 'expo-image-picker'
 
@@ -25,7 +25,7 @@ export default class NewToilet extends React.Component {
     }
 
     render() {
-        let { image, wheelchair } = this.state
+        let { image, wheelchair, place } = this.state
 
         return (<>
             <KeyboardAvoidingView behavior='height'>
@@ -165,7 +165,16 @@ export default class NewToilet extends React.Component {
                     </>)}
 
                     <TouchableOpacity >
-                        <Text style={styles.submitButton} onPress={this._onSubmit}>💩 Submit! 💩</Text>
+                        <Text style={styles.submitButton} onPress={() => {
+                            Alert.alert(undefined, `Are you sure you want to create a toilet post called '${place}'?`, [
+                                { text: 'Cancel', onPress: () => { } },
+                                {
+                                    text: 'I do!', onPress: () => {
+                                        this.onSubmit()
+                                    },
+                                }
+                            ], { cancelable: false })
+                        }}>💩 Submit! 💩</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </KeyboardAvoidingView>
