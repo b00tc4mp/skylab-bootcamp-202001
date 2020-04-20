@@ -13,7 +13,7 @@ import NewComment from './New-Comment'
 import UpdateUser from './Update-User'
 import Readme from './Readme'
 import EmergencyMap from './Emergency-Map'
-import Map from './Map'
+import Map from './User-Map'
 
 export {
     Register,

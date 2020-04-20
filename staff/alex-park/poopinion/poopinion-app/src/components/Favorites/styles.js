@@ -4,13 +4,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        width: '95%',
-        marginHorizontal: '2.5%',
+        width: '100%',
         marginVertical: 30
     },
     headerContainer: {
         flex: 1,
-        marginVertical: 0
+        marginVertical: 0,
+        marginHorizontal: '2.5%'
     },
     header: {
         fontSize: 25,
