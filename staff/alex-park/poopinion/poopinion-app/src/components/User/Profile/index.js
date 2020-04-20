@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
-import { Text, ScrollView, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native'
+import { Text, ScrollView, TouchableOpacity, View, Image, ActivityIndicator, FlatList } from 'react-native'
+import { LastPosts, LastComments } from '../'
 import moment from 'moment'
 
 function Profile({ user, onDetails, onToUpdateUser }) {
-    const [lastPosts, setLastPosts] = useState(user.publishedToilets.slice(0, 5))
-    const [lastComments, setLastComments] = useState(user.comments.slice(0, 5))
-    const [toiletLoading, setToiletLoading] = useState(undefined)
-    const [commentLoading, setCommentLoading] = useState(undefined)
+    const [view, setView] = useState('posts')
+    const [posts, setPosts] = useState(user.publishedToilets.slice(0, 5))
+    const [comments, setComments] = useState(user.comments.slice(0, 5))
 
     useEffect(() => {
-        setLastPosts(user.publishedToilets.slice(0, 5))
-        setLastComments(user.comments.slice(0, 5))
+        setPosts(user.publishedToilets.slice(0, 5))
+        setComments(user.comments.slice(0, 5))
     }, [])
 
     return (<>
@@ -37,85 +37,54 @@ function Profile({ user, onDetails, onToUpdateUser }) {
                 </View>
             </View>
 
-            <View style={styles.posts}>
-                <Text style={styles.bigText}>{user.publishedToilets.length} Post(s). Last five toilets:</Text>
-                {user.publishedToilets.length > 0 &&
-                    lastPosts.map((toilet, index) => (<>
-                        <TouchableOpacity key={index} onPress={() => {
-                            setToiletLoading(toilet.id)
-                            onDetails(toilet.id.toString())
-                        }} style={styles.postsContainer}>
-                            <View style={styles.innerPost}>
-                                <View style={styles.postsLeft}>
-                                    <Text style={styles.postTitle}>{toilet.place}</Text>
-                                    <Text style={styles.postDate}>Total favorites: {toilet.isFavedBy.length}</Text>
-                                    <Text style={styles.postDate}>Posted {moment(toilet.created).fromNow()}</Text>
-                                </View>
-                                <View style={styles.postsRight}>
-                                    {toilet.image ? (<Image style={styles.image} source={{ uri: toilet.image }} />)
-                                        :
-                                        (<Image style={styles.image} source={require('../../../../assets/placeholder.jpg')} />)}
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        {toiletLoading === toilet.id && (<>
-                            <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
-                            <ActivityIndicator size="large" color="#0000ff" />
-                        </>)}
-                    </>))
-                }
-                {!user.publishedToilets.length && (<>
-                    <Text>No toilets to display...</Text>
-                </>)}
+            <View style={styles.navContainer}>
+                <View style={styles.separator} />
+
+                <View style={styles.navButtons}>
+                    <TouchableOpacity onPress={() => setView('posts')}>
+                        <Text style={styles.navButtonText}>{user.publishedToilets.length} Toilet Post(s)</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => setView('comments')}>
+                        <Text style={styles.navButtonText}>{user.comments.length} Comment(s)</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.separator} />
             </View>
 
-            <View style={styles.comments}>
-                <Text style={styles.bigText}>{user.comments.length} Comment(s). Last five comments: </Text>
-                {user.comments.length > 0 &&
-                    lastComments.map((comment, index) => (<>
-                        <TouchableOpacity key={index} onPress={() => {
-                            setCommentLoading(comment.id)
-                            onDetails(comment.commentedAt.toString())
-                        }} style={styles.postsContainer}>
-                            <View style={styles.innerPost}>
-                                <View style={styles.postsLeftComment}>
-                                    <Text>"{comment.rating.textArea.length > 0 ? (<Text style={styles.commentText}>{comment.rating.textArea}</Text>) : (<Text>(No text comment added)</Text>)}"</Text>
-                                    <Text style={styles.postDate}>Posted {moment(comment.created).fromNow()}</Text>
-                                    <View style={styles.innerPost}>
-                                        <View style={styles.innerPost}>
-                                            <Image source={require('../../../../assets/thumb-up.png')} style={styles.thumb} /><Text></Text>
-                                            <Text style={styles.thumbCount}>: {comment.thumbsUp.length}</Text>
-                                        </View>
+            {view === 'posts' && (<>
+                <View style={styles.posts}>
+                    {user.publishedToilets.length > 0 && (<>
+                        <FlatList
+                            data={user.publishedToilets}
+                            renderItem={({ item }) => {
+                                return <LastPosts toilet={item} onDetails={onDetails} />
+                            }}
+                        />
+                    </>)}
+                    {!user.publishedToilets.length && (<>
+                        <Text>No toilets to display...</Text>
+                    </>)}
+                </View>
+            </>)}
 
-                                        <View style={styles.innerPost}>
-                                            <Image source={require('../../../../assets/thumb-down.png')} style={styles.thumb} /><Text></Text>
-                                            <Text style={styles.thumbCount}>: {comment.thumbsDown.length}</Text>
-                                        </View>
-                                    </View>
-                                </View>
+            {view === 'comments' && (<>
+                <View style={styles.comments}>
+                    {user.comments.length > 0 && (<>
+                        <FlatList
+                            data={user.comments}
+                            renderItem={({ item }) => {
+                                return <LastComments comment={item} onDetails={onDetails} />
+                            }}
+                        />
+                    </>)}
+                    {!user.comments.length && (<>
+                        <Text>No comments to display...</Text>
+                    </>)}
+                </View>
+            </>)}
 
-                                <View style={styles.postsRight}>
-                                    <Text style={styles.postTitle}>Toilet's score: {comment.rating.overallRating}</Text>
-                                    <Text>Cleanness: {comment.rating.cleanness}</Text>
-                                    <Text>Aesthetics: {comment.rating.looks}</Text>
-                                    <Text>Payment required: {comment.rating.paymentRequired > 0 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
-                                    <Text>Multiple toilets: {comment.rating.multipleToilets > 0 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
-                                    <Text>Paper provision: {comment.rating.paperDeployment > 0 ? (<Text>Yes</Text>) : (<Text>No</Text>)}</Text>
-                                </View>
-
-                            </View>
-                        </TouchableOpacity>
-                        {commentLoading === comment.id && (<>
-                            <Text style={{ textAlign: 'center', fontStyle: 'italic' }}>Submit loading, please don't press anything...</Text>
-                            <ActivityIndicator size="large" color="#0000ff" />
-                        </>)}
-
-                    </>))
-                }
-                {!user.comments.length && (<>
-                    <Text>No comments to display...</Text>
-                </>)}
-            </View>
         </ScrollView>
     </>)
 }

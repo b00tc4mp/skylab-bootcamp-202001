@@ -36,23 +36,7 @@ const styles = StyleSheet.create({
     },
     posts: {
         marginVertical: 30
-    },
-    postsContainer: {
-        backgroundColor: 'white',
-        padding: 10,
-        marginVertical: 10,
-        opacity: 0.7,
-        borderWidth: 2,
-        borderRadius: 15,
-        borderColor: 'grey'
-    },
-    postTitle: {
-        fontWeight: 'bold',
-        fontSize: 20
-    },
-    postDate: {
-        fontStyle: 'italic'
-    },
+    }, 
     comments: {
         marginVertical: 30
     },
@@ -60,37 +44,20 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold'
     },
-    innerPost: {
+    separator: {
+        borderBottomColor: 'lightgrey',
+        borderBottomWidth: 2,
+        marginVertical: 5,
+    },
+    navContainer: {
+        marginTop: 15
+    },
+    navButtons: {
         flexDirection: 'row',
+        justifyContent: 'space-around'
     },
-    postsLeft: {
-        flex: 1
-    },
-    postsLeftComment: {
-        flex: 1,
-        justifyContent: 'center'
-    },
-    postsRight: {
-        flex: 1
-    },
-    image: {
-        width: '100%',
-        height: 100,
-        resizeMode: 'contain'
-    },
-    commentText: {
-        fontStyle: 'italic',
-        fontSize: 18
-    },
-    thumb: {
-        width: 30,
-        height: 30,
-        resizeMode: 'contain',
-        marginRight: 5
-    },
-    thumbCount: {
-        alignSelf: 'center',
-        marginRight: 15
+    navButtonText: {
+        fontSize: 20
     }
 })
 

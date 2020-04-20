@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, FlatList } from 'react-native'
 import styles from './styles'
 import { Post } from '../'
 import { LocationMap } from '../../Geolocation'
@@ -29,10 +29,16 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                 <View style={styles.topToilets}>
                     <Text style={styles.bold}>Top Toilets</Text>
                 </View>
-
-                {topTen.length > 0 && topTen.map((toilet, index) => (<>
-                    <Post user={user} toilet={toilet} onDetails={onDetails} onFav={onFav} />
-                </>))}
+                
+                {topTen.length > 0 && (<>
+                    <FlatList
+                        data={topTen}
+                        style={styles.postsContainer}
+                        renderItem={({ item }) => {
+                            return <Post user={user} toilet={item} onDetails={onDetails} onFav={onFav} />
+                        }}
+                    />
+                </>)}
 
             </View>
 

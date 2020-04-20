@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     mapContainer: {
         width: '95%',
         marginHorizontal: '2.5%'
+    },
+    postsContainer: { 
+        width: '100%' 
     }
 })
 

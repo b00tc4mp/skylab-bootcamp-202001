@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, Image, ScrollView, TouchableOpacity, Alert, FlatList } from 'react-native'
 import moment from 'moment'
 import { LocationMap } from '../../Geolocation'
 import { PoopRating, PostComment, PostScore, FavButton } from '../'
@@ -45,9 +45,12 @@ function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDo
                     <View style={styles.commentsContainer}>
                         <Text style={styles.comments}>Last ratings/comments ({toilet.comments.length}):</Text>
                         {toilet.comments.length ?
-                            (comments.map(comment => (<>
-                                <PostComment user={user} comment={comment} onDelete={onDelete} onThumbUp={onThumbUp} onThumbDown={onThumbDown} toilet={toilet} />
-                            </>)))
+                            (<FlatList
+                                data={toilet.comments}
+                                renderItem={({ item }) => {
+                                    return <PostComment user={user} comment={item} onDelete={onDelete} onThumbUp={onThumbUp} onThumbDown={onThumbDown} toilet={toilet} />
+                                }}
+                            />)
                             :
                             (<Text>No comments to display...</Text>)}
                     </View>

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './styles'
-import { View, ScrollView, Text } from 'react-native'
+import { View, ScrollView, Text, FlatList } from 'react-native'
 import { Post } from '../'
 
 function QueryResults({ query, toilets, user, onFav, onDetails }) {
@@ -11,9 +11,12 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                 {toilets.length > 0 &&
 
                     <View style={styles.resultsContainer}>
-                        {toilets.map(toilet => (<>
-                            <Post toilet={toilet} user={user} onFav={onFav} onDetails={onDetails} />
-                        </>))}
+                        <FlatList
+                            data={toilets}
+                            renderItem={({ item }) => {
+                                return <Post toilet={item} user={user} onFav={onFav} onDetails={onDetails} />
+                            }}
+                        />
                     </View>
                 }
 
