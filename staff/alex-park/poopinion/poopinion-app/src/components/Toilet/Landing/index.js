@@ -19,9 +19,11 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                     (<Text style={styles.topHeader}>🚽 Welcome, stranger!! Enjoy your pooping 🚽</Text>)}
                 <Text>Your current position is: </Text>
 
-                {coordinates.latitude && coordinates.longitude &&
-                    <LocationMap target={coordinates} user={user} />
-                }
+                {coordinates.latitude && coordinates.longitude && (<>
+                    <View style={styles.mapContainer}>
+                        <LocationMap target={coordinates} user={user} />
+                    </View>
+                </>)}
 
                 <View style={styles.topToilets}>
                     <Text style={styles.bold}>Top Toilets</Text>

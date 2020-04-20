@@ -88,6 +88,9 @@ const styles = StyleSheet.create({
         height: '100%',
         alignSelf: 'flex-start'
     },
+    noToilets: {
+        marginHorizontal: '2.5%'
+    }
 })
 
 export default styles

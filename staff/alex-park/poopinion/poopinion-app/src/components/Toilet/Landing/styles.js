@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
     bold: {
         fontSize: 25,
         fontWeight: 'bold'
+    },
+    mapContainer: {
+        width: '95%',
+        marginHorizontal: '2.5%'
     }
 })
 

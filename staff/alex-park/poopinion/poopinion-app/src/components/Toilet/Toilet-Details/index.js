@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Image, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import moment from 'moment'
 import { LocationMap } from '../../Geolocation'
-import PoopRating from '../Poop-Rating'
-import PostComment from '../Post-Comment'
-import PostScore from '../Post-Score'
+import { PoopRating, PostComment, PostScore, FavButton } from '../'
 import styles from './styles'
-import FavButton from '../Fav-Button'
 
 function ToiletDetails({ toilet, globalRating, user, onFav, onThumbUp, onThumbDown, onComment, onDelete, onDeleteToilet }) {
     const [comments, setComments] = useState(toilet.comments.slice(0, 5))

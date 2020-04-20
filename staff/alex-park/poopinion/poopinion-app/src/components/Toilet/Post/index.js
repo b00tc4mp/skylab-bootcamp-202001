@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import moment from 'moment'
 import { View, TouchableHighlight, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from './styles'
-import PoopRating from '../Poop-Rating'
-import FavButton from '../Fav-Button'
+import { PoopRating, FavButton } from '../'
 
 function Post({ toilet, onDetails, onFav, user }) {
     const [loading, setLoading] = useState(undefined)

@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './styles'
 import { View, ScrollView, Text } from 'react-native'
-import Post from '../Post'
+import { Post } from '../'
 
 function QueryResults({ query, toilets, user, onFav, onDetails }) {
     return (<>
@@ -17,7 +17,7 @@ function QueryResults({ query, toilets, user, onFav, onDetails }) {
                     </View>
                 }
 
-                {!toilets.length && <Text style={{marginHorizontal: '2.5%'}}>Still no toilets to display...</Text>}
+                {!toilets.length && <Text style={styles.noToilets}>No toilets to display...</Text>}
             </View>
         </ScrollView>
     </>)
