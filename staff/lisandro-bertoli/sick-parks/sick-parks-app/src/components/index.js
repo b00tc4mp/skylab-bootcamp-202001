@@ -7,7 +7,7 @@ import Results from './Results'
 import Search from './Search'
 import TopSearch from './TopSearch'
 import Map from './Map'
-import MapViewContainer from './MapViewContainer'
+import MapModal from './MapModal'
 import Profile from './Profile'
 import ParkDetails from './ParkDetails'
 import Feedback from './Feedback'
@@ -39,7 +39,7 @@ export {
     Search,
     TopSearch,
     Map,
-    MapViewContainer,
+    MapModal,
     Profile,
     ParkDetails,
     Feedback,

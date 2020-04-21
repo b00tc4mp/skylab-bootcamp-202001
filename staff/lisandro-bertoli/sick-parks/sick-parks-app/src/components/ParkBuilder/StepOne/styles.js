@@ -24,20 +24,6 @@ const styles = StyleSheet.create({
         fontFamily: fonts.SEMI,
         fontSize: 16
     },
-
-    modalText: {
-        color: colors.MAIN,
-        fontSize: 16,
-        fontFamily: fonts.SEMI
-    },
-    modalHeader: {
-        flex: 0.1,
-        paddingHorizontal: 10,
-        flexDirection: 'row',
-        backgroundColor: colors.BACKGROUND,
-        alignItems: 'center',
-        justifyContent: 'space-between'
-    },
     inputsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',

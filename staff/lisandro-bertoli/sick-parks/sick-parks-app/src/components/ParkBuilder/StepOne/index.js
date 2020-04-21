@@ -2,20 +2,27 @@ import React, { useState } from 'react'
 import { ScrollView, Modal, KeyboardAvoidingView, TextInput, Picker, View, Text } from 'react-native'
 import Button from '../../Button'
 import Feedback from '../../Feedback'
-import MapViewContainer from '../../MapViewContainer'
+import MapModal from '../../MapModal'
 import styles from './styles'
 import { colors } from '../../../constants'
 
 export default function StepOne({ onToStepTwo, error }) {
     const [name, setName] = useState()
     const [resort, setResort] = useState()
-    const [showModal, setShowModal] = useState(false)
+    const [modalVisibility, setModalVisibility] = useState(false)
     const [flow, setFlow] = useState()
     const [location, setLocation] = useState()
     const [size, setSize] = useState('m')
     const [level, setLevel] = useState('begginer')
 
     const handleNextStep = () => onToStepTwo(name, resort, location, flow, level, size)
+
+    const handleAddLocation = (location) => {
+        setLocation(location)
+        handleModalToggle()
+    }
+
+    const handleModalToggle = () => setModalVisibility(!modalVisibility)
 
     return (
         <KeyboardAvoidingView behavior='padding'>
@@ -38,9 +45,7 @@ export default function StepOne({ onToStepTwo, error }) {
                             <TextInput selectionColor={colors.BACKGROUND} placeholder='Eg: Jib/Rail garden' style={styles.textInput} onChangeText={(text) => setFlow(text)} />
                         </View>
 
-
                         <View style={{ justifyContent: 'space-between' }}>
-
                             <View style={styles.pickerContainer}>
                                 <Text style={styles.label}>Size: </Text>
                                 <Picker
@@ -73,37 +78,15 @@ export default function StepOne({ onToStepTwo, error }) {
                             </View>
                         </View>
 
-                        <Button style={styles.buttonContainer} textStyle={styles.button} text='Set Location' onPress={() => setShowModal(true)} />
-
+                        <Button style={styles.buttonContainer} textStyle={styles.button} text='Set Location' onPress={handleModalToggle} />
                     </View>
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        presentationStyle='formSheet'
-                        visible={showModal}
-                        onRequestClose={() => {
-                            Alert.alert('Modal has been closed.');
-                        }}>
-                        <View style={styles.modalHeader}>
-                            <Button onPress={() => setShowModal(false)} style={{ flex: 1 }} text='Cancel' textStyle={{ fontSize: 16, color: 'red' }} />
-                            <Text style={styles.modalText}>Pick a location</Text>
-                        </View>
-                        <MapViewContainer _markers={location} style={styles.mapStyle} handleNewMarker={(coordinate) => {
 
-                            setLocation([coordinate])
-
-                            setTimeout(() => {
-                                setShowModal(false)
-                            }, 100)
-                        }} />
-                    </Modal>
+                    <MapModal addLocation={handleAddLocation} visibility={modalVisibility} modalToggle={handleModalToggle} />
 
                     {error && <Feedback level='warn' message={error} />}
                     <Button text='Next' style={styles.nextButton} textStyle={styles.button} onPress={handleNextStep} />
                 </View>
             </ScrollView>
         </KeyboardAvoidingView >
-
     )
 }
-

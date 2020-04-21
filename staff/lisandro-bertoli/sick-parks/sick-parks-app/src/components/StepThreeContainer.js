@@ -13,7 +13,7 @@ export default function StepThreeContainer({ navigation, route }) {
         try {
             park.location = {
                 type: 'Point',
-                coordinates: [location[0].longitude, location[0].latitude]
+                coordinates: [location.longitude, location.latitude]
             }
             await createPark({ park, features })
 

@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 23763,
-  "expoServerNgrokUrl": "https://wy-ndk.anonymous.sick-parks-app.exp.direct",
-  "packagerNgrokUrl": "https://packager.wy-ndk.anonymous.sick-parks-app.exp.direct",
-  "ngrokPid": 23815,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
