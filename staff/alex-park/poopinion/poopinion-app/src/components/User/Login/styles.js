@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         height: Dimensions.get('window').height
     },
+    version: {
+        marginHorizontal: '2.5%'
+    },
     formContainer: {
         flex: 1.5,
         width: '90%',

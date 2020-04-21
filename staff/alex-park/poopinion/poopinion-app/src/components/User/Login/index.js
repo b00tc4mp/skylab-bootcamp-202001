@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Feedback, Contact } from '../../'
 import styles from './styles'
-import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, ActivityIndicator, Linking } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, Image, ActivityIndicator } from 'react-native'
 
 function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
     const [email, setEmail] = useState()
@@ -51,6 +51,7 @@ function Login({ onSubmit, error, goToRegister, goToLanding, goToFAQs }) {
                         </View>
                     </View>
 
+                    <Text style={styles.version}>v.1.0.13</Text>
                     <View style={styles.bottomRow}>
                         <Contact />
 

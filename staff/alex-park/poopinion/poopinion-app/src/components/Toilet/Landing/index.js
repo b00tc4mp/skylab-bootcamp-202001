@@ -3,7 +3,6 @@ import { View, ScrollView, Text, FlatList } from 'react-native'
 import styles from './styles'
 import { Post } from '../'
 import { LocationMap } from '../../Geolocation'
-import { Contact } from '../../'
 
 function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
     return (<>
@@ -23,7 +22,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                 <View style={styles.topToilets}>
                     <Text style={styles.bold}>Top Toilets</Text>
                 </View>
-                
+
                 {topToilets.length > 0 && (<>
                     <FlatList
                         data={topToilets}
@@ -35,7 +34,7 @@ function Landing({ user, coordinates, topToilets, onFav, onDetails }) {
                 </>)}
             </View>
 
-            <View><Contact /></View>
+            <View><Text>© All rights reserved to Àlex Park Viñas</Text></View>
         </ScrollView>
     </>)
 }

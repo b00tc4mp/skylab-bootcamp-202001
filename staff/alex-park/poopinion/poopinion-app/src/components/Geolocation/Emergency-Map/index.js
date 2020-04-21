@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styles from './styles'
-import { View, ScrollView, Slider, Text, SafeAreaView, Image, TouchableOpacity } from 'react-native'
-import MapView from 'react-native-maps'
-import moment from 'moment'
+import { View, ScrollView, Slider, Text, SafeAreaView, Image, TouchableOpacity, FlatList } from 'react-native'
+import MapView, { Marker, Circle } from 'react-native-maps'
+import { MapCallout } from '../'
 import { isPointWithinRadius } from 'geolib'
 
 function EmergencyMap({ coordinates, topToilets, onDetails, user }) {
@@ -24,7 +24,7 @@ function EmergencyMap({ coordinates, topToilets, onDetails, user }) {
                         longitudeDelta: zoom,
                     }}>
 
-                    <MapView.Circle
+                    <Circle
                         center={{ latitude: coordinates.latitude, longitude: coordinates.longitude }}
                         radius={radius}
                         strokeWidth={1}
@@ -32,7 +32,7 @@ function EmergencyMap({ coordinates, topToilets, onDetails, user }) {
                         fillColor={'rgba(230,238,255,0.6)'}
                     />
 
-                    <MapView.Marker
+                    <Marker
                         coordinate={{
                             latitude: coordinates.latitude,
                             longitude: coordinates.longitude
@@ -41,31 +41,25 @@ function EmergencyMap({ coordinates, topToilets, onDetails, user }) {
                         pinColor={'lightblue'}
                     />
 
+                    {/* {topToilets && (<>
+                        <FlatList
+                            style={{ flex: 1 }}
+                            data={topToilets}
+                            renderItem={({ item }) => {
+                                isPointWithinRadius({ latitude: coordinates.latitude, longitude: coordinates.longitude },
+                                    { latitude: item.geolocation.latitude, longitude: item.geolocation.longitude },
+                                    radius) && item.score > score && (<>
+                                        <View style={{ flex: 1 }}>
+                                            <MapCallout toilet={item} onDetails={onDetails} />
+                                        </View>
+                                    </>)
+                            }} />
+                    </>)} */}
                     {topToilets && topToilets.map(toilet => (<>
                         {isPointWithinRadius({ latitude: coordinates.latitude, longitude: coordinates.longitude },
                             { latitude: toilet.geolocation.latitude, longitude: toilet.geolocation.longitude },
                             radius) && toilet.score > score && (<>
-                                <MapView.Marker
-                                    coordinate={{
-                                        latitude: toilet.geolocation.latitude,
-                                        longitude: toilet.geolocation.longitude,
-                                    }}
-                                >
-                                    <MapView.Callout onPress={() => onDetails(toilet.id.toString())}>
-                                        <View style={styles.calloutContainer}>
-                                            <Text style={styles.centerText}>
-                                                <Image
-                                                    source={{ uri: toilet.image }}
-                                                    style={styles.calloutImage}
-                                                />
-                                            </Text>
-                                            <Text style={styles.calloutTitle}>{toilet.place}</Text>
-                                            <Text><Text style={styles.bold}>Publisher</Text>: {toilet.publisher.name} {toilet.publisher.surname}</Text>
-                                            <Text><Text style={styles.bold}>Published at</Text>: {moment(toilet.created).fromNow()}</Text>
-                                            <Text><Text style={styles.bold}>Score</Text>: {toilet.score} ({toilet.comments.length})</Text>
-                                        </View>
-                                    </MapView.Callout>
-                                </MapView.Marker>
+                                <MapCallout toilet={toilet} onDetails={onDetails} />
                             </>)}
                     </>))}
                 </MapView>

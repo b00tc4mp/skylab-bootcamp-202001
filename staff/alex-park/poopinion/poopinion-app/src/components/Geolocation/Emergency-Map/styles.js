@@ -48,24 +48,6 @@ const styles = StyleSheet.create({
     bold: {
         fontWeight: 'bold'
     },
-    calloutContainer: {
-        width: 200, 
-        height: 200 
-    },
-    centerText: {
-        textAlign: 'center'
-    },
-    calloutImage: {
-        flex: 1, 
-        width: Dimensions.get('window').width * 0.18, 
-        height: Dimensions.get('window').width * 0.18, 
-        margin: 0
-    },
-    calloutTitle: { 
-        fontSize: 18, 
-        fontWeight: 'bold', 
-        fontStyle: 'italic' 
-    },
     windowInfo: {
         marginTop: 10,
         width: '95%',
