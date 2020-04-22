@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { View, Modal, Text } from 'react-native'
 import Button from '../Button'
 
@@ -35,14 +35,7 @@ export default function MapModal({ visibility, modalToggle, addLocation }) {
 
             <View style={styles.container}>
                 <MapView
-                    provider={PROVIDER_GOOGLE}
                     showsUserLocation={true}
-                    region={location.latitude ? {
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                        latitudeDelta: 1,
-                        longitudeDelta: 1,
-                    } : undefined}
                     style={styles.mapStyle}
                     onPress={({ nativeEvent }) => setLocation(nativeEvent.coordinate)}
                 >

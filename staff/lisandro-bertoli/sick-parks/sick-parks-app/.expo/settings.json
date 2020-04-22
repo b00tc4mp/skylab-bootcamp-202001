@@ -1,7 +1,7 @@
 {
   "dev": true,
   "minify": false,
-  "urlRandomness": "mg-pbj",
+  "urlRandomness": "du-emd",
   "hostType": "lan",
   "lanType": "ip",
   "https": false
