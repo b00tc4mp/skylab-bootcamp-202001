@@ -166,11 +166,11 @@ export default class NewToilet extends React.Component {
 
                     <TouchableOpacity >
                         <Text style={styles.submitButton} onPress={() => {
-                            Alert.alert(undefined, `Are you sure you want to create a toilet post called '${place}'?`, [
+                            Alert.alert(undefined, `Are you sure you want to create a toilet post called '${typeof place === 'undefined' ? 'No place defined' : place}'?`, [
                                 { text: 'Cancel', onPress: () => { } },
                                 {
                                     text: 'I do!', onPress: () => {
-                                        this.onSubmit()
+                                        this._onSubmit()
                                     },
                                 }
                             ], { cancelable: false })

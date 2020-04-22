@@ -16,10 +16,17 @@ function MapCallout({ toilet, onDetails }) {
             <Callout onPress={() => onDetails(toilet.id.toString())}>
                 <View style={styles.calloutContainer}>
                     <Text style={styles.centerText}>
-                        <Image
-                            source={{ uri: toilet.image }}
-                            style={styles.calloutImage}
-                        />
+                        {toilet.image ? (<>
+                            <Image
+                                source={{ uri: toilet.image }}
+                                style={styles.calloutImage}
+                            />
+                        </>) : (<>
+                            <Image
+                                source={require('../../../../assets/placeholder.jpg')}
+                                style={styles.calloutImage}
+                            />
+                        </>)}
                     </Text>
                     <Text style={styles.calloutTitle}>{toilet.place}</Text>
                     <Text><Text style={styles.bold}>Publisher</Text>: {toilet.publisher.name} {toilet.publisher.surname}</Text>
