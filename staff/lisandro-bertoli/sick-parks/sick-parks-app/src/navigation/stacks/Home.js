@@ -18,7 +18,7 @@ export default () => (
 
         <HomeStack.Screen name="Search" options={{ headerShown: false }} component={SearchContainer} />
         <HomeStack.Screen name="Results" component={ResultsContainer} />
-        <HomeStack.Screen name="ParkDetails" component={ParkDetailsContainer} />
+        <HomeStack.Screen name="ParkDetails" options={{ title: 'Park' }} component={ParkDetailsContainer} />
 
     </HomeStack.Navigator >
 

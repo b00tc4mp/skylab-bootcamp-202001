@@ -6,7 +6,6 @@ import FeatureInput from '../FeatureInput'
 import Feature from '../Feature'
 import Comments from '../Comments'
 import CommentInput from '../CommentInput'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import Feedback from '../Feedback'
 import styles from './styles'
 

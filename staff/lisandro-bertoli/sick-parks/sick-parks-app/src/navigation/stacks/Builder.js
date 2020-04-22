@@ -12,15 +12,15 @@ const options = {
     headerTitleStyle: {
         fontFamily: fonts.SEMI
     },
-    headerTintcolor: colors.SECONDARY
+    headerTintColor: colors.SECONDARY
 }
 
 export default () => (
     <BuilderStack.Navigator screenOptions={options} initialRouteName='StepOne' >
 
-        <BuilderStack.Screen name="StepOne" component={StepOneContainer} />
-        <BuilderStack.Screen name="StepTwo" component={StepTwoContainer} />
-        <BuilderStack.Screen name="StepThree" component={StepThreeContainer} />
+        <BuilderStack.Screen name="StepOne" options={{ title: 'New Park' }} component={StepOneContainer} />
+        <BuilderStack.Screen name="StepTwo" options={{ title: 'Add Features' }} component={StepTwoContainer} />
+        <BuilderStack.Screen name="StepThree" options={{ title: 'Summary' }} component={StepThreeContainer} />
 
     </BuilderStack.Navigator >
 )
