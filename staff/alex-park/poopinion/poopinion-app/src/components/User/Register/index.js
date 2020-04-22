@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Feedback } from '../../index'
+import { Feedback } from '../../'
 import styles from './styles'
 import { TextInputMask } from 'react-native-masked-text'
 import { View, Text, TextInput, TouchableOpacity, Picker, ScrollView, KeyboardAvoidingView, ActivityIndicator } from 'react-native'
