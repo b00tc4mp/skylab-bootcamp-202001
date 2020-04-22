@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
         flex: 0.30,
         justifyContent: 'space-around',
         padding: 15,
-        alignSelf: 'flex-start'
+        alignSelf: 'flex-start',
+        textAlign: 'left'
     },
     bottom: {
         flex: 0.4,
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
 
     text: {
         fontFamily: fonts.REGULAR,
-        textAlign: 'center'
+        // textAlign: 'center'
     },
 })
 

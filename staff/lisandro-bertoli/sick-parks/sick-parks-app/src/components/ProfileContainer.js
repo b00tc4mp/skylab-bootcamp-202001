@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { retrievePublishedParks, retrieveUser, isUserLoggedIn } from 'sick-parks-logic'
+import { retrievePublishedParks, retrieveUser, isUserLoggedIn, updateUser } from 'sick-parks-logic'
 import Profile from './Profile'
 import Loading from './Loading'
 import { AuthContext } from './AuthProvider'
@@ -14,7 +14,6 @@ export default function PorfileContainer() {
     useEffect(() => {
         (async () => {
             try {
-
                 if (isUserLoggedIn()) {
                     const _user = await retrieveUser()
                     const parks = await retrievePublishedParks()
@@ -22,8 +21,6 @@ export default function PorfileContainer() {
                     setUser(_user)
                     setPublishedParks(parks)
                 }
-
-
             } catch (error) {
                 await logout()
                 console.log(error)
@@ -33,10 +30,20 @@ export default function PorfileContainer() {
 
     const handleLogout = async () => await logout()
 
-    const handleOnToLogin = () => { }
+    const handleUpdateUser = async (updates) => {
+        try {
+            await updateUser(user.id, updates)
+
+            const updated = await retrieveUser()
+
+            setUser(updated)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     if (!user) return <Loading />
 
-    return <Profile user={user} userParks={publishedParks} onToLogin={handleOnToLogin} onLogout={handleLogout} />
+    return <Profile user={user} userParks={publishedParks} onUpdateUser={handleUpdateUser} onLogout={handleLogout} />
 }
 

@@ -7,8 +7,9 @@ import styles from './styles'
 const logoutImg = require('../../../assets/sign-out.png')
 
 
-export default function Profile({ onLogout, user, userParks }) {
+export default function Profile({ onLogout, user, userParks, onUpdateUser }) {
     const [showModal, setShowModal] = useState(false)
+    const [userUpdates, setUserUpdates] = useState()
     const [editProfile, setEditProfile] = useState()
 
 
@@ -21,6 +22,8 @@ export default function Profile({ onLogout, user, userParks }) {
         setShowModal(false)
         setEditProfile()
     }
+
+    const userUpdate = () => onUpdateUser(userUpdates)
 
     return (
 
@@ -56,24 +59,32 @@ export default function Profile({ onLogout, user, userParks }) {
                                     <Text style={styles.sectionHeader}>Update e-mail</Text>
                                     <View style={styles.inputsContainer}>
                                         <Text style={styles.label}>New e-mail:  </Text>
-                                        <TextInput style={styles.textInput} placeholder='Your email password' />
+                                        <TextInput
+                                            style={styles.textInput}
+                                            placeholder='Your new email'
+                                            onChangeText={(email) => setUserUpdates({ ...userUpdates, email })}
+                                        />
                                     </View>
 
-                                    <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} />
+                                    <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} onPress={userUpdate} />
                                 </View>
                                 <View style={styles.bottomSettings}>
                                     <Text style={styles.sectionHeader}>Change Password</Text>
                                     <View style={styles.inputsContainer}>
                                         <Text style={styles.label}>New Password:  </Text>
-                                        <TextInput style={styles.textInput} placeholder='Your new password' />
+                                        <TextInput style={styles.textInput} placeholder='Your new password' onChangeText={(oldPassword) => setUserUpdates({ ...userUpdates, oldPassword })} />
                                     </View>
                                     <View style={styles.inputsContainer}>
                                         <Text style={styles.label}>Old Password:  </Text>
 
-                                        <TextInput style={styles.textInput} placeholder='Your old password' />
+                                        <TextInput
+                                            style={styles.textInput}
+                                            placeholder='Your old password'
+                                            onChangeText={(password) => setUserUpdates({ ...userUpdates, password })}
+                                        />
 
                                     </View>
-                                    <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} />
+                                    <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} onPress={userUpdate} />
                                 </View>
                             </View>
                         </ScrollView>
@@ -110,8 +121,8 @@ export default function Profile({ onLogout, user, userParks }) {
                     </View>
                 </View>
                 <View style={styles.userInfo}>
-                    <Text style={styles.data}>{`${user.name} ${user.surname}`}</Text>
-                    <Text style={styles.data}>{user.email}</Text>
+                    <Text style={styles.text}>{`${user.name} ${user.surname}`}</Text>
+                    <Text style={styles.text}>{user.email}</Text>
                 </View>
                 <View style={styles.bottom}>
                     <MyButton
