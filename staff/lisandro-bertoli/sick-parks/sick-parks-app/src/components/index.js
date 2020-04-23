@@ -17,6 +17,8 @@ import StepOne from './ParkBuilder/StepOne'
 import StepTwo from './ParkBuilder/StepTwo'
 import StepThree from './ParkBuilder/StepThree'
 import Loading from './Loading'
+import UserSettings from './UserSettings'
+import MyModal from './MyModal'
 import LandingContainer from './LandingContainer'
 import RegisterContainer from './RegisterContainer'
 import LoginContainer from './LoginContainer'
@@ -49,6 +51,8 @@ export {
     StepTwo,
     StepThree,
     Loading,
+    UserSettings,
+    MyModal,
     LandingContainer,
     RegisterContainer,
     LoginContainer,

@@ -3,11 +3,14 @@ import { retrievePublishedParks, retrieveUser, isUserLoggedIn, updateUser } from
 import Profile from './Profile'
 import Loading from './Loading'
 import { AuthContext } from './AuthProvider'
+import { __handleErrors__ } from '../handlers'
+import { Alert } from 'react-native'
 
 
 
 export default function PorfileContainer() {
     const { logout } = useContext(AuthContext)
+    const [error, setError] = useState(null)
     const [publishedParks, setPublishedParks] = useState([])
     const [user, setUser] = useState()
 
@@ -28,6 +31,7 @@ export default function PorfileContainer() {
         })()
     }, [])
 
+
     const handleLogout = async () => await logout()
 
     const handleUpdateUser = async (updates) => {
@@ -36,14 +40,16 @@ export default function PorfileContainer() {
 
             const updated = await retrieveUser()
 
+            Alert.alert('Update succesful')
+
             setUser(updated)
-        } catch (error) {
-            console.log(error)
+        } catch ({ message }) {
+            __handleErrors__(message, setError)
         }
     }
 
     if (!user) return <Loading />
 
-    return <Profile user={user} userParks={publishedParks} onUpdateUser={handleUpdateUser} onLogout={handleLogout} />
+    return <Profile user={user} error={error} userParks={publishedParks} onUpdateUser={handleUpdateUser} onLogout={handleLogout} />
 }
 

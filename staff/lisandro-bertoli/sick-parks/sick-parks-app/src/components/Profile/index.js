@@ -1,29 +1,21 @@
 import React, { useState } from 'react'
-import { ScrollView, KeyboardAvoidingView, TextInput, View, Text, Modal, Image } from 'react-native'
+import { ScrollView, View, Text, Image } from 'react-native'
 import MyButton from '../Button'
+import UserSettings from '../UserSettings'
 import Results from '../Results'
-
+import MyModal from '../MyModal'
 import styles from './styles'
 const logoutImg = require('../../../assets/sign-out.png')
 
 
-export default function Profile({ onLogout, user, userParks, onUpdateUser }) {
-    const [showModal, setShowModal] = useState(false)
-    const [userUpdates, setUserUpdates] = useState()
-    const [editProfile, setEditProfile] = useState()
+export default function Profile({ onLogout, user, userParks, onUpdateUser, error }) {
+    const [modal, setModal] = useState({ show: false })
 
+    const onToModal = (title) => setModal({ show: true, title })
 
-    const handleGoToSettings = () => {
-        setEditProfile(true)
-        setShowModal(true)
-    }
+    const userUpdate = (updates) => onUpdateUser(updates)
 
-    const handleHideModal = () => {
-        setShowModal(false)
-        setEditProfile()
-    }
-
-    const userUpdate = () => onUpdateUser(userUpdates)
+    const handleModalToggle = () => setModal({ show: false })
 
     return (
 
@@ -38,76 +30,16 @@ export default function Profile({ onLogout, user, userParks, onUpdateUser }) {
                     <Image source={logoutImg} style={styles.logoutImage} />
                 </MyButton>
             </View>
-            <Modal
-                animationType="slide"
-                presentationStyle='formSheet'
-                transparent={false}
-                visible={showModal}>
-                <View style={styles.modalHeader}>
-                    <MyButton onPress={handleHideModal} text='Cancel' textStyle={styles.modalButton} style={styles.modalButtonContainer} />
-                    {!editProfile && <Text style={styles.modalHeaderText} >My Parks</Text>}
-                    {editProfile && <Text style={styles.modalHeaderText} >Settings</Text>}
-                </View>
-                {!editProfile && <Results onToDetails={() => { }} results={userParks} />}
-
-
-                {editProfile &&
-                    <KeyboardAvoidingView behavior='padding'>
-                        <ScrollView scrollEnabled={true}>
-                            <View style={styles.settingsContainer}>
-                                <View style={styles.topSettings}>
-                                    <Text style={styles.sectionHeader}>Update e-mail</Text>
-                                    <View style={styles.inputsContainer}>
-                                        <Text style={styles.label}>New e-mail:  </Text>
-                                        <TextInput
-                                            style={styles.textInput}
-                                            placeholder='Your new email'
-                                            onChangeText={(email) => setUserUpdates({ ...userUpdates, email })}
-                                        />
-                                    </View>
-
-                                    <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} onPress={userUpdate} />
-                                </View>
-                                <View style={styles.bottomSettings}>
-                                    <Text style={styles.sectionHeader}>Change Password</Text>
-                                    <View style={styles.inputsContainer}>
-                                        <Text style={styles.label}>New Password:  </Text>
-                                        <TextInput style={styles.textInput} placeholder='Your new password' onChangeText={(oldPassword) => setUserUpdates({ ...userUpdates, oldPassword })} />
-                                    </View>
-                                    <View style={styles.inputsContainer}>
-                                        <Text style={styles.label}>Old Password:  </Text>
-
-                                        <TextInput
-                                            style={styles.textInput}
-                                            placeholder='Your old password'
-                                            onChangeText={(password) => setUserUpdates({ ...userUpdates, password })}
-                                        />
-
-                                    </View>
-                                    <MyButton style={styles.actionButton} text='Change' textStyle={styles.buttonText} onPress={userUpdate} />
-                                </View>
-                            </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>}
-            </Modal>
+            <MyModal visibility={modal.show} modalToggle={handleModalToggle} title={modal.title}>
+                {modal.title === 'Parks' && <Results onToDetails={() => { }} results={userParks} />}
+                {modal.title === 'Settings' && <UserSettings onUpdate={userUpdate} error={error} />}
+            </MyModal>
             <ScrollView contentContainerStyle={{ flex: 1 }}>
                 <View style={styles.top}>
                     <View style={styles.imageContainer}>
-                        {user.image && <Image
-                            style={{
-                                width: 50,
-                                height: 50,
-                                resizeMode: 'contain',
-                            }}
-                            source={{
-                                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                            }}
-                        />}
-                        {!user.image &&
-                            <View
-                                style={styles.noImage}>
-                                <Text style={styles.buttonText}>{user.name.charAt(0)}</Text>
-                            </View>}
+                        <View style={styles.noImage}>
+                            <Text style={styles.buttonText}>{user.name.charAt(0)}</Text>
+                        </View>
                     </View>
                     <View style={styles.topDataContainer}>
                         <View style={styles.topData}>
@@ -126,19 +58,19 @@ export default function Profile({ onLogout, user, userParks, onUpdateUser }) {
                 </View>
                 <View style={styles.bottom}>
                     <MyButton
-                        onPress={handleGoToSettings}
+                        onPress={() => onToModal('Settings')}
                         style={styles.actionButton}
                         text='Edit profile'
                         textStyle={styles.buttonText} />
 
                     <MyButton
-                        onPress={() => setShowModal(true)}
+                        onPress={() => onToModal('Parks')}
                         style={styles.actionButton}
                         text='My Parks'
                         textStyle={styles.buttonText} />
                 </View>
             </ScrollView>
-        </View>
+        </View >
     )
 }
 

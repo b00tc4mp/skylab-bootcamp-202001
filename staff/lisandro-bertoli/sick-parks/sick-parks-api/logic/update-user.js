@@ -26,10 +26,14 @@ module.exports = function (id, data) {
     validate.string(id, 'userId')
     validate.type(data, 'updates', Object)
 
-    const { name, email, allowLocation, notifications, password, oldPassword } = data
+    const { name, surname, email, allowLocation, notifications, password, oldPassword } = data
 
     if (name !== undefined) {
         validate.string(name, 'name')
+    }
+
+    if (surname !== undefined) {
+        validate.string(surname, 'surname')
     }
 
     if (email !== undefined) {
@@ -57,19 +61,22 @@ module.exports = function (id, data) {
 
     const keys = Object.keys(data)
 
-    const VALID_KEYS = ['name', 'allowLocation', 'email', 'password', 'oldPassword', 'notifications']
+    const VALID_KEYS = ['name', 'surname', 'allowLocation', 'email', 'password', 'oldPassword', 'notifications']
 
     for (const key of keys)
         if (!VALID_KEYS.includes(key)) throw new NotAllowedError(`property ${key} is not allowed`)
 
     return (async () => {
         const _user = await User.findById(id)
+
         if (!_user) throw new NotFoundError(`user ${id} does not exist`)
+        if (password) {
+            const verifiedPassword = await bcrypt.compare(oldPassword, _user.password)
 
-        const verifiedPassword = await bcrypt.compare(oldPassword, _user.password)
-        if (!verifiedPassword) throw new NotAllowedError('wrong credentials')
+            if (!verifiedPassword) throw new NotAllowedError('wrong credentials')
 
-        if (password) data.password = await bcrypt.hash(password, 10)
+            data.password = await bcrypt.hash(password, 10)
+        }
 
         await User.findByIdAndUpdate(id, { $set: data })
 

@@ -16,64 +16,6 @@ const styles = StyleSheet.create({
         padding: 15,
 
     },
-    modalHeader: {
-        height: 60,
-        flexDirection: 'row',
-        backgroundColor: colors.MAIN,
-        alignItems: 'center',
-        paddingHorizontal: 25,
-        justifyContent: 'space-between'
-    },
-
-    modalButton: {
-        color: colors.SECONDARY,
-        paddingTop: 10
-    },
-
-    settingsContainer: {
-        flex: 1,
-        backgroundColor: colors.BACKGROUND,
-        justifyContent: 'space-between',
-        paddingHorizontal: 15,
-        paddingVertical: 50
-    },
-    topSettings: {
-        flex: 1
-    },
-
-    inputsContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 25,
-        paddingVertical: 15,
-        flex: 1,
-    },
-
-    label: {
-        fontFamily: fonts.REGULAR
-
-    },
-
-    sectionHeader: {
-        fontFamily: fonts.SEMI,
-        alignSelf: 'center'
-    },
-
-    textInput: {
-        height: '160%',
-        backgroundColor: colors.MAIN,
-        width: '60%',
-        alignSelf: 'flex-end',
-        paddingHorizontal: 10,
-        borderColor: colors.SECONDARY,
-        borderWidth: 2,
-        color: colors.SECONDARY,
-    },
-
-    bottomSettings: {
-        justifyContent: 'space-between',
-        marginVertical: 50
-    },
 
     headerText: {
         paddingTop: 10,
@@ -83,14 +25,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         alignSelf: 'flex-end'
     },
-    modalHeaderText: {
-        paddingTop: 10,
-        alignSelf: 'center',
-        color: colors.SECONDARY,
-        fontWeight: 'bold',
-        fontSize: 18,
-        fontFamily: fonts.SEMI,
-    },
+
     noImage: {
         width: 100,
         height: 100,
@@ -179,19 +114,9 @@ const styles = StyleSheet.create({
         color: colors.MAIN
 
     },
-    input: {
-        backgroundColor: colors.MAIN,
-        flex: 0.8,
-        color: colors.SECONDARY,
-        borderRadius: 5,
-        alignItems: 'center',
-        paddingLeft: 5,
-        fontFamily: fonts.REGULAR,
-    },
 
     text: {
         fontFamily: fonts.REGULAR,
-        // textAlign: 'center'
     },
 })
 

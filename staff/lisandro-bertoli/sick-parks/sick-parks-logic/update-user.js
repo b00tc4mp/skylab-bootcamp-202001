@@ -25,10 +25,14 @@ module.exports = function (id, data) {
     validate.stringFrontend(id, 'userId')
     validate.type(data, 'updates', Object)
 
-    const { name, email, allowLocation, notifications, password, oldPassword } = data
+    const { name, surname, email, allowLocation, notifications, password, oldPassword } = data
 
     if (name !== undefined) {
         validate.stringFrontend(name, 'name')
+    }
+
+    if (surname !== undefined) {
+        validate.stringFrontend(surname, 'surname')
     }
 
     if (email !== undefined) {
@@ -51,12 +55,12 @@ module.exports = function (id, data) {
         validate.stringFrontend(oldPassword, 'oldPassword')
     }
 
-    if (password && !oldPassword) throw new Error('oldPassword is not defined')
-    if (!password && oldPassword) throw new Error('password is not defined')
+    if (password && !oldPassword) throw new Error('Old password is empty')
+    if (!password && oldPassword) throw new Error('Password is empty')
 
     const keys = Object.keys(data)
 
-    const VALID_KEYS = ['name', 'allowLocation', 'email', 'password', 'oldPassword', 'notifications']
+    const VALID_KEYS = ['name', 'surname', 'allowLocation', 'email', 'password', 'oldPassword', 'notifications']
 
     for (const key of keys)
         if (!VALID_KEYS.includes(key)) throw new NotAllowedError(`property ${key} is not allowed`)
@@ -67,7 +71,7 @@ module.exports = function (id, data) {
         const response = await fetch(`${this.API_URL}/users/${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-            body: JSON.stringify({ name, email, allowLocation, notifications, password, oldPassword })
+            body: JSON.stringify({ name, surname, email, allowLocation, notifications, password, oldPassword })
         })
 
         if (response.status === 200) return
