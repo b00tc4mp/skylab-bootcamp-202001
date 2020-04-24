@@ -45,15 +45,15 @@ describe('retrievePublishedParks', () => {
     })
 
     describe('when user and park exist', () => {
-        let parkId
+        let parkId, userId
 
         beforeEach(async () => {
 
             const { id } = await User.create({ name, surname, email, password })
+            userId = id
 
-
-            const park = await Park.create({ name: parkName, size, level, resort, description, location, creator: id })
-            parkId = park.id
+            const { id: pid } = await Park.create({ name: parkName, size, level, resort, description, location, creator: id })
+            parkId = pid
 
             const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
@@ -66,7 +66,7 @@ describe('retrievePublishedParks', () => {
 
 
             try {
-                await retrievePublishedParks()
+                await retrievePublishedParks(userId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.an.instanceOf(ContentError)
@@ -76,7 +76,7 @@ describe('retrievePublishedParks', () => {
         })
 
         it('should succeed on correct credentials', async () => {
-            const result = await retrievePublishedParks()
+            const result = await retrievePublishedParks(userId)
 
             expect(result[0].name).to.equal(parkName)
             expect(result[0].id).to.equal(parkId)
@@ -86,8 +86,10 @@ describe('retrievePublishedParks', () => {
         })
     })
     describe('when user has no parks', () => {
+        let userId
         beforeEach(async () => {
             const { id } = await User.create({ name, surname, email, password })
+            userId = id
             const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
 
@@ -95,7 +97,7 @@ describe('retrievePublishedParks', () => {
 
         it('should fail returning empty array', async () => {
 
-            const result = await retrievePublishedParks()
+            const result = await retrievePublishedParks(userId)
 
             expect(result).to.be.instanceOf(Array)
             expect(result.length).to.equal(0)

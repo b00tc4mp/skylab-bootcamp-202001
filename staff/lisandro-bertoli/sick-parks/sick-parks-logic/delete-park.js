@@ -7,6 +7,7 @@ const fetch = require('node-fetch')
  * Sends reques to delte the park from storage. 
  * 
  * @param {string} parkId park's unique id
+ * @param {string} userId user's unique id
  * 
  * @returns {undefined}
  * 
@@ -16,14 +17,14 @@ const fetch = require('node-fetch')
  * @throws {NotAllowedError} when the user trying to delete the park is not the creator
  */
 
-module.exports = function (parkId) {
+module.exports = function (userId, parkId) {
+    validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
 
     return (async () => {
-
         const token = await this.storage.getItem('token')
 
-        const response = await fetch(`${this.API_URL}/users/asdf23/parks/${parkId}`, {
+        const response = await fetch(`${this.API_URL}/users/${userId}/parks/${parkId}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })

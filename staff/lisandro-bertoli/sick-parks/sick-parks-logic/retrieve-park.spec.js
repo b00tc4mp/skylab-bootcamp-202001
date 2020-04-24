@@ -3,7 +3,7 @@ require('dotenv').config()
 const logic = require('.')
 const { retrievePark } = logic
 const AsyncStorage = require('not-async-storage')
-const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
+const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 const { mongoose, models: { Park, User, Feature, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { NotFoundError, ContentError } = require('sick-parks-errors')
@@ -11,10 +11,11 @@ const { NotFoundError, ContentError } = require('sick-parks-errors')
 const { random } = Math
 
 logic.__context__.storage = AsyncStorage
+logic.__context__.API_URL = API_URL
 
 describe('retrievePark', () => {
     before(async () => {
-        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await [Park.deleteMany(), User.deleteMany()]
     })
 

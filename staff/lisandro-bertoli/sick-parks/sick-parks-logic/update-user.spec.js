@@ -105,12 +105,12 @@ describe('updateUser', () => {
         data = { password: '123' }
         expect(() =>
             updateUser(userId, data)
-        ).to.Throw(Error, `oldPassword is not defined`)
+        ).to.Throw(Error, `Old password is empty`)
 
         data = { oldPassword: '123' }
         expect(() =>
             updateUser(userId, data)
-        ).to.Throw(Error, `password is not defined`)
+        ).to.Throw(Error, `Password is empty`)
     })
 
     it('should fail on non-familiar property', () => {

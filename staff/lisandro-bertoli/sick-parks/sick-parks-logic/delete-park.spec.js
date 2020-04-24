@@ -51,7 +51,7 @@ describe('deletePark', () => {
 
     describe('when park exists and user exist', () => {
         it('should succeed deleting the park from parks collection', async () => {
-            await deletePark(parkId)
+            await deletePark(userId, parkId)
 
             const park = await Park.findById(parkId)
 
@@ -59,7 +59,7 @@ describe('deletePark', () => {
         })
 
         it('should remove the park from the user parks', async () => {
-            await deletePark(parkId)
+            await deletePark(userId, parkId)
 
             const user = await User.findById(userId)
 
@@ -72,17 +72,12 @@ describe('deletePark', () => {
     })
 
     describe('when invalid parkId is provided', () => {
-        let _parkId
-        beforeEach(async () => {
-            await Park.deleteOne({ _id: parkId })
 
-            const { id } = await Park.create({ name: parkName, size, level, location })
-            _parkId = id
-        })
+        beforeEach(async () => await Park.deleteOne({ _id: parkId }))
 
         it('should fail on non existing park and throw ', async () => {
             try {
-                await deletePark(parkId)
+                await deletePark(userId, parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -93,16 +88,12 @@ describe('deletePark', () => {
     })
 
     describe("when an invalid userId is provided", () => {
-        let _userId
-        beforeEach(async () => {
-            await User.deleteOne({ _id: userId })
 
-            const { id } = await User.create({ name, surname, email, password })
-            _userId = id
-        })
+        beforeEach(async () => await User.deleteOne({ _id: userId }))
+
         it('should fail on non existing user and throw ', async () => {
             try {
-                await deletePark(parkId)
+                await deletePark(userId, parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotFoundError)
@@ -111,15 +102,17 @@ describe('deletePark', () => {
         })
 
         it('should fail on incorrect user as park creator and throw', async () => {
-            const _token = jwt.sign({ sub: _userId }, JWT_SECRET)
+            const { id } = await User.create({ name, surname, email, password })
+
+            const _token = jwt.sign({ sub: id }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
 
             try {
-                await deletePark(parkId)
+                await deletePark(userId, parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
-                expect(error.message).to.equal('Only the creator can delete the park')
+                expect(error.message).to.equal(`user ${id} did not create this park`)
             }
         })
     })
@@ -128,16 +121,16 @@ describe('deletePark', () => {
 
     it('should fail on non-string or park id', () => {
         let parkId = 1
-        expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
+        expect(() => deletePark(userId, parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = true
-        expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
+        expect(() => deletePark(userId, parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = {}
-        expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
+        expect(() => deletePark(userId, parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = ''
-        expect(() => deletePark(parkId)).to.throw(Error, `parkId is empty`)
+        expect(() => deletePark(userId, parkId)).to.throw(Error, `parkId is empty`)
     })
 
 

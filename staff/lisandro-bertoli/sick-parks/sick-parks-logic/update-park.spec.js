@@ -122,8 +122,37 @@ describe('updatePark', () => {
                 }
             })
         })
+
     })
 
+    describe('when park or user do not exist', () => {
+        let userId, parkId
+        let update = {}
+
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+            const { id: _id } = await Park.create({ name: parkName, size, level, location, creator: userId })
+            parkId = _id
+
+            const _token = jwt.sign({ sub: id }, JWT_SECRET)
+            await logic.__context__.storage.setItem('token', _token)
+        })
+
+        it('should fail and throw on non existing park', async () => {
+            await Park.deleteOne({ _id: parkId })
+
+            try {
+                await updatePark(userId, parkId, update)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`park ${parkId} does not exist`)
+            }
+        })
+
+    })
 
     it('should fail on non string user id', () => {
         let userId = 1

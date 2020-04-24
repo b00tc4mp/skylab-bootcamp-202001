@@ -1,5 +1,7 @@
 const { validate } = require('sick-parks-utils')
 const fetch = require('node-fetch')
+const context = require('./context')
+
 
 /**
  * Search for the parks in storage that match the given query. 
@@ -15,7 +17,7 @@ const fetch = require('node-fetch')
  * @throws {TypeError} if query or location do not have the correct type
  */
 
-module.exports = (query = '', location) => {
+module.exports = function (query = '', location) {
     validate.stringFrontend(query, 'query', false)
     validate.type(location, 'location', Array)
     location.forEach(coordinate => validate.type(coordinate, 'coordinate', Number))
@@ -23,7 +25,7 @@ module.exports = (query = '', location) => {
     return (async () => {
 
 
-        const response = await fetch(`http://192.168.1.101:8085/api/parks?q=${query}&location[]=${location[0]}&location[]=${location[1]}`)
+        const response = await fetch(`${this.API_URL}/parks?q=${query}&location[]=${location[0]}&location[]=${location[1]}`)
 
         const data = await response.json()
 
@@ -35,4 +37,4 @@ module.exports = (query = '', location) => {
 
     })()
 
-}
+}.bind(context)

@@ -1,5 +1,6 @@
 const { NotFoundError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
+const context = require('./context')
 const fetch = require('node-fetch')
 
 /**
@@ -17,12 +18,12 @@ const fetch = require('node-fetch')
 
 
 
-module.exports = (parkId) => {
+module.exports = function (parkId) {
     validate.stringFrontend(parkId, 'parkId')
 
     return (async () => {
 
-        const response = await fetch(`http://192.168.1.101:8085/api/parks/${parkId}`)
+        const response = await fetch(`${this.API_URL}/parks/${parkId}`)
 
         if (response.status === 200) {
             const data = await response.json()
@@ -46,4 +47,4 @@ module.exports = (parkId) => {
 
     })()
 
-}
+}.bind(context)

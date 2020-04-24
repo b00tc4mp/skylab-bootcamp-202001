@@ -22,7 +22,10 @@ const fetch = require('node-fetch')
 
 
 module.exports = function (data) {
+    validate.type(data, 'park data', Object)
+
     const { features, park } = data
+
     if (park.flow) validate.stringFrontend(park.flow, 'flow')
 
     for (key in park) {

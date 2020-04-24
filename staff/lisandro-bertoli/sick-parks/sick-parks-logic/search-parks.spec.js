@@ -2,16 +2,17 @@ require('dotenv').config()
 
 const logic = require('.')
 const { searchParks } = logic
-
-const TEST_MONGODB_URL = process.env.TEST_MONGODB_URL
+const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 
 const { mongoose, models: { Park, Location } } = require('sick-parks-data')
 const { expect } = require('chai')
 const { random, sqrt, pow } = Math
 
+logic.__context__.API_URL = API_URL
+
 describe('searchParks', () => {
     before(async () => {
-        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+        await mongoose.connect(MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await Park.deleteMany()
     })
     let name, size, level, location1, resort

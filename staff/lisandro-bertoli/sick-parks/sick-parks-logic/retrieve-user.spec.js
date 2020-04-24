@@ -61,16 +61,14 @@ describe('retrieveUser', () => {
     })
 
     describe('when user does not exist', () => {
-        it('should fail throwing jwt malformed', async () => {
+        it('should fail and throw', async () => {
             try {
-
-                await retrieveUser()
+                await retrieveUser(true)
 
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.an.instanceOf(NotFoundError)
-                expect(error.message).to.equal(`This user does not exist anymore`)
-
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
             }
 
         })
