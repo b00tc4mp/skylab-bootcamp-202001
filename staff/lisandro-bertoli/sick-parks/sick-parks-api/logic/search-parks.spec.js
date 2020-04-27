@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { Park, Location } } = require('sick-parks-data')
+const { NotFoundError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random, sqrt, pow } = Math
 
@@ -135,17 +136,18 @@ describe('searchParks', () => {
 
     })
 
-    it('should return empty array when no results', async () => {
+    it('should throw on no results for query', async () => {
         let q = 'Random'
 
-        const result = await searchParks({ q, location })
-        expect(result).to.be.an('array')
-        expect(result).to.have.length(0)
+        try {
+            await searchParks({ q, location })
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.be.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`No results for ${q}`)
+        }
+
     })
-
-
-
-
 
     after(() => Park.deleteMany().then(() => mongoose.disconnect()))
 

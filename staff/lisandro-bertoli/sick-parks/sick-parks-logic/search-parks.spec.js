@@ -5,6 +5,7 @@ const { searchParks } = logic
 const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 
 const { mongoose, models: { Park, Location } } = require('sick-parks-data')
+const { NotFoundError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random, sqrt, pow } = Math
 
@@ -127,12 +128,18 @@ describe('searchParks', () => {
 
     })
 
-    it('should return empty array when no results', async () => {
-        let query = 'Random'
+    it('should throw on no results for query', async () => {
+        const query = 'Random'
 
-        const result = await searchParks(query, location)
-        expect(result).to.be.an.instanceOf(Array)
-        expect(result.length).to.equal(0)
+
+        try {
+            await searchParks(query, location)
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.be.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`No results for ${query}`)
+        }
+
     })
 
 

@@ -1,5 +1,6 @@
 const { models: { Park } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
+const { NotFoundError } = require('sick-parks-errors')
 
 /**
  * Search for the parks in storage that match the given query. 
@@ -13,6 +14,8 @@ const { validate } = require('sick-parks-utils')
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if query does not have the correct type
+ * @throws {NotFoundError} if query returns no results
+ * 
  */
 
 
@@ -63,8 +66,7 @@ module.exports = ({ q, location }) => {
         if (filter === 'latest') results = await Park.find().sort({ created: -1 }).lean()
         else results = await Park.find(filter).lean()
 
-
-        if (!results.length) return results // Change it yo throw NotFoundError
+        if (!results.length) throw new NotFoundError(`No results for ${q}`)
 
         const sanitizedResults = results.map(result => {
             result.id = result._id.toString()

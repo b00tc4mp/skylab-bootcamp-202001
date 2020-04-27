@@ -28,23 +28,15 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 
 
 module.exports = (userId, { park, features }) => {
+    validate.string(userId, 'user id')
+    validate.type(park, 'park', Object)
+    validate.type(features, 'features', Array)
+
     for (let key in park)
         if (key !== 'location') {
-
             validate.string(park[key], `${park[key]}`)
             park[key] = park[key].toLowerCase()
-
         }
-
-    //TODO Find way to make this validation right
-    // features.forEach(feature => {
-    //     
-    //     for (key in feature) {
-    //         
-    //         if (key !== 'location') validate.string(feature[key], `${feature[key]}`)
-    //     }
-    // })
-
 
     return (async () => {
         const user = await User.findById(userId)

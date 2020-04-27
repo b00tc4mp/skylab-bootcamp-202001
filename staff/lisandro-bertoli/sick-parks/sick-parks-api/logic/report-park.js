@@ -68,8 +68,8 @@ module.exports = (params, body, payload) => {
 
 
         park.reports.forEach(_report => {
-            if (_report.problem === 'duplicate')++duplicate
-            if (_report.problem === 'unreal')++unreal
+            if (_report.problem === 'duplicate') duplicate++
+            if (_report.problem === 'unreal') unreal++
 
             if (duplicate === 5 || unreal === 5) park.underReview = true
 
@@ -78,6 +78,6 @@ module.exports = (params, body, payload) => {
         await user.save()
         await park.save()
 
-        return park.underReview // on route check for property to call deletePark 
+        return park.underReview
     })()
 }
