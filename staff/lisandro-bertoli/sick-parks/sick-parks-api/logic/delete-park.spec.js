@@ -18,7 +18,6 @@ describe('deletePark', () => {
     let report, report2
     let userId, parkId
 
-
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -38,7 +37,6 @@ describe('deletePark', () => {
             parkId = id
 
         })()
-
     })
 
     describe('when park exists and user exist', () => {
@@ -59,8 +57,6 @@ describe('deletePark', () => {
 
             expect(foundPark).to.be.undefined
         })
-
-
     })
 
     describe('on deletion by accumulated reports', () => {
@@ -69,21 +65,20 @@ describe('deletePark', () => {
             const park = await Park.findById(parkId)
 
             park.underReview = true
-            return await park.save()
 
+            return await park.save()
         })
 
         it('should succeed removing the park if no previous approvals', async () => {
             await deletePark(parkId)
 
             const park = await Park.findById(parkId)
-            expect(park).to.equal(null)
 
             const user = await User.findById(userId)
             const foundPark = user.parks.find(id => id === parkId)
 
+            expect(park).to.equal(null)
             expect(foundPark).to.be.undefined
-
         })
 
         describe('when park has previous approvals', () => {
@@ -100,12 +95,11 @@ describe('deletePark', () => {
                     user: userId,
                     problem: 'duplicate'
                 }
+
                 report2 = {
                     user: userId,
                     problem: 'unreal'
                 }
-
-
             })
 
             it('should remove the park when approvals minus reports is < 0', async () => {
@@ -118,14 +112,12 @@ describe('deletePark', () => {
                 await deletePark(parkId)
 
                 const _park = await Park.findById(parkId)
-
-                expect(_park).to.equal(null)
-
                 const user = await User.findById(userId)
+
                 const foundPark = user.parks.find(id => id === parkId)
 
+                expect(_park).to.equal(null)
                 expect(foundPark).to.be.undefined
-
             })
 
             it('should leave the park under review if the difference is >= 0', async () => {
@@ -136,6 +128,7 @@ describe('deletePark', () => {
                 await deletePark(parkId)
 
                 const _park = await Park.findById(parkId)
+
                 expect(_park.id).to.not.equal(null)
                 expect(_park.underReview).to.be.true
             })
@@ -145,12 +138,14 @@ describe('deletePark', () => {
 
     describe("when an invalid userId is provided", () => {
         let _userId
+
         beforeEach(async () => {
             await User.deleteOne({ _id: userId })
 
             const { id } = await User.create({ name, surname, email, password })
             _userId = id
         })
+
         it('should fail on non existing user and throw ', async () => {
             try {
                 await deletePark(parkId, userId)
@@ -174,6 +169,7 @@ describe('deletePark', () => {
 
     describe('when invalid parkId is provided', () => {
         let _parkId
+
         beforeEach(async () => {
             await Park.deleteOne({ _id: parkId })
 
@@ -202,7 +198,7 @@ describe('deletePark', () => {
         })
     })
 
-    it('should fail on non-string or park id', () => {
+    it('should fail on non-string park id', () => {
         let parkId = 1
         expect(() => deletePark(parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
 
@@ -230,6 +226,8 @@ describe('deletePark', () => {
         expect(() => deletePark(parkId, userId)).to.throw(Error, `userId is empty`)
     })
 
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
-
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
+    })
 })

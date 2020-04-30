@@ -18,8 +18,8 @@ const { models: { User } } = require('sick-parks-data')
  */
 
 
-module.exports = ({ sub: id }) => {
-    validate.string(id, 'id')
+module.exports = (id) => {
+    validate.string(id, 'user id')
     // Will need to change it to alson receive id through params if need to go to other user profile
     return User.findById(id)
         .then(user => {

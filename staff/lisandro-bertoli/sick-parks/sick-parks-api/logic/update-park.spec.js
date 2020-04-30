@@ -48,8 +48,6 @@ describe('updatePark', () => {
         beforeEach(async () => {
             const { id } = await User.create({ name, surname, email, password })
             userId = id
-
-
         })
 
         describe('when user is the creator', () => {
@@ -115,6 +113,30 @@ describe('updatePark', () => {
         })
     })
 
+    describe('when park does not exist', () => {
+        let userId, parkId
+        let update = {}
+
+        beforeEach(async () => {
+            const { id: _id } = await Park.create({ name: parkName, size, level, location, creator: userId })
+            parkId = _id
+
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+            await Park.deleteOne({ _id })
+        })
+
+        it('should fail and throw', async () => {
+            try {
+                await updatePark(userId, parkId, update)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`park ${parkId} does not exist`)
+            }
+        })
+    })
 
     it('should fail on non string user id', () => {
         let userId = 1
@@ -154,6 +176,27 @@ describe('updatePark', () => {
         }).to.throw(TypeError, `parkId ${parkId} is not a string`)
     })
 
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    it('should fail on non Object updates', () => {
+        let userId = 'string'
+        let parkId = 'string'
+        let update = 1
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `updates ${update} is not a Object`)
 
+        update = undefined
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `updates ${update} is not a Object`)
+
+        update = true
+        expect(() => {
+            updatePark(userId, parkId, update)
+        }).to.throw(TypeError, `updates ${update} is not a Object`)
+    })
+
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
+    })
 })

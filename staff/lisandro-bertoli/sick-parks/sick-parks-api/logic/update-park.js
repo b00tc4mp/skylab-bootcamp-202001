@@ -9,8 +9,7 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
  * @param {string} parkid the park's unique id
  * @param {Object} updates the modifications to be made
  * 
- * 
- * @returns {undefined} 
+ * @returns {Promise<undefined>}
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if userId, parkId or updates does not have the correct type
@@ -20,12 +19,10 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
  * 
  */
 
-
-
 module.exports = (userId, parkId, updates) => {
     validate.string(userId, 'userId')
     validate.string(parkId, 'parkId')
-
+    validate.type(updates, 'updates', Object)
 
     return (async () => {
         const park = await Park.findById(parkId)
@@ -35,24 +32,17 @@ module.exports = (userId, parkId, updates) => {
 
         for (key in updates) {
             if (!park[key]) throw new NotAllowedError(`field ${key} is not a valid`)
-            if (key === 'location') {
+
+            if (key === 'location')
                 updates[key] = new Location({ coordinates: updates[key].coordinates })
 
-            }
-
-            if (key === 'features') {
-
+            if (key === 'features')
                 updates[key].forEach(feature => {
-
-                    if (feature.location) feature.location = new Location({ coordinates: feature.location.coordinates })
+                    if (feature.location)
+                        feature.location = new Location({ coordinates: feature.location.coordinates })
 
                     feature = new Feature(feature)
-
-
                 })
-
-
-            }
 
             park[key] = updates[key]
         }

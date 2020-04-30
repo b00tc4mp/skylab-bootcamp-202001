@@ -8,14 +8,11 @@ const { expect } = require('chai')
 const { random } = Math
 const bcrypt = require('bcryptjs')
 
-
-
 describe('updateUser', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
         return await User.deleteMany()
     })
-
 
     let name, surname, email, password, userId, oldPassword
 
@@ -30,6 +27,7 @@ describe('updateUser', () => {
 
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
+
             const user = await User.create({ name, surname, email, password: _password })
             userId = user.id
         })
@@ -44,13 +42,11 @@ describe('updateUser', () => {
 
             const _user = await User.findById(userId).lean()
 
-            expect(_user.name).to.equal(name)
-            expect(_user.email).to.equal(email)
-
             const validPassword = await bcrypt.compare(password, _user.password)
 
+            expect(_user.name).to.equal(name)
+            expect(_user.email).to.equal(email)
             expect(validPassword).to.be.true
-
         })
 
         it('should fail on invalid oldPassword', async () => {
@@ -66,7 +62,6 @@ describe('updateUser', () => {
                 expect(error).to.be.an.instanceOf(NotAllowedError)
                 expect(error.message).to.equal('wrong credentials')
             }
-
         })
 
     })
@@ -88,12 +83,6 @@ describe('updateUser', () => {
         ).to.Throw(TypeError, `userId ${userId} is not a string`)
     })
 
-
-
-
-
-
-
     it('should fail on unsatisfying password and oldPassword pair', () => {
         userId = 'asdfasdf'
         data = { password: '123' }
@@ -108,8 +97,6 @@ describe('updateUser', () => {
     })
 
     it('should fail on non-familiar property', () => {
-        userId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ZTNiZDhmZDE3YjgwOTFiYWFjMTIxMzgiLCJpYXQiOjE1ODA5ODA3NjEsImV4cCI6MTU4MDk4NDM2MX0.t8g49qXznSCYiK040NvOWHPXWqnj9riJ_6MD2vwIv3M'
-
         const property = 'hello'
 
         data = { [property]: 'world' }
@@ -119,6 +106,8 @@ describe('updateUser', () => {
         ).to.Throw(Error, `property ${property} is not allowed`)
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
-
+    after(async () => {
+        await User.deleteMany()
+        await mongoose.disconnect()
+    })
 })

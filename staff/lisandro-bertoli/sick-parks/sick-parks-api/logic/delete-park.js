@@ -7,10 +7,10 @@ const { models: { User, Park } } = require('sick-parks-data')
  * will remove the park if requirementes are met. 
  * When userId is provided, it must match the park creator id
  * 
- * @param {string} [userId] user's unique id
+ * @param {string} userId user's unique id
  * @param {string} parkId park's unique id
  * 
- * @returns {undefined}
+ * @returns {Promise<undefined>}
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if userId and parkId do not have the correct type
@@ -25,7 +25,6 @@ module.exports = (parkId, userId) => {
     if (userId || userId === '') validate.string(userId, 'userId')
 
     return (async () => {
-
         const park = await Park.findById(parkId)
 
         if (!park) throw new NotFoundError(`park ${parkId} does not exist`)
@@ -42,8 +41,10 @@ module.exports = (parkId, userId) => {
             user.parks = parks
 
             await user.save()
+
             return
         }
+
         if (!park.underReview) throw new NotAllowedError(`park ${parkId} is not under review. A user id is required`)
 
         const difference = park.approvals.length - park.reports.length
@@ -51,11 +52,10 @@ module.exports = (parkId, userId) => {
         if (!park.approvals.length || difference < 0) {
             await Park.deleteOne({ _id: parkId })
             await User.updateOne({ _id: park.creator }, { $pull: { parks: { $in: [parkId] } } })
+
             return
         }
 
         return
-
-
     })()
 }

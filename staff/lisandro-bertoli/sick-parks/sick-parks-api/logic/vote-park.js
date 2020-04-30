@@ -2,7 +2,6 @@ const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 const { models: { Park, User } } = require('sick-parks-data')
 const { validate } = require('sick-parks-utils')
 
-
 /**
  * Adds a user's vote to the park. Sets the park rating to the difference
  * between upVotes and downVotes
@@ -11,7 +10,7 @@ const { validate } = require('sick-parks-utils')
  * @param {string} parkId park's unique id
  * @param {Boolean} vote the up or down vote from the user
  * 
- * @returns {undefined}
+ * @returns {Promise<undefined>}
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if user data, park data or vote does not have the correct type
@@ -19,7 +18,6 @@ const { validate } = require('sick-parks-utils')
  * @throws {NotAllowedError} when the user has already upVoted
  * @throws {NotAllowedError} when the user has already downVoted
  */
-
 
 module.exports = (userId, parkId, vote) => {
     validate.string(userId, 'userId')
@@ -38,15 +36,20 @@ module.exports = (userId, parkId, vote) => {
 
             const index = park.downVotes.indexOf(user._id)
 
-            if (index !== -1) park.downVotes.splice(index, 1)
-            else park.upVotes.push(user._id)
+            if (index !== -1)
+                park.downVotes.splice(index, 1)
+            else
+                park.upVotes.push(user._id)
+
         } else {
             if (park.downVotes.includes(user._id)) throw new NotAllowedError(`user with id ${userId} already downVoted`)
 
             const index = park.upVotes.indexOf(user._id)
 
-            if (index !== -1) park.upVotes.splice(index, 1)
-            else park.downVotes.push(user._id)
+            if (index !== -1)
+                park.upVotes.splice(index, 1)
+            else
+                park.downVotes.push(user._id)
         }
 
         park.rating = park.upVotes.length - park.downVotes.length
@@ -55,5 +58,4 @@ module.exports = (userId, parkId, vote) => {
 
         return
     })()
-
 }

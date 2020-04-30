@@ -10,15 +10,18 @@ const createPark = require('./create-park')
 describe('createPark', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-        return Promise.all([User.deleteMany(), Park.deleteMany()])
+        return await [User.deleteMany(), Park.deleteMany()]
     })
 
     let userName, surname, email, password
-    let features = []
-    let park = {}
+    let features
+    let park
     let featureName, featureSize
+    let userId
 
     beforeEach(() => {
+        features = []
+
         featureName = `rail`
         featureSize = `l`
         featureLocation = {
@@ -30,6 +33,8 @@ describe('createPark', () => {
         email = `${random()}@mail.com`
         password = `password${random()}`
 
+        park = {}
+
         park.name = `name${random()}`
         park.size = `l`
         park.flow = `flow${random()}`
@@ -40,10 +45,10 @@ describe('createPark', () => {
     })
 
     describe('when user exists', () => {
-        let userId
         beforeEach(async () => {
             const { id } = await User.create({ name: userName, surname, email, password })
             userId = id
+
             features.push({ name: featureName, size: featureSize, location: featureLocation })
         })
 
@@ -63,10 +68,10 @@ describe('createPark', () => {
         })
 
         it('should add the park to the user', async () => {
-            const _id = await createPark(userId, { park, features })
-            const user = await User.findById(userId)
+            const id = await createPark(userId, { park, features })
+            const { parks } = await User.findById(userId)
 
-            expect(user.parks).to.include(_id)
+            expect(parks).to.include(id)
         })
 
         it('should fail when park already exists', async () => {
@@ -79,11 +84,14 @@ describe('createPark', () => {
                 expect(error).to.be.an.instanceOf(NotAllowedError)
                 expect(error.message).to.equal(`park '${park.name}' already exists`)
             }
-
         })
 
+        afterEach(async () => await User.deleteMany())
+    })
+
+    describe('when user does not exists', () => {
+
         it('should fail and throw', async () => {
-            await User.deleteMany()
             try {
                 await createPark(userId, { park, features })
                 throw new Error('should not reach this point')
@@ -93,12 +101,49 @@ describe('createPark', () => {
             }
 
         })
-
-        afterEach(async () => {
-            await User.deleteMany()
-
-        })
     })
 
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    it('should fail on non-string or empty user id', () => {
+        userId = 1
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `user id ${userId} is not a string`)
+
+        userId = true
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `user id ${userId} is not a string`)
+
+        userId = {}
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `user id ${userId} is not a string`)
+
+        userId = ''
+        expect(() => createPark(userId, { park, features })).to.throw(Error, `user id is empty`)
+    })
+
+    it('should fail on non-object park', () => {
+        userId = 'string'
+        park = 1
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `park ${park} is not a Object`)
+
+        park = true
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `park ${park} is not a Object`)
+
+        park = undefined
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `park ${park} is not a Object`)
+    })
+
+    it('should fail on non-array features', () => {
+        userId = 'string'
+        park = {}
+        features = 1
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `features ${features} is not a Array`)
+
+        features = true
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `features ${features} is not a Array`)
+
+        features = undefined
+        expect(() => createPark(userId, { park, features })).to.throw(TypeError, `features ${features} is not a Array`)
+    })
+
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
+    })
 })

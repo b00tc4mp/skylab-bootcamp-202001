@@ -7,7 +7,6 @@ const { expect } = require('chai')
 const { random } = Math
 const approvePark = require('./approve-park')
 
-
 describe('approvePark', () => {
     before(async () => {
         await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -35,31 +34,35 @@ describe('approvePark', () => {
 
         beforeEach(async () => {
             const { id } = await User.create({ name, surname, email, password })
-            userId = id
 
+            userId = id
         })
+
         describe('when park has less than 4 approvals', () => {
             beforeEach(async () => {
                 const { id: _id } = await Park.create({ name: parkName, size, level, location })
+
                 parkId = _id
             })
 
 
             it('should succeed on incrementing approvals by 1', async () => {
-                await approvePark(userId, { id: parkId })
+                await approvePark(userId, parkId)
 
                 const park = await Park.findById(parkId)
 
                 expect(park.approvals.length).to.equal(1)
                 expect(park.approvals[0].toString()).to.equal(userId)
-
             })
 
             it('should fail when user already gave approval', async () => {
-                await approvePark(userId, { id: parkId })
+                const park = await Park.findById(parkId)
+
+                park.approvals.push(userId)
+                await park.save()
 
                 try {
-                    await approvePark(userId, { id: parkId })
+                    await approvePark(userId, parkId)
                     throw new Error('should not reach this point')
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)
@@ -77,20 +80,16 @@ describe('approvePark', () => {
 
                 for (let i = 1; i < 5; i++) {
                     const { id } = await User.create({ name, surname, email, password })
+
                     park.approvals.push(id)
                     await park.save()
                 }
-
-
-
             })
 
             it('should succeed on verifying the park', async () => {
-                await approvePark(userId, { id: parkId })
+                await approvePark(userId, parkId)
 
                 const _park = await Park.findById(parkId).lean()
-
-
 
                 expect(_park.verified).to.be.true
             })
@@ -101,18 +100,23 @@ describe('approvePark', () => {
 
     describe('when user does not exist', () => {
         let parkId
-        let userId = 'asdfasdfasfd'
+        let userId
+
         beforeEach(async () => {
             const { id: _id } = await Park.create({ name: parkName, size, level, location })
             parkId = _id
+
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+            await User.deleteOne({ email })
         })
 
         it('should fail and throw', async () => {
             try {
-                await approvePark(userId, { id: parkId })
+                await approvePark(userId, parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
-
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.be.equal(`user with id ${userId} does not exist`)
             }
@@ -121,24 +125,60 @@ describe('approvePark', () => {
 
     describe('when park does not exist', () => {
         let userId
-        let parkId = 'asdfasdfasfd'
+        let parkId
         beforeEach(async () => {
             const { id: _id } = await User.create({ name, surname, email, password })
             userId = _id
+
+            const { id } = await Park.create({ name: parkName, size, level, location })
+            parkId = id
+
+            await Park.deleteOne({ name: parkName })
         })
 
         it('should fail and throw', async () => {
             try {
-                await approvePark(userId, { id: parkId })
+                await approvePark(userId, parkId)
                 throw new Error('should not reach this point')
             } catch (error) {
-
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.be.equal(`park with id ${parkId} does not exist`)
             }
         })
     })
 
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    it('should fail on non-string or empty user id', () => {
+        let userId = 1
+        let parkId = 'string'
+        expect(() => approvePark(userId, parkId)).to.throw(TypeError, `user id ${userId} is not a string`)
 
+        userId = true
+        expect(() => approvePark(userId, parkId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+        userId = {}
+        expect(() => approvePark(userId, parkId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+        userId = ''
+        expect(() => approvePark(userId, parkId)).to.throw(Error, `user id is empty`)
+    })
+
+    it('should fail on non-string or empty park id', () => {
+        let parkId = 1
+        let userId = 'string'
+        expect(() => approvePark(userId, parkId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+        parkId = true
+        expect(() => approvePark(userId, parkId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+        parkId = {}
+        expect(() => approvePark(userId, parkId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+        parkId = ''
+        expect(() => approvePark(userId, parkId)).to.throw(Error, `park id is empty`)
+    })
+
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
+    })
 })

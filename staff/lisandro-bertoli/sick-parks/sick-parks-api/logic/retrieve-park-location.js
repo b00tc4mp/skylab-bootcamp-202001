@@ -8,8 +8,8 @@ module.exports = (parkId) => {
     return (async () => {
         const park = await Park.findById(parkId).lean()
         if (!park) throw new NotFoundError(`park ${parkId} does not exist`)
-        park.id = park._id.toString()
 
+        park.id = park._id.toString()
 
         const { name, id, resort, size, location } = park
 

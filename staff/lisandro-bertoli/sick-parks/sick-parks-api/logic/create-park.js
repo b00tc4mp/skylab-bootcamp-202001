@@ -6,19 +6,19 @@ const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
  * Creates a new Park on parks collection, adding it to the user parks property
  * 
  * @param {string} userId user's unique id
- * @param {object} req.body the request body with the park info
- * @param {object} req.body.park the park itself
- * @param {string} req.body.park.name the name of the park
- * @param {string} req.body.park.size the size of the park
- * @param {string} req.body.park.resort the resort the park belongs to
- * @param {string} req.body.park.level the level recomended for riding the park
+ * @param {object} parkData the request body with the park info
  * 
+ * @param {object} parkData.park the park itself
+ * @param {string} parkData.park.name the name of the park
+ * @param {string} parkData.park.size the size of the park
+ * @param {string} parkData.park.resort the resort the park belongs to
+ * @param {string} parkData.park.level the level recomended for riding the park
  * 
- * @param {Object[]} req.body.features the features of the park
- * @param {string} req.body.features[].description the level recomended for riding the feature
- * @param {string} req.body.features[].size the size of the feature
+ * @param {Object[]} parkData.features the features of the park
+ * @param {string} parkData.features[].description the level recomended for riding the feature
+ * @param {string} parkData.features[].size the size of the feature
  * 
- * @returns {string} park id 
+ * @returns {Promise<string>} park id 
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if user data and park data do not have the correct type
@@ -47,8 +47,8 @@ module.exports = (userId, { park, features }) => {
 
         park.location = new Location({ coordinates: park.location.coordinates })
 
-
         const newPark = await Park.create(park)
+
         const newFeatures = features.map(feature => {
             if (feature.location) feature.location = new Location({ coordinates: feature.location.coordinates })
 
@@ -64,8 +64,5 @@ module.exports = (userId, { park, features }) => {
         await user.save()
 
         return newPark._id.toString()
-
     })()
-
-
 }

@@ -24,31 +24,30 @@ describe('authenticateUser', () => {
     })
 
     describe('when user already exists', () => {
-        let _id
+        let userId
 
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
 
-            const user = await User.create(new User({ name, surname, email, password: _password }))
+            const { id } = await User.create(new User({ name, surname, email, password: _password }))
 
-            _id = user.id
+            userId = id
         })
 
         it('should succeed on valid credentials, returning user id', async () => {
-
-            const id = await authenticateUser({ email, password })
+            const id = await authenticateUser(email, password)
 
             expect(id).to.be.a('string')
             expect(id.length).to.be.greaterThan(0)
-            expect(id).to.equal(_id)
-
+            expect(id).to.equal(userId)
         })
 
 
         it('should fail on incorrect email', async () => {
             email = `wrong${email}`
+
             try {
-                await authenticateUser({ email, password })
+                await authenticateUser(email, password)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
@@ -58,8 +57,9 @@ describe('authenticateUser', () => {
 
         it('should fail on incorecnt password', async () => {
             password = `wrong${email}`
+
             try {
-                await authenticateUser({ email, password })
+                await authenticateUser(email, password)
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotAllowedError)
@@ -68,5 +68,36 @@ describe('authenticateUser', () => {
         })
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
+    it('should fail on non-string or empty password', () => {
+        password = 1
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = true
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = {}
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = ''
+        expect(() => authenticateUser(email, password)).to.throw(Error, `password is empty`)
+    })
+
+    it('should fail on non-string or empty email', () => {
+        email = 1
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = true
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = {}
+        expect(() => authenticateUser(email, password)).to.throw(TypeError, `email ${email} is not a string`)
+
+        email = ''
+        expect(() => authenticateUser(email, password)).to.throw(Error, `email is empty`)
+    })
+
+    after(async () => {
+        await User.deleteMany()
+        await mongoose.disconnect()
+    })
 })

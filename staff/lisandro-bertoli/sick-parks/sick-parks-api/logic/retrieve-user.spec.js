@@ -9,10 +9,11 @@ const { NotFoundError } = require('sick-parks-errors')
 describe('retrieveUser', () => {
     let name, surname, email, password
 
+    before(async () => {
+        await mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
-    before(() =>
-        mongoose.connect(TEST_MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    )
+        return await User.deleteMany()
+    })
 
 
     beforeEach(() => {
@@ -25,50 +26,61 @@ describe('retrieveUser', () => {
     describe('when user exists', () => {
         let _id
         describe('when user is not deactivated', () => {
-            beforeEach(() =>
-                User.create({ name, surname, email, password })
-                    .then(({ id }) => _id = id)
-            )
+            beforeEach(async () => {
+                const { id } = await User.create({ name, surname, email, password })
 
-            it('should succeed on valid id, returning the user', () => {
-                return retrieveUser({ sub: _id })
-                    .then(user => {
-                        expect(user.constructor).to.equal(Object)
-                        expect(user.name).to.equal(name)
-                        expect(user.surname).to.equal(surname)
-                        expect(user.email).to.equal(email)
-                        expect(user.password).to.be.undefined
-                    })
+                _id = id
+            })
+
+            it('should succeed on valid id, returning the user', async () => {
+                const user = await retrieveUser(_id)
+
+                expect(user.constructor).to.equal(Object)
+                expect(user.name).to.equal(name)
+                expect(user.surname).to.equal(surname)
+                expect(user.email).to.equal(email)
+                expect(user.password).to.be.undefined
             })
         })
     })
 
     describe('when user does not exist', () => {
+        let _id
 
-        let id = '507f1f77bcf86cd799439011'
-        it('should fail throwing not-found-error', () => {
-            return retrieveUser({ sub: id })
-                .then(() => { throw new Error('should not reach this point') })
-                .catch(error => {
-                    expect(error).to.be.instanceOf(NotFoundError)
-                    expect(error.message).to.equal(`user with id ${id} does not exist`)
-                })
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+            _id = id
+
+            await User.deleteOne({ _id })
+        })
+
+        it('should fail throwing not-found-error', async () => {
+            try {
+                const user = await retrieveUser(_id)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`user with id ${_id} does not exist`)
+            }
         })
     })
+
     it('should fail on non-string or empty id', () => {
         let id = 1
-        expect(() => retrieveUser({ sub: id })).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
 
         id = true
-        expect(() => retrieveUser({ sub: id })).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
 
         id = {}
-        expect(() => retrieveUser({ sub: id })).to.throw(TypeError, `id ${id} is not a string`)
+        expect(() => retrieveUser(id)).to.throw(TypeError, `id ${id} is not a string`)
 
         id = ''
-        expect(() => retrieveUser({ sub: id })).to.throw(Error, `id is empty`)
+        expect(() => retrieveUser(id)).to.throw(Error, `id is empty`)
     })
 
-    after(() => User.deleteMany().then(() => mongoose.disconnect()))
-
+    after(async () => {
+        await User.deleteMany()
+        await mongoose.disconnect()
+    })
 })

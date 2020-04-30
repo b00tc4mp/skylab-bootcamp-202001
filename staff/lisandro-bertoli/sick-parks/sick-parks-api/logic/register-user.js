@@ -3,7 +3,6 @@ const { models: { User } } = require('sick-parks-data')
 const { NotAllowedError } = require('sick-parks-errors')
 const bcrypt = require('bcryptjs')
 
-
 /**
  * Creates a new user and adds it to the storage
  * 
@@ -20,7 +19,6 @@ const bcrypt = require('bcryptjs')
  * @throws {NotAllowedError} when provided email already exists in storage
  */
 
-
 module.exports = ({ name, surname, email, password }) => {
     validate.string(name, 'name')
     validate.string(surname, 'surname')
@@ -28,20 +26,15 @@ module.exports = ({ name, surname, email, password }) => {
     validate.email(email)
     validate.string(password, 'password')
 
+    return (async () => {
+        const user = await User.findOne({ email })
 
+        if (user) throw new NotAllowedError(`user ${email} already exists`)
 
-    return User.findOne({ email })
-        .then(user => {
-            if (user) throw new NotAllowedError(`user ${email} already exists`)
+        password = await bcrypt.hash(password, 10)
 
-            return bcrypt.hash(password, 10)
-        })
-        .then(password => {
+        await User.create({ name, surname, email, password })
 
-            user = new User({ name, surname, email, password })
-
-            return user.save()
-        })
-        .then(() => { })
-
+        return
+    })()
 }

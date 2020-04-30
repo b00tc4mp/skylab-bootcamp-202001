@@ -15,13 +15,11 @@ describe('reportPark', () => {
 
     let name, surname, email, password
     let parkName, size, level, location
-    let body
+    let problem
     let validOptions = ['unreal', 'duplicate']
 
     beforeEach(() => {
-        const problem = validOptions[floor(random() * 2)]
-        body = { problem }
-
+        problem = validOptions[floor(random() * 2)]
 
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -46,18 +44,16 @@ describe('reportPark', () => {
         })
 
         it('should succeed on reporting the problem', async () => {
-            const underReview = await reportPark({ pid: parkId }, body, { sub: userId })
-
+            const underReview = await reportPark(parkId, problem, userId)
             const park = await Park.findOne({ _id: parkId }).lean()
 
             expect(park.reports[0].user.toString()).to.equal(userId)
-            expect(park.reports[0].problem).to.equal(body.problem)
+            expect(park.reports[0].problem).to.equal(problem)
             expect(typeof underReview).to.equal('boolean')
-
         })
 
         it('should add the parkId to the contributions of the user', async () => {
-            await reportPark({ pid: parkId }, body, { sub: userId })
+            await reportPark(parkId, problem, userId)
 
             const user = await User.findOne({ _id: userId }).lean()
 
@@ -67,7 +63,7 @@ describe('reportPark', () => {
         describe('when reports duplicate or unreal reach 5', () => {
             beforeEach(async () => {
                 const park = await Park.create({ name: parkName, size, level, location })
-                parkId = park._id.toString()
+                parkId = park.id
 
                 for (let i = 1; i < 5; i++) {
                     const { id } = await User.create({ name, surname, email, password })
@@ -87,8 +83,7 @@ describe('reportPark', () => {
             })
 
             it('should set the park under review', async () => {
-
-                const underReview = await reportPark({ pid: parkId }, body, { sub: userId })
+                const underReview = await reportPark(parkId, problem, userId)
                 const _park = await Park.findById(parkId).lean()
 
                 expect(_park.underReview).to.equal(true)
@@ -97,24 +92,125 @@ describe('reportPark', () => {
         })
 
         describe('when user already reported the problem', () => {
-            it('should fail and throw', async () => {
-                await reportPark({ pid: parkId }, body, { sub: userId })
-                try {
 
-                    await reportPark({ pid: parkId }, body, { sub: userId })
+            it('should fail and throw', async () => {
+                await reportPark(parkId, problem, userId)
+
+                try {
+                    await reportPark(parkId, problem, userId)
                     throw new Error('should not reach this point')
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)
                     expect(error.message).to.equal(`user ${userId} alredy filed this report`)
                 }
-
             })
         })
-
-        //TODO more unhappy paths
-
     })
 
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    describe('when park does not exist', () => {
+        let parkId, userId
+
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+            const { id: _id } = await Park.create({ name: parkName, size, level, location })
+            parkId = _id
+
+            await Park.deleteOne({ _id })
+        })
+
+        it('should fail and throw', async () => {
+            try {
+                await reportPark(parkId, problem, userId)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`park with id ${parkId} does not exist`)
+            }
+
+        })
+    })
+
+    describe('when user does not exist', () => {
+        let parkId, userId
+
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+            const { id: _id } = await Park.create({ name: parkName, size, level, location })
+            parkId = _id
+
+            await User.deleteOne({ _id: id })
+        })
+
+        it('should fail and throw', async () => {
+            try {
+                await reportPark(parkId, problem, userId)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+            }
+        })
+    })
+
+    describe('synchronous unhappy paths', () => {
+        let parkId, userId
+
+        beforeEach(() => {
+            parkId = `park-${random()}`
+            userId = `user-${random()}`
+            problem = `problem-${random()}`
+        })
+
+        it('should fail on non-string or empty user id', () => {
+            userId = 1
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+            userId = true
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+            userId = {}
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+            userId = ''
+            expect(() => reportPark(parkId, problem, userId)).to.throw(Error, `user id is empty`)
+        })
+
+        it('should fail on non-string or empty park id', () => {
+            parkId = 1
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+            parkId = true
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+            parkId = {}
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+            parkId = ''
+            expect(() => reportPark(parkId, problem, userId)).to.throw(Error, `park id is empty`)
+        })
+
+        it('should fail on non-string or empty problem', () => {
+            problem = 1
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `problem ${problem} is not a string`)
+
+            problem = true
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `problem ${problem} is not a string`)
+
+            problem = {}
+            expect(() => reportPark(parkId, problem, userId)).to.throw(TypeError, `problem ${problem} is not a string`)
+
+            problem = ''
+            expect(() => reportPark(parkId, problem, userId)).to.throw(Error, `problem is empty`)
+        })
+    })
+
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
+    })
 })
 

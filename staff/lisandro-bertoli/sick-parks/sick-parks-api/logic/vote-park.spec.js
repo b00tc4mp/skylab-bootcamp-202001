@@ -101,11 +101,16 @@ describe('votePark', () => {
 
     describe('when park does not exist', () => {
         let userId
-        let parkId = 'asdfasdfasfd'
+        let parkId
+
         beforeEach(async () => {
             const { id } = await User.create({ name, surname, email, password })
             userId = id
 
+            const { id: _id } = await Park.create({ name: parkName, size, level, location })
+            parkId = _id
+
+            await Park.deleteOne({ _id })
         })
 
         it('should fail and throw', async () => {
@@ -113,7 +118,6 @@ describe('votePark', () => {
                 await votePark(userId, parkId, upVote)
                 throw new Error('should not reach this point')
             } catch (error) {
-
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.be.equal(`park with id ${parkId} does not exist`)
             }
@@ -122,11 +126,16 @@ describe('votePark', () => {
 
     describe('when user does not exist', () => {
         let parkId
-        let userId = 'asdfasdfasfd'
+        let userId
+
         beforeEach(async () => {
             const { id: _id } = await Park.create({ name: parkName, size, level, location })
             parkId = _id
 
+            const { id } = await User.create({ name, surname, email, password })
+            userId = id
+
+            await User.deleteOne({ _id: id })
         })
 
         it('should fail and throw', async () => {
@@ -134,7 +143,6 @@ describe('votePark', () => {
                 await votePark(userId, parkId, upVote)
                 throw new Error('should not reach this point')
             } catch (error) {
-
                 expect(error).to.be.instanceOf(NotFoundError)
                 expect(error.message).to.be.equal(`user with id ${userId} does not exist`)
             }
@@ -159,19 +167,36 @@ describe('votePark', () => {
     it('should fail on non-string parkId', () => {
         parkId = 1
         userId = 'string'
+
         expect(() => votePark(userId, parkId, upVote)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = undefined
-        userId = 'string'
+
         expect(() => votePark(userId, parkId, upVote)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
 
         parkId = true
-        userId = 'string'
-        expect(() => votePark(userId, parkId, upVote)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
 
+        expect(() => votePark(userId, parkId, upVote)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
     })
 
 
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    it('should fail on non-string parkId', () => {
+        parkId = 'string'
+        let vote = 1
 
+        expect(() => votePark(userId, parkId, vote)).to.Throw(TypeError, `vote ${vote} is not a boolean`)
+
+        vote = undefined
+
+        expect(() => votePark(userId, parkId, vote)).to.Throw(TypeError, `vote ${vote} is not a boolean`)
+
+        vote = 'string'
+
+        expect(() => votePark(userId, parkId, vote)).to.Throw(TypeError, `vote ${vote} is not a boolean`)
+    })
+
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
+    })
 })

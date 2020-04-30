@@ -14,6 +14,7 @@ describe('deleteUser', () => {
     })
 
     let name, surname, email, password
+    let _id
 
     beforeEach(() => {
         name = `name-${Math.random()}`
@@ -23,7 +24,7 @@ describe('deleteUser', () => {
     })
 
     describe('when user exists', () => {
-        let _id
+
         beforeEach(async () => {
             const _password = await bcrypt.hash(password, 10)
 
@@ -31,20 +32,17 @@ describe('deleteUser', () => {
             _id = id
         })
 
-
         it('should succeed removing the user', async () => {
             const returnVal = await deleteUser(_id, password)
+            const user = await User.findById(_id).lean()
 
             expect(returnVal).to.be.undefined
-
-            const user = await User.findById(_id)
-
             expect(user).to.be.null
-
         })
 
         it('should fail on incorrect password', async () => {
             password = password + 'wrong'
+
             try {
                 await deleteUser(_id, password)
                 throw new Error('should not reach this point')
@@ -55,22 +53,56 @@ describe('deleteUser', () => {
         })
     })
 
-    it('should fail on incorrect id', async () => {
-        let _id = '5e6536527984d5537dd3f385'
+    describe('when user does not exist', () => {
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+            _id = id
 
-        try {
-            await deleteUser(_id, password)
-            throw new Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.be.instanceOf(NotFoundError)
-            expect(error.message).to.be.equal(`user with id ${_id} does not exist`)
-        }
+            await User.deleteMany()
+        })
+
+        it('should fail on incorrect id or non existing user', async () => {
+            try {
+                await deleteUser(_id, password)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotFoundError)
+                expect(error.message).to.be.equal(`user with id ${_id} does not exist`)
+            }
+        })
     })
 
+    it('should fail on non-string or empty user id', () => {
+        _id = 1
+        expect(() => deleteUser(_id, password)).to.throw(TypeError, `user id ${_id} is not a string`)
+
+        _id = true
+        expect(() => deleteUser(_id, password)).to.throw(TypeError, `user id ${_id} is not a string`)
+
+        _id = {}
+        expect(() => deleteUser(_id, password)).to.throw(TypeError, `user id ${_id} is not a string`)
+
+        _id = ''
+        expect(() => deleteUser(_id, password)).to.throw(Error, `user id is empty`)
+    })
+
+    it('should fail on non-string or empty password', () => {
+        _id = 'string'
+        password = 1
+        expect(() => deleteUser(_id, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = true
+        expect(() => deleteUser(_id, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = {}
+        expect(() => deleteUser(_id, password)).to.throw(TypeError, `password ${password} is not a string`)
+
+        password = ''
+        expect(() => deleteUser(_id, password)).to.throw(Error, `password is empty`)
+    })
 
     after(async () => {
         await User.deleteMany()
         await mongoose.disconnect()
-
     })
 })

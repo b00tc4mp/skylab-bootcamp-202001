@@ -6,11 +6,10 @@ const { NotFoundError } = require('sick-parks-errors')
  * Search for the parks in storage that match the given query. 
  * Ordering them by distance.
  * 
- * @param {Object} query the requests query
- * @param {string} query.q the query itself provided by the user
- * @param {Array} query.location the location of the user
+ * @param {string} query the query itself provided by the user
+ * @param {Array}  location the location of the user
  * 
- * @returns {Array} list of matching results. Empty if no matches
+ * @returns {Promise<Array>} list of matching results. Empty if no matches
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if query does not have the correct type
@@ -18,10 +17,12 @@ const { NotFoundError } = require('sick-parks-errors')
  * 
  */
 
+module.exports = (query, location) => {
+    validate.string(query, 'query', false)
+    validate.type(location, 'location', Array)
 
-module.exports = ({ q, location }) => {
-    validate.string(q, 'query', false)
-    const _location = location.map(coordinate => parseFloat(coordinate))
+    location = location.map(coordinate => parseFloat(coordinate))
+    query = query.toLowerCase()
 
     let filter = {
         $and: [
@@ -30,7 +31,7 @@ module.exports = ({ q, location }) => {
                     $near: {
                         $geometry: {
                             type: 'Point',
-                            coordinates: _location
+                            coordinates: location
                         }
                     }
                 }
@@ -39,19 +40,19 @@ module.exports = ({ q, location }) => {
     }
 
     switch (true) {
-        case q.toLowerCase() === 'latest':
+        case query.toLowerCase() === 'latest':
             filter = 'latest'
             break
-        case q.toLowerCase() === 'verified':
+        case query.toLowerCase() === 'verified':
             filter.$and.unshift({ verified: true })
             break
-        case q !== '':
+        case query !== '':
             filter.$and.unshift({
                 $or: [
-                    { name: { $regex: q } },
-                    { resort: { $regex: q } },
-                    { level: { $regex: q } },
-                    { size: { $regex: q } }
+                    { name: { $regex: query } },
+                    { resort: { $regex: query } },
+                    { level: { $regex: query } },
+                    { size: { $regex: query } }
                 ]
             })
             break
@@ -62,11 +63,12 @@ module.exports = ({ q, location }) => {
     return (async () => {
         let results
 
+        if (filter === 'latest')
+            results = await Park.find().sort({ created: -1 }).lean()
+        else
+            results = await Park.find(filter).lean()
 
-        if (filter === 'latest') results = await Park.find().sort({ created: -1 }).lean()
-        else results = await Park.find(filter).lean()
-
-        if (!results.length) throw new NotFoundError(`No results for ${q}`)
+        if (!results.length) throw new NotFoundError(`No results for ${query}`)
 
         const sanitizedResults = results.map(result => {
             result.id = result._id.toString()
@@ -80,5 +82,4 @@ module.exports = ({ q, location }) => {
 
         return sanitizedResults
     })()
-
 }

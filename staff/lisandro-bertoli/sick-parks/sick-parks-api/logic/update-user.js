@@ -9,8 +9,7 @@ const bcrypt = require('bcryptjs')
  * @param {string} id the user's unique id
  * @param {Object} data the modifications to be made
  * 
- * 
- * @returns {undefined} 
+ * @returns {Promise<undefined>} 
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if userId or data and data keys do not have the correct type
@@ -21,8 +20,7 @@ const bcrypt = require('bcryptjs')
  * 
  */
 
-
-module.exports = function (id, data) {
+module.exports = (id, data) => {
     validate.string(id, 'userId')
     validate.type(data, 'updates', Object)
 
@@ -70,6 +68,7 @@ module.exports = function (id, data) {
         const _user = await User.findById(id)
 
         if (!_user) throw new NotFoundError(`user ${id} does not exist`)
+
         if (password) {
             const verifiedPassword = await bcrypt.compare(oldPassword, _user.password)
 
