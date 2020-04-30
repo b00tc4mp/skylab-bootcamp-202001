@@ -3,7 +3,6 @@ const { validate } = require('sick-parks-utils')
 const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
 const fetch = require('node-fetch')
 
-
 /**
  * Updates the user with the new given data.
  * 
@@ -77,8 +76,7 @@ module.exports = function (id, data) {
         if (response.status === 200) return
 
         if (response.status >= 400 || response.status < 500) {
-            const data = await response.json()
-            const { error } = data
+            const { error } = await response.json()
 
             if (response.status === 404) throw new NotFoundError('User could not be found in our records')
             if (response.status === 403) throw new NotAllowedError(error)

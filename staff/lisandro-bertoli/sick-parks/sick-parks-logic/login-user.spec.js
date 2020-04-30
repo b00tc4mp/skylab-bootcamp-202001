@@ -2,12 +2,10 @@ const logic = require('.')
 const { loginUser } = logic
 const { random } = Math
 const { expect } = require('chai')
-const AsyncStorage = require('not-async-storage')
-
 const { mongoose, models: { User } } = require('sick-parks-data')
 const bcrypt = require('bcryptjs')
-const { ContentError } = require('sick-parks-errors')
-
+const { ContentError, NotAllowedError } = require('sick-parks-errors')
+const AsyncStorage = require('not-async-storage')
 const { TEST_MONGODB_URL: MONGODB_URL, TEST_API_URL: API_URL } = process.env
 
 logic.__context__.storage = AsyncStorage
@@ -36,14 +34,13 @@ describe('loginUser', () => {
         })
 
         it('should succeed on correct credentials', async () => {
-
             const returnValue = await loginUser(email, password)
-
-            expect(returnValue).to.be.undefined
 
             const token = await logic.__context__.storage.getItem('token')
 
             const [header, payload, signature] = token.split('.')
+
+            expect(returnValue).to.be.undefined
             expect(header.length).to.be.greaterThan(0)
             expect(payload.length).to.be.greaterThan(0)
             expect(signature.length).to.be.greaterThan(0)
@@ -56,24 +53,24 @@ describe('loginUser', () => {
                 await loginUser(email, password)
                 throw new Error('should not reach this point')
             } catch (error) {
-                expect(error).to.be.instanceOf(Error)
+                expect(error).to.be.instanceOf(NotAllowedError)
+                expect(error.message).to.equal('wrong credentials')
+            }
+        })
+
+        it('should fail on incorrect email', async () => {
+            email = `wrong-${email}`
+            try {
+                await loginUser(email, password)
+                throw new Error('should not reach this point')
+
+            } catch (error) {
+                expect(error).to.be.instanceOf(NotAllowedError)
                 expect(error.message).to.equal('wrong credentials')
             }
         })
     })
 
-    it('should fail on incorrect email', async () => {
-        email = `wrong-${email}`
-        try {
-            await loginUser(email, password)
-            throw new Error('should not reach this point')
-
-        } catch (error) {
-            expect(error).to.be.instanceOf(Error)
-            expect(error.message).to.equal('wrong credentials')
-        }
-
-    })
 
     it('should fail on non-string password', () => {
         password = 1
@@ -84,7 +81,6 @@ describe('loginUser', () => {
 
         password = true
         expect(() => loginUser(email, password)).to.Throw(TypeError, `password ${password} is not a string`)
-
     })
 
     it('should fail on non-email email', () => {
@@ -96,10 +92,10 @@ describe('loginUser', () => {
 
         email = 'email'
         expect(() => loginUser(email, password)).to.Throw(ContentError, `${email} is not an e-mail`)
-
     })
+
     after(async () => {
-        await Promise.resolve(User.deleteMany())
+        await User.deleteMany()
         return await mongoose.disconnect()
     })
 })

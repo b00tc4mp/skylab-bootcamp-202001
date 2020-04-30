@@ -24,18 +24,15 @@ describe('retrievePark', () => {
     let feature = {}
 
     beforeEach(() => {
-
         feature.name = "other"
         feature.size = "xl"
         feature.level = "advanced"
         feature.location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
 
-
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}`
         password = `password-${random()}`
-
 
         parkName = `parkName-${random()}`
         size = `l`
@@ -50,8 +47,10 @@ describe('retrievePark', () => {
 
         beforeEach(async () => {
             const feat = new Feature(feature)
+
             const { id } = await User.create({ name, surname, email, password })
             userId = id
+
             const park = await Park.create({ name: parkName, size, level, resort, description, location, creator: id, features: [feat] })
             parkId = park.id
         })
@@ -75,14 +74,14 @@ describe('retrievePark', () => {
     describe('when park does not exist', () => {
         let parkId
         beforeEach(async () => {
+            const { id } = await Park.create({ name: parkName, size, level, resort, description, location })
+            parkId = id
 
-            const park = await Park.create({ name: parkName, size, level, resort, description, location })
-            parkId = park._id.toString()
             await Park.deleteOne({ _id: parkId })
             return
         })
 
-        it('should fail on wrong id', async () => {
+        it('should fail and throw', async () => {
             try {
                 await retrievePark(parkId)
                 throw new Error('should not reach this point')
@@ -91,23 +90,23 @@ describe('retrievePark', () => {
                 expect(error.message).to.equal(`the park you are looking for does not exist or has been deleted`)
             }
         })
+    })
 
-        it('should fail on non string id', () => {
-            let parkId = 1
-            expect(() => {
-                retrievePark(parkId)
-            }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
+    it('should fail on non string id', () => {
+        let parkId = 1
+        expect(() => {
+            retrievePark(parkId)
+        }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
 
-            parkId = undefined
-            expect(() => {
-                retrievePark(parkId)
-            }).to.Throw(ContentError, `parkId is empty`)
+        parkId = undefined
+        expect(() => {
+            retrievePark(parkId)
+        }).to.Throw(ContentError, `parkId is empty`)
 
-            parkId = true
-            expect(() => {
-                retrievePark(parkId)
-            }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
-        })
+        parkId = true
+        expect(() => {
+            retrievePark(parkId)
+        }).to.Throw(TypeError, `parkId ${parkId} is not a string`)
     })
 
     after(() => Promise.all([Park.deleteMany(), User.deleteMany()]).then(() => mongoose.disconnect()))

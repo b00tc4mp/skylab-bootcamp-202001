@@ -3,19 +3,15 @@ const { ContentError } = require('sick-parks-errors')
 const { validate } = require('sick-parks-utils')
 const context = require('./context')
 
-
 /**
  * Retrieves the parks created by a specific user
  * 
  * @param {string} userId the users's unique id
  * 
- * @returns {Array} list of al parks data. Empty if user has no created parks
+ * @returns {Promise<Array>} list of al parks data. Empty if user has no created parks
  * 
  * @throws {ContentError} if id in token is not valid
  */
-
-
-
 
 module.exports = function (userId) {
     validate.string(userId)
@@ -27,7 +23,6 @@ module.exports = function (userId) {
             headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }
         })
 
-
         if (response.status === 200) {
             const { results } = await response.json()
 
@@ -35,16 +30,11 @@ module.exports = function (userId) {
         }
 
         if (response.status >= 400 || response.status < 500) {
-            const data = await response.json()
-
-            const { error } = data
             if (response.status === 406) throw new ContentError('invalid user id in token')
 
+            const { error } = await response.json()
+
             throw new Error(error)
-
-
         } else throw new Error('Server error')
-
     })()
-
 }.bind(context)

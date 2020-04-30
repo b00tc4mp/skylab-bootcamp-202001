@@ -27,7 +27,6 @@ describe('reportPark', () => {
     beforeEach(() => {
         problem = validOptions[floor(random() * 2)]
 
-
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}`
@@ -54,7 +53,7 @@ describe('reportPark', () => {
         })
 
         it('should succeed on reporting the problem', async () => {
-            const underReview = await reportPark(userId, parkId, problem)
+            await reportPark(userId, parkId, problem)
 
             const park = await Park.findOne({ _id: parkId }).lean()
 
@@ -99,15 +98,14 @@ describe('reportPark', () => {
                 const _park = await Park.findById(parkId).lean()
 
                 expect(_park.underReview).to.equal(true)
-
             })
         })
 
         describe('when user already reported the problem', () => {
             it('should fail and throw', async () => {
                 await reportPark(userId, parkId, problem)
-                try {
 
+                try {
                     await reportPark(userId, parkId, problem)
                     throw new Error('should not reach this point')
                 } catch (error) {
@@ -117,60 +115,54 @@ describe('reportPark', () => {
 
             })
         })
-
-        //TODO more unhappy paths
-
     })
 
-    it('should fail on non-string userId', () => {
-        userId = 1
-        parkId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `userId ${userId} is not a string`)
+    describe('synchronous unahappy paths', () => {
+        let userId, parkId, problem
 
-        userId = undefined
-        parkId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `userId is empty`)
+        beforeEach(() => {
+            problem = validOptions[floor(random() * 2)]
+            userId = `user${random()}`
+            parkId = `park${random()}`
+        })
 
-        userId = true
-        parkId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `userId ${userId} is not a string`)
+        it('should fail on non-string userId', () => {
+            userId = 1
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `userId ${userId} is not a string`)
 
+            userId = undefined
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `userId is empty`)
+
+            userId = true
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `userId ${userId} is not a string`)
+        })
+
+        it('should fail on non-string parkId', () => {
+            parkId = 1
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
+
+            parkId = undefined
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `parkId is empty`)
+
+            parkId = true
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
+        })
+
+        it('should fail on non-string problem', () => {
+            problem = 1
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `problem ${problem} is not a string`)
+
+            problem = undefined
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `problem is empty`)
+
+            problem = true
+            expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `problem ${problem} is not a string`)
+        })
     })
 
-    it('should fail on non-string parkId', () => {
-        parkId = 1
-        userId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
-
-        parkId = undefined
-        userId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `parkId is empty`)
-
-        parkId = true
-        userId = 'string'
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
-
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
     })
-
-    it('should fail on non-string problem', () => {
-        parkId = 'string'
-        userId = 'string'
-        problem = 1
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `problem ${problem} is not a string`)
-
-        parkId = 'string'
-        userId = 'string'
-        problem = undefined
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(ContentError, `problem is empty`)
-
-        parkId = 'string'
-        userId = 'string'
-        problem = true
-        expect(() => reportPark(userId, parkId, problem)).to.Throw(TypeError, `problem ${problem} is not a string`)
-
-    })
-
-
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
 })
 

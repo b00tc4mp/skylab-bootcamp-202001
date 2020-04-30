@@ -23,7 +23,6 @@ describe('deletePark', () => {
     let parkName, size, level, location
     let userId, parkId
 
-
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -34,8 +33,11 @@ describe('deletePark', () => {
         size = `l`
         level = `begginer`
         location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
+    })
 
-        return (async () => {
+    describe('when user exists', () => {
+
+        beforeEach(async () => {
             const { _id } = await User.create({ name, surname, email, password })
             userId = _id.toString()
 
@@ -43,13 +45,10 @@ describe('deletePark', () => {
             parkId = id
 
             const _token = jwt.sign({ sub: userId }, JWT_SECRET)
+
             await logic.__context__.storage.setItem('token', _token)
+        })
 
-        })()
-
-    })
-
-    describe('when park exists and user exist', () => {
         it('should succeed deleting the park from parks collection', async () => {
             await deletePark(userId, parkId)
 
@@ -68,30 +67,58 @@ describe('deletePark', () => {
             expect(foundPark).to.be.undefined
         })
 
+        describe('park does not exist', () => {
 
-    })
+            beforeEach(async () => await Park.deleteOne({ _id: parkId }))
 
-    describe('when invalid parkId is provided', () => {
-
-        beforeEach(async () => await Park.deleteOne({ _id: parkId }))
-
-        it('should fail on non existing park and throw ', async () => {
-            try {
-                await deletePark(userId, parkId)
-                throw new Error('should not reach this point')
-            } catch (error) {
-                expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.equal(`park ${parkId} does not exist`)
-            }
+            it('should fail on non existing park and throw ', async () => {
+                try {
+                    await deletePark(userId, parkId)
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.instanceOf(NotFoundError)
+                    expect(error.message).to.equal(`park ${parkId} does not exist`)
+                }
+            })
         })
 
+        describe('when user is not park creator', () => {
+            let _id
+            beforeEach(async () => {
+                const { id } = await User.create({ name, surname, email, password })
+                _id = id
+
+                const _token = jwt.sign({ sub: id }, JWT_SECRET)
+                await logic.__context__.storage.setItem('token', _token)
+            })
+
+            it('should fail and throw', async () => {
+                try {
+                    await deletePark(userId, parkId)
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.instanceOf(NotAllowedError)
+                    expect(error.message).to.equal(`user ${_id} did not create this park`)
+                }
+            })
+        })
     })
 
-    describe("when an invalid userId is provided", () => {
 
-        beforeEach(async () => await User.deleteOne({ _id: userId }))
+    describe('user does not exist', () => {
 
-        it('should fail on non existing user and throw ', async () => {
+        beforeEach(async () => {
+            const { id } = await Park.create({ name: parkName, size, level, location, creator: userId })
+            parkId = id
+
+            const _token = jwt.sign({ sub: userId }, JWT_SECRET)
+
+            await logic.__context__.storage.setItem('token', _token)
+
+            await User.deleteOne({ _id: userId })
+        })
+
+        it('should fail and throw ', async () => {
             try {
                 await deletePark(userId, parkId)
                 throw new Error('should not reach this point')
@@ -100,40 +127,46 @@ describe('deletePark', () => {
                 expect(error.message).to.equal(`user ${userId} does not exist`)
             }
         })
+    })
 
-        it('should fail on incorrect user as park creator and throw', async () => {
-            const { id } = await User.create({ name, surname, email, password })
+    describe('sychronous unhappy paths', () => {
 
-            const _token = jwt.sign({ sub: id }, JWT_SECRET)
-            await logic.__context__.storage.setItem('token', _token)
+        beforeEach(() => {
+            parkId = `park-${random()}`
+            userId = `user-${random()}`
+        })
 
-            try {
-                await deletePark(userId, parkId)
-                throw new Error('should not reach this point')
-            } catch (error) {
-                expect(error).to.be.instanceOf(NotAllowedError)
-                expect(error.message).to.equal(`user ${id} did not create this park`)
-            }
+        it('should fail on non-string or park id', () => {
+            parkId = 1
+            expect(() => deletePark(userId, parkId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+            parkId = true
+            expect(() => deletePark(userId, parkId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+            parkId = {}
+            expect(() => deletePark(userId, parkId)).to.throw(TypeError, `park id ${parkId} is not a string`)
+
+            parkId = ''
+            expect(() => deletePark(userId, parkId)).to.throw(Error, `park id is empty`)
+        })
+
+        it('should fail on non-string or user id', () => {
+            userId = 1
+            expect(() => deletePark(userId, userId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+            userId = true
+            expect(() => deletePark(userId, userId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+            userId = {}
+            expect(() => deletePark(userId, userId)).to.throw(TypeError, `user id ${userId} is not a string`)
+
+            userId = ''
+            expect(() => deletePark(userId, userId)).to.throw(Error, `user id is empty`)
         })
     })
 
-
-
-    it('should fail on non-string or park id', () => {
-        let parkId = 1
-        expect(() => deletePark(userId, parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
-
-        parkId = true
-        expect(() => deletePark(userId, parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
-
-        parkId = {}
-        expect(() => deletePark(userId, parkId)).to.throw(TypeError, `parkId ${parkId} is not a string`)
-
-        parkId = ''
-        expect(() => deletePark(userId, parkId)).to.throw(Error, `parkId is empty`)
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        return await mongoose.disconnect()
     })
-
-
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
-
 })

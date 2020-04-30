@@ -10,7 +10,7 @@ const context = require('./context')
  * @param {string} email   the email of the user
  * @param {string} password the password of the user
  * 
- * @returns {undefined}
+ * @returns {Promise<undefined>}
  * 
  * @throws {ContentError} if params don't follow the format and content rules
  * @throws {TypeError} if user's name, surname, email or password do not have the correct type
@@ -34,15 +34,9 @@ module.exports = function (name, surname, email, password) {
         if (response.status === 201) return
 
         if (response.status >= 400 || response.status < 500) {
-            return response.json()
-                .then(response => {
-                    const { error } = response
+            const { error } = await response.json()
 
-                    throw new Error(error)
-
-                })
+            throw new Error(error)
         } else throw new Error('Unknown error')
-
-
     })()
 }.bind(context)

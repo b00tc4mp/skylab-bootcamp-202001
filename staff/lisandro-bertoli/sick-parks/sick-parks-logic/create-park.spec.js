@@ -4,10 +4,9 @@ const logic = require('.')
 const { createPark } = logic
 const AsyncStorage = require('not-async-storage')
 const { expect } = require('chai')
-
 const { TEST_JWT_SECRET: JWT_SECRET, TEST_API_URL: API_URL, TEST_MONGODB_URL: MONGODB_URL } = process.env
 const { mongoose, models: { Park, User } } = require('sick-parks-data')
-const { NotAllowedError, NotFoundError } = require('sick-parks-errors')
+const { NotAllowedError, NotFoundError, ContentError } = require('sick-parks-errors')
 const { random } = Math
 const jwt = require('jsonwebtoken')
 
@@ -20,7 +19,7 @@ describe('createPark', () => {
         return Promise.all([User.deleteMany(), Park.deleteMany()])
     })
 
-    let userName, surname, email, password, token
+    let userName, surname, email, password
     let features = []
     let park = {}
     let featureName, featureSize
@@ -51,14 +50,17 @@ describe('createPark', () => {
         beforeEach(async () => {
             const { id } = await User.create({ name: userName, surname, email, password })
             userId = id
+
             features.push({ name: featureName, size: featureSize, location: featureLocation })
 
             const _token = jwt.sign({ sub: id }, JWT_SECRET)
+
             await logic.__context__.storage.setItem('token', _token)
         })
 
         it('should create a new park', async () => {
             await createPark({ park, features })
+
             const _park = await Park.findOne({ name: park.name }).lean()
 
             expect(_park.name).to.equal(park.name)
@@ -74,6 +76,7 @@ describe('createPark', () => {
 
         it('should add the park to the user', async () => {
             await createPark({ park, features })
+
             const user = await User.findById(userId)
             const _park = await Park.findOne({ name: park.name }).lean()
 
@@ -84,6 +87,7 @@ describe('createPark', () => {
             park.flow = undefined
 
             await createPark({ park, features })
+
             const _park = await Park.findOne({ name: park.name }).lean()
             expect(_park).to.exist
             expect(_park.flow).to.equal('N/A')
@@ -94,34 +98,38 @@ describe('createPark', () => {
             features = []
 
             await createPark({ park, features })
+
             const _park = await Park.findOne({ name: park.name }).lean()
+
             expect(_park).to.exist
             expect(_park.features).to.be.an.instanceOf(Array)
             expect(_park.features).to.have.lengthOf(0)
-
         })
 
-        it('should fail when park already exists', async () => {
-            await Park.create(park)
+        describe('when park already exists', () => {
 
-            try {
-                await createPark({ park, features })
-                throw new Error('should not reach this point')
-            } catch (error) {
-                expect(error).to.be.an.instanceOf(NotAllowedError)
-                expect(error.message).to.equal(`park '${park.name}' already exists`)
-            }
+            beforeEach(async () => {
+                await Park.create(park)
+            })
 
+            it('should fail and throw', async () => {
+                try {
+                    await createPark({ park, features })
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.an.instanceOf(NotAllowedError)
+                    expect(error.message).to.equal(`park '${park.name}' already exists`)
+                }
+            })
         })
 
         afterEach(async () => {
             await User.deleteMany()
-
         })
-
     })
 
     describe('when user does not exist', () => {
+
         it('should fail and throw', async () => {
             try {
                 await createPark({ park, features })
@@ -130,30 +138,136 @@ describe('createPark', () => {
                 expect(error).to.be.an.instanceOf(NotFoundError)
                 expect(error.message).to.equal('It seems you are not logged in or you deleted your account')
             }
-
         })
     })
 
+    describe('synchronous unhappy paths', () => {
 
+        it('should fail on non non-object park data', () => {
+            let parkData = true
+            expect(() => createPark(parkData)).to.Throw(TypeError, `park data ${parkData} is not a Object`)
 
+            parkData = 1
+            expect(() => createPark(parkData)).to.Throw(TypeError, `park data ${parkData} is not a Object`)
 
+            parkData = undefined
+            expect(() => createPark(parkData)).to.Throw(TypeError, `park data ${parkData} is not a Object`)
+        })
 
+        it('should fail on non string flow', () => {
+            park.flow = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
 
-    it('should fail on non string flow', () => {
-        park.flow = true
-        expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+            park.flow = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
 
-        park.flow = 1
-        expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+            park.flow = []
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+        })
 
-        park.flow = []
-        expect(() => createPark({ park, features })).to.Throw(TypeError, `flow ${park.flow} is not a string`)
+        it('should fail on non string park name', () => {
+            park.name = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `name ${park.name} is not a string`)
+
+            park.name = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `name ${park.name} is not a string`)
+
+            park.name = undefined
+            expect(() => createPark({ park, features })).to.Throw(ContentError, `name is empty`)
+        })
+
+        it('should fail on non string park resort', () => {
+            park.resort = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `resort ${park.resort} is not a string`)
+
+            park.resort = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `resort ${park.resort} is not a string`)
+
+            park.resort = undefined
+            expect(() => createPark({ park, features })).to.Throw(ContentError, `resort is empty`)
+        })
+
+        it('should fail on non string park level', () => {
+            park.level = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `level ${park.level} is not a string`)
+
+            park.level = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `level ${park.level} is not a string`)
+
+            park.level = undefined
+            expect(() => createPark({ park, features })).to.Throw(ContentError, `level is empty`)
+        })
+
+        it('should fail on non string park size', () => {
+            park.size = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `size ${park.size} is not a string`)
+
+            park.size = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `size ${park.size} is not a string`)
+
+            park.size = undefined
+            expect(() => createPark({ park, features })).to.Throw(ContentError, `size is empty`)
+        })
+
+        it('should fail on non string park description', () => {
+            park.description = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `description ${park.description} is not a string`)
+
+            park.description = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `description ${park.description} is not a string`)
+
+            park.description = []
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `description ${park.description} is not a string`)
+        })
+
+        it('should fail on non object park location', () => {
+            park.location = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `location ${park.location} is not a Object`)
+
+            park.location = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `location ${park.location} is not a Object`)
+
+            park.location = undefined
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `location ${park.location} is not a Object`)
+        })
+
+        it('should fail on non object feature location', () => {
+            features[0].location = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `location ${features[0].location} is not a Object`)
+
+            features[0].location = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `location ${features[0].location} is not a Object`)
+
+            features[0].location = undefined
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `location ${features[0].location} is not a Object`)
+        })
+
+        it('should fail on non string feature name', () => {
+            features[0].name = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `name ${features[0].name} is not a string`)
+
+            features[0].name = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `name ${features[0].name} is not a string`)
+
+            features[0].name = undefined
+            expect(() => createPark({ park, features })).to.Throw(ContentError, `name is empty`)
+        })
+
+        it('should fail on non object feature location', () => {
+            features[0].name = 'string'
+            features[0].size = true
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `size ${features[0].size} is not a string`)
+
+            features[0].size = 1
+            expect(() => createPark({ park, features })).to.Throw(TypeError, `size ${features[0].size} is not a string`)
+
+            features[0].size = undefined
+            expect(() => createPark({ park, features })).to.Throw(ContentError, `size is empty`)
+        })
     })
 
-
-
-
-
-
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        return await mongoose.disconnect()
+    })
 })

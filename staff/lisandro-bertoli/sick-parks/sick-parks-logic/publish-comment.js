@@ -42,7 +42,6 @@ module.exports = function (userId, parkId, body) {
             throw new Error(error)
 
         } else throw new Error('Server error')
-
     })()
 
 }.bind(context)

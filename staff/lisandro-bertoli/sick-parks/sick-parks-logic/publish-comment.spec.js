@@ -26,7 +26,6 @@ describe('publishComment', () => {
     beforeEach(() => {
         body = `text-${random()}`
 
-
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}`
@@ -39,7 +38,7 @@ describe('publishComment', () => {
     })
 
 
-    describe('when park and user already exist', () => {
+    describe('when user already exist', () => {
         let parkId, userId
 
         beforeEach(async () => {
@@ -57,23 +56,43 @@ describe('publishComment', () => {
             await publishComment(userId, parkId, body)
             const park = await Park.findOne({ _id: parkId }).lean()
 
-
             expect(park).to.have.property("comments")
             expect(park.comments[0].body).to.equal(body)
-
         })
 
+        describe('when park does not exist', () => {
+
+            beforeEach(async () => {
+                await Park.deleteOne({ _id: parkId })
+            })
+
+            it('should fail and throw', async () => {
+                try {
+                    await publishComment(userId, parkId, body)
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.instanceOf(NotFoundError)
+                    expect(error.message).to.be.equal(`park with id ${parkId} does not exist`)
+                }
+            })
+        })
     })
 
-    describe('when park does not exist/incorrect park id', () => {
-        let userId
-        let parkId = 'asdfasdfasfd'
-        beforeEach(async () => {
-            const { id } = await User.create({ name, surname, email, password })
-            userId = id
 
-            const _token = jwt.sign({ sub: id }, JWT_SECRET)
+    describe('when user does not exist', () => {
+        let parkId
+        let userId
+        beforeEach(async () => {
+            const { id: _id } = await User.create({ name, surname, email, password })
+            userId = _id
+
+            const { id } = await Park.create({ name: parkName, size, level, location })
+            parkId = id
+
+            const _token = jwt.sign({ sub: userId }, JWT_SECRET)
             await logic.__context__.storage.setItem('token', _token)
+
+            await User.deleteOne({ _id })
         })
 
         it('should fail and throw', async () => {
@@ -82,84 +101,56 @@ describe('publishComment', () => {
                 throw new Error('should not reach this point')
             } catch (error) {
                 expect(error).to.be.instanceOf(NotFoundError)
-                expect(error.message).to.be.equal(`park with id ${parkId} does not exist`)
+                expect(error.message).to.be.equal(`user with id ${userId} does not exist`)
             }
         })
+    })
 
-        describe('when user does not exist', () => {
-            let parkId
-            let userId = 'asdfasdfasfd'
-            beforeEach(async () => {
-                const { id: _id } = await Park.create({ name: parkName, size, level, location })
-                parkId = _id
+    describe('synchronous unhappy paths', () => {
+        let body, userId, parkId
 
-                const _token = jwt.sign({ sub: userId }, JWT_SECRET)
-                await logic.__context__.storage.setItem('token', _token)
-            })
-
-            it('should fail on incorrect user id', async () => {
-                try {
-                    await publishComment(userId, parkId, body)
-                    throw new Error('should not reach this point')
-                } catch (error) {
-                    expect(error).to.be.instanceOf(NotFoundError)
-                    expect(error.message).to.be.equal(`user with id ${userId} does not exist`)
-                }
-            })
-
+        beforeEach(() => {
+            body = `text-${random()}`
+            userId = `user-${random()}`
+            parkId = `park-${random()}`
         })
 
+        it('should fail on non-string userId', () => {
+            userId = 1
+            expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `userId ${userId} is not a string`)
+
+            userId = undefined
+            expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `userId is empty`)
+
+            userId = true
+            expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `userId ${userId} is not a string`)
+        })
+
+        it('should fail on non-string parkId', () => {
+            parkId = 1
+            expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
+
+            parkId = undefined
+            expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `parkId is empty`)
+
+            parkId = true
+            expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
+        })
+
+        it('should fail on non-string problem', () => {
+            body = 1
+            expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `body ${body} is not a string`)
+
+            body = undefined
+            expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `body is empty`)
+
+            body = true
+            expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `body ${body} is not a string`)
+        })
     })
 
-    it('should fail on non-string userId', () => {
-        userId = 1
-        parkId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `userId ${userId} is not a string`)
-
-        userId = undefined
-        parkId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `userId is empty`)
-
-        userId = true
-        parkId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `userId ${userId} is not a string`)
-
+    after(async () => {
+        await [User.deleteMany(), Park.deleteMany()]
+        await mongoose.disconnect()
     })
-
-    it('should fail on non-string parkId', () => {
-        parkId = 1
-        userId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
-
-        parkId = undefined
-        userId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `parkId is empty`)
-
-        parkId = true
-        userId = 'string'
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `parkId ${parkId} is not a string`)
-
-    })
-
-    it('should fail on non-string problem', () => {
-        parkId = 'string'
-        userId = 'string'
-        body = 1
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `body ${body} is not a string`)
-
-        parkId = 'string'
-        userId = 'string'
-        body = undefined
-        expect(() => publishComment(userId, parkId, body)).to.Throw(ContentError, `body is empty`)
-
-        parkId = 'string'
-        userId = 'string'
-        body = true
-        expect(() => publishComment(userId, parkId, body)).to.Throw(TypeError, `body ${body} is not a string`)
-
-    })
-
-
-    after(() => Promise.all([User.deleteMany(), Park.deleteMany()]).then(() => mongoose.disconnect()))
-
 })

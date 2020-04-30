@@ -40,7 +40,7 @@ module.exports = {
 
         if (review) deletePark(req.params.pid)
 
-        resreq.params, req.body, req.payload
+        res
             .status(201)
             .end()
     }),

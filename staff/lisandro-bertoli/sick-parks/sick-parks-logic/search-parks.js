@@ -25,16 +25,12 @@ module.exports = function (query = '', location) {
     location.forEach(coordinate => validate.type(coordinate, 'coordinate', Number))
 
     return (async () => {
-        const response = await fetch(`${this.API_URL}/parks?q=${query}&location[]=${location[0]}&location[]=${location[1]}`)
+        const response = await fetch(`${this.API_URL}/parks?query=${query}&location[]=${location[0]}&location[]=${location[1]}`)
 
-        const data = await response.json()
-
-        const { error, results } = data
-        // TODO should throw NotFoundError on no results
+        const { error, results } = await response.json()
 
         if (error) throw new NotFoundError(error)
 
         return results
     })()
-
 }.bind(context)

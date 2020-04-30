@@ -9,7 +9,7 @@ const fetch = require('node-fetch')
  * @param {string} parkId park's unique id
  * @param {string} userId user's unique id
  * 
- * @returns {undefined}
+ * @returns {Promise<undefined>}
  * 
  * @throws {ContentError} if park id doesn't follow the format and content rules
  * @throws {TypeError} if parkId does not have the correct type
@@ -18,8 +18,8 @@ const fetch = require('node-fetch')
  */
 
 module.exports = function (userId, parkId) {
-    validate.string(userId, 'userId')
-    validate.string(parkId, 'parkId')
+    validate.string(userId, 'user id')
+    validate.string(parkId, 'park id')
 
     return (async () => {
         const token = await this.storage.getItem('token')
@@ -35,12 +35,11 @@ module.exports = function (userId, parkId) {
             const data = await response.json()
 
             const { error } = data
+
             if (response.status === 404) throw new NotFoundError(error)
             if (response.status === 403) throw new NotAllowedError(error)
 
             throw new Error(error)
-
-
         } else throw new Error('Server error')
 
     })()
