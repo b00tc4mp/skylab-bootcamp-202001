@@ -24,7 +24,6 @@ export default function ({ removable, featureId, feature, onDelete }) {
                 <Text style={styles.featureProp}>Description</Text>
                 <Text style={styles.featureData}>{feature.description || 'N/A'}</Text>
             </View>
-
         </View >
     </View>
     )

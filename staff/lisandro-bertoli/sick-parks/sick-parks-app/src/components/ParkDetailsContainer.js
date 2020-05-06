@@ -2,21 +2,21 @@ import React, { useState, useEffect, useContext } from 'react'
 import { CommonActions } from '@react-navigation/native'
 import { Alert } from 'react-native'
 import { updatePark, publishComment, reportPark, votePark, approvePark, retrieveUser, retrievePark, deletePark } from 'sick-parks-logic'
-import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
+import { __handleErrors__ } from '../handlers'
 import Loading from './Loading'
 import ParkDetails from './ParkDetails'
 import { AuthContext } from './AuthProvider'
 
 export default function ParkDetailsContainer({ navigation, route }) {
     const { isAnonymous, isUser } = useContext(AuthContext)
-    const [park, setPark] = useState(route.params.park) // maybe like this ==> useState(()=> route.params.park)
+    const [park, setPark] = useState(route.params.park)
     const [error, setError] = useState(route.params.error)
     const [user, setUser] = useState({})
 
     useEffect(() => {
         (async () => {
             if (isUser) {
-                const _user = await retrieveUser()
+                const _user = await retrieveUser(true)
                 setUser(_user)
             }
         })()
@@ -27,6 +27,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
             setError(null)
 
             const _park = await retrievePark(id)
+
             setPark(_park)
         } catch ({ message }) {
             __handleErrors__(message, setError)
@@ -37,14 +38,13 @@ export default function ParkDetailsContainer({ navigation, route }) {
 
     const handleOnDelete = async () => {
         try {
-            await deletePark(park.id, user.id)
-            await retrieveUser(true) // TODO modify retrieve user to make it affect re render of profile
+            await deletePark(user.id, park.id)
+            await retrieveUser(true)
 
             Alert.alert('Park deleted')
-
         } catch ({ message }) {
             __handleErrors__(message, setError)
-
+            Alert.alert('Sorry, Something went wrong')
         } finally {
             navigation.dispatch(
                 CommonActions.reset({
@@ -101,7 +101,7 @@ export default function ParkDetailsContainer({ navigation, route }) {
 
             __handleParkUpdate__(park.id)
 
-            await retrieveUser(true) //TODO see how to refresh profile contrbutions whem navigating to it 
+            await retrieveUser(true)
 
             Alert.alert('Thanks for contributing!')
         } catch ({ message }) {

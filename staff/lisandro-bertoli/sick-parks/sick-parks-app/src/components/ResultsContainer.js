@@ -12,8 +12,10 @@ export default function ResultsContainer({ navigation, route }) {
 
             navigation.navigate('ParkDetails', { park })
         } catch (error) {
-            if (error.name === 'NotFoundError') Alert.alert(error.message)
-            else setError(error.message)
+            if (error.name === 'NotFoundError')
+                Alert.alert(error.message)
+            else
+                setError(error.message)
         }
     }
 

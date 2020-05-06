@@ -6,20 +6,16 @@ import styles from './styles'
 
 export default function Results({ results, onToDetails, error }) {
 
-
-    return (<>
+    return (
         <View style={styles.container}>
+
             {!error && <FlatList
                 data={results}
-                renderItem={({ item }) => {
-
-                    return <ResultsItem park={item} onToPark={onToDetails} />
-                }}
+                renderItem={({ item }) => (<ResultsItem park={item} onToPark={onToDetails} />)}
                 keyExtractor={item => item.id}
             />}
 
             {error && <FeedBack level='warn' message={error} />}
         </View>
-    </>
     )
 }

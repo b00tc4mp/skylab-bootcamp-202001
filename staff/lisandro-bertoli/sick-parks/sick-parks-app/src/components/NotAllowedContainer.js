@@ -3,8 +3,7 @@ import { AuthContext } from './AuthProvider'
 import NotAllowed from './NotAllowed'
 import { __handleErrors__ } from '../handlers'
 
-
-export default function NotAllowedContainer({ navigation }) {
+export default function NotAllowedContainer() {
     const [error, setError] = useState(null)
     const { setAnonymous } = useContext(AuthContext)
 

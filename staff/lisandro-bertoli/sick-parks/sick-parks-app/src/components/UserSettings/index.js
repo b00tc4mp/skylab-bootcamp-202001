@@ -4,10 +4,13 @@ import Button from '../Button'
 import Feedback from '../Feedback'
 import styles from './styles'
 
-export default UserSettings = ({ onUpdate, error }) => {
-    const [userUpdates, setUserUpdates] = useState()
+export default function UserSettings({ user, onUpdate, error }) {
+    const [userUpdates, setUserUpdates] = useState({})
 
-    const update = () => onUpdate(userUpdates)
+    const update = () => {
+        onUpdate(userUpdates)
+        setUserUpdates({})
+    }
 
     return (
 
@@ -17,26 +20,27 @@ export default UserSettings = ({ onUpdate, error }) => {
                     <View style={styles.topSettings}>
                         <Text style={styles.sectionHeader}>Update my info</Text>
                         <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>New e-mail:  </Text>
+                            <Text style={styles.label}>E-mail:  </Text>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder='Your new email'
+                                placeholder={user.email}
                                 onChangeText={(email) => setUserUpdates({ ...userUpdates, email })}
+
                             />
                         </View>
                         <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>New name:  </Text>
+                            <Text style={styles.label}>Name:  </Text>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder='Your new email'
+                                placeholder={user.name}
                                 onChangeText={(name) => setUserUpdates({ ...userUpdates, name })}
                             />
                         </View>
                         <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>New surname:  </Text>
+                            <Text style={styles.label}>Surname:  </Text>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder='Your new email'
+                                placeholder={user.surname}
                                 onChangeText={(surname) => setUserUpdates({ ...userUpdates, surname })}
                             />
                         </View>
@@ -44,8 +48,12 @@ export default UserSettings = ({ onUpdate, error }) => {
                     <View style={styles.bottomSettings}>
                         <Text style={styles.sectionHeader}>Change Password</Text>
                         <View style={styles.inputsContainer}>
-                            <Text style={styles.label}>New Password:  </Text>
-                            <TextInput style={styles.textInput} placeholder='Your new password' onChangeText={(password) => setUserUpdates({ ...userUpdates, password })} />
+                            <Text style={styles.label}>Password:  </Text>
+                            <TextInput
+                                style={styles.textInput}
+                                placeholder='Your new password'
+                                onChangeText={(password) => setUserUpdates({ ...userUpdates, password })}
+                            />
                         </View>
                         <View style={styles.inputsContainer}>
                             <Text style={styles.label}>Old Password:  </Text>
@@ -53,7 +61,7 @@ export default UserSettings = ({ onUpdate, error }) => {
                             <TextInput
                                 style={styles.textInput}
                                 placeholder='Your old password'
-                                onChangeText={(OldPassword) => setUserUpdates({ ...userUpdates, OldPassword })}
+                                onChangeText={(oldPassword) => setUserUpdates({ ...userUpdates, oldPassword })}
                             />
                         </View>
 

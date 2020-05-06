@@ -1,5 +1,5 @@
 import React from "react"
-import { AuthProvider } from './AuthProvider'
+import AuthProvider from './AuthProvider'
 import { StatusBar } from 'react-native'
 import AppNavigation from "../navigation/index"
 

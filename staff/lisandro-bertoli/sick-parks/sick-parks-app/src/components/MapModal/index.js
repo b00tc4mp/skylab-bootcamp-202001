@@ -23,16 +23,13 @@ export default function MapModal({ visibility, modalToggle, addLocation }) {
                     text='Cancel'
                     textStyle={styles.buttonText}
                 />
-
                 <Text style={styles.modalText}>Pick a location</Text>
-
                 <Button
                     onPress={acceptLocation}
                     text='Accept'
                     textStyle={styles.buttonText}
                 />
             </View>
-
             <View style={styles.container}>
                 <MapView
                     showsUserLocation={true}
@@ -42,7 +39,6 @@ export default function MapModal({ visibility, modalToggle, addLocation }) {
                     {location.latitude && (<Marker coordinate={location} />)}
                 </MapView>
             </View>
-
         </Modal >
     )
 }

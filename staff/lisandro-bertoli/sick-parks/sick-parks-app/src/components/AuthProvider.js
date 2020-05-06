@@ -3,7 +3,7 @@ import { loginUser, logoutUser, isUserLoggedIn, isAnonymousUser, setAnonymousUse
 
 export const AuthContext = React.createContext()
 
-export const AuthProvider = ({ children }) => {
+export default function AuthProvider({ children }) {
     const [isUser, setIsUser] = useState()
     const [isAnonymous, setIsAnonymous] = useState()
 
@@ -38,7 +38,6 @@ export const AuthProvider = ({ children }) => {
                     setIsUser(false)
                     setIsAnonymous(false)
                 }
-
             }}>
             {children}
         </AuthContext.Provider>

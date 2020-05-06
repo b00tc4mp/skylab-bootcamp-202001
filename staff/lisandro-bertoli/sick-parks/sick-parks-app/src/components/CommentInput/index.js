@@ -3,7 +3,7 @@ import { TextInput, View } from 'react-native'
 import MyButton from '../Button'
 import styles from './styles'
 
-const CommentInput = ({ onCancel, onSubmit }) => {
+export default function CommentInput({ onCancel, onSubmit }) {
     const [text, setText] = useState('')
 
     return (
@@ -22,5 +22,3 @@ const CommentInput = ({ onCancel, onSubmit }) => {
         </View >
     )
 }
-
-export default CommentInput

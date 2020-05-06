@@ -14,21 +14,23 @@ export default function PorfileContainer() {
     const [user, setUser] = useState()
 
     useEffect(() => {
+
         (async () => {
             try {
                 if (isUserLogged()) {
                     const _user = await retrieveUser()
-                    const parks = await retrievePublishedParks()
+
+                    const parks = await retrievePublishedParks(_user.id)
 
                     setUser(_user)
                     setPublishedParks(parks)
                 }
             } catch (error) {
+                __handleErrors__('Sorry something went wrong', setError)
                 await logout()
             }
         })()
     }, [])
-
 
     const handleLogout = async () => await logout()
 
@@ -36,7 +38,7 @@ export default function PorfileContainer() {
         try {
             await updateUser(user.id, updates)
 
-            const updated = await retrieveUser()
+            const updated = await retrieveUser(true)
 
             Alert.alert('Update succesful')
 
@@ -46,7 +48,7 @@ export default function PorfileContainer() {
         }
     }
 
-    if (!user) return <Loading />
+    if (!user) return <Loading error={error} />
 
     return <Profile user={user} error={error} userParks={publishedParks} onUpdateUser={handleUpdateUser} onLogout={handleLogout} />
 }

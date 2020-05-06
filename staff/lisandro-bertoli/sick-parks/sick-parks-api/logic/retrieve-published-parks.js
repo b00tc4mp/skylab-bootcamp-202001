@@ -26,9 +26,7 @@ module.exports = (id) => {
         if (!results.length) return results
 
         const sanitizedResults = results.map(result => {
-            result.id = result._id.toString()
-
-            const { id, name, resort, size, verified, rating } = result
+            const { id, name, resort, size, verified, rating } = sanitize(result)
 
             return { id, name, resort, size, verified, rating }
         })

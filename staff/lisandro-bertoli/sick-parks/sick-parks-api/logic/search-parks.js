@@ -1,5 +1,5 @@
 const { models: { Park } } = require('sick-parks-data')
-const { validate } = require('sick-parks-utils')
+const { validate, sanitize } = require('sick-parks-utils')
 const { NotFoundError } = require('sick-parks-errors')
 
 /**
@@ -22,7 +22,6 @@ module.exports = (query, location) => {
     validate.type(location, 'location', Array)
 
     location = location.map(coordinate => parseFloat(coordinate))
-    query = query.toLowerCase()
 
     let filter = {
         $and: [
@@ -49,10 +48,10 @@ module.exports = (query, location) => {
         case query !== '':
             filter.$and.unshift({
                 $or: [
-                    { name: { $regex: query } },
-                    { resort: { $regex: query } },
-                    { level: { $regex: query } },
-                    { size: { $regex: query } }
+                    { name: { $regex: query, $options: 'i' } },
+                    { resort: { $regex: query, $options: 'i' } },
+                    { level: { $regex: query, $options: 'i' } },
+                    { size: { $regex: query, $options: 'i' } }
                 ]
             })
             break
@@ -71,7 +70,8 @@ module.exports = (query, location) => {
         if (!results.length) throw new NotFoundError(`No results for ${query}`)
 
         const sanitizedResults = results.map(result => {
-            result.id = result._id.toString()
+            result = sanitize(result)
+
             result.name = result.name.charAt(0).toUpperCase() + result.name.slice(1)
             result.resort = result.resort.charAt(0).toUpperCase() + result.resort.slice(1)
 
@@ -83,3 +83,4 @@ module.exports = (query, location) => {
         return sanitizedResults
     })()
 }
+

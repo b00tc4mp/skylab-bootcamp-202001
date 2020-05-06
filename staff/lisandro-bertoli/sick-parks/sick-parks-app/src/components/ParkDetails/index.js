@@ -8,8 +8,9 @@ import Comments from '../Comments'
 import CommentInput from '../CommentInput'
 import Feedback from '../Feedback'
 import styles from './styles'
+import { images } from '../../constants'
 
-function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
+export default function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContribution, onUpdate, onDeletePark }) {
     const [comments, setComments] = useState()
     const [votes, setVotes] = useState()
     const [showComments, setShowComments] = useState(false)
@@ -67,9 +68,7 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
     return (
         <ScrollView >
             <View key={0} style={styles.container}>
-                {park.image ? (<Image style={styles.image} source={{ uri: park.image }} />)
-                    :
-                    (<Image style={styles.image} source={require('../../../assets/default-details.jpg')} />)}
+                <Image style={styles.image} source={images.PARK_DEFAULT} />
                 <View style={styles.infoContainer}>
                     <View style={styles.header}>
                         <View style={styles.headerLeft}>
@@ -80,7 +79,6 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                             <MyButton text='See what people are saying' style={styles.commentsButton} textStyle={styles.commentsLink} onPress={() => setShowComments(!showComments)} />
                         </View>
                     </View>
-
                     <View style={styles.top}>
                         <View style={styles.basicInfoContainer}>
                             <View>
@@ -130,44 +128,45 @@ function ParkDetails({ error, user, park, onVote, onCommentSubmit, onContributio
                         </View>
                     )}
 
-                    {user.id === park.creator.id ?
-                        (<View style={styles.delete}>
+                    {user.id === park.creator.id
+                        ? (<View style={styles.delete}>
                             <MyButton
                                 text='Delete park'
                                 style={styles.report}
                                 textStyle={styles.actionText}
                                 onPress={handleDeletePark}
                             />
-                        </View>) : null}
+                        </View>)
+                        : null}
 
                     <View style={styles.featuresContainer}>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                             <Text style={styles.sectionHeader}>Park features ({park.features.length})</Text>
 
-                            {user.id === park.creator.id ?
-                                (<MyButton
+                            {user.id === park.creator.id
+                                ? (<MyButton
                                     text='➕'
                                     textStyle={styles.commentButton}
                                     onPress={() => setFeatureInput(!featureInput)}
-                                />) : null}
+                                />)
+                                : null}
 
                         </View>
                         {featureInput && (<FeatureInput onNewFeature={handleNewFeature} />)}
-                        {park.features.length ? (park.features.map((feature, index) => (
+                        {park.features.length
+                            ? (park.features.map((feature, index) => (
+                                <Feature
+                                    key={index}
+                                    featureId={feature.id}
+                                    onDelete={handleDeleteFeature}
+                                    removable={user.id === park.creator.id}
+                                    feature={feature}
 
-                            <Feature
-                                key={index}
-                                featureId={feature.id}
-                                onDelete={handleDeleteFeature}
-                                removable={user.id === park.creator.id}
-                                feature={feature}
-
-                            />))) : (<Text>No features were added to this park</Text>)}
+                                />)))
+                            : (<Text>No features were added to this park</Text>)}
                     </View>
                 </View>
             </View>
         </ScrollView>
     )
 }
-
-export default ParkDetails

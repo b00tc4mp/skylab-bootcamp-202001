@@ -6,15 +6,15 @@ import Feature from '../../Feature'
 import styles from './styles'
 
 
-export default function StepOne({ onToStepThree }) {
-    const [features, setFeatures] = useState([])
+export default function StepOne({ onToStepThree, cachedData }) {
+    const [features, setFeatures] = useState(cachedData || [])
 
     const handleNextStep = () => onToStepThree(features)
 
     const addFeature = (feature) => setFeatures([...features, feature])
 
     const deleteFeature = (position) => {
-        const updatedFeatures = features.filter((feature, index) => index !== position ? feature : undefined)
+        const updatedFeatures = features.filter((feature, index) => index !== position)
         setFeatures(updatedFeatures)
     }
 
@@ -30,9 +30,7 @@ export default function StepOne({ onToStepThree }) {
                             key={index.toString()}
                             feature={feature}
                             onDelete={deleteFeature}
-                        />))
-                        : null}
-
+                        />)) : null}
                     <Button style={styles.nextButton} text='Next' textStyle={styles.button}
                         onPress={handleNextStep}
                     />

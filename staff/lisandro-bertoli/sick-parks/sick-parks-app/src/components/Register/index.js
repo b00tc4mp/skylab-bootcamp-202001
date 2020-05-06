@@ -3,6 +3,7 @@ import { TextInput, Text, TouchableWithoutFeedback, Keyboard, Image } from 'reac
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Button from '../Button'
 import styles from './styles'
+import { images } from '../../constants'
 
 export default function Register({ onSubmit, error, onToLogin }) {
     const [name, setName] = useState()
@@ -16,7 +17,7 @@ export default function Register({ onSubmit, error, onToLogin }) {
 
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <KeyboardAwareScrollView contentContainerStyle={styles.container} >
-                < Image source={require(' ../../../assets/logo.png')} style={styles.logo}></Image>
+                < Image source={images.LOGO} style={styles.logo}></Image>
                 <TextInput style={styles.input} placeholder='Your name here' onChangeText={(text) => setName(text)} value={name} />
                 <TextInput style={styles.input} placeholder='Your surname here' onChangeText={(text) => setSurname(text)} value={surname} />
                 <TextInput textContentType='emailAddress' keyboardType='email-address' style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} value={email} />

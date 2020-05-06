@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, View, Text, Image } from 'react-native'
 import MyButton from '../Button'
 import UserSettings from '../UserSettings'
 import Results from '../Results'
 import MyModal from '../MyModal'
 import styles from './styles'
-const logoutImg = require('../../../assets/sign-out.png')
-
+import { images } from '../../constants'
 
 export default function Profile({ onLogout, user, userParks, onUpdateUser, error }) {
     const [modal, setModal] = useState({ show: false })
@@ -18,21 +17,19 @@ export default function Profile({ onLogout, user, userParks, onUpdateUser, error
     const handleModalToggle = () => setModal({ show: false })
 
     return (
-
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerText}>{`${user.name}'s Profile`}</Text>
-
                 <MyButton
                     onPress={onLogout}
                     style={styles.logoutButtonContainer}
                     textStyle={styles.logoutButton} >
-                    <Image source={logoutImg} style={styles.logoutImage} />
+                    <Image source={images.LOGOUT} style={styles.logoutImage} />
                 </MyButton>
             </View>
             <MyModal visibility={modal.show} modalToggle={handleModalToggle} title={modal.title}>
                 {modal.title === 'Parks' && <Results onToDetails={() => { }} results={userParks} />}
-                {modal.title === 'Settings' && <UserSettings onUpdate={userUpdate} error={error} />}
+                {modal.title === 'Settings' && <UserSettings user={user} onUpdate={userUpdate} error={error} />}
             </MyModal>
             <ScrollView contentContainerStyle={{ flex: 1 }}>
                 <View style={styles.top}>

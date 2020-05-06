@@ -1,5 +1,5 @@
 import React from 'react'
-import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
+import { __handleErrors__ } from '../handlers'
 import { createPark } from 'sick-parks-logic'
 import { Alert } from 'react-native'
 import { CommonActions } from '@react-navigation/native'
@@ -17,16 +17,16 @@ export default function StepThreeContainer({ navigation, route }) {
             }
             await createPark({ park, features })
 
-            // await __handleUserUpdate__(setError) // TODO modify retrieve user to replace this
             Alert.alert('Park created!')
         } catch ({ message }) {
             Alert.alert(message)
         } finally {
+            // TODO see for this to take me to park details
             navigation.dispatch(
                 CommonActions.reset({
                     index: 0,
                     routes: [{ name: 'Home' }]
-                })) // TODO see for this to take me to park details
+                }))
         }
     }
 

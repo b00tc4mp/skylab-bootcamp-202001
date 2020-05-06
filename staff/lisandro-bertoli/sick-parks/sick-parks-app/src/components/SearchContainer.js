@@ -1,34 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import { __handleUserUpdate__, __handleErrors__ } from '../handlers'
+import { __handleErrors__ } from '../handlers'
 import { searchParks } from 'sick-parks-logic'
 import Search from './Search'
 
 export default function SearchContainer({ navigation }) {
-    //const [currentQuery, setCurrentQuery] = useState()  //TODO reimplement this with top search bar
-    const [location, setLocation] = useState({})
+    const [location, setLocation] = useState()
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function ({ coords }) {
-            setLocation({
-                latitude: coords.latitude,
-                longitude: coords.longitude,
-                latitudeDelta: 1,
-                longitudeDelta: 1,
-            })
+            const _location = [coords.longitude, coords.latitude]
+            setLocation(_location)
         })
     }, [])
 
     const handleOnSubmit = async (query) => {
         try {
-            //setCurrentQuery(query)
-            const results = await searchParks(query, [location.longitude, location.latitude])
+            const results = await searchParks(query, location)
 
             if (!results.length) throw new Error(`No ${query} parks found`)
 
-            navigation.navigate('Results', { results }) // NEED TO PASS THE QUERY when reimplementing top search bar
+            navigation.navigate('Results', { results })
         } catch ({ message }) {
             navigation.navigate('Results', { error: message })
-
         }
     }
 

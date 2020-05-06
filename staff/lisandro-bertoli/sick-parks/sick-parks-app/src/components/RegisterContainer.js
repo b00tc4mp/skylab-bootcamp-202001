@@ -11,6 +11,7 @@ export default function RegisterScreen({ navigation }) {
             await registerUser(name, surname, email, password)
 
             setError(null)
+
             navigation.navigate('Login')
         } catch ({ message }) {
             __handleErrors__(message, setError)

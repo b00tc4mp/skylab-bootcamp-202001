@@ -7,7 +7,6 @@ import styles from './styles'
 export default function NotAllowed({ onToLogin, error }) {
 
     return (
-
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerText}>Hey stranger!</Text>

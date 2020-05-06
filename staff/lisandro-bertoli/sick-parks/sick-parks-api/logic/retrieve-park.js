@@ -1,5 +1,5 @@
 const { models: { Park } } = require('sick-parks-data')
-const { validate } = require('sick-parks-utils')
+const { validate, sanitize } = require('sick-parks-utils')
 const { NotFoundError } = require('sick-parks-errors')
 
 /**
@@ -25,20 +25,11 @@ module.exports = (parkId) => {
 
         if (!park) throw new NotFoundError(`park ${parkId} does not exist`)
 
-        park.id = park._id.toString()
-        park.creator.id = park.creator._id.toString()
+        sanitize(park.creator)
 
-        delete park.creator._id
-        delete park._id
-        delete park.__v
+        park.features.forEach(feature => sanitize(feature))
 
-        park.features.forEach(feature => {
-            feature.id = feature._id.toString()
-            delete feature._id
-
-        })
-
-        return park
+        return sanitize(park)
     })()
 }
 

@@ -20,7 +20,6 @@ export default function Map({ coordinates }) {
                     longitude: coordinates[0],
                 }} />
         </MapView>
-
     </>)
 
 }

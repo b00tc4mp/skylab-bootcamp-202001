@@ -63,5 +63,5 @@ export {
     StepOneContainer,
     StepTwoContainer,
     StepThreeContainer,
-    NotAllowedContainer
+    NotAllowedContainer,
 }

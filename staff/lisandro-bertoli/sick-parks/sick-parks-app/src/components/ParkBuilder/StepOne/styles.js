@@ -3,36 +3,21 @@ import { colors, fonts } from '../../../constants'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: colors.BACKGROUND,
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         alignItems: 'stretch',
         paddingHorizontal: 10,
-        marginTop: 10,
-        paddingBottom: '5%'
-    },
-    topContainer: {
-        flex: 1
-    },
-    bottomContainer: {
-        justifyContent: 'space-between',
-        marginVertical: 25
-    },
-
-    sectionHeader: {
-        alignSelf: 'center',
-        fontFamily: fonts.SEMI,
-        fontSize: 16
+        paddingVertical: 5,
+        height: Dimensions.get('window').height
     },
     inputsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 25,
-        flex: 1,
     },
 
     textInput: {
-        height: '160%',
+        height: 40,
         backgroundColor: colors.MAIN,
         width: '60%',
         alignSelf: 'flex-end',
@@ -44,13 +29,12 @@ const styles = StyleSheet.create({
 
     },
     pickerContainer: {
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 10
     },
     picker: {
-        height: 40,
+        height: 45,
         color: colors.SECONDARY,
         width: '60%',
         backgroundColor: colors.MAIN,
@@ -67,18 +51,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginVertical: 25,
         flex: 1
-    },
-
-    numberInput: {
-        height: '150%',
-        backgroundColor: colors.MAIN,
-        width: '20%',
-        alignSelf: 'flex-end',
-        borderColor: colors.SECONDARY,
-        color: colors.SECONDARY,
-        borderWidth: 2,
-        paddingHorizontal: 10,
-        fontFamily: fonts.REGULAR
     },
     buttonContainer: {
         alignItems: 'center',
@@ -106,9 +78,14 @@ const styles = StyleSheet.create({
         color: colors.MAIN,
         fontFamily: fonts.SEMI
     },
+    actionButtons: {
+        height: '25%',
+        justifyContent: "space-around"
+    },
 
     label: {
-        fontFamily: fonts.SEMI
+        fontFamily: fonts.SEMI,
+        alignSelf: 'center'
 
     }
 

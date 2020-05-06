@@ -4,6 +4,7 @@ import AuthNavigation from './stacks/Auth'
 import UserNavigation from './UserNav'
 import AnonymousNavigation from './AnonymousNav'
 import { AuthContext } from '../components/AuthProvider'
+import { Loading } from '../components'
 import { __handleErrors__ } from '../handlers'
 
 export default () => {

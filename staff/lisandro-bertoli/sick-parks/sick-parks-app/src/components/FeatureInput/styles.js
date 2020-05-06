@@ -3,19 +3,17 @@ import { colors, fonts } from '../../constants'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'space-around',
         marginTop: 15
     },
     pickerContainer: {
-        flex: 0.2,
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginVertical: 5,
         alignItems: 'center'
     },
     picker: {
-        height: 40,
+        height: 44,
         color: colors.SECONDARY,
         width: '60%',
         backgroundColor: colors.MAIN,

@@ -3,6 +3,7 @@ import { TextInput, Text, TouchableWithoutFeedback, Keyboard, Image } from 'reac
 import Button from '../Button'
 import styles from './styles'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { images } from '../../constants'
 
 export default function Login({ onSubmit, onToRegister, error }) {
     const [email, setEmail] = useState()
@@ -11,11 +12,9 @@ export default function Login({ onSubmit, onToRegister, error }) {
     const handleOnSubmit = () => onSubmit(email, password)
 
     return (
-
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-
             <KeyboardAwareScrollView contentContainerStyle={styles.container} >
-                < Image source={require(' ../../../assets/logo.png')} style={styles.logo}></Image>
+                < Image source={images.LOGO} style={styles.logo}></Image>
                 <TextInput textContentType='emailAddress' keyboardType='email-address' style={styles.input} placeholder='Your e-mail here' onChangeText={(text) => setEmail(text)} value={email} />
                 <TextInput secureTextEntry={true} textContentType='password' style={styles.input} placeholder='Your password here' onChangeText={(text) => setPassword(text)} value={password} />
 
@@ -24,7 +23,6 @@ export default function Login({ onSubmit, onToRegister, error }) {
                 <Button text='Not a member yet? Sign up' textStyle={styles.anchor} onPress={onToRegister} />
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
-
     )
 }
 

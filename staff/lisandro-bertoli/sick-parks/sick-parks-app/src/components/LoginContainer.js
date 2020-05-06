@@ -14,7 +14,6 @@ export default function LoginContainer({ navigation }) {
             await login(email, password)
         } catch ({ message }) {
             __handleErrors__(message, setError)
-
         }
     }
 
