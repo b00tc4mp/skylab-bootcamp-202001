@@ -2,6 +2,7 @@ require('dotenv').config()
 
 const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { Park, User, Location } } = require('sick-parks-data')
+const { NotFoundError } = require('sick-parks-errors')
 const { expect } = require('chai')
 const { random } = Math
 const retrievePublishedParks = require('./retrieve-published-parks')
@@ -29,7 +30,7 @@ describe('retrievePublishedParks', () => {
         location = new Location({ coordinates: [random() * 15 + 1, random() * 15 + 1] })
     })
 
-    describe('when user and park exist', () => {
+    describe('when user exists', () => {
         let userId, parkId
 
         beforeEach(async () => {
@@ -49,24 +50,48 @@ describe('retrievePublishedParks', () => {
             expect(result[0].size).to.equal(size)
             expect(result[0].verified).to.exist
         })
+
+        describe('when user has no parks', () => {
+            let userId
+
+            beforeEach(async () => {
+                const { id } = await User.create({ name, surname, email, password })
+
+                userId = id
+            })
+
+            it('should fail returning empty array', async () => {
+                const result = await retrievePublishedParks(userId)
+
+                expect(result).to.be.instanceOf(Array)
+                expect(result.length).to.equal(0)
+            })
+        })
     })
 
-    describe('when user has no parks', () => {
+    describe('when user does not exist', () => {
         let userId
 
         beforeEach(async () => {
             const { id } = await User.create({ name, surname, email, password })
-
             userId = id
+
+            await User.deleteOne({ _id: id })
         })
 
-        it('should fail returning empty array', async () => {
-            const result = await retrievePublishedParks(userId)
-
-            expect(result).to.be.instanceOf(Array)
-            expect(result.length).to.equal(0)
+        it('should fail and throw', async () => {
+            try {
+                await retrievePublishedParks(userId)
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.be.an.instanceOf(NotFoundError)
+                expect(error.message).to.equal(`user with id ${userId} does not exist`)
+            }
         })
     })
+
+
+
 
     it('should fail on non string id', () => {
         let userId = 1

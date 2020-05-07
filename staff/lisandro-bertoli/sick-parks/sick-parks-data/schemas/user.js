@@ -25,5 +25,6 @@ module.exports = new Schema({
         ref: 'Park'
     }],
     created: { type: Date, trim: true, default: Date.now },
-    authenticated: Date
+    authenticated: Date,
+    deactivated: Boolean,
 }, { reatainKeyOrder: true })

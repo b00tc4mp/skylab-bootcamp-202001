@@ -4,7 +4,7 @@ const { env: { TEST_MONGODB_URL } } = process
 const { mongoose, models: { User } } = require('sick-parks-data')
 const { expect } = require('chai')
 const retrieveUser = require('./retrieve-user')
-const { NotFoundError } = require('sick-parks-errors')
+const { NotFoundError, NotAllowedError } = require('sick-parks-errors')
 
 describe('retrieveUser', () => {
     let name, surname, email, password
@@ -15,7 +15,6 @@ describe('retrieveUser', () => {
         return await User.deleteMany()
     })
 
-
     beforeEach(() => {
         name = 'name-' + Math.random()
         surname = 'surname-' + Math.random()
@@ -23,23 +22,45 @@ describe('retrieveUser', () => {
         password = 'password-' + Math.random()
 
     })
+
     describe('when user exists', () => {
         let _id
+        beforeEach(async () => {
+            const { id } = await User.create({ name, surname, email, password })
+
+            _id = id
+        })
+
         describe('when user is not deactivated', () => {
-            beforeEach(async () => {
-                const { id } = await User.create({ name, surname, email, password })
-
-                _id = id
-            })
-
             it('should succeed on valid id, returning the user', async () => {
                 const user = await retrieveUser(_id)
 
                 expect(user.constructor).to.equal(Object)
+                expect(user.id).to.equal(_id)
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.email).to.equal(email)
                 expect(user.password).to.be.undefined
+            })
+        })
+
+        describe('when user is deactivated', () => {
+            beforeEach(async () => {
+                const user = await User.findById(_id)
+
+                user.deactivated = true
+
+                await user.save()
+            })
+
+            it('should fail and throw', async () => {
+                try {
+                    await retrieveUser(_id)
+                    throw new Error('should not reach this point')
+                } catch (error) {
+                    expect(error).to.be.an.instanceOf(NotAllowedError)
+                    expect(error.message).to.equal(`user with id ${_id} is deactivated`)
+                }
             })
         })
     })

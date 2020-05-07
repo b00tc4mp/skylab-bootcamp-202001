@@ -49,10 +49,10 @@ describe('approvePark', () => {
             it('should succeed on incrementing approvals by 1', async () => {
                 await approvePark(userId, parkId)
 
-                const park = await Park.findById(parkId)
+                const { approvals } = await Park.findById(parkId)
 
-                expect(park.approvals.length).to.equal(1)
-                expect(park.approvals[0].toString()).to.equal(userId)
+                expect(approvals.length).to.be.greaterThan(0)
+                expect(approvals[0].toString()).to.equal(userId)
             })
 
             it('should fail when user already gave approval', async () => {
@@ -67,7 +67,6 @@ describe('approvePark', () => {
                 } catch (error) {
                     expect(error).to.be.instanceOf(NotAllowedError)
                     expect(error.message).to.equal(`user with id ${userId} already approved`)
-
                 }
             })
         })
@@ -76,7 +75,7 @@ describe('approvePark', () => {
         describe('when park already has 4 approvals', () => {
             beforeEach(async () => {
                 const park = await Park.create({ name: parkName, size, level, location })
-                parkId = park._id.toString()
+                parkId = park.id
 
                 for (let i = 1; i < 5; i++) {
                     const { id } = await User.create({ name, surname, email, password })
@@ -89,8 +88,9 @@ describe('approvePark', () => {
             it('should succeed on verifying the park', async () => {
                 await approvePark(userId, parkId)
 
-                const _park = await Park.findById(parkId).lean()
+                const _park = await Park.findById(parkId)
 
+                expect(_park.approvals).to.have.lengthOf(5)
                 expect(_park.verified).to.be.true
             })
         })

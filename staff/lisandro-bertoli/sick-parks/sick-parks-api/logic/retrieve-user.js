@@ -17,21 +17,22 @@ const { models: { User } } = require('sick-parks-data')
  * @throws {NotAllowedError} when the provided user id belongs to a deactivated user
  */
 
+// Will need to change it to alson receive id through params if need to go to other user profile
+module.exports = (_id) => {
+    validate.string(_id, 'user id')
 
-module.exports = (id) => {
-    validate.string(id, 'user id')
-    // Will need to change it to alson receive id through params if need to go to other user profile
-    return User.findById(id)
-        .then(user => {
+    return (async () => {
+        const user = await User.findById(_id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} does not exist`)
+        if (!user) throw new NotFoundError(`user with id ${_id} does not exist`)
+        if (user.deactivated) throw new NotAllowedError(`user with id ${_id} is deactivated`)
 
-            if (user.deactivated) throw new NotAllowedError(`user with id ${id} is deactivated`)
+        user.retrieved = new Date
 
-            user.retrieved = new Date
-            user.id = user._id.toString()
+        user.save()
 
-            return user.save()
-        })
-        .then(({ id, name, surname, email, contributions, image, allowLocation, notifications }) => ({ id, name, surname, email, contributions, image, allowLocation, notifications }))
+        const { id, name, surname, email, contributions, image, allowLocation, notifications } = user
+
+        return { id, name, surname, email, contributions, image, allowLocation, notifications }
+    })()
 }

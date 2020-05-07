@@ -1,5 +1,5 @@
 const { models: { Park, User } } = require('sick-parks-data')
-const { validate } = require('sick-parks-utils')
+const { validate, sanitize } = require('sick-parks-utils')
 const { NotFoundError } = require('sick-parks-errors')
 
 /**
