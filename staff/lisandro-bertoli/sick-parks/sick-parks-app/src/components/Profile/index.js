@@ -7,12 +7,21 @@ import MyModal from '../MyModal'
 import styles from './styles'
 import { images } from '../../constants'
 
-export default function Profile({ onLogout, user, userParks, onUpdateUser, error }) {
+export default function Profile({ onLogout, user, userParks, onUpdateUser, goToDetails, error }) {
     const [modal, setModal] = useState({ show: false })
 
     const onToModal = (title) => setModal({ show: true, title })
 
-    const userUpdate = (updates) => onUpdateUser(updates)
+    const userUpdate = async (updates) => {
+        await onUpdateUser(updates)
+
+        handleModalToggle()
+    }
+    const handleOnToDetails = async (id) => {
+        await goToDetails(id)
+
+        handleModalToggle()
+    }
 
     const handleModalToggle = () => setModal({ show: false })
 
@@ -28,7 +37,7 @@ export default function Profile({ onLogout, user, userParks, onUpdateUser, error
                 </MyButton>
             </View>
             <MyModal visibility={modal.show} modalToggle={handleModalToggle} title={modal.title}>
-                {modal.title === 'Parks' && <Results onToDetails={() => { }} results={userParks} />}
+                {modal.title === 'Parks' && <Results onToDetails={handleOnToDetails} results={userParks} />}
                 {modal.title === 'Settings' && <UserSettings user={user} onUpdate={userUpdate} error={error} />}
             </MyModal>
             <ScrollView contentContainerStyle={{ flex: 1 }}>

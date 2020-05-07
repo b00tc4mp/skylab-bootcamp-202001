@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { retrievePublishedParks, retrieveUser, updateUser } from 'sick-parks-logic'
+import { retrievePublishedParks, retrieveUser, updateUser, retrievePark } from 'sick-parks-logic'
 import Profile from './Profile'
 import Loading from './Loading'
 import { AuthContext } from './AuthProvider'
@@ -7,7 +7,7 @@ import { __handleErrors__ } from '../handlers'
 import { Alert } from 'react-native'
 
 
-export default function PorfileContainer() {
+export default function PorfileContainer({ navigation }) {
     const { logout, isUserLogged } = useContext(AuthContext)
     const [error, setError] = useState(null)
     const [publishedParks, setPublishedParks] = useState([])
@@ -48,8 +48,21 @@ export default function PorfileContainer() {
         }
     }
 
+    const handleGoToDetails = async (id) => {
+        try {
+            const park = await retrievePark(id)
+
+            navigation.navigate('ParkDetails', { park })
+        } catch (error) {
+            if (error.name === 'NotFoundError')
+                Alert.alert(error.message)
+            else
+                setError(error.message)
+        }
+    }
+
     if (!user) return <Loading error={error} />
 
-    return <Profile user={user} error={error} userParks={publishedParks} onUpdateUser={handleUpdateUser} onLogout={handleLogout} />
+    return <Profile user={user} error={error} userParks={publishedParks} onUpdateUser={handleUpdateUser} goToDetails={handleGoToDetails} onLogout={handleLogout} />
 }
 
