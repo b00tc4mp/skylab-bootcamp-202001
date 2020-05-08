@@ -27,7 +27,7 @@ import logic, {
 } from 'poopinion-logic'
 
 logic.__context__.storage = AsyncStorage
-logic.__context__.API_URL = 'http://192.168.1.253:8085/api'
+logic.__context__.API_URL = 'https://guarded-earth-09298.herokuapp.com/api'
 console.disableYellowBox = true;
 
 export default function App() {
