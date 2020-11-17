@@ -1,0 +1,40 @@
+{
+  "name": "timekeeper-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "debug": "node debug .",
+    "watch": "nodemon .",
+    "test": "npx mocha logic utils --timeout 10000",
+    "test-watch": "npx mocha --watch logic utils --timeout 10000",
+    "test-debug": "npx mocha debug logic utils --timeout 10000",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/*.spec.js --timeout 10000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "nodemailer": "^6.4.6",
+    "timekeeper-data": "file:../timekeeper-data",
+    "timekeeper-errors": "file:../timekeeper-errors",
+    "timekeeper-utils": "file:../timekeeper-utils",
+    "uuid": "^7.0.1",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.1.0",
+    "nodemon": "^2.0.2",
+    "nyc": "^15.0.0"
+  }
+}
