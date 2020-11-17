@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap')
+    
+.telemetria
+  display: flex
+  justify-content: center
+  height: 13vh
+  font-size: 1rem
+  border-radius: 1rem
+  background-color: #e2e1e1
+  color: white
+  z-index: 1
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1)
+  &:hover
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)
+    
+
+.on-live-telemetry
+  height: 22vh
+  display: flex
+  width: 85%
+  align-items: center
+  justify-content: center
+  color: white
+  animation-name: fadeInUp
+  animation-duration: .8s
+  animation-delay: 0s
+  animation-iteration-count: 1
+
+.telemetria > div
+  font-family: 'Montserrat', sans-serif
+  color: #203246
+  margin: 1rem 1.6rem
+  p 
+    margin: 1rem 0
+    text-align: center
+  
+@keyframes fadeInUp 
+  from 
+    opacity: 0
+    transform: translate3d(0, 200%, 0)
+  
+  to 
+    opacity: 1
+    transform: translate3d(0, 0, 0)

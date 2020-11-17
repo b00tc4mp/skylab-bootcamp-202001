@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900&display=swap')
+
+  
+.video-wrapper
+  margin: 3rem 3rem 1.5rem 3rem
+  width: 85%
+  border-radius: 0.5rem
+  font-family: 'Montserrat', sans-serif
+  box-shadow: 0 15px 10px -6px #777
+  background: linear-gradient(0deg, rgba(51,78,92,0.9) 0%, rgba(71,178,158, 0.9) 100%,)
+  animation: opaci .35s
+
+.aspect-ratio--16x9 
+  width: 100%
+  padding-bottom: 56.25%
+  position: relative
+  font-size: 5rem
+  border-radius: 0.5rem
+
+.start-button
+  display: inline-block
+  padding: 1rem 1.5rem
+  border-radius: 10rem
+  color: rgba(51,78,92,1)
+  text-transform: uppercase
+  font-size: 1rem
+  letter-spacing: .15rem
+  transition: all .3s
+  position: relative
+  overflow: hidden
+  z-index: 1
+  outline: none
+  border: none
+  
+  &:before 
+    content: ''
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 0%
+    height: 100%
+    background-color: #334E5C
+    transition: all .4s
+    border-radius: 10rem
+    z-index: -1
+    border: none
+    transform: scale(1.05)
+  
+  &:hover 
+    color: #fff
+    border: none
+    &:before 
+      transform: scale(1.1)
+      width: 100%
+      border: none
+
+.aspect-ratio__inner-wrapper 
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  border-radius: 0.5rem
+
+.start_button_wrapper
+  position: absolute
+  display: flex
+  justify-content: center
+  align-items: center
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+
+ 
+.video 
+  width: 100%
+  height: 100%
+  object-fit: cover
+
+.drone-status
+  border-radius: 0.5rem 0.5rem 0 0
+  position: absolute
+  width: 100%
+  height: 6%
+  background-color:  rgba(51,78,92,0.3)
+  display: flex
+  justify-content: space-between
+  
+
+.status
+  left: 100px
+  height: 100%
+  width: 14rem
+  display: flex
+  justify-content: center
+  align-items: center
+  p 
+    color: #fff
+    font-size: 1rem
+
+.drone-height
+  
+  height: 100%
+  width: 14rem
+  display: flex
+  justify-content: center
+  align-items: center
+  p 
+    color: #fff
+    font-size: 1rem
+
+.drone-battery
+  height: 100%
+  width: 14rem
+  color: #fff
+  display: flex
+  justify-content: center
+  align-items: center
+
+
+.power-off
+  height: 100%
+  width: 14rem
+  display: flex
+  justify-content: center
+  align-items: center
+  z-index: 1919
+  svg
+    max-width: 1.25rem
+    color: #fff
+    cursor: pointer
+    
+
+.battery 
+  width: 24%
+  height: 35%
+  padding: 3px
+  border: 1px solid #ffffff
+  border-radius: 5px
+  div
+    width: 100%
+    height: 100%
+    background-color: #ffffff
+    border-radius: 2px
+    display: flex
+    justify-content: center
+    align-items: center
+  
+
+.battery-2
+  width: 1.25% 
+  height: 25% 
+  margin-left: 1px
+  background-color: #ffffff
+  border-radius: 0 5px 5px 0
+
+
+  
+@keyframes fadeInDown 
+  from 
+    opacity: 0
+    transform: translate3d(0, -200%, 0)
+  
+  to 
+    opacity: 1
+    transform: translate3d(0, 0, 0)
+  
+
+
+  
+@keyframes opaci
+  from 
+    opacity: 0
+   
+  to 
+    opacity: 0.3
+    
+  

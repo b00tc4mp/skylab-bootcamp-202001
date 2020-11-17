@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round&display=swap');
+  
+.controls-wrapper
+  height: 30%
+  position: absolute
+  bottom: 0
+  display: flex
+  width: 90%
+  flex-wrap: wrap
+  align-items: flex-end
+  justify-content: center
+  color: white
+  transition: 0.6s
+  overflow: hidden
+  animation-name: fadeInUp
+  animation-duration: .8s
+  animation-delay: 0s
+  animation-iteration-count: 1
+
+.roller 
+  position: absolute
+  height: 120px
+  width: 120px
+  border-radius: 50%
+  top: 100px
+  left: 100px
+  background: rgba(19, 19, 19, 0.6)
+  background: radial-gradient(ellipse at center, rgba(49, 49, 49, 0.6) 0%,rgba(19, 19, 19, 0.6) 100%)
+  box-shadow: inset 0 0 20px rgba(#000, .7), 0 1px 1px rgba(#fff, .1)
+  transition: 0.4s
+
+.roller2
+  position: absolute
+  height: 120px
+  width: 120px
+  border-radius: 50%
+  direction: rtl
+  top: 100px
+  right: 100px
+  background: rgba(19, 19, 19, 0.6)
+  background: radial-gradient(ellipse at center, rgba(49, 49, 49, 0.6) 0%,rgba(19, 19, 19, 0.6) 100%)
+  box-shadow: inset 0 0 20px rgba(#000, .7), 0 1px 1px rgba(#fff, .7)
+  transition: 0.4s
+                
+
+.stick 
+  height: 80px
+  width: 80px
+  position: absolute
+  border-radius: 50%
+  left: 20px
+  top: 20px
+  background: #0f0f11
+  background: linear-gradient(180deg, rgba(30, 30, 30, 0.6) 0%,rgba(103, 112, 114, 0.6) 100%)
+  box-shadow: 0 0 8px rgba(#000, .6), 0 8px 8px rgba(#000, .4)
+  -webkit-transition: all .1s
+  transition: all .1s
+
+.left  
+  left: 0 
+.right  
+  left: 40px 
+.top  
+  top: 0 
+.bottom  
+  top: 40px 
+
+.inner 
+  height: 68px
+  width: 68px
+  position: absolute
+  top: 6px
+  left: 6px
+  border-radius: 50%
+  background: radial-gradient(ellipse at center, rgba(103, 112, 114, 0.6) 0%,rgba(19, 19, 19, 0.6)100%)
+  box-shadow: inset 0 0 2px rgba(#000, .7), 0 1px 1px rgba(#fff, .1)
+
+
+.controls-menu
+    width: 50%
+    height: 40%
+    display: flex
+    transition: .4s
+    justify-content: center
+    align-items: flex-start
+
+.control-icon
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 1rem
+    transition: .4s
+    svg
+      color: #334E5C
+      font-size: 2.2rem
+      transition: .4s
+  
+
+.active-down
+    svg 
+        transition: .3s
+        color: #334E5C
+        font-size: 2.5rem
+
+
+.key
+  list-style: none
+  display: block
+  color: #aaa
+  font: bold 9pt arial
+  text-decoration: none
+  text-align: center
+  justify-content: center
+  align-items: center
+  text-transform: uppercase
+  font-size: 0.9rem
+  display: flex
+  width: 44px
+  height: 41px
+  margin: 5px
+  background: #eff0f2
+  -moz-border-radius: 4px
+  border-radius: 4px
+  border-top: 1px solid #f5f5f5
+  -webkit-box-shadow: inset 0 0 25px #e8e8e8, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 2px 3px #333
+  -moz-box-shadow: inset 0 0 25px #e8e8e8, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 2px 3px #333
+  box-shadow: inset 0 0 25px #e8e8e8, 0 1px 0 #c3c3c3, 0 2px 0 #c9c9c9, 0 2px 3px #333
+  text-shadow: 0px 1px 0px #f5f5f5
+  font-family: 'Varela Round', sans-serif
+
+
+.key-active
+  color: #888
+  background: #ebeced
+  margin: 7px 5px 3px
+  -webkit-box-shadow: inset 0 0 25px #ddd, 0 0 3px #333
+  -moz-box-shadow: inset 0 0 25px #ddd, 0 0 3px #333
+  box-shadow: inset 0 0 25px #ddd, 0 0 3px #333
+  border-top: 1px solid #eee
+
+
+.keydown
+  color: #888
+  background: #ebeced
+  margin: 7px 5px 3px
+  -webkit-box-shadow: inset 0 0 25px #ddd, 0 0 3px #333
+  -moz-box-shadow: inset 0 0 25px #ddd, 0 0 3px #333
+  box-shadow: inset 0 0 25px #ddd, 0 0 3px #333
+  border-top: 1px solid #eee
+
+
+.letter-keys
+    position: absolute
+    display: flex
+    flex-direction: column
+    width: 30%
+    height: 50%
+    top: 100px
+    left: 100px
+    transition: .4s
+
+
+.arrow-keys
+    position: absolute
+    display: flex
+    flex-direction: column
+    width: 30%
+    height: 50%
+    direction: rtl
+    top: 100px
+    right: 100px
+    transition: .4s
+
+
+.c27
+    position: absolute
+    top: 100px
+    left: 250px
+
+.c13
+    position: absolute
+    direction: rtl
+    top: 100px
+    right: 250px
+
+.w
+    display: flex
+    justify-content: center
+    list-style: none
+
+.asd
+    display: flex
+    justify-content: center
+    li 
+        display: flex
+        align-items: flex-start
+
+@keyframes fadeInUp 
+  from 
+    opacity: 0
+    transform: translate3d(0, 200%, 0)
+
+  to 
+    opacity: 1
+    transform: translate3d(0, 0, 0)
+  
