@@ -1,0 +1,42 @@
+@import variables
+
+.results
+  display: flex
+  justify-content: space-evenly
+  align-items: center
+  flex-wrap: wrap
+  max-width: 80%
+  
+  overflow: scroll
+
+.results-nocards
+  height: (((48.5vh - $heigth-navbar) - $heigth-footer ) -$heigth-search )
+  background-color: black
+  margin-bottom: -5px
+  padding: 0
+  background: radial-gradient(circle, #fff 35%, #383838 100%)   
+
+@media (max-width: 698px)
+  .results
+    overflow: visible
+
+@media (min-width: 698px)
+
+  .results-nocards
+    background: radial-gradient(circle, #fff 35%, #383838 100%)   
+    height: $heigth-nocards
+    background-color: white
+    background: url('magic-search.jpg') no-repeat center center
+    animation: slide 2s linear
+    background-image: 100%
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -o-background-size: cover
+    background-size: cover
+
+    @keyframes slide
+      0%
+        opacity: 0.1
+
+      100%
+        opacity: 1

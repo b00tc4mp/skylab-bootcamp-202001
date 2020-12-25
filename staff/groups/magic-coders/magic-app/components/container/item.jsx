@@ -1,0 +1,28 @@
+function Item ({item, onClick, view, users, toSold, viewProfile}) {
+
+
+  let {multiverseid, name, imageUrl, user} = item
+  let email = undefined
+  let phone = undefined
+
+  if (users && view === 'forsale') {
+    for (var i = 0; i < users.length; i++) {  
+      if (users[i].name === user.toLowerCase()) {
+        email = users[i].email
+        phone = users[i].phone
+      }
+    }
+  }
+
+  return <li className="item">
+    <div>
+      {user && <h2 style={{margin: 0}}>{user}</h2>}
+      {(view === 'profile' || view === 'forsale') && <div><span>{setPrice(multiverseid)}</span></div>}
+      
+      
+    </div>
+    <img onClick={() => onClick(item)} src={imageUrl} />
+    {(view === 'forsale') && <button onClick={ () => event.path[0].innerText = user + ': ' + email + ' ' +  phone} >Contact</button> }
+    {(view === 'profile' && viewProfile) && <Button onClick={() => toSold(multiverseid)} className="button--green">Sold</Button>}
+  </li>
+}

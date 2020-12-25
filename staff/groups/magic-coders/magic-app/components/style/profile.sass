@@ -1,0 +1,71 @@
+@import variables
+.profile
+  min-height: ((100vh - $heigth-navbar) - $heigth-footer  )
+  color: white
+  width: 100%
+
+
+  .profile__header
+    min-height: 3rem
+    width: 100%
+    display: flex
+    justify-content: space-between
+    background-color: #272727
+
+  &__estadistics
+    
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 0.5rem
+    p 
+      margin: 1rem
+      font-size: 1.25em
+   
+
+  &__name
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 1.5em
+  
+    padding: 0.5rem
+    
+
+  &__buttons
+ 
+    display: flex
+    justify-content: center
+    align-items: center
+    padding: 0.5rem
+
+    button 
+        border: 1px solid white
+        border-radius: 1rem
+        width: 5rem
+        padding: 0.5rem
+        
+        margin: 0.5rem
+        outline: none
+        
+
+  &__content
+    
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-wrap: wrap
+    color: black
+
+      
+
+@media ( max-width: 698px )
+  .profile__header
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    &__estadistics
+      width: 0
+      display: flex
+      justify-content: center
