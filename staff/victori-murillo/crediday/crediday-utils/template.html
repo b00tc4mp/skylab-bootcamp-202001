@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <mate charest="utf-8" />
+    <title>Hello world!</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 1px solid black;
+            text-align: left;
+            padding: 6px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Hora</th>
+            <th>Cliente</th>
+            <th>Pago</th>
+            <th>En</th>
+            <th>Cobrador</th>
+        </tr>
+        {{#each users}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.time}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.payment}}</td>
+            <td>{{this.by}}</td>
+            <td>{{this.collector}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    <!-- <h1>User List</h1>
+        <ul>
+            {{#each users}}
+            <li>Name: {{this.name}}</li>
+            <li>Age: {{this.age}}</li>
+            <br>
+        {{/each}}
+        </ul> -->
+</body>
+
+</html>
