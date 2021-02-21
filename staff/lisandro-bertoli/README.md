@@ -1,5 +1,11 @@
 [github](https://github.com/lichab)
 
+## GIT Commits
+
+commit d4f97ddd22ba7403865eb6d02720591e72eb9297 finished net web server wit logger
+
+commit 6f9dc7cadefe2016517423dac7ab3ca5d8542ebb add reg logic with middware (will stop using self made body parser)
+
 # CSS
 
 ## Specificity

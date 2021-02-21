@@ -1,0 +1,11 @@
+extends app
+
+
+include search
+
+block body    
+    h1 Your favorites
+    a(href="/return") Go back
+    if results
+        include results
+        +results(results)

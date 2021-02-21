@@ -1,0 +1,19 @@
+extends app
+
+block body
+    h1 Sign-up
+    br
+    section.register
+      form(action="/register" method="post")
+        label(for="name") name
+        input(type="text" name="name" value=(name || false))
+        label(for="surname") surname
+        input(type="text" name="surname" value=(surname || false))
+        label(for="username") username
+        input(type="text" name="username" value=(username || false))
+        label(for="password") password
+        input(type="password" name="password")
+        button(type="submit") Register
+        if error
+            p #{error}
+        a(href="/login")  to Login
