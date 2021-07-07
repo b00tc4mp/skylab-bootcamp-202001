@@ -1,0 +1,25 @@
+@import './config'
+    
+.register
+    @extend %border-for-box
+    display: inline-block
+    border: 1px solid black
+    border-radius: 1rem
+    padding: 0.5rem
+
+    h2 
+        @extend %general-titles
+    
+    &--hide
+        display: none
+
+    input
+        @extend %border-for-inputs
+
+    button
+        @extend %main-buttons
+    
+    a
+        display: block
+        padding: 0.5rem
+        margin: 0.5rem
